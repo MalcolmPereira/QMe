@@ -1,4 +1,4 @@
 QMe
 ===
 
-QMe Quiz Me Application
+QMe Quiz Trivia Application
