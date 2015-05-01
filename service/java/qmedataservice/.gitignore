@@ -1,0 +1,14 @@
+/build/
+/bin/
+.gradle/
+/.gradle/
+target/
+/target/
+/.settings/
+.idea
+.classpath
+.settings
+qmedataservice.iml
+qmedataservice.ipr
+qmedataservice.iws
+/coverage-report/

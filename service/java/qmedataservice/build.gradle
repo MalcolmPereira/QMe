@@ -1,0 +1,19 @@
+apply plugin: 'java' 
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+buildscript {
+	ext {
+		javaVersion = "1.8"
+	}
+    repositories {
+    	mavenCentral()
+        mavenLocal()
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
