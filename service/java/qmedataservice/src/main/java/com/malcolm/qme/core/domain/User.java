@@ -9,7 +9,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * Created by Malcolm on 5/1/2015.
+ * @Author Malcolm
  */
 public final class User {
     /**

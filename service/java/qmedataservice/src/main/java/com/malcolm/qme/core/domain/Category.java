@@ -2,14 +2,14 @@
  * Name      : com.malcolm.qme.core.domain.Category.java
  * Date      : 5/1/2015
  * Developer : Malcolm
- * Purpose   : TODO:
+ * Purpose   : QMe Category Domain Class
  */
 package com.malcolm.qme.core.domain;
 
 import java.util.Date;
 
 /**
- * Created by Malcolm on 5/1/2015.
+ * @Author Malcolm
  */
 public final class Category {
     /**

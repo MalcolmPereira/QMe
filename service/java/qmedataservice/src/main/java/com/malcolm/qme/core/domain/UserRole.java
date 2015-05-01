@@ -7,11 +7,11 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * Created by Malcolm on 5/1/2015.
+ * @Author Malcolm
  */
 public final class UserRole {
     /**
-     * Role Id
+     * User Role Id
      */
     private final long userRoleID;
 
