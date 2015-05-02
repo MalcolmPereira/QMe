@@ -16,7 +16,7 @@ public final class UserQuizGame {
     /**
      * User Game Unique Token
      */
-    private final String userGameToken;
+    private final long userGameToken;
 
     /**
      * User Id
@@ -27,6 +27,11 @@ public final class UserQuizGame {
      * Category Id
      */
     private final long categoryID;
+
+    /**
+     * User Game Score
+     */
+    private final long userGameScore;
 
     /**
      * Quiz Start Date
@@ -44,13 +49,15 @@ public final class UserQuizGame {
      * @param userGameToken
      * @param userID
      * @param categoryID
+     * @param userGameScore
      * @param quizStartDate
      * @param quizEndDate
      */
-    public UserQuizGame(String userGameToken, long userID, long categoryID, Date quizStartDate, Date quizEndDate) {
+    public UserQuizGame(long userGameToken, long userID, long categoryID, long userGameScore, Date quizStartDate, Date quizEndDate) {
         this.userGameToken = userGameToken;
         this.userID = userID;
         this.categoryID = categoryID;
+        this.userGameScore = userGameScore;
         this.quizStartDate = quizStartDate;
         this.quizEndDate = quizEndDate;
     }
@@ -62,10 +69,11 @@ public final class UserQuizGame {
      * @param userID
      * @param categoryID
      */
-    public UserQuizGame(String userGameToken, long userID, long categoryID) {
+    public UserQuizGame(long userGameToken, long userID, long categoryID) {
         this.userGameToken = userGameToken;
         this.userID = userID;
         this.categoryID = categoryID;
+        this.userGameScore = 0;
         this.quizStartDate = null;
         this.quizEndDate = null;
     }
@@ -74,7 +82,7 @@ public final class UserQuizGame {
      * Get User Game Token
      * @return
      */
-    public String getUserGameToken() {
+    public long getUserGameToken() {
         return userGameToken;
     }
 
@@ -110,6 +118,14 @@ public final class UserQuizGame {
         return quizEndDate;
     }
 
+    /**
+     * Get User Game Score
+     * @return
+     */
+    public long getUserGameScore() {
+        return userGameScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,20 +134,22 @@ public final class UserQuizGame {
         UserQuizGame that = (UserQuizGame) o;
 
         if (categoryID != that.categoryID) return false;
+        if (userGameScore != that.userGameScore) return false;
+        if (userGameToken != that.userGameToken) return false;
         if (userID != that.userID) return false;
         if (quizEndDate != null ? !quizEndDate.equals(that.quizEndDate) : that.quizEndDate != null) return false;
         if (quizStartDate != null ? !quizStartDate.equals(that.quizStartDate) : that.quizStartDate != null)
             return false;
-        if (!userGameToken.equals(that.userGameToken)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userGameToken.hashCode();
+        int result = (int) (userGameToken ^ (userGameToken >>> 32));
         result = 31 * result + (int) (userID ^ (userID >>> 32));
         result = 31 * result + (int) (categoryID ^ (categoryID >>> 32));
+        result = 31 * result + (int) (userGameScore ^ (userGameScore >>> 32));
         result = 31 * result + (quizStartDate != null ? quizStartDate.hashCode() : 0);
         result = 31 * result + (quizEndDate != null ? quizEndDate.hashCode() : 0);
         return result;
@@ -140,9 +158,10 @@ public final class UserQuizGame {
     @Override
     public String toString() {
         return "UserQuizGame{" +
-                "userGameToken='" + userGameToken + '\'' +
+                "userGameToken=" + userGameToken +
                 ", userID=" + userID +
                 ", categoryID=" + categoryID +
+                ", userGameScore=" + userGameScore +
                 ", quizStartDate=" + quizStartDate +
                 ", quizEndDate=" + quizEndDate +
                 '}';
