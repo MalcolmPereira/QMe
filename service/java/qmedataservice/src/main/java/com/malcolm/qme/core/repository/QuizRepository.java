@@ -1,20 +1,17 @@
 /**
  * Name      : com.malcolm.qme.core.repository.QuizRepository.java
  * Date      : 5/2/15
- * Developer : malcolm
- * Purpose   : TODO:
+ * Developer : Malcolm
+ * Purpose   : QMe Quiz Repository Class
  */
-package com.malcolm.qme.core.repository;/**
- * Created by malcolm on 5/2/15.
- */
+package com.malcolm.qme.core.repository;
 
-import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Quiz;
 
 import java.util.List;
 
 /**
- * @Author: malcolm
+ * @Author: Malcolm
  */
 public interface QuizRepository extends QMeRepository<Quiz> {
 
