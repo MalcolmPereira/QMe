@@ -21,6 +21,10 @@ public final class User {
      */
     private final String userName;
     /**
+     * User Password
+     */
+    private final String userPassword;
+    /**
      * User First Name
      */
     private final String userFirstName;
@@ -47,8 +51,10 @@ public final class User {
 
     /**
      * Public Constructor
+     *
      * @param userID
      * @param userName
+     * @param userPassword
      * @param userFirstName
      * @param userLastName
      * @param userEmail
@@ -56,33 +62,38 @@ public final class User {
      * @param userUpdateDate
      * @param updateUserID
      */
-    public User(long  userID, String userName, String userFirstName, String userLastName, String userEmail, Date userRegisteredDate, Date userUpdateDate, long updateUserID) {
-        this.userID                 = userID;
-        this.userName               = userName;
-        this.userFirstName          = userFirstName;
-        this.userLastName           = userLastName;
-        this.userEmail              = userEmail;
-        this.userRegisteredDate     = userRegisteredDate;
-        this.userUpdateDate         = userUpdateDate;
-        this.updateUserID           = updateUserID;
+    public User(long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, Date userRegisteredDate, Date userUpdateDate, long updateUserID) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userEmail = userEmail;
+        this.userRegisteredDate = userRegisteredDate;
+        this.userUpdateDate = userUpdateDate;
+        this.updateUserID = updateUserID;
     }
 
     /**
      * Public Constructor
+     *
+
      * @param userName
+     * @param userPassword
      * @param userFirstName
      * @param userLastName
      * @param userEmail
      */
-    public User(String userName, String userFirstName, String userLastName, String userEmail) {
-        this.userName               = userName;
-        this.userFirstName          = userFirstName;
-        this.userLastName           = userLastName;
-        this.userEmail              = userEmail;
-        this.userID                 = 0;
-        this.userRegisteredDate     = null;
-        this.userUpdateDate         = null;
-        this.updateUserID           = 0;
+    public User(String userName, String userPassword, String userFirstName, String userLastName, String userEmail) {
+        this.userID = 0;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userEmail = userEmail;
+        this.userRegisteredDate = null;
+        this.userUpdateDate = null;
+        this.updateUserID = 0;
     }
 
     /**
@@ -100,6 +111,14 @@ public final class User {
      */
     public String getUserName() {
         return userName;
+    }
+
+    /**
+     * Get User Password
+     * @return
+     */
+    public String getUserPassword() {
+        return userPassword;
     }
 
     /**
@@ -163,6 +182,7 @@ public final class User {
         if (!userFirstName.equals(user.userFirstName)) return false;
         if (!userLastName.equals(user.userLastName)) return false;
         if (!userName.equals(user.userName)) return false;
+        if (!userPassword.equals(user.userPassword)) return false;
         if (userRegisteredDate != null ? !userRegisteredDate.equals(user.userRegisteredDate) : user.userRegisteredDate != null)
             return false;
         if (userUpdateDate != null ? !userUpdateDate.equals(user.userUpdateDate) : user.userUpdateDate != null)
@@ -175,6 +195,7 @@ public final class User {
     public int hashCode() {
         int result = (int) (userID ^ (userID >>> 32));
         result = 31 * result + userName.hashCode();
+        result = 31 * result + userPassword.hashCode();
         result = 31 * result + userFirstName.hashCode();
         result = 31 * result + userLastName.hashCode();
         result = 31 * result + userEmail.hashCode();
@@ -192,8 +213,6 @@ public final class User {
                 ", userFirstName='" + userFirstName + '\'' +
                 ", userLastName='" + userLastName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
-                ", userRegisteredDate=" + userRegisteredDate +
-                ", userUpdateDate=" + userUpdateDate +
                 ", updateUserID=" + updateUserID +
                 '}';
     }
