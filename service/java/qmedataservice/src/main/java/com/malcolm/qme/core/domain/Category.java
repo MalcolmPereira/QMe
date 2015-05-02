@@ -129,21 +129,23 @@ public final class Category {
 
         Category category = (Category) o;
 
-        if (getCategoryID() != category.getCategoryID()) return false;
-        if (getCategoryParentID() != category.getCategoryParentID()) return false;
-        if (getCategoryCreateUserID() != category.getCategoryCreateUserID()) return false;
-        if (!getCategoryName().equals(category.getCategoryName())) return false;
-        return getCategoryCreateDate().equals(category.getCategoryCreateDate());
+        if (categoryCreateUserID != category.categoryCreateUserID) return false;
+        if (categoryID != category.categoryID) return false;
+        if (categoryParentID != category.categoryParentID) return false;
+        if (categoryCreateDate != null ? !categoryCreateDate.equals(category.categoryCreateDate) : category.categoryCreateDate != null)
+            return false;
+        if (!categoryName.equals(category.categoryName)) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getCategoryID() ^ (getCategoryID() >>> 32));
-        result = 31 * result + (int) (getCategoryParentID() ^ (getCategoryParentID() >>> 32));
-        result = 31 * result + getCategoryName().hashCode();
-        result = 31 * result + getCategoryCreateDate().hashCode();
-        result = 31 * result + (int) (getCategoryCreateUserID() ^ (getCategoryCreateUserID() >>> 32));
+        int result = (int) (categoryID ^ (categoryID >>> 32));
+        result = 31 * result + (int) (categoryParentID ^ (categoryParentID >>> 32));
+        result = 31 * result + categoryName.hashCode();
+        result = 31 * result + (categoryCreateDate != null ? categoryCreateDate.hashCode() : 0);
+        result = 31 * result + (int) (categoryCreateUserID ^ (categoryCreateUserID >>> 32));
         return result;
     }
 

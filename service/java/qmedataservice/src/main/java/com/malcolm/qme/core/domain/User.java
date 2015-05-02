@@ -157,27 +157,30 @@ public final class User {
 
         User user = (User) o;
 
-        if (getUserID() != user.getUserID()) return false;
-        if (getUpdateUserID() != user.getUpdateUserID()) return false;
-        if (!getUserName().equals(user.getUserName())) return false;
-        if (!getUserFirstName().equals(user.getUserFirstName())) return false;
-        if (!getUserLastName().equals(user.getUserLastName())) return false;
-        if (!getUserEmail().equals(user.getUserEmail())) return false;
-        if (!getUserRegisteredDate().equals(user.getUserRegisteredDate())) return false;
-        return getUserUpdateDate().equals(user.getUserUpdateDate());
+        if (updateUserID != user.updateUserID) return false;
+        if (userID != user.userID) return false;
+        if (!userEmail.equals(user.userEmail)) return false;
+        if (!userFirstName.equals(user.userFirstName)) return false;
+        if (!userLastName.equals(user.userLastName)) return false;
+        if (!userName.equals(user.userName)) return false;
+        if (userRegisteredDate != null ? !userRegisteredDate.equals(user.userRegisteredDate) : user.userRegisteredDate != null)
+            return false;
+        if (userUpdateDate != null ? !userUpdateDate.equals(user.userUpdateDate) : user.userUpdateDate != null)
+            return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getUserID() ^ (getUserID() >>> 32));
-        result = 31 * result + getUserName().hashCode();
-        result = 31 * result + getUserFirstName().hashCode();
-        result = 31 * result + getUserLastName().hashCode();
-        result = 31 * result + getUserEmail().hashCode();
-        result = 31 * result + getUserRegisteredDate().hashCode();
-        result = 31 * result + getUserUpdateDate().hashCode();
-        result = 31 * result + (int) (getUpdateUserID() ^ (getUpdateUserID() >>> 32));
+        int result = (int) (userID ^ (userID >>> 32));
+        result = 31 * result + userName.hashCode();
+        result = 31 * result + userFirstName.hashCode();
+        result = 31 * result + userLastName.hashCode();
+        result = 31 * result + userEmail.hashCode();
+        result = 31 * result + (userRegisteredDate != null ? userRegisteredDate.hashCode() : 0);
+        result = 31 * result + (userUpdateDate != null ? userUpdateDate.hashCode() : 0);
+        result = 31 * result + (int) (updateUserID ^ (updateUserID >>> 32));
         return result;
     }
 
