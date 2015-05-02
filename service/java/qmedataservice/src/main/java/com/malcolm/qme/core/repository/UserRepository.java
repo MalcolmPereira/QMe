@@ -27,6 +27,4 @@ public interface UserRepository extends QMeRepository<User>{
      * @return
      */
     public User findByUserEmail(String userEmail);
-
-
 }
