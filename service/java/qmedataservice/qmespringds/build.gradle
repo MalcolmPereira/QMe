@@ -5,6 +5,7 @@ apply plugin: 'idea'
 buildscript {
 	ext {
 		javaVersion = "1.8"
+		springVersion = "4.1.6.RELEASE"
 		springDataVersion = "1.8.0.RELEASE"
 		hibernateVersion	= "4.3.9.Final"
 		mySQLDriverVersion	= "5.1.35"
@@ -22,10 +23,13 @@ buildscript {
 
 dependencies {
 	compile project(':qmecore')
+	compile("org.springframework:spring-core:${springVersion}")
+	compile("org.springframework:spring-test:${springVersion}")
 	compile ("org.springframework.data:spring-data-jpa:${springDataVersion}");
 	compile("org.hibernate:hibernate-core:${hibernateVersion}")
 	compile("org.hibernate:hibernate-entitymanager:${hibernateVersion}")
 	compile("mysql:mysql-connector-java:${mySQLDriverVersion}")
+
 	testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
 	testCompile("junit:junit:${junitVersion}")
 	testCompile("org.jmockit:jmockit:${jmockitVersion}")
