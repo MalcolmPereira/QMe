@@ -8,7 +8,6 @@ package com.malcolm.qme.core.repository;
 
 import com.malcolm.qme.core.domain.User;
 
-import java.util.List;
 
 /**
  * @Author: Malcolm
