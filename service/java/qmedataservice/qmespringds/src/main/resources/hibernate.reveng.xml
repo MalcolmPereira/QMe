@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="ANSWER_OPTION" match-catalog="qme"></table-filter>
+	<table-filter match-name="ANSWER_OPTION_MEDIA"
+		match-catalog="qme">
+	</table-filter>
+	<table-filter match-name="ANSWER_REFERENCE_MEDIA"
+		match-catalog="qme">
+	</table-filter>
+	<table-filter match-name="CATEGORY" match-catalog="qme"></table-filter>
+	<table-filter match-name="QUESTION" match-catalog="qme"></table-filter>
+	<table-filter match-name="QUESTION_HIT" match-catalog="qme"></table-filter>
+	<table-filter match-name="QUIZ" match-catalog="qme"></table-filter>
+	<table-filter match-name="QUIZ_QUESTION" match-catalog="qme"></table-filter>
+	<table-filter match-name="ROLE" match-catalog="qme"></table-filter>
+	<table-filter match-name="USER" match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_CATEGORY" match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_CATEGORY_LIKES"
+		match-catalog="qme">
+	</table-filter>
+	<table-filter match-name="USER_QUESTION_LIKES"
+		match-catalog="qme">
+	</table-filter>
+	<table-filter match-name="USER_QUIZ" match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_QUIZ_GAME" match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_QUIZ_LIKES" match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_ROLES" match-catalog="qme"></table-filter>
+</hibernate-reverse-engineering>
