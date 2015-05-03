@@ -10,20 +10,9 @@ buildscript {
     	mavenCentral()
         mavenLocal()
     }
+
 }
 
-subprojects {
-	apply plugin: 'java' 
-	apply plugin: 'eclipse'
-	apply plugin: 'idea'
-
-    repositories {
-    	mavenCentral()
-        mavenLocal()
-    }
+dependencies {
+	compile project(':qmecore')
 }
-
-
-
-
-
