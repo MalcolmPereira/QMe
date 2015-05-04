@@ -34,6 +34,11 @@ import java.util.Properties;
 @ComponentScan({"com.malcolm.qme.springdata.entity"})
 public class QMeSpringDataJPAConfig {
 
+    /**
+     * Entity Package
+     */
+    private static final String ENTITY_PACKAGE = "com.malcolm.qme.springdata.entity";
+
     @Autowired
     private Environment environment;
 
@@ -62,7 +67,7 @@ public class QMeSpringDataJPAConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        entityManagerFactoryBean.setPackagesToScan("com.malcolm.qme.core.domain");
+        entityManagerFactoryBean.setPackagesToScan(ENTITY_PACKAGE);
         entityManagerFactoryBean.setJpaProperties(hibernateProperties());
         return entityManagerFactoryBean;
     }
