@@ -29,7 +29,7 @@ public class UserEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1695545475168328036L;
 	
-	private Integer userId;
+	private Long userId;
 	private String userName;
 	private String userFirstName;
 	private String userLastName;
@@ -37,7 +37,7 @@ public class UserEntity implements java.io.Serializable {
 	private String userPasscode;
 	private Date userRegisteredDate;
 	private Date userUpdatedDate;
-	private Integer updateUser;
+	private Long updateUser;
 
 	public UserEntity() {
 	}
@@ -56,7 +56,7 @@ public class UserEntity implements java.io.Serializable {
 
 	public UserEntity(String userName, String userFirstName, String userLastName,
 					  String userEmail, String userPasscode, Date userRegisteredDate,
-					  Date userUpdatedDate, Integer updateUser) {
+					  Date userUpdatedDate, Long updateUser) {
 		this.userName = userName;
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
@@ -70,11 +70,11 @@ public class UserEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "USER_ID", unique = true, nullable = false)
-	public Integer getUserId() {
+	public Long getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -144,11 +144,11 @@ public class UserEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "UPDATE_USER")
-	public Integer getUpdateUser() {
+	public Long getUpdateUser() {
 		return this.updateUser;
 	}
 
-	public void setUpdateUser(Integer updateUser) {
+	public void setUpdateUser(Long updateUser) {
 		this.updateUser = updateUser;
 	}
 

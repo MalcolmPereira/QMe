@@ -23,20 +23,20 @@ public class AnswerOptionEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -7816994725559572572L;
 	
-	private Integer optionId;
-	private int questionId;
+	private Long optionId;
+	private Long questionId;
 	private String optionText;
 	private Byte iscorrect;
 
 	public AnswerOptionEntity() {
 	}
 
-	public AnswerOptionEntity(int questionId, String optionText) {
+	public AnswerOptionEntity(Long questionId, String optionText) {
 		this.questionId = questionId;
 		this.optionText = optionText;
 	}
 
-	public AnswerOptionEntity(int questionId, String optionText, Byte iscorrect) {
+	public AnswerOptionEntity(Long questionId, String optionText, Byte iscorrect) {
 		this.questionId = questionId;
 		this.optionText = optionText;
 		this.iscorrect = iscorrect;
@@ -45,20 +45,20 @@ public class AnswerOptionEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "OPTION_ID", unique = true, nullable = false)
-	public Integer getOptionId() {
+	public Long getOptionId() {
 		return this.optionId;
 	}
 
-	public void setOptionId(Integer optionId) {
+	public void setOptionId(Long optionId) {
 		this.optionId = optionId;
 	}
 
 	@Column(name = "QUESTION_ID", nullable = false)
-	public int getQuestionId() {
+	public Long getQuestionId() {
 		return this.questionId;
 	}
 
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(Long questionId) {
 		this.questionId = questionId;
 	}
 

@@ -23,20 +23,20 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 2587678388163496632L;
 	
-	private Integer optionMediaId;
-	private int optionId;
+	private Long optionMediaId;
+	private Long optionId;
 	private String optionMediaType;
 	private byte[] optionMedia;
 
 	public AnswerOptionMediaEntity() {
 	}
 
-	public AnswerOptionMediaEntity(int optionId, String optionMediaType) {
+	public AnswerOptionMediaEntity(Long optionId, String optionMediaType) {
 		this.optionId = optionId;
 		this.optionMediaType = optionMediaType;
 	}
 
-	public AnswerOptionMediaEntity(int optionId, String optionMediaType,
+	public AnswerOptionMediaEntity(Long optionId, String optionMediaType,
 								   byte[] optionMedia) {
 		this.optionId = optionId;
 		this.optionMediaType = optionMediaType;
@@ -46,20 +46,20 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "OPTION_MEDIA_ID", unique = true, nullable = false)
-	public Integer getOptionMediaId() {
+	public Long getOptionMediaId() {
 		return this.optionMediaId;
 	}
 
-	public void setOptionMediaId(Integer optionMediaId) {
+	public void setOptionMediaId(Long optionMediaId) {
 		this.optionMediaId = optionMediaId;
 	}
 
 	@Column(name = "OPTION_ID", nullable = false)
-	public int getOptionId() {
+	public Long getOptionId() {
 		return this.optionId;
 	}
 
-	public void setOptionId(int optionId) {
+	public void setOptionId(Long optionId) {
 		this.optionId = optionId;
 	}
 

@@ -26,22 +26,22 @@ public class QuestionEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3717740254932115775L;
 	
-	private Integer questionId;
-	private int catId;
+	private Long questionId;
+	private Long catId;
 	private String questionText;
 	private String questionAnswer;
-	private int questionLikes;
+	private Long questionLikes;
 	private Date questionCreateDate;
-	private int questionCreateUser;
+	private Long questionCreateUser;
 	private Date questionUpdateDate;
-	private int questionUpdateUser;
+	private Long questionUpdateUser;
 
 	public QuestionEntity() {
 	}
 
-	public QuestionEntity(int catId, String questionText, int questionLikes,
-						  Date questionCreateDate, int questionCreateUser,
-						  Date questionUpdateDate, int questionUpdateUser) {
+	public QuestionEntity(Long catId, String questionText, Long questionLikes,
+						  Date questionCreateDate, Long questionCreateUser,
+						  Date questionUpdateDate, Long questionUpdateUser) {
 		this.catId = catId;
 		this.questionText = questionText;
 		this.questionLikes = questionLikes;
@@ -51,9 +51,9 @@ public class QuestionEntity implements java.io.Serializable {
 		this.questionUpdateUser = questionUpdateUser;
 	}
 
-	public QuestionEntity(int catId, String questionText, String questionAnswer,
-						  int questionLikes, Date questionCreateDate, int questionCreateUser,
-						  Date questionUpdateDate, int questionUpdateUser) {
+	public QuestionEntity(Long catId, String questionText, String questionAnswer,
+						  Long questionLikes, Date questionCreateDate, Long questionCreateUser,
+						  Date questionUpdateDate, Long questionUpdateUser) {
 		this.catId = catId;
 		this.questionText = questionText;
 		this.questionAnswer = questionAnswer;
@@ -67,20 +67,20 @@ public class QuestionEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "QUESTION_ID", unique = true, nullable = false)
-	public Integer getQuestionId() {
+	public Long getQuestionId() {
 		return this.questionId;
 	}
 
-	public void setQuestionId(Integer questionId) {
+	public void setQuestionId(Long questionId) {
 		this.questionId = questionId;
 	}
 
 	@Column(name = "CAT_ID", nullable = false)
-	public int getCatId() {
+	public Long getCatId() {
 		return this.catId;
 	}
 
-	public void setCatId(int catId) {
+	public void setCatId(Long catId) {
 		this.catId = catId;
 	}
 
@@ -103,11 +103,11 @@ public class QuestionEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "QUESTION_LIKES", nullable = false)
-	public int getQuestionLikes() {
+	public Long getQuestionLikes() {
 		return this.questionLikes;
 	}
 
-	public void setQuestionLikes(int questionLikes) {
+	public void setQuestionLikes(Long questionLikes) {
 		this.questionLikes = questionLikes;
 	}
 
@@ -122,11 +122,11 @@ public class QuestionEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "QUESTION_CREATE_USER", nullable = false)
-	public int getQuestionCreateUser() {
+	public Long getQuestionCreateUser() {
 		return this.questionCreateUser;
 	}
 
-	public void setQuestionCreateUser(int questionCreateUser) {
+	public void setQuestionCreateUser(Long questionCreateUser) {
 		this.questionCreateUser = questionCreateUser;
 	}
 
@@ -141,11 +141,11 @@ public class QuestionEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "QUESTION_UPDATE_USER", nullable = false)
-	public int getQuestionUpdateUser() {
+	public Long getQuestionUpdateUser() {
 		return this.questionUpdateUser;
 	}
 
-	public void setQuestionUpdateUser(int questionUpdateUser) {
+	public void setQuestionUpdateUser(Long questionUpdateUser) {
 		this.questionUpdateUser = questionUpdateUser;
 	}
 

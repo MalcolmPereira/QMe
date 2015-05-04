@@ -21,17 +21,17 @@ public class QuestionHitEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -7814830528253557435L;
 	
-	private int questionId;
-	private int catId;
-	private int questionHit;
-	private int rightCount;
-	private int wrongCount;
+	private Long questionId;
+	private Long catId;
+	private Long questionHit;
+	private Long rightCount;
+	private Long wrongCount;
 
 	public QuestionHitEntity() {
 	}
 
-	public QuestionHitEntity(int questionId, int catId, int questionHit,
-							 int rightCount, int wrongCount) {
+	public QuestionHitEntity(Long questionId, Long catId, Long questionHit,
+							 Long rightCount, Long wrongCount) {
 		this.questionId = questionId;
 		this.catId = catId;
 		this.questionHit = questionHit;
@@ -41,47 +41,47 @@ public class QuestionHitEntity implements java.io.Serializable {
 
 	@Id
 	@Column(name = "QUESTION_ID", unique = true, nullable = false)
-	public int getQuestionId() {
+	public Long getQuestionId() {
 		return this.questionId;
 	}
 
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(Long questionId) {
 		this.questionId = questionId;
 	}
 
 	@Column(name = "CAT_ID", nullable = false)
-	public int getCatId() {
+	public Long getCatId() {
 		return this.catId;
 	}
 
-	public void setCatId(int catId) {
+	public void setCatId(Long catId) {
 		this.catId = catId;
 	}
 
 	@Column(name = "QUESTION_HIT", nullable = false)
-	public int getQuestionHit() {
+	public Long getQuestionHit() {
 		return this.questionHit;
 	}
 
-	public void setQuestionHit(int questionHit) {
+	public void setQuestionHit(Long questionHit) {
 		this.questionHit = questionHit;
 	}
 
 	@Column(name = "RIGHT_COUNT", nullable = false)
-	public int getRightCount() {
+	public Long getRightCount() {
 		return this.rightCount;
 	}
 
-	public void setRightCount(int rightCount) {
+	public void setRightCount(Long rightCount) {
 		this.rightCount = rightCount;
 	}
 
 	@Column(name = "WRONG_COUNT", nullable = false)
-	public int getWrongCount() {
+	public Long getWrongCount() {
 		return this.wrongCount;
 	}
 
-	public void setWrongCount(int wrongCount) {
+	public void setWrongCount(Long wrongCount) {
 		this.wrongCount = wrongCount;
 	}
 

@@ -55,21 +55,21 @@ public class UserSpringDataRepositoryTest {
     @Test
     public void testFetchOne(){
         assertNotNull(userSpringDataRepo);
-        UserEntity userEntity = userSpringDataRepo.findOne(1);
+        UserEntity userEntity = userSpringDataRepo.findOne(1L);
         assertNotNull(userEntity);
-        assertThat(userEntity.getUserId(), equalTo(1));
+        assertThat(userEntity.getUserId(), equalTo(1L));
     }
 
     @Test
     public void testCRUD(){
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("testUser1", "Test", "UserEntity", "testuser@test.com", "testpassword", new Date(), new Date());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTest", "Test", "Test", "UserSpringDataRepositoryTest@test.com", "Test", new Date(), new Date());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
-        assertThat(userEntity.getUserId(), greaterThan(0));
+        assertThat(userEntity.getUserId(), greaterThan(0L));
 
-        Integer userID = userEntity.getUserId();
+        Long userID = userEntity.getUserId();
         userEntity = userSpringDataRepo.findOne(userID);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), equalTo(userID));

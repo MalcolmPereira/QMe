@@ -29,24 +29,24 @@ public class QuizEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -8654794883612895110L;
 	
-	private Integer quizId;
+	private Long quizId;
 	private String quizName;
 	private String quizDesc;
-	private int catId;
-	private Integer quizHits;
-	private int quizLikes;
+	private Long catId;
+	private Long quizHits;
+	private Long quizLikes;
 	private byte maxAttempts;
 	private Date quizCreateDate;
-	private int quizCreateUser;
+	private Long quizCreateUser;
 	private Date quizUpdateDate;
-	private int quizUpdateUser;
+	private Long quizUpdateUser;
 
 	public QuizEntity() {
 	}
 
-	public QuizEntity(String quizName, int catId, int quizLikes, byte maxAttempts,
-					  Date quizCreateDate, int quizCreateUser, Date quizUpdateDate,
-					  int quizUpdateUser) {
+	public QuizEntity(String quizName, Long catId, Long quizLikes, byte maxAttempts,
+					  Date quizCreateDate, Long quizCreateUser, Date quizUpdateDate,
+					  Long quizUpdateUser) {
 		this.quizName = quizName;
 		this.catId = catId;
 		this.quizLikes = quizLikes;
@@ -57,9 +57,9 @@ public class QuizEntity implements java.io.Serializable {
 		this.quizUpdateUser = quizUpdateUser;
 	}
 
-	public QuizEntity(String quizName, String quizDesc, int catId, Integer quizHits,
-					  int quizLikes, byte maxAttempts, Date quizCreateDate,
-					  int quizCreateUser, Date quizUpdateDate, int quizUpdateUser) {
+	public QuizEntity(String quizName, String quizDesc, Long catId, Long quizHits,
+					  Long quizLikes, byte maxAttempts, Date quizCreateDate,
+					  Long quizCreateUser, Date quizUpdateDate, Long quizUpdateUser) {
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
 		this.catId = catId;
@@ -75,11 +75,11 @@ public class QuizEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "QUIZ_ID", unique = true, nullable = false)
-	public Integer getQuizId() {
+	public Long getQuizId() {
 		return this.quizId;
 	}
 
-	public void setQuizId(Integer quizId) {
+	public void setQuizId(Long quizId) {
 		this.quizId = quizId;
 	}
 
@@ -102,29 +102,29 @@ public class QuizEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "CAT_ID", nullable = false)
-	public int getCatId() {
+	public Long getCatId() {
 		return this.catId;
 	}
 
-	public void setCatId(int catId) {
+	public void setCatId(Long catId) {
 		this.catId = catId;
 	}
 
 	@Column(name = "QUIZ_HITS")
-	public Integer getQuizHits() {
+	public Long getQuizHits() {
 		return this.quizHits;
 	}
 
-	public void setQuizHits(Integer quizHits) {
+	public void setQuizHits(Long quizHits) {
 		this.quizHits = quizHits;
 	}
 
 	@Column(name = "QUIZ_LIKES", nullable = false)
-	public int getQuizLikes() {
+	public Long getQuizLikes() {
 		return this.quizLikes;
 	}
 
-	public void setQuizLikes(int quizLikes) {
+	public void setQuizLikes(Long quizLikes) {
 		this.quizLikes = quizLikes;
 	}
 
@@ -148,11 +148,11 @@ public class QuizEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "QUIZ_CREATE_USER", nullable = false)
-	public int getQuizCreateUser() {
+	public Long getQuizCreateUser() {
 		return this.quizCreateUser;
 	}
 
-	public void setQuizCreateUser(int quizCreateUser) {
+	public void setQuizCreateUser(Long quizCreateUser) {
 		this.quizCreateUser = quizCreateUser;
 	}
 
@@ -167,11 +167,11 @@ public class QuizEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "QUIZ_UPDATE_USER", nullable = false)
-	public int getQuizUpdateUser() {
+	public Long getQuizUpdateUser() {
 		return this.quizUpdateUser;
 	}
 
-	public void setQuizUpdateUser(int quizUpdateUser) {
+	public void setQuizUpdateUser(Long quizUpdateUser) {
 		this.quizUpdateUser = quizUpdateUser;
 	}
 

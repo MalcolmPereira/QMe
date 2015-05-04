@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,22 +44,61 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(long id) {
-        return(getUser(userSpringDataRepo.findOne(Long.valueOf(id).intValue())));
+        return(getUser(userSpringDataRepo.findOne(id)));
     }
 
     @Override
     public User save(User user) {
-        return null;
+        UserEntity userEntity = getUserEntity(user);
+        userEntity.setUserRegisteredDate(new Date());
+        userEntity.setUserUpdatedDate(new Date());
+        userEntity = userSpringDataRepo.save(userEntity);
+        userEntity.setUpdateUser(userEntity.getUserId());
+        userEntity = userSpringDataRepo.save(userEntity);
+        return getUser(userEntity);
     }
 
     @Override
     public User update(User user, long updateUserId) {
-        return null;
+        UserEntity userEntity = getUserEntity(user);
+        userEntity.setUserUpdatedDate(new Date());
+        userEntity.setUpdateUser(updateUserId);
+        userEntity = userSpringDataRepo.save(userEntity);
+        return getUser(userEntity);
     }
 
     @Override
     public void delete(long id) {
-        userSpringDataRepo.delete(Long.valueOf(id).intValue());
+        userSpringDataRepo.delete(id);
+    }
+
+    /**
+     * Get UserEntity
+     * @param user
+     * @return
+     */
+    private UserEntity getUserEntity(User user){
+        UserEntity userEntity = new UserEntity();
+        if(user.getUserID() > 0){
+            userEntity.setUserId(user.getUserID());
+        }
+        if(user.getUserName() != null && user.getUserName().trim().length() != 0){
+            userEntity.setUserName(user.getUserName());
+        }
+        userEntity.setUserPasscode(user.getUserPassword());
+        userEntity.setUserFirstName(user.getUserFirstName());
+        userEntity.setUserLastName(user.getUserLastName());
+        userEntity.setUserEmail(user.getUserEmail());
+        if(user.getUserRegisteredDate() != null){
+            userEntity.setUserRegisteredDate(user.getUserRegisteredDate());
+        }
+        if(user.getUserUpdateDate() != null){
+            userEntity.setUserUpdatedDate(user.getUserUpdateDate());
+        }
+        if(user.getUpdateUserID() > 0){
+            userEntity.setUpdateUser(user.getUpdateUserID());
+        }
+        return userEntity;
     }
 
    /**

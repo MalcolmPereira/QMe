@@ -23,20 +23,20 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5542631772390685116L;
 	
-	private Integer answerRefMediaId;
-	private int questionId;
+	private Long answerRefMediaId;
+	private Long questionId;
 	private String refMediaType;
 	private byte[] refMedia;
 
 	public AnswerReferenceMediaEntity() {
 	}
 
-	public AnswerReferenceMediaEntity(int questionId, String refMediaType) {
+	public AnswerReferenceMediaEntity(Long questionId, String refMediaType) {
 		this.questionId = questionId;
 		this.refMediaType = refMediaType;
 	}
 
-	public AnswerReferenceMediaEntity(int questionId, String refMediaType,
+	public AnswerReferenceMediaEntity(Long questionId, String refMediaType,
 									  byte[] refMedia) {
 		this.questionId = questionId;
 		this.refMediaType = refMediaType;
@@ -46,20 +46,20 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ANSWER_REF_MEDIA_ID", unique = true, nullable = false)
-	public Integer getAnswerRefMediaId() {
+	public Long getAnswerRefMediaId() {
 		return this.answerRefMediaId;
 	}
 
-	public void setAnswerRefMediaId(Integer answerRefMediaId) {
+	public void setAnswerRefMediaId(Long answerRefMediaId) {
 		this.answerRefMediaId = answerRefMediaId;
 	}
 
 	@Column(name = "QUESTION_ID", nullable = false)
-	public int getQuestionId() {
+	public Long getQuestionId() {
 		return this.questionId;
 	}
 
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(Long questionId) {
 		this.questionId = questionId;
 	}
 

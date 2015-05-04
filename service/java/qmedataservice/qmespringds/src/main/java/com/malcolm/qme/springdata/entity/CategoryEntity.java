@@ -27,20 +27,20 @@ public class CategoryEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5777006509366362337L;
 	
-	private Integer catId;
+	private Long catId;
 	private String catName;
-	private int catParentId;
+	private Long catParentId;
 	private Date catCreateDate;
-	private int catCreateUser;
+	private Long catCreateUser;
 	private Date catUpdateDate;
-	private int catUpdateUser;
-	private Integer catLikes;
+	private Long catUpdateUser;
+	private Long catLikes;
 
 	public CategoryEntity() {
 	}
 
-	public CategoryEntity(String catName, int catParentId, Date catCreateDate,
-						  int catCreateUser, Date catUpdateDate, int catUpdateUser) {
+	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
+						  Long catCreateUser, Date catUpdateDate, Long catUpdateUser) {
 		this.catName = catName;
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
@@ -49,9 +49,9 @@ public class CategoryEntity implements java.io.Serializable {
 		this.catUpdateUser = catUpdateUser;
 	}
 
-	public CategoryEntity(String catName, int catParentId, Date catCreateDate,
-						  int catCreateUser, Date catUpdateDate, int catUpdateUser,
-						  Integer catLikes) {
+	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
+						  Long catCreateUser, Date catUpdateDate, Long catUpdateUser,
+						  Long catLikes) {
 		this.catName = catName;
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
@@ -64,11 +64,11 @@ public class CategoryEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "CAT_ID", unique = true, nullable = false)
-	public Integer getCatId() {
+	public Long getCatId() {
 		return this.catId;
 	}
 
-	public void setCatId(Integer catId) {
+	public void setCatId(Long catId) {
 		this.catId = catId;
 	}
 
@@ -82,11 +82,11 @@ public class CategoryEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "CAT_PARENT_ID", nullable = false)
-	public int getCatParentId() {
+	public Long getCatParentId() {
 		return this.catParentId;
 	}
 
-	public void setCatParentId(int catParentId) {
+	public void setCatParentId(Long catParentId) {
 		this.catParentId = catParentId;
 	}
 
@@ -101,11 +101,11 @@ public class CategoryEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "CAT_CREATE_USER", nullable = false)
-	public int getCatCreateUser() {
+	public Long getCatCreateUser() {
 		return this.catCreateUser;
 	}
 
-	public void setCatCreateUser(int catCreateUser) {
+	public void setCatCreateUser(Long catCreateUser) {
 		this.catCreateUser = catCreateUser;
 	}
 
@@ -120,20 +120,20 @@ public class CategoryEntity implements java.io.Serializable {
 	}
 
 	@Column(name = "CAT_UPDATE_USER", nullable = false)
-	public int getCatUpdateUser() {
+	public Long getCatUpdateUser() {
 		return this.catUpdateUser;
 	}
 
-	public void setCatUpdateUser(int catUpdateUser) {
+	public void setCatUpdateUser(Long catUpdateUser) {
 		this.catUpdateUser = catUpdateUser;
 	}
 
 	@Column(name = "CAT_LIKES")
-	public Integer getCatLikes() {
+	public Long getCatLikes() {
 		return this.catLikes;
 	}
 
-	public void setCatLikes(Integer catLikes) {
+	public void setCatLikes(Long catLikes) {
 		this.catLikes = catLikes;
 	}
 
