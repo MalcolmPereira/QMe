@@ -1,19 +1,17 @@
 /**
  * Name      : com.malcolm.qme.core.repository.UserQuizGameRepository.java
  * Date      : 5/2/15
- * Developer : malcolm
- * Purpose   : QMe User Quiz Game Repository Class
+ * Developer : Malcolm
+ * Purpose   : QMe User Quiz Game Repository Interface
  */
-package com.malcolm.qme.core.repository;/**
- * Created by malcolm on 5/2/15.
- */
+package com.malcolm.qme.core.repository;
 
 import com.malcolm.qme.core.domain.UserQuizGame;
 
 import java.util.List;
 
 /**
- * @Author: malcolm
+ * @Author: Malcolm
  */
 public interface UserQuizGameRepository extends QMeRepository<UserQuizGame> {
     /**

@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.core.repository.RoleRepository.java
  * Date      : 5/2/15
  * Developer : Malcolm
- * Purpose   : QMe Role Repository Class
+ * Purpose   : QMe Role Repository Interface
  */
 package com.malcolm.qme.core.repository;
 

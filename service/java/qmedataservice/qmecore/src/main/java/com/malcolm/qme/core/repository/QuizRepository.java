@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.core.repository.QuizRepository.java
  * Date      : 5/2/15
  * Developer : Malcolm
- * Purpose   : QMe Quiz Repository Class
+ * Purpose   : QMe Quiz Repository Interface
  */
 package com.malcolm.qme.core.repository;
 

@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.core.repository.UserQuizLikesRepository.java
  * Date      : 5/2/15
  * Developer : Malcolm
- * Purpose   : QMe User Quiz Likes Repository Class
+ * Purpose   : QMe User Quiz Likes Repository Interface
  */
 package com.malcolm.qme.core.repository;
 

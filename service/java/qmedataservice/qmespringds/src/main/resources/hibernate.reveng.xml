@@ -2,29 +2,38 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-	<table-filter match-name="ANSWER_OPTION" match-catalog="qme"></table-filter>
-	<table-filter match-name="ANSWER_OPTION_MEDIA"
-		match-catalog="qme">
-	</table-filter>
-	<table-filter match-name="ANSWER_REFERENCE_MEDIA"
-		match-catalog="qme">
-	</table-filter>
-	<table-filter match-name="CATEGORY" match-catalog="qme"></table-filter>
-	<table-filter match-name="QUESTION" match-catalog="qme"></table-filter>
-	<table-filter match-name="QUESTION_HIT" match-catalog="qme"></table-filter>
-	<table-filter match-name="QUIZ" match-catalog="qme"></table-filter>
-	<table-filter match-name="QUIZ_QUESTION" match-catalog="qme"></table-filter>
-	<table-filter match-name="ROLE" match-catalog="qme"></table-filter>
-	<table-filter match-name="USER" match-catalog="qme"></table-filter>
-	<table-filter match-name="USER_CATEGORY" match-catalog="qme"></table-filter>
-	<table-filter match-name="USER_CATEGORY_LIKES"
-		match-catalog="qme">
-	</table-filter>
-	<table-filter match-name="USER_QUESTION_LIKES"
-		match-catalog="qme">
-	</table-filter>
-	<table-filter match-name="USER_QUIZ" match-catalog="qme"></table-filter>
-	<table-filter match-name="USER_QUIZ_GAME" match-catalog="qme"></table-filter>
-	<table-filter match-name="USER_QUIZ_LIKES" match-catalog="qme"></table-filter>
-	<table-filter match-name="USER_ROLES" match-catalog="qme"></table-filter>
+	<table-filter match-name="ANSWER_OPTION"		 	match-catalog="qme"></table-filter>
+	<table-filter match-name="ANSWER_OPTION_MEDIA" 		match-catalog="qme"></table-filter>
+	<table-filter match-name="ANSWER_REFERENCE_MEDIA" 	match-catalog="qme"></table-filter>
+	<table-filter match-name="CATEGORY" 				match-catalog="qme"></table-filter>
+	<table-filter match-name="QUESTION" 				match-catalog="qme"></table-filter>
+	<table-filter match-name="QUESTION_HIT" 			match-catalog="qme"></table-filter>
+	<table-filter match-name="QUIZ" 					match-catalog="qme"></table-filter>
+	<table-filter match-name="QUIZ_QUESTION" 			match-catalog="qme"></table-filter>
+	<table-filter match-name="ROLE" 					match-catalog="qme"></table-filter>
+	<table-filter match-name="USER" 					match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_CATEGORY" 			match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_CATEGORY_LIKES" 		match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_QUESTION_LIKES" 		match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_QUIZ" 				match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_QUIZ_GAME" 			match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_QUIZ_LIKES" 			match-catalog="qme"></table-filter>
+	<table-filter match-name="USER_ROLES" 				match-catalog="qme"></table-filter>
+	<table catalog="qme" schema="qme" name="ANSWER_OPTION" 			class="AnswerOptionEntity"></table>
+	<table catalog="qme" schema="qme" name="ANSWER_OPTION_MEDIA" 	class="AnswerOptionMediaEntity"></table>
+	<table catalog="qme" schema="qme" name="ANSWER_REFERENCE_MEDIA" class="AnswerReferenceMediaEntity"></table>
+	<table catalog="qme" schema="qme" name="CATEGORY" 				class="CategoryEntity"></table>
+	<table catalog="qme" schema="qme" name="QUESTION" 				class="QuestionEntity"></table>
+	<table catalog="qme" schema="qme" name="QUESTION_HIT" 			class="QuestionHitEntity"></table>
+	<table catalog="qme" schema="qme" name="QUIZ" 					class="QuizEntity"></table>
+	<table catalog="qme" schema="qme" name="QUIZ_QUESTION" 			class="QuizQuestionEntity"></table>
+	<table catalog="qme" schema="qme" name="ROLE" 					class="RoleEntity"></table>
+	<table catalog="qme" schema="qme" name="USER" 					class="UserEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_CATEGORY" 			class="UserCategoryEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_CATEGORY_LIKES" 	class="UserCategoryLikesEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_QUESTION_LIKES" 	class="UserQuestionLikesEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_QUIZ" 				class="UserQuizEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_QUIZ_GAME" 		class="UserQuizGameEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_QUIZ_LIKES" 		class="UserQuizLikesEntity"></table>
+	<table catalog="qme" schema="qme" name="USER_ROLES" 			class="UserRolesEntity"></table>
 </hibernate-reverse-engineering>

@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.core.domain.AnswerOption.java
  * Date      : 5/2/15
  * Developer : Malcolm
- * Purpose   : QMe User Repository Class
+ * Purpose   : QMe User Repository Interface
  */
 package com.malcolm.qme.core.repository;
 

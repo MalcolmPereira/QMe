@@ -31,7 +31,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource({"classpath:qmespringds.properties"})
 @EnableJpaRepositories("com.malcolm.qme.springdata.repository")
-@ComponentScan({"com.malcolm.qme.springdata.entity"})
+@ComponentScan({"com.malcolm.qme.springdata"})
 public class QMeSpringDataJPAConfig {
 
     /**
