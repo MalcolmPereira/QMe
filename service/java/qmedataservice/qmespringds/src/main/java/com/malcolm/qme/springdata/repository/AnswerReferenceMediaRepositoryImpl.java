@@ -6,12 +6,16 @@
  */
 package com.malcolm.qme.springdata.repository;
 
-import com.malcolm.qme.core.domain.AnswerReferenceMedia;
-import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.malcolm.qme.core.domain.AnswerReferenceMedia;
+import com.malcolm.qme.core.domain.MediaTypeEnum;
+import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
+import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
 
 /**
  * @Author: Malcolm
@@ -28,31 +32,93 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 
     @Override
     public List<AnswerReferenceMedia> findByQuestionId(Long questionID) {
-        return null;
+    	return(getAnswerReferenceMedia(answerReferenceMediaSpringDataRepository.findByQuestionId(questionID)));
     }
 
     @Override
     public List<AnswerReferenceMedia> findAll() {
-        return null;
+    	return(getAnswerReferenceMedia(answerReferenceMediaSpringDataRepository.findAll()));
     }
 
     @Override
     public AnswerReferenceMedia findById(Long id) {
+    	AnswerReferenceMediaEntity answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.findOne(id);
+        if(answerReferenceMediaEntity != null){
+            return getAnswerReferenceMedia(answerReferenceMediaEntity);
+        }
         return null;
     }
 
     @Override
     public AnswerReferenceMedia save(AnswerReferenceMedia answerReferenceMedia) {
-        return null;
+    	AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
+    	answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
+    	return getAnswerReferenceMedia(answerReferenceMediaEntity);
     }
 
     @Override
     public AnswerReferenceMedia update(AnswerReferenceMedia answerReferenceMedia, Long updateUserId) {
-        return null;
+    	AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
+    	answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
+    	return getAnswerReferenceMedia(answerReferenceMediaEntity);
     }
 
     @Override
     public void delete(Long id) {
-
+    	answerReferenceMediaSpringDataRepository.delete(id);
     }
+    
+    /**
+     * Map AnswerReferenceMedia Domain Object to AnswerReferenceMediaEntity 
+     * 
+     * @param answerReferenceMedia
+     * @return
+     */
+    private AnswerReferenceMediaEntity getAnswerReferenceMediaEntity(AnswerReferenceMedia answerReferenceMedia){
+    	AnswerReferenceMediaEntity answerReferenceMediaEntity = new AnswerReferenceMediaEntity();
+    	if(answerReferenceMedia.getAnswerRefMediaID() > 0 ){
+    		answerReferenceMediaEntity.setAnswerRefMediaId(answerReferenceMedia.getAnswerRefMediaID());
+    	}
+    	if(answerReferenceMedia.getQuestionID() > 0 ){
+    		answerReferenceMediaEntity.setQuestionId(answerReferenceMedia.getQuestionID());
+    	}
+    	if(answerReferenceMedia.getMediaType() != null) {
+    		answerReferenceMediaEntity.setRefMediaType(answerReferenceMedia.getMediaType().getValue());
+        }
+    	if(answerReferenceMedia.getMedia() != null) {
+    		answerReferenceMediaEntity.setRefMedia(answerReferenceMedia.getMedia());
+        }
+    	return answerReferenceMediaEntity;
+    }
+    
+    /**
+     * Map AnswerReferenceMediaEntity to AnswerReferenceMedia Domain Object
+     * 
+     * @param answerReferenceMediaEntity
+     * @return
+     */
+    private List<AnswerReferenceMedia> getAnswerReferenceMedia(List<AnswerReferenceMediaEntity> answerReferenceMediaEntities){
+    	List<AnswerReferenceMedia> answerReferenceMediaList = new ArrayList<AnswerReferenceMedia>();
+    	 if(answerReferenceMediaEntities == null){
+             return answerReferenceMediaList;
+         }
+    	 for (AnswerReferenceMediaEntity answerReferenceMediaEntity : answerReferenceMediaEntities){
+    		 answerReferenceMediaList.add(getAnswerReferenceMedia(answerReferenceMediaEntity));
+         }
+    	 return answerReferenceMediaList;
+    }
+    
+    /**
+     * Map AnswerReferenceMediaEntity to AnswerReferenceMedia Domain Object
+     * 
+     * @param answerReferenceMediaEntity
+     * @return
+     */
+    private AnswerReferenceMedia getAnswerReferenceMedia(AnswerReferenceMediaEntity answerReferenceMediaEntity){
+    	return new AnswerReferenceMedia(answerReferenceMediaEntity.getAnswerRefMediaId(),
+    				answerReferenceMediaEntity.getQuestionId(), 
+    				MediaTypeEnum.valueOf(answerReferenceMediaEntity.getRefMediaType()), 
+    				answerReferenceMediaEntity.getRefMedia());
+    }
+    
 }
