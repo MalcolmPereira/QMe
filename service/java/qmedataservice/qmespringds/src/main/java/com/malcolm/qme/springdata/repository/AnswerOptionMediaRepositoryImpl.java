@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.springdata.repository.AnswerOptionMediaRepositoryImpl.java
  * Date      : 5/5/2015
  * Developer : Malcolm
- * Purpose   : TODO:
+ * Purpose   : QMe AnswerOptionMediaEntity Repository Implementation
  */
 package com.malcolm.qme.springdata.repository;
 
@@ -30,7 +30,7 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 
     @Override
     public List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID) {
-        return null;
+        return(getAnswerOptionMedia(answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID)));
     }
 
     @Override

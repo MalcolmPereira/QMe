@@ -129,11 +129,11 @@ public class UserRepositoryImpl implements UserRepository {
         return userList;
    }
 
-    /**
+   /**
      * Map UserEntity to User Domain Object
      * @param userEntity
      * @return
-     */
+   */
    private User getUser(UserEntity userEntity){
         return new User(
              userEntity.getUserId(),

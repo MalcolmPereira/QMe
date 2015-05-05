@@ -9,8 +9,18 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.springdata.entity.AnswerOptionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * @Author: Malcolm
  */
 public interface AnswerOptionSpringDataRepository extends JpaRepository<AnswerOptionEntity, Long> {
+
+    /**
+     * Find By Question Id
+     * @param questionId
+     * @return
+     */
+    public List<AnswerOptionEntity> findByQuestionId(Long questionId);
+
 }
