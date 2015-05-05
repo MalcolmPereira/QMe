@@ -37,6 +37,7 @@ public final class QuestionHit {
     private final Long wrongCount;
 
     /**
+     * Public Constructor
      *
      * @param questionID
      * @param categoryID
@@ -56,7 +57,7 @@ public final class QuestionHit {
      * Get Question ID
      * @return
      */
-    public long getQuestionID() {
+    public Long getQuestionID() {
         return questionID;
     }
 
@@ -64,7 +65,7 @@ public final class QuestionHit {
      * Get Category ID
      * @return
      */
-    public long getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -72,7 +73,7 @@ public final class QuestionHit {
      * Get Question Hit
      * @return
      */
-    public long getQuestionHit() {
+    public Long getQuestionHit() {
         return questionHit;
     }
 
@@ -80,7 +81,7 @@ public final class QuestionHit {
      * Get Right Count
      * @return
      */
-    public long getRightCount() {
+    public Long getRightCount() {
         return rightCount;
     }
 
@@ -88,7 +89,7 @@ public final class QuestionHit {
      * Get Wrong Count
      * @return
      */
-    public long getWrongCount() {
+    public Long getWrongCount() {
         return wrongCount;
     }
 
@@ -99,21 +100,23 @@ public final class QuestionHit {
 
         QuestionHit that = (QuestionHit) o;
 
-        if (!questionID.equals(that.questionID)) return false;
-        if (!categoryID.equals(that.categoryID)) return false;
-        if (questionHit != null ? !questionHit.equals(that.questionHit) : that.questionHit != null) return false;
-        if (rightCount != null ? !rightCount.equals(that.rightCount) : that.rightCount != null) return false;
-        return !(wrongCount != null ? !wrongCount.equals(that.wrongCount) : that.wrongCount != null);
+        if (!getQuestionID().equals(that.getQuestionID())) return false;
+        if (!getCategoryID().equals(that.getCategoryID())) return false;
+        if (getQuestionHit() != null ? !getQuestionHit().equals(that.getQuestionHit()) : that.getQuestionHit() != null)
+            return false;
+        if (getRightCount() != null ? !getRightCount().equals(that.getRightCount()) : that.getRightCount() != null)
+            return false;
+        return !(getWrongCount() != null ? !getWrongCount().equals(that.getWrongCount()) : that.getWrongCount() != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = questionID.hashCode();
-        result = 31 * result + categoryID.hashCode();
-        result = 31 * result + (questionHit != null ? questionHit.hashCode() : 0);
-        result = 31 * result + (rightCount != null ? rightCount.hashCode() : 0);
-        result = 31 * result + (wrongCount != null ? wrongCount.hashCode() : 0);
+        int result = getQuestionID().hashCode();
+        result = 31 * result + getCategoryID().hashCode();
+        result = 31 * result + (getQuestionHit() != null ? getQuestionHit().hashCode() : 0);
+        result = 31 * result + (getRightCount() != null ? getRightCount().hashCode() : 0);
+        result = 31 * result + (getWrongCount() != null ? getWrongCount().hashCode() : 0);
         return result;
     }
 

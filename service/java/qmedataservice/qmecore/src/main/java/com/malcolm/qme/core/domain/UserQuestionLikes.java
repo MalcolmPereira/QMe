@@ -14,19 +14,19 @@ public final class UserQuestionLikes {
     /**
      * User Id
      */
-    private final long userID;
+    private final Long userID;
 
     /**
      * Question Id
      */
-    private final long questionID;
+    private final Long questionID;
 
     /**
      * Public Constructor
      * @param userID
      * @param questionID
      */
-    public UserQuestionLikes(long userID, long questionID) {
+    public UserQuestionLikes(Long userID, Long questionID) {
         this.userID = userID;
         this.questionID = questionID;
     }
@@ -35,7 +35,7 @@ public final class UserQuestionLikes {
      * Get User Id
      * @return
      */
-    public long getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -43,7 +43,7 @@ public final class UserQuestionLikes {
      * Get Question Id
      * @return
      */
-    public long getQuestionID() {
+    public Long getQuestionID() {
         return questionID;
     }
 
@@ -54,15 +54,15 @@ public final class UserQuestionLikes {
 
         UserQuestionLikes that = (UserQuestionLikes) o;
 
-        if (getUserID() != that.getUserID()) return false;
-        return getQuestionID() == that.getQuestionID();
+        if (!getUserID().equals(that.getUserID())) return false;
+        return getQuestionID().equals(that.getQuestionID());
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getUserID() ^ (getUserID() >>> 32));
-        result = 31 * result + (int) (getQuestionID() ^ (getQuestionID() >>> 32));
+        int result = getUserID().hashCode();
+        result = 31 * result + getQuestionID().hashCode();
         return result;
     }
 

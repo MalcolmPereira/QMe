@@ -13,7 +13,7 @@ public final class Role {
     /**
      * Role Id
      */
-    private final long roleID;
+    private final Long roleID;
     /**
      * Role Name
      */
@@ -29,7 +29,7 @@ public final class Role {
      * @param roleName
      * @param roleDesc
      */
-    public Role(long roleID, String roleName, String roleDesc) {
+    public Role(Long roleID, String roleName, String roleDesc) {
         this.roleID = roleID;
         this.roleName = roleName;
         this.roleDesc = roleDesc;
@@ -41,7 +41,7 @@ public final class Role {
      * @param roleDesc
      */
     public Role(String roleName, String roleDesc) {
-        this.roleID     = 0;
+        this.roleID     = 0L;
         this.roleName   = roleName;
         this.roleDesc   = roleDesc;
     }
@@ -50,7 +50,7 @@ public final class Role {
      * Get Role ID
      * @return
      */
-    public long getRoleID() {
+    public Long getRoleID() {
         return roleID;
     }
 
@@ -77,17 +77,17 @@ public final class Role {
 
         Role role = (Role) o;
 
-        if (getRoleID() != role.getRoleID()) return false;
+        if (!getRoleID().equals(role.getRoleID())) return false;
         if (!getRoleName().equals(role.getRoleName())) return false;
-        return getRoleDesc().equals(role.getRoleDesc());
+        return !(getRoleDesc() != null ? !getRoleDesc().equals(role.getRoleDesc()) : role.getRoleDesc() != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getRoleID() ^ (getRoleID() >>> 32));
+        int result = getRoleID().hashCode();
         result = 31 * result + getRoleName().hashCode();
-        result = 31 * result + getRoleDesc().hashCode();
+        result = 31 * result + (getRoleDesc() != null ? getRoleDesc().hashCode() : 0);
         return result;
     }
 

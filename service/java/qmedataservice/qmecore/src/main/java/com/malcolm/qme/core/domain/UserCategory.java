@@ -14,25 +14,26 @@ public final class UserCategory {
     /**
      * User Category Id
      */
-    private final long userCategoryID;
+    private final Long userCategoryID;
 
     /**
      * User Id
      */
-    private final long userID;
+    private final Long userID;
 
     /**
      * Category Id
      */
-    private final long categoryID;
+    private final Long categoryID;
 
     /**
      * Public Constructor
+     *
      * @param userCategoryID
      * @param userID
      * @param categoryID
      */
-    public UserCategory(long userCategoryID, long userID, long categoryID) {
+    public UserCategory(Long userCategoryID, Long userID, Long categoryID) {
         this.userCategoryID = userCategoryID;
         this.userID = userID;
         this.categoryID = categoryID;
@@ -40,12 +41,13 @@ public final class UserCategory {
 
     /**
      * Public Constructor
+     *
 
      * @param userID
      * @param categoryID
      */
-    public UserCategory(long userID, long categoryID) {
-        this.userCategoryID = 0;
+    public UserCategory(Long userID, Long categoryID) {
+        this.userCategoryID = 0L;
         this.userID = userID;
         this.categoryID = categoryID;
     }
@@ -54,7 +56,7 @@ public final class UserCategory {
      * Get User Category Id
      * @return
      */
-    public long getUserCategoryID() {
+    public Long getUserCategoryID() {
         return userCategoryID;
     }
 
@@ -62,7 +64,7 @@ public final class UserCategory {
      * Get User Id
      * @return
      */
-    public long getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -70,7 +72,7 @@ public final class UserCategory {
      * Get Category Id
      * @return
      */
-    public long getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -81,17 +83,17 @@ public final class UserCategory {
 
         UserCategory that = (UserCategory) o;
 
-        if (getUserCategoryID() != that.getUserCategoryID()) return false;
-        if (getUserID() != that.getUserID()) return false;
-        return getCategoryID() == that.getCategoryID();
+        if (!getUserCategoryID().equals(that.getUserCategoryID())) return false;
+        if (!getUserID().equals(that.getUserID())) return false;
+        return getCategoryID().equals(that.getCategoryID());
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getUserCategoryID() ^ (getUserCategoryID() >>> 32));
-        result = 31 * result + (int) (getUserID() ^ (getUserID() >>> 32));
-        result = 31 * result + (int) (getCategoryID() ^ (getCategoryID() >>> 32));
+        int result = getUserCategoryID().hashCode();
+        result = 31 * result + getUserID().hashCode();
+        result = 31 * result + getCategoryID().hashCode();
         return result;
     }
 

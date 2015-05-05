@@ -57,6 +57,7 @@ public final class Question {
 
     /**
      * Public Constructor
+     *
      * @param questionID
      * @param categoryID
      * @param questionText
@@ -81,7 +82,7 @@ public final class Question {
 
     /**
      * Public Constructor
-
+     *
      * @param categoryID
      * @param questionText
      * @param answer
@@ -103,7 +104,7 @@ public final class Question {
      * Get Question ID
      * @return
      */
-    public long getQuestionID() {
+    public Long getQuestionID() {
         return questionID;
     }
 
@@ -111,7 +112,7 @@ public final class Question {
      * Get Category ID
      * @return
      */
-    public long getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -135,7 +136,7 @@ public final class Question {
      * Get Likes
      * @return
      */
-    public long getLikes() {
+    public Long getLikes() {
         return likes;
     }
 
@@ -151,7 +152,7 @@ public final class Question {
      * Get Question Create User
      * @return
      */
-    public long getCreateUserID() {
+    public Long getCreateUserID() {
         return createUserID;
     }
 
@@ -167,7 +168,7 @@ public final class Question {
      * Get Question Update User
      * @return
      */
-    public long getUpdateUserID() {
+    public Long getUpdateUserID() {
         return updateUserID;
     }
 
@@ -178,31 +179,31 @@ public final class Question {
 
         Question question = (Question) o;
 
-        if (!questionID.equals(question.questionID)) return false;
-        if (!categoryID.equals(question.categoryID)) return false;
-        if (!questionText.equals(question.questionText)) return false;
-        if (!answer.equals(question.answer)) return false;
-        if (likes != null ? !likes.equals(question.likes) : question.likes != null) return false;
-        if (questionCreateDate != null ? !questionCreateDate.equals(question.questionCreateDate) : question.questionCreateDate != null)
+        if (!getQuestionID().equals(question.getQuestionID())) return false;
+        if (!getCategoryID().equals(question.getCategoryID())) return false;
+        if (!getQuestionText().equals(question.getQuestionText())) return false;
+        if (!getAnswer().equals(question.getAnswer())) return false;
+        if (getLikes() != null ? !getLikes().equals(question.getLikes()) : question.getLikes() != null) return false;
+        if (getQuestionCreateDate() != null ? !getQuestionCreateDate().equals(question.getQuestionCreateDate()) : question.getQuestionCreateDate() != null)
             return false;
-        if (!createUserID.equals(question.createUserID)) return false;
-        if (questionUpdateDate != null ? !questionUpdateDate.equals(question.questionUpdateDate) : question.questionUpdateDate != null)
+        if (!getCreateUserID().equals(question.getCreateUserID())) return false;
+        if (getQuestionUpdateDate() != null ? !getQuestionUpdateDate().equals(question.getQuestionUpdateDate()) : question.getQuestionUpdateDate() != null)
             return false;
-        return updateUserID.equals(question.updateUserID);
+        return !(getUpdateUserID() != null ? !getUpdateUserID().equals(question.getUpdateUserID()) : question.getUpdateUserID() != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = questionID.hashCode();
-        result = 31 * result + categoryID.hashCode();
-        result = 31 * result + questionText.hashCode();
-        result = 31 * result + answer.hashCode();
-        result = 31 * result + (likes != null ? likes.hashCode() : 0);
-        result = 31 * result + (questionCreateDate != null ? questionCreateDate.hashCode() : 0);
-        result = 31 * result + createUserID.hashCode();
-        result = 31 * result + (questionUpdateDate != null ? questionUpdateDate.hashCode() : 0);
-        result = 31 * result + updateUserID.hashCode();
+        int result = getQuestionID().hashCode();
+        result = 31 * result + getCategoryID().hashCode();
+        result = 31 * result + getQuestionText().hashCode();
+        result = 31 * result + getAnswer().hashCode();
+        result = 31 * result + (getLikes() != null ? getLikes().hashCode() : 0);
+        result = 31 * result + (getQuestionCreateDate() != null ? getQuestionCreateDate().hashCode() : 0);
+        result = 31 * result + getCreateUserID().hashCode();
+        result = 31 * result + (getQuestionUpdateDate() != null ? getQuestionUpdateDate().hashCode() : 0);
+        result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
         return result;
     }
 

@@ -16,7 +16,7 @@ public final class Quiz {
     /**
      * Quiz Id
      */
-    private final long quizID;
+    private final Long quizID;
 
     /**
      * Quiz Name
@@ -31,22 +31,22 @@ public final class Quiz {
     /**
      * Category Id
      */
-    private final long categoryID;
+    private final Long categoryID;
 
     /**
      * Quiz Likes
      */
-    private final long likes;
+    private final Long likes;
 
     /**
      * Quiz Hits
      */
-    private final long quizHit;
+    private final Long quizHit;
 
     /**
      * Quiz Max Attempts
      */
-    private final long quizMaxAttempts;
+    private final Long quizMaxAttempts;
 
     /**
      * Quiz Create Date
@@ -56,7 +56,7 @@ public final class Quiz {
     /**
      * Quiz Create User Id
      */
-    private final long  createUserID;
+    private final Long  createUserID;
 
     /**
      * Quiz Update Date
@@ -66,7 +66,7 @@ public final class Quiz {
     /**
      * Update User Id
      */
-    private final long  updateUserID;
+    private final Long  updateUserID;
 
     /**
      * Public Constructor
@@ -83,7 +83,7 @@ public final class Quiz {
      * @param quizUpdateDate
      * @param updateUserID
      */
-    public Quiz(long quizID, String quizName, String quizDesc, long categoryID, long likes, long quizHit, long quizMaxAttempts, Date quizCreateDate, long createUserID, Date quizUpdateDate, long updateUserID) {
+    public Quiz(Long quizID, String quizName, String quizDesc, Long categoryID, Long likes, Long quizHit, Long quizMaxAttempts, Date quizCreateDate, Long createUserID, Date quizUpdateDate, Long updateUserID) {
         this.quizID = quizID;
         this.quizName = quizName;
         this.quizDesc = quizDesc;
@@ -106,25 +106,25 @@ public final class Quiz {
      * @param quizMaxAttempts
      * @param createUserID
      */
-    public Quiz(String quizName, String quizDesc, long categoryID, long quizMaxAttempts, long createUserID) {
-        this.quizID = 0;
+    public Quiz(String quizName, String quizDesc, Long categoryID, Long quizMaxAttempts, Long createUserID) {
+        this.quizID = 0L;
         this.quizName = quizName;
         this.quizDesc = quizDesc;
         this.categoryID = categoryID;
-        this.likes = 0;
-        this.quizHit = 0;
+        this.likes = 0L;
+        this.quizHit = 0L;
         this.quizMaxAttempts = quizMaxAttempts;
         this.quizCreateDate = null;
         this.createUserID = createUserID;
         this.quizUpdateDate = null;
-        this.updateUserID = 0;
+        this.updateUserID = 0L;
     }
 
     /**
-     * Get Quiz Id
+     * Get Quiz ID
      * @return
      */
-    public long getQuizID() {
+    public Long getQuizID() {
         return quizID;
     }
 
@@ -145,10 +145,10 @@ public final class Quiz {
     }
 
     /**
-     * Get Category Id
+     * Get Category ID
      * @return
      */
-    public long getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -156,7 +156,7 @@ public final class Quiz {
      * Get Quiz Likes
      * @return
      */
-    public long getLikes() {
+    public Long getLikes() {
         return likes;
     }
 
@@ -164,7 +164,7 @@ public final class Quiz {
      * Get Quiz Hits
      * @return
      */
-    public long getQuizHit() {
+    public Long getQuizHit() {
         return quizHit;
     }
 
@@ -172,7 +172,7 @@ public final class Quiz {
      * Get Quiz Max Attempts
      * @return
      */
-    public long getQuizMaxAttempts() {
+    public Long getQuizMaxAttempts() {
         return quizMaxAttempts;
     }
 
@@ -185,10 +185,10 @@ public final class Quiz {
     }
 
     /**
-     * Get Quiz Create User ID
+     * Get Quiz Create User
      * @return
      */
-    public long getCreateUserID() {
+    public Long getCreateUserID() {
         return createUserID;
     }
 
@@ -204,7 +204,7 @@ public final class Quiz {
      * Get Quiz Update User
      * @return
      */
-    public long getUpdateUserID() {
+    public Long getUpdateUserID() {
         return updateUserID;
     }
 
@@ -215,36 +215,37 @@ public final class Quiz {
 
         Quiz quiz = (Quiz) o;
 
-        if (categoryID != quiz.categoryID) return false;
-        if (createUserID != quiz.createUserID) return false;
-        if (likes != quiz.likes) return false;
-        if (quizHit != quiz.quizHit) return false;
-        if (quizID != quiz.quizID) return false;
-        if (quizMaxAttempts != quiz.quizMaxAttempts) return false;
-        if (updateUserID != quiz.updateUserID) return false;
-        if (quizCreateDate != null ? !quizCreateDate.equals(quiz.quizCreateDate) : quiz.quizCreateDate != null)
+        if (!getQuizID().equals(quiz.getQuizID())) return false;
+        if (!getQuizName().equals(quiz.getQuizName())) return false;
+        if (getQuizDesc() != null ? !getQuizDesc().equals(quiz.getQuizDesc()) : quiz.getQuizDesc() != null)
             return false;
-        if (!quizDesc.equals(quiz.quizDesc)) return false;
-        if (!quizName.equals(quiz.quizName)) return false;
-        if (quizUpdateDate != null ? !quizUpdateDate.equals(quiz.quizUpdateDate) : quiz.quizUpdateDate != null)
+        if (!getCategoryID().equals(quiz.getCategoryID())) return false;
+        if (getLikes() != null ? !getLikes().equals(quiz.getLikes()) : quiz.getLikes() != null) return false;
+        if (getQuizHit() != null ? !getQuizHit().equals(quiz.getQuizHit()) : quiz.getQuizHit() != null) return false;
+        if (getQuizMaxAttempts() != null ? !getQuizMaxAttempts().equals(quiz.getQuizMaxAttempts()) : quiz.getQuizMaxAttempts() != null)
             return false;
+        if (getQuizCreateDate() != null ? !getQuizCreateDate().equals(quiz.getQuizCreateDate()) : quiz.getQuizCreateDate() != null)
+            return false;
+        if (!getCreateUserID().equals(quiz.getCreateUserID())) return false;
+        if (getQuizUpdateDate() != null ? !getQuizUpdateDate().equals(quiz.getQuizUpdateDate()) : quiz.getQuizUpdateDate() != null)
+            return false;
+        return !(getUpdateUserID() != null ? !getUpdateUserID().equals(quiz.getUpdateUserID()) : quiz.getUpdateUserID() != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (quizID ^ (quizID >>> 32));
-        result = 31 * result + quizName.hashCode();
-        result = 31 * result + quizDesc.hashCode();
-        result = 31 * result + (int) (categoryID ^ (categoryID >>> 32));
-        result = 31 * result + (int) (likes ^ (likes >>> 32));
-        result = 31 * result + (int) (quizHit ^ (quizHit >>> 32));
-        result = 31 * result + (int) (quizMaxAttempts ^ (quizMaxAttempts >>> 32));
-        result = 31 * result + (quizCreateDate != null ? quizCreateDate.hashCode() : 0);
-        result = 31 * result + (int) (createUserID ^ (createUserID >>> 32));
-        result = 31 * result + (quizUpdateDate != null ? quizUpdateDate.hashCode() : 0);
-        result = 31 * result + (int) (updateUserID ^ (updateUserID >>> 32));
+        int result = getQuizID().hashCode();
+        result = 31 * result + getQuizName().hashCode();
+        result = 31 * result + (getQuizDesc() != null ? getQuizDesc().hashCode() : 0);
+        result = 31 * result + getCategoryID().hashCode();
+        result = 31 * result + (getLikes() != null ? getLikes().hashCode() : 0);
+        result = 31 * result + (getQuizHit() != null ? getQuizHit().hashCode() : 0);
+        result = 31 * result + (getQuizMaxAttempts() != null ? getQuizMaxAttempts().hashCode() : 0);
+        result = 31 * result + (getQuizCreateDate() != null ? getQuizCreateDate().hashCode() : 0);
+        result = 31 * result + getCreateUserID().hashCode();
+        result = 31 * result + (getQuizUpdateDate() != null ? getQuizUpdateDate().hashCode() : 0);
+        result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
         return result;
     }
 

@@ -13,17 +13,17 @@ public final class UserRole {
     /**
      * User Role Id
      */
-    private final long userRoleID;
+    private final Long userRoleID;
 
     /**
      * Role Id
      */
-    private final long roleID;
+    private final Integer roleID;
 
     /**
      * User Id
      */
-    private final long userID;
+    private final Long userID;
 
     /**
      * Public Constructor
@@ -31,7 +31,7 @@ public final class UserRole {
      * @param roleID
      * @param userID
      */
-    public UserRole(long userRoleID, long roleID, long userID) {
+    public UserRole(Long userRoleID, Integer roleID, Long userID) {
         this.userRoleID = userRoleID;
         this.roleID = roleID;
         this.userID = userID;
@@ -42,8 +42,8 @@ public final class UserRole {
      * @param roleID
      * @param userID
      */
-    public UserRole(long roleID, long userID) {
-        this.userRoleID = 0;
+    public UserRole(Integer roleID, Long userID) {
+        this.userRoleID = 0L;
         this.roleID     = roleID;
         this.userID     = userID;
     }
@@ -52,7 +52,7 @@ public final class UserRole {
      * Get User Role ID
      * @return
      */
-    public long getUserRoleID() {
+    public Long getUserRoleID() {
         return userRoleID;
     }
 
@@ -60,7 +60,7 @@ public final class UserRole {
      * Get Role ID
      * @return
      */
-    public long getRoleID() {
+    public Integer getRoleID() {
         return roleID;
     }
 
@@ -68,7 +68,7 @@ public final class UserRole {
      * Get User ID
      * @return
      */
-    public long getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -79,17 +79,17 @@ public final class UserRole {
 
         UserRole userRole = (UserRole) o;
 
-        if (getUserRoleID() != userRole.getUserRoleID()) return false;
-        if (getRoleID() != userRole.getRoleID()) return false;
-        return getUserID() == userRole.getUserID();
+        if (!getUserRoleID().equals(userRole.getUserRoleID())) return false;
+        if (!getRoleID().equals(userRole.getRoleID())) return false;
+        return getUserID().equals(userRole.getUserID());
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getUserRoleID() ^ (getUserRoleID() >>> 32));
-        result = 31 * result + (int) (getRoleID() ^ (getRoleID() >>> 32));
-        result = 31 * result + (int) (getUserID() ^ (getUserID() >>> 32));
+        int result = getUserRoleID().hashCode();
+        result = 31 * result + getRoleID().hashCode();
+        result = 31 * result + getUserID().hashCode();
         return result;
     }
 

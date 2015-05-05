@@ -14,17 +14,17 @@ public final class QuizQuestion {
     /**
      * Quiz Question Id
      */
-    private final long quizQuestionID;
+    private final Long quizQuestionID;
 
     /**
      * Quiz Id
      */
-    private final long quizID;
+    private final Long quizID;
 
     /**
      * Question Id
      */
-    private final long questionID;
+    private final Long questionID;
 
     /**
      * Public Constructor
@@ -33,8 +33,20 @@ public final class QuizQuestion {
      * @param quizID
      * @param questionID
      */
-    public QuizQuestion(long quizQuestionID, long quizID, long questionID) {
+    public QuizQuestion(Long quizQuestionID, Long quizID, Long questionID) {
         this.quizQuestionID = quizQuestionID;
+        this.quizID = quizID;
+        this.questionID = questionID;
+    }
+
+    /**
+     * Public Constructor
+     *
+     * @param quizID
+     * @param questionID
+     */
+    public QuizQuestion(Long quizID, Long questionID) {
+        this.quizQuestionID = 0L;
         this.quizID = quizID;
         this.questionID = questionID;
     }
@@ -43,7 +55,7 @@ public final class QuizQuestion {
      * Get Quiz Question ID
      * @return
      */
-    public long getQuizQuestionID() {
+    public Long getQuizQuestionID() {
         return quizQuestionID;
     }
 
@@ -51,7 +63,7 @@ public final class QuizQuestion {
      * Get Quiz ID
      * @return
      */
-    public long getQuizID() {
+    public Long getQuizID() {
         return quizID;
     }
 
@@ -59,7 +71,7 @@ public final class QuizQuestion {
      * Get Question ID
      * @return
      */
-    public long getQuestionID() {
+    public Long getQuestionID() {
         return questionID;
     }
 
@@ -70,18 +82,17 @@ public final class QuizQuestion {
 
         QuizQuestion that = (QuizQuestion) o;
 
-        if (questionID != that.questionID) return false;
-        if (quizID != that.quizID) return false;
-        if (quizQuestionID != that.quizQuestionID) return false;
+        if (!getQuizQuestionID().equals(that.getQuizQuestionID())) return false;
+        if (!getQuizID().equals(that.getQuizID())) return false;
+        return getQuestionID().equals(that.getQuestionID());
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (quizQuestionID ^ (quizQuestionID >>> 32));
-        result = 31 * result + (int) (quizID ^ (quizID >>> 32));
-        result = 31 * result + (int) (questionID ^ (questionID >>> 32));
+        int result = getQuizQuestionID().hashCode();
+        result = 31 * result + getQuizID().hashCode();
+        result = 31 * result + getQuestionID().hashCode();
         return result;
     }
 

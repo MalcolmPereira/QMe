@@ -39,6 +39,7 @@ public final class Category {
 
     /**
      * Public Constructor
+     *
      * @param categoryID
      * @param categoryParentID
      * @param categoryName
@@ -46,47 +47,47 @@ public final class Category {
      * @param categoryCreateUserID
      */
     public Category(Long categoryID, Long categoryParentID, String categoryName, Date categoryCreateDate, Long categoryCreateUserID) {
-        this.categoryID             = categoryID;
-        this.categoryParentID       = categoryParentID;
-        this.categoryName           = categoryName;
-        this.categoryCreateDate     = categoryCreateDate;
-        this.categoryCreateUserID   = categoryCreateUserID;
+        this.categoryID = categoryID;
+        this.categoryParentID = categoryParentID;
+        this.categoryName = categoryName;
+        this.categoryCreateDate = categoryCreateDate;
+        this.categoryCreateUserID = categoryCreateUserID;
     }
 
     /**
      * Public Constructor
-
+     *
      * @param categoryParentID
      * @param categoryName
      * @param categoryCreateUserID
      */
-    public Category(Long categoryParentID, String categoryName, long categoryCreateUserID) {
-        this.categoryID             = 0L;
-        this.categoryParentID       = categoryParentID;
-        this.categoryName           = categoryName;
-        this.categoryCreateUserID   = categoryCreateUserID;
-        this.categoryCreateDate     = null;
+    public Category(Long categoryParentID, String categoryName, Long categoryCreateUserID) {
+        this.categoryID = 0L;
+        this.categoryParentID = categoryParentID;
+        this.categoryName = categoryName;
+        this.categoryCreateDate = null;
+        this.categoryCreateUserID = categoryCreateUserID;
     }
 
     /**
      * Public Constructor
-
+     *
      * @param categoryName
      * @param categoryCreateUserID
      */
     public Category(String categoryName, Long categoryCreateUserID) {
-        this.categoryID             = 0L;
-        this.categoryParentID       = 0L;
-        this.categoryName           = categoryName;
-        this.categoryCreateUserID   = categoryCreateUserID;
-        this.categoryCreateDate     = null;
+        this.categoryID = 0L;
+        this.categoryParentID = 0L;
+        this.categoryName = categoryName;
+        this.categoryCreateDate = null;
+        this.categoryCreateUserID = categoryCreateUserID;
     }
 
     /**
      * Get Category Id
      * @return
      */
-    public long getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -94,7 +95,7 @@ public final class Category {
      * Get Category Parent Id
      * @return
      */
-    public long getCategoryParentID() {
+    public Long getCategoryParentID() {
         return categoryParentID;
     }
 
@@ -118,7 +119,7 @@ public final class Category {
      * Get Category Create User Id
      * @return
      */
-    public long getCategoryCreateUserID() {
+    public Long getCategoryCreateUserID() {
         return categoryCreateUserID;
     }
 
@@ -129,23 +130,23 @@ public final class Category {
 
         Category category = (Category) o;
 
-        if (!categoryID.equals(category.categoryID)) return false;
-        if (categoryParentID != null ? !categoryParentID.equals(category.categoryParentID) : category.categoryParentID != null)
+        if (!getCategoryID().equals(category.getCategoryID())) return false;
+        if (getCategoryParentID() != null ? !getCategoryParentID().equals(category.getCategoryParentID()) : category.getCategoryParentID() != null)
             return false;
-        if (!categoryName.equals(category.categoryName)) return false;
-        if (categoryCreateDate != null ? !categoryCreateDate.equals(category.categoryCreateDate) : category.categoryCreateDate != null)
+        if (!getCategoryName().equals(category.getCategoryName())) return false;
+        if (getCategoryCreateDate() != null ? !getCategoryCreateDate().equals(category.getCategoryCreateDate()) : category.getCategoryCreateDate() != null)
             return false;
-        return !(categoryCreateUserID != null ? !categoryCreateUserID.equals(category.categoryCreateUserID) : category.categoryCreateUserID != null);
+        return !(getCategoryCreateUserID() != null ? !getCategoryCreateUserID().equals(category.getCategoryCreateUserID()) : category.getCategoryCreateUserID() != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = categoryID.hashCode();
-        result = 31 * result + (categoryParentID != null ? categoryParentID.hashCode() : 0);
-        result = 31 * result + categoryName.hashCode();
-        result = 31 * result + (categoryCreateDate != null ? categoryCreateDate.hashCode() : 0);
-        result = 31 * result + (categoryCreateUserID != null ? categoryCreateUserID.hashCode() : 0);
+        int result = getCategoryID().hashCode();
+        result = 31 * result + (getCategoryParentID() != null ? getCategoryParentID().hashCode() : 0);
+        result = 31 * result + getCategoryName().hashCode();
+        result = 31 * result + (getCategoryCreateDate() != null ? getCategoryCreateDate().hashCode() : 0);
+        result = 31 * result + (getCategoryCreateUserID() != null ? getCategoryCreateUserID().hashCode() : 0);
         return result;
     }
 

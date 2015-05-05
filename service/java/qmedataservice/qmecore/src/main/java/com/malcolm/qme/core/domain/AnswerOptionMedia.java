@@ -62,10 +62,10 @@ public final class AnswerOptionMedia {
     }
 
     /**
-     * Get Answer Option Media ID
+     * Get Answer Option Media Id
      * @return
      */
-    public long getAnswerOptionMediaID() {
+    public Long getAnswerOptionMediaID() {
         return answerOptionMediaID;
     }
 
@@ -73,7 +73,7 @@ public final class AnswerOptionMedia {
      * Get Answer Option ID
      * @return
      */
-    public long getAnswerOptionID() {
+    public Long getAnswerOptionID() {
         return answerOptionID;
     }
 
@@ -100,17 +100,17 @@ public final class AnswerOptionMedia {
 
         AnswerOptionMedia that = (AnswerOptionMedia) o;
 
-        if (!answerOptionMediaID.equals(that.answerOptionMediaID)) return false;
-        if (!answerOptionID.equals(that.answerOptionID)) return false;
-        return mediaType == that.mediaType;
+        if (!getAnswerOptionMediaID().equals(that.getAnswerOptionMediaID())) return false;
+        if (!getAnswerOptionID().equals(that.getAnswerOptionID())) return false;
+        return getMediaType() == that.getMediaType();
 
     }
 
     @Override
     public int hashCode() {
-        int result = answerOptionMediaID.hashCode();
-        result = 31 * result + answerOptionID.hashCode();
-        result = 31 * result + mediaType.hashCode();
+        int result = getAnswerOptionMediaID().hashCode();
+        result = 31 * result + getAnswerOptionID().hashCode();
+        result = 31 * result + getMediaType().hashCode();
         return result;
     }
 

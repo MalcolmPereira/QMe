@@ -15,7 +15,7 @@ public final class User {
     /**
      * User Id
      */
-    private final long userID;
+    private final Long userID;
     /**
      * User Name
      */
@@ -47,7 +47,7 @@ public final class User {
     /**
      * Update User Id
      */
-    private final long  updateUserID;
+    private final Long  updateUserID;
 
     /**
      * Public Constructor
@@ -62,7 +62,7 @@ public final class User {
      * @param userUpdateDate
      * @param updateUserID
      */
-    public User(long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, Date userRegisteredDate, Date userUpdateDate, long updateUserID) {
+    public User(Long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, Date userRegisteredDate, Date userUpdateDate, Long updateUserID) {
         this.userID = userID;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -77,7 +77,6 @@ public final class User {
     /**
      * Public Constructor
      *
-
      * @param userName
      * @param userPassword
      * @param userFirstName
@@ -85,7 +84,7 @@ public final class User {
      * @param userEmail
      */
     public User(String userName, String userPassword, String userFirstName, String userLastName, String userEmail) {
-        this.userID = 0;
+        this.userID = 0L;
         this.userName = userName;
         this.userPassword = userPassword;
         this.userFirstName = userFirstName;
@@ -93,14 +92,14 @@ public final class User {
         this.userEmail = userEmail;
         this.userRegisteredDate = null;
         this.userUpdateDate = null;
-        this.updateUserID = 0;
+        this.updateUserID = 0L;
     }
 
     /**
      * Return User Id
      * @return
      */
-    public long getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -165,7 +164,7 @@ public final class User {
      * Return Update User ID
      * @return
      */
-    public long getUpdateUserID() {
+    public Long getUpdateUserID() {
         return updateUserID;
     }
 
@@ -176,32 +175,33 @@ public final class User {
 
         User user = (User) o;
 
-        if (updateUserID != user.updateUserID) return false;
-        if (userID != user.userID) return false;
-        if (!userEmail.equals(user.userEmail)) return false;
-        if (!userFirstName.equals(user.userFirstName)) return false;
-        if (!userLastName.equals(user.userLastName)) return false;
-        if (!userName.equals(user.userName)) return false;
-        if (!userPassword.equals(user.userPassword)) return false;
-        if (userRegisteredDate != null ? !userRegisteredDate.equals(user.userRegisteredDate) : user.userRegisteredDate != null)
+        if (!getUserID().equals(user.getUserID())) return false;
+        if (!getUserName().equals(user.getUserName())) return false;
+        if (!getUserPassword().equals(user.getUserPassword())) return false;
+        if (getUserFirstName() != null ? !getUserFirstName().equals(user.getUserFirstName()) : user.getUserFirstName() != null)
             return false;
-        if (userUpdateDate != null ? !userUpdateDate.equals(user.userUpdateDate) : user.userUpdateDate != null)
+        if (getUserLastName() != null ? !getUserLastName().equals(user.getUserLastName()) : user.getUserLastName() != null)
             return false;
+        if (!getUserEmail().equals(user.getUserEmail())) return false;
+        if (getUserRegisteredDate() != null ? !getUserRegisteredDate().equals(user.getUserRegisteredDate()) : user.getUserRegisteredDate() != null)
+            return false;
+        if (getUserUpdateDate() != null ? !getUserUpdateDate().equals(user.getUserUpdateDate()) : user.getUserUpdateDate() != null)
+            return false;
+        return !(getUpdateUserID() != null ? !getUpdateUserID().equals(user.getUpdateUserID()) : user.getUpdateUserID() != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userID ^ (userID >>> 32));
-        result = 31 * result + userName.hashCode();
-        result = 31 * result + userPassword.hashCode();
-        result = 31 * result + userFirstName.hashCode();
-        result = 31 * result + userLastName.hashCode();
-        result = 31 * result + userEmail.hashCode();
-        result = 31 * result + (userRegisteredDate != null ? userRegisteredDate.hashCode() : 0);
-        result = 31 * result + (userUpdateDate != null ? userUpdateDate.hashCode() : 0);
-        result = 31 * result + (int) (updateUserID ^ (updateUserID >>> 32));
+        int result = getUserID().hashCode();
+        result = 31 * result + getUserName().hashCode();
+        result = 31 * result + getUserPassword().hashCode();
+        result = 31 * result + (getUserFirstName() != null ? getUserFirstName().hashCode() : 0);
+        result = 31 * result + (getUserLastName() != null ? getUserLastName().hashCode() : 0);
+        result = 31 * result + getUserEmail().hashCode();
+        result = 31 * result + (getUserRegisteredDate() != null ? getUserRegisteredDate().hashCode() : 0);
+        result = 31 * result + (getUserUpdateDate() != null ? getUserUpdateDate().hashCode() : 0);
+        result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
         return result;
     }
 
@@ -210,9 +210,12 @@ public final class User {
         return "User{" +
                 "userID=" + userID +
                 ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
                 ", userFirstName='" + userFirstName + '\'' +
                 ", userLastName='" + userLastName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
+                ", userRegisteredDate=" + userRegisteredDate +
+                ", userUpdateDate=" + userUpdateDate +
                 ", updateUserID=" + updateUserID +
                 '}';
     }

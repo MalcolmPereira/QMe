@@ -17,22 +17,22 @@ public final class UserQuiz {
     /**
      * User Quiz  Id
      */
-    private final long userQuizID;
+    private final Long userQuizID;
 
     /**
      * User Id
      */
-    private final long userID;
+    private final Long userID;
 
     /**
      * Quiz Id
      */
-    private final long quizID;
+    private final Long quizID;
 
     /**
      * Category Id
      */
-    private final long categoryID;
+    private final Long categoryID;
 
     /**
      * Quiz Start Date
@@ -52,7 +52,7 @@ public final class UserQuiz {
     /**
      * Quiz Id
      */
-    private final long quizScore;
+    private final Integer quizScore;
 
     /**
      * Correct
@@ -72,7 +72,7 @@ public final class UserQuiz {
      * @param quizScore
      * @param quizComplete
      */
-    public UserQuiz(long userQuizID, long userID, long quizID, long categoryID, Date quizStartDate, Date quizEndDate, String userQuizToken, long quizScore, Boolean quizComplete) {
+    public UserQuiz(Long userQuizID, Long userID, Long quizID, Long categoryID, Date quizStartDate, Date quizEndDate, String userQuizToken, Integer quizScore, Boolean quizComplete) {
         this.userQuizID = userQuizID;
         this.userID = userID;
         this.quizID = quizID;
@@ -92,8 +92,8 @@ public final class UserQuiz {
      * @param categoryID
      * @param userQuizToken
      */
-    public UserQuiz(long userID, long quizID, long categoryID, String userQuizToken) {
-        this.userQuizID = 0;
+    public UserQuiz(Long userID, Long quizID, Long categoryID, String userQuizToken) {
+        this.userQuizID = 0L;
         this.userID = userID;
         this.quizID = quizID;
         this.categoryID = categoryID;
@@ -108,7 +108,7 @@ public final class UserQuiz {
      * Get User Quiz ID
      * @return
      */
-    public long getUserQuizID() {
+    public Long getUserQuizID() {
         return userQuizID;
     }
 
@@ -116,7 +116,7 @@ public final class UserQuiz {
      * Get User ID
      * @return
      */
-    public long getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -124,7 +124,7 @@ public final class UserQuiz {
      * Get Quiz ID
      * @return
      */
-    public long getQuizID() {
+    public Long getQuizID() {
         return quizID;
     }
 
@@ -132,7 +132,7 @@ public final class UserQuiz {
      * Get Category ID
      * @return
      */
-    public long getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -164,7 +164,7 @@ public final class UserQuiz {
      * Get Quiz Score
      * @return
      */
-    public long getQuizScore() {
+    public Integer getQuizScore() {
         return quizScore;
     }
 
@@ -172,7 +172,7 @@ public final class UserQuiz {
      * Get Quiz Complete
      * @return
      */
-    public Boolean getQuizComplete() {
+    public Boolean isQuizComplete() {
         return quizComplete;
     }
 
@@ -183,32 +183,31 @@ public final class UserQuiz {
 
         UserQuiz userQuiz = (UserQuiz) o;
 
-        if (categoryID != userQuiz.categoryID) return false;
-        if (quizID != userQuiz.quizID) return false;
-        if (quizScore != userQuiz.quizScore) return false;
-        if (userID != userQuiz.userID) return false;
-        if (userQuizID != userQuiz.userQuizID) return false;
-        if (quizComplete != null ? !quizComplete.equals(userQuiz.quizComplete) : userQuiz.quizComplete != null)
+        if (!getUserQuizID().equals(userQuiz.getUserQuizID())) return false;
+        if (!getUserID().equals(userQuiz.getUserID())) return false;
+        if (!getQuizID().equals(userQuiz.getQuizID())) return false;
+        if (!getCategoryID().equals(userQuiz.getCategoryID())) return false;
+        if (getQuizStartDate() != null ? !getQuizStartDate().equals(userQuiz.getQuizStartDate()) : userQuiz.getQuizStartDate() != null)
             return false;
-        if (quizEndDate != null ? !quizEndDate.equals(userQuiz.quizEndDate) : userQuiz.quizEndDate != null)
+        if (getQuizEndDate() != null ? !getQuizEndDate().equals(userQuiz.getQuizEndDate()) : userQuiz.getQuizEndDate() != null)
             return false;
-        if (quizStartDate != null ? !quizStartDate.equals(userQuiz.quizStartDate) : userQuiz.quizStartDate != null)
+        if (!getUserQuizToken().equals(userQuiz.getUserQuizToken())) return false;
+        if (getQuizScore() != null ? !getQuizScore().equals(userQuiz.getQuizScore()) : userQuiz.getQuizScore() != null)
             return false;
-        if (!userQuizToken.equals(userQuiz.userQuizToken)) return false;
+        return !(quizComplete != null ? !quizComplete.equals(userQuiz.quizComplete) : userQuiz.quizComplete != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userQuizID ^ (userQuizID >>> 32));
-        result = 31 * result + (int) (userID ^ (userID >>> 32));
-        result = 31 * result + (int) (quizID ^ (quizID >>> 32));
-        result = 31 * result + (int) (categoryID ^ (categoryID >>> 32));
-        result = 31 * result + (quizStartDate != null ? quizStartDate.hashCode() : 0);
-        result = 31 * result + (quizEndDate != null ? quizEndDate.hashCode() : 0);
-        result = 31 * result + userQuizToken.hashCode();
-        result = 31 * result + (int) (quizScore ^ (quizScore >>> 32));
+        int result = getUserQuizID().hashCode();
+        result = 31 * result + getUserID().hashCode();
+        result = 31 * result + getQuizID().hashCode();
+        result = 31 * result + getCategoryID().hashCode();
+        result = 31 * result + (getQuizStartDate() != null ? getQuizStartDate().hashCode() : 0);
+        result = 31 * result + (getQuizEndDate() != null ? getQuizEndDate().hashCode() : 0);
+        result = 31 * result + getUserQuizToken().hashCode();
+        result = 31 * result + (getQuizScore() != null ? getQuizScore().hashCode() : 0);
         result = 31 * result + (quizComplete != null ? quizComplete.hashCode() : 0);
         return result;
     }

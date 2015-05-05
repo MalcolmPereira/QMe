@@ -86,7 +86,7 @@ public final class AnswerOption {
     }
 
     /**
-     * Option Correct
+     * Is Correct
      * @return
      */
     public Boolean isCorrect() {
@@ -100,18 +100,18 @@ public final class AnswerOption {
 
         AnswerOption that = (AnswerOption) o;
 
-        if (!answerOptionID.equals(that.answerOptionID)) return false;
-        if (!questionID.equals(that.questionID)) return false;
-        if (!optionText.equals(that.optionText)) return false;
+        if (!getAnswerOptionID().equals(that.getAnswerOptionID())) return false;
+        if (!getQuestionID().equals(that.getQuestionID())) return false;
+        if (!getOptionText().equals(that.getOptionText())) return false;
         return correct.equals(that.correct);
 
     }
 
     @Override
     public int hashCode() {
-        int result = answerOptionID.hashCode();
-        result = 31 * result + questionID.hashCode();
-        result = 31 * result + optionText.hashCode();
+        int result = getAnswerOptionID().hashCode();
+        result = 31 * result + getQuestionID().hashCode();
+        result = 31 * result + getOptionText().hashCode();
         result = 31 * result + correct.hashCode();
         return result;
     }
