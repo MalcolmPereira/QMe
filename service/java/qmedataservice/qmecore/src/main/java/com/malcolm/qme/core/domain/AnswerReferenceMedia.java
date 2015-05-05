@@ -15,12 +15,12 @@ public final class AnswerReferenceMedia {
     /**
      * Answer Reference Media Id
      */
-    private final long answerRefMediaID;
+    private final Long answerRefMediaID;
 
     /**
      * Question Id
      */
-    private final long questionID;
+    private final Long questionID;
 
     /**
      * Media Type
@@ -40,7 +40,7 @@ public final class AnswerReferenceMedia {
      * @param mediaType
      * @param media
      */
-    public AnswerReferenceMedia(long answerRefMediaID, long questionID, MediaTypeEnum mediaType, byte[] media) {
+    public AnswerReferenceMedia(Long answerRefMediaID, Long questionID, MediaTypeEnum mediaType, byte[] media) {
         this.answerRefMediaID = answerRefMediaID;
         this.questionID = questionID;
         this.mediaType = mediaType;
@@ -54,8 +54,8 @@ public final class AnswerReferenceMedia {
      * @param mediaType
      * @param media
      */
-    public AnswerReferenceMedia(long questionID, MediaTypeEnum mediaType, byte[] media) {
-        this.answerRefMediaID = 0;
+    public AnswerReferenceMedia(Long questionID, MediaTypeEnum mediaType, byte[] media) {
+        this.answerRefMediaID = 0L;
         this.questionID = questionID;
         this.mediaType = mediaType;
         this.media = media;
@@ -100,17 +100,16 @@ public final class AnswerReferenceMedia {
 
         AnswerReferenceMedia that = (AnswerReferenceMedia) o;
 
-        if (answerRefMediaID != that.answerRefMediaID) return false;
-        if (questionID != that.questionID) return false;
-        if (mediaType != that.mediaType) return false;
+        if (!answerRefMediaID.equals(that.answerRefMediaID)) return false;
+        if (!questionID.equals(that.questionID)) return false;
+        return mediaType == that.mediaType;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (answerRefMediaID ^ (answerRefMediaID >>> 32));
-        result = 31 * result + (int) (questionID ^ (questionID >>> 32));
+        int result = answerRefMediaID.hashCode();
+        result = 31 * result + questionID.hashCode();
         result = 31 * result + mediaType.hashCode();
         return result;
     }

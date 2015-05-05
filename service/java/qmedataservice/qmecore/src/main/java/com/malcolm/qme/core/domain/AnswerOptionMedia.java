@@ -15,12 +15,12 @@ public final class AnswerOptionMedia {
     /**
      * Answer Option Media Id
      */
-    private final long answerOptionMediaID;
+    private final Long answerOptionMediaID;
 
     /**
      * Answer Option Id
      */
-    private final long answerOptionID;
+    private final Long answerOptionID;
 
     /**
      * Media Type
@@ -40,7 +40,7 @@ public final class AnswerOptionMedia {
      * @param mediaType
      * @param media
      */
-    public AnswerOptionMedia(long answerOptionMediaID, long answerOptionID, MediaTypeEnum mediaType, byte[] media) {
+    public AnswerOptionMedia(Long answerOptionMediaID, Long answerOptionID, MediaTypeEnum mediaType, byte[] media) {
         this.answerOptionMediaID = answerOptionMediaID;
         this.answerOptionID = answerOptionID;
         this.mediaType = mediaType;
@@ -54,8 +54,8 @@ public final class AnswerOptionMedia {
      * @param mediaType
      * @param media
      */
-    public AnswerOptionMedia(long answerOptionID, MediaTypeEnum mediaType, byte[] media) {
-        this.answerOptionMediaID = 0;
+    public AnswerOptionMedia(Long answerOptionID, MediaTypeEnum mediaType, byte[] media) {
+        this.answerOptionMediaID = 0L;
         this.answerOptionID = answerOptionID;
         this.mediaType = mediaType;
         this.media = media;
@@ -100,17 +100,16 @@ public final class AnswerOptionMedia {
 
         AnswerOptionMedia that = (AnswerOptionMedia) o;
 
-        if (answerOptionID != that.answerOptionID) return false;
-        if (answerOptionMediaID != that.answerOptionMediaID) return false;
-        if (mediaType != that.mediaType) return false;
+        if (!answerOptionMediaID.equals(that.answerOptionMediaID)) return false;
+        if (!answerOptionID.equals(that.answerOptionID)) return false;
+        return mediaType == that.mediaType;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (answerOptionMediaID ^ (answerOptionMediaID >>> 32));
-        result = 31 * result + (int) (answerOptionID ^ (answerOptionID >>> 32));
+        int result = answerOptionMediaID.hashCode();
+        result = 31 * result + answerOptionID.hashCode();
         result = 31 * result + mediaType.hashCode();
         return result;
     }

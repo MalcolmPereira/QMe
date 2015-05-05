@@ -14,27 +14,27 @@ public final class QuestionHit {
     /**
      * Question Id
      */
-    private final long questionID;
+    private final Long questionID;
 
     /**
      * Category Id
      */
-    private final long categoryID;
+    private final Long categoryID;
 
     /**
      * Question Hit
      */
-    private final long questionHit;
+    private final Long questionHit;
 
     /**
      * Right Count
      */
-    private final long rightCount;
+    private final Long rightCount;
 
     /**
      * Wrong Count
      */
-    private final long wrongCount;
+    private final Long wrongCount;
 
     /**
      *
@@ -44,7 +44,7 @@ public final class QuestionHit {
      * @param rightCount
      * @param wrongCount
      */
-    public QuestionHit(long questionID, long categoryID, long questionHit, long rightCount, long wrongCount) {
+    public QuestionHit(Long questionID, Long categoryID, Long questionHit, Long rightCount, Long wrongCount) {
         this.questionID = questionID;
         this.categoryID = categoryID;
         this.questionHit = questionHit;
@@ -99,21 +99,21 @@ public final class QuestionHit {
 
         QuestionHit that = (QuestionHit) o;
 
-        if (getQuestionID() != that.getQuestionID()) return false;
-        if (getCategoryID() != that.getCategoryID()) return false;
-        if (getQuestionHit() != that.getQuestionHit()) return false;
-        if (getRightCount() != that.getRightCount()) return false;
-        return getWrongCount() == that.getWrongCount();
+        if (!questionID.equals(that.questionID)) return false;
+        if (!categoryID.equals(that.categoryID)) return false;
+        if (questionHit != null ? !questionHit.equals(that.questionHit) : that.questionHit != null) return false;
+        if (rightCount != null ? !rightCount.equals(that.rightCount) : that.rightCount != null) return false;
+        return !(wrongCount != null ? !wrongCount.equals(that.wrongCount) : that.wrongCount != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getQuestionID() ^ (getQuestionID() >>> 32));
-        result = 31 * result + (int) (getCategoryID() ^ (getCategoryID() >>> 32));
-        result = 31 * result + (int) (getQuestionHit() ^ (getQuestionHit() >>> 32));
-        result = 31 * result + (int) (getRightCount() ^ (getRightCount() >>> 32));
-        result = 31 * result + (int) (getWrongCount() ^ (getWrongCount() >>> 32));
+        int result = questionID.hashCode();
+        result = 31 * result + categoryID.hashCode();
+        result = 31 * result + (questionHit != null ? questionHit.hashCode() : 0);
+        result = 31 * result + (rightCount != null ? rightCount.hashCode() : 0);
+        result = 31 * result + (wrongCount != null ? wrongCount.hashCode() : 0);
         return result;
     }
 

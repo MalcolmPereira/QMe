@@ -15,12 +15,12 @@ public final class Category {
     /**
      * Category Id
      */
-    private final long categoryID;
+    private final Long categoryID;
 
     /**
      * Category Parent Id
      */
-    private final long categoryParentID;
+    private final Long categoryParentID;
 
     /**
      * Category Name
@@ -35,7 +35,7 @@ public final class Category {
     /**
      * Category Create User Id
      */
-    private final long  categoryCreateUserID;
+    private final Long  categoryCreateUserID;
 
     /**
      * Public Constructor
@@ -45,7 +45,7 @@ public final class Category {
      * @param categoryCreateDate
      * @param categoryCreateUserID
      */
-    public Category(long categoryID, long categoryParentID, String categoryName, Date categoryCreateDate, long categoryCreateUserID) {
+    public Category(Long categoryID, Long categoryParentID, String categoryName, Date categoryCreateDate, Long categoryCreateUserID) {
         this.categoryID             = categoryID;
         this.categoryParentID       = categoryParentID;
         this.categoryName           = categoryName;
@@ -60,8 +60,8 @@ public final class Category {
      * @param categoryName
      * @param categoryCreateUserID
      */
-    public Category(long categoryParentID, String categoryName, long categoryCreateUserID) {
-        this.categoryID             = 0;
+    public Category(Long categoryParentID, String categoryName, long categoryCreateUserID) {
+        this.categoryID             = 0L;
         this.categoryParentID       = categoryParentID;
         this.categoryName           = categoryName;
         this.categoryCreateUserID   = categoryCreateUserID;
@@ -74,9 +74,9 @@ public final class Category {
      * @param categoryName
      * @param categoryCreateUserID
      */
-    public Category(String categoryName, long categoryCreateUserID) {
-        this.categoryID             = 0;
-        this.categoryParentID       = 0;
+    public Category(String categoryName, Long categoryCreateUserID) {
+        this.categoryID             = 0L;
+        this.categoryParentID       = 0L;
         this.categoryName           = categoryName;
         this.categoryCreateUserID   = categoryCreateUserID;
         this.categoryCreateDate     = null;
@@ -129,23 +129,23 @@ public final class Category {
 
         Category category = (Category) o;
 
-        if (categoryCreateUserID != category.categoryCreateUserID) return false;
-        if (categoryID != category.categoryID) return false;
-        if (categoryParentID != category.categoryParentID) return false;
-        if (categoryCreateDate != null ? !categoryCreateDate.equals(category.categoryCreateDate) : category.categoryCreateDate != null)
+        if (!categoryID.equals(category.categoryID)) return false;
+        if (categoryParentID != null ? !categoryParentID.equals(category.categoryParentID) : category.categoryParentID != null)
             return false;
         if (!categoryName.equals(category.categoryName)) return false;
+        if (categoryCreateDate != null ? !categoryCreateDate.equals(category.categoryCreateDate) : category.categoryCreateDate != null)
+            return false;
+        return !(categoryCreateUserID != null ? !categoryCreateUserID.equals(category.categoryCreateUserID) : category.categoryCreateUserID != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (categoryID ^ (categoryID >>> 32));
-        result = 31 * result + (int) (categoryParentID ^ (categoryParentID >>> 32));
+        int result = categoryID.hashCode();
+        result = 31 * result + (categoryParentID != null ? categoryParentID.hashCode() : 0);
         result = 31 * result + categoryName.hashCode();
         result = 31 * result + (categoryCreateDate != null ? categoryCreateDate.hashCode() : 0);
-        result = 31 * result + (int) (categoryCreateUserID ^ (categoryCreateUserID >>> 32));
+        result = 31 * result + (categoryCreateUserID != null ? categoryCreateUserID.hashCode() : 0);
         return result;
     }
 

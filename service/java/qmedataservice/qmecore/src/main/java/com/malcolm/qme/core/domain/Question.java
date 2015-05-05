@@ -15,12 +15,12 @@ public final class Question {
     /**
      * Question Id
      */
-    private final long questionID;
+    private final Long questionID;
 
     /**
      * Category Id
      */
-    private final long categoryID;
+    private final Long categoryID;
 
     /**
      * Question Text
@@ -35,7 +35,7 @@ public final class Question {
     /**
      * Question Likes
      */
-    private final long likes;
+    private final Long likes;
 
     /**
      * Question Create Date
@@ -44,7 +44,7 @@ public final class Question {
     /**
      * Question Create User Id
      */
-    private final long  createUserID;
+    private final Long  createUserID;
 
     /**
      * Question Update Date
@@ -53,7 +53,7 @@ public final class Question {
     /**
      * Update User Id
      */
-    private final long  updateUserID;
+    private final Long  updateUserID;
 
     /**
      * Public Constructor
@@ -67,7 +67,7 @@ public final class Question {
      * @param questionUpdateDate
      * @param updateUserID
      */
-    public Question(long questionID, long categoryID, String questionText, String answer, long likes, Date questionCreateDate, long createUserID, Date questionUpdateDate, long updateUserID) {
+    public Question(Long questionID, Long categoryID, String questionText, String answer, Long likes, Date questionCreateDate, Long createUserID, Date questionUpdateDate, Long updateUserID) {
         this.questionID = questionID;
         this.categoryID = categoryID;
         this.questionText = questionText;
@@ -87,16 +87,16 @@ public final class Question {
      * @param answer
      * @param createUserID
      */
-    public Question(long categoryID, String questionText, String answer, long createUserID) {
-        this.questionID = 0;
+    public Question(Long categoryID, String questionText, String answer, Long createUserID) {
+        this.questionID = 0L;
         this.categoryID = categoryID;
         this.questionText = questionText;
         this.answer = answer;
-        this.likes = 0;
+        this.likes = 0L;
         this.questionCreateDate = null;
         this.createUserID = createUserID;
         this.questionUpdateDate = null;
-        this.updateUserID = 0;
+        this.updateUserID = 0L;
     }
 
     /**
@@ -178,32 +178,31 @@ public final class Question {
 
         Question question = (Question) o;
 
-        if (categoryID != question.categoryID) return false;
-        if (createUserID != question.createUserID) return false;
-        if (likes != question.likes) return false;
-        if (questionID != question.questionID) return false;
-        if (updateUserID != question.updateUserID) return false;
+        if (!questionID.equals(question.questionID)) return false;
+        if (!categoryID.equals(question.categoryID)) return false;
+        if (!questionText.equals(question.questionText)) return false;
         if (!answer.equals(question.answer)) return false;
+        if (likes != null ? !likes.equals(question.likes) : question.likes != null) return false;
         if (questionCreateDate != null ? !questionCreateDate.equals(question.questionCreateDate) : question.questionCreateDate != null)
             return false;
-        if (!questionText.equals(question.questionText)) return false;
+        if (!createUserID.equals(question.createUserID)) return false;
         if (questionUpdateDate != null ? !questionUpdateDate.equals(question.questionUpdateDate) : question.questionUpdateDate != null)
             return false;
+        return updateUserID.equals(question.updateUserID);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (questionID ^ (questionID >>> 32));
-        result = 31 * result + (int) (categoryID ^ (categoryID >>> 32));
+        int result = questionID.hashCode();
+        result = 31 * result + categoryID.hashCode();
         result = 31 * result + questionText.hashCode();
         result = 31 * result + answer.hashCode();
-        result = 31 * result + (int) (likes ^ (likes >>> 32));
+        result = 31 * result + (likes != null ? likes.hashCode() : 0);
         result = 31 * result + (questionCreateDate != null ? questionCreateDate.hashCode() : 0);
-        result = 31 * result + (int) (createUserID ^ (createUserID >>> 32));
+        result = 31 * result + createUserID.hashCode();
         result = 31 * result + (questionUpdateDate != null ? questionUpdateDate.hashCode() : 0);
-        result = 31 * result + (int) (updateUserID ^ (updateUserID >>> 32));
+        result = 31 * result + updateUserID.hashCode();
         return result;
     }
 
