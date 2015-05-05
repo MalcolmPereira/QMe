@@ -27,32 +27,25 @@ public class CategoryEntity implements java.io.Serializable {
 	private Long catParentId;
 	private Date catCreateDate;
 	private Long catCreateUser;
-	private Date catUpdateDate;
-	private Long catUpdateUser;
 	private Long catLikes;
 
 	public CategoryEntity() {
 	}
 
 	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
-			Long catCreateUser, Date catUpdateDate, Long catUpdateUser) {
+			Long catCreateUser) {
 		this.catName = catName;
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
 		this.catCreateUser = catCreateUser;
-		this.catUpdateDate = catUpdateDate;
-		this.catUpdateUser = catUpdateUser;
 	}
 
 	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
-			Long catCreateUser, Date catUpdateDate, Long catUpdateUser,
-			Long catLikes) {
+			Long catCreateUser,Long catLikes) {
 		this.catName = catName;
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
 		this.catCreateUser = catCreateUser;
-		this.catUpdateDate = catUpdateDate;
-		this.catUpdateUser = catUpdateUser;
 		this.catLikes = catLikes;
 	}
 
@@ -104,25 +97,6 @@ public class CategoryEntity implements java.io.Serializable {
 		this.catCreateUser = catCreateUser;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CAT_UPDATE_DATE", nullable = false, length = 19)
-	public Date getCatUpdateDate() {
-		return this.catUpdateDate;
-	}
-
-	public void setCatUpdateDate(Date catUpdateDate) {
-		this.catUpdateDate = catUpdateDate;
-	}
-
-	@Column(name = "CAT_UPDATE_USER", nullable = false)
-	public Long getCatUpdateUser() {
-		return this.catUpdateUser;
-	}
-
-	public void setCatUpdateUser(Long catUpdateUser) {
-		this.catUpdateUser = catUpdateUser;
-	}
-
 	@Column(name = "CAT_LIKES")
 	public Long getCatLikes() {
 		return this.catLikes;
@@ -131,5 +105,4 @@ public class CategoryEntity implements java.io.Serializable {
 	public void setCatLikes(Long catLikes) {
 		this.catLikes = catLikes;
 	}
-
 }

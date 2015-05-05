@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Malcolm on 5/5/2015.
+ * @Author: Malcolm
  */
 @Repository("AnswerOptionMediaRepository")
 public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaRepository {

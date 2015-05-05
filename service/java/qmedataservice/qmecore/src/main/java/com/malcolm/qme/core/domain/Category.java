@@ -38,18 +38,25 @@ public final class Category {
     private final Long  categoryCreateUserID;
 
     /**
+     * Category Likes
+     */
+    private final Long categoryLikes;
+
+    /**
      * Public Constructor
      *
      * @param categoryID
      * @param categoryParentID
      * @param categoryName
+     * @param categoryLikes
      * @param categoryCreateDate
      * @param categoryCreateUserID
      */
-    public Category(Long categoryID, Long categoryParentID, String categoryName, Date categoryCreateDate, Long categoryCreateUserID) {
+    public Category(Long categoryID, Long categoryParentID, String categoryName,Long categoryLikes, Date categoryCreateDate, Long categoryCreateUserID) {
         this.categoryID = categoryID;
         this.categoryParentID = categoryParentID;
         this.categoryName = categoryName;
+        this.categoryLikes = categoryLikes;
         this.categoryCreateDate = categoryCreateDate;
         this.categoryCreateUserID = categoryCreateUserID;
     }
@@ -65,6 +72,7 @@ public final class Category {
         this.categoryID = 0L;
         this.categoryParentID = categoryParentID;
         this.categoryName = categoryName;
+        this.categoryLikes = 0L;
         this.categoryCreateDate = null;
         this.categoryCreateUserID = categoryCreateUserID;
     }
@@ -79,6 +87,7 @@ public final class Category {
         this.categoryID = 0L;
         this.categoryParentID = 0L;
         this.categoryName = categoryName;
+        this.categoryLikes = 0L;
         this.categoryCreateDate = null;
         this.categoryCreateUserID = categoryCreateUserID;
     }
@@ -122,6 +131,16 @@ public final class Category {
     public Long getCategoryCreateUserID() {
         return categoryCreateUserID;
     }
+    
+    /**
+     * Get Category Likes
+     * 
+     * @return
+     */
+    public Long getCategoryLikes() {
+		return categoryLikes;
+	}
+
 
     @Override
     public boolean equals(Object o) {
@@ -156,6 +175,7 @@ public final class Category {
                 "categoryID=" + categoryID +
                 ", categoryParentID=" + categoryParentID +
                 ", categoryName='" + categoryName + '\'' +
+                 ",categoryLikes='" + categoryLikes + '\'' +
                 ", categoryCreateDate=" + categoryCreateDate +
                 ", categoryCreateUserID=" + categoryCreateUserID +
                 '}';

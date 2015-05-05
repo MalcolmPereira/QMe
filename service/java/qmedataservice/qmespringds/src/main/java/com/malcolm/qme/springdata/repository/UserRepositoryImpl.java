@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Malcolm on 5/4/2015.
+ * @Author: Malcolm
  */
 @Repository("UserRepository")
 public class UserRepositoryImpl implements UserRepository {
