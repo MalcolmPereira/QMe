@@ -48,6 +48,7 @@ public class UserRepositoryImplTest {
     private UserRepository userRepo;
 
 
+
     @Test
     public void testFetchAll(){
         assertNotNull(userRepo);
@@ -59,10 +60,11 @@ public class UserRepositoryImplTest {
     @Test
     public void testFetchOne(){
         assertNotNull(userRepo);
-        User user = userRepo.findById(1);
+        User user = userRepo.findById(1L);
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(1L));
     }
+
 
 
     @Test
@@ -79,8 +81,8 @@ public class UserRepositoryImplTest {
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
 
-        User userUpdate = new User(user.getUserID(),user.getUserName(), user.getUserPassword(),"First Name Updated","Last Name Updated",user.getUserEmail(),user.getUserRegisteredDate(), new Date(),2 );
-        userUpdate = userRepo.update(userUpdate, 2);
+        User userUpdate = new User(user.getUserID(),user.getUserName(), user.getUserPassword(),"First Name Updated","Last Name Updated",user.getUserEmail(),user.getUserRegisteredDate(), new Date(),2L );
+        userUpdate = userRepo.update(userUpdate, 2L);
         assertNotNull(userUpdate);
         assertThat(user.getUserID(), equalTo(userID));
         assertThat(user.getUserFirstName(), equalTo("First Name Updated"));
@@ -90,4 +92,5 @@ public class UserRepositoryImplTest {
         user = userRepo.findById(userID);
         assertNull(user);
     }
+
 }

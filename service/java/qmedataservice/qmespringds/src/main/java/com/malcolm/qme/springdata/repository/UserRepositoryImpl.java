@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(long id) {
+    public User findById(Long id) {
         return(getUser(userSpringDataRepo.findOne(id)));
     }
 
@@ -59,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User update(User user, long updateUserId) {
+    public User update(User user, Long updateUserId) {
         UserEntity userEntity = getUserEntity(user);
         userEntity.setUserUpdatedDate(new Date());
         userEntity.setUpdateUser(updateUserId);
@@ -68,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         userSpringDataRepo.delete(id);
     }
 
@@ -121,9 +121,9 @@ public class UserRepositoryImpl implements UserRepository {
      */
    private User getUser(UserEntity userEntity){
         return new User(
-                    userEntity.getUserId(), userEntity.getUserName(), userEntity.getUserFirstName(), userEntity.getUserLastName(),
-                    userEntity.getUserEmail(), userEntity.getUserPasscode(), userEntity.getUserRegisteredDate(),
-                    userEntity.getUserUpdatedDate(), userEntity.getUpdateUser()
+             userEntity.getUserId(), userEntity.getUserName(), userEntity.getUserFirstName(), userEntity.getUserLastName(),
+             userEntity.getUserEmail(), userEntity.getUserPasscode(), userEntity.getUserRegisteredDate(),
+             userEntity.getUserUpdatedDate(), userEntity.getUpdateUser()
         );
    }
 }

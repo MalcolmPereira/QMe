@@ -24,7 +24,7 @@ public interface QMeRepository<T> {
      * @param id
      * @return
      */
-    public T findById(long id);
+    public T findById(Long id);
 
     /**
      * Save
@@ -41,12 +41,12 @@ public interface QMeRepository<T> {
      * @param updateUserId
      * @return
      */
-    public T update(T t, long updateUserId);
+    public T update(T t, Long updateUserId);
 
     /**
      * Delete
      *
      * @param id
      */
-    public void delete(long id);
+    public void delete(Long id);
 }
