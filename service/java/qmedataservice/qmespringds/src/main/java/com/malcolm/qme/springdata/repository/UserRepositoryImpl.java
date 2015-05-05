@@ -29,12 +29,20 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByUserName(String userName) {
-        return getUser(userSpringDataRepo.findByUserNameIgnoreCase(userName));
+        UserEntity userEntity = userSpringDataRepo.findByUserNameIgnoreCase(userName);
+        if(userEntity != null){
+            return getUser(userEntity);
+        }
+        return null;
     }
 
     @Override
     public User findByUserEmail(String userEmail) {
-        return getUser(userSpringDataRepo.findByUserEmailIgnoreCase(userEmail));
+        UserEntity userEntity = userSpringDataRepo.findByUserEmailIgnoreCase(userEmail);
+        if(userEntity != null){
+            return getUser(userEntity);
+        }
+        return null;
     }
 
     @Override
@@ -44,7 +52,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(Long id) {
-        return(getUser(userSpringDataRepo.findOne(id)));
+        UserEntity userEntity = userSpringDataRepo.findOne(id);
+        if(userEntity != null){
+            return getUser(userEntity);
+        }
+        return null;
     }
 
     @Override
@@ -108,6 +120,9 @@ public class UserRepositoryImpl implements UserRepository {
      */
    private List<User> getUsers(List<UserEntity> userEntities){
         List<User> userList = new ArrayList<User>();
+        if(userEntities == null){
+            return userList;
+        }
         for (UserEntity userEntity : userEntities){
             userList.add(getUser(userEntity));
         }
@@ -121,9 +136,15 @@ public class UserRepositoryImpl implements UserRepository {
      */
    private User getUser(UserEntity userEntity){
         return new User(
-             userEntity.getUserId(), userEntity.getUserName(), userEntity.getUserFirstName(), userEntity.getUserLastName(),
-             userEntity.getUserEmail(), userEntity.getUserPasscode(), userEntity.getUserRegisteredDate(),
-             userEntity.getUserUpdatedDate(), userEntity.getUpdateUser()
+             userEntity.getUserId(),
+             userEntity.getUserName(),
+             userEntity.getUserPasscode(),
+             userEntity.getUserFirstName(),
+             userEntity.getUserLastName(),
+             userEntity.getUserEmail(),
+             userEntity.getUserRegisteredDate(),
+             userEntity.getUserUpdatedDate(),
+             userEntity.getUpdateUser()
         );
    }
 }
