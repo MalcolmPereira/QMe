@@ -13,7 +13,7 @@ public final class Role {
     /**
      * Role Id
      */
-    private final Long roleID;
+    private final Integer roleID;
     /**
      * Role Name
      */
@@ -29,7 +29,7 @@ public final class Role {
      * @param roleName
      * @param roleDesc
      */
-    public Role(Long roleID, String roleName, String roleDesc) {
+    public Role(Integer roleID, String roleName, String roleDesc) {
         this.roleID = roleID;
         this.roleName = roleName;
         this.roleDesc = roleDesc;
@@ -41,7 +41,7 @@ public final class Role {
      * @param roleDesc
      */
     public Role(String roleName, String roleDesc) {
-        this.roleID     = 0L;
+        this.roleID     = 0;
         this.roleName   = roleName;
         this.roleDesc   = roleDesc;
     }
@@ -50,7 +50,7 @@ public final class Role {
      * Get Role ID
      * @return
      */
-    public Long getRoleID() {
+    public Integer  getRoleID() {
         return roleID;
     }
 

@@ -85,7 +85,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     /**
-     * Get UserEntity
+     * Map User Domain Object to UserEntity o
      * @param user
      * @return
      */
@@ -114,7 +114,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
    /**
-     * Map to QMe UserEntity Domain Object
+     * Map UserEntity to User Domain Object
      * @param userEntities
      * @return
      */
@@ -130,7 +130,7 @@ public class UserRepositoryImpl implements UserRepository {
    }
 
     /**
-     * Map to QMe UserEntity Domain Object
+     * Map UserEntity to User Domain Object
      * @param userEntity
      * @return
      */
