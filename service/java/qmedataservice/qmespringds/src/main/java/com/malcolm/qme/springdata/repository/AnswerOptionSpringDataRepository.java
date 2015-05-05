@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.springdata.repository.AnswerOptionSpringDataRepository.java
  * Date      : 5/5/2015
  * Developer : Malcolm
- * Purpose   : SpringData JPAAnswerOptionEntity Repository
+ * Purpose   : SpringData JPA AnswerOptionEntity Repository
  */
 package com.malcolm.qme.springdata.repository;
 
