@@ -21,5 +21,5 @@ public interface AnswerOptionRepository extends QMeRepository<AnswerOption> {
      * @param questionID
      * @return
      */
-    public List<AnswerOption> findByQuestionId(long questionID);
+    public List<AnswerOption> findByQuestionId(Long questionID);
 }

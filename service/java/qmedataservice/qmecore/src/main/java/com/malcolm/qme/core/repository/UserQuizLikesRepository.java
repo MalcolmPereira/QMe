@@ -21,7 +21,7 @@ public interface UserQuizLikesRepository extends QMeRepository<UserQuizLikes> {
      * @param userID
      * @return
      */
-    public List<UserQuizLikes> findByUserId(long userID);
+    public List<UserQuizLikes> findByUserId(Long userID);
 
     /**
      * Find By Quiz ID
@@ -29,6 +29,6 @@ public interface UserQuizLikesRepository extends QMeRepository<UserQuizLikes> {
      * @param quizID
      * @return
      */
-    public List<UserQuizLikes> findByQuizId(long quizID);
+    public List<UserQuizLikes> findByQuizId(Long quizID);
 
 }

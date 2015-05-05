@@ -19,12 +19,12 @@ public interface QuizQuestionRepository extends QMeRepository<QuizQuestion> {
      * @param quizID
      * @return
      */
-    public List<QuizQuestion> findByQuizId(long quizID);
+    public List<QuizQuestion> findByQuizId(Long quizID);
 
     /**
      * Find By Question Id
      * @param questionID
      * @return
      */
-    public List<QuizQuestion> findByQuestionId(long questionID);
+    public List<QuizQuestion> findByQuestionId(Long questionID);
 }

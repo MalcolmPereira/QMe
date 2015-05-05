@@ -19,5 +19,5 @@ public interface UserCategoryRepository extends QMeRepository<UserCategory> {
      * Find By User ID
      * @return
      */
-    public List<UserCategory> findByUserID(long userID);
+    public List<UserCategory> findByUserID(Long userID);
 }

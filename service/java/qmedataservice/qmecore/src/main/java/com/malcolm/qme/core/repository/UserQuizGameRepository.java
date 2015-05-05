@@ -20,7 +20,7 @@ public interface UserQuizGameRepository extends QMeRepository<UserQuizGame> {
      * @param userID
      * @return
      */
-    public List<UserQuizGame> findByUserId(long userID);
+    public List<UserQuizGame> findByUserId(Long userID);
 
     /**
      * Find By Game Token
@@ -28,5 +28,5 @@ public interface UserQuizGameRepository extends QMeRepository<UserQuizGame> {
      * @param userGameToken
      * @return
      */
-    public UserQuizGame findByGameToken(long userGameToken);
+    public UserQuizGame findByGameToken(Long userGameToken);
 }

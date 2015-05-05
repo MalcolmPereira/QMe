@@ -21,7 +21,7 @@ public interface UserRoleRepository extends QMeRepository<UserRole> {
      * @param userID
      * @return
      */
-    public List<UserRole> findByUserId(long userID);
+    public List<UserRole> findByUserId(Long userID);
 
     /**
      * Find By Role ID
@@ -29,5 +29,5 @@ public interface UserRoleRepository extends QMeRepository<UserRole> {
      * @param roleID
      * @return
      */
-    public List<UserRole> findByRoleId(long roleID);
+    public List<UserRole> findByRoleId(Integer roleID);
 }

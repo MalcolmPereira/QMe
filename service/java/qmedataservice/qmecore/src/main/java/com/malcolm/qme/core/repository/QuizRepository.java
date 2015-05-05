@@ -21,7 +21,7 @@ public interface QuizRepository extends QMeRepository<Quiz> {
      * @param categoryID
      * @return
      */
-    public List<Quiz> findByCategoryId(long categoryID);
+    public List<Quiz> findByCategoryId(Long categoryID);
 
     /**
      * Find By Most Liked

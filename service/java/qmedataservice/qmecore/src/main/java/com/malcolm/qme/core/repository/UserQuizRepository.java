@@ -21,7 +21,7 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz> {
      * @param userID
      * @return
      */
-    public List<UserQuiz> findByUserId(long userID);
+    public List<UserQuiz> findByUserId(Long userID);
 
     /**
      * Find Completed Quiz By User ID
@@ -29,7 +29,7 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz> {
      * @param userID
      * @return
      */
-    public List<UserQuiz> findCompletedByUserId(long userID);
+    public List<UserQuiz> findCompletedByUserId(Long userID);
 
     /**
      * Find Pending Quiz By User ID
@@ -37,7 +37,7 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz> {
      * @param userID
      * @return
      */
-    public List<UserQuiz> findPendingByUserId(long userID);
+    public List<UserQuiz> findPendingByUserId(Long userID);
 
     /**
      * Find By Quiz ID
@@ -45,5 +45,5 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz> {
      * @param quizID
      * @return
      */
-    public List<UserQuiz> findByQuizId(long quizID);
+    public List<UserQuiz> findByQuizId(Long quizID);
 }
