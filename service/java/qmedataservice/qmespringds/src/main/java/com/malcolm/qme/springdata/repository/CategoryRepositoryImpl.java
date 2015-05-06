@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,40 +31,90 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	
 	@Override
 	public List<Category> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+        return(getCategory(categorySpringDataRepository.findAll()));
 	}
+
+    @Override
+    public List<Category> findCategoryNameLike(String categoryName) {
+        return(getCategory(categorySpringDataRepository.findByCatNameIgnoreCaseLike(categoryName)));
+    }
 
 	@Override
 	public Category findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+        CategoryEntity categoryEntity = categorySpringDataRepository.findOne(id);
+        if(categoryEntity != null){
+            return getCategory(categoryEntity);
+        }
+        return null;
+
+
+    }
+
+	@Override
+	public Category save(Category category) {
+        CategoryEntity categoryEntity = getCategoryEntity(category);
+        categoryEntity = categorySpringDataRepository.save(categoryEntity);
+        return getCategory(categoryEntity);
 	}
 
 	@Override
-	public Category save(Category t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Category update(Category t, Long updateUserId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category update(Category category, Long updateUserId) {
+        CategoryEntity categoryEntity = getCategoryEntity(category);
+        categoryEntity = categorySpringDataRepository.save(categoryEntity);
+        return getCategory(categoryEntity);
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+        categorySpringDataRepository.delete(id);
 
 	}
 
-	@Override
-	public List<Category> findCategoryNameLike(String categoryName) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+     * Map Category Domain Object to CategoryEntity
+     *
+     * @param category
+     * @return
+     */
+    private CategoryEntity getCategoryEntity(Category category){
+        CategoryEntity categoryEntity = new CategoryEntity();
+        if(category.getCategoryID() > 0){
+            categoryEntity.setCatId(category.getCategoryID());
+        }
+        if(category.getCategoryParentID() > 0){
+            categoryEntity.setCatParentId(category.getCategoryParentID());
+        }
+        categoryEntity.setCatName(category.getCategoryName());
+        if(category.getCategoryLikes() > 0){
+            categoryEntity.setCatLikes(category.getCategoryLikes());
+        }
+        if(category.getCategoryCreateDate() != null)    {
+            categoryEntity.setCatCreateDate(category.getCategoryCreateDate());
+        }else{
+            categoryEntity.setCatCreateDate(new Date());
+        }
+        categoryEntity.setCatCreateUser(category.getCategoryCreateUserID());
+        return categoryEntity;
+    }
+
+	/**
+	 * Map CategoryEntity to Category Domain Object
+	 *
+	 * @param categoryEntities
+	 * @return
+	 */
+	private List<Category> getCategory(List<CategoryEntity> categoryEntities){
+		List<Category> categoryList = new ArrayList<Category>();
+		if(categoryEntities == null){
+			return categoryList;
+		}
+		for (CategoryEntity categoryEntity : categoryEntities){
+			categoryList.add(getCategory(categoryEntity));
+		}
+		return categoryList;
+
 	}
-	
+
 	/**
 	 * Map CategoryEntity to Category Domain Object
 	 * 
@@ -71,14 +122,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	 * @return
 	 */
 	private Category getCategory(CategoryEntity categoryEntity){
-		/*return new Category(categoryEntity.getCatId(), 
+       return new Category(categoryEntity.getCatId(),
 				categoryEntity.getCatParentId(),
 				categoryEntity.getCatName(),
-		);
-		
-		public Category(Long categoryID, Long categoryParentID, String categoryName, Date categoryCreateDate, Long categoryCreateUserID) {
-		*/
-		return null;
+				categoryEntity.getCatLikes(),
+				categoryEntity.getCatCreateDate(),
+				categoryEntity.getCatCreateUser()
+
+	   );
 	}
 
 }

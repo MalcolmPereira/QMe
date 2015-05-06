@@ -1,0 +1,18 @@
+/**
+ * Name      : com.malcolm.qme.springdata.repository.QuestionHitSpringDataRepository.java
+ * Date      : 5/5/15
+ * Developer : Malcolm
+ * Purpose   : SpringData JPA QuestionHitEntity Repository
+ */
+package com.malcolm.qme.springdata.repository;/**
+ * Created by malcolm on 5/5/15.
+ */
+
+import com.malcolm.qme.springdata.entity.QuestionHitEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+/**
+ * @Author: Malcolm
+ */
+public interface QuestionHitSpringDataRepository extends JpaRepository<QuestionHitEntity, Long> {
+}
