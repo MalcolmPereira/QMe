@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.springdata.repository.QuizRepositoryImpl.java
  * Date      : 5/7/15
  * Developer : Malcolm
- * Purpose   : QMe Quiz Repository Interface Implementation
+ * Purpose   : QMe Quiz Repository Implementation
  */
 package com.malcolm.qme.springdata.repository;
 
