@@ -15,7 +15,7 @@ import com.malcolm.qme.springdata.entity.QuizEntity;
 /**
  * @Author: Malcolm
  */
-public interface QuizSpringDataRepository extends JpaRepository<QuizEntity, Long> {
+interface QuizSpringDataRepository extends JpaRepository<QuizEntity, Long> {
 	
 	/**
      * Find By Category ID

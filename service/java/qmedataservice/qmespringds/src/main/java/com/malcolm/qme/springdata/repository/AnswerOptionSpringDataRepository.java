@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface AnswerOptionSpringDataRepository extends JpaRepository<AnswerOptionEntity, Long> {
+interface AnswerOptionSpringDataRepository extends JpaRepository<AnswerOptionEntity, Long> {
 
     /**
      * Find By Question Id

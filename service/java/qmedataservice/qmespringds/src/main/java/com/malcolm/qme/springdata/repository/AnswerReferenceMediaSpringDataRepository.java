@@ -15,7 +15,7 @@ import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
 /**
  * @Author: Malcolm
  */
-public interface AnswerReferenceMediaSpringDataRepository extends JpaRepository<AnswerReferenceMediaEntity, Long> {
+interface AnswerReferenceMediaSpringDataRepository extends JpaRepository<AnswerReferenceMediaEntity, Long> {
 	
 	 /**
      * Find By Question Id

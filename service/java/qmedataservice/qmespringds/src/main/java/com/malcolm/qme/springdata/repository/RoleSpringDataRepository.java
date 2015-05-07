@@ -13,7 +13,7 @@ import com.malcolm.qme.springdata.entity.RoleEntity;
 /**
  * @Author: Malcolm
  */
-public interface RoleSpringDataRepository extends JpaRepository<RoleEntity, Integer> {
+interface RoleSpringDataRepository extends JpaRepository<RoleEntity, Integer> {
 	
 	/**
 	 * Find by Role Name

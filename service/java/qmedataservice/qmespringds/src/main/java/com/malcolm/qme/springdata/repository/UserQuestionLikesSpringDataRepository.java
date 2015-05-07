@@ -13,5 +13,5 @@ import com.malcolm.qme.springdata.entity.UserQuestionLikesEntity;
 /**
  * @Author: Malcolm
  */
-public interface UserQuestionLikesSpringDataRepository extends JpaRepository<UserQuestionLikesEntity, Long> {
+interface UserQuestionLikesSpringDataRepository extends JpaRepository<UserQuestionLikesEntity, Long> {
 }

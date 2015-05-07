@@ -14,5 +14,5 @@ import com.malcolm.qme.springdata.entity.UserCategoryLikesEntity;
 /**
  * @Author: Malcolm
  */
-public interface UserCategoryLikesSpringDataRepository extends JpaRepository<UserCategoryLikesEntity, Long> {
+interface UserCategoryLikesSpringDataRepository extends JpaRepository<UserCategoryLikesEntity, Long> {
 }

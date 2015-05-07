@@ -15,7 +15,7 @@ import com.malcolm.qme.springdata.entity.QuestionEntity;
 /**
  * @Author: Malcolm
  */
-public interface QuestionSpringDataRepository extends JpaRepository<QuestionEntity, Long> {
+interface QuestionSpringDataRepository extends JpaRepository<QuestionEntity, Long> {
 	
 	 /**
      * Find By Category ID

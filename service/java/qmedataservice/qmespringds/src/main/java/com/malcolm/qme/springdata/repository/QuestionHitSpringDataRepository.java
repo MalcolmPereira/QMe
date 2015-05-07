@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @Author: Malcolm
  */
-public interface QuestionHitSpringDataRepository extends JpaRepository<QuestionHitEntity, Long> {
+interface QuestionHitSpringDataRepository extends JpaRepository<QuestionHitEntity, Long> {
 }

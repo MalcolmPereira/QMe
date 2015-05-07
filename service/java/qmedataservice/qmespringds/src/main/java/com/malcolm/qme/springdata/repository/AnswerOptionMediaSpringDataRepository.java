@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface AnswerOptionMediaSpringDataRepository extends JpaRepository<AnswerOptionMediaEntity, Long> {
+interface AnswerOptionMediaSpringDataRepository extends JpaRepository<AnswerOptionMediaEntity, Long> {
 
     /**
      * Find By Option Id

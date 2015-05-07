@@ -15,7 +15,7 @@ import com.malcolm.qme.springdata.entity.CategoryEntity;
 /**
  * @Author: Malcolm
  */
-public interface CategorySpringDataRepository extends JpaRepository<CategoryEntity, Long> {
+interface CategorySpringDataRepository extends JpaRepository<CategoryEntity, Long> {
 	
 	public List<CategoryEntity> findByCatNameIgnoreCaseLike(String categoryName);
 }
