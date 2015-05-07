@@ -1,6 +1,6 @@
 /**
- * Name      : com.malcolm.qme.springdata.repository.QuestionHitRepositoryImpl.java
- * Date      : 5/5/15
+ * Name      : com.malcolm.qme.springdata.repository.QuestionRepositoryImpl.java
+ * Date      : 5/7/15
  * Developer : Malcolm
  * Purpose   : QMe Question Repository Implementation
  */
@@ -24,7 +24,7 @@ import com.malcolm.qme.springdata.entity.QuestionEntity;
 public class QuestionRepositoryImpl implements QuestionRepository {
 	
 	/**
-     * Spring Data CategoryEntity Repository
+     * Spring Data QuestionEntity Repository
      */
     @Autowired
     private QuestionSpringDataRepository questionSpringDataRepository;
@@ -104,7 +104,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	/**
      * Map QuestionEntity to Question Domain Object
      *
-     * @param Map QuestionEntity to Question Domain Object
+     * @param questionEntities
      * @return
      */
     private List<Question> getQuestion(List<QuestionEntity> questionEntities){

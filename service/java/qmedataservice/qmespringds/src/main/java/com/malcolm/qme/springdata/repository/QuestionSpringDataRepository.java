@@ -1,5 +1,5 @@
 /**
- * Name      : com.malcolm.qme.springdata.repository.QuestionHitSpringDataRepository.java
+ * Name      : com.malcolm.qme.springdata.repository.QuestionSpringDataRepository.java
  * Date      : 5/7/15
  * Developer : Malcolm
  * Purpose   : SpringData JPA QuestionEntity Repository
@@ -19,14 +19,13 @@ public interface QuestionSpringDataRepository extends JpaRepository<QuestionEnti
 	
 	 /**
      * Find By Category ID
-     * @param userName
+     * @param catId
      * @return
      */
     public List<QuestionEntity> findByCatId(Long catId);
     
     /**
      * Find Most Liked
-     * @param userName
      * @return
      */
     public List<QuestionEntity> findTop50ByOrderByLikes();
