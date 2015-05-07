@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.springdata.repository.QuestionHitRepositoryImpl.java
  * Date      : 5/5/15
  * Developer : Malcolm
- * Purpose   : QMe Question Hit Repository Interface
+ * Purpose   : QMe Question Hit Repository Implementation
  */
 
 package com.malcolm.qme.springdata.repository;
