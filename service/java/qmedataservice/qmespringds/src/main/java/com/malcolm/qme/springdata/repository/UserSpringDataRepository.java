@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @Author: Malcolm
  */
-interface UserSpringDataRepository extends JpaRepository<UserEntity, Long> {
+public interface UserSpringDataRepository extends JpaRepository<UserEntity, Long> {
 
     /**
      * Find By User Name
