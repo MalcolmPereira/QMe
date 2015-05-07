@@ -1,0 +1,115 @@
+/**
+ * Name      : com.malcolm.qme.springdata.repository.UserCategoryLikesRepositoryImpl.java
+ * Date      : 5/4/2015
+ * Developer : Malcolm
+ * Purpose   : QMe User Category Likes Repository Implementation
+ */
+package com.malcolm.qme.springdata.repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.malcolm.qme.core.domain.UserCategoryLikes;
+import com.malcolm.qme.core.repository.UserCategoryLikesRepository;
+import com.malcolm.qme.springdata.entity.UserCategoryLikesEntity;
+import com.malcolm.qme.springdata.entity.UserCategoryLikesEntityId;
+
+/**
+ * @Author: Malcolm
+ */
+@Repository("UserCategoryLikesRepository")
+public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesRepository {
+	
+	/**
+     * Spring Data UserEntity Repository
+     */
+    @Autowired
+    private UserCategoryLikesSpringDataRepository userCategoryLikesSpringDataRepository;
+	
+	@Override
+	public List<UserCategoryLikes> findAll() {
+		return(getUserCategoryLikes(userCategoryLikesSpringDataRepository.findAll()));
+	}
+
+	@Override
+	public UserCategoryLikes findById(Long id) {
+		UserCategoryLikesEntity userCategoryLikesEntity = userCategoryLikesSpringDataRepository.findOne(id);
+		if(userCategoryLikesEntity != null){
+			return getUserCategoryLikes(userCategoryLikesEntity);
+		}
+		return null;
+	}
+
+	@Override
+	public UserCategoryLikes save(UserCategoryLikes userCategoryLikes) {
+		UserCategoryLikesEntity userCategoryLikesEntity = getUserCategoryLikesEntity(userCategoryLikes);
+		userCategoryLikesEntity = userCategoryLikesSpringDataRepository.save(userCategoryLikesEntity);
+		return getUserCategoryLikes(userCategoryLikesEntity);
+	}
+
+	@Override
+	public UserCategoryLikes update(UserCategoryLikes userCategoryLikes, Long updateUserId) {
+		UserCategoryLikesEntity userCategoryLikesEntity = getUserCategoryLikesEntity(userCategoryLikes);
+		userCategoryLikesEntity = userCategoryLikesSpringDataRepository.save(userCategoryLikesEntity);
+		return getUserCategoryLikes(userCategoryLikesEntity);
+	}
+
+	@Override
+	public void delete(Long id) {
+		userCategoryLikesSpringDataRepository.delete(id);
+	}
+
+	@Override
+	public List<UserCategoryLikes> findByUserId(Long userID) {
+		return null;
+	}
+	
+	/**
+	 * Map UserCategoryLikes Domain Object to UserCategoryLikesEntity
+	 * 
+	 * @param userCategoryLikes
+	 * @return
+	 */
+	private UserCategoryLikesEntity getUserCategoryLikesEntity(UserCategoryLikes userCategoryLikes){
+		UserCategoryLikesEntity userCategoryLikesEntity = new UserCategoryLikesEntity();
+		UserCategoryLikesEntityId id = new UserCategoryLikesEntityId();
+		id.setUserId(userCategoryLikes.getUserID());
+		id.setCatId(userCategoryLikes.getCategoryID());
+		userCategoryLikesEntity.setId(id);
+		return userCategoryLikesEntity;
+	}
+	
+	/**
+	 * Map UserCategoryLikesEntity to UserCategoryLikes Domain Object
+	 * 
+	 * @param userCategoryLikesEntities
+	 * @return
+	 */
+	private List<UserCategoryLikes> getUserCategoryLikes(List<UserCategoryLikesEntity> userCategoryLikesEntities){
+		List<UserCategoryLikes> userCategoryLikesList = new ArrayList<UserCategoryLikes>();
+        if(userCategoryLikesEntities == null){
+            return userCategoryLikesList;
+        }
+        for (UserCategoryLikesEntity userCategoryLikesEntity : userCategoryLikesEntities){
+        	userCategoryLikesList.add(getUserCategoryLikes(userCategoryLikesEntity));
+        }
+        return userCategoryLikesList;
+	}
+	
+	/**
+	 * Map UserCategoryLikesEntity to UserCategoryLikes Domain Object
+	 * 
+	 * @param userCategoryLikesEntity
+	 * @return
+	 */
+	private UserCategoryLikes getUserCategoryLikes(UserCategoryLikesEntity userCategoryLikesEntity){
+		return new UserCategoryLikes(
+			userCategoryLikesEntity.getId().getUserId(),
+			userCategoryLikesEntity.getId().getCatId()
+		);
+	}
+
+}
