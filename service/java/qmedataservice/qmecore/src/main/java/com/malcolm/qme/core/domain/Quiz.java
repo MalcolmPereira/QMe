@@ -46,7 +46,7 @@ public final class Quiz {
     /**
      * Quiz Max Attempts
      */
-    private final Long quizMaxAttempts;
+    private final Integer quizMaxAttempts;
 
     /**
      * Quiz Create Date
@@ -83,7 +83,7 @@ public final class Quiz {
      * @param quizUpdateDate
      * @param updateUserID
      */
-    public Quiz(Long quizID, String quizName, String quizDesc, Long categoryID, Long likes, Long quizHit, Long quizMaxAttempts, Date quizCreateDate, Long createUserID, Date quizUpdateDate, Long updateUserID) {
+    public Quiz(Long quizID, String quizName, String quizDesc, Long categoryID, Long likes, Long quizHit, Integer quizMaxAttempts, Date quizCreateDate, Long createUserID, Date quizUpdateDate, Long updateUserID) {
         this.quizID = quizID;
         this.quizName = quizName;
         this.quizDesc = quizDesc;
@@ -106,7 +106,7 @@ public final class Quiz {
      * @param quizMaxAttempts
      * @param createUserID
      */
-    public Quiz(String quizName, String quizDesc, Long categoryID, Long quizMaxAttempts, Long createUserID) {
+    public Quiz(String quizName, String quizDesc, Long categoryID, Integer quizMaxAttempts, Long createUserID) {
         this.quizID = 0L;
         this.quizName = quizName;
         this.quizDesc = quizDesc;
@@ -172,7 +172,7 @@ public final class Quiz {
      * Get Quiz Max Attempts
      * @return
      */
-    public Long getQuizMaxAttempts() {
+    public Integer getQuizMaxAttempts() {
         return quizMaxAttempts;
     }
 
