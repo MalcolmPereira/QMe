@@ -9,9 +9,13 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuizLikes;
 import com.malcolm.qme.core.repository.UserQuizLikesRepository;
+import com.malcolm.qme.springdata.entity.UserQuizLikesEntity;
+import com.malcolm.qme.springdata.entity.UserQuizLikesEntityId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,26 +42,79 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 
     @Override
     public List<UserQuizLikes> findAll() {
-        return null;
+    	return (getUserQuizLikes(userQuizLikesSpringDataRepository.findAll()));
     }
 
     @Override
     public UserQuizLikes findById(Long id) {
+    	UserQuizLikesEntity userQuizLikesEntity = userQuizLikesSpringDataRepository.findOne(id);
+    	if(userQuizLikesEntity != null){
+    		return getUserQuizLikes(userQuizLikesEntity);
+    	}
         return null;
     }
 
     @Override
     public UserQuizLikes save(UserQuizLikes userQuizLikes) {
-        return null;
+    	UserQuizLikesEntity userQuizLikesEntity = getUserQuizLikesEntity(userQuizLikes);
+    	userQuizLikesEntity = userQuizLikesSpringDataRepository.save(userQuizLikesEntity);
+    	return getUserQuizLikes(userQuizLikesEntity);
     }
 
     @Override
     public UserQuizLikes update(UserQuizLikes userQuizLikes, Long updateUserId) {
-        return null;
+    	UserQuizLikesEntity userQuizLikesEntity = getUserQuizLikesEntity(userQuizLikes);
+    	userQuizLikesEntity = userQuizLikesSpringDataRepository.save(userQuizLikesEntity);
+    	return getUserQuizLikes(userQuizLikesEntity);
     }
 
     @Override
     public void delete(Long id) {
-
+    	userQuizLikesSpringDataRepository.delete(id);
+    }
+    
+    /**
+     * Map UserQuizLikes Domain Object to UserQuizLikesEntity 
+     * 
+     * @param userQuizLikes
+     * @return
+     */
+    private UserQuizLikesEntity getUserQuizLikesEntity(UserQuizLikes userQuizLikes) {
+    	UserQuizLikesEntity userQuizLikesEntity = new UserQuizLikesEntity();
+    	UserQuizLikesEntityId userQuizLikesEntityId = new UserQuizLikesEntityId();
+    	userQuizLikesEntityId.setUserId(userQuizLikes.getUserID());
+    	userQuizLikesEntityId.setQuizId(userQuizLikes.getQuizID());
+    	userQuizLikesEntity.setId(userQuizLikesEntityId);
+    	return userQuizLikesEntity;
+    }
+    
+    /**
+     * Map UserQuizLikesEntity to UserQuizLikes Domain Object
+     * 
+     * @param userQuizLikesEntities
+     * @return
+     */
+    private List<UserQuizLikes> getUserQuizLikes(List<UserQuizLikesEntity> userQuizLikesEntities) {
+    	List<UserQuizLikes> userQuizLikesList = new ArrayList<UserQuizLikes>();
+    	if (userQuizLikesEntities == null) {
+			return userQuizLikesList;
+		}
+    	for (UserQuizLikesEntity userQuizLikesEntity : userQuizLikesEntities) {
+    		userQuizLikesList.add(getUserQuizLikes(userQuizLikesEntity));
+		}
+    	return userQuizLikesList;
+    }
+    
+    /**
+     * Map UserQuizLikesEntity to UserQuizLikes Domain Object
+     * 
+     * @param userQuizLikesEntity
+     * @return
+     */
+    private UserQuizLikes getUserQuizLikes(UserQuizLikesEntity userQuizLikesEntity) {
+    	return new UserQuizLikes(
+    			userQuizLikesEntity.getId().getUserId(),
+    			userQuizLikesEntity.getId().getQuizId()
+    	);
     }
 }
