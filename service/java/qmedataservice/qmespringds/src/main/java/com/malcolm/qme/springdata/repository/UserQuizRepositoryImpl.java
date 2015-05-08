@@ -1,10 +1,22 @@
+/**
+ * Name      : com.malcolm.qme.springdata.repository.UserQuizRepositoryImpl.java
+ * Date      : 5/8/2015
+ * Developer : Malcolm
+ * Purpose   : QMe User Quiz Repository Implementation
+ */
 package com.malcolm.qme.springdata.repository;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.malcolm.qme.core.domain.UserQuiz;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 
+/**
+ * @Author: Malcolm
+ */
+@Repository("UserQuizRepository")
 public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	@Override
