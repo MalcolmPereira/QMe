@@ -41,7 +41,7 @@ public class QuizRepositoryImpl implements QuizRepository {
 
 	@Override
 	public List<Quiz> findByMostLiked() {
-		return(getQuiz(quizSpringDataRepository.findTop50ByOrderByLikes()));
+		return(getQuiz(quizSpringDataRepository.findTop50ByOrderByQuizLikes()));
 	}
 
 	@Override

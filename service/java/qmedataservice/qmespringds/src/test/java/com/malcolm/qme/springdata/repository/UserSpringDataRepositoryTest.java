@@ -85,4 +85,76 @@ public class UserSpringDataRepositoryTest {
         userEntity = userSpringDataRepo.findOne(userID);
         assertNull(userEntity);
     }
+
+    @Test
+    public void testFindByUserNameIgnoreCase(){
+        assertNotNull(userSpringDataRepo);
+
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName", "Test", "Test", "UserSpringDataRepositoryTestUserName@test.com", "Test", new Date(), new Date());
+        userEntity = userSpringDataRepo.save(userEntity);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), greaterThan(0L));
+
+        Long userID = userEntity.getUserId();
+        userEntity = userSpringDataRepo.findOne(userID);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+
+        userEntity = userSpringDataRepo.findByUserNameIgnoreCase("UserSpringDataRepositoryTestUserName");
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+
+        userEntity = userSpringDataRepo.findByUserNameIgnoreCase("userspringdatarepositorytestusername");
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+
+        userEntity.setUserFirstName("First Name Updated");
+        userEntity.setUserLastName("Last Name Updated");
+        userEntity = userSpringDataRepo.save(userEntity);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+        assertThat(userEntity.getUserFirstName(), equalTo("First Name Updated"));
+        assertThat(userEntity.getUserLastName(), equalTo("Last Name Updated"));
+
+        userSpringDataRepo.delete(userEntity);
+        userEntity = userSpringDataRepo.findOne(userID);
+        assertNull(userEntity);
+
+    }
+
+    @Test
+    public void findByUserEmailIgnoreCase(){
+        assertNotNull(userSpringDataRepo);
+
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName1", "Test", "Test", "UserSpringDataRepositoryTestUserName1@test.com", "Test", new Date(), new Date());
+        userEntity = userSpringDataRepo.save(userEntity);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), greaterThan(0L));
+
+        Long userID = userEntity.getUserId();
+        userEntity = userSpringDataRepo.findOne(userID);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+
+        userEntity = userSpringDataRepo.findByUserEmailIgnoreCase("UserSpringDataRepositoryTestUserName1@test.com");
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+
+        userEntity = userSpringDataRepo.findByUserEmailIgnoreCase("userspringdatarepositorytestusername1@TEST.COM");
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+
+        userEntity.setUserFirstName("First Name Updated");
+        userEntity.setUserLastName("Last Name Updated");
+        userEntity = userSpringDataRepo.save(userEntity);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), equalTo(userID));
+        assertThat(userEntity.getUserFirstName(), equalTo("First Name Updated"));
+        assertThat(userEntity.getUserLastName(), equalTo("Last Name Updated"));
+
+        userSpringDataRepo.delete(userEntity);
+        userEntity = userSpringDataRepo.findOne(userID);
+        assertNull(userEntity);
+
+    }
 }

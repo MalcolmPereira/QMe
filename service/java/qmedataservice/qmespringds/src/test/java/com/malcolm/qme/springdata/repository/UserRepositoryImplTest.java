@@ -105,4 +105,98 @@ public class UserRepositoryImplTest {
 
     }
 
+
+    @Test
+    public void testFindByUserName(){
+
+        assertNotNull(userRepo);
+
+        User user = new User("UserRepositoryImplTestUserName", "Test", "Test", "Test","UserRepositoryImplTest@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+
+        long userID = user.getUserID();
+        user = userRepo.findById(userID);
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        user = userRepo.findByUserName("UserRepositoryImplTestUserName");
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        user = userRepo.findByUserName("userrepositoryimpltestusername");
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        User userUpdate = new User(
+                user.getUserID(),
+                user.getUserName(),
+                user.getUserPassword(),
+                "First Name Updated",
+                "Last Name Updated",
+                user.getUserEmail(),
+                user.getUserRegisteredDate(), new Date(),
+                2L );
+
+        userUpdate = userRepo.update(userUpdate, 2L);
+
+        assertNotNull(userUpdate);
+        assertThat(userUpdate.getUserID(), equalTo(userID));
+        assertThat(userUpdate.getUserFirstName(), equalTo("First Name Updated"));
+        assertThat(userUpdate.getUserLastName(), equalTo("Last Name Updated"));
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
+    }
+
+    @Test
+    public void testFindByUserEmail(){
+
+        assertNotNull(userRepo);
+
+        User user = new User("UserRepositoryImplTestUserName1", "Test", "Test", "Test","UserRepositoryImplTestUserName1@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+
+        long userID = user.getUserID();
+        user = userRepo.findById(userID);
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        user = userRepo.findByUserEmail("UserRepositoryImplTestUserName1@test.com");
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        user = userRepo.findByUserEmail("userrepositoryimpltestusername1@TEST.COM");
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        User userUpdate = new User(
+                user.getUserID(),
+                user.getUserName(),
+                user.getUserPassword(),
+                "First Name Updated",
+                "Last Name Updated",
+                user.getUserEmail(),
+                user.getUserRegisteredDate(), new Date(),
+                2L );
+
+        userUpdate = userRepo.update(userUpdate, 2L);
+
+        assertNotNull(userUpdate);
+        assertThat(userUpdate.getUserID(), equalTo(userID));
+        assertThat(userUpdate.getUserFirstName(), equalTo("First Name Updated"));
+        assertThat(userUpdate.getUserLastName(), equalTo("Last Name Updated"));
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
+    }
+
+
 }

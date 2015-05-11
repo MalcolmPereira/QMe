@@ -28,7 +28,7 @@ interface QuizSpringDataRepository extends JpaRepository<QuizEntity, Long> {
      * Find Most Liked
      * @return
      */
-    public List<QuizEntity> findTop50ByOrderByLikes();
+    public List<QuizEntity> findTop50ByOrderByQuizLikes();
     
     /**
      * @param quizName

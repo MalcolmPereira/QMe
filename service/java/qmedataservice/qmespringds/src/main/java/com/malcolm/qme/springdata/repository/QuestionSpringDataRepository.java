@@ -28,6 +28,6 @@ interface QuestionSpringDataRepository extends JpaRepository<QuestionEntity, Lon
      * Find Most Liked
      * @return
      */
-    public List<QuestionEntity> findTop50ByOrderByLikes();
+    public List<QuestionEntity> findTop50ByOrderByQuestionLikes();
 	
 }	
