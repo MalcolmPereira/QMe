@@ -50,7 +50,7 @@ public class UserRepositoryImplTest {
 
 
     @Test
-    public void testFetchAll(){
+    public void testFindAll(){
         assertNotNull(userRepo);
         List<User> users = userRepo.findAll();
         assertNotNull(users);
@@ -58,7 +58,7 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void testFetchOne(){
+    public void testFindById(){
         assertNotNull(userRepo);
         User user = userRepo.findById(1L);
         assertNotNull(user);

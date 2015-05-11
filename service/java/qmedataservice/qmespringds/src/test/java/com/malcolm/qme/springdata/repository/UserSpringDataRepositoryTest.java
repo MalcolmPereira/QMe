@@ -45,7 +45,7 @@ public class UserSpringDataRepositoryTest {
     private UserSpringDataRepository userSpringDataRepo;
 
     @Test
-    public void testFetchAll(){
+    public void testFindAll(){
         assertNotNull(userSpringDataRepo);
         List<UserEntity> userEntities = userSpringDataRepo.findAll();
         assertNotNull(userEntities);
@@ -53,7 +53,7 @@ public class UserSpringDataRepositoryTest {
     }
 
     @Test
-    public void testFetchOne(){
+    public void testFindById(){
         assertNotNull(userSpringDataRepo);
         UserEntity userEntity = userSpringDataRepo.findOne(1L);
         assertNotNull(userEntity);
@@ -81,7 +81,7 @@ public class UserSpringDataRepositoryTest {
         assertThat(userEntity.getUserFirstName(), equalTo("First Name Updated"));
         assertThat(userEntity.getUserLastName(), equalTo("Last Name Updated"));
 
-        userSpringDataRepo.delete(userEntity);
+        userSpringDataRepo.delete(userID);
         userEntity = userSpringDataRepo.findOne(userID);
         assertNull(userEntity);
     }
@@ -116,7 +116,7 @@ public class UserSpringDataRepositoryTest {
         assertThat(userEntity.getUserFirstName(), equalTo("First Name Updated"));
         assertThat(userEntity.getUserLastName(), equalTo("Last Name Updated"));
 
-        userSpringDataRepo.delete(userEntity);
+        userSpringDataRepo.delete(userID);
         userEntity = userSpringDataRepo.findOne(userID);
         assertNull(userEntity);
 
@@ -152,7 +152,7 @@ public class UserSpringDataRepositoryTest {
         assertThat(userEntity.getUserFirstName(), equalTo("First Name Updated"));
         assertThat(userEntity.getUserLastName(), equalTo("Last Name Updated"));
 
-        userSpringDataRepo.delete(userEntity);
+        userSpringDataRepo.delete(userID);
         userEntity = userSpringDataRepo.findOne(userID);
         assertNull(userEntity);
 
