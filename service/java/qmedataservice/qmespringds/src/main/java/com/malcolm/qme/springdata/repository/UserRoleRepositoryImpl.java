@@ -82,8 +82,8 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 		if(userRole.getUserRoleID() > 0){
 			userRolesEntity.setUserRoleId(userRolesEntity.getUserRoleId());
 		}
-		userRolesEntity.setRoleId(userRolesEntity.getRoleId());
-		userRolesEntity.setUserId(userRolesEntity.getUserId());
+		userRolesEntity.setRoleId(userRole.getRoleID());
+		userRolesEntity.setUserId(userRole.getUserID());
 		return userRolesEntity;
 	}
 

@@ -6,15 +6,9 @@
  */
 package com.malcolm.qme.springdata.repository;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
-import java.util.Date;
-import java.util.List;
-
+import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +19,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import com.malcolm.qme.core.domain.User;
-import com.malcolm.qme.core.repository.UserRepository;
-import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import java.util.Date;
+import java.util.List;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.*;
 
 /**
  * @Author: malcolm

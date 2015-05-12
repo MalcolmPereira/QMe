@@ -7,6 +7,8 @@
 
 package com.malcolm.qme.springdata.repository;
 
+import com.malcolm.qme.core.domain.Role;
+import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.core.repository.UserRepository;
@@ -26,8 +28,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @Author: Malcolm
@@ -75,5 +76,177 @@ public class UserRoleRepositoryImplTest {
         UserRole userRole= userRoleRepository.findById(1L);
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), equalTo(1L));
+    }
+
+    @Test
+    public void testCRUD(){
+
+        assertNotNull(userRoleRepository);
+
+        assertNotNull(userRepo);
+
+        assertNotNull(roleRepo);
+
+        User user = new User("RoleRepositoryImplTest", "Test", "Test", "Test","RoleRepositoryImplTest@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+
+        long userID = user.getUserID();
+        user = userRepo.findById(userID);
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        Role role = new Role("RoleRepositoryImplTest","RoleRepositoryImplTest Desc");
+        role = roleRepo.save(role);
+        assertNotNull(role);
+        assertThat(role.getRoleID(), greaterThan(0));
+
+        Integer roleID = role.getRoleID();
+
+        role = roleRepo.findById(roleID);
+        assertNotNull(role);
+        assertThat(role.getRoleID(), equalTo(roleID));
+
+        UserRole userRole = new UserRole(roleID,userID);
+        userRole = userRoleRepository.save(userRole);
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), greaterThan(0L));
+
+        Long userRoleID = userRole.getUserRoleID();
+
+        userRole = userRoleRepository.findById(userRoleID);
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), equalTo(userRoleID));
+
+        userRoleRepository.delete(userRoleID);
+        userRole = userRoleRepository.findById(userRoleID);
+        assertNull(userRole);
+
+        roleRepo.delete(roleID);
+        role = roleRepo.findById(roleID);
+        assertNull(role);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
+    }
+
+    @Test
+    public void testFindByUserId(){
+
+        assertNotNull(userRoleRepository);
+
+        assertNotNull(userRepo);
+
+        assertNotNull(roleRepo);
+
+        User user = new User("RoleRepositoryImplTest ByUserID ", "Test", "Test", "Test","RoleRepositoryImplTestByUserID@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+
+        long userID = user.getUserID();
+        user = userRepo.findById(userID);
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        Role role = new Role("RoleRepositoryImplTest ByUserID","RoleRepositoryImplTest ByUserID Desc");
+        role = roleRepo.save(role);
+        assertNotNull(role);
+        assertThat(role.getRoleID(), greaterThan(0));
+
+        Integer roleID = role.getRoleID();
+
+        role = roleRepo.findById(roleID);
+        assertNotNull(role);
+        assertThat(role.getRoleID(), equalTo(roleID));
+
+        UserRole userRole = new UserRole(roleID,userID);
+        userRole = userRoleRepository.save(userRole);
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), greaterThan(0L));
+
+        Long userRoleID = userRole.getUserRoleID();
+
+        userRole = userRoleRepository.findById(userRoleID);
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), equalTo(userRoleID));
+
+        List<UserRole>  userRolesList = userRoleRepository.findByUserId(userID);
+        assertNotNull(userRolesList);
+        assertThat(userRolesList.size(), equalTo(1));
+
+        userRoleRepository.delete(userRoleID);
+        userRole = userRoleRepository.findById(userRoleID);
+        assertNull(userRole);
+
+        roleRepo.delete(roleID);
+        role = roleRepo.findById(roleID);
+        assertNull(role);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+    }
+
+    @Test
+    public void testFindByRoleId(){
+
+        assertNotNull(userRoleRepository);
+
+        assertNotNull(userRepo);
+
+        assertNotNull(roleRepo);
+
+        User user = new User("RoleRepositoryImplTest ByRoleId ", "Test", "Test", "Test","RoleRepositoryImplTestByRoleId@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+
+        long userID = user.getUserID();
+        user = userRepo.findById(userID);
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        Role role = new Role("RoleRepositoryImplTest ByRoleId","RoleRepositoryImplTest ByRoleId Desc");
+        role = roleRepo.save(role);
+        assertNotNull(role);
+        assertThat(role.getRoleID(), greaterThan(0));
+
+        Integer roleID = role.getRoleID();
+
+        role = roleRepo.findById(roleID);
+        assertNotNull(role);
+        assertThat(role.getRoleID(), equalTo(roleID));
+
+        UserRole userRole = new UserRole(roleID,userID);
+        userRole = userRoleRepository.save(userRole);
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), greaterThan(0L));
+
+        Long userRoleID = userRole.getUserRoleID();
+
+        userRole = userRoleRepository.findById(userRoleID);
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), equalTo(userRoleID));
+
+        List<UserRole>  userRolesList = userRoleRepository.findByRoleId(roleID);
+        assertNotNull(userRolesList);
+        assertThat(userRolesList.size(), equalTo(1));
+
+        userRoleRepository.delete(userRoleID);
+        userRole = userRoleRepository.findById(userRoleID);
+        assertNull(userRole);
+
+        roleRepo.delete(roleID);
+        role = roleRepo.findById(roleID);
+        assertNull(role);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
     }
 }

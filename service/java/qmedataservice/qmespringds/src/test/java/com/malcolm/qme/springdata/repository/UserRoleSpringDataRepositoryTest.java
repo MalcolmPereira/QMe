@@ -234,7 +234,7 @@ public class UserRoleSpringDataRepositoryTest {
         assertNotNull(userRolesEntity);
         assertThat(userRolesEntity.getUserRoleId(), equalTo(userRoleID));
 
-        List<UserRolesEntity>  userRolesEntityList = userRoleSpringDataRepository.findByUserId(userID);
+        List<UserRolesEntity>  userRolesEntityList = userRoleSpringDataRepository.findByRoleId(roleID);
         assertNotNull(userRolesEntityList);
         assertThat(userRolesEntityList.size(), equalTo(1));
 
