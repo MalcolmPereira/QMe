@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.springdata.repository.UserRepositoryImplTest.java
  * Date      : 5/4/2015
  * Developer : Malcolm
- * Purpose   : Tests for SpringData JPA UserEntity Repository Implemetation
+ * Purpose   : Tests for User Repository Implementation
  */
 package com.malcolm.qme.springdata.repository;
 
