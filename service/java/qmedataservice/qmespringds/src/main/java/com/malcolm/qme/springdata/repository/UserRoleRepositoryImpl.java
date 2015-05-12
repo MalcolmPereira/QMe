@@ -34,6 +34,16 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	}
 
 	@Override
+	public List<UserRole> findByUserId(Long userID) {
+		return (getUserRole(userRoleSpringDataRepository.findByUserId(userID)));
+	}
+
+	@Override
+	public List<UserRole> findByRoleId(Integer roleID) {
+		return (getUserRole(userRoleSpringDataRepository.findByRoleId(roleID)));
+	}
+
+	@Override
 	public UserRole findById(Long id) {
 		UserRolesEntity userRolesEntity = userRoleSpringDataRepository.findOne(id);
 		if(userRolesEntity != null){
@@ -59,18 +69,6 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	@Override
 	public void delete(Long id) {
 		userRoleSpringDataRepository.delete(id);
-	}
-
-	@Override
-	public List<UserRole> findByUserId(Long userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<UserRole> findByRoleId(Integer roleID) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
