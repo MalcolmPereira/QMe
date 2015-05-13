@@ -73,7 +73,7 @@ public class UserRepositoryImplTest {
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
 
-        long userID = user.getUserID();
+        Long userID = user.getUserID();
         user = userRepo.findById(userID);
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
@@ -113,7 +113,7 @@ public class UserRepositoryImplTest {
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
 
-        long userID = user.getUserID();
+        Long userID = user.getUserID();
         user = userRepo.findById(userID);
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
@@ -159,7 +159,7 @@ public class UserRepositoryImplTest {
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
 
-        long userID = user.getUserID();
+        Long userID = user.getUserID();
         user = userRepo.findById(userID);
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
