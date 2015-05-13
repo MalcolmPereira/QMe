@@ -83,11 +83,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         }
         if(category.getCategoryParentID() > 0){
             categoryEntity.setCatParentId(category.getCategoryParentID());
+        }else{
+            categoryEntity.setCatParentId(0L);
         }
         categoryEntity.setCatName(category.getCategoryName());
-        if(category.getCategoryLikes() > 0){
-            categoryEntity.setCatLikes(category.getCategoryLikes());
-        }
+        categoryEntity.setCatLikes(category.getCategoryLikes());
         if(category.getCategoryCreateDate() != null)    {
             categoryEntity.setCatCreateDate(category.getCategoryCreateDate());
         }else{
