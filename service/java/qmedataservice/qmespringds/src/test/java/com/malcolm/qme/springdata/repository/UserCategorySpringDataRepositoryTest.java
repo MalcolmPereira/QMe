@@ -104,7 +104,7 @@ public class UserCategorySpringDataRepositoryTest {
 
         userCategoryEntity = userCategorySpringDataRepo.findOne(userCatID);
         assertNotNull(userCategoryEntity);
-        assertThat(userCategoryEntity.getCatId(), equalTo(userCatID));
+        assertThat(userCategoryEntity.getUserCatId(), equalTo(userCatID));
 
         userCategorySpringDataRepo.delete(userCatID);
         userCategoryEntity = userCategorySpringDataRepo.findOne(userCatID);
@@ -147,7 +147,7 @@ public class UserCategorySpringDataRepositoryTest {
 
         userCategoryEntity = userCategorySpringDataRepo.findOne(userCatID);
         assertNotNull(userCategoryEntity);
-        assertThat(userCategoryEntity.getCatId(), equalTo(userCatID));
+        assertThat(userCategoryEntity.getUserCatId(), equalTo(userCatID));
 
         List<UserCategoryEntity> userCategoryEntityList = userCategorySpringDataRepo.findByUserId(userID);
         assertNotNull(userCategoryEntityList);
