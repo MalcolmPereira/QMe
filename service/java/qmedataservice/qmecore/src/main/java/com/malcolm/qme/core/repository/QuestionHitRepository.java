@@ -11,5 +11,5 @@ import com.malcolm.qme.core.domain.QuestionHit;
 /**
  * @Author: Malcolm
  */
-public interface QuestionHitRepository extends QMeRepository<QuestionHit> {
+public interface QuestionHitRepository extends QMeRepository<QuestionHit,Long> {
 }

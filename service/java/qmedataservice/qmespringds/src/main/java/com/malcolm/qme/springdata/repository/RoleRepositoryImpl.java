@@ -72,7 +72,7 @@ public class RoleRepositoryImpl implements RoleRepository {
 		roleSpringDataRepository.delete(id);
 
 	}
-
+	
 	/**
 	 * Map Role Domain Object to RoleEntity
 	 * 
@@ -118,6 +118,8 @@ public class RoleRepositoryImpl implements RoleRepository {
 				roleEntity.getRoleName(),
 		roleEntity.getRoleDesc());
 	}
+
+	
 
 
 }

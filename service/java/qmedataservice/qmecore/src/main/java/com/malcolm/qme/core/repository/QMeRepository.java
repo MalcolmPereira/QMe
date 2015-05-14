@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface QMeRepository<T> {
+public interface QMeRepository<T,I> {
     /**
      * Find all
      * @return
@@ -24,7 +24,7 @@ public interface QMeRepository<T> {
      * @param id
      * @return
      */
-    public T findById(Long id);
+    public T findById(I id);
 
     /**
      * Save
@@ -48,5 +48,5 @@ public interface QMeRepository<T> {
      *
      * @param id
      */
-    public void delete(Long id);
+    public void delete(I id);
 }

@@ -12,7 +12,7 @@ import com.malcolm.qme.core.domain.User;
 /**
  * @Author: Malcolm
  */
-public interface UserRepository extends QMeRepository<User>{
+public interface UserRepository extends QMeRepository<User,Long>{
     /**
      * Find User By User Name
      * @param userName

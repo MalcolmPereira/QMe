@@ -35,8 +35,9 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	}
 
 	@Override
-	public UserQuestionLikes findById(Long id) {
-		UserQuestionLikesEntity userQuestionLikesEntity = userQuestionLikesSpringDataRepository.findOne(id);  
+	public UserQuestionLikes findById(UserQuestionLikes userQuestionLikes) {
+		UserQuestionLikesEntityId  userQuestionLikesEntityId = getUserQuestionLikesEntityId(userQuestionLikes);
+		UserQuestionLikesEntity userQuestionLikesEntity = userQuestionLikesSpringDataRepository.findOne(userQuestionLikesEntityId);  
 		if(userQuestionLikesEntity != null){
             return getUserQuestionLikes(userQuestionLikesEntity);
         }
@@ -58,8 +59,9 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	}
 
 	@Override
-	public void delete(Long id) {
-		userQuestionLikesSpringDataRepository.delete(id);
+	public void delete(UserQuestionLikes userQuestionLikes) {
+		UserQuestionLikesEntityId  userQuestionLikesEntityId = getUserQuestionLikesEntityId(userQuestionLikes);
+		userQuestionLikesSpringDataRepository.delete(userQuestionLikesEntityId);
 	}
 
 	@Override
@@ -72,6 +74,20 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	public List<UserQuestionLikes> findByQuestionId(Long questionID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Map UserQuestionLikes Domain Object to UserQuestionLikesEntityId 
+	 * 
+	 * @param userQuestionLikes
+	 * @return
+	 */
+	private UserQuestionLikesEntityId getUserQuestionLikesEntityId(UserQuestionLikes userQuestionLikes){
+		UserQuestionLikesEntityId  userQuestionLikesEntityId = new UserQuestionLikesEntityId();
+		userQuestionLikesEntityId.setUserId(userQuestionLikes.getUserID());
+		userQuestionLikesEntityId.setQuestionId(userQuestionLikes.getQuestionID());
+		return  userQuestionLikesEntityId;
+		
 	}
 	
 	/**

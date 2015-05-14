@@ -352,6 +352,12 @@ VALUES (1, 1);
 INSERT INTO USER_CATEGORY(USER_ID, CAT_ID) 
 VALUES (1, 2);
 
+-- Add User Categories Likes
+INSERT INTO USER_CATEGORY_LIKES (USER_ID,CAT_ID) 
+VALUES (1, 1);
+INSERT INTO USER_CATEGORY_LIKES (USER_ID,CAT_ID) 
+VALUES (1, 2);
+
 -- Add Questions/Answer Options and Answer Reference for Default Java Quiz
 
 

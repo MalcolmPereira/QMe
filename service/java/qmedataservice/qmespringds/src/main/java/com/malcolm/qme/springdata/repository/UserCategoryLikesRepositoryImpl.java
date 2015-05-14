@@ -35,8 +35,9 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	}
 
 	@Override
-	public UserCategoryLikes findById(Long id) {
-		UserCategoryLikesEntity userCategoryLikesEntity = userCategoryLikesSpringDataRepository.findOne(id);
+	public UserCategoryLikes findById(UserCategoryLikes userCategoryLikes) {
+		UserCategoryLikesEntityId userCategoryLikesEntityId = getUserCategoryLikesEntityId(userCategoryLikes);
+		UserCategoryLikesEntity userCategoryLikesEntity = userCategoryLikesSpringDataRepository.findOne(userCategoryLikesEntityId);
 		if(userCategoryLikesEntity != null){
 			return getUserCategoryLikes(userCategoryLikesEntity);
 		}
@@ -58,13 +59,27 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	}
 
 	@Override
-	public void delete(Long id) {
-		userCategoryLikesSpringDataRepository.delete(id);
+	public void delete(UserCategoryLikes userCategoryLikes) {
+		UserCategoryLikesEntityId userCategoryLikesEntityId = getUserCategoryLikesEntityId(userCategoryLikes);
+		userCategoryLikesSpringDataRepository.delete(userCategoryLikesEntityId);
 	}
 
 	@Override
 	public List<UserCategoryLikes> findByUserId(Long userID) {
 		return null;
+	}
+	
+	/**
+	 * Map UserCategoryLikes Domain Object to UserCategoryLikesEntityId
+	 * 
+	 * @param userCategoryLikes
+	 * @return
+	 */
+	private UserCategoryLikesEntityId getUserCategoryLikesEntityId(UserCategoryLikes userCategoryLikes){
+		UserCategoryLikesEntityId userCategoryLikesEntityId = new UserCategoryLikesEntityId();
+		userCategoryLikesEntityId.setUserId(userCategoryLikes.getUserID());
+		userCategoryLikesEntityId.setCatId(userCategoryLikes.getCategoryID());
+		return userCategoryLikesEntityId;
 	}
 	
 	/**

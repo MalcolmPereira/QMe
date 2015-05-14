@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface AnswerOptionMediaRepository extends QMeRepository<AnswerOptionMedia> {
+public interface AnswerOptionMediaRepository extends QMeRepository<AnswerOptionMedia,Long> {
     /**
      * Find By Question Id
      *

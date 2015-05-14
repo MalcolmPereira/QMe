@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface AnswerOptionRepository extends QMeRepository<AnswerOption> {
+public interface AnswerOptionRepository extends QMeRepository<AnswerOption,Long> {
 
     /**
      * Find By Question Id

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface AnswerReferenceMediaRepository extends QMeRepository<AnswerReferenceMedia> {
+public interface AnswerReferenceMediaRepository extends QMeRepository<AnswerReferenceMedia,Long> {
 
     /**
      * Find By Question Id

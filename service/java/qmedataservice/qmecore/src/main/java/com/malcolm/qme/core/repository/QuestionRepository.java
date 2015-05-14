@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface QuestionRepository extends QMeRepository<Question> {
+public interface QuestionRepository extends QMeRepository<Question,Long> {
 
     /**
      * Find By Category

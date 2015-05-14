@@ -7,10 +7,12 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.springdata.entity.UserQuizLikesEntity;
+import com.malcolm.qme.springdata.entity.UserQuizLikesEntityId;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @Author: Malcolm
  */
-public interface UserQuizLikesSpringDataRepository extends JpaRepository<UserQuizLikesEntity, Long> {
+public interface UserQuizLikesSpringDataRepository extends JpaRepository<UserQuizLikesEntity, UserQuizLikesEntityId> {
 }

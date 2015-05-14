@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface UserCategoryRepository extends QMeRepository<UserCategory> {
+public interface UserCategoryRepository extends QMeRepository<UserCategory,Long> {
 
     /**
      * Find By User ID

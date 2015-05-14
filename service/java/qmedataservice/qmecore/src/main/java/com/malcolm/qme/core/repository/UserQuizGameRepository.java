@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @Author: Malcolm
  */
-public interface UserQuizGameRepository extends QMeRepository<UserQuizGame> {
+public interface UserQuizGameRepository extends QMeRepository<UserQuizGame,Long> {
     /**
      * Find By User ID
      *

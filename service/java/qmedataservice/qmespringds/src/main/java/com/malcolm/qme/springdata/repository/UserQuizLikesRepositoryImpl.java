@@ -46,8 +46,9 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
     }
 
     @Override
-    public UserQuizLikes findById(Long id) {
-    	UserQuizLikesEntity userQuizLikesEntity = userQuizLikesSpringDataRepository.findOne(id);
+    public UserQuizLikes findById(UserQuizLikes userQuizLikes) {
+    	UserQuizLikesEntityId userQuizLikesEntityId = getUserQuizLikesEntityId(userQuizLikes);
+    	UserQuizLikesEntity userQuizLikesEntity = userQuizLikesSpringDataRepository.findOne(userQuizLikesEntityId);
     	if(userQuizLikesEntity != null){
     		return getUserQuizLikes(userQuizLikesEntity);
     	}
@@ -69,8 +70,23 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
     }
 
     @Override
-    public void delete(Long id) {
-    	userQuizLikesSpringDataRepository.delete(id);
+    public void delete(UserQuizLikes userQuizLikes) {
+    	UserQuizLikesEntityId userQuizLikesEntityId = getUserQuizLikesEntityId(userQuizLikes);
+    	userQuizLikesSpringDataRepository.delete(userQuizLikesEntityId);
+    }
+    
+    
+    /**
+     * Map UserQuizLikes Domain Object to UserQuizLikesEntityId 
+     * 
+     * @param userQuizLikes
+     * @return
+     */
+    private UserQuizLikesEntityId getUserQuizLikesEntityId(UserQuizLikes userQuizLikes) {
+    	UserQuizLikesEntityId userQuizLikesEntityId = new UserQuizLikesEntityId();
+    	userQuizLikesEntityId.setUserId(userQuizLikes.getUserID());
+    	userQuizLikesEntityId.setQuizId(userQuizLikes.getQuizID());
+    	return userQuizLikesEntityId;
     }
     
     /**

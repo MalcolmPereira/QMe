@@ -16,17 +16,17 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses(
 		{ 
-			//AnswerOptionMediaSpringDataRepositoryTest.class,
-			CategoryRepositoryImplTest.class,
-			CategorySpringDataRepositoryTest.class, 
-			RoleRepositoryImplTest.class,
 			RoleSpringDataRepositoryTest.class,
-			UserCategoryRepositoryImplTest.class,
-			UserCategorySpringDataRepositoryTest.class,
-			UserRoleRepositoryImplTest.class,
-			UserRoleSpringDataRepositoryTest.class,
+			RoleRepositoryImplTest.class,
+			UserSpringDataRepositoryTest.class, 
 			UserRepositoryImplTest.class, 
-			UserSpringDataRepositoryTest.class 
+			UserRoleSpringDataRepositoryTest.class,
+			CategorySpringDataRepositoryTest.class, 
+			CategoryRepositoryImplTest.class,
+			UserRoleRepositoryImplTest.class,
+			UserCategorySpringDataRepositoryTest.class,
+			UserCategoryRepositoryImplTest.class,
+			UserCategoryLikesSpringDataRepositoryTest.class
 	}
 )
 public class AllRepositoryTests {

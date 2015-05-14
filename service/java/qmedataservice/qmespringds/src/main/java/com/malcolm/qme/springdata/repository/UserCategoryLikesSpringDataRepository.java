@@ -10,9 +10,10 @@ package com.malcolm.qme.springdata.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.malcolm.qme.springdata.entity.UserCategoryLikesEntity;
+import com.malcolm.qme.springdata.entity.UserCategoryLikesEntityId;
 
 /**
  * @Author: Malcolm
  */
-interface UserCategoryLikesSpringDataRepository extends JpaRepository<UserCategoryLikesEntity, Long> {
+interface UserCategoryLikesSpringDataRepository extends JpaRepository<UserCategoryLikesEntity, UserCategoryLikesEntityId> {
 }
