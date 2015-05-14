@@ -1,6 +1,6 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 4, 2015 10:39:47 PM by Hibernate Tools 4.3.1
+// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -65,10 +65,10 @@ public class UserQuizGameEntityId implements java.io.Serializable {
 		return ((this.getUserId() == castOther.getUserId()) || (this
 				.getUserId() != null && castOther.getUserId() != null && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getCatId().equals(castOther.getCatId())) || (this
+				&& ((this.getCatId() == castOther.getCatId()) || (this
 						.getCatId() != null && castOther.getCatId() != null && this
 						.getCatId().equals(castOther.getCatId())))
-				&& ((this.getQuizGameToken().equals(castOther.getQuizGameToken())) || (this
+				&& ((this.getQuizGameToken() == castOther.getQuizGameToken()) || (this
 						.getQuizGameToken() != null
 						&& castOther.getQuizGameToken() != null && this
 						.getQuizGameToken()

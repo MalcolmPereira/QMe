@@ -1,6 +1,6 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 4, 2015 10:39:47 PM by Hibernate Tools 4.3.1
+// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,25 +16,22 @@ import javax.persistence.Table;
 @Table(name = "ANSWER_REFERENCE_MEDIA", catalog = "qme")
 public class AnswerReferenceMediaEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = -7353838286698930968L;
+	private static final long serialVersionUID = 5127686293574230507L;
 	
 	private Long answerRefMediaId;
 	private Long questionId;
-	private Integer refMediaType;
+	private Integer mediaTypeId;
+	private String refMediaMime;
 	private byte[] refMedia;
 
 	public AnswerReferenceMediaEntity() {
 	}
 
-	public AnswerReferenceMediaEntity(Long questionId, Integer refMediaType) {
+	public AnswerReferenceMediaEntity(Long questionId, Integer mediaTypeId,
+			String refMediaMime, byte[] refMedia) {
 		this.questionId = questionId;
-		this.refMediaType = refMediaType;
-	}
-
-	public AnswerReferenceMediaEntity(Long questionId, Integer refMediaType,
-			byte[] refMedia) {
-		this.questionId = questionId;
-		this.refMediaType = refMediaType;
+		this.mediaTypeId = mediaTypeId;
+		this.refMediaMime = refMediaMime;
 		this.refMedia = refMedia;
 	}
 
@@ -58,16 +55,25 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 		this.questionId = questionId;
 	}
 
-	@Column(name = "MEDIA_TYPE_ID", nullable = false, length = 50)
-	public Integer getRefMediaType() {
-		return this.refMediaType;
+	@Column(name = "MEDIA_TYPE_ID", nullable = false)
+	public Integer getMediaTypeId() {
+		return this.mediaTypeId;
 	}
 
-	public void setRefMediaType(Integer refMediaType) {
-		this.refMediaType = refMediaType;
+	public void setMediaTypeId(Integer mediaTypeId) {
+		this.mediaTypeId = mediaTypeId;
 	}
 
-	@Column(name = "REF_MEDIA")
+	@Column(name = "REF_MEDIA_MIME", nullable = false, length = 150)
+	public String getRefMediaMime() {
+		return this.refMediaMime;
+	}
+
+	public void setRefMediaMime(String refMediaMime) {
+		this.refMediaMime = refMediaMime;
+	}
+
+	@Column(name = "REF_MEDIA", nullable = false)
 	public byte[] getRefMedia() {
 		return this.refMedia;
 	}
@@ -75,4 +81,5 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 	public void setRefMedia(byte[] refMedia) {
 		this.refMedia = refMedia;
 	}
+
 }

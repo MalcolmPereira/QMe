@@ -9,6 +9,7 @@
 	<table-filter match-catalog="qme" match-name="ANSWER_OPTION" />
 	<table-filter match-catalog="qme" match-name="ANSWER_OPTION_MEDIA" />
 	<table-filter match-catalog="qme" match-name="ANSWER_REFERENCE_MEDIA" />
+	<table-filter match-catalog="qme" match-name="MEDIA_TYPE" />
 	<table-filter match-catalog="qme" match-name="CATEGORY" />
 	<table-filter match-catalog="qme" match-name="QUESTION" />
 	<table-filter match-catalog="qme" match-name="QUESTION_HIT" />
@@ -37,6 +38,9 @@
 	</table>
 	<table catalog="qme" name="ANSWER_REFERENCE_MEDIA"
 		   class="com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity">
+	</table>
+	<table catalog="qme" name="MEDIA_TYPE"
+		   class="com.malcolm.qme.springdata.entity.MediaTypeEntity">
 	</table>
 	<table catalog="qme" name="QUIZ"
 		   class="com.malcolm.qme.springdata.entity.QuizEntity">

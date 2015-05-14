@@ -5,11 +5,13 @@
  * Purpose   : QMe User Quiz Game Repository Implementation
  */
 
-package com.malcolm.qme.springdata.entity;
+package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuizGame;
 import com.malcolm.qme.core.repository.UserQuizGameRepository;
-import com.malcolm.qme.springdata.repository.UserQuizGameSpringDataRepository;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

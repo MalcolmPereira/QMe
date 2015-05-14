@@ -1,6 +1,6 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 4, 2015 10:39:47 PM by Hibernate Tools 4.3.1
+// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,25 +16,22 @@ import javax.persistence.Table;
 @Table(name = "ANSWER_OPTION_MEDIA", catalog = "qme")
 public class AnswerOptionMediaEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 5792900660188386851L;
+	private static final long serialVersionUID = 5004836789617623451L;
 	
 	private Long optionMediaId;
 	private Long optionId;
-	private Integer optionMediaType;
+	private Integer mediaTypeId;
+	private String optionMediaMime;
 	private byte[] optionMedia;
 
 	public AnswerOptionMediaEntity() {
 	}
 
-	public AnswerOptionMediaEntity(Long optionId, Integer optionMediaType) {
+	public AnswerOptionMediaEntity(Long optionId, Integer mediaTypeId,
+			String optionMediaMime, byte[] optionMedia) {
 		this.optionId = optionId;
-		this.optionMediaType = optionMediaType;
-	}
-
-	public AnswerOptionMediaEntity(Long optionId, Integer optionMediaType,
-			byte[] optionMedia) {
-		this.optionId = optionId;
-		this.optionMediaType = optionMediaType;
+		this.mediaTypeId = mediaTypeId;
+		this.optionMediaMime = optionMediaMime;
 		this.optionMedia = optionMedia;
 	}
 
@@ -58,16 +55,25 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 		this.optionId = optionId;
 	}
 
-	@Column(name = "MEDIA_TYPE_ID", nullable = false, length = 50)
-	public Integer getOptionMediaType() {
-		return this.optionMediaType;
+	@Column(name = "MEDIA_TYPE_ID", nullable = false)
+	public Integer getMediaTypeId() {
+		return this.mediaTypeId;
 	}
 
-	public void setOptionMediaType(Integer optionMediaType) {
-		this.optionMediaType = optionMediaType;
+	public void setMediaTypeId(Integer mediaTypeId) {
+		this.mediaTypeId = mediaTypeId;
 	}
 
-	@Column(name = "OPTION_MEDIA")
+	@Column(name = "OPTION_MEDIA_MIME", nullable = false, length = 150)
+	public String getOptionMediaMime() {
+		return this.optionMediaMime;
+	}
+
+	public void setOptionMediaMime(String optionMediaMime) {
+		this.optionMediaMime = optionMediaMime;
+	}
+
+	@Column(name = "OPTION_MEDIA", nullable = false)
 	public byte[] getOptionMedia() {
 		return this.optionMedia;
 	}

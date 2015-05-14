@@ -1,6 +1,6 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 4, 2015 10:39:47 PM by Hibernate Tools 4.3.1
+// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,6 +11,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class UserQuizLikesEntityId implements java.io.Serializable {
 
+	
 	private static final long serialVersionUID = -2710987586087887522L;
 	
 	private Long userId;
@@ -54,7 +55,7 @@ public class UserQuizLikesEntityId implements java.io.Serializable {
 		return ((this.getUserId() == castOther.getUserId()) || (this
 				.getUserId() != null && castOther.getUserId() != null && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getQuizId().equals(castOther.getQuizId())) || (this
+				&& ((this.getQuizId() == castOther.getQuizId()) || (this
 						.getQuizId() != null && castOther.getQuizId() != null && this
 						.getQuizId().equals(castOther.getQuizId())));
 	}

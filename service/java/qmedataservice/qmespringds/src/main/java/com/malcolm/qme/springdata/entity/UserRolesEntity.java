@@ -1,6 +1,6 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 4, 2015 10:39:47 PM by Hibernate Tools 4.3.1
+// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Table(name = "USER_ROLES", catalog = "qme")
 public class UserRolesEntity implements java.io.Serializable {
 
+	
 	private static final long serialVersionUID = 8593806823811122424L;
 	
 	private Long userRoleId;

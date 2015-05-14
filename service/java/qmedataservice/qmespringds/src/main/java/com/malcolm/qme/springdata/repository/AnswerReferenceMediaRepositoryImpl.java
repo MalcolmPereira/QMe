@@ -83,7 +83,7 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
     		answerReferenceMediaEntity.setQuestionId(answerReferenceMedia.getQuestionID());
     	}
     	if(answerReferenceMedia.getMediaType() != null) {
-    		answerReferenceMediaEntity.setRefMediaType(answerReferenceMedia.getMediaType().getId());
+    		answerReferenceMediaEntity.setMediaTypeId(answerReferenceMedia.getMediaType().getId());
         }
     	if(answerReferenceMedia.getMedia() != null) {
     		answerReferenceMediaEntity.setRefMedia(answerReferenceMedia.getMedia());
@@ -117,7 +117,7 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
     private AnswerReferenceMedia getAnswerReferenceMedia(AnswerReferenceMediaEntity answerReferenceMediaEntity){
     	return new AnswerReferenceMedia(answerReferenceMediaEntity.getAnswerRefMediaId(),
     				answerReferenceMediaEntity.getQuestionId(), 
-    				MediaTypeEnum.fromId(answerReferenceMediaEntity.getRefMediaType()), 
+    				MediaTypeEnum.fromId(answerReferenceMediaEntity.getMediaTypeId()), 
     				answerReferenceMediaEntity.getRefMedia());
     }
     

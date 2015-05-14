@@ -1,6 +1,6 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 4, 2015 10:39:47 PM by Hibernate Tools 4.3.1
+// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "CATEGORY", catalog = "qme", uniqueConstraints = @UniqueConstraint(columnNames = "CAT_NAME"))
 public class CategoryEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 7450015211498125076L;
+	private static final long serialVersionUID = -5184527654571520450L;
 	
 	private Long catId;
 	private String catName;
@@ -41,7 +41,7 @@ public class CategoryEntity implements java.io.Serializable {
 	}
 
 	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
-			Long catCreateUser,Long catLikes) {
+			Long catCreateUser, Long catLikes) {
 		this.catName = catName;
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
@@ -105,4 +105,5 @@ public class CategoryEntity implements java.io.Serializable {
 	public void setCatLikes(Long catLikes) {
 		this.catLikes = catLikes;
 	}
+
 }
