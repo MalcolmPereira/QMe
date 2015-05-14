@@ -33,6 +33,16 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	public List<UserQuestionLikes> findAll() {
     	return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findAll()));
 	}
+    
+    @Override
+	public List<UserQuestionLikes> findByUserId(Long userID) {
+    	return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByUserId(userID)));
+	}
+
+	@Override
+	public List<UserQuestionLikes> findByQuestionId(Long questionID) {
+		return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByQuestionId(questionID)));
+	}
 
 	@Override
 	public UserQuestionLikes findById(UserQuestionLikes userQuestionLikes) {
@@ -64,18 +74,6 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 		userQuestionLikesSpringDataRepository.delete(userQuestionLikesEntityId);
 	}
 
-	@Override
-	public List<UserQuestionLikes> findByUserId(Long userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<UserQuestionLikes> findByQuestionId(Long questionID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	/**
 	 * Map UserQuestionLikes Domain Object to UserQuestionLikesEntityId 
 	 * 

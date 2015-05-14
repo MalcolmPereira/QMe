@@ -30,8 +30,10 @@ import org.junit.runners.Suite.SuiteClasses;
 			UserCategoryLikesRepositoryImplTest.class,
 			QuestionSpringDataRepositoryTest.class,
 			QuestionRepositoryImplTest.class,
-			CategorySpringDataRepositoryTest.class,
-			QuestionHitRepositoryImplTest.class
+			QuestionHitSpringDataRepositoryTest.class,
+			QuestionHitRepositoryImplTest.class,
+			UserQuestionLikesSpringDataRepositoryTest.class,
+			UserQuestionLikesRepositoryImplTest.class
 			
 	}
 )
