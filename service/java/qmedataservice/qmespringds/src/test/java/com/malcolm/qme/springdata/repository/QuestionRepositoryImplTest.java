@@ -42,7 +42,7 @@ import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 public class QuestionRepositoryImplTest {
 
 	/**
-     * Spring Data UserEntity Repository
+     * Question Repository
      */
     @Autowired
     @Qualifier("QuestionRepository")

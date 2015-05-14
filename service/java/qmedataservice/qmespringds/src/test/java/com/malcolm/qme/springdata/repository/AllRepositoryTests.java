@@ -29,7 +29,9 @@ import org.junit.runners.Suite.SuiteClasses;
 			UserCategoryLikesSpringDataRepositoryTest.class,
 			UserCategoryLikesRepositoryImplTest.class,
 			QuestionSpringDataRepositoryTest.class,
-			QuestionRepositoryImplTest.class
+			QuestionRepositoryImplTest.class,
+			CategorySpringDataRepositoryTest.class,
+			QuestionHitRepositoryImplTest.class
 			
 	}
 )
