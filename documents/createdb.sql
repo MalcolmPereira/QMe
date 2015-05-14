@@ -397,9 +397,9 @@ VALUES(1,"Some Question Text 1","Some Answer",0,CURRENT_TIMESTAMP,1,CURRENT_TIME
 INSERT INTO QUESTION (CAT_ID, QUESTION_TEXT, QUESTION_ANSWER, QUESTION_LIKES, QUESTION_CREATE_DATE, QUESTION_CREATE_USER, QUESTION_UPDATE_DATE, QUESTION_UPDATE_USER)
 VALUES(1,"Some Question Text 2","Some Answer",0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
--- Add Answer Reference Media
+-- Add Answer Reference Media (Note need to have image file available in some temp directory for loading BLOB image)
 INSERT INTO ANSWER_REFERENCE_MEDIA (QUESTION_ID, MEDIA_TYPE_ID, REF_MEDIA_MIME,REF_MEDIA) 
-VALUES ('1', '1', 'image/png', '/tmp/cube.png');
+VALUES ('1', '1', 'image/png', load_file('/tmp/cube.png'));
 
 -- Add Question Hits
 INSERT INTO QUESTION_HIT(QUESTION_ID,CAT_ID,QUESTION_HIT,RIGHT_COUNT,WRONG_COUNT)
