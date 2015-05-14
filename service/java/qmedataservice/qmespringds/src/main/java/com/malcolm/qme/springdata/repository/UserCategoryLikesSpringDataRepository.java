@@ -21,5 +21,5 @@ import com.malcolm.qme.springdata.entity.UserCategoryLikesEntityId;
 interface UserCategoryLikesSpringDataRepository extends JpaRepository<UserCategoryLikesEntity, UserCategoryLikesEntityId> {
 	
 	@Query(value = "SELECT * FROM USER_CATEGORY_LIKES WHERE USER_ID = ?1", nativeQuery = true)
-	List<UserCategoryLikesEntity> findByUserID(Long userId);
+	List<UserCategoryLikesEntity> findByUserId(Long userId);
 }

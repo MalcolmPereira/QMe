@@ -131,7 +131,7 @@ public class UserCategoryLikesSpringDataRepositoryTest {
     }    
     
     @Test
-    public void testByUserId(){
+    public void testFindByUserId(){
     	assertNotNull(userCategoryLikesSpringDataRepo);
         
         assertNotNull(userSpringDataRepo);
@@ -163,7 +163,7 @@ public class UserCategoryLikesSpringDataRepositoryTest {
         assertThat(userCategoryLikesEntity.getId().getUserId(), equalTo(userID));
         assertThat(userCategoryLikesEntity.getId().getCatId(), equalTo(catID));
         
-        List<UserCategoryLikesEntity> userCategoryLikesEntityList = userCategoryLikesSpringDataRepo.findByUserID(userID);
+        List<UserCategoryLikesEntity> userCategoryLikesEntityList = userCategoryLikesSpringDataRepo.findByUserId(userID);
         assertNotNull(userCategoryLikesEntityList);
         assertThat(userCategoryLikesEntityList.size(), equalTo(1));
         

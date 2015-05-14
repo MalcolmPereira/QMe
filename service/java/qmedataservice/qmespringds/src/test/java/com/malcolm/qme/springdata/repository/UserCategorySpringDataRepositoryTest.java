@@ -74,6 +74,7 @@ public class UserCategorySpringDataRepositoryTest {
         UserCategoryEntity userCategoryEntity = userCategorySpringDataRepo.findOne(1L);
         assertNotNull(userCategoryEntity);
         assertThat(userCategoryEntity.getCatId(), equalTo(1L));
+        assertThat(userCategoryEntity.getUserId(), equalTo(1L));
     }
 
     @Test

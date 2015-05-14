@@ -33,6 +33,11 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	public List<UserCategoryLikes> findAll() {
 		return(getUserCategoryLikes(userCategoryLikesSpringDataRepository.findAll()));
 	}
+	
+	@Override
+	public List<UserCategoryLikes> findByUserId(Long userID) {
+		return(getUserCategoryLikes(userCategoryLikesSpringDataRepository.findByUserId(userID)));
+	}
 
 	@Override
 	public UserCategoryLikes findById(UserCategoryLikes userCategoryLikes) {
@@ -64,11 +69,6 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 		userCategoryLikesSpringDataRepository.delete(userCategoryLikesEntityId);
 	}
 
-	@Override
-	public List<UserCategoryLikes> findByUserId(Long userID) {
-		return null;
-	}
-	
 	/**
 	 * Map UserCategoryLikes Domain Object to UserCategoryLikesEntityId
 	 * 
