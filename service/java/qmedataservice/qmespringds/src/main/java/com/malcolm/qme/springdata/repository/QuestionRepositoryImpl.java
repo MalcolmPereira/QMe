@@ -36,7 +36,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
 	@Override
 	public List<Question> findByMostLiked() {
-		return(getQuestion(questionSpringDataRepository.findTop50ByOrderByQuestionLikes()));
+		return(getQuestion(questionSpringDataRepository.findTop50ByOrderByQuestionLikesDesc()));
 	}
     
 	@Override
