@@ -4,10 +4,9 @@ package com.malcolm.qme.core.domain;
  * Created by malcolm on 5/2/15.
  */
 public enum MediaTypeEnum {
-	//TODO: Add Media Type by mime-types
-    LINK(1,"LINK"),
-    IMAGE(2,"IMAGE"),
-    VIDEO(3,"VIDEO"),
+	IMAGE(1,"IMAGE"),
+    VIDEO(2,"VIDEO"),
+    AUDIO(3,"AUDIO"),
     FILE(4,"FILE")
 	;
 	/**
