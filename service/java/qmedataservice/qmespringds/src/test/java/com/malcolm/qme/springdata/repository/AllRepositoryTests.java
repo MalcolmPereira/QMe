@@ -27,7 +27,10 @@ import org.junit.runners.Suite.SuiteClasses;
 			UserCategorySpringDataRepositoryTest.class,
 			UserCategoryRepositoryImplTest.class,
 			UserCategoryLikesSpringDataRepositoryTest.class,
-			UserCategoryLikesRepositoryImplTest.class
+			UserCategoryLikesRepositoryImplTest.class,
+			QuestionSpringDataRepositoryTest.class,
+			QuestionRepositoryImplTest.class
+			
 	}
 )
 public class AllRepositoryTests {
