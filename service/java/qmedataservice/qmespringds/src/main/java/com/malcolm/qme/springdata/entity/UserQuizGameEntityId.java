@@ -65,10 +65,10 @@ public class UserQuizGameEntityId implements java.io.Serializable {
 		return ((this.getUserId() == castOther.getUserId()) || (this
 				.getUserId() != null && castOther.getUserId() != null && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getCatId() == castOther.getCatId()) || (this
+				&& ((this.getCatId().equals(castOther.getCatId())) || (this
 						.getCatId() != null && castOther.getCatId() != null && this
 						.getCatId().equals(castOther.getCatId())))
-				&& ((this.getQuizGameToken() == castOther.getQuizGameToken()) || (this
+				&& ((this.getQuizGameToken().equals(castOther.getQuizGameToken())) || (this
 						.getQuizGameToken() != null
 						&& castOther.getQuizGameToken() != null && this
 						.getQuizGameToken()

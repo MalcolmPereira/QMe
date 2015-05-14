@@ -54,7 +54,7 @@ public class UserQuestionLikesEntityId implements java.io.Serializable {
 		return ((this.getUserId() == castOther.getUserId()) || (this
 				.getUserId() != null && castOther.getUserId() != null && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getQuestionId() == castOther.getQuestionId()) || (this
+				&& ((this.getQuestionId().equals(castOther.getQuestionId())) || (this
 						.getQuestionId() != null
 						&& castOther.getQuestionId() != null && this
 						.getQuestionId().equals(castOther.getQuestionId())));
