@@ -20,18 +20,18 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 	
 	private Long answerRefMediaId;
 	private Long questionId;
-	private String refMediaType;
+	private Integer refMediaType;
 	private byte[] refMedia;
 
 	public AnswerReferenceMediaEntity() {
 	}
 
-	public AnswerReferenceMediaEntity(Long questionId, String refMediaType) {
+	public AnswerReferenceMediaEntity(Long questionId, Integer refMediaType) {
 		this.questionId = questionId;
 		this.refMediaType = refMediaType;
 	}
 
-	public AnswerReferenceMediaEntity(Long questionId, String refMediaType,
+	public AnswerReferenceMediaEntity(Long questionId, Integer refMediaType,
 			byte[] refMedia) {
 		this.questionId = questionId;
 		this.refMediaType = refMediaType;
@@ -58,12 +58,12 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 		this.questionId = questionId;
 	}
 
-	@Column(name = "REF_MEDIA_TYPE", nullable = false, length = 50)
-	public String getRefMediaType() {
+	@Column(name = "MEDIA_TYPE_ID", nullable = false, length = 50)
+	public Integer getRefMediaType() {
 		return this.refMediaType;
 	}
 
-	public void setRefMediaType(String refMediaType) {
+	public void setRefMediaType(Integer refMediaType) {
 		this.refMediaType = refMediaType;
 	}
 
@@ -75,5 +75,4 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 	public void setRefMedia(byte[] refMedia) {
 		this.refMedia = refMedia;
 	}
-
 }

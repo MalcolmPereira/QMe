@@ -82,7 +82,7 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
             answerOptionMediaEntity.setOptionId(answerOptionMedia.getAnswerOptionID());
         }
         if(answerOptionMedia.getMediaType() != null) {
-            answerOptionMediaEntity.setOptionMediaType(answerOptionMedia.getMediaType().getValue());
+            answerOptionMediaEntity.setOptionMediaType(answerOptionMedia.getMediaType().getId());
         }
         if(answerOptionMedia.getMedia() != null) {
             answerOptionMediaEntity.setOptionMedia(answerOptionMedia.getMedia());
@@ -116,7 +116,7 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
         return new AnswerOptionMedia(
                 answerOptionMediaEntity.getOptionMediaId(),
                 answerOptionMediaEntity.getOptionId(),
-                MediaTypeEnum.valueOf(answerOptionMediaEntity.getOptionMediaType()),
+                MediaTypeEnum.fromId(answerOptionMediaEntity.getOptionMediaType()),
                 answerOptionMediaEntity.getOptionMedia()
         );
     }

@@ -20,18 +20,18 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 	
 	private Long optionMediaId;
 	private Long optionId;
-	private String optionMediaType;
+	private Integer optionMediaType;
 	private byte[] optionMedia;
 
 	public AnswerOptionMediaEntity() {
 	}
 
-	public AnswerOptionMediaEntity(Long optionId, String optionMediaType) {
+	public AnswerOptionMediaEntity(Long optionId, Integer optionMediaType) {
 		this.optionId = optionId;
 		this.optionMediaType = optionMediaType;
 	}
 
-	public AnswerOptionMediaEntity(Long optionId, String optionMediaType,
+	public AnswerOptionMediaEntity(Long optionId, Integer optionMediaType,
 			byte[] optionMedia) {
 		this.optionId = optionId;
 		this.optionMediaType = optionMediaType;
@@ -58,12 +58,12 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 		this.optionId = optionId;
 	}
 
-	@Column(name = "OPTION_MEDIA_TYPE", nullable = false, length = 50)
-	public String getOptionMediaType() {
+	@Column(name = "MEDIA_TYPE_ID", nullable = false, length = 50)
+	public Integer getOptionMediaType() {
 		return this.optionMediaType;
 	}
 
-	public void setOptionMediaType(String optionMediaType) {
+	public void setOptionMediaType(Integer optionMediaType) {
 		this.optionMediaType = optionMediaType;
 	}
 
