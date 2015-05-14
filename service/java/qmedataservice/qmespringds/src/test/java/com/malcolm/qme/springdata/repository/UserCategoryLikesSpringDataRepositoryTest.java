@@ -129,5 +129,56 @@ public class UserCategoryLikesSpringDataRepositoryTest {
         assertNull(userEntity);
         
     }    
+    
+    @Test
+    public void testByUserId(){
+    	assertNotNull(userCategoryLikesSpringDataRepo);
+        
+        assertNotNull(userSpringDataRepo);
+
+        assertNotNull(categorySpringDataRepository);
+        
+        UserEntity userEntity = new UserEntity("UCatLikesSpringDataRepositoryTestByUSERID", "Test", "Test", "UserCategoryLikesSpringDataRepositoryTestByUSERID@test.com", "Test", new Date(), new Date());
+        userEntity = userSpringDataRepo.save(userEntity);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), greaterThan(0L));
+        Long userID = userEntity.getUserId();
+
+        CategoryEntity categoryEntity = new CategoryEntity("UCatLikesSpringDataRepositoryTestByUSERID", 0L, new Date(), userID);
+        categoryEntity = categorySpringDataRepository.save(categoryEntity);
+        assertNotNull(categoryEntity);
+        assertThat(categoryEntity.getCatId(), greaterThan(0L));
+        Long catID = categoryEntity.getCatId();
+        
+        UserCategoryLikesEntity userCategoryLikesEntity = new UserCategoryLikesEntity();
+        UserCategoryLikesEntityId userCategoryLikesEntityId = new UserCategoryLikesEntityId();
+        userCategoryLikesEntityId.setUserId(userID);
+        userCategoryLikesEntityId.setCatId(catID);
+        userCategoryLikesEntity.setId(userCategoryLikesEntityId);
+        
+        userCategoryLikesEntity = userCategoryLikesSpringDataRepo.save(userCategoryLikesEntity);
+        
+        userCategoryLikesEntity = userCategoryLikesSpringDataRepo.findOne(userCategoryLikesEntityId);
+        assertNotNull(userCategoryLikesEntity);
+        assertThat(userCategoryLikesEntity.getId().getUserId(), equalTo(userID));
+        assertThat(userCategoryLikesEntity.getId().getCatId(), equalTo(catID));
+        
+        List<UserCategoryLikesEntity> userCategoryLikesEntityList = userCategoryLikesSpringDataRepo.findByUserID(userID);
+        assertNotNull(userCategoryLikesEntityList);
+        assertThat(userCategoryLikesEntityList.size(), equalTo(1));
+        
+        userCategoryLikesSpringDataRepo.delete(userCategoryLikesEntityId);
+        userCategoryLikesEntity = userCategoryLikesSpringDataRepo.findOne(userCategoryLikesEntityId);
+        assertNull(userCategoryLikesEntity);
+
+        categorySpringDataRepository.delete(catID);
+        categoryEntity = categorySpringDataRepository.findOne(catID);
+        assertNull(categoryEntity);
+
+        userSpringDataRepo.delete(userID);
+        userEntity = userSpringDataRepo.findOne(userID);
+        assertNull(userEntity);
+        
+    }  
 }
 
