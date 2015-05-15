@@ -15,13 +15,15 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses(
-		{ 
+		{
+			MediaTypeSpringDataRepositoryTest.class,
+			MediaTypeRepositoryImplTest.class,
 			RoleSpringDataRepositoryTest.class,
 			RoleRepositoryImplTest.class,
-			UserSpringDataRepositoryTest.class, 
-			UserRepositoryImplTest.class, 
+			UserSpringDataRepositoryTest.class,
+			UserRepositoryImplTest.class,
 			UserRoleSpringDataRepositoryTest.class,
-			CategorySpringDataRepositoryTest.class, 
+			CategorySpringDataRepositoryTest.class,
 			CategoryRepositoryImplTest.class,
 			UserRoleRepositoryImplTest.class,
 			UserCategorySpringDataRepositoryTest.class,
@@ -34,9 +36,9 @@ import org.junit.runners.Suite.SuiteClasses;
 			QuestionHitRepositoryImplTest.class,
 			UserQuestionLikesSpringDataRepositoryTest.class,
 			UserQuestionLikesRepositoryImplTest.class
-			
-	}
-)
+
+		}
+		)
 public class AllRepositoryTests {
 
 }
