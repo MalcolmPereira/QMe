@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 public class UserQuizGameEntityId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7631787668803094636L;
-	
+
 	private Long userId;
 	private Long catId;
 	private Long quizGameToken;
@@ -53,37 +53,42 @@ public class UserQuizGameEntityId implements java.io.Serializable {
 		this.quizGameToken = quizGameToken;
 	}
 
+	@Override
 	public boolean equals(Object other) {
-		if ((this == other))
+		if ((this == other)) {
 			return true;
-		if ((other == null))
+		}
+		if ((other == null)) {
 			return false;
-		if (!(other instanceof UserQuizGameEntityId))
+		}
+		if (!(other instanceof UserQuizGameEntityId)) {
 			return false;
-		UserQuizGameEntityId castOther = (UserQuizGameEntityId) other;
+		}
+		final UserQuizGameEntityId castOther = (UserQuizGameEntityId) other;
 
-		return ((this.getUserId() == castOther.getUserId()) || (this
-				.getUserId() != null && castOther.getUserId() != null && this
+		return ((this.getUserId() == castOther.getUserId()) || ((this
+				.getUserId() != null) && (castOther.getUserId() != null) && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getCatId() == castOther.getCatId()) || (this
-						.getCatId() != null && castOther.getCatId() != null && this
+				&& ((this.getCatId().equals(castOther.getCatId())) || ((this
+						.getCatId() != null) && (castOther.getCatId() != null) && this
 						.getCatId().equals(castOther.getCatId())))
-				&& ((this.getQuizGameToken() == castOther.getQuizGameToken()) || (this
-						.getQuizGameToken() != null
-						&& castOther.getQuizGameToken() != null && this
-						.getQuizGameToken()
-						.equals(castOther.getQuizGameToken())));
+						&& ((this.getQuizGameToken().equals(castOther.getQuizGameToken())) || ((this
+								.getQuizGameToken() != null)
+								&& (castOther.getQuizGameToken() != null) && this
+								.getQuizGameToken()
+								.equals(castOther.getQuizGameToken())));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result
+		result = (37 * result)
 				+ (getUserId() == null ? 0 : this.getUserId().hashCode());
-		result = 37 * result
+		result = (37 * result)
 				+ (getCatId() == null ? 0 : this.getCatId().hashCode());
-		result = 37
-				* result
+		result = (37
+				* result)
 				+ (getQuizGameToken() == null ? 0 : this.getQuizGameToken()
 						.hashCode());
 		return result;

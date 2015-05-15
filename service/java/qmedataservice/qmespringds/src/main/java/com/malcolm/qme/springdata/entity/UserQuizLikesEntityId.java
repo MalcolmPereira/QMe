@@ -11,9 +11,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class UserQuizLikesEntityId implements java.io.Serializable {
 
-	
+
 	private static final long serialVersionUID = -2710987586087887522L;
-	
+
 	private Long userId;
 	private Long quizId;
 
@@ -43,29 +43,34 @@ public class UserQuizLikesEntityId implements java.io.Serializable {
 		this.quizId = quizId;
 	}
 
+	@Override
 	public boolean equals(Object other) {
-		if ((this == other))
+		if ((this == other)) {
 			return true;
-		if ((other == null))
+		}
+		if ((other == null)) {
 			return false;
-		if (!(other instanceof UserQuizLikesEntityId))
+		}
+		if (!(other instanceof UserQuizLikesEntityId)) {
 			return false;
-		UserQuizLikesEntityId castOther = (UserQuizLikesEntityId) other;
+		}
+		final UserQuizLikesEntityId castOther = (UserQuizLikesEntityId) other;
 
-		return ((this.getUserId() == castOther.getUserId()) || (this
-				.getUserId() != null && castOther.getUserId() != null && this
+		return ((this.getUserId() == castOther.getUserId()) || ((this
+				.getUserId() != null) && (castOther.getUserId() != null) && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getQuizId() == castOther.getQuizId()) || (this
-						.getQuizId() != null && castOther.getQuizId() != null && this
+				&& ((this.getQuizId().equals(castOther.getQuizId())) || ((this
+						.getQuizId() != null) && (castOther.getQuizId() != null) && this
 						.getQuizId().equals(castOther.getQuizId())));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result
+		result = (37 * result)
 				+ (getUserId() == null ? 0 : this.getUserId().hashCode());
-		result = 37 * result
+		result = (37 * result)
 				+ (getQuizId() == null ? 0 : this.getQuizId().hashCode());
 		return result;
 	}

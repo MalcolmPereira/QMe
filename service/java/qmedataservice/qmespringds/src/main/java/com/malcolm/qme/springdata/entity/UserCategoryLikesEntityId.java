@@ -11,9 +11,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class UserCategoryLikesEntityId implements java.io.Serializable {
 
-	
+
 	private static final long serialVersionUID = -4470609228632391708L;
-	
+
 	private Long userId;
 	private Long catId;
 
@@ -43,29 +43,34 @@ public class UserCategoryLikesEntityId implements java.io.Serializable {
 		this.catId = catId;
 	}
 
+	@Override
 	public boolean equals(Object other) {
-		if ((this == other))
+		if ((this == other)) {
 			return true;
-		if ((other == null))
+		}
+		if ((other == null)) {
 			return false;
-		if (!(other instanceof UserCategoryLikesEntityId))
+		}
+		if (!(other instanceof UserCategoryLikesEntityId)) {
 			return false;
-		UserCategoryLikesEntityId castOther = (UserCategoryLikesEntityId) other;
+		}
+		final UserCategoryLikesEntityId castOther = (UserCategoryLikesEntityId) other;
 
-		return ((this.getUserId() == castOther.getUserId()) || (this
-				.getUserId() != null && castOther.getUserId() != null && this
+		return ((((this.getUserId() == castOther.getUserId()) || ((this
+				.getUserId() != null) && (castOther.getUserId() != null) && this
 				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getCatId() == castOther.getCatId()) || (this
-						.getCatId() != null && castOther.getCatId() != null && this
+				&& ((this.getCatId().equals(castOther.getCatId())))) || ((this
+						.getCatId() != null) && (castOther.getCatId() != null) && this
 						.getCatId().equals(castOther.getCatId())));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result
+		result = (37 * result)
 				+ (getUserId() == null ? 0 : this.getUserId().hashCode());
-		result = 37 * result
+		result = (37 * result)
 				+ (getCatId() == null ? 0 : this.getCatId().hashCode());
 		return result;
 	}
