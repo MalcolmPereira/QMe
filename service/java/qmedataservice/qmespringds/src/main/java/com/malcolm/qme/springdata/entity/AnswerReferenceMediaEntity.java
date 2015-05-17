@@ -1,11 +1,12 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 16, 2015 7:28:18 PM by Hibernate Tools 3.4.0.CR1
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,22 +17,20 @@ import javax.persistence.Table;
 @Table(name = "ANSWER_REFERENCE_MEDIA", catalog = "qme")
 public class AnswerReferenceMediaEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 5127686293574230507L;
-	
+	private static final long serialVersionUID = -1526844399566983846L;
+
 	private Long answerRefMediaId;
 	private Long questionId;
 	private Integer mediaTypeId;
-	private String refMediaMime;
 	private byte[] refMedia;
 
 	public AnswerReferenceMediaEntity() {
 	}
 
 	public AnswerReferenceMediaEntity(Long questionId, Integer mediaTypeId,
-			String refMediaMime, byte[] refMedia) {
+			byte[] refMedia) {
 		this.questionId = questionId;
 		this.mediaTypeId = mediaTypeId;
-		this.refMediaMime = refMediaMime;
 		this.refMedia = refMedia;
 	}
 
@@ -62,15 +61,6 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 
 	public void setMediaTypeId(Integer mediaTypeId) {
 		this.mediaTypeId = mediaTypeId;
-	}
-
-	@Column(name = "REF_MEDIA_MIME", nullable = false, length = 150)
-	public String getRefMediaMime() {
-		return this.refMediaMime;
-	}
-
-	public void setRefMediaMime(String refMediaMime) {
-		this.refMediaMime = refMediaMime;
 	}
 
 	@Column(name = "REF_MEDIA", nullable = false)

@@ -22,12 +22,12 @@ import com.malcolm.qme.springdata.entity.MediaTypeEntity;
  */
 @Repository("MediaTypeRepository")
 public class MediaTypeRepositoryImpl implements MediaTypeRepository {
-	
+
 	/**
-     * Spring Data QuestionEntity Repository
-     */
-    @Autowired
-    private MediaTypeSpringDataRepository mediaTypeSpringDataRepository;
+	 * Spring Data QuestionEntity Repository
+	 */
+	@Autowired
+	private MediaTypeSpringDataRepository mediaTypeSpringDataRepository;
 
 	@Override
 	public List<MediaType> findAll() {
@@ -36,7 +36,7 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 
 	@Override
 	public MediaType findById(Integer id) {
-		MediaTypeEntity mediaTypeEntity = mediaTypeSpringDataRepository.findOne(id);
+		final MediaTypeEntity mediaTypeEntity = mediaTypeSpringDataRepository.findOne(id);
 		if(mediaTypeEntity != null){
 			return getMediaType(mediaTypeEntity);
 		}
@@ -61,49 +61,48 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	public void delete(Integer id) {
 		mediaTypeSpringDataRepository.delete(id);
 	}
-	
-	 /**
+
+	/**
 	 * Map MediaType Domain Object to MediaTypeEntity
-	 * 
+	 *
 	 * @param mediaType
 	 * @return
 	 */
 	private MediaTypeEntity getMediaTypeEntity(MediaType mediaType){
-		 MediaTypeEntity mediaTypeEntity = new MediaTypeEntity();
-		 if(mediaType.getMediaTypeID() > 0 ){
-			 mediaTypeEntity.setMediaTypeId(mediaType.getMediaTypeID());
-		 }
-		 mediaTypeEntity.setMediaType(mediaType.getMediaType());
-		 mediaTypeEntity.setMediaTypeDesc(mediaType.getMediaTypeDesc());
-		 return mediaTypeEntity;
-	 }
-	
-	 /**
+		final MediaTypeEntity mediaTypeEntity = new MediaTypeEntity();
+		if(mediaType.getMediaTypeID() > 0 ){
+			mediaTypeEntity.setMediaTypeId(mediaType.getMediaTypeID());
+		}
+		mediaTypeEntity.setMediaMimeType(mediaType.getMediaType());
+		return mediaTypeEntity;
+	}
+
+	/**
 	 * Map MediaTypeEntity to MediaType Domain Object
-	 * 
+	 *
 	 * @param mediaTypeEntities
 	 * @return
 	 */
 	private List<MediaType> getMediaType(List<MediaTypeEntity> mediaTypeEntities){
-		 List<MediaType> mediaTypeList = new ArrayList<MediaType>();
-         if(mediaTypeEntities == null){
-             return mediaTypeList;
-         }
-         for (MediaTypeEntity mediaTypeEntity : mediaTypeEntities){
-        	 mediaTypeList.add(getMediaType(mediaTypeEntity));
-         }
-         return mediaTypeList;
-		 
-	 }
-	
+		final List<MediaType> mediaTypeList = new ArrayList<MediaType>();
+		if(mediaTypeEntities == null){
+			return mediaTypeList;
+		}
+		for (final MediaTypeEntity mediaTypeEntity : mediaTypeEntities){
+			mediaTypeList.add(getMediaType(mediaTypeEntity));
+		}
+		return mediaTypeList;
+
+	}
+
 	/**
 	 * Map MediaTypeEntity to MediaType Domain Object
-	 * 
+	 *
 	 * @param mediaTypeEntity
 	 * @return
 	 */
 	private MediaType getMediaType(MediaTypeEntity mediaTypeEntity){
-		return new MediaType(mediaTypeEntity.getMediaTypeId(),mediaTypeEntity.getMediaType(),mediaTypeEntity.getMediaTypeDesc());
+		return new MediaType(mediaTypeEntity.getMediaTypeId(),mediaTypeEntity.getMediaMimeType());
 	}
 
 }

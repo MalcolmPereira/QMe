@@ -61,7 +61,7 @@ public class MediaTypeSpringDataRepositoryTest {
 	@Test
 	public void testCRUD() {
 		assertNotNull(mediaTypeSpringDataRepository);
-		MediaTypeEntity mediaTypeEntity = new MediaTypeEntity("MediaTypeSpringDataRepositoryTest","MediaTypeSpringDataRepositoryTest");
+		MediaTypeEntity mediaTypeEntity = new MediaTypeEntity("MediaTypeSpringDataRepositoryTest");
 		mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);
 		assertNotNull(mediaTypeEntity);
 		assertThat(mediaTypeEntity.getMediaTypeId(),greaterThan(1));

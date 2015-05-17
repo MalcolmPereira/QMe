@@ -1,11 +1,12 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 16, 2015 7:28:18 PM by Hibernate Tools 3.4.0.CR1
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,22 +17,20 @@ import javax.persistence.Table;
 @Table(name = "ANSWER_OPTION_MEDIA", catalog = "qme")
 public class AnswerOptionMediaEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 5004836789617623451L;
-	
+	private static final long serialVersionUID = -7762543847542101433L;
+
 	private Long optionMediaId;
 	private Long optionId;
 	private Integer mediaTypeId;
-	private String optionMediaMime;
 	private byte[] optionMedia;
 
 	public AnswerOptionMediaEntity() {
 	}
 
 	public AnswerOptionMediaEntity(Long optionId, Integer mediaTypeId,
-			String optionMediaMime, byte[] optionMedia) {
+			byte[] optionMedia) {
 		this.optionId = optionId;
 		this.mediaTypeId = mediaTypeId;
-		this.optionMediaMime = optionMediaMime;
 		this.optionMedia = optionMedia;
 	}
 
@@ -62,15 +61,6 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 
 	public void setMediaTypeId(Integer mediaTypeId) {
 		this.mediaTypeId = mediaTypeId;
-	}
-
-	@Column(name = "OPTION_MEDIA_MIME", nullable = false, length = 150)
-	public String getOptionMediaMime() {
-		return this.optionMediaMime;
-	}
-
-	public void setOptionMediaMime(String optionMediaMime) {
-		this.optionMediaMime = optionMediaMime;
 	}
 
 	@Column(name = "OPTION_MEDIA", nullable = false)

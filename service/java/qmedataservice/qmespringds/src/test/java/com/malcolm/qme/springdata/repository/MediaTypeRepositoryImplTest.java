@@ -64,7 +64,7 @@ public class MediaTypeRepositoryImplTest {
 	@Test
 	public void testCRUD() {
 		assertNotNull(mediaTypeRepository);
-		MediaType mediaType = new MediaType("MediaTypeRepositoryImplTest","MediaTypeRepositoryImplTest");
+		MediaType mediaType = new MediaType("MediaTypeRepositoryImplTest");
 		mediaType = mediaTypeRepository.save(mediaType);
 		assertNotNull(mediaType);
 		assertThat(mediaType.getMediaTypeID(),greaterThan(1));

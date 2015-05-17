@@ -18,34 +18,28 @@ public final class MediaType {
 	 * Media Type Name
 	 */
 	private final String mediaType;
-	/**
-	 * Media Type Desc
-	 */
-	private final String mediaTypeDesc;
 
 	/**
 	 * Public Constructor
 	 *
 	 * @param mediaTypeID
 	 * @param mediaType
-	 * @param mediaTypeDesc
 	 */
-	public MediaType(Integer mediaTypeID, String mediaType, String mediaTypeDesc) {
+	public MediaType(Integer mediaTypeID, String mediaType) {
+		super();
 		this.mediaTypeID = mediaTypeID;
 		this.mediaType = mediaType;
-		this.mediaTypeDesc = mediaTypeDesc;
 	}
 
 	/**
 	 * Public Constructor
 	 *
 	 * @param mediaType
-	 * @param mediaTypeDesc
 	 */
-	public MediaType(String mediaType, String mediaTypeDesc) {
+	public MediaType(String mediaType) {
+		super();
 		this.mediaTypeID = 0;
 		this.mediaType = mediaType;
-		this.mediaTypeDesc = mediaTypeDesc;
 	}
 
 	/**
@@ -62,13 +56,9 @@ public final class MediaType {
 		return mediaType;
 	}
 
-	/**
-	 * @return the mediaTypeDesc
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
 	 */
-	public String getMediaTypeDesc() {
-		return mediaTypeDesc;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,12 +66,13 @@ public final class MediaType {
 		result = (prime * result)
 				+ ((mediaType == null) ? 0 : mediaType.hashCode());
 		result = (prime * result)
-				+ ((mediaTypeDesc == null) ? 0 : mediaTypeDesc.hashCode());
-		result = (prime * result)
 				+ ((mediaTypeID == null) ? 0 : mediaTypeID.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -101,13 +92,6 @@ public final class MediaType {
 		} else if (!mediaType.equals(other.mediaType)) {
 			return false;
 		}
-		if (mediaTypeDesc == null) {
-			if (other.mediaTypeDesc != null) {
-				return false;
-			}
-		} else if (!mediaTypeDesc.equals(other.mediaTypeDesc)) {
-			return false;
-		}
 		if (mediaTypeID == null) {
 			if (other.mediaTypeID != null) {
 				return false;
@@ -118,9 +102,13 @@ public final class MediaType {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "MediaType [mediaTypeID=" + mediaTypeID + ", mediaType="
-				+ mediaType + ", mediaTypeDesc=" + mediaTypeDesc + "]";
+				+ mediaType + "]";
 	}
+
 }

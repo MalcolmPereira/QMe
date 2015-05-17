@@ -35,7 +35,9 @@ import org.junit.runners.Suite.SuiteClasses;
 			QuestionHitSpringDataRepositoryTest.class,
 			QuestionHitRepositoryImplTest.class,
 			UserQuestionLikesSpringDataRepositoryTest.class,
-			UserQuestionLikesRepositoryImplTest.class
+			UserQuestionLikesRepositoryImplTest.class,
+			AnswerReferenceMediaSpringDataRepositoryTest.class,
+			AnswerReferenceMediaRepositoryImplTest.class
 
 		}
 		)

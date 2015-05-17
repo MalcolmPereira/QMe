@@ -7,120 +7,158 @@
 
 package com.malcolm.qme.core.domain;
 
+
 /**
  * @Author: malcolm
  */
 public final class AnswerOptionMedia {
 
-    /**
-     * Answer Option Media Id
-     */
-    private final Long answerOptionMediaID;
+	/**
+	 * Answer Option Media Id
+	 */
+	private final Long answerOptionMediaID;
 
-    /**
-     * Answer Option Id
-     */
-    private final Long answerOptionID;
+	/**
+	 * Answer Option Id
+	 */
+	private final Long answerOptionID;
 
-    /**
-     * Media Type
-     */
-    private final MediaTypeEnum mediaType;
+	/**
+	 * Media Type
+	 */
+	private final Integer mediaTypeID;
 
-    /**
-     * Media
-     */
-    private final byte[] media;
+	/**
+	 * Media
+	 */
+	private final byte[] media;
 
-    /**
-     * Public Constructor
-     *
-     * @param answerOptionMediaID
-     * @param answerOptionID
-     * @param mediaType
-     * @param media
-     */
-    public AnswerOptionMedia(Long answerOptionMediaID, Long answerOptionID, MediaTypeEnum mediaType, byte[] media) {
-        this.answerOptionMediaID = answerOptionMediaID;
-        this.answerOptionID = answerOptionID;
-        this.mediaType = mediaType;
-        this.media = media;
-    }
+	/**
+	 * Public Constructor
+	 *
+	 * @param answerOptionMediaID
+	 * @param answerOptionID
+	 * @param mediaTypeID
+	 * @param media
+	 */
+	public AnswerOptionMedia(Long answerOptionMediaID, Long answerOptionID, Integer mediaTypeID, byte[] media) {
+		this.answerOptionMediaID = answerOptionMediaID;
+		this.answerOptionID = answerOptionID;
+		this.mediaTypeID = mediaTypeID;
+		this.media = media;
+	}
 
-    /**
-     * Public Constructor
-     *
-     * @param answerOptionID
-     * @param mediaType
-     * @param media
-     */
-    public AnswerOptionMedia(Long answerOptionID, MediaTypeEnum mediaType, byte[] media) {
-        this.answerOptionMediaID = 0L;
-        this.answerOptionID = answerOptionID;
-        this.mediaType = mediaType;
-        this.media = media;
-    }
+	/**
+	 * Public Constructor
+	 *
+	 * @param answerOptionID
+	 * @param mediaTypeID
+	 * @param media
+	 */
+	public AnswerOptionMedia(Long answerOptionID, Integer mediaTypeID, byte[] media) {
+		this.answerOptionMediaID = 0L;
+		this.answerOptionID = answerOptionID;
+		this.mediaTypeID = mediaTypeID;
+		this.media = media;
+	}
 
-    /**
-     * Get Answer Option Media Id
-     * @return
-     */
-    public Long getAnswerOptionMediaID() {
-        return answerOptionMediaID;
-    }
+	/**
+	 * Get Answer Option Media Id
+	 * @return
+	 */
+	public Long getAnswerOptionMediaID() {
+		return answerOptionMediaID;
+	}
 
-    /**
-     * Get Answer Option ID
-     * @return
-     */
-    public Long getAnswerOptionID() {
-        return answerOptionID;
-    }
+	/**
+	 * Get Answer Option ID
+	 * @return
+	 */
+	public Long getAnswerOptionID() {
+		return answerOptionID;
+	}
 
-    /**
-     * Get Media Type
-     * @return
-     */
-    public MediaTypeEnum getMediaType() {
-        return mediaType;
-    }
+	/**
+	 * Get Media
+	 * @return
+	 */
+	public byte[] getMedia() {
+		return media;
+	}
 
-    /**
-     * Get Media
-     * @return
-     */
-    public byte[] getMedia() {
-        return media;
-    }
+	/**
+	 * @return the mediaTypeID
+	 */
+	public Integer getMediaTypeID() {
+		return mediaTypeID;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result)
+				+ ((answerOptionID == null) ? 0 : answerOptionID.hashCode());
+		result = (prime
+				* result)
+				+ ((answerOptionMediaID == null) ? 0 : answerOptionMediaID
+						.hashCode());
+		result = (prime * result)
+				+ ((mediaTypeID == null) ? 0 : mediaTypeID.hashCode());
+		return result;
+	}
 
-        AnswerOptionMedia that = (AnswerOptionMedia) o;
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final AnswerOptionMedia other = (AnswerOptionMedia) obj;
+		if (answerOptionID == null) {
+			if (other.answerOptionID != null) {
+				return false;
+			}
+		} else if (!answerOptionID.equals(other.answerOptionID)) {
+			return false;
+		}
+		if (answerOptionMediaID == null) {
+			if (other.answerOptionMediaID != null) {
+				return false;
+			}
+		} else if (!answerOptionMediaID.equals(other.answerOptionMediaID)) {
+			return false;
+		}
+		if (mediaTypeID == null) {
+			if (other.mediaTypeID != null) {
+				return false;
+			}
+		} else if (!mediaTypeID.equals(other.mediaTypeID)) {
+			return false;
+		}
+		return true;
+	}
 
-        if (!getAnswerOptionMediaID().equals(that.getAnswerOptionMediaID())) return false;
-        if (!getAnswerOptionID().equals(that.getAnswerOptionID())) return false;
-        return getMediaType() == that.getMediaType();
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "AnswerOptionMedia [answerOptionMediaID=" + answerOptionMediaID
+				+ ", answerOptionID=" + answerOptionID + ", mediaTypeID="
+				+ mediaTypeID + "]";
+	}
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getAnswerOptionMediaID().hashCode();
-        result = 31 * result + getAnswerOptionID().hashCode();
-        result = 31 * result + getMediaType().hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "AnswerOptionMedia{" +
-                "answerOptionMediaID=" + answerOptionMediaID +
-                ", answerOptionID=" + answerOptionID +
-                ", mediaType=" + mediaType +
-                '}';
-    }
 }
 
