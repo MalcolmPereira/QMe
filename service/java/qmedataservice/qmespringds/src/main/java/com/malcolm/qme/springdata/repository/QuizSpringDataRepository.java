@@ -16,23 +16,23 @@ import com.malcolm.qme.springdata.entity.QuizEntity;
  * @Author: Malcolm
  */
 interface QuizSpringDataRepository extends JpaRepository<QuizEntity, Long> {
-	
+
 	/**
-     * Find By Category ID
-     * @param catId
-     * @return
-     */
-    public List<QuizEntity> findByCatId(Long catId);
-    
-    /**
-     * Find Most Liked
-     * @return
-     */
-    public List<QuizEntity> findTop50ByOrderByQuizLikes();
-    
-    /**
-     * @param quizName
-     * @return
-     */
-    public List<QuizEntity> findByQuizNameIgnoreCaseLike(String quizName);
+	 * Find By Category ID
+	 * @param catId
+	 * @return
+	 */
+	public List<QuizEntity> findByCatId(Long catId);
+
+	/**
+	 * Find Most Liked
+	 * @return
+	 */
+	public List<QuizEntity> findTop50ByOrderByQuizLikesDesc();
+
+	/**
+	 * @param quizName
+	 * @return
+	 */
+	public List<QuizEntity> findByQuizNameIgnoreCaseLike(String quizName);
 }

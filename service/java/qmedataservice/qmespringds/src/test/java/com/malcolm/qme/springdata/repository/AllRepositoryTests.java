@@ -39,7 +39,9 @@ import org.junit.runners.Suite.SuiteClasses;
 			AnswerReferenceMediaSpringDataRepositoryTest.class,
 			AnswerReferenceMediaRepositoryImplTest.class,
 			AnswerOptionSpringDataRepositoryTest.class,
-			AnswerOptionRepositoryImplTest.class
+			AnswerOptionRepositoryImplTest.class,
+			QuizSpringDataRepositoryTest.class,
+			QuizRepositoryImplTest.class
 		}
 		)
 public class AllRepositoryTests {

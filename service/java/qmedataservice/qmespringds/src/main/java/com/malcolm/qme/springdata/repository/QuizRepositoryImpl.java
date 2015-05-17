@@ -22,18 +22,18 @@ import com.malcolm.qme.springdata.entity.QuizEntity;
  */
 @Repository("QuizRepository")
 public class QuizRepositoryImpl implements QuizRepository {
-	
+
 	/**
-     * Spring Data QuizRepository Repository
-     */
-    @Autowired
-    private QuizSpringDataRepository quizSpringDataRepository;
-	
+	 * Spring Data QuizRepository Repository
+	 */
+	@Autowired
+	private QuizSpringDataRepository quizSpringDataRepository;
+
 	@Override
 	public List<Quiz> findAll() {
 		return(getQuiz(quizSpringDataRepository.findAll()));
 	}
-	
+
 	@Override
 	public List<Quiz> findByCategoryId(Long categoryID) {
 		return(getQuiz(quizSpringDataRepository.findByCatId(categoryID)));
@@ -41,7 +41,7 @@ public class QuizRepositoryImpl implements QuizRepository {
 
 	@Override
 	public List<Quiz> findByMostLiked() {
-		return(getQuiz(quizSpringDataRepository.findTop50ByOrderByQuizLikes()));
+		return(getQuiz(quizSpringDataRepository.findTop50ByOrderByQuizLikesDesc()));
 	}
 
 	@Override
@@ -51,11 +51,11 @@ public class QuizRepositoryImpl implements QuizRepository {
 
 	@Override
 	public Quiz findById(Long id) {
-		QuizEntity quizEntity = quizSpringDataRepository.findOne(id);
+		final QuizEntity quizEntity = quizSpringDataRepository.findOne(id);
 		if(quizEntity != null){
-            return getQuiz(quizEntity);
-        }
-        return null;
+			return getQuiz(quizEntity);
+		}
+		return null;
 	}
 
 	@Override
@@ -83,72 +83,66 @@ public class QuizRepositoryImpl implements QuizRepository {
 	}
 
 	/**
-     * Map Quiz Domain Object to QuizEntity
-     * 
-     * @param quiz
-     * @return
-     */
-    private QuizEntity getQuizEntity(Quiz quiz){
-    	QuizEntity quizEntity = new QuizEntity();
-    	if(quiz.getQuizID() > 0){
-    		quizEntity.setQuizId(quiz.getQuizID());
-    	}
-    	quizEntity.setQuizName(quiz.getQuizName());
+	 * Map Quiz Domain Object to QuizEntity
+	 *
+	 * @param quiz
+	 * @return
+	 */
+	private QuizEntity getQuizEntity(Quiz quiz){
+		final QuizEntity quizEntity = new QuizEntity();
+		if(quiz.getQuizID() > 0){
+			quizEntity.setQuizId(quiz.getQuizID());
+		}
+		quizEntity.setQuizName(quiz.getQuizName());
 		quizEntity.setQuizDesc(quiz.getQuizDesc());
 		quizEntity.setCatId(quiz.getCategoryID());
-		if(quiz.getLikes() > 0){
-			quizEntity.setQuizLikes(quiz.getLikes());
-		}	
-		if(quiz.getQuizHit() > 0){
-			quizEntity.setQuizHits(quiz.getQuizHit());
-		}
-		if(quiz.getQuizMaxAttempts() > 0){
-			quizEntity.setMaxAttempts(quiz.getQuizMaxAttempts());
-		}
+		quizEntity.setQuizLikes(quiz.getLikes());
+		quizEntity.setQuizHits(quiz.getQuizHit());
+		quizEntity.setMaxAttempts(quiz.getQuizMaxAttempts());
 		quizEntity.setQuizCreateDate(quiz.getQuizCreateDate());
 		quizEntity.setQuizCreateUser(quiz.getCreateUserID());
 		quizEntity.setQuizUpdateDate(quiz.getQuizUpdateDate());
 		quizEntity.setQuizUpdateUser(quiz.getUpdateUserID());
-    	return quizEntity;
-    }
-	
-	/**
-     * Map QuizEntity to Quiz Domain Object
-     * 
-     * @param quizQuestionEntities
-     * @return
-     */
-    private List<Quiz> getQuiz(List<QuizEntity> quizEntities){
-    	List<Quiz> quizList = new ArrayList<Quiz>();
-        if(quizEntities == null){
-            return quizList;
-        }
-        for (QuizEntity quizEntity : quizEntities){
-        	quizList.add(getQuiz(quizEntity));
-        }
-        return quizList;
-    }
-	
+		return quizEntity;
+	}
+
 	/**
 	 * Map QuizEntity to Quiz Domain Object
-	 * 
-     * @param quizEntity
-     * @return
-     */
-    private Quiz getQuiz(QuizEntity quizEntity){
-    	return new Quiz(
-    			quizEntity.getQuizId(),
-    			quizEntity.getQuizName(),
-    			quizEntity.getQuizDesc(),
-    			quizEntity.getCatId(),
-    			quizEntity.getQuizLikes(),
-    			quizEntity.getQuizHits(),
-    			quizEntity.getMaxAttempts(),
-    			quizEntity.getQuizCreateDate(),
-    			quizEntity.getQuizCreateUser(),
-    			quizEntity.getQuizUpdateDate(),
-    			quizEntity.getQuizUpdateUser());
-    }
+	 *
+	 * @param quizQuestionEntities
+	 * @return
+	 */
+	private List<Quiz> getQuiz(List<QuizEntity> quizEntities){
+		final List<Quiz> quizList = new ArrayList<Quiz>();
+		if(quizEntities == null){
+			return quizList;
+		}
+		for (final QuizEntity quizEntity : quizEntities){
+			quizList.add(getQuiz(quizEntity));
+		}
+		return quizList;
+	}
+
+	/**
+	 * Map QuizEntity to Quiz Domain Object
+	 *
+	 * @param quizEntity
+	 * @return
+	 */
+	private Quiz getQuiz(QuizEntity quizEntity){
+		return new Quiz(
+				quizEntity.getQuizId(),
+				quizEntity.getQuizName(),
+				quizEntity.getQuizDesc(),
+				quizEntity.getCatId(),
+				quizEntity.getQuizLikes(),
+				quizEntity.getQuizHits(),
+				quizEntity.getMaxAttempts(),
+				quizEntity.getQuizCreateDate(),
+				quizEntity.getQuizCreateUser(),
+				quizEntity.getQuizUpdateDate(),
+				quizEntity.getQuizUpdateUser());
+	}
 
 
 }
