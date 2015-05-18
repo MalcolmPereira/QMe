@@ -47,7 +47,9 @@ import org.junit.runners.Suite.SuiteClasses;
 			QuizQuestionSpringDataRepositoryTest.class,
 			QuizQuestionRepositoryImplTest.class,
 			UserQuizLikesSpringDataRepositoryTest.class,
-			UserQuizLikesRepositoryImplTest.class
+			UserQuizLikesRepositoryImplTest.class,
+			UserQuizSpringDataRepositoryTest.class,
+			UserQuizRepositoryImplTest.class
 		}
 )
 public class AllRepositoryTests {
