@@ -4,7 +4,6 @@
  * Developer : Malcolm
  * Purpose   : Tests for SpringData JPA UserEntity Repository
  */
-
 package com.malcolm.qme.springdata.repository;
 
 

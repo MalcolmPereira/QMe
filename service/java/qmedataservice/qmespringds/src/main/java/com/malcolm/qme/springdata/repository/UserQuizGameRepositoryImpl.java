@@ -32,18 +32,18 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     private UserQuizGameSpringDataRepository userQuizGameSpringDataRepository;
 
     @Override
+    public List<UserQuizGame> findAll() {
+        return(getUserQuizGame(userQuizGameSpringDataRepository.findAll()));
+    }
+    
+    @Override
     public List<UserQuizGame> findByUserId(Long userID) {
-        return null;
+    	return(getUserQuizGame(userQuizGameSpringDataRepository.findByUserId(userID)));
     }
 
     @Override
     public UserQuizGame findByGameToken(Long userGameToken) {
-        return null;
-    }
-
-    @Override
-    public List<UserQuizGame> findAll() {
-        return(getUserQuizGame(userQuizGameSpringDataRepository.findAll()));
+    	return(getUserQuizGame(userQuizGameSpringDataRepository.findByGameToken(userGameToken)));
     }
 
     @Override
