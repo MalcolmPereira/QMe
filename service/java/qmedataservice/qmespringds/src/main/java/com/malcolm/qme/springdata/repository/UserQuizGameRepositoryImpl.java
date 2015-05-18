@@ -47,8 +47,9 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     }
 
     @Override
-    public UserQuizGame findById(Long id) {
-        UserQuizGameEntity userQuizGameEntity = userQuizGameSpringDataRepository.findOne(id);
+    public UserQuizGame findById(UserQuizGame userQuizGame) {
+    	UserQuizGameEntityId id = getUserQuizGameEntityId(userQuizGame);
+    	UserQuizGameEntity userQuizGameEntity = userQuizGameSpringDataRepository.findOne(id);
         if(userQuizGameEntity != null){
            return getUserQuizGame(userQuizGameEntity);
         }
@@ -72,10 +73,25 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UserQuizGame userQuizGame) {
+    	UserQuizGameEntityId id = getUserQuizGameEntityId(userQuizGame);
         userQuizGameSpringDataRepository.delete(id);
     }
-
+    
+    /**
+     * Map UserQuizGame Domain Object to UserQuizGameEntity
+     *
+     * @param userQuizGame
+     * @return
+     */
+    private UserQuizGameEntityId getUserQuizGameEntityId(UserQuizGame userQuizGame){
+        UserQuizGameEntityId userQuizGameEntityId = new UserQuizGameEntityId();
+        userQuizGameEntityId.setQuizGameToken(userQuizGame.getUserGameToken());
+        userQuizGameEntityId.setUserId(userQuizGame.getUserID());
+        userQuizGameEntityId.setCatId(userQuizGame.getCategoryID());
+        return userQuizGameEntityId;
+    }
+    
     /**
      * Map UserQuizGame Domain Object to UserQuizGameEntity
      *
@@ -84,10 +100,8 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
      */
     private UserQuizGameEntity getUserQuizGameEntity(UserQuizGame userQuizGame){
         UserQuizGameEntity userQuizGameEntity = new UserQuizGameEntity();
-        UserQuizGameEntityId userQuizGameEntityId = new UserQuizGameEntityId();
-        userQuizGameEntityId.setQuizGameToken(userQuizGame.getUserGameToken());
-        userQuizGameEntityId.setUserId(userQuizGame.getUserID());
-        userQuizGameEntityId.setCatId(userQuizGame.getCategoryID());
+        UserQuizGameEntityId userQuizGameEntityId = getUserQuizGameEntityId(userQuizGame);
+        userQuizGameEntity.setId(userQuizGameEntityId);
         userQuizGameEntity.setUserScore(userQuizGame.getUserGameScore());
         userQuizGameEntity.setStartDate(userQuizGame.getQuizStartDate());
         userQuizGameEntity.setEndDate(userQuizGame.getQuizEndDate());

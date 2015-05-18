@@ -6,6 +6,14 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+
+import java.util.List;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +23,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
 
 /**
  * @Author: malcolm
@@ -37,5 +47,26 @@ public class UserQuizGameSpringDataRepositoryTest {
      */
     @Autowired
     private UserQuizGameSpringDataRepository userQuizGameSpringDataRepository;
-
+    
+    @Test
+    public void testFindAll(){
+        assertNotNull(userQuizGameSpringDataRepository);
+        List<UserQuizGameEntity> userQuizGameEntities = userQuizGameSpringDataRepository.findAll();
+        assertNotNull(userQuizGameEntities);
+        assertThat(userQuizGameEntities.size(), greaterThan(0));
+    }
+    
+    @Test
+    public void testFindById(){
+        assertNotNull(userQuizGameSpringDataRepository);
+        UserQuizGameEntityId id = new UserQuizGameEntityId();
+        id.setUserId(1L);
+        id.setCatId(1L);
+        id.setQuizGameToken(1L);
+        UserQuizGameEntity userQuizGameEntity = userQuizGameSpringDataRepository.findOne(id);
+        assertNotNull(userQuizGameEntity);
+        assertThat(userQuizGameEntity.getId().getUserId(), equalTo(1L));
+        assertThat(userQuizGameEntity.getId().getCatId(), equalTo(1L));
+        assertThat(userQuizGameEntity.getId().getQuizGameToken(), equalTo(1L));
+    }
 }
