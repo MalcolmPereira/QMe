@@ -17,7 +17,7 @@ import com.malcolm.qme.springdata.entity.UserCategoryEntity;
  */
 interface UserCategorySpringDataRepository extends JpaRepository<UserCategoryEntity, Long> {
 	/**
-     * Find By USer ID
+     * Find By User ID
      * @param userId
      * @return
      */

@@ -87,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	/**
-	 * Map User Domain Object to UserEntity o
+	 * Map User Domain Object to UserEntity
 	 * 
 	 * @param user
 	 * @return
