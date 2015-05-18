@@ -16,19 +16,19 @@ import com.malcolm.qme.springdata.entity.QuizQuestionEntity;
  * @Author: Malcolm
  */
 interface QuizQuestionSpringDataRepository extends JpaRepository<QuizQuestionEntity, Long> {
-	
-	 /**
-     * Find By Quiz ID
-     * @param quizId
-     * @return
-     */
-    public List<QuizQuestionEntity> findByQuizId(Long quizId);
-    
-    /**
-     * Find By Question ID
-     * @param questionId
-     * @return
-     */
-    public List<QuizQuestionEntity> findByQuestionId(Long questionId);
-	
+
+	/**
+	 * Find By Quiz ID
+	 * @param quizId
+	 * @return
+	 */
+	public List<QuizQuestionEntity> findByQuizId(Long quizId);
+
+	/**
+	 * Find By Question ID
+	 * @param questionId
+	 * @return
+	 */
+	public List<QuizQuestionEntity> findByQuestionId(Long questionId);
+
 }
