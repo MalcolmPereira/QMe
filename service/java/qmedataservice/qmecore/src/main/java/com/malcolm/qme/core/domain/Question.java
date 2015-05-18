@@ -33,6 +33,11 @@ public final class Question {
     private final String answer;
 
     /**
+     * Question Point
+     */
+    private final Integer questionPoint;
+    
+    /**
      * Question Likes
      */
     private final Long likes;
@@ -54,33 +59,40 @@ public final class Question {
      * Update User Id
      */
     private final Long  updateUserID;
-
-    /**
-     * Public Constructor
-     *
-     * @param questionID
-     * @param categoryID
-     * @param questionText
-     * @param answer
-     * @param likes
-     * @param questionCreateDate
-     * @param createUserID
-     * @param questionUpdateDate
-     * @param updateUserID
-     */
-    public Question(Long questionID, Long categoryID, String questionText, String answer, Long likes, Date questionCreateDate, Long createUserID, Date questionUpdateDate, Long updateUserID) {
-        this.questionID = questionID;
-        this.categoryID = categoryID;
-        this.questionText = questionText;
-        this.answer = answer;
-        this.likes = likes;
-        this.questionCreateDate = questionCreateDate;
-        this.createUserID = createUserID;
-        this.questionUpdateDate = questionUpdateDate;
-        this.updateUserID = updateUserID;
-    }
-
-    /**
+    
+    
+	/**
+	 * Public Constructor
+	 * 
+	 * @param questionID
+	 * @param categoryID
+	 * @param questionText
+	 * @param answer
+	 * @param questionPoint
+	 * @param likes
+	 * @param questionCreateDate
+	 * @param createUserID
+	 * @param questionUpdateDate
+	 * @param updateUserID
+	 */
+	public Question(Long questionID, Long categoryID, String questionText,
+			String answer, Integer questionPoint, Long likes,
+			Date questionCreateDate, Long createUserID,
+			Date questionUpdateDate, Long updateUserID) {
+		super();
+		this.questionID = questionID;
+		this.categoryID = categoryID;
+		this.questionText = questionText;
+		this.answer = answer;
+		this.questionPoint = questionPoint;
+		this.likes = likes;
+		this.questionCreateDate = questionCreateDate;
+		this.createUserID = createUserID;
+		this.questionUpdateDate = questionUpdateDate;
+		this.updateUserID = updateUserID;
+	}
+    
+	/**
      * Public Constructor
      *
      * @param categoryID
@@ -93,6 +105,7 @@ public final class Question {
         this.categoryID = categoryID;
         this.questionText = questionText;
         this.answer = answer;
+        this.questionPoint = 1;
         this.likes = 0L;
         this.questionCreateDate = null;
         this.createUserID = createUserID;
@@ -100,125 +113,183 @@ public final class Question {
         this.updateUserID = 0L;
     }
 
-    /**
-     * Get Question ID
-     * @return
-     */
-    public Long getQuestionID() {
-        return questionID;
-    }
+	/**
+	 * @return the questionID
+	 */
+	public Long getQuestionID() {
+		return questionID;
+	}
 
-    /**
-     * Get Category ID
-     * @return
-     */
-    public Long getCategoryID() {
-        return categoryID;
-    }
+	/**
+	 * @return the categoryID
+	 */
+	public Long getCategoryID() {
+		return categoryID;
+	}
 
-    /**
-     * Get Question Text
-     * @return
-     */
-    public String getQuestionText() {
-        return questionText;
-    }
+	/**
+	 * @return the questionText
+	 */
+	public String getQuestionText() {
+		return questionText;
+	}
 
-    /**
-     * Get Asnwer
-     * @return
-     */
-    public String getAnswer() {
-        return answer;
-    }
+	/**
+	 * @return the answer
+	 */
+	public String getAnswer() {
+		return answer;
+	}
 
-    /**
-     * Get Likes
-     * @return
-     */
-    public Long getLikes() {
-        return likes;
-    }
+	/**
+	 * @return the questionPoint
+	 */
+	public Integer getQuestionPoint() {
+		return questionPoint;
+	}
 
-    /**
-     * Get Question Create Date
-     * @return
-     */
-    public Date getQuestionCreateDate() {
-        return questionCreateDate;
-    }
+	/**
+	 * @return the likes
+	 */
+	public Long getLikes() {
+		return likes;
+	}
 
-    /**
-     * Get Question Create User
-     * @return
-     */
-    public Long getCreateUserID() {
-        return createUserID;
-    }
+	/**
+	 * @return the questionCreateDate
+	 */
+	public Date getQuestionCreateDate() {
+		return questionCreateDate;
+	}
 
-    /**
-     * Get Question Update Date
-     * @return
-     */
-    public Date getQuestionUpdateDate() {
-        return questionUpdateDate;
-    }
+	/**
+	 * @return the createUserID
+	 */
+	public Long getCreateUserID() {
+		return createUserID;
+	}
 
-    /**
-     * Get Question Update User
-     * @return
-     */
-    public Long getUpdateUserID() {
-        return updateUserID;
-    }
+	/**
+	 * @return the questionUpdateDate
+	 */
+	public Date getQuestionUpdateDate() {
+		return questionUpdateDate;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/**
+	 * @return the updateUserID
+	 */
+	public Long getUpdateUserID() {
+		return updateUserID;
+	}
 
-        Question question = (Question) o;
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
+		result = prime * result
+				+ ((categoryID == null) ? 0 : categoryID.hashCode());
+		result = prime * result
+				+ ((createUserID == null) ? 0 : createUserID.hashCode());
+		result = prime * result + ((likes == null) ? 0 : likes.hashCode());
+		result = prime
+				* result
+				+ ((questionCreateDate == null) ? 0 : questionCreateDate
+						.hashCode());
+		result = prime * result
+				+ ((questionID == null) ? 0 : questionID.hashCode());
+		result = prime * result
+				+ ((questionPoint == null) ? 0 : questionPoint.hashCode());
+		result = prime * result
+				+ ((questionText == null) ? 0 : questionText.hashCode());
+		result = prime
+				* result
+				+ ((questionUpdateDate == null) ? 0 : questionUpdateDate
+						.hashCode());
+		result = prime * result
+				+ ((updateUserID == null) ? 0 : updateUserID.hashCode());
+		return result;
+	}
 
-        if (!getQuestionID().equals(question.getQuestionID())) return false;
-        if (!getCategoryID().equals(question.getCategoryID())) return false;
-        if (!getQuestionText().equals(question.getQuestionText())) return false;
-        if (!getAnswer().equals(question.getAnswer())) return false;
-        if (getLikes() != null ? !getLikes().equals(question.getLikes()) : question.getLikes() != null) return false;
-        if (getQuestionCreateDate() != null ? !getQuestionCreateDate().equals(question.getQuestionCreateDate()) : question.getQuestionCreateDate() != null)
-            return false;
-        if (!getCreateUserID().equals(question.getCreateUserID())) return false;
-        if (getQuestionUpdateDate() != null ? !getQuestionUpdateDate().equals(question.getQuestionUpdateDate()) : question.getQuestionUpdateDate() != null)
-            return false;
-        return !(getUpdateUserID() != null ? !getUpdateUserID().equals(question.getUpdateUserID()) : question.getUpdateUserID() != null);
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		if (answer == null) {
+			if (other.answer != null)
+				return false;
+		} else if (!answer.equals(other.answer))
+			return false;
+		if (categoryID == null) {
+			if (other.categoryID != null)
+				return false;
+		} else if (!categoryID.equals(other.categoryID))
+			return false;
+		if (createUserID == null) {
+			if (other.createUserID != null)
+				return false;
+		} else if (!createUserID.equals(other.createUserID))
+			return false;
+		if (likes == null) {
+			if (other.likes != null)
+				return false;
+		} else if (!likes.equals(other.likes))
+			return false;
+		if (questionCreateDate == null) {
+			if (other.questionCreateDate != null)
+				return false;
+		} else if (!questionCreateDate.equals(other.questionCreateDate))
+			return false;
+		if (questionID == null) {
+			if (other.questionID != null)
+				return false;
+		} else if (!questionID.equals(other.questionID))
+			return false;
+		if (questionPoint == null) {
+			if (other.questionPoint != null)
+				return false;
+		} else if (!questionPoint.equals(other.questionPoint))
+			return false;
+		if (questionText == null) {
+			if (other.questionText != null)
+				return false;
+		} else if (!questionText.equals(other.questionText))
+			return false;
+		if (questionUpdateDate == null) {
+			if (other.questionUpdateDate != null)
+				return false;
+		} else if (!questionUpdateDate.equals(other.questionUpdateDate))
+			return false;
+		if (updateUserID == null) {
+			if (other.updateUserID != null)
+				return false;
+		} else if (!updateUserID.equals(other.updateUserID))
+			return false;
+		return true;
+	}
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getQuestionID().hashCode();
-        result = 31 * result + getCategoryID().hashCode();
-        result = 31 * result + getQuestionText().hashCode();
-        result = 31 * result + getAnswer().hashCode();
-        result = 31 * result + (getLikes() != null ? getLikes().hashCode() : 0);
-        result = 31 * result + (getQuestionCreateDate() != null ? getQuestionCreateDate().hashCode() : 0);
-        result = 31 * result + getCreateUserID().hashCode();
-        result = 31 * result + (getQuestionUpdateDate() != null ? getQuestionUpdateDate().hashCode() : 0);
-        result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "questionID=" + questionID +
-                ", categoryID=" + categoryID +
-                ", questionText='" + questionText + '\'' +
-                ", answer='" + answer + '\'' +
-                ", likes=" + likes +
-                ", questionCreateDate=" + questionCreateDate +
-                ", createUserID=" + createUserID +
-                ", questionUpdateDate=" + questionUpdateDate +
-                ", updateUserID=" + updateUserID +
-                '}';
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Question [questionID=" + questionID + ", categoryID="
+				+ categoryID + ", questionText=" + questionText + ", answer="
+				+ answer + ", questionPoint=" + questionPoint + ", likes="
+				+ likes + ", questionCreateDate=" + questionCreateDate
+				+ ", createUserID=" + createUserID + ", questionUpdateDate="
+				+ questionUpdateDate + ", updateUserID=" + updateUserID + "]";
+	}
 }

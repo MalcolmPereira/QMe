@@ -130,6 +130,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         		questionEntity.getCatId(),
         		questionEntity.getQuestionText(),
         		questionEntity.getQuestionAnswer(),
+        		1,
         		questionEntity.getQuestionLikes(),
         		questionEntity.getQuestionCreateDate(),
         		questionEntity.getQuestionCreateUser(),
