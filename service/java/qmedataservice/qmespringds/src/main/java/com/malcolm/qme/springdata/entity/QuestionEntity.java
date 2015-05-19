@@ -1,12 +1,14 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 18, 2015 7:53:02 PM by Hibernate Tools 3.4.0.CR1
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,12 +21,13 @@ import javax.persistence.TemporalType;
 @Table(name = "QUESTION", catalog = "qme")
 public class QuestionEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 9087848230244027291L;
-	
+	private static final long serialVersionUID = 6712594174002258631L;
+
 	private Long questionId;
 	private Long catId;
 	private String questionText;
 	private String questionAnswer;
+	private Integer questionPoint;
 	private Long questionLikes;
 	private Date questionCreateDate;
 	private Long questionCreateUser;
@@ -47,12 +50,13 @@ public class QuestionEntity implements java.io.Serializable {
 	}
 
 	public QuestionEntity(Long catId, String questionText,
-			String questionAnswer, Long questionLikes, Date questionCreateDate,
-			Long questionCreateUser, Date questionUpdateDate,
-			Long questionUpdateUser) {
+			String questionAnswer, Integer questionPoint, Long questionLikes,
+			Date questionCreateDate, Long questionCreateUser,
+			Date questionUpdateDate, Long questionUpdateUser) {
 		this.catId = catId;
 		this.questionText = questionText;
 		this.questionAnswer = questionAnswer;
+		this.questionPoint = questionPoint;
 		this.questionLikes = questionLikes;
 		this.questionCreateDate = questionCreateDate;
 		this.questionCreateUser = questionCreateUser;
@@ -96,6 +100,15 @@ public class QuestionEntity implements java.io.Serializable {
 
 	public void setQuestionAnswer(String questionAnswer) {
 		this.questionAnswer = questionAnswer;
+	}
+
+	@Column(name = "QUESTION_POINT")
+	public Integer getQuestionPoint() {
+		return this.questionPoint;
+	}
+
+	public void setQuestionPoint(Integer questionPoint) {
+		this.questionPoint = questionPoint;
 	}
 
 	@Column(name = "QUESTION_LIKES", nullable = false)

@@ -101,26 +101,36 @@ public class QuizQuestionSpringDataRepositoryTest {
 		assertThat(categoryEntity.getCatId(), greaterThan(0L));
 		final Long catID = categoryEntity.getCatId();
 
-		QuestionEntity questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTest Question1","QuizQuestionSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTest Question1",
+				"QuizQuestionSpringDataRepositoryTest Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question1ID = questionEntity.getQuestionId();
 
-		questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTest Question2","QuestionSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
+		questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTest Question2",
+				"QuestionSpringDataRepositoryTest Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question2ID = questionEntity.getQuestionId();
 
-		questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTest Question3","QuestionSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
+		questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTest Question3",
+				"QuestionSpringDataRepositoryTest Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question3ID = questionEntity.getQuestionId();
 
 		QuizEntity quizEntity = new QuizEntity(
-				"QuizQuestionSpringDataRepositoryTest Quiz","QuizQuestionSpringDataRepositoryTest Quiz Desc",catID, 0L,0L,
+				"QuizQuestionSpringDataRepositoryTest Quiz",
+				"QuizQuestionSpringDataRepositoryTest Quiz Desc",catID, 0L,0L,
 				0, new Date(), 1L,new Date(), 1L
 				);
 
@@ -206,19 +216,28 @@ public class QuizQuestionSpringDataRepositoryTest {
 		assertThat(categoryEntity.getCatId(), greaterThan(0L));
 		final Long catID = categoryEntity.getCatId();
 
-		QuestionEntity questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTestByQuiz Question1","QuizQuestionSpringDataRepositoryTestByQuiz Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTestByQuiz Question1",
+				"QuizQuestionSpringDataRepositoryTestByQuiz Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question1ID = questionEntity.getQuestionId();
 
-		questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTestByQuiz Question2","QuizQuestionSpringDataRepositoryTestByQuiz Answer",0L,new Date(),1L,new Date(),1L);
+		questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTestByQuiz Question2",
+				"QuizQuestionSpringDataRepositoryTestByQuiz Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question2ID = questionEntity.getQuestionId();
 
-		questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTestByQuiz Question3","QuizQuestionSpringDataRepositoryTestByQuiz Answer",0L,new Date(),1L,new Date(),1L);
+		questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTestByQuiz Question3",
+				"QuizQuestionSpringDataRepositoryTestByQuiz Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
@@ -316,19 +335,28 @@ public class QuizQuestionSpringDataRepositoryTest {
 		assertThat(categoryEntity.getCatId(), greaterThan(0L));
 		final Long catID = categoryEntity.getCatId();
 
-		QuestionEntity questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTestByQuestion Question1","QuizQuestionSpringDataRepositoryTestByQuestion Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTestByQuestion Question1",
+				"QuizQuestionSpringDataRepositoryTestByQuestion Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question1ID = questionEntity.getQuestionId();
 
-		questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTestByQuestion Question2","QuizQuestionSpringDataRepositoryTestByQuestion Answer",0L,new Date(),1L,new Date(),1L);
+		questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTestByQuestion Question2",
+				"QuizQuestionSpringDataRepositoryTestByQuestion Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
 		final Long question2ID = questionEntity.getQuestionId();
 
-		questionEntity = new QuestionEntity(catID,"QuizQuestionSpringDataRepositoryTestByQuestion Question3","QuizQuestionSpringDataRepositoryTestByQuestion Answer",0L,new Date(),1L,new Date(),1L);
+		questionEntity = new QuestionEntity(catID,
+				"QuizQuestionSpringDataRepositoryTestByQuestion Question3",
+				"QuizQuestionSpringDataRepositoryTestByQuestion Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));

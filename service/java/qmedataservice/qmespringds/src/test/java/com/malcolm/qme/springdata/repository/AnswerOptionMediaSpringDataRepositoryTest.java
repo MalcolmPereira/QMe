@@ -15,9 +15,6 @@ import static org.junit.Assert.assertThat;
 import java.util.Date;
 import java.util.List;
 
-import com.malcolm.qme.springdata.entity.AnswerOptionEntity;
-import com.malcolm.qme.springdata.entity.QuestionEntity;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,9 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.AnswerOptionEntity;
 import com.malcolm.qme.springdata.entity.AnswerOptionMediaEntity;
+import com.malcolm.qme.springdata.entity.QuestionEntity;
 
 /**
  * @author Malcolm
@@ -37,164 +36,177 @@ import com.malcolm.qme.springdata.entity.AnswerOptionMediaEntity;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
 @TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
+		DependencyInjectionTestExecutionListener.class,
+		TransactionalTestExecutionListener.class
 })
 public class AnswerOptionMediaSpringDataRepositoryTest {
-	
+
 	/**
-     * AnswerOptionMediaEntity Repository
-     */
-    @Autowired
-    private AnswerOptionMediaSpringDataRepository answerOptionMediaSpringDataRepository;
+	 * AnswerOptionMediaEntity Repository
+	 */
+	@Autowired
+	private AnswerOptionMediaSpringDataRepository answerOptionMediaSpringDataRepository;
 
-    /**
-     * AnswerOptionEntity Repository
-     */
-    @Autowired
-    private AnswerOptionSpringDataRepository answerOptionSpringDataRepo;
+	/**
+	 * AnswerOptionEntity Repository
+	 */
+	@Autowired
+	private AnswerOptionSpringDataRepository answerOptionSpringDataRepo;
 
-    /**
-     * QuestionEntity Repository
-     */
-    @Autowired
-    private QuestionSpringDataRepository questionSpringDataRepository;
-    
-    @Test
-    public void testFetchAll(){
-        assertNotNull(answerOptionMediaSpringDataRepository);
-        List<AnswerOptionMediaEntity> answerOptionMediaEntities = answerOptionMediaSpringDataRepository.findAll();
-        assertNotNull(answerOptionMediaEntities);
-        assertThat(answerOptionMediaEntities.size(), greaterThan(0));
-    }
+	/**
+	 * QuestionEntity Repository
+	 */
+	@Autowired
+	private QuestionSpringDataRepository questionSpringDataRepository;
 
-    @Test
-    public void testFindById(){
-        assertNotNull(answerOptionMediaSpringDataRepository);
-        final AnswerOptionMediaEntity answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(1L);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(1L));
-    }
+	@Test
+	public void testFetchAll(){
+		assertNotNull(answerOptionMediaSpringDataRepository);
+		final List<AnswerOptionMediaEntity> answerOptionMediaEntities = answerOptionMediaSpringDataRepository.findAll();
+		assertNotNull(answerOptionMediaEntities);
+		assertThat(answerOptionMediaEntities.size(), greaterThan(0));
+	}
 
-    @Test
-    public void testCRUD(){
+	@Test
+	public void testFindById(){
+		assertNotNull(answerOptionMediaSpringDataRepository);
+		final AnswerOptionMediaEntity answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(1L);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(1L));
+	}
 
-        assertNotNull(answerOptionSpringDataRepo);
+	@Test
+	public void testCRUD(){
 
-        assertNotNull(questionSpringDataRepository);
+		assertNotNull(answerOptionSpringDataRepo);
 
-        assertNotNull(answerOptionMediaSpringDataRepository);
+		assertNotNull(questionSpringDataRepository);
 
-        QuestionEntity questionEntity = new QuestionEntity(1L,"AnswerOptionMediaSpringDataRepositoryTest Question","AnswerOptionMediaSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
-        questionEntity = questionSpringDataRepository.save(questionEntity);
-        assertNotNull(questionEntity);
-        assertThat(questionEntity.getQuestionId(), greaterThan(0L));
-        final Long questionID = questionEntity.getQuestionId();
+		assertNotNull(answerOptionMediaSpringDataRepository);
 
-        AnswerOptionEntity answerOptionEntity = new AnswerOptionEntity(questionID, "Option 1", (byte) 0);
-        answerOptionEntity = answerOptionSpringDataRepo.save(answerOptionEntity);
-        assertNotNull(answerOptionEntity);
-        assertThat(answerOptionEntity.getOptionId(), greaterThan(0L));
-        final Long answerOptionID  = answerOptionEntity.getOptionId();
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"AnswerOptionMediaSpringDataRepositoryTest Question",
+				"AnswerOptionMediaSpringDataRepositoryTest Answer",
+				1,
+				0L,
+				new Date(),
+				1L,
+				new Date(),
+				1L);
+		questionEntity = questionSpringDataRepository.save(questionEntity);
+		assertNotNull(questionEntity);
+		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
+		final Long questionID = questionEntity.getQuestionId();
 
-        AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID,1,new String("testing").getBytes());
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), greaterThan(0L));
-        final Long answerOptionMediaID  = answerOptionMediaEntity.getOptionMediaId();
-        
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
-        assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing"));
-        
-        answerOptionMediaEntity.setOptionMedia(new String("testing updates").getBytes());
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
-        
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
-        assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing updates"));
-        
-        answerOptionMediaSpringDataRepository.delete(answerOptionMediaID);
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
-        assertNull(answerOptionMediaEntity);
-        
-        answerOptionSpringDataRepo.delete(answerOptionID);
-        answerOptionEntity = answerOptionSpringDataRepo.findOne(answerOptionID);
-        assertNull(answerOptionEntity);
+		AnswerOptionEntity answerOptionEntity = new AnswerOptionEntity(questionID, "Option 1", (byte) 0);
+		answerOptionEntity = answerOptionSpringDataRepo.save(answerOptionEntity);
+		assertNotNull(answerOptionEntity);
+		assertThat(answerOptionEntity.getOptionId(), greaterThan(0L));
+		final Long answerOptionID  = answerOptionEntity.getOptionId();
 
-        questionSpringDataRepository.delete(questionID);
-        questionEntity = questionSpringDataRepository.findOne(questionID);
-        assertNull(questionEntity);
-    }
-    
-    @Test
-    public void testFindByOptionId(){
+		AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID,1,new String("testing").getBytes());
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), greaterThan(0L));
+		final Long answerOptionMediaID  = answerOptionMediaEntity.getOptionMediaId();
 
-        assertNotNull(answerOptionSpringDataRepo);
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
+		assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing"));
 
-        assertNotNull(questionSpringDataRepository);
+		answerOptionMediaEntity.setOptionMedia(new String("testing updates").getBytes());
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
 
-        assertNotNull(answerOptionMediaSpringDataRepository);
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
+		assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing updates"));
 
-        QuestionEntity questionEntity = new QuestionEntity(1L,"AnswerOptionMediaSpringDataRepositoryTest Question","AnswerOptionMediaSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
-        questionEntity = questionSpringDataRepository.save(questionEntity);
-        assertNotNull(questionEntity);
-        assertThat(questionEntity.getQuestionId(), greaterThan(0L));
-        final Long questionID = questionEntity.getQuestionId();
+		answerOptionMediaSpringDataRepository.delete(answerOptionMediaID);
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
+		assertNull(answerOptionMediaEntity);
 
-        AnswerOptionEntity answerOptionEntity = new AnswerOptionEntity(questionID, "Option 1", (byte) 0);
-        answerOptionEntity = answerOptionSpringDataRepo.save(answerOptionEntity);
-        assertNotNull(answerOptionEntity);
-        assertThat(answerOptionEntity.getOptionId(), greaterThan(0L));
-        final Long answerOptionID  = answerOptionEntity.getOptionId();
+		answerOptionSpringDataRepo.delete(answerOptionID);
+		answerOptionEntity = answerOptionSpringDataRepo.findOne(answerOptionID);
+		assertNull(answerOptionEntity);
 
-        AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID,1,new String("testing").getBytes());
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), greaterThan(0L));
-        final Long answerOptionMediaID  = answerOptionMediaEntity.getOptionMediaId();
-        
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
-        assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing"));
-        
-        List<AnswerOptionMediaEntity> answerOptionMediaEntityList = answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID);
-        assertNotNull(answerOptionMediaEntityList);
-        assertThat(answerOptionMediaEntityList.size(), equalTo(1));
-        assertThat(answerOptionMediaEntityList.get(0).getOptionMediaId(), equalTo(answerOptionMediaID));
-        assertThat(new String(answerOptionMediaEntityList.get(0).getOptionMedia()), equalTo("testing"));
-        
-        answerOptionMediaEntity.setOptionMedia(new String("testing updates").getBytes());
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
-        
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
-        assertNotNull(answerOptionMediaEntity);
-        assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
-        assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing updates"));
-        
-        answerOptionMediaEntityList = answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID);
-        assertNotNull(answerOptionMediaEntityList);
-        assertThat(answerOptionMediaEntityList.size(), equalTo(1));
-        assertThat(answerOptionMediaEntityList.get(0).getOptionMediaId(), equalTo(answerOptionMediaID));
-        assertThat(new String(answerOptionMediaEntityList.get(0).getOptionMedia()), equalTo("testing updates"));
-        
-        answerOptionMediaSpringDataRepository.delete(answerOptionMediaID);
-        answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
-        assertNull(answerOptionMediaEntity);
-        
-        answerOptionSpringDataRepo.delete(answerOptionID);
-        answerOptionEntity = answerOptionSpringDataRepo.findOne(answerOptionID);
-        assertNull(answerOptionEntity);
+		questionSpringDataRepository.delete(questionID);
+		questionEntity = questionSpringDataRepository.findOne(questionID);
+		assertNull(questionEntity);
+	}
 
-        questionSpringDataRepository.delete(questionID);
-        questionEntity = questionSpringDataRepository.findOne(questionID);
-        assertNull(questionEntity);
-    }
+	@Test
+	public void testFindByOptionId(){
+
+		assertNotNull(answerOptionSpringDataRepo);
+
+		assertNotNull(questionSpringDataRepository);
+
+		assertNotNull(answerOptionMediaSpringDataRepository);
+
+		QuestionEntity questionEntity = new QuestionEntity(
+				1L,
+				"AnswerOptionMediaSpringDataRepositoryTest Question",
+				"AnswerOptionMediaSpringDataRepositoryTest Answer",
+				1,
+				0L,new Date(),1L,new Date(),1L);
+		questionEntity = questionSpringDataRepository.save(questionEntity);
+		assertNotNull(questionEntity);
+		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
+		final Long questionID = questionEntity.getQuestionId();
+
+		AnswerOptionEntity answerOptionEntity = new AnswerOptionEntity(questionID, "Option 1", (byte) 0);
+		answerOptionEntity = answerOptionSpringDataRepo.save(answerOptionEntity);
+		assertNotNull(answerOptionEntity);
+		assertThat(answerOptionEntity.getOptionId(), greaterThan(0L));
+		final Long answerOptionID  = answerOptionEntity.getOptionId();
+
+		AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID,1,new String("testing").getBytes());
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), greaterThan(0L));
+		final Long answerOptionMediaID  = answerOptionMediaEntity.getOptionMediaId();
+
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
+		assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing"));
+
+		List<AnswerOptionMediaEntity> answerOptionMediaEntityList = answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID);
+		assertNotNull(answerOptionMediaEntityList);
+		assertThat(answerOptionMediaEntityList.size(), equalTo(1));
+		assertThat(answerOptionMediaEntityList.get(0).getOptionMediaId(), equalTo(answerOptionMediaID));
+		assertThat(new String(answerOptionMediaEntityList.get(0).getOptionMedia()), equalTo("testing"));
+
+		answerOptionMediaEntity.setOptionMedia(new String("testing updates").getBytes());
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
+
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
+		assertNotNull(answerOptionMediaEntity);
+		assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
+		assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing updates"));
+
+		answerOptionMediaEntityList = answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID);
+		assertNotNull(answerOptionMediaEntityList);
+		assertThat(answerOptionMediaEntityList.size(), equalTo(1));
+		assertThat(answerOptionMediaEntityList.get(0).getOptionMediaId(), equalTo(answerOptionMediaID));
+		assertThat(new String(answerOptionMediaEntityList.get(0).getOptionMedia()), equalTo("testing updates"));
+
+		answerOptionMediaSpringDataRepository.delete(answerOptionMediaID);
+		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(answerOptionMediaID);
+		assertNull(answerOptionMediaEntity);
+
+		answerOptionSpringDataRepo.delete(answerOptionID);
+		answerOptionEntity = answerOptionSpringDataRepo.findOne(answerOptionID);
+		assertNull(answerOptionEntity);
+
+		questionSpringDataRepository.delete(questionID);
+		questionEntity = questionSpringDataRepository.findOne(questionID);
+		assertNull(questionEntity);
+	}
 }

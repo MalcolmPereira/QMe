@@ -76,7 +76,10 @@ public class AnswerReferenceMediaSpringDataRepositoryTest {
 
 		assertNotNull(questionSpringDataRepository);
 
-		QuestionEntity questionEntity = new QuestionEntity(1L,"AnswerReferenceMediaSpringDataRepositoryTest Question","AnswerReferenceMediaSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"AnswerReferenceMediaSpringDataRepositoryTest Question",
+				"AnswerReferenceMediaSpringDataRepositoryTest Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
@@ -123,7 +126,10 @@ public class AnswerReferenceMediaSpringDataRepositoryTest {
 
 		assertNotNull(questionSpringDataRepository);
 
-		QuestionEntity questionEntity = new QuestionEntity(1L,"AnswerReferenceMediaSpringDataRepositoryTestQuesID Question","AnswerReferenceMediaSpringDataRepositoryTestQuesID Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"AnswerReferenceMediaSpringDataRepositoryTestQuesID Question",
+				"AnswerReferenceMediaSpringDataRepositoryTestQuesID Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
 		assertThat(questionEntity.getQuestionId(), greaterThan(0L));

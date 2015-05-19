@@ -75,7 +75,10 @@ public class AnswerOptionSpringDataRepositoryTest {
 
 		assertNotNull(questionSpringDataRepository);
 
-		QuestionEntity questionEntity = new QuestionEntity(1L,"AnswerOptionSpringDataRepositoryTest Question","AnswerOptionSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"AnswerOptionSpringDataRepositoryTest Question",
+				"AnswerOptionSpringDataRepositoryTest Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);
@@ -115,7 +118,10 @@ public class AnswerOptionSpringDataRepositoryTest {
 
 		assertNotNull(questionSpringDataRepository);
 
-		QuestionEntity questionEntity = new QuestionEntity(1L,"AnswerOptionSpringDataRepositoryTestByQID Question","AnswerOptionSpringDataRepositoryTestByQID Answer",0L,new Date(),1L,new Date(),1L);
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"AnswerOptionSpringDataRepositoryTestByQID Question",
+				"AnswerOptionSpringDataRepositoryTestByQID Answer",
+				1,0L,new Date(),1L,new Date(),1L);
 
 		questionEntity = questionSpringDataRepository.save(questionEntity);
 		assertNotNull(questionEntity);

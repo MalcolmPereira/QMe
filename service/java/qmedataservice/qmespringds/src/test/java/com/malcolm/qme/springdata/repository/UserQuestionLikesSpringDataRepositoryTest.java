@@ -36,213 +36,222 @@ import com.malcolm.qme.springdata.entity.UserQuestionLikesEntityId;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
 @TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
+		DependencyInjectionTestExecutionListener.class,
+		TransactionalTestExecutionListener.class
 })
 public class UserQuestionLikesSpringDataRepositoryTest {
-	
-	/**
-     * UserQuestionLikesEntity Repository
-     */
-    @Autowired
-    private UserQuestionLikesSpringDataRepository userQuestionLikesSpringDataRepo;
-	
-	/**
-     * UserEntity Repository
-     */
-    @Autowired
-    private UserSpringDataRepository userSpringDataRepo;
-    
-    /**
-     * QuestionEntity Repository
-     */
-    @Autowired
-    private QuestionSpringDataRepository questionSpringDataRepository;
-    
-    
-    @Test
-    public void testFindAll(){
-        assertNotNull(userQuestionLikesSpringDataRepo);
-        List<UserQuestionLikesEntity> userQuestionLikesEntities = userQuestionLikesSpringDataRepo.findAll();
-        assertNotNull(userQuestionLikesEntities);
-        assertThat(userQuestionLikesEntities.size(), greaterThan(0));
-    }
-    
-    @Test
-    public void testFindById(){
-        assertNotNull(userQuestionLikesSpringDataRepo);
-        UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
-        userQuestionLikesEntityId.setUserId(1L);
-        userQuestionLikesEntityId.setQuestionId(1L);
-        UserQuestionLikesEntity userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(1L));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(1L));
-    }
 
-    @Test
-    public void testCRUD(){
-    	
-    	assertNotNull(userQuestionLikesSpringDataRepo);
-    	
-    	assertNotNull(userSpringDataRepo);
-    	
-    	assertNotNull(questionSpringDataRepository);
-    	
-    	UserEntity userEntity = new UserEntity("UserQuestionLikesSpringDataRepositoryTest", "Test", "Test", "UserQuestionLikesSpringDataRepositoryTest@test.com", "Test", new Date(), new Date());
-        userEntity = userSpringDataRepo.save(userEntity);
-        assertNotNull(userEntity);
-        assertThat(userEntity.getUserId(), greaterThan(0L));
-        Long userID = userEntity.getUserId();
-        
-        
-        QuestionEntity questionEntity = new QuestionEntity(1L,"QuestionSpringDataRepositoryTest Question","QuestionSpringDataRepositoryTest Answer",0L,new Date(),1L,new Date(),1L);
-        questionEntity = questionSpringDataRepository.save(questionEntity);
-        assertNotNull(questionEntity);
-        assertThat(questionEntity.getQuestionId(), greaterThan(0L));
-        Long questionID = questionEntity.getQuestionId();
-        
-        UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
-        userQuestionLikesEntityId.setUserId(userID);
-        userQuestionLikesEntityId.setQuestionId(questionID);
-        UserQuestionLikesEntity userQuestionLikesEntity = new UserQuestionLikesEntity();
-        userQuestionLikesEntity.setId(userQuestionLikesEntityId);
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.save(userQuestionLikesEntity);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
-        
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
-        
-        userQuestionLikesSpringDataRepo.delete(userQuestionLikesEntityId);
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNull(userQuestionLikesEntity);
-      
-        questionSpringDataRepository.delete(questionID);
-        questionEntity = questionSpringDataRepository.findOne(questionID);
-        assertNull(questionEntity);
-        
-        userSpringDataRepo.delete(userID);
-        userEntity = userSpringDataRepo.findOne(userID);
-        assertNull(userEntity);
-    }
-    
-    @Test
-    public void testFindByUserId(){
-    	
-    	assertNotNull(userQuestionLikesSpringDataRepo);
-    	
-    	assertNotNull(userSpringDataRepo);
-    	
-    	assertNotNull(questionSpringDataRepository);
-    	
-    	UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByUserID", "Test", "Test", "UQuestLikesSpringDataRepoTestByUserID@test.com", "Test", new Date(), new Date());
-        userEntity = userSpringDataRepo.save(userEntity);
-        assertNotNull(userEntity);
-        assertThat(userEntity.getUserId(), greaterThan(0L));
-        Long userID = userEntity.getUserId();
-        
-        
-        QuestionEntity questionEntity = new QuestionEntity(1L,"UserQuestionLikesSpringDataRepositoryTestByUserID Question","UserQuestionLikesSpringDataRepositoryTestByUserID Answer",0L,new Date(),1L,new Date(),1L);
-        questionEntity = questionSpringDataRepository.save(questionEntity);
-        assertNotNull(questionEntity);
-        assertThat(questionEntity.getQuestionId(), greaterThan(0L));
-        Long questionID = questionEntity.getQuestionId();
-        
-        UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
-        userQuestionLikesEntityId.setUserId(userID);
-        userQuestionLikesEntityId.setQuestionId(questionID);
-        UserQuestionLikesEntity userQuestionLikesEntity = new UserQuestionLikesEntity();
-        userQuestionLikesEntity.setId(userQuestionLikesEntityId);
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.save(userQuestionLikesEntity);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
-        
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
-        
-        List<UserQuestionLikesEntity> userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByUserId(userID);
-        assertNotNull(userQuestionLikesEntityList);
-        assertThat(userQuestionLikesEntityList.size(), equalTo(1));
-        
-        userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByQuestionId(questionID);
-        assertNotNull(userQuestionLikesEntityList);
-        assertThat(userQuestionLikesEntityList.size(), equalTo(1));
-        
-        userQuestionLikesSpringDataRepo.delete(userQuestionLikesEntityId);
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNull(userQuestionLikesEntity);
-      
-        questionSpringDataRepository.delete(questionID);
-        questionEntity = questionSpringDataRepository.findOne(questionID);
-        assertNull(questionEntity);
-        
-        userSpringDataRepo.delete(userID);
-        userEntity = userSpringDataRepo.findOne(userID);
-        assertNull(userEntity);
-    }
-    
-    @Test
-    public void testFindByQuestionId(){
-    	
-    	assertNotNull(userQuestionLikesSpringDataRepo);
-    	
-    	assertNotNull(userSpringDataRepo);
-    	
-    	assertNotNull(questionSpringDataRepository);
-    	
-    	UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByQID", "Test", "Test", "UQuestLikesSpringDataRepoTestByQID@test.com", "Test", new Date(), new Date());
-        userEntity = userSpringDataRepo.save(userEntity);
-        assertNotNull(userEntity);
-        assertThat(userEntity.getUserId(), greaterThan(0L));
-        Long userID = userEntity.getUserId();
-        
-        
-        QuestionEntity questionEntity = new QuestionEntity(1L,"UQuestLikesSpringDataRepoTestByQID Question","UQuestLikesSpringDataRepoTestByQID Answer",0L,new Date(),1L,new Date(),1L);
-        questionEntity = questionSpringDataRepository.save(questionEntity);
-        assertNotNull(questionEntity);
-        assertThat(questionEntity.getQuestionId(), greaterThan(0L));
-        Long questionID = questionEntity.getQuestionId();
-        
-        UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
-        userQuestionLikesEntityId.setUserId(userID);
-        userQuestionLikesEntityId.setQuestionId(questionID);
-        UserQuestionLikesEntity userQuestionLikesEntity = new UserQuestionLikesEntity();
-        userQuestionLikesEntity.setId(userQuestionLikesEntityId);
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.save(userQuestionLikesEntity);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
-        
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNotNull(userQuestionLikesEntity);
-        assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
-        
-        List<UserQuestionLikesEntity> userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByUserId(userID);
-        assertNotNull(userQuestionLikesEntityList);
-        assertThat(userQuestionLikesEntityList.size(), equalTo(1));
-        
-        userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByQuestionId(questionID);
-        assertNotNull(userQuestionLikesEntityList);
-        assertThat(userQuestionLikesEntityList.size(), equalTo(1));
-        
-        userQuestionLikesSpringDataRepo.delete(userQuestionLikesEntityId);
-        userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
-        assertNull(userQuestionLikesEntity);
-      
-        questionSpringDataRepository.delete(questionID);
-        questionEntity = questionSpringDataRepository.findOne(questionID);
-        assertNull(questionEntity);
-        
-        userSpringDataRepo.delete(userID);
-        userEntity = userSpringDataRepo.findOne(userID);
-        assertNull(userEntity);
-    }
+	/**
+	 * UserQuestionLikesEntity Repository
+	 */
+	@Autowired
+	private UserQuestionLikesSpringDataRepository userQuestionLikesSpringDataRepo;
+
+	/**
+	 * UserEntity Repository
+	 */
+	@Autowired
+	private UserSpringDataRepository userSpringDataRepo;
+
+	/**
+	 * QuestionEntity Repository
+	 */
+	@Autowired
+	private QuestionSpringDataRepository questionSpringDataRepository;
+
+
+	@Test
+	public void testFindAll(){
+		assertNotNull(userQuestionLikesSpringDataRepo);
+		final List<UserQuestionLikesEntity> userQuestionLikesEntities = userQuestionLikesSpringDataRepo.findAll();
+		assertNotNull(userQuestionLikesEntities);
+		assertThat(userQuestionLikesEntities.size(), greaterThan(0));
+	}
+
+	@Test
+	public void testFindById(){
+		assertNotNull(userQuestionLikesSpringDataRepo);
+		final UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
+		userQuestionLikesEntityId.setUserId(1L);
+		userQuestionLikesEntityId.setQuestionId(1L);
+		final UserQuestionLikesEntity userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(1L));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(1L));
+	}
+
+	@Test
+	public void testCRUD(){
+
+		assertNotNull(userQuestionLikesSpringDataRepo);
+
+		assertNotNull(userSpringDataRepo);
+
+		assertNotNull(questionSpringDataRepository);
+
+		UserEntity userEntity = new UserEntity("UserQuestionLikesSpringDataRepositoryTest", "Test", "Test", "UserQuestionLikesSpringDataRepositoryTest@test.com", "Test", new Date(), new Date());
+		userEntity = userSpringDataRepo.save(userEntity);
+		assertNotNull(userEntity);
+		assertThat(userEntity.getUserId(), greaterThan(0L));
+		final Long userID = userEntity.getUserId();
+
+
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"QuestionSpringDataRepositoryTest Question",
+				"QuestionSpringDataRepositoryTest Answer",
+				1,0L,new Date(),1L,new Date(),1L);
+		questionEntity = questionSpringDataRepository.save(questionEntity);
+		assertNotNull(questionEntity);
+		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
+		final Long questionID = questionEntity.getQuestionId();
+
+		final UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
+		userQuestionLikesEntityId.setUserId(userID);
+		userQuestionLikesEntityId.setQuestionId(questionID);
+		UserQuestionLikesEntity userQuestionLikesEntity = new UserQuestionLikesEntity();
+		userQuestionLikesEntity.setId(userQuestionLikesEntityId);
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.save(userQuestionLikesEntity);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
+
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
+
+		userQuestionLikesSpringDataRepo.delete(userQuestionLikesEntityId);
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNull(userQuestionLikesEntity);
+
+		questionSpringDataRepository.delete(questionID);
+		questionEntity = questionSpringDataRepository.findOne(questionID);
+		assertNull(questionEntity);
+
+		userSpringDataRepo.delete(userID);
+		userEntity = userSpringDataRepo.findOne(userID);
+		assertNull(userEntity);
+	}
+
+	@Test
+	public void testFindByUserId(){
+
+		assertNotNull(userQuestionLikesSpringDataRepo);
+
+		assertNotNull(userSpringDataRepo);
+
+		assertNotNull(questionSpringDataRepository);
+
+		UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByUserID", "Test", "Test", "UQuestLikesSpringDataRepoTestByUserID@test.com", "Test", new Date(), new Date());
+		userEntity = userSpringDataRepo.save(userEntity);
+		assertNotNull(userEntity);
+		assertThat(userEntity.getUserId(), greaterThan(0L));
+		final Long userID = userEntity.getUserId();
+
+
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"UserQuestionLikesSpringDataRepositoryTestByUserID Question",
+				"UserQuestionLikesSpringDataRepositoryTestByUserID Answer",
+				1,0L,new Date(),1L,new Date(),1L);
+		questionEntity = questionSpringDataRepository.save(questionEntity);
+		assertNotNull(questionEntity);
+		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
+		final Long questionID = questionEntity.getQuestionId();
+
+		final UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
+		userQuestionLikesEntityId.setUserId(userID);
+		userQuestionLikesEntityId.setQuestionId(questionID);
+		UserQuestionLikesEntity userQuestionLikesEntity = new UserQuestionLikesEntity();
+		userQuestionLikesEntity.setId(userQuestionLikesEntityId);
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.save(userQuestionLikesEntity);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
+
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
+
+		List<UserQuestionLikesEntity> userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByUserId(userID);
+		assertNotNull(userQuestionLikesEntityList);
+		assertThat(userQuestionLikesEntityList.size(), equalTo(1));
+
+		userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByQuestionId(questionID);
+		assertNotNull(userQuestionLikesEntityList);
+		assertThat(userQuestionLikesEntityList.size(), equalTo(1));
+
+		userQuestionLikesSpringDataRepo.delete(userQuestionLikesEntityId);
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNull(userQuestionLikesEntity);
+
+		questionSpringDataRepository.delete(questionID);
+		questionEntity = questionSpringDataRepository.findOne(questionID);
+		assertNull(questionEntity);
+
+		userSpringDataRepo.delete(userID);
+		userEntity = userSpringDataRepo.findOne(userID);
+		assertNull(userEntity);
+	}
+
+	@Test
+	public void testFindByQuestionId(){
+
+		assertNotNull(userQuestionLikesSpringDataRepo);
+
+		assertNotNull(userSpringDataRepo);
+
+		assertNotNull(questionSpringDataRepository);
+
+		UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByQID", "Test", "Test", "UQuestLikesSpringDataRepoTestByQID@test.com", "Test", new Date(), new Date());
+		userEntity = userSpringDataRepo.save(userEntity);
+		assertNotNull(userEntity);
+		assertThat(userEntity.getUserId(), greaterThan(0L));
+		final Long userID = userEntity.getUserId();
+
+
+		QuestionEntity questionEntity = new QuestionEntity(1L,
+				"UQuestLikesSpringDataRepoTestByQID Question",
+				"UQuestLikesSpringDataRepoTestByQID Answer",
+				1,0L,new Date(),1L,new Date(),1L);
+		questionEntity = questionSpringDataRepository.save(questionEntity);
+		assertNotNull(questionEntity);
+		assertThat(questionEntity.getQuestionId(), greaterThan(0L));
+		final Long questionID = questionEntity.getQuestionId();
+
+		final UserQuestionLikesEntityId userQuestionLikesEntityId = new UserQuestionLikesEntityId();
+		userQuestionLikesEntityId.setUserId(userID);
+		userQuestionLikesEntityId.setQuestionId(questionID);
+		UserQuestionLikesEntity userQuestionLikesEntity = new UserQuestionLikesEntity();
+		userQuestionLikesEntity.setId(userQuestionLikesEntityId);
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.save(userQuestionLikesEntity);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
+
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNotNull(userQuestionLikesEntity);
+		assertThat(userQuestionLikesEntity.getId().getUserId(), equalTo(userID));
+		assertThat(userQuestionLikesEntity.getId().getQuestionId(), equalTo(questionID));
+
+		List<UserQuestionLikesEntity> userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByUserId(userID);
+		assertNotNull(userQuestionLikesEntityList);
+		assertThat(userQuestionLikesEntityList.size(), equalTo(1));
+
+		userQuestionLikesEntityList = userQuestionLikesSpringDataRepo.findByQuestionId(questionID);
+		assertNotNull(userQuestionLikesEntityList);
+		assertThat(userQuestionLikesEntityList.size(), equalTo(1));
+
+		userQuestionLikesSpringDataRepo.delete(userQuestionLikesEntityId);
+		userQuestionLikesEntity = userQuestionLikesSpringDataRepo.findOne(userQuestionLikesEntityId);
+		assertNull(userQuestionLikesEntity);
+
+		questionSpringDataRepository.delete(questionID);
+		questionEntity = questionSpringDataRepository.findOne(questionID);
+		assertNull(questionEntity);
+
+		userSpringDataRepo.delete(userID);
+		userEntity = userSpringDataRepo.findOne(userID);
+		assertNull(userEntity);
+	}
 }

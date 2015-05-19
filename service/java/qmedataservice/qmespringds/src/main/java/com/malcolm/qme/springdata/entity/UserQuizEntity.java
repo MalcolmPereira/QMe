@@ -1,12 +1,14 @@
 package com.malcolm.qme.springdata.entity;
 
-// Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 18, 2015 7:53:02 PM by Hibernate Tools 3.4.0.CR1
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,9 +21,8 @@ import javax.persistence.TemporalType;
 @Table(name = "USER_QUIZ", catalog = "qme")
 public class UserQuizEntity implements java.io.Serializable {
 
-	
 	private static final long serialVersionUID = -7214565628037365166L;
-	
+
 	private Long userQuizId;
 	private Long userId;
 	private Long quizId;
