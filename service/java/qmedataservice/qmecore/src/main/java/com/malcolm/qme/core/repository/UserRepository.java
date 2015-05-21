@@ -10,20 +10,22 @@ import com.malcolm.qme.core.domain.User;
 
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
-public interface UserRepository extends QMeRepository<User,Long>{
+public interface UserRepository extends QMeRepository<User, Long> {
     /**
      * Find User By User Name
-     * @param userName
-     * @return
+     *
+     * @param userName User Name
+     * @return User for unique user name
      */
-    public User findByUserName(String userName);
+    User findByUserName(String userName);
 
     /**
      * Find User By User Email
-     * @param userEmail
-     * @return
+     *
+     * @param userEmail User Email
+     * @return User for unique user email
      */
-    public User findByUserEmail(String userEmail);
+    User findByUserEmail(String userEmail);
 }

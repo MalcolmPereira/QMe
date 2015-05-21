@@ -7,7 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class QuestionHit {
 
@@ -39,11 +39,11 @@ public final class QuestionHit {
     /**
      * Public Constructor
      *
-     * @param questionID
-     * @param categoryID
-     * @param questionHit
-     * @param rightCount
-     * @param wrongCount
+     * @param questionID Question ID
+     * @param categoryID Category ID
+     * @param questionHit Question Hit
+     * @param rightCount Right Count
+     * @param wrongCount Wrong Count
      */
     public QuestionHit(Long questionID, Long categoryID, Long questionHit, Long rightCount, Long wrongCount) {
         this.questionID = questionID;
@@ -55,7 +55,7 @@ public final class QuestionHit {
 
     /**
      * Get Question ID
-     * @return
+     * @return Question ID
      */
     public Long getQuestionID() {
         return questionID;
@@ -63,7 +63,7 @@ public final class QuestionHit {
 
     /**
      * Get Category ID
-     * @return
+     * @return Category ID
      */
     public Long getCategoryID() {
         return categoryID;
@@ -71,7 +71,7 @@ public final class QuestionHit {
 
     /**
      * Get Question Hit
-     * @return
+     * @return Question Hit
      */
     public Long getQuestionHit() {
         return questionHit;
@@ -79,7 +79,7 @@ public final class QuestionHit {
 
     /**
      * Get Right Count
-     * @return
+     * @return Right Count
      */
     public Long getRightCount() {
         return rightCount;
@@ -87,7 +87,7 @@ public final class QuestionHit {
 
     /**
      * Get Wrong Count
-     * @return
+     * @return Wrong Count
      */
     public Long getWrongCount() {
         return wrongCount;
@@ -100,13 +100,7 @@ public final class QuestionHit {
 
         QuestionHit that = (QuestionHit) o;
 
-        if (!getQuestionID().equals(that.getQuestionID())) return false;
-        if (!getCategoryID().equals(that.getCategoryID())) return false;
-        if (getQuestionHit() != null ? !getQuestionHit().equals(that.getQuestionHit()) : that.getQuestionHit() != null)
-            return false;
-        if (getRightCount() != null ? !getRightCount().equals(that.getRightCount()) : that.getRightCount() != null)
-            return false;
-        return !(getWrongCount() != null ? !getWrongCount().equals(that.getWrongCount()) : that.getWrongCount() != null);
+        return getQuestionID().equals(that.getQuestionID()) && getCategoryID().equals(that.getCategoryID()) && !(getQuestionHit() != null ? !getQuestionHit().equals(that.getQuestionHit()) : that.getQuestionHit() != null) && !(getRightCount() != null ? !getRightCount().equals(that.getRightCount()) : that.getRightCount() != null) && !(getWrongCount() != null ? !getWrongCount().equals(that.getWrongCount()) : that.getWrongCount() != null);
 
     }
 

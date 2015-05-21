@@ -8,7 +8,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public final class QuizQuestion {
     /**
@@ -29,9 +29,9 @@ public final class QuizQuestion {
     /**
      * Public Constructor
      *
-     * @param quizQuestionID
-     * @param quizID
-     * @param questionID
+     * @param quizQuestionID Quiz Question ID
+     * @param quizID Quiz ID
+     * @param questionID Question ID
      */
     public QuizQuestion(Long quizQuestionID, Long quizID, Long questionID) {
         this.quizQuestionID = quizQuestionID;
@@ -42,8 +42,8 @@ public final class QuizQuestion {
     /**
      * Public Constructor
      *
-     * @param quizID
-     * @param questionID
+     * @param quizID Quiz ID
+     * @param questionID Question ID
      */
     public QuizQuestion(Long quizID, Long questionID) {
         this.quizQuestionID = 0L;
@@ -53,7 +53,7 @@ public final class QuizQuestion {
 
     /**
      * Get Quiz Question ID
-     * @return
+     * @return Quiz Question ID
      */
     public Long getQuizQuestionID() {
         return quizQuestionID;
@@ -61,7 +61,7 @@ public final class QuizQuestion {
 
     /**
      * Get Quiz ID
-     * @return
+     * @return Quiz ID
      */
     public Long getQuizID() {
         return quizID;
@@ -69,7 +69,7 @@ public final class QuizQuestion {
 
     /**
      * Get Question ID
-     * @return
+     * @return Question ID
      */
     public Long getQuestionID() {
         return questionID;
@@ -82,9 +82,7 @@ public final class QuizQuestion {
 
         QuizQuestion that = (QuizQuestion) o;
 
-        if (!getQuizQuestionID().equals(that.getQuizQuestionID())) return false;
-        if (!getQuizID().equals(that.getQuizID())) return false;
-        return getQuestionID().equals(that.getQuestionID());
+        return getQuizQuestionID().equals(that.getQuizQuestionID()) && getQuizID().equals(that.getQuizID()) && getQuestionID().equals(that.getQuestionID());
 
     }
 

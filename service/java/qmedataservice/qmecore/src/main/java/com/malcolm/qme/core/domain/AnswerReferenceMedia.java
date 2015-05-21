@@ -8,7 +8,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public final class AnswerReferenceMedia {
 
@@ -35,10 +35,9 @@ public final class AnswerReferenceMedia {
 	/**
 	 * Public Constructor
 	 *
-	 * @param answerRefMediaID
-	 * @param mediaTypeID
-	 * @param mediaType
-	 * @param media
+	 * @param answerRefMediaID Answer Reference Media ID
+	 * @param mediaTypeID Media Type ID
+	 * @param media Media Byte Array
 	 */
 	public AnswerReferenceMedia(Long answerRefMediaID, Long questionID, Integer mediaTypeID, byte[] media) {
 		this.answerRefMediaID = answerRefMediaID;
@@ -50,9 +49,9 @@ public final class AnswerReferenceMedia {
 	/**
 	 * Public Constructor
 	 *
-	 * @param questionID
-	 * @param mediaTypeID
-	 * @param media
+	 * @param questionID Question ID
+	 * @param mediaTypeID Media Type ID
+	 * @param media Media Byte Array
 	 */
 	public AnswerReferenceMedia(Long questionID, Integer mediaTypeID,byte[] media) {
 		this.answerRefMediaID = 0L;
@@ -63,7 +62,7 @@ public final class AnswerReferenceMedia {
 
 	/**
 	 * Get Answer Option Media ID
-	 * @return
+	 * @return Answer Option Media ID
 	 */
 	public Long getAnswerRefMediaID() {
 		return answerRefMediaID;
@@ -71,7 +70,7 @@ public final class AnswerReferenceMedia {
 
 	/**
 	 * Get Answer Option ID
-	 * @return
+	 * @return Answer Option ID
 	 */
 	public Long getQuestionID() {
 		return questionID;
@@ -79,7 +78,7 @@ public final class AnswerReferenceMedia {
 
 	/**
 	 * Get Media
-	 * @return
+	 * @return Media byte Array
 	 */
 	public byte[] getMedia() {
 		return media;

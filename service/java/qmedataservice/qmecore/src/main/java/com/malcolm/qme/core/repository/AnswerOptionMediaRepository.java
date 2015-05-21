@@ -14,15 +14,15 @@ import com.malcolm.qme.core.domain.AnswerOptionMedia;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface AnswerOptionMediaRepository extends QMeRepository<AnswerOptionMedia,Long> {
     /**
      * Find By Question Id
      *
-     * @param answerOptionID
-     * @return
+     * @param answerOptionID Answer Option ID
+     * @return AnswerOptionMedia List for Answer Option ID
      */
-    public List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID);
+    List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID);
 
 }

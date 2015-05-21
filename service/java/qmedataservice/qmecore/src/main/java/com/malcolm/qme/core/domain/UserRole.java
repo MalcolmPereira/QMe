@@ -7,7 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class UserRole {
     /**
@@ -27,9 +27,9 @@ public final class UserRole {
 
     /**
      * Public Constructor
-     * @param userRoleID
-     * @param roleID
-     * @param userID
+     * @param userRoleID User Role ID
+     * @param roleID Role ID
+     * @param userID User ID
      */
     public UserRole(Long userRoleID, Integer roleID, Long userID) {
         this.userRoleID = userRoleID;
@@ -39,8 +39,8 @@ public final class UserRole {
 
     /**
      * Public Constructor
-     * @param roleID
-     * @param userID
+     * @param roleID Role ID
+     * @param userID User ID
      */
     public UserRole(Integer roleID, Long userID) {
         this.userRoleID = 0L;
@@ -50,7 +50,7 @@ public final class UserRole {
 
     /**
      * Get User Role ID
-     * @return
+     * @return User Role ID
      */
     public Long getUserRoleID() {
         return userRoleID;
@@ -58,7 +58,7 @@ public final class UserRole {
 
     /**
      * Get Role ID
-     * @return
+     * @return Role ID
      */
     public Integer getRoleID() {
         return roleID;
@@ -66,7 +66,7 @@ public final class UserRole {
 
     /**
      * Get User ID
-     * @return
+     * @return User ID
      */
     public Long getUserID() {
         return userID;
@@ -79,9 +79,7 @@ public final class UserRole {
 
         UserRole userRole = (UserRole) o;
 
-        if (!getUserRoleID().equals(userRole.getUserRoleID())) return false;
-        if (!getRoleID().equals(userRole.getRoleID())) return false;
-        return getUserID().equals(userRole.getUserID());
+        return getUserRoleID().equals(userRole.getUserRoleID()) && getRoleID().equals(userRole.getRoleID()) && getUserID().equals(userRole.getUserID());
 
     }
 

@@ -10,7 +10,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public final class Quiz {
     /**
@@ -71,17 +71,17 @@ public final class Quiz {
     /**
      * Public Constructor
      *
-     * @param quizID
-     * @param quizName
-     * @param quizDesc
-     * @param categoryID
-     * @param likes
-     * @param quizHit
-     * @param quizMaxAttempts
-     * @param quizCreateDate
-     * @param createUserID
-     * @param quizUpdateDate
-     * @param updateUserID
+     * @param quizID Quiz ID
+     * @param quizName Quiz Name
+     * @param quizDesc Quiz Desc
+     * @param categoryID Category ID
+     * @param likes Likes
+     * @param quizHit Quiz Hit
+     * @param quizMaxAttempts Quiz Max Attempts
+     * @param quizCreateDate Quiz Create Date
+     * @param createUserID Quiz Create User ID
+     * @param quizUpdateDate Quiz Update Date
+     * @param updateUserID Quiz Update User Id
      */
     public Quiz(Long quizID, String quizName, String quizDesc, Long categoryID, Long likes, Long quizHit, Integer quizMaxAttempts, Date quizCreateDate, Long createUserID, Date quizUpdateDate, Long updateUserID) {
         this.quizID = quizID;
@@ -100,11 +100,11 @@ public final class Quiz {
     /**
      * Public Constructor
      *
-     * @param quizName
-     * @param quizDesc
-     * @param categoryID
-     * @param quizMaxAttempts
-     * @param createUserID
+     * @param quizName Quiz Name
+     * @param quizDesc Quiz Desc
+     * @param categoryID Category ID
+     * @param quizMaxAttempts Quiz Max Attempts
+     * @param createUserID Quiz Create User ID
      */
     public Quiz(String quizName, String quizDesc, Long categoryID, Integer quizMaxAttempts, Long createUserID) {
         this.quizID = 0L;
@@ -122,7 +122,7 @@ public final class Quiz {
 
     /**
      * Get Quiz ID
-     * @return
+     * @return Quiz ID
      */
     public Long getQuizID() {
         return quizID;
@@ -130,7 +130,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Name
-     * @return
+     * @return Quiz Name
      */
     public String getQuizName() {
         return quizName;
@@ -138,7 +138,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Desc
-     * @return
+     * @return Quiz Desc
      */
     public String getQuizDesc() {
         return quizDesc;
@@ -146,7 +146,7 @@ public final class Quiz {
 
     /**
      * Get Category ID
-     * @return
+     * @return Category ID
      */
     public Long getCategoryID() {
         return categoryID;
@@ -154,7 +154,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Likes
-     * @return
+     * @return Quiz Likes
      */
     public Long getLikes() {
         return likes;
@@ -162,7 +162,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Hits
-     * @return
+     * @return Quiz Hits
      */
     public Long getQuizHit() {
         return quizHit;
@@ -170,7 +170,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Max Attempts
-     * @return
+     * @return Quiz Max Attempts
      */
     public Integer getQuizMaxAttempts() {
         return quizMaxAttempts;
@@ -178,7 +178,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Create Date
-     * @return
+     * @return Quiz Create Date
      */
     public Date getQuizCreateDate() {
         return quizCreateDate;
@@ -186,7 +186,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Create User
-     * @return
+     * @return Quiz Create User
      */
     public Long getCreateUserID() {
         return createUserID;
@@ -194,7 +194,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Update Date
-     * @return
+     * @return Quiz Update Date
      */
     public Date getQuizUpdateDate() {
         return quizUpdateDate;
@@ -202,7 +202,7 @@ public final class Quiz {
 
     /**
      * Get Quiz Update User
-     * @return
+     * @return Quiz Update User
      */
     public Long getUpdateUserID() {
         return updateUserID;
@@ -215,21 +215,7 @@ public final class Quiz {
 
         Quiz quiz = (Quiz) o;
 
-        if (!getQuizID().equals(quiz.getQuizID())) return false;
-        if (!getQuizName().equals(quiz.getQuizName())) return false;
-        if (getQuizDesc() != null ? !getQuizDesc().equals(quiz.getQuizDesc()) : quiz.getQuizDesc() != null)
-            return false;
-        if (!getCategoryID().equals(quiz.getCategoryID())) return false;
-        if (getLikes() != null ? !getLikes().equals(quiz.getLikes()) : quiz.getLikes() != null) return false;
-        if (getQuizHit() != null ? !getQuizHit().equals(quiz.getQuizHit()) : quiz.getQuizHit() != null) return false;
-        if (getQuizMaxAttempts() != null ? !getQuizMaxAttempts().equals(quiz.getQuizMaxAttempts()) : quiz.getQuizMaxAttempts() != null)
-            return false;
-        if (getQuizCreateDate() != null ? !getQuizCreateDate().equals(quiz.getQuizCreateDate()) : quiz.getQuizCreateDate() != null)
-            return false;
-        if (!getCreateUserID().equals(quiz.getCreateUserID())) return false;
-        if (getQuizUpdateDate() != null ? !getQuizUpdateDate().equals(quiz.getQuizUpdateDate()) : quiz.getQuizUpdateDate() != null)
-            return false;
-        return !(getUpdateUserID() != null ? !getUpdateUserID().equals(quiz.getUpdateUserID()) : quiz.getUpdateUserID() != null);
+        return getQuizID().equals(quiz.getQuizID()) && getQuizName().equals(quiz.getQuizName()) && getCategoryID().equals(quiz.getCategoryID()) && getCreateUserID().equals(quiz.getCreateUserID());
 
     }
 
@@ -237,15 +223,8 @@ public final class Quiz {
     public int hashCode() {
         int result = getQuizID().hashCode();
         result = 31 * result + getQuizName().hashCode();
-        result = 31 * result + (getQuizDesc() != null ? getQuizDesc().hashCode() : 0);
         result = 31 * result + getCategoryID().hashCode();
-        result = 31 * result + (getLikes() != null ? getLikes().hashCode() : 0);
-        result = 31 * result + (getQuizHit() != null ? getQuizHit().hashCode() : 0);
-        result = 31 * result + (getQuizMaxAttempts() != null ? getQuizMaxAttempts().hashCode() : 0);
-        result = 31 * result + (getQuizCreateDate() != null ? getQuizCreateDate().hashCode() : 0);
         result = 31 * result + getCreateUserID().hashCode();
-        result = 31 * result + (getQuizUpdateDate() != null ? getQuizUpdateDate().hashCode() : 0);
-        result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
         return result;
     }
 

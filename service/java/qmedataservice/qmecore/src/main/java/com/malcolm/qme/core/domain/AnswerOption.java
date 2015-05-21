@@ -8,7 +8,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public final class AnswerOption {
 
@@ -35,10 +35,10 @@ public final class AnswerOption {
     /**
      * Public Constructor
      *
-     * @param answerOptionID
-     * @param questionID
-     * @param optionText
-     * @param correct
+     * @param answerOptionID Answer Option ID
+     * @param questionID Question ID
+     * @param optionText Answer Option Text
+     * @param correct Is the Answer Option Correct
      */
     public AnswerOption(Long answerOptionID, Long questionID, String optionText, Boolean correct) {
         this.answerOptionID = answerOptionID;
@@ -50,9 +50,9 @@ public final class AnswerOption {
     /**
      * Public Constructor
      *
-     * @param questionID
-     * @param optionText
-     * @param correct
+     * @param questionID Question ID
+     * @param optionText Answer Option Text
+     * @param correct Is the Answer Option Correct
      */
     public AnswerOption(Long questionID, String optionText, Boolean correct) {
         this.answerOptionID = 0L;
@@ -63,7 +63,7 @@ public final class AnswerOption {
 
     /**
      * Get Answer Option ID
-     * @return
+     * @return Answer Option ID
      */
     public Long getAnswerOptionID() {
         return answerOptionID;
@@ -71,7 +71,7 @@ public final class AnswerOption {
 
     /**
      * Get Question ID
-     * @return
+     * @return Question ID
      */
     public Long getQuestionID() {
         return questionID;
@@ -79,7 +79,7 @@ public final class AnswerOption {
 
     /**
      * Get Option Text
-     * @return
+     * @return Answer Option Text
      */
     public String getOptionText() {
         return optionText;
@@ -87,7 +87,7 @@ public final class AnswerOption {
 
     /**
      * Is Correct
-     * @return
+     * @return Return Answer Option Value - true correct option, false wrong option
      */
     public Boolean isCorrect() {
         return correct;
@@ -100,10 +100,10 @@ public final class AnswerOption {
 
         AnswerOption that = (AnswerOption) o;
 
-        if (!getAnswerOptionID().equals(that.getAnswerOptionID())) return false;
-        if (!getQuestionID().equals(that.getQuestionID())) return false;
-        if (!getOptionText().equals(that.getOptionText())) return false;
-        return correct.equals(that.correct);
+        return getAnswerOptionID().equals(that.getAnswerOptionID()) &&
+               getQuestionID().equals(that.getQuestionID()) &&
+               getOptionText().equals(that.getOptionText()) &&
+               correct.equals(that.correct);
 
     }
 

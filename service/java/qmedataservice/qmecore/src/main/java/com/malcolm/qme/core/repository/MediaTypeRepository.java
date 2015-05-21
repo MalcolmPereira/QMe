@@ -9,7 +9,7 @@ package com.malcolm.qme.core.repository;
 import com.malcolm.qme.core.domain.MediaType;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface MediaTypeRepository extends QMeRepository<MediaType,Integer> {
 }

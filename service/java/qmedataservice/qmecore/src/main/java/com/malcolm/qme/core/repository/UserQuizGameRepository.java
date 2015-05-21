@@ -11,22 +11,22 @@ import com.malcolm.qme.core.domain.UserQuizGame;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserQuizGameRepository extends QMeRepository<UserQuizGame,UserQuizGame> {
     /**
      * Find By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return UserQuizGame List by User ID
      */
-    public List<UserQuizGame> findByUserId(Long userID);
+    List<UserQuizGame> findByUserId(Long userID);
 
     /**
      * Find By Game Token
      *
-     * @param userGameToken
-     * @return
+     * @param userGameToken User Game Token
+     * @return UserQuizGame by User Game Token
      */
-    public UserQuizGame findByGameToken(Long userGameToken);
+    UserQuizGame findByGameToken(Long userGameToken);
 }

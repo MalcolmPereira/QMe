@@ -11,29 +11,29 @@ import com.malcolm.qme.core.domain.Quiz;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface QuizRepository extends QMeRepository<Quiz,Long> {
 
     /**
      * Find By Category
      *
-     * @param categoryID
-     * @return
+     * @param categoryID Category ID
+     * @return Quiz List for Category ID
      */
-    public List<Quiz> findByCategoryId(Long categoryID);
+    List<Quiz> findByCategoryId(Long categoryID);
 
     /**
      * Find By Most Liked
      *
-     * @return
+     * @return Quiz List sorted by likes.
      */
-    public List<Quiz> findByMostLiked();
+    List<Quiz> findByMostLiked();
 
     /**
      * Find By Quiz Name Like
-     * @param quizName
-     * @return
+     * @param quizName Quiz Name
+     * @return Quiz List matching name like
      */
-    public List<Quiz> findQuizNameLike(String quizName);
+    List<Quiz> findQuizNameLike(String quizName);
 }

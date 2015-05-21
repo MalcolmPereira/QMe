@@ -11,15 +11,15 @@ import com.malcolm.qme.core.domain.AnswerOption;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface AnswerOptionRepository extends QMeRepository<AnswerOption,Long> {
 
     /**
      * Find By Question Id
      *
-     * @param questionID
-     * @return
+     * @param questionID Question ID
+     * @return Answer Options for Question ID
      */
-    public List<AnswerOption> findByQuestionId(Long questionID);
+    List<AnswerOption> findByQuestionId(Long questionID);
 }

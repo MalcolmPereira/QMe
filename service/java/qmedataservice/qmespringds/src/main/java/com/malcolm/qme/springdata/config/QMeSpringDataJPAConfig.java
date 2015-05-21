@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 @Configuration
 @EnableTransactionManagement
@@ -45,7 +45,7 @@ public class QMeSpringDataJPAConfig {
     /**
      * Get DataSource
      *
-     * @return
+     * @return DataSource
      */
     @Bean
     public DataSource dataSource() {
@@ -60,7 +60,7 @@ public class QMeSpringDataJPAConfig {
     /**
      * Entity Manager
      *
-     * @return
+     * @return Local Entity Manager Factory
      */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -75,7 +75,7 @@ public class QMeSpringDataJPAConfig {
     /**
      * Return Hibernate Properties
      *
-     * @return
+     * @return Hibernate Properties
      */
     protected Properties hibernateProperties() {
         return new Properties() {
@@ -95,7 +95,7 @@ public class QMeSpringDataJPAConfig {
     /**
      * Return the Transaction Manager
      *
-     * @return
+     * @return JPA Transaction Manager
      */
     @Bean
     public JpaTransactionManager transactionManager() {

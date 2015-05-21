@@ -9,13 +9,13 @@ package com.malcolm.qme.core.repository;
 import com.malcolm.qme.core.domain.Role;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface RoleRepository extends QMeRepository<Role,Integer> {
     /**
      * Find User By Role Name
-     * @param roleName
-     * @return
+     * @param roleName Role Name
+     * @return Role List by role name
      */
-    public Role findByRoleName(String roleName);
+    Role findByRoleName(String roleName);
 }

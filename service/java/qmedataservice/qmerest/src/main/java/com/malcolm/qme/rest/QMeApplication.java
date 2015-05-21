@@ -1,0 +1,30 @@
+/**
+ * Name      : com.malcolm.qme.rest.QMeApplication.java
+ * Date      : 5/20/15
+ * Developer : Malcolm
+ * Purpose   : Spring Boot Core Starter Application
+ */
+
+package com.malcolm.qme.rest;
+
+import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+
+/**
+ * @Author: malcolm
+ */
+@EnableAutoConfiguration
+@Import({RestConfig.class,QMeSpringDataJPAConfig.class})
+public class QMeApplication {
+    /**
+     * Run the Application
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(QMeApplication.class, args);
+    }
+}

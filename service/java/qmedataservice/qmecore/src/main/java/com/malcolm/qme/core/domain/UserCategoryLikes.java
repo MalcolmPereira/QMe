@@ -7,7 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public class UserCategoryLikes {
     /**
@@ -23,8 +23,8 @@ public class UserCategoryLikes {
     /**
      * Public Constructor
      *
-     * @param userID
-     * @param categoryID
+     * @param userID User ID
+     * @param categoryID Category ID
      */
     public UserCategoryLikes(Long userID, Long categoryID) {
         this.userID = userID;
@@ -33,7 +33,7 @@ public class UserCategoryLikes {
 
     /**
      * Get User Id
-     * @return
+     * @return  User Id
      */
     public Long getUserID() {
         return userID;
@@ -41,7 +41,7 @@ public class UserCategoryLikes {
 
     /**
      * Get Category Id
-     * @return
+     * @return Category Id
      */
     public Long getCategoryID() {
         return categoryID;
@@ -54,8 +54,7 @@ public class UserCategoryLikes {
 
         UserCategoryLikes that = (UserCategoryLikes) o;
 
-        if (!getUserID().equals(that.getUserID())) return false;
-        return getCategoryID().equals(that.getCategoryID());
+        return getUserID().equals(that.getUserID()) && getCategoryID().equals(that.getCategoryID());
 
     }
 

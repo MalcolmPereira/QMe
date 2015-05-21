@@ -11,15 +11,15 @@ import com.malcolm.qme.core.domain.UserCategoryLikes;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserCategoryLikesRepository extends QMeRepository<UserCategoryLikes,UserCategoryLikes> {
     /**
      * Find By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return UserCategoryLikes by User ID
      */
-    public List<UserCategoryLikes> findByUserId(Long userID);
+    List<UserCategoryLikes> findByUserId(Long userID);
 
 }

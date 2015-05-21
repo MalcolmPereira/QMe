@@ -9,7 +9,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class Category {
     /**
@@ -45,12 +45,12 @@ public final class Category {
     /**
      * Public Constructor
      *
-     * @param categoryID
-     * @param categoryParentID
-     * @param categoryName
-     * @param categoryLikes
-     * @param categoryCreateDate
-     * @param categoryCreateUserID
+     * @param categoryID Category ID
+     * @param categoryParentID Parent Category ID
+     * @param categoryName Category Name
+     * @param categoryLikes Category Likes
+     * @param categoryCreateDate Category Create Date
+     * @param categoryCreateUserID Category Create User ID
      */
     public Category(Long categoryID, Long categoryParentID, String categoryName,Long categoryLikes, Date categoryCreateDate, Long categoryCreateUserID) {
         this.categoryID = categoryID;
@@ -64,9 +64,9 @@ public final class Category {
     /**
      * Public Constructor
      *
-     * @param categoryParentID
-     * @param categoryName
-     * @param categoryCreateUserID
+     * @param categoryParentID Parent Category ID
+     * @param categoryName Category Name
+     * @param categoryCreateUserID Category Create User ID
      */
     public Category(Long categoryParentID, String categoryName, Long categoryCreateUserID) {
         this.categoryID = 0L;
@@ -80,8 +80,8 @@ public final class Category {
     /**
      * Public Constructor
      *
-     * @param categoryName
-     * @param categoryCreateUserID
+     * @param categoryName Category Name
+     * @param categoryCreateUserID Category Create User ID
      */
     public Category(String categoryName, Long categoryCreateUserID) {
         this.categoryID = 0L;
@@ -94,7 +94,7 @@ public final class Category {
 
     /**
      * Get Category Id
-     * @return
+     * @return Category Id
      */
     public Long getCategoryID() {
         return categoryID;
@@ -102,7 +102,7 @@ public final class Category {
 
     /**
      * Get Category Parent Id
-     * @return
+     * @return Category Parent Id
      */
     public Long getCategoryParentID() {
         return categoryParentID;
@@ -110,7 +110,7 @@ public final class Category {
 
     /**
      * Get Category Name
-     * @return
+     * @return Category Name
      */
     public String getCategoryName() {
         return categoryName;
@@ -118,7 +118,7 @@ public final class Category {
 
     /**
      * Get Category Create Date
-     * @return
+     * @return Category Create Date
      */
     public Date getCategoryCreateDate() {
         return categoryCreateDate;
@@ -126,7 +126,7 @@ public final class Category {
 
     /**
      * Get Category Create User Id
-     * @return
+     * @return Category Create User Id
      */
     public Long getCategoryCreateUserID() {
         return categoryCreateUserID;
@@ -135,7 +135,7 @@ public final class Category {
     /**
      * Get Category Likes
      * 
-     * @return
+     * @return Category Likes
      */
     public Long getCategoryLikes() {
 		return categoryLikes;
@@ -149,13 +149,10 @@ public final class Category {
 
         Category category = (Category) o;
 
-        if (!getCategoryID().equals(category.getCategoryID())) return false;
-        if (getCategoryParentID() != null ? !getCategoryParentID().equals(category.getCategoryParentID()) : category.getCategoryParentID() != null)
-            return false;
-        if (!getCategoryName().equals(category.getCategoryName())) return false;
-        if (getCategoryCreateDate() != null ? !getCategoryCreateDate().equals(category.getCategoryCreateDate()) : category.getCategoryCreateDate() != null)
-            return false;
-        return !(getCategoryCreateUserID() != null ? !getCategoryCreateUserID().equals(category.getCategoryCreateUserID()) : category.getCategoryCreateUserID() != null);
+        return getCategoryID().equals(category.getCategoryID()) &&
+               !(getCategoryParentID() != null ? !getCategoryParentID().equals(category.getCategoryParentID()) : category.getCategoryParentID() != null) &&
+                getCategoryName().equals(category.getCategoryName()) && !(getCategoryCreateDate() != null ? !getCategoryCreateDate().equals(category.getCategoryCreateDate()) : category.getCategoryCreateDate() != null) &&
+                !(getCategoryCreateUserID() != null ? !getCategoryCreateUserID().equals(category.getCategoryCreateUserID()) : category.getCategoryCreateUserID() != null);
 
     }
 

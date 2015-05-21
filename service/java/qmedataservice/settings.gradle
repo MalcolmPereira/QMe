@@ -1,4 +1,7 @@
 
 include "qmecore"
 include "qmespringds"
+include 'qmerest'
 rootProject.name = 'qmedataservice'
+
+

@@ -11,15 +11,15 @@ import com.malcolm.qme.core.domain.AnswerReferenceMedia;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface AnswerReferenceMediaRepository extends QMeRepository<AnswerReferenceMedia,Long> {
 
     /**
      * Find By Question Id
      *
-     * @param questionID
-     * @return
+     * @param questionID Question ID
+     * @return Answer Reference Media List for Question ID
      */
-    public List<AnswerReferenceMedia> findByQuestionId(Long questionID);
+    List<AnswerReferenceMedia> findByQuestionId(Long questionID);
 }

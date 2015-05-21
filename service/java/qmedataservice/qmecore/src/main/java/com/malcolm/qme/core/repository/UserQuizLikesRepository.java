@@ -11,24 +11,24 @@ import com.malcolm.qme.core.domain.UserQuizLikes;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserQuizLikesRepository extends QMeRepository<UserQuizLikes,UserQuizLikes> {
 
     /**
      * Find By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return UserQuizLikes by User ID
      */
-    public List<UserQuizLikes> findByUserId(Long userID);
+    List<UserQuizLikes> findByUserId(Long userID);
 
     /**
      * Find By Quiz ID
      *
-     * @param quizID
-     * @return
+     * @param quizID Quiz ID
+     * @return UserQuizLikes by Quiz ID
      */
-    public List<UserQuizLikes> findByQuizId(Long quizID);
+    List<UserQuizLikes> findByQuizId(Long quizID);
 
 }

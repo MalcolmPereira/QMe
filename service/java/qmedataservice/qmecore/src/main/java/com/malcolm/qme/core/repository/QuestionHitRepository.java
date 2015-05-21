@@ -9,7 +9,7 @@ package com.malcolm.qme.core.repository;
 import com.malcolm.qme.core.domain.QuestionHit;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface QuestionHitRepository extends QMeRepository<QuestionHit,Long> {
 }

@@ -11,13 +11,14 @@ import com.malcolm.qme.core.domain.UserCategory;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserCategoryRepository extends QMeRepository<UserCategory,Long> {
 
     /**
      * Find By User ID
-     * @return
+     * @param userID  User ID
+     * @return UserCategory by User ID
      */
-    public List<UserCategory> findByUserID(Long userID);
+    List<UserCategory> findByUserID(Long userID);
 }

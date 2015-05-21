@@ -9,7 +9,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class User {
     /**
@@ -52,15 +52,15 @@ public final class User {
     /**
      * Public Constructor
      *
-     * @param userID
-     * @param userName
-     * @param userPassword
-     * @param userFirstName
-     * @param userLastName
-     * @param userEmail
-     * @param userRegisteredDate
-     * @param userUpdateDate
-     * @param updateUserID
+     * @param userID User ID
+     * @param userName Unique User Name
+     * @param userPassword Encrypted User Password
+     * @param userFirstName User First Name
+     * @param userLastName User Last Name
+     * @param userEmail Unique User Email
+     * @param userRegisteredDate User Registered Date
+     * @param userUpdateDate User Update Date
+     * @param updateUserID Update User ID
      */
     public User(Long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, Date userRegisteredDate, Date userUpdateDate, Long updateUserID) {
         this.userID = userID;
@@ -77,11 +77,11 @@ public final class User {
     /**
      * Public Constructor
      *
-     * @param userName
-     * @param userPassword
-     * @param userFirstName
-     * @param userLastName
-     * @param userEmail
+     * @param userName Unique User Name
+     * @param userPassword Encrypted User Password
+     * @param userFirstName User First Name
+     * @param userLastName User Last Name
+     * @param userEmail Unique User Email
      */
     public User(String userName, String userPassword, String userFirstName, String userLastName, String userEmail) {
         this.userID = 0L;
@@ -97,7 +97,7 @@ public final class User {
 
     /**
      * Return User Id
-     * @return
+     * @return User Id
      */
     public Long getUserID() {
         return userID;
@@ -106,7 +106,7 @@ public final class User {
     /**
      * Return User Name
      *
-     * @return
+     * @return User Name
      */
     public String getUserName() {
         return userName;
@@ -114,7 +114,7 @@ public final class User {
 
     /**
      * Get User Password
-     * @return
+     * @return User Password
      */
     public String getUserPassword() {
         return userPassword;
@@ -122,7 +122,7 @@ public final class User {
 
     /**
      * Return User First Name
-     * @return
+     * @return User First Name
      */
     public String getUserFirstName() {
         return userFirstName;
@@ -130,7 +130,7 @@ public final class User {
 
     /**
      * Return User Last Name
-     * @return
+     * @return User Last Name
      */
     public String getUserLastName() {
         return userLastName;
@@ -138,7 +138,7 @@ public final class User {
 
     /**
      * Return User Email
-     * @return
+     * @return User Email
      */
     public String getUserEmail() {
         return userEmail;
@@ -146,7 +146,7 @@ public final class User {
 
     /**
      * Return User Registered Date
-     * @return
+     * @return User Registered Date
      */
     public Date getUserRegisteredDate() {
         return userRegisteredDate;
@@ -154,7 +154,7 @@ public final class User {
 
     /**
      * Return User Update Date
-     * @return
+     * @return User Update Date
      */
     public Date getUserUpdateDate() {
         return userUpdateDate;
@@ -162,7 +162,7 @@ public final class User {
 
     /**
      * Return Update User ID
-     * @return
+     * @return Update User ID
      */
     public Long getUpdateUserID() {
         return updateUserID;
@@ -175,19 +175,7 @@ public final class User {
 
         User user = (User) o;
 
-        if (!getUserID().equals(user.getUserID())) return false;
-        if (!getUserName().equals(user.getUserName())) return false;
-        if (!getUserPassword().equals(user.getUserPassword())) return false;
-        if (getUserFirstName() != null ? !getUserFirstName().equals(user.getUserFirstName()) : user.getUserFirstName() != null)
-            return false;
-        if (getUserLastName() != null ? !getUserLastName().equals(user.getUserLastName()) : user.getUserLastName() != null)
-            return false;
-        if (!getUserEmail().equals(user.getUserEmail())) return false;
-        if (getUserRegisteredDate() != null ? !getUserRegisteredDate().equals(user.getUserRegisteredDate()) : user.getUserRegisteredDate() != null)
-            return false;
-        if (getUserUpdateDate() != null ? !getUserUpdateDate().equals(user.getUserUpdateDate()) : user.getUserUpdateDate() != null)
-            return false;
-        return !(getUpdateUserID() != null ? !getUpdateUserID().equals(user.getUpdateUserID()) : user.getUpdateUserID() != null);
+        return getUserID().equals(user.getUserID()) && getUserName().equals(user.getUserName()) && getUserPassword().equals(user.getUserPassword()) && !(getUserFirstName() != null ? !getUserFirstName().equals(user.getUserFirstName()) : user.getUserFirstName() != null) && !(getUserLastName() != null ? !getUserLastName().equals(user.getUserLastName()) : user.getUserLastName() != null) && getUserEmail().equals(user.getUserEmail()) && !(getUserRegisteredDate() != null ? !getUserRegisteredDate().equals(user.getUserRegisteredDate()) : user.getUserRegisteredDate() != null) && !(getUserUpdateDate() != null ? !getUserUpdateDate().equals(user.getUserUpdateDate()) : user.getUserUpdateDate() != null) && !(getUpdateUserID() != null ? !getUpdateUserID().equals(user.getUpdateUserID()) : user.getUpdateUserID() != null);
 
     }
 

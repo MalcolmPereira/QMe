@@ -10,7 +10,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public final class UserQuiz {
 
@@ -67,16 +67,16 @@ public final class UserQuiz {
 	/**
 	 * Public Constructor
 	 * 
-	 * @param userQuizID
-	 * @param userID
-	 * @param quizID
-	 * @param categoryID
-	 * @param quizStartDate
-	 * @param quizEndDate
-	 * @param userQuizToken
-	 * @param quizUserScore
-	 * @param quizMaxScore
-	 * @param quizComplete
+	 * @param userQuizID User Quiz ID
+	 * @param userID User ID
+	 * @param quizID Quiz ID
+	 * @param categoryID Category ID
+	 * @param quizStartDate Quiz Start Date
+	 * @param quizEndDate Quiz End Date
+	 * @param userQuizToken Unique User Quiz Token
+	 * @param quizUserScore Quiz User Score
+	 * @param quizMaxScore Quiz Max Score
+	 * @param quizComplete Quiz Complete - True Complete/False Incomplete
 	 */
 	public UserQuiz(Long userQuizID, Long userID, Long quizID, Long categoryID,
 			Date quizStartDate, Date quizEndDate, String userQuizToken,
@@ -97,10 +97,10 @@ public final class UserQuiz {
 	/**
      * Public Constructor
      *
-     * @param userID
-     * @param quizID
-     * @param categoryID
-     * @param userQuizToken
+     * @param userID User ID
+     * @param quizID Quiz ID
+     * @param categoryID Category ID
+     * @param userQuizToken Unique User Quiz Token
      */
     public UserQuiz(Long userID, Long quizID, Long categoryID, Integer quizMaxScore, String userQuizToken) {
         this.userQuizID = 0L;

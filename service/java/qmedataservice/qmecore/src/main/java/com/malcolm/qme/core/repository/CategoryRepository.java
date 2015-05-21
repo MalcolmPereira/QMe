@@ -11,14 +11,14 @@ import com.malcolm.qme.core.domain.Category;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface CategoryRepository extends QMeRepository<Category,Long> {
 
     /**
      * Find By Category Name Like
-     * @param categoryName
-     * @return
+     * @param categoryName Category Name Like
+     * @return Category List matching category name like
      */
-    public List<Category> findCategoryNameLike(String categoryName);
+    List<Category> findCategoryNameLike(String categoryName);
 }

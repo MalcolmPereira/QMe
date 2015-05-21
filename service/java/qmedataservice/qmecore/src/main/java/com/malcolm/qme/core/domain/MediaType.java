@@ -7,7 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class MediaType {
 	/**
@@ -22,8 +22,8 @@ public final class MediaType {
 	/**
 	 * Public Constructor
 	 *
-	 * @param mediaTypeID
-	 * @param mediaType
+	 * @param mediaTypeID Media Type ID
+	 * @param mediaType Media Mime Type
 	 */
 	public MediaType(Integer mediaTypeID, String mediaType) {
 		super();
@@ -34,7 +34,7 @@ public final class MediaType {
 	/**
 	 * Public Constructor
 	 *
-	 * @param mediaType
+	 * @param mediaType Media Mime Type
 	 */
 	public MediaType(String mediaType) {
 		super();

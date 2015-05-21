@@ -11,39 +11,39 @@ import com.malcolm.qme.core.domain.UserQuiz;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
-public interface UserQuizRepository extends QMeRepository<UserQuiz,Long> {
+public interface UserQuizRepository extends QMeRepository<UserQuiz, Long> {
 
     /**
      * Find By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return UserQuiz by User ID
      */
-    public List<UserQuiz> findByUserId(Long userID);
+    List<UserQuiz> findByUserId(Long userID);
 
     /**
      * Find Completed Quiz By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return Completed UserQuiz List by User ID
      */
-    public List<UserQuiz> findCompletedByUserId(Long userID);
+    List<UserQuiz> findCompletedByUserId(Long userID);
 
     /**
      * Find Pending Quiz By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return Pending UserQuiz List by User ID
      */
-    public List<UserQuiz> findPendingByUserId(Long userID);
+    List<UserQuiz> findPendingByUserId(Long userID);
 
     /**
      * Find By Quiz ID
      *
-     * @param quizID
-     * @return
+     * @param quizID Quiz ID
+     * @return UserQuiz by Quiz ID
      */
-    public List<UserQuiz> findByQuizId(Long quizID);
+    List<UserQuiz> findByQuizId(Long quizID);
 }

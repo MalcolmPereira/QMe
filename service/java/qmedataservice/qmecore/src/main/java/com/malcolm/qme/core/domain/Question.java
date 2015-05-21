@@ -9,7 +9,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class Question {
     /**
@@ -64,16 +64,16 @@ public final class Question {
 	/**
 	 * Public Constructor
 	 * 
-	 * @param questionID
-	 * @param categoryID
-	 * @param questionText
-	 * @param answer
-	 * @param questionPoint
-	 * @param likes
-	 * @param questionCreateDate
-	 * @param createUserID
-	 * @param questionUpdateDate
-	 * @param updateUserID
+	 * @param questionID Question ID
+	 * @param categoryID Category ID
+	 * @param questionText Question Text
+	 * @param answer Answer for Question
+	 * @param questionPoint Question Point (Score accumulated if the question is answered correctly)
+	 * @param likes Question Likes
+	 * @param questionCreateDate Question Create Date
+	 * @param createUserID Question Create User
+	 * @param questionUpdateDate Question Update Date
+	 * @param updateUserID Question Update User
 	 */
 	public Question(Long questionID, Long categoryID, String questionText,
 			String answer, Integer questionPoint, Long likes,
@@ -91,14 +91,36 @@ public final class Question {
 		this.questionUpdateDate = questionUpdateDate;
 		this.updateUserID = updateUserID;
 	}
-    
+
+	/**
+	 * Public Constructor
+	 *
+	 * @param categoryID Category ID
+	 * @param questionText Question Text
+	 * @param answer Answer for Question
+	 * @param questionPoint Question Point (Score accumulated if the question is answered correctly)
+	 * @param createUserID Question Create User
+	 */
+	public Question(Long categoryID, String questionText, String answer, Integer questionPoint,Long createUserID) {
+		this.questionID = 0L;
+		this.categoryID = categoryID;
+		this.questionText = questionText;
+		this.answer = answer;
+		this.questionPoint = questionPoint;
+		this.likes = 0L;
+		this.questionCreateDate = null;
+		this.createUserID = createUserID;
+		this.questionUpdateDate = null;
+		this.updateUserID = 0L;
+	}
+
 	/**
      * Public Constructor
      *
-     * @param categoryID
-     * @param questionText
-     * @param answer
-     * @param createUserID
+     * @param categoryID Category ID
+     * @param questionText Question Text
+     * @param answer Answer for Question
+     * @param createUserID Question Create User
      */
     public Question(Long categoryID, String questionText, String answer, Long createUserID) {
         this.questionID = 0L;

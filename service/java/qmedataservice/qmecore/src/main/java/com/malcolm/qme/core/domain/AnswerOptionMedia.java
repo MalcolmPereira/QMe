@@ -9,7 +9,7 @@ package com.malcolm.qme.core.domain;
 
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 public final class AnswerOptionMedia {
 
@@ -36,10 +36,10 @@ public final class AnswerOptionMedia {
 	/**
 	 * Public Constructor
 	 *
-	 * @param answerOptionMediaID
-	 * @param answerOptionID
-	 * @param mediaTypeID
-	 * @param media
+	 * @param answerOptionMediaID AnswerOption Media ID
+	 * @param answerOptionID AnswerOption ID
+	 * @param mediaTypeID Media Type ID
+	 * @param media Media Bytes
 	 */
 	public AnswerOptionMedia(Long answerOptionMediaID, Long answerOptionID, Integer mediaTypeID, byte[] media) {
 		this.answerOptionMediaID = answerOptionMediaID;
@@ -51,9 +51,9 @@ public final class AnswerOptionMedia {
 	/**
 	 * Public Constructor
 	 *
-	 * @param answerOptionID
-	 * @param mediaTypeID
-	 * @param media
+	 * @param answerOptionID AnswerOption ID
+	 * @param mediaTypeID Media Type ID
+	 * @param media Media Bytes
 	 */
 	public AnswerOptionMedia(Long answerOptionID, Integer mediaTypeID, byte[] media) {
 		this.answerOptionMediaID = 0L;
@@ -64,7 +64,7 @@ public final class AnswerOptionMedia {
 
 	/**
 	 * Get Answer Option Media Id
-	 * @return
+	 * @return Answer Option Media Id
 	 */
 	public Long getAnswerOptionMediaID() {
 		return answerOptionMediaID;
@@ -72,7 +72,7 @@ public final class AnswerOptionMedia {
 
 	/**
 	 * Get Answer Option ID
-	 * @return
+	 * @return Answer Option ID
 	 */
 	public Long getAnswerOptionID() {
 		return answerOptionID;
@@ -80,7 +80,7 @@ public final class AnswerOptionMedia {
 
 	/**
 	 * Get Media
-	 * @return
+	 * @return Get Media Bytes
 	 */
 	public byte[] getMedia() {
 		return media;

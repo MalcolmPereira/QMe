@@ -11,23 +11,23 @@ import com.malcolm.qme.core.domain.UserRole;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserRoleRepository extends QMeRepository<UserRole, Long> {
 
     /**
      * Find By User ID
      *
-     * @param userID
-     * @return
+     * @param userID User ID
+     * @return UserRole for User ID
      */
-    public List<UserRole> findByUserId(Long userID);
+    List<UserRole> findByUserId(Long userID);
 
     /**
      * Find By Role ID
      *
-     * @param roleID
-     * @return
+     * @param roleID Role ID
+     * @return UserRole for Role ID
      */
-    public List<UserRole> findByRoleId(Integer roleID);
+    List<UserRole> findByRoleId(Integer roleID);
 }

@@ -7,7 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class Role {
     /**
@@ -25,9 +25,9 @@ public final class Role {
 
     /**
      * Public Constructor
-     * @param roleID
-     * @param roleName
-     * @param roleDesc
+     * @param roleID Role ID
+     * @param roleName Role Name
+     * @param roleDesc Role Description
      */
     public Role(Integer roleID, String roleName, String roleDesc) {
         this.roleID = roleID;
@@ -37,8 +37,8 @@ public final class Role {
 
     /**
      * Public Constructor
-     * @param roleName
-     * @param roleDesc
+     * @param roleName Role Name
+     * @param roleDesc Role Description
      */
     public Role(String roleName, String roleDesc) {
         this.roleID     = 0;
@@ -48,7 +48,7 @@ public final class Role {
 
     /**
      * Get Role ID
-     * @return
+     * @return Role ID
      */
     public Integer  getRoleID() {
         return roleID;
@@ -56,7 +56,7 @@ public final class Role {
 
     /**
      * Get Role Name
-     * @return
+     * @return Role Name
      */
     public String getRoleName() {
         return roleName;
@@ -64,7 +64,7 @@ public final class Role {
 
     /**
      * Get Role Desc
-     * @return
+     * @return Role Desc
      */
     public String getRoleDesc() {
         return roleDesc;
@@ -77,9 +77,7 @@ public final class Role {
 
         Role role = (Role) o;
 
-        if (!getRoleID().equals(role.getRoleID())) return false;
-        if (!getRoleName().equals(role.getRoleName())) return false;
-        return !(getRoleDesc() != null ? !getRoleDesc().equals(role.getRoleDesc()) : role.getRoleDesc() != null);
+        return getRoleID().equals(role.getRoleID()) && getRoleName().equals(role.getRoleName()) && !(getRoleDesc() != null ? !getRoleDesc().equals(role.getRoleDesc()) : role.getRoleDesc() != null);
 
     }
 

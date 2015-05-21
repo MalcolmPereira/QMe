@@ -10,7 +10,7 @@ package com.malcolm.qme.core.domain;
 import java.util.Date;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public final class UserQuizGame {
     /**
@@ -46,12 +46,12 @@ public final class UserQuizGame {
     /**
      * Public Constructor
      *
-     * @param userGameToken
-     * @param userID
-     * @param categoryID
-     * @param userGameScore
-     * @param quizStartDate
-     * @param quizEndDate
+     * @param userGameToken Unique User Game Token
+     * @param userID User ID
+     * @param categoryID Category ID
+     * @param userGameScore User Game Score
+     * @param quizStartDate Quiz Start Date
+     * @param quizEndDate Quiz End Date
      */
     public UserQuizGame(Long userGameToken, Long userID, Long categoryID, Integer userGameScore, Date quizStartDate, Date quizEndDate) {
         this.userGameToken = userGameToken;
@@ -65,9 +65,9 @@ public final class UserQuizGame {
     /**
      * Public Constructor
      *
-     * @param userGameToken
-     * @param userID
-     * @param categoryID
+     * @param userGameToken Unique User Game Token
+     * @param userID User ID
+     * @param categoryID Category ID
      */
     public UserQuizGame(Long userGameToken, Long userID, Long categoryID) {
         this.userGameToken = userGameToken;
@@ -80,7 +80,7 @@ public final class UserQuizGame {
 
     /**
      * Get User Game Token
-     * @return
+     * @return User Game Token
      */
     public Long getUserGameToken() {
         return userGameToken;
@@ -88,7 +88,7 @@ public final class UserQuizGame {
 
     /**
      * Get User ID
-     * @return
+     * @return User ID
      */
     public Long getUserID() {
         return userID;
@@ -96,7 +96,7 @@ public final class UserQuizGame {
 
     /**
      * Get Category ID
-     * @return
+     * @return Category ID
      */
     public Long getCategoryID() {
         return categoryID;
@@ -104,15 +104,15 @@ public final class UserQuizGame {
 
     /**
      * Get User Game Score
-     * @return
+     * @return User Game Score
      */
     public Integer getUserGameScore() {
         return userGameScore;
     }
 
     /**
-     * Get Start Date
-     * @return
+     * Get Quiz Start Date
+     * @return Quiz Start Date
      */
     public Date getQuizStartDate() {
         return quizStartDate;
@@ -120,7 +120,7 @@ public final class UserQuizGame {
 
     /**
      * Get Quiz End Date
-     * @return
+     * @return Quiz End Date
      */
     public Date getQuizEndDate() {
         return quizEndDate;
@@ -133,14 +133,7 @@ public final class UserQuizGame {
 
         UserQuizGame that = (UserQuizGame) o;
 
-        if (!getUserGameToken().equals(that.getUserGameToken())) return false;
-        if (!getUserID().equals(that.getUserID())) return false;
-        if (!getCategoryID().equals(that.getCategoryID())) return false;
-        if (getUserGameScore() != null ? !getUserGameScore().equals(that.getUserGameScore()) : that.getUserGameScore() != null)
-            return false;
-        if (getQuizStartDate() != null ? !getQuizStartDate().equals(that.getQuizStartDate()) : that.getQuizStartDate() != null)
-            return false;
-        return !(getQuizEndDate() != null ? !getQuizEndDate().equals(that.getQuizEndDate()) : that.getQuizEndDate() != null);
+        return getUserGameToken().equals(that.getUserGameToken()) && getUserID().equals(that.getUserID()) && getCategoryID().equals(that.getCategoryID()) && !(getUserGameScore() != null ? !getUserGameScore().equals(that.getUserGameScore()) : that.getUserGameScore() != null) && !(getQuizStartDate() != null ? !getQuizStartDate().equals(that.getQuizStartDate()) : that.getQuizStartDate() != null) && !(getQuizEndDate() != null ? !getQuizEndDate().equals(that.getQuizEndDate()) : that.getQuizEndDate() != null);
 
     }
 

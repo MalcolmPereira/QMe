@@ -10,43 +10,43 @@ package com.malcolm.qme.core.repository;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface QMeRepository<T,I> {
     /**
      * Find all
-     * @return
+     * @return List of T
      */
-    public List<T> findAll();
+     List<T> findAll();
 
     /**
      * Find By Id
-     * @param id
-     * @return
+     * @param id ID of Entity
+     * @return One Object of type  T
      */
-    public T findById(I id);
+     T findById(I id);
 
     /**
      * Save
      *
-     * @param t
-     * @return
+     * @param t Object of type  T
+     * @return Object of type  T
      */
-    public T save(T t);
+     T save(T t);
 
     /**
      * Update
      *
-     * @param t
-     * @param updateUserId
-     * @return
+     * @param t Object of type  T
+     * @param updateUserId Update User ID
+     * @return Object of type  T
      */
-    public T update(T t, Long updateUserId);
+     T update(T t, Long updateUserId);
 
     /**
      * Delete
      *
-     * @param id
+     * @param id ID of Entity
      */
-    public void delete(I id);
+     void delete(I id);
 }

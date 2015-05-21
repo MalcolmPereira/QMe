@@ -11,22 +11,22 @@ import com.malcolm.qme.core.domain.Question;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface QuestionRepository extends QMeRepository<Question,Long> {
 
     /**
      * Find By Category
      *
-     * @param categoryID
-     * @return
+     * @param categoryID Category ID
+     * @return Question List for Category ID
      */
-    public List<Question> findByCategoryId(Long categoryID);
+    List<Question> findByCategoryId(Long categoryID);
 
     /**
      * Find By Most Liked
      *
-     * @return
+     * @return Questions sorted by Likes
      */
-    public List<Question> findByMostLiked();
+    List<Question> findByMostLiked();
 }

@@ -7,7 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 /**
- * @Author Malcolm
+ * @author Malcolm
  */
 public final class UserCategory {
 
@@ -29,9 +29,9 @@ public final class UserCategory {
     /**
      * Public Constructor
      *
-     * @param userCategoryID
-     * @param userID
-     * @param categoryID
+     * @param userCategoryID User Category ID
+     * @param userID User ID
+     * @param categoryID Category ID
      */
     public UserCategory(Long userCategoryID, Long userID, Long categoryID) {
         this.userCategoryID = userCategoryID;
@@ -43,8 +43,8 @@ public final class UserCategory {
      * Public Constructor
      *
 
-     * @param userID
-     * @param categoryID
+     * @param userID  User ID
+     * @param categoryID Category ID
      */
     public UserCategory(Long userID, Long categoryID) {
         this.userCategoryID = 0L;
@@ -54,7 +54,7 @@ public final class UserCategory {
 
     /**
      * Get User Category Id
-     * @return
+     * @return User Category Id
      */
     public Long getUserCategoryID() {
         return userCategoryID;
@@ -62,7 +62,7 @@ public final class UserCategory {
 
     /**
      * Get User Id
-     * @return
+     * @return User Id
      */
     public Long getUserID() {
         return userID;
@@ -70,7 +70,7 @@ public final class UserCategory {
 
     /**
      * Get Category Id
-     * @return
+     * @return Category Id
      */
     public Long getCategoryID() {
         return categoryID;
@@ -83,9 +83,7 @@ public final class UserCategory {
 
         UserCategory that = (UserCategory) o;
 
-        if (!getUserCategoryID().equals(that.getUserCategoryID())) return false;
-        if (!getUserID().equals(that.getUserID())) return false;
-        return getCategoryID().equals(that.getCategoryID());
+        return getUserCategoryID().equals(that.getUserCategoryID()) && getUserID().equals(that.getUserID()) && getCategoryID().equals(that.getCategoryID());
 
     }
 
