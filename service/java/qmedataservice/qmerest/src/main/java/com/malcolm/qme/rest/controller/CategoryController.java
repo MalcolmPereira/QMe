@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
@@ -36,35 +37,35 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public List<QMeCategory> list() {
+    public @ResponseBody List<QMeCategory> list() {
         return categoryService.list();
     }
 
     @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public List<QMeCategory> searchByName(String categoryName) {
+    public @ResponseBody List<QMeCategory> searchByName(String categoryName) {
         return null;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeCategory searchById(long categoryId) {
+    public @ResponseBody QMeCategory searchById(long categoryId) {
         return null;
     }
 
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeCategory create(QMeCategory category) {
+    public @ResponseBody QMeCategory create(QMeCategory category) {
         return null;
     }
 
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeCategory update(QMeCategory category) {
+    public @ResponseBody QMeCategory update(QMeCategory category) {
         return null;
     }
 
