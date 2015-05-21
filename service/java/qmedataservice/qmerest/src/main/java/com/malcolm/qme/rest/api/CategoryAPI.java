@@ -18,7 +18,7 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * QMeCategory API Root Path
      */
-    String ROOT_PATH = APP_STRING + "category/";
+    String ROOT_PATH = APP_STRING + "/category";
 
     /**
      * QMeCategory API Get By ID Path

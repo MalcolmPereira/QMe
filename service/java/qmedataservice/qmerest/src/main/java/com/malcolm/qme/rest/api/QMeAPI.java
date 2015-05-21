@@ -13,7 +13,7 @@ public interface QMeAPI {
     /**
      * App String
      */
-    String APP_STRING 		   = "/qme/";
+    String APP_STRING 		   = "/qme";
     /**
      * Id Parameter
      */

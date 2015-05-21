@@ -11,15 +11,15 @@ import com.malcolm.qme.rest.model.QMeCategory;
 import java.util.List;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 public interface CategoryService extends QMeService<QMeCategory,Long> {
 
     /**
      * Search By Name
      *
-     * @param categoryName
-     * @return
+     * @param categoryName Category Name
+     * @return QMeCategory List
      */
      List<QMeCategory> searchByName(String categoryName);
 }

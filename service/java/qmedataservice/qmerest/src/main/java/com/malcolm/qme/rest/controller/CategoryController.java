@@ -9,6 +9,8 @@ package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.CategoryAPI;
 import com.malcolm.qme.rest.model.QMeCategory;
+import com.malcolm.qme.rest.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -25,11 +27,17 @@ import java.util.List;
 @EnableAutoConfiguration
 public class CategoryController implements CategoryAPI {
 
+    /**
+     * Category Service
+     */
+    @Autowired
+    private CategoryService categoryService;
+
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public List<QMeCategory> list() {
-        return null;
+        return categoryService.list();
     }
 
     @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
@@ -64,6 +72,6 @@ public class CategoryController implements CategoryAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public void delete(long categoryId) {
-
     }
+
 }
