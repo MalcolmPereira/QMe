@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 @Controller
 @EnableAutoConfiguration

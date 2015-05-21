@@ -6,10 +6,8 @@
  */
 package com.malcolm.qme.rest.api;
 
-import java.util.Collection;
-
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 public interface QMeAPI {
     /**

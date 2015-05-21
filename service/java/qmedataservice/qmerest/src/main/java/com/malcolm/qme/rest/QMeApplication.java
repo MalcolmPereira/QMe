@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 @EnableAutoConfiguration
 @Import({RestConfig.class,QMeSpringDataJPAConfig.class})

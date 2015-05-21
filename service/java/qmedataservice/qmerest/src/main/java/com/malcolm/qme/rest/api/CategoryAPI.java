@@ -12,7 +12,7 @@ import com.malcolm.qme.rest.model.QMeCategory;
 import java.util.List;
 
 /**
- * @Author: malcolm
+ * @author Malcolm
  */
 public interface CategoryAPI extends QMeAPI {
     /**
@@ -33,7 +33,7 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * Get All Categories
      *
-     * @return
+     * @return List of Category
      */
     @GET(ROOT_PATH)
     public List<QMeCategory> list();
@@ -41,8 +41,8 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * Search by Name
      *
-     * @param categoryName
-     * @return
+     * @param categoryName Category Name
+     * @return List of QMe Categories
      */
     @GET(NAME_PATH)
     public List<QMeCategory> searchByName(@Path(NAME_PARAM_STRING) String categoryName);
@@ -50,8 +50,8 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * Search by ID
      *
-     * @param categoryId
-     * @return
+     * @param categoryId Category ID
+     * @return QMe Category
      */
     @GET(ID_PATH)
     public QMeCategory searchById(@Path(ID_PARAM_STRING) long categoryId);
@@ -59,8 +59,8 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * Create QMeCategory
      *
-     * @param category
-     * @return
+     * @param category Category
+     * @return Category
      */
     @POST(ROOT_PATH)
     public QMeCategory create(@Body QMeCategory category);
@@ -68,8 +68,8 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * Update QMeCategory
      *
-     * @param category
-     * @return
+     * @param category Category
+     * @return Category
      */
     @PUT(ROOT_PATH)
     public QMeCategory update(@Body QMeCategory category);
@@ -78,7 +78,7 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * Delete QMeCategory
      *
-     * @param categoryId
+     * @param categoryId Category ID
      */
     @DELETE(ID_PATH)
     public void delete(@Path(ID_PARAM_STRING) long categoryId);
