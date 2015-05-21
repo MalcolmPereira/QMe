@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "MEDIA_TYPE", catalog = "qme", uniqueConstraints = @UniqueConstraint(columnNames = "MEDIA_MIME_TYPE"))
@@ -47,7 +47,7 @@ public class MediaTypeEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param mediaMimeType
+	 * @param mediaMimeType Media Mime Type
 	 */
 	public MediaTypeEntity(String mediaMimeType) {
 		this.mediaMimeType = mediaMimeType;

@@ -28,7 +28,7 @@ import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import com.malcolm.qme.springdata.entity.RoleEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})

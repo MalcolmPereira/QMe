@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "ROLE", catalog = "qme", uniqueConstraints = @UniqueConstraint(columnNames = "ROLE_NAME"))
@@ -47,17 +47,6 @@ public class RoleEntity implements java.io.Serializable {
 	 * Public Constructor
 	 */
 	public RoleEntity() {
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param roleName
-	 * @param roleDesc
-	 */
-	public RoleEntity(String roleName, String roleDesc) {
-		this.roleName = roleName;
-		this.roleDesc = roleDesc;
 	}
 
 	/**

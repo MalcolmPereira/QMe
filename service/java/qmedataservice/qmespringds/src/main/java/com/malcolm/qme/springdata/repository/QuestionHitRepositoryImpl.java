@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("QuestionHitRepository")
 public class QuestionHitRepositoryImpl implements QuestionHitRepository {
@@ -64,8 +64,8 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
     /**
      * Map QuestionHit Domain Object to QuestionHitEntity
      *
-     * @param questionHit
-     * @return
+     * @param questionHit QuestionHit
+     * @return QuestionHitEntity
      */
     private QuestionHitEntity getQuestionHitEntity(QuestionHit questionHit){
         QuestionHitEntity questionHitEntity = new QuestionHitEntity();
@@ -84,8 +84,8 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
     /**
      * Map QuestionHitEntity to QuestionHit Domain Object
      *
-     * @param questionHitEntities
-     * @return
+     * @param questionHitEntities QuestionHitEntity List
+     * @return QuestionHit
      */
     private List<QuestionHit> getQuestionHit(List<QuestionHitEntity> questionHitEntities){
         List<QuestionHit> questionHitList = new ArrayList<QuestionHit>();
@@ -102,8 +102,8 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
     /**
      * Map QuestionHitEntity to QuestionHit Domain Object
      *
-     * @param questionHitEntity
-     * @return
+     * @param questionHitEntity QuestionHitEntity
+     * @return QuestionHit
      */
     private QuestionHit getQuestionHit(QuestionHitEntity questionHitEntity){
         return new QuestionHit(

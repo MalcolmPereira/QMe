@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "USER_ROLES", catalog = "qme")
@@ -49,17 +49,6 @@ public class UserRolesEntity implements java.io.Serializable {
 	 * Public Constructor
 	 */
 	public UserRolesEntity() {
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param userId
-	 * @param roleId
-	 */
-	public UserRolesEntity(Long userId, Integer roleId) {
-		this.userId = userId;
-		this.roleId = roleId;
 	}
 
 	/**

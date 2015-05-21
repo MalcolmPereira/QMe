@@ -17,7 +17,7 @@ import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
 import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("AnswerReferenceMediaRepository")
 public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaRepository {
@@ -70,8 +70,8 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 	/**
 	 * Map AnswerReferenceMedia Domain Object to AnswerReferenceMediaEntity
 	 *
-	 * @param answerReferenceMedia
-	 * @return
+	 * @param answerReferenceMedia AnswerReferenceMedia
+	 * @return AnswerReferenceMediaEntity
 	 */
 	private AnswerReferenceMediaEntity getAnswerReferenceMediaEntity(AnswerReferenceMedia answerReferenceMedia){
 		final AnswerReferenceMediaEntity answerReferenceMediaEntity = new AnswerReferenceMediaEntity();
@@ -91,8 +91,8 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 	/**
 	 * Map AnswerReferenceMediaEntity to AnswerReferenceMedia Domain Object
 	 *
-	 * @param answerReferenceMediaEntity
-	 * @return
+	 * @param answerReferenceMediaEntities AnswerReferenceMediaEntity List
+	 * @return AnswerReferenceMedia List
 	 */
 	private List<AnswerReferenceMedia> getAnswerReferenceMedia(List<AnswerReferenceMediaEntity> answerReferenceMediaEntities){
 		final List<AnswerReferenceMedia> answerReferenceMediaList = new ArrayList<AnswerReferenceMedia>();
@@ -108,8 +108,8 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 	/**
 	 * Map AnswerReferenceMediaEntity to AnswerReferenceMedia Domain Object
 	 *
-	 * @param answerReferenceMediaEntity
-	 * @return
+	 * @param answerReferenceMediaEntity AnswerReferenceMediaEntity
+	 * @return AnswerReferenceMedia
 	 */
 	private AnswerReferenceMedia getAnswerReferenceMedia(AnswerReferenceMediaEntity answerReferenceMediaEntity){
 		return new AnswerReferenceMedia(answerReferenceMediaEntity.getAnswerRefMediaId(),

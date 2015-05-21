@@ -65,8 +65,8 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	/**
 	 * Map MediaType Domain Object to MediaTypeEntity
 	 *
-	 * @param mediaType
-	 * @return
+	 * @param mediaType MediaType
+	 * @return MediaTypeEntity
 	 */
 	private MediaTypeEntity getMediaTypeEntity(MediaType mediaType){
 		final MediaTypeEntity mediaTypeEntity = new MediaTypeEntity();
@@ -80,8 +80,8 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	/**
 	 * Map MediaTypeEntity to MediaType Domain Object
 	 *
-	 * @param mediaTypeEntities
-	 * @return
+	 * @param mediaTypeEntities MediaTypeEntity List
+	 * @return MediaType List
 	 */
 	private List<MediaType> getMediaType(List<MediaTypeEntity> mediaTypeEntities){
 		final List<MediaType> mediaTypeList = new ArrayList<MediaType>();
@@ -98,8 +98,8 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	/**
 	 * Map MediaTypeEntity to MediaType Domain Object
 	 *
-	 * @param mediaTypeEntity
-	 * @return
+	 * @param mediaTypeEntity MediaTypeEntity
+	 * @return MediaType
 	 */
 	private MediaType getMediaType(MediaTypeEntity mediaTypeEntity){
 		return new MediaType(mediaTypeEntity.getMediaTypeId(),mediaTypeEntity.getMediaMimeType());

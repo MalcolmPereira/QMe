@@ -30,7 +30,7 @@ import com.malcolm.qme.springdata.entity.UserEntity;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})

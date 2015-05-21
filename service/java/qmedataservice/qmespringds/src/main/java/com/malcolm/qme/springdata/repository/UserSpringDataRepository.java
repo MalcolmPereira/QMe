@@ -10,21 +10,21 @@ import com.malcolm.qme.springdata.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface UserSpringDataRepository extends JpaRepository<UserEntity, Long> {
 
     /**
      * Find By User Name
-     * @param userName
-     * @return
+     * @param userName User Name
+     * @return UserEntity List
      */
-    public UserEntity findByUserNameIgnoreCase(String userName);
+    UserEntity findByUserNameIgnoreCase(String userName);
 
     /**
      * Find By User Email
-     * @param userName
-     * @return
+     * @param userEmail User Email
+     * @return UserEntity List
      */
-    public UserEntity findByUserEmailIgnoreCase(String userName);
+    UserEntity findByUserEmailIgnoreCase(String userEmail);
 }

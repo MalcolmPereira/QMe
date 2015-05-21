@@ -11,15 +11,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.RoleEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface RoleSpringDataRepository extends JpaRepository<RoleEntity, Integer> {
 	
 	/**
 	 * Find by Role Name
 	 * 
-	 * @param roleName
-	 * @return
+	 * @param roleName Role Name
+	 * @return RoleEntity
 	 */
-	public RoleEntity findByRoleNameIgnoreCase(String roleName);
+	RoleEntity findByRoleNameIgnoreCase(String roleName);
 }

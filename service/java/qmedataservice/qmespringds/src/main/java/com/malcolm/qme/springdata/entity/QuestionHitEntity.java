@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "QUESTION_HIT", catalog = "qme")
@@ -60,11 +60,11 @@ public class QuestionHitEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param questionId
-	 * @param catId
-	 * @param questionHit
-	 * @param rightCount
-	 * @param wrongCount
+	 * @param questionId Question ID
+	 * @param catId Category ID
+	 * @param questionHit Question Hit
+	 * @param rightCount Right Count
+	 * @param wrongCount Wrong Count
 	 */
 	public QuestionHitEntity(Long questionId, Long catId, Long questionHit,
 			Long rightCount, Long wrongCount) {

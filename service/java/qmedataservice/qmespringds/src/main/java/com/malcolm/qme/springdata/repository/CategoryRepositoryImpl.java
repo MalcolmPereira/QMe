@@ -18,7 +18,7 @@ import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.springdata.entity.CategoryEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("CategoryRepository")
 public class CategoryRepositoryImpl implements CategoryRepository {
@@ -73,8 +73,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	/**
      * Map Category Domain Object to CategoryEntity
      *
-     * @param category
-     * @return
+     * @param category Category
+     * @return CategoryEntity
      */
     private CategoryEntity getCategoryEntity(Category category){
         CategoryEntity categoryEntity = new CategoryEntity();
@@ -100,8 +100,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	/**
 	 * Map CategoryEntity to Category Domain Object
 	 *
-	 * @param categoryEntities
-	 * @return
+	 * @param categoryEntities CategoryEntity List
+	 * @return Category List
 	 */
 	private List<Category> getCategory(List<CategoryEntity> categoryEntities){
 		List<Category> categoryList = new ArrayList<Category>();
@@ -118,8 +118,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	/**
 	 * Map CategoryEntity to Category Domain Object
 	 * 
-	 * @param categoryEntity
-	 * @return
+	 * @param categoryEntity CategoryEntity
+	 * @return Category
 	 */
 	private Category getCategory(CategoryEntity categoryEntity){
        return new Category(categoryEntity.getCatId(),

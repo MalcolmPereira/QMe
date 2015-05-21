@@ -16,7 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "USER_CATEGORY_LIKES", catalog = "qme")
@@ -43,13 +43,6 @@ public class UserCategoryLikesEntity implements java.io.Serializable {
 	public UserCategoryLikesEntity() {
 	}
 
-	/**
-	 * Public Constructor
-	 * @param id
-	 */
-	public UserCategoryLikesEntity(UserCategoryLikesEntityId id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the id

@@ -18,7 +18,7 @@ import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserQuizRepository")
 public class UserQuizRepositoryImpl implements UserQuizRepository {
@@ -91,8 +91,8 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	/**
 	 * Map User Quiz Domain Object to UserQuizEntity
 	 * 
-	 * @param user
-	 * @return
+	 * @param userQuiz UserQuiz
+	 * @return UserQuizEntity
 	 */
 	private UserQuizEntity getUserQuizEntity(UserQuiz userQuiz) {
 		UserQuizEntity userQuizEntity = new UserQuizEntity();
@@ -118,8 +118,8 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	/**
 	 * Map UserQuizEntity to User Quiz Domain Object
 	 * 
-	 * @param userQuizEntities
-	 * @return
+	 * @param userQuizEntities UserQuizEntity List
+	 * @return UserQuiz List
 	 */
 	private List<UserQuiz> getUserQuiz(List<UserQuizEntity> userQuizEntities) {
 		List<UserQuiz> userQuizList = new ArrayList<UserQuiz>();
@@ -135,8 +135,8 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	/**
 	 * Map UserQuizEntity to User Quiz Domain Object
 	 * 
-	 * @param userEntity
-	 * @return
+	 * @param userQuizEntity UserQuizEntity
+	 * @return UserQuiz
 	 */
 	private UserQuiz getUserQuiz(UserQuizEntity userQuizEntity) {
 		return new UserQuiz(userQuizEntity.getUserQuizId(),

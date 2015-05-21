@@ -30,7 +30,7 @@ import com.malcolm.qme.springdata.entity.QuestionEntity;
 import com.malcolm.qme.springdata.entity.QuestionHitEntity;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})

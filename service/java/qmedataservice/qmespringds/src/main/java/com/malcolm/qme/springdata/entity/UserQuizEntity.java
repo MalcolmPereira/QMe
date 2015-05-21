@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "USER_QUIZ", catalog = "qme")
@@ -99,13 +99,13 @@ public class UserQuizEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param userId
-	 * @param quizId
-	 * @param catId
-	 * @param quizStartDate
-	 * @param quizUserScore
-	 * @param quizMaxScore
-	 * @param quizComplete
+	 * @param userId User ID
+	 * @param quizId Quiz ID
+	 * @param catId Category ID
+	 * @param quizStartDate Quiz Start Date
+	 * @param quizUserScore Quiz User Score
+	 * @param quizMaxScore Quiz Max Score
+	 * @param quizComplete Quiz Complete 1 - Complete/ 0 - Incomplete
 	 */
 	public UserQuizEntity(Long userId, Long quizId, Long catId,
 			Date quizStartDate, Integer quizUserScore, Integer quizMaxScore,
@@ -119,32 +119,7 @@ public class UserQuizEntity implements java.io.Serializable {
 		this.quizComplete = quizComplete;
 	}
 
-	/**
-	 * Public Constructor
-	 *
-	 * @param userId
-	 * @param quizId
-	 * @param catId
-	 * @param quizStartDate
-	 * @param quizEndDate
-	 * @param quizUserScore
-	 * @param quizMaxScore
-	 * @param quizToken
-	 * @param quizComplete
-	 */
-	public UserQuizEntity(Long userId, Long quizId, Long catId,
-			Date quizStartDate, Date quizEndDate, Integer quizUserScore,
-			Integer quizMaxScore, String quizToken, byte quizComplete) {
-		this.userId = userId;
-		this.quizId = quizId;
-		this.catId = catId;
-		this.quizStartDate = quizStartDate;
-		this.quizEndDate = quizEndDate;
-		this.quizUserScore = quizUserScore;
-		this.quizMaxScore = quizMaxScore;
-		this.quizToken = quizToken;
-		this.quizComplete = quizComplete;
-	}
+
 
 	/**
 	 * @return the userQuizId

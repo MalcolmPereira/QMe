@@ -29,7 +29,7 @@ import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 
 /**
- * @Author: malcolm
+ * @uthor malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})

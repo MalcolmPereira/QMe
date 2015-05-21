@@ -16,10 +16,14 @@ import com.malcolm.qme.springdata.entity.UserCategoryLikesEntity;
 import com.malcolm.qme.springdata.entity.UserCategoryLikesEntityId;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface UserCategoryLikesSpringDataRepository extends JpaRepository<UserCategoryLikesEntity, UserCategoryLikesEntityId> {
-	
+	/**
+	 * Find Category Likes By User ID
+	 * @param userId User ID
+	 * @return UserCategoryLikesEntity List
+	 */
 	@Query(value = "SELECT * FROM USER_CATEGORY_LIKES WHERE USER_ID = ?1", nativeQuery = true)
 	List<UserCategoryLikesEntity> findByUserId(Long userId);
 }

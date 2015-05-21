@@ -31,7 +31,7 @@ import com.malcolm.qme.springdata.entity.UserQuestionLikesEntity;
 import com.malcolm.qme.springdata.entity.UserQuestionLikesEntityId;
 
 /**
- * @Author: malcolm
+ * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})

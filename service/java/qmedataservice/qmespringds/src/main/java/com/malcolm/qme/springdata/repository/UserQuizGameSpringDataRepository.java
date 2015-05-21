@@ -15,12 +15,23 @@ import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
 import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserQuizGameSpringDataRepository extends JpaRepository<UserQuizGameEntity, UserQuizGameEntityId> {
+	/**
+	 * Find By User ID
+	 * @param userId User ID
+	 * @return UserQuizGameEntity List
+	 */
 	@Query(value = "SELECT * FROM USER_QUIZ_GAME WHERE USER_ID = ?1", nativeQuery = true)
 	List<UserQuizGameEntity> findByUserId(Long userId);
-	
+
+	/**
+	 * Find by Game Token
+	 *
+	 * @param quizGameToken Game Token
+	 * @return UserQuizGameEntity List
+	 */
 	@Query(value = "SELECT * FROM USER_QUIZ_GAME WHERE QUIZ_GAME_TOKEN = ?1", nativeQuery = true)
 	UserQuizGameEntity findByGameToken(Long quizGameToken);
 }

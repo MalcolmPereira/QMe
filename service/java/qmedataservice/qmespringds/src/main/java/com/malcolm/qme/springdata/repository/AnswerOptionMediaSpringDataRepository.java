@@ -12,16 +12,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface AnswerOptionMediaSpringDataRepository extends JpaRepository<AnswerOptionMediaEntity, Long> {
 
     /**
      * Find By Option Id
-     * @param optionId
-     * @return
+     * @param optionId Option ID
+     * @return AnswerOptionMediaEntity List
      */
-    public List<AnswerOptionMediaEntity> findByOptionId(Long optionId);
+    List<AnswerOptionMediaEntity> findByOptionId(Long optionId);
 
 
 }

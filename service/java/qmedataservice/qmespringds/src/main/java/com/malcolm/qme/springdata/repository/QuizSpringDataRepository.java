@@ -13,26 +13,26 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.QuizEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface QuizSpringDataRepository extends JpaRepository<QuizEntity, Long> {
 
 	/**
 	 * Find By Category ID
-	 * @param catId
-	 * @return
+	 * @param catId Category ID
+	 * @return QuizEntity List
 	 */
-	public List<QuizEntity> findByCatId(Long catId);
+	List<QuizEntity> findByCatId(Long catId);
 
 	/**
 	 * Find Most Liked
-	 * @return
+	 * @return QuizEntity List
 	 */
-	public List<QuizEntity> findTop50ByOrderByQuizLikesDesc();
+	List<QuizEntity> findTop50ByOrderByQuizLikesDesc();
 
 	/**
-	 * @param quizName
-	 * @return
+	 * @param quizName Quiz Name
+	 * @return QuizEntity List
 	 */
-	public List<QuizEntity> findByQuizNameIgnoreCaseLike(String quizName);
+	List<QuizEntity> findByQuizNameIgnoreCaseLike(String quizName);
 }

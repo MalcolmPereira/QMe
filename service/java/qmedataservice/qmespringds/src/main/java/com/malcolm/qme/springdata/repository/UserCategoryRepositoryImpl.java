@@ -17,7 +17,7 @@ import com.malcolm.qme.core.repository.UserCategoryRepository;
 import com.malcolm.qme.springdata.entity.UserCategoryEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserCategoryRepository")
 public class UserCategoryRepositoryImpl implements UserCategoryRepository {
@@ -69,8 +69,8 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 	/**
 	 * Map UserCategory Domain Object to UserCategoryEntity 
 	 * 
-	 * @param userCategory
-	 * @return
+	 * @param userCategory UserCategory
+	 * @return UserCategoryEntity
 	 */
 	private UserCategoryEntity getUserCategoryEntity(UserCategory userCategory){
 		UserCategoryEntity userCategoryEntity = new UserCategoryEntity();
@@ -85,8 +85,8 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 	/**
 	 * Map UserCategoryEntity to UserCategory Domain Object
 	 * 
-	 * @param userCategoryEntities
-	 * @return
+	 * @param userCategoryEntities UserCategoryEntity List
+	 * @return UserCategory List
 	 */
 	private List<UserCategory> getUserCategory(List<UserCategoryEntity> userCategoryEntities){
 		List<UserCategory> userCategoryList = new ArrayList<UserCategory>();
@@ -102,8 +102,8 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 	/**
 	 * Map UserCategoryEntity to UserCategory Domain Object
 	 * 
-	 * @param userCategoryEntity
-	 * @return
+	 * @param userCategoryEntity UserCategoryEntity
+	 * @return UserCategory
 	 */
 	private UserCategory getUserCategory(UserCategoryEntity userCategoryEntity){
 		return new UserCategory(

@@ -17,7 +17,7 @@ import com.malcolm.qme.core.repository.AnswerOptionRepository;
 import com.malcolm.qme.springdata.entity.AnswerOptionEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("AnswerOptionRepository")
 public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
@@ -79,8 +79,8 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	/**
 	 * Map AnswerOption Domain Object to AnswerOptionEntity
 	 *
-	 * @param answerOption
-	 * @return
+	 * @param answerOption AnswerOption
+	 * @return AnswerOptionEntity
 	 */
 	private AnswerOptionEntity getAnswerOptionEntity(AnswerOption answerOption){
 		final AnswerOptionEntity answerOptionEntity = new AnswerOptionEntity();
@@ -100,8 +100,8 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	/**
 	 * Map AnswerOptionEntity to AnswerOption Domain Object
 	 *
-	 * @param answerOptionEntities
-	 * @return
+	 * @param answerOptionEntities AnswerOptionEntity List
+	 * @return AnswerOption List
 	 */
 	private List<AnswerOption> getAnswerOption(List<AnswerOptionEntity> answerOptionEntities){
 		final List<AnswerOption> optionList = new ArrayList<AnswerOption>();
@@ -117,8 +117,8 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	/**
 	 * Map AnswerOptionEntity to AnswerOption Domain Object
 	 *
-	 * @param answerOptionEntity
-	 * @return
+	 * @param answerOptionEntity AnswerOptionEntity
+	 * @return AnswerOption
 	 */
 	private AnswerOption getAnswerOption(AnswerOptionEntity answerOptionEntity){
 		Boolean optionCorrect = Boolean.FALSE;

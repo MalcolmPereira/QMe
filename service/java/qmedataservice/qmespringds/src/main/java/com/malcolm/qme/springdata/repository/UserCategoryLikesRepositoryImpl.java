@@ -18,7 +18,7 @@ import com.malcolm.qme.springdata.entity.UserCategoryLikesEntity;
 import com.malcolm.qme.springdata.entity.UserCategoryLikesEntityId;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserCategoryLikesRepository")
 public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesRepository {
@@ -85,8 +85,8 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	/**
 	 * Map UserCategoryLikes Domain Object to UserCategoryLikesEntity
 	 * 
-	 * @param userCategoryLikes
-	 * @return
+	 * @param userCategoryLikes UserCategoryLikes
+	 * @return UserCategoryLikesEntity
 	 */
 	private UserCategoryLikesEntity getUserCategoryLikesEntity(UserCategoryLikes userCategoryLikes){
 		UserCategoryLikesEntity userCategoryLikesEntity = new UserCategoryLikesEntity();
@@ -100,8 +100,8 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	/**
 	 * Map UserCategoryLikesEntity to UserCategoryLikes Domain Object
 	 * 
-	 * @param userCategoryLikesEntities
-	 * @return
+	 * @param userCategoryLikesEntities UserCategoryLikesEntity List
+	 * @return UserCategoryLikes List
 	 */
 	private List<UserCategoryLikes> getUserCategoryLikes(List<UserCategoryLikesEntity> userCategoryLikesEntities){
 		List<UserCategoryLikes> userCategoryLikesList = new ArrayList<UserCategoryLikes>();
@@ -117,8 +117,8 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	/**
 	 * Map UserCategoryLikesEntity to UserCategoryLikes Domain Object
 	 * 
-	 * @param userCategoryLikesEntity
-	 * @return
+	 * @param userCategoryLikesEntity UserCategoryLikesEntity
+	 * @return UserCategoryLikes
 	 */
 	private UserCategoryLikes getUserCategoryLikes(UserCategoryLikesEntity userCategoryLikesEntity){
 		return new UserCategoryLikes(

@@ -13,21 +13,21 @@ import com.malcolm.qme.springdata.entity.UserRolesEntity;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserRoleSpringDataRepository extends JpaRepository<UserRolesEntity, Long> {
 
     /**
      * Find By User ID
-     * @param userId
-     * @return
+     * @param userId User ID
+     * @return UserRolesEntity List
      */
-    public List<UserRolesEntity> findByUserId(Long userId);
+    List<UserRolesEntity> findByUserId(Long userId);
 
     /**
-     * Find By User ID
-     * @param roleId
-     * @return
+     * Find By Role ID
+     * @param roleId Role ID
+     * @return UserRolesEntity List
      */
-    public List<UserRolesEntity> findByRoleId(Integer roleId);
+    List<UserRolesEntity> findByRoleId(Integer roleId);
 }

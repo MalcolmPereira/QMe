@@ -20,11 +20,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserQuizGameRepository")
 public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
-
     /**
      * Spring Data UserEntity Repository
      */
@@ -95,8 +94,8 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     /**
      * Map UserQuizGame Domain Object to UserQuizGameEntity
      *
-     * @param userQuizGame
-     * @return
+     * @param userQuizGame UserQuizGame
+     * @return UserQuizGameEntity
      */
     private UserQuizGameEntity getUserQuizGameEntity(UserQuizGame userQuizGame){
         UserQuizGameEntity userQuizGameEntity = new UserQuizGameEntity();
@@ -112,8 +111,8 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
      *
      * Map UserQuizGameEntity to UserQuizGame Domain Object
      *
-     * @param userQuizGameEntities
-     * @return
+     * @param userQuizGameEntities UserQuizGameEntity List
+     * @return UserQuizGame List
      */
     private List<UserQuizGame> getUserQuizGame(List<UserQuizGameEntity> userQuizGameEntities){
         List<UserQuizGame> UserQuizGameList = new ArrayList<UserQuizGame>();
@@ -129,8 +128,8 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     /**
      * Map UserQuizGameEntity to UserQuizGame Domain Object
      *
-     * @param userQuizGameEntity
-     * @return
+     * @param userQuizGameEntity UserQuizGameEntity
+     * @return UserQuizGame
      */
     private UserQuizGame getUserQuizGame(UserQuizGameEntity userQuizGameEntity){
         return new UserQuizGame(

@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "QUESTION", catalog = "qme")
@@ -99,38 +99,15 @@ public class QuestionEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param catId
-	 * @param questionText
-	 * @param questionLikes
-	 * @param questionCreateDate
-	 * @param questionCreateUser
-	 * @param questionUpdateDate
-	 * @param questionUpdateUser
-	 */
-	public QuestionEntity(Long catId, String questionText, Long questionLikes,
-			Date questionCreateDate, Long questionCreateUser,
-			Date questionUpdateDate, Long questionUpdateUser) {
-		this.catId = catId;
-		this.questionText = questionText;
-		this.questionLikes = questionLikes;
-		this.questionCreateDate = questionCreateDate;
-		this.questionCreateUser = questionCreateUser;
-		this.questionUpdateDate = questionUpdateDate;
-		this.questionUpdateUser = questionUpdateUser;
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param catId
-	 * @param questionText
-	 * @param questionAnswer
-	 * @param questionPoint
-	 * @param questionLikes
-	 * @param questionCreateDate
-	 * @param questionCreateUser
-	 * @param questionUpdateDate
-	 * @param questionUpdateUser
+	 * @param catId Category ID
+	 * @param questionText Question Text
+	 * @param questionAnswer Question Answer
+	 * @param questionPoint Question Point
+	 * @param questionLikes Question Likes
+	 * @param questionCreateDate Question Create Date
+	 * @param questionCreateUser Question Create User
+	 * @param questionUpdateDate Question Update Date
+	 * @param questionUpdateUser Question Update User
 	 */
 	public QuestionEntity(Long catId, String questionText,
 			String questionAnswer, Integer questionPoint, Long questionLikes,

@@ -13,9 +13,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.CategoryEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface CategorySpringDataRepository extends JpaRepository<CategoryEntity, Long> {
-	
-	public List<CategoryEntity> findByCatNameIgnoreCaseLike(String categoryName);
+
+	/**
+	 * Find by Category Name
+	 * @param categoryName Category Name
+	 * @return CategoryEntity List
+	 */
+	List<CategoryEntity> findByCatNameIgnoreCaseLike(String categoryName);
 }

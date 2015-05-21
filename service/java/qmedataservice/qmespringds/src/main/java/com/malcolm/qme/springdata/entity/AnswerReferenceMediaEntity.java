@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "ANSWER_REFERENCE_MEDIA", catalog = "qme")
@@ -52,20 +52,6 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 	 * Public Constructor
 	 */
 	public AnswerReferenceMediaEntity() {
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param questionId
-	 * @param mediaTypeId
-	 * @param refMedia
-	 */
-	public AnswerReferenceMediaEntity(Long questionId, Integer mediaTypeId,
-			byte[] refMedia) {
-		this.questionId = questionId;
-		this.mediaTypeId = mediaTypeId;
-		this.refMedia = refMedia;
 	}
 
 	/**

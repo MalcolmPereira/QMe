@@ -15,12 +15,24 @@ import com.malcolm.qme.springdata.entity.UserQuizLikesEntity;
 import com.malcolm.qme.springdata.entity.UserQuizLikesEntityId;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserQuizLikesSpringDataRepository extends JpaRepository<UserQuizLikesEntity, UserQuizLikesEntityId> {
+	/**
+	 * Find By User ID
+	 *
+	 * @param userId User ID
+	 * @return UserQuizLikesEntity List
+	 */
 	@Query(value = "SELECT * FROM USER_QUIZ_LIKES WHERE USER_ID = ?1", nativeQuery = true)
 	List<UserQuizLikesEntity> findByUserId(Long userId);
 
+	/**
+	 * Find By Quiz ID
+	 *
+	 * @param quizId Quiz ID
+	 * @return UserQuizLikesEntity List
+	 */
 	@Query(value = "SELECT * FROM USER_QUIZ_LIKES WHERE QUIZ_ID = ?1", nativeQuery = true)
 	List<UserQuizLikesEntity> findByQuizId(Long quizId);
 }

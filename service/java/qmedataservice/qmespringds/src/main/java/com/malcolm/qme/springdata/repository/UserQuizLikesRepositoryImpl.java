@@ -19,7 +19,7 @@ import com.malcolm.qme.springdata.entity.UserQuizLikesEntity;
 import com.malcolm.qme.springdata.entity.UserQuizLikesEntityId;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserQuizLikesRepository")
 public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
@@ -92,8 +92,8 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 	 /**
 	  * Map UserQuizLikes Domain Object to UserQuizLikesEntity
 	  *
-	  * @param userQuizLikes
-	  * @return
+	  * @param userQuizLikes UserQuizLikes
+	  * @return UserQuizLikesEntity
 	  */
 	 private UserQuizLikesEntity getUserQuizLikesEntity(UserQuizLikes userQuizLikes) {
 		 final UserQuizLikesEntity userQuizLikesEntity = new UserQuizLikesEntity();
@@ -107,8 +107,8 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 	 /**
 	  * Map UserQuizLikesEntity to UserQuizLikes Domain Object
 	  *
-	  * @param userQuizLikesEntities
-	  * @return
+	  * @param userQuizLikesEntities UserQuizLikesEntity List
+	  * @return UserQuizLikes List
 	  */
 	 private List<UserQuizLikes> getUserQuizLikes(List<UserQuizLikesEntity> userQuizLikesEntities) {
 		 final List<UserQuizLikes> userQuizLikesList = new ArrayList<UserQuizLikes>();
@@ -124,8 +124,8 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 	 /**
 	  * Map UserQuizLikesEntity to UserQuizLikes Domain Object
 	  *
-	  * @param userQuizLikesEntity
-	  * @return
+	  * @param userQuizLikesEntity UserQuizLikesEntity
+	  * @return UserQuizLikes
 	  */
 	 private UserQuizLikes getUserQuizLikes(UserQuizLikesEntity userQuizLikesEntity) {
 		 return new UserQuizLikes(

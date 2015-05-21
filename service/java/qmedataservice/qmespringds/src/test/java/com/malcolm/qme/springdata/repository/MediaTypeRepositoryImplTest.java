@@ -29,7 +29,7 @@ import com.malcolm.qme.core.repository.MediaTypeRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { QMeSpringDataJPAConfig.class })

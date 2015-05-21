@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "CATEGORY", catalog = "qme", uniqueConstraints = @UniqueConstraint(columnNames = "CAT_NAME"))
@@ -75,10 +75,10 @@ public class CategoryEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param catName
-	 * @param catParentId
-	 * @param catCreateDate
-	 * @param catCreateUser
+	 * @param catName Category Name
+	 * @param catParentId Category Parent ID
+	 * @param catCreateDate Category Create Date
+	 * @param catCreateUser Category Create User
 	 */
 	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
 			Long catCreateUser) {
@@ -86,24 +86,6 @@ public class CategoryEntity implements java.io.Serializable {
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
 		this.catCreateUser = catCreateUser;
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param catName
-	 * @param catParentId
-	 * @param catCreateDate
-	 * @param catCreateUser
-	 * @param catLikes
-	 */
-	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
-			Long catCreateUser, Long catLikes) {
-		this.catName = catName;
-		this.catParentId = catParentId;
-		this.catCreateDate = catCreateDate;
-		this.catCreateUser = catCreateUser;
-		this.catLikes = catLikes;
 	}
 
 	/**

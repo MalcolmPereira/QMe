@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "USER_CATEGORY", catalog = "qme")
@@ -50,8 +50,8 @@ public class UserCategoryEntity implements java.io.Serializable {
 
 	/**
 	 * Public Constructor
-	 * @param userId
-	 * @param catId
+	 * @param userId User ID
+	 * @param catId Category ID
 	 */
 	public UserCategoryEntity(Long userId, Long catId) {
 		this.userId = userId;

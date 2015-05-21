@@ -13,16 +13,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface AnswerReferenceMediaSpringDataRepository extends JpaRepository<AnswerReferenceMediaEntity, Long> {
 	
 	 /**
      * Find By Question Id
-     * @param questionId
-     * @return
+     * @param questionId Question Id
+     * @return AnswerReferenceMediaEntity List
      */
-    public List<AnswerReferenceMediaEntity> findByQuestionId(Long questionId);
+    List<AnswerReferenceMediaEntity> findByQuestionId(Long questionId);
 
 	
 }

@@ -18,7 +18,7 @@ import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.springdata.entity.RoleEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("RoleRepository")
 public class RoleRepositoryImpl implements RoleRepository {
@@ -76,8 +76,8 @@ public class RoleRepositoryImpl implements RoleRepository {
 	/**
 	 * Map Role Domain Object to RoleEntity
 	 * 
-	 * @param role
-	 * @return
+	 * @param role Role
+	 * @return RoleEntity
 	 */
 	private RoleEntity getRoleEntity(Role role){
 		RoleEntity roleEntity = new RoleEntity();
@@ -92,8 +92,8 @@ public class RoleRepositoryImpl implements RoleRepository {
 	/**
 	 * Map RoleEntity to Role Domain Object
 	 * 
-	 * @param roleEntities
-	 * @return
+	 * @param roleEntities RoleEntity List
+	 * @return Role List
 	 */
 	private List<Role> getRole(List<RoleEntity> roleEntities){
 		List<Role> roleList = new ArrayList<Role>();
@@ -109,8 +109,8 @@ public class RoleRepositoryImpl implements RoleRepository {
 	/**
 	 * Map RoleEntity to Role Domain Object
 	 * 
-	 * @param roleEntity
-	 * @return
+	 * @param roleEntity RoleEntity
+	 * @return Role
 	 */
 	private Role getRole(RoleEntity roleEntity){
 		return new Role(

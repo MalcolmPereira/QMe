@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "USER", catalog = "qme", uniqueConstraints = {
@@ -98,13 +98,13 @@ public class UserEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param userName
-	 * @param userFirstName
-	 * @param userLastName
-	 * @param userEmail
-	 * @param userPasscode
-	 * @param userRegisteredDate
-	 * @param userUpdatedDate
+	 * @param userName User Name
+	 * @param userFirstName User First Name
+	 * @param userLastName User Last Name
+	 * @param userEmail User Email
+	 * @param userPasscode User Passcode
+	 * @param userRegisteredDate User Registered Date
+	 * @param userUpdatedDate User Updated Date
 	 */
 	public UserEntity(String userName, String userFirstName,
 			String userLastName, String userEmail, String userPasscode,
@@ -118,30 +118,7 @@ public class UserEntity implements java.io.Serializable {
 		this.userUpdatedDate = userUpdatedDate;
 	}
 
-	/**
-	 * Public Constructor
-	 *
-	 * @param userName
-	 * @param userFirstName
-	 * @param userLastName
-	 * @param userEmail
-	 * @param userPasscode
-	 * @param userRegisteredDate
-	 * @param userUpdatedDate
-	 * @param updateUser
-	 */
-	public UserEntity(String userName, String userFirstName,
-			String userLastName, String userEmail, String userPasscode,
-			Date userRegisteredDate, Date userUpdatedDate, Long updateUser) {
-		this.userName = userName;
-		this.userFirstName = userFirstName;
-		this.userLastName = userLastName;
-		this.userEmail = userEmail;
-		this.userPasscode = userPasscode;
-		this.userRegisteredDate = userRegisteredDate;
-		this.userUpdatedDate = userUpdatedDate;
-		this.updateUser = updateUser;
-	}
+
 
 	/**
 	 * @return the userId

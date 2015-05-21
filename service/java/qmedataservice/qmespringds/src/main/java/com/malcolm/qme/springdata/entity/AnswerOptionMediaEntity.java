@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "ANSWER_OPTION_MEDIA", catalog = "qme")
@@ -57,9 +57,9 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param optionId
-	 * @param mediaTypeId
-	 * @param optionMedia
+	 * @param optionId Answer Option Id
+	 * @param mediaTypeId Media Type ID
+	 * @param optionMedia Option Media Byte Array
 	 */
 	public AnswerOptionMediaEntity(Long optionId, Integer mediaTypeId,
 			byte[] optionMedia) {

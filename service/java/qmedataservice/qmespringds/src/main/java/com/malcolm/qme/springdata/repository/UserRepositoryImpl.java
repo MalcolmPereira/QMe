@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserRepository")
 public class UserRepositoryImpl implements UserRepository {
@@ -89,8 +89,8 @@ public class UserRepositoryImpl implements UserRepository {
 	/**
 	 * Map User Domain Object to UserEntity
 	 * 
-	 * @param user
-	 * @return
+	 * @param user User
+	 * @return UserEntity
 	 */
 	private UserEntity getUserEntity(User user) {
 		UserEntity userEntity = new UserEntity();
@@ -120,8 +120,8 @@ public class UserRepositoryImpl implements UserRepository {
 	/**
 	 * Map UserEntity to User Domain Object
 	 * 
-	 * @param userEntities
-	 * @return
+	 * @param userEntities UserEntity List
+	 * @return User List
 	 */
 	private List<User> getUsers(List<UserEntity> userEntities) {
 		List<User> userList = new ArrayList<User>();
@@ -137,8 +137,8 @@ public class UserRepositoryImpl implements UserRepository {
 	/**
 	 * Map UserEntity to User Domain Object
 	 * 
-	 * @param userEntity
-	 * @return
+	 * @param userEntity UserEntity
+	 * @return User
 	 */
 	private User getUser(UserEntity userEntity) {
 		return new User(userEntity.getUserId(), userEntity.getUserName(),

@@ -17,7 +17,7 @@ import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("UserRoleRepository")
 public class UserRoleRepositoryImpl implements UserRoleRepository {
@@ -74,8 +74,8 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	/**
 	 * Map UserRole Domain Object to UserRolesEntity
 	 *
-	 * @param userRole
-	 * @return
+	 * @param userRole UserRole
+	 * @return UserRolesEntity
 	 */
 	private UserRolesEntity getUserRoleEntity(UserRole userRole) {
 		UserRolesEntity userRolesEntity = new UserRolesEntity();
@@ -90,8 +90,8 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	/**
 	 * Map UserRolesEntity to UserRole Domain Object
 	 *
-	 * @param userRolesEntities
-	 * @return
+	 * @param userRolesEntities UserRolesEntity List
+	 * @return UserRole List
 	 */
 	private List<UserRole> getUserRole(List<UserRolesEntity> userRolesEntities) {
 		List<UserRole> userRoleList = new ArrayList<UserRole>();
@@ -107,8 +107,8 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	/**
 	 * Map UserRolesEntity to UserRole Domain Object
 	 *
-	 * @param userRolesEntity
-	 * @return
+	 * @param userRolesEntity UserRolesEntity
+	 * @return UserRole
 	 */
 	private UserRole getUserRole(UserRolesEntity userRolesEntity) {
 		return new UserRole(

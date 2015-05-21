@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "USER_QUIZ_GAME", catalog = "qme")
@@ -60,36 +60,6 @@ public class UserQuizGameEntity implements java.io.Serializable {
 	 * Public Constructor
 	 */
 	public UserQuizGameEntity() {
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param id
-	 * @param startDate
-	 * @param userScore
-	 */
-	public UserQuizGameEntity(UserQuizGameEntityId id, Date startDate,
-			Integer userScore) {
-		this.id = id;
-		this.startDate = startDate;
-		this.userScore = userScore;
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param id
-	 * @param startDate
-	 * @param endDate
-	 * @param userScore
-	 */
-	public UserQuizGameEntity(UserQuizGameEntityId id, Date startDate,
-			Date endDate, Integer userScore) {
-		this.id = id;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.userScore = userScore;
 	}
 
 	/**

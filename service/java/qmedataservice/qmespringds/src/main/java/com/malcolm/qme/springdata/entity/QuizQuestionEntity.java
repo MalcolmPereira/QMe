@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "QUIZ_QUESTION", catalog = "qme")
@@ -52,8 +52,8 @@ public class QuizQuestionEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param quizId
-	 * @param questionId
+	 * @param quizId Quiz ID
+	 * @param questionId Question ID
 	 */
 	public QuizQuestionEntity(Long quizId, Long questionId) {
 		this.quizId = quizId;

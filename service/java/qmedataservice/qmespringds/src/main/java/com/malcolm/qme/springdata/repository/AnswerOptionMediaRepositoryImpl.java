@@ -17,7 +17,7 @@ import com.malcolm.qme.core.repository.AnswerOptionMediaRepository;
 import com.malcolm.qme.springdata.entity.AnswerOptionMediaEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("AnswerOptionMediaRepository")
 public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaRepository {
@@ -69,8 +69,8 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 	/**
 	 * Map AnswerOptionMedia Domain Object to AnswerOptionMediaEntity
 	 *
-	 * @param answerOptionMedia
-	 * @return
+	 * @param answerOptionMedia AnswerOptionMedia
+	 * @return AnswerOptionMedia Entity
 	 */
 	private AnswerOptionMediaEntity getAnswerOptionMediaEntity(AnswerOptionMedia answerOptionMedia){
 		final AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity();
@@ -91,8 +91,8 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 	/**
 	 * Map AnswerOptionMediaEntity to AnswerOptionMedia Domain Object
 	 *
-	 * @param answerOptionMediaEntities
-	 * @return
+	 * @param answerOptionMediaEntities AnswerOptionMediaEntity List
+	 * @return AnswerOptionMedia List
 	 */
 	private List<AnswerOptionMedia> getAnswerOptionMedia(List<AnswerOptionMediaEntity> answerOptionMediaEntities){
 		final List<AnswerOptionMedia> optionMediaList = new ArrayList<AnswerOptionMedia>();
@@ -107,8 +107,8 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 
 	/**
 	 * Map AnswerOptionMediaEntity to AnswerOptionMedia Domain Object
-	 * @param answerOptionMediaEntity
-	 * @return
+	 * @param answerOptionMediaEntity AnswerOptionMediaEntity
+	 * @return AnswerOptionMedia
 	 */
 	private AnswerOptionMedia getAnswerOptionMedia(AnswerOptionMediaEntity answerOptionMediaEntity){
 		return new AnswerOptionMedia(

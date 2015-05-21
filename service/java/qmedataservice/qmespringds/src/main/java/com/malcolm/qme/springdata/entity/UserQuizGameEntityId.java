@@ -11,7 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Embeddable
 public class UserQuizGameEntityId implements java.io.Serializable {
@@ -40,19 +40,6 @@ public class UserQuizGameEntityId implements java.io.Serializable {
 	 * Public Constructor
 	 */
 	public UserQuizGameEntityId() {
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param userId
-	 * @param catId
-	 * @param quizGameToken
-	 */
-	public UserQuizGameEntityId(Long userId, Long catId, Long quizGameToken) {
-		this.userId = userId;
-		this.catId = catId;
-		this.quizGameToken = quizGameToken;
 	}
 
 	/**

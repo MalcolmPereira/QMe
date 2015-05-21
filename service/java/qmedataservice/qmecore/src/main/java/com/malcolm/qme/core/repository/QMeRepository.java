@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-public interface QMeRepository<T,I> {
+interface QMeRepository<T,I> {
     /**
      * Find all
      * @return List of T

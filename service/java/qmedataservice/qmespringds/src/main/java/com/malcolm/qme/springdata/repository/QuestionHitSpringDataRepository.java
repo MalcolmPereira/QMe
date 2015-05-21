@@ -10,7 +10,7 @@ import com.malcolm.qme.springdata.entity.QuestionHitEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface QuestionHitSpringDataRepository extends JpaRepository<QuestionHitEntity, Long> {
 }

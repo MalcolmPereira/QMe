@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Entity
 @Table(name = "QUIZ", catalog = "qme", uniqueConstraints = @UniqueConstraint(columnNames = "QUIZ_NAME"))
@@ -106,41 +106,16 @@ public class QuizEntity implements java.io.Serializable {
 	/**
 	 * public Constructor
 	 *
-	 * @param quizName
-	 * @param catId
-	 * @param quizLikes
-	 * @param maxAttempts
-	 * @param quizCreateDate
-	 * @param quizCreateUser
-	 * @param quizUpdateDate
-	 * @param quizUpdateUser
-	 */
-	public QuizEntity(String quizName, Long catId, Long quizLikes,
-			Integer maxAttempts, Date quizCreateDate, Long quizCreateUser,
-			Date quizUpdateDate, Long quizUpdateUser) {
-		this.quizName = quizName;
-		this.catId = catId;
-		this.quizLikes = quizLikes;
-		this.maxAttempts = maxAttempts;
-		this.quizCreateDate = quizCreateDate;
-		this.quizCreateUser = quizCreateUser;
-		this.quizUpdateDate = quizUpdateDate;
-		this.quizUpdateUser = quizUpdateUser;
-	}
-
-	/**
-	 * public Constructor
-	 *
-	 * @param quizName
-	 * @param quizDesc
-	 * @param catId
-	 * @param quizHits
-	 * @param quizLikes
-	 * @param maxAttempts
-	 * @param quizCreateDate
-	 * @param quizCreateUser
-	 * @param quizUpdateDate
-	 * @param quizUpdateUser
+	 * @param quizName Quiz Name
+	 * @param quizDesc Quiz Desc
+	 * @param catId Category ID
+	 * @param quizHits Quiz Hits
+	 * @param quizLikes Quiz Likes
+	 * @param maxAttempts Quiz Max Attempts
+	 * @param quizCreateDate Quiz Create Date
+	 * @param quizCreateUser Quiz Create User
+	 * @param quizUpdateDate Quiz Update Date
+	 * @param quizUpdateUser Quiz Update User
 	 */
 	public QuizEntity(String quizName, String quizDesc, Long catId,
 			Long quizHits, Long quizLikes, Integer maxAttempts,

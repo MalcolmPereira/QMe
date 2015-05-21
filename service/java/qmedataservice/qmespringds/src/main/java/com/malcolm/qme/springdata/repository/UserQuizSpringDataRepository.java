@@ -13,30 +13,30 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEntity, Long> {
 	/**
      * Find By User ID
-     * @param userId
-     * @return
+     * @param userId User ID
+     * @return UserQuizEntity List
      */
-    public List<UserQuizEntity> findByUserId(Long userId);
+    List<UserQuizEntity> findByUserId(Long userId);
     
     /**
      * Find By Quiz ID
-     * @param quizId
-     * @return
+     * @param quizId Quiz ID
+     * @return UserQuizEntity List
      */
-    public List<UserQuizEntity> findByQuizId(Long quizId);
+    List<UserQuizEntity> findByQuizId(Long quizId);
     
     /**
      * Find By User ID and Complete Status
      * 
-     * @param userId
-     * @param quizComplete
-     * @return
+     * @param userId  User ID
+     * @param quizComplete Quiz Complete Flag 1 - Complete, 0 - InComplete
+     * @return UserQuizEntity List
      */
-    public List<UserQuizEntity> findByUserIdAndQuizComplete(Long userId, byte quizComplete);
+    List<UserQuizEntity> findByUserIdAndQuizComplete(Long userId, byte quizComplete);
 	
 }

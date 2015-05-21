@@ -11,7 +11,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @RunWith(Suite.class)
 @SuiteClasses(

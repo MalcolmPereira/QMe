@@ -13,22 +13,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.QuizQuestionEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface QuizQuestionSpringDataRepository extends JpaRepository<QuizQuestionEntity, Long> {
 
 	/**
 	 * Find By Quiz ID
-	 * @param quizId
-	 * @return
+	 * @param quizId Quiz ID
+	 * @return QuizQuestionEntity
 	 */
-	public List<QuizQuestionEntity> findByQuizId(Long quizId);
+	List<QuizQuestionEntity> findByQuizId(Long quizId);
 
 	/**
 	 * Find By Question ID
-	 * @param questionId
-	 * @return
+	 * @param questionId Question ID
+	 * @return QuizQuestionEntity
 	 */
-	public List<QuizQuestionEntity> findByQuestionId(Long questionId);
+	List<QuizQuestionEntity> findByQuestionId(Long questionId);
 
 }

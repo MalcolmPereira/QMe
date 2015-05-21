@@ -57,20 +57,9 @@ public final class AnswerOptionEntity implements java.io.Serializable {
 	/**
 	 * Public Constructor
 	 *
-	 * @param questionId
-	 * @param optionText
-	 */
-	public AnswerOptionEntity(Long questionId, String optionText) {
-		this.questionId = questionId;
-		this.optionText = optionText;
-	}
-
-	/**
-	 * Public Constructor
-	 *
-	 * @param questionId
-	 * @param optionText
-	 * @param iscorrect
+	 * @param questionId Question ID
+	 * @param optionText Answer Option Text
+	 * @param iscorrect Answer Option is Correct
 	 */
 	public AnswerOptionEntity(Long questionId, String optionText, Byte iscorrect) {
 		this.questionId = questionId;

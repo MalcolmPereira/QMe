@@ -13,21 +13,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.QuestionEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface QuestionSpringDataRepository extends JpaRepository<QuestionEntity, Long> {
 	
 	 /**
      * Find By Category ID
-     * @param catId
-     * @return
+     * @param catId Category ID
+     * @return QuestionEntity List
      */
-    public List<QuestionEntity> findByCatId(Long catId);
+    List<QuestionEntity> findByCatId(Long catId);
     
     /**
      * Find Most Liked
-     * @return
+     * @return QuestionEntity List
      */
-    public List<QuestionEntity> findTop50ByOrderByQuestionLikesDesc();
+    List<QuestionEntity> findTop50ByOrderByQuestionLikesDesc();
 	
 }	

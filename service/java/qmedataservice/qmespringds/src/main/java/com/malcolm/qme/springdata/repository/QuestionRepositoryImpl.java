@@ -18,7 +18,7 @@ import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.entity.QuestionEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 @Repository("QuestionRepository")
 public class QuestionRepositoryImpl implements QuestionRepository {
@@ -80,8 +80,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	/**
      * Map QuestionHit Domain Object to QuestionHitEntity
      *
-     * @param questionHit
-     * @return
+     * @param questionHit Question
+     * @return QuestionEntity
      */
     private QuestionEntity getQuestionEntity(Question question){
     	QuestionEntity questionEntity = new QuestionEntity();
@@ -94,6 +94,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     	questionEntity.setQuestionText(question.getQuestionText());
     	questionEntity.setQuestionAnswer(question.getAnswer());
     	questionEntity.setQuestionLikes(question.getLikes());
+		questionEntity.setQuestionPoint(question.getQuestionPoint());
 		questionEntity.setQuestionCreateDate(question.getQuestionCreateDate());
 		questionEntity.setQuestionCreateUser(question.getCreateUserID());
 		questionEntity.setQuestionUpdateDate(question.getQuestionUpdateDate());
@@ -121,8 +122,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	/**
      * Map QuestionEntity to Question Domain Object
      *
-     * @param questionHitEntity
-     * @return
+     * @param questionEntity  QuestionEntity
+     * @return Question
      */
     private Question getQuestion(QuestionEntity questionEntity){
         return new Question (
@@ -130,7 +131,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         		questionEntity.getCatId(),
         		questionEntity.getQuestionText(),
         		questionEntity.getQuestionAnswer(),
-        		1,
+				questionEntity.getQuestionPoint(),
         		questionEntity.getQuestionLikes(),
         		questionEntity.getQuestionCreateDate(),
         		questionEntity.getQuestionCreateUser(),

@@ -13,13 +13,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.malcolm.qme.springdata.entity.UserCategoryEntity;
 
 /**
- * @Author: Malcolm
+ * @author Malcolm
  */
 interface UserCategorySpringDataRepository extends JpaRepository<UserCategoryEntity, Long> {
 	/**
      * Find By User ID
-     * @param userId
-     * @return
+     * @param userId User ID
+     * @return UserCategoryEntity List
      */
-    public List<UserCategoryEntity> findByUserId(Long userId);
+    List<UserCategoryEntity> findByUserId(Long userId);
 }
