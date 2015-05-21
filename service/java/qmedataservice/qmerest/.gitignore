@@ -1,0 +1,15 @@
+/build/
+/bin/
+.gradle/
+/.gradle/
+target/
+/target/
+/.settings/
+.idea
+.classpath
+.settings
+.project
+qmerest.iml
+qmerest.ipr
+qmerest.iws
+/coverage-report/
