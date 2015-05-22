@@ -4,8 +4,11 @@ apply plugin: 'idea'
 
 buildscript {
 	ext {
-		javaVersion = "1.8"
-	}
+		javaVersion     = "1.8"
+        slf4jVersion	= "1.7.12"
+        log4JVersion    = "1.2.16"
+    }
+
     repositories {
     	mavenCentral()
         mavenLocal()
@@ -19,6 +22,11 @@ subprojects {
     repositories {
     	mavenCentral()
         mavenLocal()
+    }
+    dependencies {
+        compile ("org.slf4j:slf4j-api:${slf4jVersion}");
+        compile ("org.slf4j:slf4j-log4j12:${slf4jVersion}");
+        compile ("log4j:log4j:${log4JVersion}");
     }
 }
 

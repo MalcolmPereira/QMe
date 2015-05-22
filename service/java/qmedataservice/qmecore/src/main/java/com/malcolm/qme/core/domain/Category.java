@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.core.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ public final class Category {
     /**
      * Category Create Date
      */
-    private final Date categoryCreateDate;
+    private final LocalDateTime categoryCreateDate;
 
     /**
      * Category Create User Id
@@ -52,7 +53,7 @@ public final class Category {
      * @param categoryCreateDate Category Create Date
      * @param categoryCreateUserID Category Create User ID
      */
-    public Category(Long categoryID, Long categoryParentID, String categoryName,Long categoryLikes, Date categoryCreateDate, Long categoryCreateUserID) {
+    public Category(Long categoryID, Long categoryParentID, String categoryName,Long categoryLikes, LocalDateTime categoryCreateDate, Long categoryCreateUserID) {
         this.categoryID = categoryID;
         this.categoryParentID = categoryParentID;
         this.categoryName = categoryName;
@@ -120,7 +121,7 @@ public final class Category {
      * Get Category Create Date
      * @return Category Create Date
      */
-    public Date getCategoryCreateDate() {
+    public LocalDateTime getCategoryCreateDate() {
         return categoryCreateDate;
     }
 

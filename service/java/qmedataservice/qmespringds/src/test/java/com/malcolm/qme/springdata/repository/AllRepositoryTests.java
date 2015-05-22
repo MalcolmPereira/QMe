@@ -16,6 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses(
 		{
+            DateTimeUtilTest.class,
 			MediaTypeSpringDataRepositoryTest.class,
 			MediaTypeRepositoryImplTest.class,
 			RoleSpringDataRepositoryTest.class,

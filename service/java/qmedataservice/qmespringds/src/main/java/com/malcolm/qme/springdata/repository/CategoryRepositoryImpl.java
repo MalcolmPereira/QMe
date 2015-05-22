@@ -89,7 +89,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         categoryEntity.setCatName(category.getCategoryName());
         categoryEntity.setCatLikes(category.getCategoryLikes());
         if(category.getCategoryCreateDate() != null)    {
-            categoryEntity.setCatCreateDate(category.getCategoryCreateDate());
+            categoryEntity.setCatCreateDate(DateTimeUtil.convertToDate(category.getCategoryCreateDate()));
         }else{
             categoryEntity.setCatCreateDate(new Date());
         }
@@ -126,7 +126,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				categoryEntity.getCatParentId(),
 				categoryEntity.getCatName(),
 				categoryEntity.getCatLikes(),
-				categoryEntity.getCatCreateDate(),
+                DateTimeUtil.convertToLocalDateTime(categoryEntity.getCatCreateDate()),
 				categoryEntity.getCatCreateUser()
 
 	   );
