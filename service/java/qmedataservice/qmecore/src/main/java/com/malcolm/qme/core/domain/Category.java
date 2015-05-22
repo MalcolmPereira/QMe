@@ -7,7 +7,6 @@
 package com.malcolm.qme.core.domain;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author Malcolm
