@@ -7,20 +7,20 @@
 package com.malcolm.qme.rest.api;
 
 /**
- * @author malcolm
+ * @author Malcolm
  */
 public interface QMeAPI {
-    /**
-     * App String
-     */
-    String APP_STRING 		   = "/qme";
-    /**
-     * Id Parameter
-     */
-    String ID_PARAM_STRING 		= "id";
-    /**
-     * Name Parameter
-     */
-    String NAME_PARAM_STRING 	= "name";
+	/**
+	 * App String
+	 */
+	String APP_STRING 		   = "/qme";
+	/**
+	 * Id Parameter
+	 */
+	String ID_PARAM_STRING 		= "id";
+	/**
+	 * Name Parameter
+	 */
+	String NAME_PARAM_STRING 	= "name";
 
 }
