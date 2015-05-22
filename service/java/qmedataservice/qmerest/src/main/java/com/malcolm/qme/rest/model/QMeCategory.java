@@ -11,7 +11,6 @@ import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * QMeCategory Model for REST Service Controller
