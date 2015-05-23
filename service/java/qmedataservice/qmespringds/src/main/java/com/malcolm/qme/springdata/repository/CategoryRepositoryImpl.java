@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,9 +90,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         categoryEntity.setCatName(category.getCategoryName());
         categoryEntity.setCatLikes(category.getCategoryLikes());
         if(category.getCategoryCreateDate() != null)    {
-            categoryEntity.setCatCreateDate(DateTimeUtil.convertToDate(category.getCategoryCreateDate()));
+            categoryEntity.setCatCreateDate(category.getCategoryCreateDate());
         }else{
-            categoryEntity.setCatCreateDate(new Date());
+            categoryEntity.setCatCreateDate(LocalDateTime.now());
         }
         categoryEntity.setCatCreateUser(category.getCategoryCreateUserID());
         return categoryEntity;
@@ -126,7 +127,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				categoryEntity.getCatParentId(),
 				categoryEntity.getCatName(),
 				categoryEntity.getCatLikes(),
-                DateTimeUtil.convertToLocalDateTime(categoryEntity.getCatCreateDate()),
+                categoryEntity.getCatCreateDate(),
 				categoryEntity.getCatCreateUser()
 
 	   );

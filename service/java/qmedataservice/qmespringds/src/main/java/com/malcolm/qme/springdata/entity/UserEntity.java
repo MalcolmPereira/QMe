@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.entity;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -72,16 +73,14 @@ public class UserEntity implements java.io.Serializable {
 	/**
 	 * User Registered Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "USER_REGISTERED_DATE", nullable = false, length = 19)
-	private Date userRegisteredDate;
+	private LocalDateTime userRegisteredDate;
 
 	/**
 	 * User Update Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "USER_UPDATED_DATE", nullable = false, length = 19)
-	private Date userUpdatedDate;
+	private LocalDateTime userUpdatedDate;
 
 	/**
 	 * Update User
@@ -108,7 +107,7 @@ public class UserEntity implements java.io.Serializable {
 	 */
 	public UserEntity(String userName, String userFirstName,
 			String userLastName, String userEmail, String userPasscode,
-			Date userRegisteredDate, Date userUpdatedDate) {
+			LocalDateTime userRegisteredDate, LocalDateTime userUpdatedDate) {
 		this.userName = userName;
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
@@ -207,28 +206,28 @@ public class UserEntity implements java.io.Serializable {
 	/**
 	 * @return the userRegisteredDate
 	 */
-	public Date getUserRegisteredDate() {
+	public LocalDateTime getUserRegisteredDate() {
 		return userRegisteredDate;
 	}
 
 	/**
 	 * @param userRegisteredDate the userRegisteredDate to set
 	 */
-	public void setUserRegisteredDate(Date userRegisteredDate) {
+	public void setUserRegisteredDate(LocalDateTime userRegisteredDate) {
 		this.userRegisteredDate = userRegisteredDate;
 	}
 
 	/**
 	 * @return the userUpdatedDate
 	 */
-	public Date getUserUpdatedDate() {
+	public LocalDateTime getUserUpdatedDate() {
 		return userUpdatedDate;
 	}
 
 	/**
 	 * @param userUpdatedDate the userUpdatedDate to set
 	 */
-	public void setUserUpdatedDate(Date userUpdatedDate) {
+	public void setUserUpdatedDate(LocalDateTime userUpdatedDate) {
 		this.userUpdatedDate = userUpdatedDate;
 	}
 

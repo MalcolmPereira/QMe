@@ -7,7 +7,7 @@
 
 package com.malcolm.qme.core.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Malcolm
@@ -37,12 +37,12 @@ public final class UserQuiz {
     /**
      * Quiz Start Date
      */
-    private final Date quizStartDate;
+    private final LocalDateTime quizStartDate;
 
     /**
      * Quiz End Date
      */
-    private final Date quizEndDate;
+    private final LocalDateTime quizEndDate;
 
     /**
      * User Quiz Unique Token
@@ -79,7 +79,7 @@ public final class UserQuiz {
 	 * @param quizComplete Quiz Complete - True Complete/False Incomplete
 	 */
 	public UserQuiz(Long userQuizID, Long userID, Long quizID, Long categoryID,
-			Date quizStartDate, Date quizEndDate, String userQuizToken,
+			LocalDateTime quizStartDate, LocalDateTime quizEndDate, String userQuizToken,
 			Integer quizUserScore, Integer quizMaxScore, Boolean quizComplete) {
 		super();
 		this.userQuizID = userQuizID;
@@ -107,7 +107,7 @@ public final class UserQuiz {
         this.userID = userID;
         this.quizID = quizID;
         this.categoryID = categoryID;
-        this.quizStartDate = null;
+        this.quizStartDate = LocalDateTime.now();
         this.quizEndDate = null;
         this.userQuizToken = userQuizToken;
         this.quizUserScore = 0;
@@ -146,14 +146,14 @@ public final class UserQuiz {
 	/**
 	 * @return the quizStartDate
 	 */
-	public Date getQuizStartDate() {
+	public LocalDateTime getQuizStartDate() {
 		return quizStartDate;
 	}
 
 	/**
 	 * @return the quizEndDate
 	 */
-	public Date getQuizEndDate() {
+	public LocalDateTime getQuizEndDate() {
 		return quizEndDate;
 	}
 

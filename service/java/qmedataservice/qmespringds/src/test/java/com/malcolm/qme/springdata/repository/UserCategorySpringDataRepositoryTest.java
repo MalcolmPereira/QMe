@@ -20,14 +20,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author malcolm
@@ -61,7 +59,7 @@ public class UserCategorySpringDataRepositoryTest {
     private CategorySpringDataRepository categorySpringDataRepository;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(userCategorySpringDataRepo);
         List<UserCategoryEntity> userCategoryEntities = userCategorySpringDataRepo.findAll();
         assertNotNull(userCategoryEntities);
@@ -69,7 +67,7 @@ public class UserCategorySpringDataRepositoryTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(userCategorySpringDataRepo);
         UserCategoryEntity userCategoryEntity = userCategorySpringDataRepo.findOne(1L);
         assertNotNull(userCategoryEntity);
@@ -86,20 +84,20 @@ public class UserCategorySpringDataRepositoryTest {
 
         assertNotNull(categorySpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTest", "Test", "Test", "UserCategorySpringDataRepositoryTest@test.com", "Test", new Date(), new Date());
+        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTest", "Test", "Test", "UserCategorySpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
         Long userID = userEntity.getUserId();
 
-        CategoryEntity categoryEntity = new CategoryEntity("UserCategorySpringDataRepositoryTest", 0L, new Date(), userID);
+        CategoryEntity categoryEntity = new CategoryEntity("UserCategorySpringDataRepositoryTest", 0L, LocalDateTime.now(), userID);
         categoryEntity = categorySpringDataRepository.save(categoryEntity);
         assertNotNull(categoryEntity);
         assertThat(categoryEntity.getCatId(), greaterThan(0L));
         Long catID = categoryEntity.getCatId();
 
 
-        UserCategoryEntity userCategoryEntity = new UserCategoryEntity(userID,catID);
+        UserCategoryEntity userCategoryEntity = new UserCategoryEntity(userID, catID);
         userCategoryEntity = userCategorySpringDataRepo.save(userCategoryEntity);
         Long userCatID = userCategoryEntity.getUserCatId();
 
@@ -129,20 +127,20 @@ public class UserCategorySpringDataRepositoryTest {
 
         assertNotNull(categorySpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTestByUserID", "Test", "Test", "UserCategorySpringDataRepositoryTestByUserID@test.com", "Test", new Date(), new Date());
+        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTestByUserID", "Test", "Test", "UserCategorySpringDataRepositoryTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
         Long userID = userEntity.getUserId();
 
-        CategoryEntity categoryEntity = new CategoryEntity("UserCategorySpringDataRepositoryTestByUserID", 0L, new Date(), userID);
+        CategoryEntity categoryEntity = new CategoryEntity("UserCategorySpringDataRepositoryTestByUserID", 0L, LocalDateTime.now(), userID);
         categoryEntity = categorySpringDataRepository.save(categoryEntity);
         assertNotNull(categoryEntity);
         assertThat(categoryEntity.getCatId(), greaterThan(0L));
         Long catID = categoryEntity.getCatId();
 
 
-        UserCategoryEntity userCategoryEntity = new UserCategoryEntity(userID,catID);
+        UserCategoryEntity userCategoryEntity = new UserCategoryEntity(userID, catID);
         userCategoryEntity = userCategorySpringDataRepo.save(userCategoryEntity);
         Long userCatID = userCategoryEntity.getUserCatId();
 

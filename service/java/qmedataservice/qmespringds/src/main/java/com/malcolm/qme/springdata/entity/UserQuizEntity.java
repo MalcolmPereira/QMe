@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -55,16 +56,14 @@ public class UserQuizEntity implements java.io.Serializable {
 	/**
 	 * Quiz Start Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "QUIZ_START_DATE", nullable = false, length = 19)
-	private Date quizStartDate;
+	private LocalDateTime quizStartDate;
 
 	/**
 	 * Quiz End Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "QUIZ_END_DATE", length = 19)
-	private Date quizEndDate;
+	private LocalDateTime quizEndDate;
 
 	/**
 	 * Quiz User Score
@@ -108,7 +107,7 @@ public class UserQuizEntity implements java.io.Serializable {
 	 * @param quizComplete Quiz Complete 1 - Complete/ 0 - Incomplete
 	 */
 	public UserQuizEntity(Long userId, Long quizId, Long catId,
-			Date quizStartDate, Integer quizUserScore, Integer quizMaxScore,
+			LocalDateTime quizStartDate, Integer quizUserScore, Integer quizMaxScore,
 			byte quizComplete) {
 		this.userId = userId;
 		this.quizId = quizId;
@@ -180,28 +179,28 @@ public class UserQuizEntity implements java.io.Serializable {
 	/**
 	 * @return the quizStartDate
 	 */
-	public Date getQuizStartDate() {
+	public LocalDateTime getQuizStartDate() {
 		return quizStartDate;
 	}
 
 	/**
 	 * @param quizStartDate the quizStartDate to set
 	 */
-	public void setQuizStartDate(Date quizStartDate) {
+	public void setQuizStartDate(LocalDateTime quizStartDate) {
 		this.quizStartDate = quizStartDate;
 	}
 
 	/**
 	 * @return the quizEndDate
 	 */
-	public Date getQuizEndDate() {
+	public LocalDateTime getQuizEndDate() {
 		return quizEndDate;
 	}
 
 	/**
 	 * @param quizEndDate the quizEndDate to set
 	 */
-	public void setQuizEndDate(Date quizEndDate) {
+	public void setQuizEndDate(LocalDateTime quizEndDate) {
 		this.quizEndDate = quizEndDate;
 	}
 

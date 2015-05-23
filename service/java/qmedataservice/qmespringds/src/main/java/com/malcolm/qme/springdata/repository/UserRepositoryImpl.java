@@ -12,6 +12,7 @@ import com.malcolm.qme.springdata.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,8 +65,8 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public User save(User user) {
 		UserEntity userEntity = getUserEntity(user);
-		userEntity.setUserRegisteredDate(new Date());
-		userEntity.setUserUpdatedDate(new Date());
+		userEntity.setUserRegisteredDate(LocalDateTime.now());
+		userEntity.setUserUpdatedDate(LocalDateTime.now());
 		userEntity = userSpringDataRepo.save(userEntity);
 		userEntity.setUpdateUser(userEntity.getUserId());
 		userEntity = userSpringDataRepo.save(userEntity);
@@ -75,7 +76,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public User update(User user, Long updateUserId) {
 		UserEntity userEntity = getUserEntity(user);
-		userEntity.setUserUpdatedDate(new Date());
+		userEntity.setUserUpdatedDate(LocalDateTime.now());
 		userEntity.setUpdateUser(updateUserId);
 		userEntity = userSpringDataRepo.save(userEntity);
 		return getUser(userEntity);

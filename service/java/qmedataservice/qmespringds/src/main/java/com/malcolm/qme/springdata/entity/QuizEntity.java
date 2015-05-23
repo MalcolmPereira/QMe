@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -74,9 +75,8 @@ public class QuizEntity implements java.io.Serializable {
 	/**
 	 * Quiz Create Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "QUIZ_CREATE_DATE", nullable = false, length = 19)
-	private Date quizCreateDate;
+	private LocalDateTime quizCreateDate;
 
 	/**
 	 * Quiz Create User
@@ -87,9 +87,8 @@ public class QuizEntity implements java.io.Serializable {
 	/**
 	 * Quiz Update Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "QUIZ_UPDATE_DATE", nullable = false, length = 19)
-	private Date quizUpdateDate;
+	private LocalDateTime quizUpdateDate;
 
 	/**
 	 * Quiz Update User
@@ -119,7 +118,7 @@ public class QuizEntity implements java.io.Serializable {
 	 */
 	public QuizEntity(String quizName, String quizDesc, Long catId,
 			Long quizHits, Long quizLikes, Integer maxAttempts,
-			Date quizCreateDate, Long quizCreateUser, Date quizUpdateDate,
+			LocalDateTime quizCreateDate, Long quizCreateUser, LocalDateTime quizUpdateDate,
 			Long quizUpdateUser) {
 		this.quizName = quizName;
 		this.quizDesc = quizDesc;
@@ -234,14 +233,14 @@ public class QuizEntity implements java.io.Serializable {
 	/**
 	 * @return the quizCreateDate
 	 */
-	public Date getQuizCreateDate() {
+	public LocalDateTime getQuizCreateDate() {
 		return quizCreateDate;
 	}
 
 	/**
 	 * @param quizCreateDate the quizCreateDate to set
 	 */
-	public void setQuizCreateDate(Date quizCreateDate) {
+	public void setQuizCreateDate(LocalDateTime quizCreateDate) {
 		this.quizCreateDate = quizCreateDate;
 	}
 
@@ -262,14 +261,14 @@ public class QuizEntity implements java.io.Serializable {
 	/**
 	 * @return the quizUpdateDate
 	 */
-	public Date getQuizUpdateDate() {
+	public LocalDateTime getQuizUpdateDate() {
 		return quizUpdateDate;
 	}
 
 	/**
 	 * @param quizUpdateDate the quizUpdateDate to set
 	 */
-	public void setQuizUpdateDate(Date quizUpdateDate) {
+	public void setQuizUpdateDate(LocalDateTime quizUpdateDate) {
 		this.quizUpdateDate = quizUpdateDate;
 	}
 

@@ -13,29 +13,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class UserSpringDataRepositoryTest {
     /**
      * UserEntity Repository
@@ -44,7 +35,7 @@ public class UserSpringDataRepositoryTest {
     private UserSpringDataRepository userSpringDataRepo;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(userSpringDataRepo);
         List<UserEntity> userEntities = userSpringDataRepo.findAll();
         assertNotNull(userEntities);
@@ -52,7 +43,7 @@ public class UserSpringDataRepositoryTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(userSpringDataRepo);
         UserEntity userEntity = userSpringDataRepo.findOne(1L);
         assertNotNull(userEntity);
@@ -60,10 +51,10 @@ public class UserSpringDataRepositoryTest {
     }
 
     @Test
-    public void testCRUD(){
+    public void testCRUD() {
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTest", "Test", "Test", "UserSpringDataRepositoryTest@test.com", "Test", new Date(), new Date());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTest", "Test", "Test", "UserSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -86,10 +77,10 @@ public class UserSpringDataRepositoryTest {
     }
 
     @Test
-    public void testFindByUserNameIgnoreCase(){
+    public void testFindByUserNameIgnoreCase() {
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName", "Test", "Test", "UserSpringDataRepositoryTestUserName@test.com", "Test", new Date(), new Date());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName", "Test", "Test", "UserSpringDataRepositoryTestUserName@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -122,10 +113,10 @@ public class UserSpringDataRepositoryTest {
     }
 
     @Test
-    public void findByUserEmailIgnoreCase(){
+    public void findByUserEmailIgnoreCase() {
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName1", "Test", "Test", "UserSpringDataRepositoryTestUserName1@test.com", "Test", new Date(), new Date());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName1", "Test", "Test", "UserSpringDataRepositoryTestUserName1@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

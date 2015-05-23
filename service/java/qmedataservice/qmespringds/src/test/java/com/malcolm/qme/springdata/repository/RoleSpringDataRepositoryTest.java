@@ -7,35 +7,25 @@
 
 package com.malcolm.qme.springdata.repository;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
+import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.RoleEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
-import com.malcolm.qme.springdata.entity.RoleEntity;
+import java.util.List;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.*;
 
 /**
  * @author Malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class RoleSpringDataRepositoryTest {
 
     /**
@@ -45,7 +35,7 @@ public class RoleSpringDataRepositoryTest {
     private RoleSpringDataRepository roleSpringDataRepository;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(roleSpringDataRepository);
         List<RoleEntity> roleEntities = roleSpringDataRepository.findAll();
         assertNotNull(roleEntities);
@@ -53,15 +43,15 @@ public class RoleSpringDataRepositoryTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(roleSpringDataRepository);
         RoleEntity roleEntity = roleSpringDataRepository.findOne(1);
         assertNotNull(roleEntity);
-        assertThat(roleEntity.getRoleId(),equalTo(1));
+        assertThat(roleEntity.getRoleId(), equalTo(1));
     }
 
     @Test
-    public void testCRUD(){
+    public void testCRUD() {
         assertNotNull(roleSpringDataRepository);
 
         RoleEntity roleEntity = new RoleEntity();
@@ -92,7 +82,7 @@ public class RoleSpringDataRepositoryTest {
 
 
     @Test
-    public void testFindByRoleName(){
+    public void testFindByRoleName() {
         assertNotNull(roleSpringDataRepository);
 
         RoleEntity roleEntity = new RoleEntity();

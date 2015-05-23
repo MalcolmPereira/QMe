@@ -12,29 +12,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class CategorySpringDataRepositoryTest {
     /**
      * CategoryEntity Repository
@@ -43,7 +34,7 @@ public class CategorySpringDataRepositoryTest {
     private CategorySpringDataRepository categorySpringDataRepository;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(categorySpringDataRepository);
         List<CategoryEntity> categoryEntities = categorySpringDataRepository.findAll();
         assertNotNull(categoryEntities);
@@ -51,7 +42,7 @@ public class CategorySpringDataRepositoryTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(categorySpringDataRepository);
         CategoryEntity categoryEntity = categorySpringDataRepository.findOne(1L);
         assertNotNull(categoryEntity);
@@ -62,7 +53,7 @@ public class CategorySpringDataRepositoryTest {
     public void testCRUD() {
         assertNotNull(categorySpringDataRepository);
 
-        CategoryEntity categoryEntity = new CategoryEntity("CategorySpringDataRepositoryTest", 0L, new Date(), 1L);
+        CategoryEntity categoryEntity = new CategoryEntity("CategorySpringDataRepositoryTest", 0L, LocalDateTime.now(), 1L);
         categoryEntity = categorySpringDataRepository.save(categoryEntity);
         assertNotNull(categoryEntity);
         assertThat(categoryEntity.getCatId(), greaterThan(0L));
@@ -85,11 +76,11 @@ public class CategorySpringDataRepositoryTest {
     }
 
     @Test
-    public void testFindCategoryNameLike(){
+    public void testFindCategoryNameLike() {
 
         assertNotNull(categorySpringDataRepository);
 
-        CategoryEntity categoryEntity = new CategoryEntity("CategorySpringDataRepositoryTest Name", 0L, new Date(), 1L);
+        CategoryEntity categoryEntity = new CategoryEntity("CategorySpringDataRepositoryTest Name", 0L, LocalDateTime.now(), 1L);
         categoryEntity = categorySpringDataRepository.save(categoryEntity);
         assertNotNull(categoryEntity);
         assertThat(categoryEntity.getCatId(), greaterThan(0L));
@@ -99,11 +90,11 @@ public class CategorySpringDataRepositoryTest {
         assertNotNull(categoryEntity);
         assertThat(categoryEntity.getCatId(), equalTo(catID));
 
-        List<CategoryEntity> categoryEntityList= categorySpringDataRepository.findByCatNameIgnoreCaseLike("CategorySpringDataRepositoryTest Name");
+        List<CategoryEntity> categoryEntityList = categorySpringDataRepository.findByCatNameIgnoreCaseLike("CategorySpringDataRepositoryTest Name");
         assertNotNull(categoryEntityList);
         assertThat(categoryEntityList.size(), equalTo(1));
 
-        categoryEntityList= categorySpringDataRepository.findByCatNameIgnoreCaseLike("categoryspringdatarepositorytest name");
+        categoryEntityList = categorySpringDataRepository.findByCatNameIgnoreCaseLike("categoryspringdatarepositorytest name");
         assertNotNull(categoryEntityList);
         assertThat(categoryEntityList.size(), equalTo(1));
 

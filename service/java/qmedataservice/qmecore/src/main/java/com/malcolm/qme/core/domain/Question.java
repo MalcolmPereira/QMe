@@ -6,7 +6,7 @@
  */
 package com.malcolm.qme.core.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Malcolm
@@ -45,7 +45,7 @@ public final class Question {
     /**
      * Question Create Date
      */
-    private final Date questionCreateDate;
+    private final LocalDateTime questionCreateDate;
     /**
      * Question Create User Id
      */
@@ -54,7 +54,7 @@ public final class Question {
     /**
      * Question Update Date
      */
-    private final Date questionUpdateDate;
+    private final LocalDateTime questionUpdateDate;
     /**
      * Update User Id
      */
@@ -77,8 +77,8 @@ public final class Question {
 	 */
 	public Question(Long questionID, Long categoryID, String questionText,
 			String answer, Integer questionPoint, Long likes,
-			Date questionCreateDate, Long createUserID,
-			Date questionUpdateDate, Long updateUserID) {
+			LocalDateTime questionCreateDate, Long createUserID,
+			LocalDateTime questionUpdateDate, Long updateUserID) {
 		super();
 		this.questionID = questionID;
 		this.categoryID = categoryID;
@@ -108,9 +108,9 @@ public final class Question {
 		this.answer = answer;
 		this.questionPoint = questionPoint;
 		this.likes = 0L;
-		this.questionCreateDate = null;
+		this.questionCreateDate = LocalDateTime.now();
 		this.createUserID = createUserID;
-		this.questionUpdateDate = null;
+		this.questionUpdateDate = LocalDateTime.now();
 		this.updateUserID = 0L;
 	}
 
@@ -129,9 +129,9 @@ public final class Question {
         this.answer = answer;
         this.questionPoint = 1;
         this.likes = 0L;
-        this.questionCreateDate = null;
+        this.questionCreateDate = LocalDateTime.now();
         this.createUserID = createUserID;
-        this.questionUpdateDate = null;
+        this.questionUpdateDate = LocalDateTime.now();
         this.updateUserID = 0L;
     }
 
@@ -180,7 +180,7 @@ public final class Question {
 	/**
 	 * @return the questionCreateDate
 	 */
-	public Date getQuestionCreateDate() {
+	public LocalDateTime getQuestionCreateDate() {
 		return questionCreateDate;
 	}
 
@@ -194,7 +194,7 @@ public final class Question {
 	/**
 	 * @return the questionUpdateDate
 	 */
-	public Date getQuestionUpdateDate() {
+	public LocalDateTime getQuestionUpdateDate() {
 		return questionUpdateDate;
 	}
 

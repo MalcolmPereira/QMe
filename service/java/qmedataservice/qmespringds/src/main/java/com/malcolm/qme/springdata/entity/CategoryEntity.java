@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -50,9 +51,8 @@ public class CategoryEntity implements java.io.Serializable {
 	/**
 	 * Category Create Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CAT_CREATE_DATE", nullable = false, length = 19)
-	private Date catCreateDate;
+	private LocalDateTime catCreateDate;
 
 	/**
 	 * Category Create User
@@ -80,7 +80,7 @@ public class CategoryEntity implements java.io.Serializable {
 	 * @param catCreateDate Category Create Date
 	 * @param catCreateUser Category Create User
 	 */
-	public CategoryEntity(String catName, Long catParentId, Date catCreateDate,
+	public CategoryEntity(String catName, Long catParentId, LocalDateTime catCreateDate,
 			Long catCreateUser) {
 		this.catName = catName;
 		this.catParentId = catParentId;
@@ -133,14 +133,14 @@ public class CategoryEntity implements java.io.Serializable {
 	/**
 	 * @return the catCreateDate
 	 */
-	public Date getCatCreateDate() {
+	public LocalDateTime getCatCreateDate() {
 		return catCreateDate;
 	}
 
 	/**
 	 * @param catCreateDate the catCreateDate to set
 	 */
-	public void setCatCreateDate(Date catCreateDate) {
+	public void setCatCreateDate(LocalDateTime catCreateDate) {
 		this.catCreateDate = catCreateDate;
 	}
 

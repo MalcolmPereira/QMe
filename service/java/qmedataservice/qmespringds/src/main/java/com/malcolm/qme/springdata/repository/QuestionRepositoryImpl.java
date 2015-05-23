@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,8 +57,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	@Override
 	public Question save(Question question) {
 		QuestionEntity questionEntity =  getQuestionEntity(question);
-		questionEntity.setQuestionCreateDate(new Date());
-		questionEntity.setQuestionUpdateDate(new Date());
+		questionEntity.setQuestionCreateDate(LocalDateTime.now());
+		questionEntity.setQuestionUpdateDate(LocalDateTime.now());
 		questionEntity.setQuestionUpdateUser(question.getCreateUserID());
 		questionEntity = questionSpringDataRepository.save(questionEntity);
         return getQuestion(questionEntity);
@@ -66,7 +67,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	@Override
 	public Question update(Question question, Long updateUserId) {
 		QuestionEntity questionEntity =  getQuestionEntity(question);
-		questionEntity.setQuestionUpdateDate(new Date());
+		questionEntity.setQuestionUpdateDate(LocalDateTime.now());
 		questionEntity.setQuestionUpdateUser(updateUserId);
 		questionEntity = questionSpringDataRepository.save(questionEntity);
         return getQuestion(questionEntity);
@@ -80,7 +81,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	/**
      * Map QuestionHit Domain Object to QuestionHitEntity
      *
-     * @param questionHit Question
+     * @param question Question
      * @return QuestionEntity
      */
     private QuestionEntity getQuestionEntity(Question question){

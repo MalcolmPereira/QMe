@@ -15,28 +15,19 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class RoleRepositoryImplTest {
 
     /**
@@ -47,7 +38,7 @@ public class RoleRepositoryImplTest {
     private RoleRepository roleRepo;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(roleRepo);
         List<Role> roles = roleRepo.findAll();
         assertNotNull(roles);
@@ -55,18 +46,18 @@ public class RoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(roleRepo);
         Role role = roleRepo.findById(1);
         assertNotNull(role);
-        assertThat(role.getRoleID(),equalTo(1));
+        assertThat(role.getRoleID(), equalTo(1));
     }
 
     @Test
-    public void testCRUD(){
+    public void testCRUD() {
         assertNotNull(roleRepo);
 
-        Role role = new Role("RoleRepositoryImplTest","RoleRepositoryImplTest Desc");
+        Role role = new Role("RoleRepositoryImplTest", "RoleRepositoryImplTest Desc");
         role = roleRepo.save(role);
         assertNotNull(role);
         assertThat(role.getRoleID(), greaterThan(0));
@@ -77,7 +68,7 @@ public class RoleRepositoryImplTest {
         assertNotNull(role);
         assertThat(role.getRoleID(), equalTo(roleID));
 
-        Role roleUpdate = new Role(roleID, "RoleRepositoryImplTest Updated","RoleRepositoryImplTest Updated Desc");
+        Role roleUpdate = new Role(roleID, "RoleRepositoryImplTest Updated", "RoleRepositoryImplTest Updated Desc");
 
         roleUpdate = roleRepo.update(roleUpdate, 1L);
         assertNotNull(roleUpdate);
@@ -91,10 +82,10 @@ public class RoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindByRoleName(){
+    public void testFindByRoleName() {
         assertNotNull(roleRepo);
 
-        Role role = new Role("RoleSpringDataRepositoryTest NAME","RoleSpringDataRepositoryTest NAME Desc");
+        Role role = new Role("RoleSpringDataRepositoryTest NAME", "RoleSpringDataRepositoryTest NAME Desc");
         role = roleRepo.save(role);
         assertNotNull(role);
         assertThat(role.getRoleID(), greaterThan(0));
@@ -113,7 +104,7 @@ public class RoleRepositoryImplTest {
         assertNotNull(role);
         assertThat(role.getRoleID(), equalTo(roleID));
 
-        Role roleUpdate = new Role(roleID, "RoleSpringDataRepositoryTest NAME Updated","RoleSpringDataRepositoryTest NAME Updated Desc");
+        Role roleUpdate = new Role(roleID, "RoleSpringDataRepositoryTest NAME Updated", "RoleSpringDataRepositoryTest NAME Updated Desc");
 
         roleUpdate = roleRepo.update(roleUpdate, 1L);
         assertNotNull(roleUpdate);

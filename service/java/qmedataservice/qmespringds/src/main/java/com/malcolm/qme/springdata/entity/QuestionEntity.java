@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -67,9 +68,8 @@ public class QuestionEntity implements java.io.Serializable {
 	/**
 	 * Question Create Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "QUESTION_CREATE_DATE", nullable = false, length = 19)
-	private Date questionCreateDate;
+	private LocalDateTime questionCreateDate;
 
 	/**
 	 * Question Create User
@@ -80,9 +80,8 @@ public class QuestionEntity implements java.io.Serializable {
 	/**
 	 * Question Update Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "QUESTION_UPDATE_DATE", nullable = false, length = 19)
-	private Date questionUpdateDate;
+	private LocalDateTime questionUpdateDate;
 
 	/**
 	 * Question Update User
@@ -111,8 +110,8 @@ public class QuestionEntity implements java.io.Serializable {
 	 */
 	public QuestionEntity(Long catId, String questionText,
 			String questionAnswer, Integer questionPoint, Long questionLikes,
-			Date questionCreateDate, Long questionCreateUser,
-			Date questionUpdateDate, Long questionUpdateUser) {
+			LocalDateTime questionCreateDate, Long questionCreateUser,
+			LocalDateTime questionUpdateDate, Long questionUpdateUser) {
 		this.catId = catId;
 		this.questionText = questionText;
 		this.questionAnswer = questionAnswer;
@@ -211,14 +210,14 @@ public class QuestionEntity implements java.io.Serializable {
 	/**
 	 * @return the questionCreateDate
 	 */
-	public Date getQuestionCreateDate() {
+	public LocalDateTime getQuestionCreateDate() {
 		return questionCreateDate;
 	}
 
 	/**
 	 * @param questionCreateDate the questionCreateDate to set
 	 */
-	public void setQuestionCreateDate(Date questionCreateDate) {
+	public void setQuestionCreateDate(LocalDateTime questionCreateDate) {
 		this.questionCreateDate = questionCreateDate;
 	}
 
@@ -239,14 +238,14 @@ public class QuestionEntity implements java.io.Serializable {
 	/**
 	 * @return the questionUpdateDate
 	 */
-	public Date getQuestionUpdateDate() {
+	public LocalDateTime getQuestionUpdateDate() {
 		return questionUpdateDate;
 	}
 
 	/**
 	 * @param questionUpdateDate the questionUpdateDate to set
 	 */
-	public void setQuestionUpdateDate(Date questionUpdateDate) {
+	public void setQuestionUpdateDate(LocalDateTime questionUpdateDate) {
 		this.questionUpdateDate = questionUpdateDate;
 	}
 

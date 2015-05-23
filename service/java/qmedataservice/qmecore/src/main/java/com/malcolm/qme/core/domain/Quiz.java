@@ -7,7 +7,7 @@
 
 package com.malcolm.qme.core.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Malcolm
@@ -51,7 +51,7 @@ public final class Quiz {
     /**
      * Quiz Create Date
      */
-    private final Date quizCreateDate;
+    private final LocalDateTime quizCreateDate;
 
     /**
      * Quiz Create User Id
@@ -61,7 +61,7 @@ public final class Quiz {
     /**
      * Quiz Update Date
      */
-    private final Date quizUpdateDate;
+    private final LocalDateTime quizUpdateDate;
 
     /**
      * Update User Id
@@ -83,7 +83,7 @@ public final class Quiz {
      * @param quizUpdateDate Quiz Update Date
      * @param updateUserID Quiz Update User Id
      */
-    public Quiz(Long quizID, String quizName, String quizDesc, Long categoryID, Long likes, Long quizHit, Integer quizMaxAttempts, Date quizCreateDate, Long createUserID, Date quizUpdateDate, Long updateUserID) {
+    public Quiz(Long quizID, String quizName, String quizDesc, Long categoryID, Long likes, Long quizHit, Integer quizMaxAttempts, LocalDateTime quizCreateDate, Long createUserID, LocalDateTime quizUpdateDate, Long updateUserID) {
         this.quizID = quizID;
         this.quizName = quizName;
         this.quizDesc = quizDesc;
@@ -114,9 +114,9 @@ public final class Quiz {
         this.likes = 0L;
         this.quizHit = 0L;
         this.quizMaxAttempts = quizMaxAttempts;
-        this.quizCreateDate = null;
+        this.quizCreateDate = LocalDateTime.now();
         this.createUserID = createUserID;
-        this.quizUpdateDate = null;
+        this.quizUpdateDate = LocalDateTime.now();
         this.updateUserID = 0L;
     }
 
@@ -180,7 +180,7 @@ public final class Quiz {
      * Get Quiz Create Date
      * @return Quiz Create Date
      */
-    public Date getQuizCreateDate() {
+    public LocalDateTime getQuizCreateDate() {
         return quizCreateDate;
     }
 
@@ -196,7 +196,7 @@ public final class Quiz {
      * Get Quiz Update Date
      * @return Quiz Update Date
      */
-    public Date getQuizUpdateDate() {
+    public LocalDateTime getQuizUpdateDate() {
         return quizUpdateDate;
     }
 

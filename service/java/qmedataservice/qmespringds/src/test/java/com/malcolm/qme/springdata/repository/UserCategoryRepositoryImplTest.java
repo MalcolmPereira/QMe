@@ -7,24 +7,6 @@
 
 package com.malcolm.qme.springdata.repository;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserCategory;
@@ -32,16 +14,24 @@ import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.UserCategoryRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.*;
 
 /**
  * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class UserCategoryRepositoryImplTest {
 
     /**
@@ -66,7 +56,7 @@ public class UserCategoryRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(userCategoryRepo);
         List<UserCategory> userCategoryList = userCategoryRepo.findAll();
         assertNotNull(userCategoryList);
@@ -74,7 +64,7 @@ public class UserCategoryRepositoryImplTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(userCategoryRepo);
         UserCategory userCategory = userCategoryRepo.findById(1L);
         assertNotNull(userCategory);
@@ -90,7 +80,7 @@ public class UserCategoryRepositoryImplTest {
 
         assertNotNull(categoryRepo);
 
-        User user = new User("UserCategoryRepositoryImplTest", "Test", "Test", "Test","UserCategoryRepositoryImplTest@test.com");
+        User user = new User("UserCategoryRepositoryImplTest", "Test", "Test", "Test", "UserCategoryRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -102,7 +92,7 @@ public class UserCategoryRepositoryImplTest {
         assertThat(category.getCategoryID(), greaterThan(0L));
         Long catID = category.getCategoryID();
 
-        UserCategory userCategory = new UserCategory(userID,catID);
+        UserCategory userCategory = new UserCategory(userID, catID);
         userCategory = userCategoryRepo.save(userCategory);
         Long userCatID = userCategory.getUserCategoryID();
 
@@ -132,7 +122,7 @@ public class UserCategoryRepositoryImplTest {
 
         assertNotNull(categoryRepo);
 
-        User user = new User("UserCategoryRepositoryImplTestByUserID", "Test", "Test", "Test","UserCategoryRepositoryImplTestByUserID@test.com");
+        User user = new User("UserCategoryRepositoryImplTestByUserID", "Test", "Test", "Test", "UserCategoryRepositoryImplTestByUserID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -144,7 +134,7 @@ public class UserCategoryRepositoryImplTest {
         assertThat(category.getCategoryID(), greaterThan(0L));
         Long catID = category.getCategoryID();
 
-        UserCategory userCategory = new UserCategory(userID,catID);
+        UserCategory userCategory = new UserCategory(userID, catID);
         userCategory = userCategoryRepo.save(userCategory);
         Long userCatID = userCategory.getUserCategoryID();
 

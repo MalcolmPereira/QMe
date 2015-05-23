@@ -14,12 +14,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -31,10 +28,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class UserRepositoryImplTest {
 
     /**
@@ -45,9 +38,8 @@ public class UserRepositoryImplTest {
     private UserRepository userRepo;
 
 
-
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(userRepo);
         List<User> users = userRepo.findAll();
         assertNotNull(users);
@@ -55,7 +47,7 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(userRepo);
         User user = userRepo.findById(1L);
         assertNotNull(user);
@@ -63,12 +55,11 @@ public class UserRepositoryImplTest {
     }
 
 
-
     @Test
-    public void testCRUD(){
+    public void testCRUD() {
         assertNotNull(userRepo);
 
-        User user = new User("UserRepositoryImplTest", "Test", "Test", "Test","UserRepositoryImplTest@test.com");
+        User user = new User("UserRepositoryImplTest", "Test", "Test", "Test", "UserRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -80,14 +71,14 @@ public class UserRepositoryImplTest {
 
 
         User userUpdate = new User(
-                            user.getUserID(),
-                            user.getUserName(),
-                            user.getUserPassword(),
-                            "First Name Updated",
-                            "Last Name Updated",
-                            user.getUserEmail(),
-                            user.getUserRegisteredDate(), new Date(),
-                            2L );
+                user.getUserID(),
+                user.getUserName(),
+                user.getUserPassword(),
+                "First Name Updated",
+                "Last Name Updated",
+                user.getUserEmail(),
+                user.getUserRegisteredDate(), LocalDateTime.now(),
+                2L);
 
         userUpdate = userRepo.update(userUpdate, 2L);
 
@@ -104,11 +95,11 @@ public class UserRepositoryImplTest {
 
 
     @Test
-    public void testFindByUserName(){
+    public void testFindByUserName() {
 
         assertNotNull(userRepo);
 
-        User user = new User("UserRepositoryImplTestUserName", "Test", "Test", "Test","UserRepositoryImplTest@test.com");
+        User user = new User("UserRepositoryImplTestUserName", "Test", "Test", "Test", "UserRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -133,8 +124,8 @@ public class UserRepositoryImplTest {
                 "First Name Updated",
                 "Last Name Updated",
                 user.getUserEmail(),
-                user.getUserRegisteredDate(), new Date(),
-                2L );
+                user.getUserRegisteredDate(), LocalDateTime.now(),
+                2L);
 
         userUpdate = userRepo.update(userUpdate, 2L);
 
@@ -150,11 +141,11 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserEmail(){
+    public void testFindByUserEmail() {
 
         assertNotNull(userRepo);
 
-        User user = new User("UserRepositoryImplTestUserName1", "Test", "Test", "Test","UserRepositoryImplTestUserName1@test.com");
+        User user = new User("UserRepositoryImplTestUserName1", "Test", "Test", "Test", "UserRepositoryImplTestUserName1@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -179,8 +170,8 @@ public class UserRepositoryImplTest {
                 "First Name Updated",
                 "Last Name Updated",
                 user.getUserEmail(),
-                user.getUserRegisteredDate(), new Date(),
-                2L );
+                user.getUserRegisteredDate(), LocalDateTime.now(),
+                2L);
 
         userUpdate = userRepo.update(userUpdate, 2L);
 

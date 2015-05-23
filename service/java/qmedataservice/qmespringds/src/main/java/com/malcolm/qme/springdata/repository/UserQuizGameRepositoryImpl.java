@@ -15,6 +15,7 @@ import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,7 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     @Override
     public UserQuizGame save(UserQuizGame userQuizGame) {
         UserQuizGameEntity userQuizGameEntity = getUserQuizGameEntity(userQuizGame);
-        userQuizGameEntity.setStartDate(new Date());
+        userQuizGameEntity.setStartDate(LocalDateTime.now());
         userQuizGameEntity = userQuizGameSpringDataRepository.save(userQuizGameEntity);
         return getUserQuizGame(userQuizGameEntity);
     }
@@ -66,7 +67,7 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     @Override
     public UserQuizGame update(UserQuizGame userQuizGame, Long updateUserId) {
         UserQuizGameEntity userQuizGameEntity = getUserQuizGameEntity(userQuizGame);
-        userQuizGameEntity.setEndDate(new Date());
+        userQuizGameEntity.setEndDate(LocalDateTime.now());
         userQuizGameEntity = userQuizGameSpringDataRepository.save(userQuizGameEntity);
         return getUserQuizGame(userQuizGameEntity);
     }

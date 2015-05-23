@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.AttributeOverride;
@@ -39,16 +40,14 @@ public class UserQuizGameEntity implements java.io.Serializable {
 	/**
 	 * Start Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "START_DATE", nullable = false, length = 19)
-	private Date startDate;
+	private LocalDateTime startDate;
 
 	/**
 	 * End Date
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "END_DATE", length = 19)
-	private Date endDate;
+	private LocalDateTime endDate;
 
 	/**
 	 * User Score
@@ -79,28 +78,28 @@ public class UserQuizGameEntity implements java.io.Serializable {
 	/**
 	 * @return the startDate
 	 */
-	public Date getStartDate() {
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
 
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
 	/**
 	 * @return the endDate
 	 */
-	public Date getEndDate() {
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 

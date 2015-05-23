@@ -7,10 +7,15 @@
 
 package com.malcolm.qme.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * QMeCategory Model for REST Service Controller
@@ -165,4 +170,5 @@ public class QMeCategory extends ResourceSupport implements Serializable {
     public void setCreatedUserName(String createdUserName) {
         this.createdUserName = createdUserName;
     }
+
 }

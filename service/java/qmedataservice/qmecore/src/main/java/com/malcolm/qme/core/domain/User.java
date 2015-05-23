@@ -6,7 +6,7 @@
  */
 package com.malcolm.qme.core.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Malcolm
@@ -39,11 +39,11 @@ public final class User {
     /**
      * User Registered Date
      */
-    private final Date userRegisteredDate;
+    private final LocalDateTime userRegisteredDate;
     /**
      * User Update Date
      */
-    private final Date userUpdateDate;
+    private final LocalDateTime userUpdateDate;
     /**
      * Update User Id
      */
@@ -62,7 +62,7 @@ public final class User {
      * @param userUpdateDate User Update Date
      * @param updateUserID Update User ID
      */
-    public User(Long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, Date userRegisteredDate, Date userUpdateDate, Long updateUserID) {
+    public User(Long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, LocalDateTime userRegisteredDate, LocalDateTime userUpdateDate, Long updateUserID) {
         this.userID = userID;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -90,8 +90,8 @@ public final class User {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
-        this.userRegisteredDate = null;
-        this.userUpdateDate = null;
+        this.userRegisteredDate = LocalDateTime.now();
+        this.userUpdateDate = LocalDateTime.now();
         this.updateUserID = 0L;
     }
 
@@ -148,7 +148,7 @@ public final class User {
      * Return User Registered Date
      * @return User Registered Date
      */
-    public Date getUserRegisteredDate() {
+    public LocalDateTime getUserRegisteredDate() {
         return userRegisteredDate;
     }
 
@@ -156,7 +156,7 @@ public final class User {
      * Return User Update Date
      * @return User Update Date
      */
-    public Date getUserUpdateDate() {
+    public LocalDateTime getUserUpdateDate() {
         return userUpdateDate;
     }
 

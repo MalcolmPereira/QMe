@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,8 +62,8 @@ public class QuizRepositoryImpl implements QuizRepository {
 	@Override
 	public Quiz save(Quiz quiz) {
 		QuizEntity quizEntity = getQuizEntity(quiz);
-		quizEntity.setQuizCreateDate(new Date());
-		quizEntity.setQuizUpdateDate(new Date());
+		quizEntity.setQuizCreateDate(LocalDateTime.now());
+		quizEntity.setQuizUpdateDate(LocalDateTime.now());
 		quizEntity.setQuizUpdateUser(quizEntity.getQuizCreateUser());
 		quizEntity = quizSpringDataRepository.save(quizEntity);
 		return getQuiz(quizEntity);
@@ -71,7 +72,7 @@ public class QuizRepositoryImpl implements QuizRepository {
 	@Override
 	public Quiz update(Quiz quiz, Long updateUserId) {
 		QuizEntity quizEntity = getQuizEntity(quiz);
-		quizEntity.setQuizUpdateDate(new Date());
+		quizEntity.setQuizUpdateDate(LocalDateTime.now());
 		quizEntity.setQuizUpdateUser(updateUserId);
 		quizEntity = quizSpringDataRepository.save(quizEntity);
 		return getQuiz(quizEntity);

@@ -19,10 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import java.util.List;
 
@@ -35,10 +32,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})
-@TestExecutionListeners(listeners = {
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
 public class UserRoleRepositoryImplTest {
 
     /**
@@ -63,7 +56,7 @@ public class UserRoleRepositoryImplTest {
     private RoleRepository roleRepo;
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         assertNotNull(userRoleRepository);
         List<UserRole> userRoles = userRoleRepository.findAll();
         assertNotNull(userRoles);
@@ -71,15 +64,15 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         assertNotNull(userRoleRepository);
-        UserRole userRole= userRoleRepository.findById(1L);
+        UserRole userRole = userRoleRepository.findById(1L);
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), equalTo(1L));
     }
 
     @Test
-    public void testCRUD(){
+    public void testCRUD() {
 
         assertNotNull(userRoleRepository);
 
@@ -87,7 +80,7 @@ public class UserRoleRepositoryImplTest {
 
         assertNotNull(roleRepo);
 
-        User user = new User("RoleRepositoryImplTest", "Test", "Test", "Test","RoleRepositoryImplTest@test.com");
+        User user = new User("RoleRepositoryImplTest", "Test", "Test", "Test", "RoleRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -97,7 +90,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
 
-        Role role = new Role("RoleRepositoryImplTest","RoleRepositoryImplTest Desc");
+        Role role = new Role("RoleRepositoryImplTest", "RoleRepositoryImplTest Desc");
         role = roleRepo.save(role);
         assertNotNull(role);
         assertThat(role.getRoleID(), greaterThan(0));
@@ -108,7 +101,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(role);
         assertThat(role.getRoleID(), equalTo(roleID));
 
-        UserRole userRole = new UserRole(roleID,userID);
+        UserRole userRole = new UserRole(roleID, userID);
         userRole = userRoleRepository.save(userRole);
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), greaterThan(0L));
@@ -134,7 +127,7 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId(){
+    public void testFindByUserId() {
 
         assertNotNull(userRoleRepository);
 
@@ -142,7 +135,7 @@ public class UserRoleRepositoryImplTest {
 
         assertNotNull(roleRepo);
 
-        User user = new User("RoleRepositoryImplTest ByUserID ", "Test", "Test", "Test","RoleRepositoryImplTestByUserID@test.com");
+        User user = new User("RoleRepositoryImplTest ByUserID ", "Test", "Test", "Test", "RoleRepositoryImplTestByUserID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -152,7 +145,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
 
-        Role role = new Role("RoleRepositoryImplTest ByUserID","RoleRepositoryImplTest ByUserID Desc");
+        Role role = new Role("RoleRepositoryImplTest ByUserID", "RoleRepositoryImplTest ByUserID Desc");
         role = roleRepo.save(role);
         assertNotNull(role);
         assertThat(role.getRoleID(), greaterThan(0));
@@ -163,7 +156,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(role);
         assertThat(role.getRoleID(), equalTo(roleID));
 
-        UserRole userRole = new UserRole(roleID,userID);
+        UserRole userRole = new UserRole(roleID, userID);
         userRole = userRoleRepository.save(userRole);
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), greaterThan(0L));
@@ -174,7 +167,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), equalTo(userRoleID));
 
-        List<UserRole>  userRolesList = userRoleRepository.findByUserId(userID);
+        List<UserRole> userRolesList = userRoleRepository.findByUserId(userID);
         assertNotNull(userRolesList);
         assertThat(userRolesList.size(), equalTo(1));
 
@@ -192,7 +185,7 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindByRoleId(){
+    public void testFindByRoleId() {
 
         assertNotNull(userRoleRepository);
 
@@ -200,7 +193,7 @@ public class UserRoleRepositoryImplTest {
 
         assertNotNull(roleRepo);
 
-        User user = new User("RoleRepositoryImplTest ByRoleId ", "Test", "Test", "Test","RoleRepositoryImplTestByRoleId@test.com");
+        User user = new User("RoleRepositoryImplTest ByRoleId ", "Test", "Test", "Test", "RoleRepositoryImplTestByRoleId@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
@@ -210,7 +203,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
 
-        Role role = new Role("RoleRepositoryImplTest ByRoleId","RoleRepositoryImplTest ByRoleId Desc");
+        Role role = new Role("RoleRepositoryImplTest ByRoleId", "RoleRepositoryImplTest ByRoleId Desc");
         role = roleRepo.save(role);
         assertNotNull(role);
         assertThat(role.getRoleID(), greaterThan(0));
@@ -221,7 +214,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(role);
         assertThat(role.getRoleID(), equalTo(roleID));
 
-        UserRole userRole = new UserRole(roleID,userID);
+        UserRole userRole = new UserRole(roleID, userID);
         userRole = userRoleRepository.save(userRole);
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), greaterThan(0L));
@@ -232,7 +225,7 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), equalTo(userRoleID));
 
-        List<UserRole>  userRolesList = userRoleRepository.findByRoleId(roleID);
+        List<UserRole> userRolesList = userRoleRepository.findByRoleId(roleID);
         assertNotNull(userRolesList);
         assertThat(userRolesList.size(), equalTo(1));
 
