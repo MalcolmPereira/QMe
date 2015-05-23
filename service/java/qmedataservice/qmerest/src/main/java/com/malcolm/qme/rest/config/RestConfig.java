@@ -1,11 +1,11 @@
 /**
- * Name      : com.malcolm.qme.rest.RestConfig.java
+ * Name      : com.malcolm.qme.rest.config.RestConfig.java
  * Date      : 5/20/15
  * Developer : Malcolm
  * Purpose   : Configuration for REST MVC
  */
 
-package com.malcolm.qme.rest;
+package com.malcolm.qme.rest.config;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;

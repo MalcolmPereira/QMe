@@ -10,9 +10,6 @@ buildscript {
 		springBootVersion   = '1.2.3.RELEASE'
 		springHateosVersion = "0.17.0.RELEASE"
 		retroFitVersion		= "1.9.0"
-		hamcrestVersion		= "1.3"
-		junitVersion		= "4.12"
-		jmockitVersion		= "1.16"
 	}
     repositories {
     	mavenCentral()
@@ -45,9 +42,4 @@ dependencies {
 	compile("org.springframework:spring-aop:${springVersion}")
 	
 	compile("com.squareup.retrofit:retrofit:${retroFitVersion}")
-
-	testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
-	testCompile("junit:junit:${junitVersion}")
-	testCompile("org.jmockit:jmockit:${jmockitVersion}")
-	testCompile("org.jmockit:jmockit-coverage:${jmockitVersion}")
 }

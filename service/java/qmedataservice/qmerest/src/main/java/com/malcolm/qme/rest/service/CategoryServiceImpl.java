@@ -33,11 +33,12 @@ public final class CategoryServiceImpl implements CategoryService  {
 
     @Override
     public List<QMeCategory> searchByName(String categoryName) {
-        return null;
+        return getQMeCategory(categoryRepo.findCategoryNameLike(categoryName));
     }
 
     @Override
     public List<QMeCategory> list() {
+
         return getQMeCategory(categoryRepo.findAll());
     }
 

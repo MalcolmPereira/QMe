@@ -9,10 +9,6 @@ buildscript {
 		springDataVersion 	= "1.8.0.RELEASE"
 		hibernateVersion	= "4.3.10.Final"
 		mySQLDriverVersion	= "5.1.35"
-		hamcrestVersion		= "1.3"
-		junitVersion		= "4.12"
-		jmockitVersion		= "1.16"
-
 	}
     repositories {
     	mavenCentral()
@@ -31,8 +27,4 @@ dependencies {
 	compile("org.hibernate:hibernate-entitymanager:${hibernateVersion}")
 	compile("mysql:mysql-connector-java:${mySQLDriverVersion}")
 
-	testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
-	testCompile("junit:junit:${junitVersion}")
-	testCompile("org.jmockit:jmockit:${jmockitVersion}")
-	testCompile("org.jmockit:jmockit-coverage:${jmockitVersion}")
 }
