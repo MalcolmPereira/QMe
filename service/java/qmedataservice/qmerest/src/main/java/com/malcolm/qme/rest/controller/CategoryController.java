@@ -9,23 +9,19 @@ package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.CategoryAPI;
 import com.malcolm.qme.rest.model.QMeCategory;
+import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import com.malcolm.qme.rest.service.CategoryService;
+import com.malcolm.qme.rest.service.QMeResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * @author malcolm
  */
-@Controller
-@EnableAutoConfiguration
+@RestController
 public class CategoryController implements CategoryAPI {
 
     /**
@@ -37,42 +33,43 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody List<QMeCategory> list() {
+    public @ResponseBody List<QMeCategoryDetail> list() throws QMeResourceException {
         return categoryService.list();
     }
 
     @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody List<QMeCategory> searchByName(String categoryName) {
-        return null;
+    public @ResponseBody List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceException {
+       return categoryService.searchByName(categoryName);
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeCategory searchById(long categoryId) {
-        return null;
+    public @ResponseBody QMeCategoryDetail searchById(long categoryId) throws QMeResourceException {
+        return categoryService.searchById(categoryId);
     }
 
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeCategory create(QMeCategory category) {
-        return null;
+    public @ResponseBody QMeCategoryDetail create(QMeCategory category) throws QMeResourceException {
+        //TODO:Add Security and User Id from Principal
+        return categoryService.save(category,1L);
     }
 
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeCategory update(QMeCategory category) {
-        return null;
+    public @ResponseBody QMeCategoryDetail update(long categoryId,QMeCategory category) throws QMeResourceException {
+        return categoryService.update(category, categoryId,1L);
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void delete(long categoryId) {
+    public void delete(long categoryId) throws QMeResourceException {
+        categoryService.delete(categoryId);
     }
-
 }

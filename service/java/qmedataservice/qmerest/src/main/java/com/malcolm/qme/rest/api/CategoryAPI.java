@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.rest.api;
 
+import com.malcolm.qme.rest.model.QMeCategoryDetail;
+import com.malcolm.qme.rest.service.QMeResourceException;
 import retrofit.http.*;
 import com.malcolm.qme.rest.model.QMeCategory;
 
@@ -36,7 +38,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return List of Category
      */
     @GET(ROOT_PATH)
-    public List<QMeCategory> list();
+    public List<QMeCategoryDetail> list() throws QMeResourceException;
 
     /**
      * Search by Name
@@ -45,7 +47,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return List of QMe Categories
      */
     @GET(NAME_PATH)
-    public List<QMeCategory> searchByName(@Path(NAME_PARAM_STRING) String categoryName);
+    public List<QMeCategoryDetail> searchByName(@Path(NAME_PARAM_STRING) String categoryName) throws QMeResourceException;
 
     /**
      * Search by ID
@@ -54,7 +56,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return QMe Category
      */
     @GET(ID_PATH)
-    public QMeCategory searchById(@Path(ID_PARAM_STRING) long categoryId);
+    public QMeCategoryDetail searchById(@Path(ID_PARAM_STRING) long categoryId) throws QMeResourceException;
 
     /**
      * Create QMeCategory
@@ -63,7 +65,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return Category
      */
     @POST(ROOT_PATH)
-    public QMeCategory create(@Body QMeCategory category);
+    public QMeCategoryDetail create(@Body QMeCategory category) throws QMeResourceException;
 
     /**
      * Update QMeCategory
@@ -72,8 +74,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return Category
      */
     @PUT(ROOT_PATH)
-    public QMeCategory update(@Body QMeCategory category);
-
+    public QMeCategoryDetail update(@Path(ID_PARAM_STRING) long categoryId, @Body QMeCategory category) throws QMeResourceException;
 
     /**
      * Delete QMeCategory
@@ -81,6 +82,6 @@ public interface CategoryAPI extends QMeAPI {
      * @param categoryId Category ID
      */
     @DELETE(ID_PATH)
-    public void delete(@Path(ID_PARAM_STRING) long categoryId);
+    public void delete(@Path(ID_PARAM_STRING) long categoryId) throws QMeResourceException;
 
 }

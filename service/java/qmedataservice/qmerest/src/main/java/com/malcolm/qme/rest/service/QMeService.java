@@ -9,45 +9,47 @@ package com.malcolm.qme.rest.service;
 import java.util.List;
 
 /**
- * @Author: malcolm
+ * @author: Malcolm
+ * D - Resource Details
+ * T - Resource for Create and Update
+ * I - ID for Resource
  */
-public interface QMeService<T, I> {
+public interface QMeService<D,T,I> {
     /**
      * List All
      *
-     * @return
+     * @return List of Resources
      */
-    List<T> list();
+    List<D> list() throws QMeResourceException;
 
     /**
      * Search By Id
      *
-     * @param id
-     * @return
+     * @param id Id of Resource
+     * @return Resource
      */
-    T searchById(I id);
+    D searchById(I id) throws QMeResourceException ;
 
     /**
      * Save
      *
-     * @param t
-     * @return
+     * @param t Resource to creates
+     * @return Resource
      */
-    T create(T t);
+    D save(T t, Long userId) throws QMeResourceException;
 
     /**
      * Update
      *
-     * @param t
-     * @param updateUserId
-     * @return
+     * @param t Resource to creates
+     * @return Resource
      */
-    T update(T t, Long updateUserId);
+    D update(T t, I id, Long userId) throws QMeResourceException;
 
     /**
      * Delete
      *
-     * @param id
+     * @param id Id of Resource to delete
      */
-    void delete(I id);
+    void delete(I id) throws QMeResourceException;
 }

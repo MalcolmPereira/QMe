@@ -10,6 +10,7 @@ package com.malcolm.qme.rest.service;
 import com.malcolm.qme.core.domain.fixtures.CategoryFixtures;
 import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.rest.model.QMeCategory;
+import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -39,14 +40,14 @@ public class CategoryServiceImplTest {
 
 
     @Test
-    public void testList(){
+    public void testList() throws QMeResourceException {
 
         when(categoryRepo.findAll()).thenReturn((List)CategoryFixtures.simpleCategoryList());
 
-        List<QMeCategory> categoryList = categoryService.list();
+        List<QMeCategoryDetail> categoryList = categoryService.list();
         assertNotNull(categoryList);
         assertThat(categoryList.size(),equalTo(5));
-        for (QMeCategory qmeCategory : categoryList) {
+        for (QMeCategoryDetail qmeCategory : categoryList) {
             assertThat(qmeCategory.getCategoryId(), anyOf(
                     is(1L),
                     is(2L),
@@ -63,6 +64,25 @@ public class CategoryServiceImplTest {
             ));
 
         }
+    }
+
+    @Test
+    public void testSearchById() throws QMeResourceException {
+
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+
+        QMeCategoryDetail qmeCategory = categoryService.searchById(1L);
+        assertNotNull(qmeCategory);
+        assertThat(qmeCategory.getCategoryId(),equalTo(1L));
+        assertThat(qmeCategory.getCategoryName(),equalTo("Simple Category 1"));
+
+    }
+
+    @Test
+    public void testCreate(){
+        QMeCategory qmeCategory = new QMeCategory();
+        qmeCategory.setCategoryName("New Simple Category");
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
 
     }
 }
