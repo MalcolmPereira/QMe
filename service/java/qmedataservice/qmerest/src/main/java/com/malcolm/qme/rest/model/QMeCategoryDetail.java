@@ -14,10 +14,13 @@ import java.time.LocalDateTime;
  */
 public class QMeCategoryDetail extends QMeCategory {
     /**
+     * Generated Serialized Version Id
+     */
+    private static final long serialVersionUID = 1143257850480182831L;
+    /**
      * QMeCategory Id
      */
     private Long categoryId;
-
     /**
      * QMeCategory Likes
      */
