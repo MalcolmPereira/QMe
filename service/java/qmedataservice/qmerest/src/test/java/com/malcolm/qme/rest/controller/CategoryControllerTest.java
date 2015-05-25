@@ -12,6 +12,7 @@ import com.malcolm.qme.rest.model.fixtures.QMeCategoryDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryFixture;
 import com.malcolm.qme.rest.service.CategoryService;
 import com.malcolm.qme.rest.service.QMeResourceException;
+import com.malcolm.qme.rest.service.QMeResourceNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,6 +30,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -115,6 +117,24 @@ public class CategoryControllerTest extends QMeControllerTest{
     }
 
     @Test
+    public void testSearchByNamQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.searchByName("Simple Category 1")).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/category/search/Simple Category 1")
+                        .accept(MediaType.APPLICATION_JSON))
+                            .andExpect(status().isInternalServerError())
+                            .andDo(print())
+
+        ;
+
+
+    }
+
+    @Test
     public void testSearchById() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
@@ -128,6 +148,37 @@ public class CategoryControllerTest extends QMeControllerTest{
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.categoryId", is(1)))
                         .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
+        ;
+    }
+
+    @Test
+    public void testSearchByIdQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.searchById(1L)).thenThrow(new QMeResourceNotFoundException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/category/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testSearchByIdQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.searchById(1L)).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/category/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                            .andExpect(status().isInternalServerError())
+                            .andDo(print())
+
         ;
     }
 
@@ -150,6 +201,27 @@ public class CategoryControllerTest extends QMeControllerTest{
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.categoryId", is(1)))
                                 .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
+        ;
+
+    }
+
+    @Test
+    public void testCreateQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.save(anyObject(),eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+
+
+        mockMvc.perform(
+                post("/qme/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                            .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isInternalServerError())
+                                .andDo(print())
         ;
 
     }
@@ -178,6 +250,46 @@ public class CategoryControllerTest extends QMeControllerTest{
     }
 
     @Test
+    public void testUpdateQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenThrow(new QMeResourceNotFoundException("Some Error in the Service"));
+
+        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+
+
+        mockMvc.perform(
+                put("/qme/category/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testUpdateQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+
+
+        mockMvc.perform(
+                put("/qme/category/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                        .accept(MediaType.APPLICATION_JSON))
+                            .andExpect(status().isInternalServerError())
+                            .andDo(print())
+        ;
+    }
+
+    @Test
     public void testDelete() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
@@ -189,6 +301,34 @@ public class CategoryControllerTest extends QMeControllerTest{
                 delete("/qme/category/1"))
                     .andDo(print())
                     .andExpect(status().isOk())
+        ;
+    }
+
+    @Test
+    public void testDeleteQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        doThrow(new QMeResourceNotFoundException("Some Error in the Service")).when(categoryService).delete(1L);
+
+        mockMvc.perform(
+                delete("/qme/category/1"))
+                    .andExpect(status().isNotFound())
+                    .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testDeleteQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        doThrow(new QMeResourceException("Some Error in the Service")).when(categoryService).delete(1L);
+
+        mockMvc.perform(
+                delete("/qme/category/1"))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
         ;
     }
 }
