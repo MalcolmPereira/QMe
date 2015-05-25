@@ -73,7 +73,7 @@ public interface CategoryAPI extends QMeAPI {
      * @param category Category
      * @return Category
      */
-    @PUT(ROOT_PATH)
+    @PUT(ID_PATH)
     public QMeCategoryDetail update(@Path(ID_PARAM_STRING) Long categoryId, @Body QMeCategory category) throws QMeResourceException;
 
     /**

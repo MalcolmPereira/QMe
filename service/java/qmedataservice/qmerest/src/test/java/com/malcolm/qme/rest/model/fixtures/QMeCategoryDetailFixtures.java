@@ -5,10 +5,9 @@
  * Purpose   : Test Fixtures for QMe Category Details
  */
 
-package com.malcolm.qme.rest.model.fixtures;/**
- * Created by malcolm on 5/24/15.
- */
+package com.malcolm.qme.rest.model.fixtures;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-public class QMeCategoryDetailFixtures {
+public final class QMeCategoryDetailFixtures extends QMeResourceFixture<QMeCategoryDetail>{
 
     /**
      * Simple QMe Category Detail
@@ -98,4 +97,5 @@ public class QMeCategoryDetailFixtures {
 
         return categoryList;
     }
+
 }

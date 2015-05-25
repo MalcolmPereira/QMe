@@ -59,10 +59,11 @@ public class CategoryController implements CategoryAPI {
         return categoryService.save(category,1L);
     }
 
-    @RequestMapping(value=ROOT_PATH,method=RequestMethod.PUT)
+    @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeCategoryDetail update(@PathVariable(ID_PARAM_STRING) Long categoryId,QMeCategory category) throws QMeResourceException {
+        //TODO:Add Security and User Id from Principal
         return categoryService.update(category, categoryId,1L);
     }
 
