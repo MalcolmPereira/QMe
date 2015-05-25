@@ -10,6 +10,7 @@ buildscript {
 		springBootVersion   = '1.2.3.RELEASE'
 		springHateosVersion = "0.17.0.RELEASE"
 		retroFitVersion		= "1.9.0"
+		jsonpathVersion     = "2.0.0"
 	}
     repositories {
     	mavenCentral()
@@ -42,4 +43,6 @@ dependencies {
 	compile("org.springframework:spring-aop:${springVersion}")
 	
 	compile("com.squareup.retrofit:retrofit:${retroFitVersion}")
+
+    testCompile("com.jayway.jsonpath:json-path:${jsonpathVersion}")
 }
