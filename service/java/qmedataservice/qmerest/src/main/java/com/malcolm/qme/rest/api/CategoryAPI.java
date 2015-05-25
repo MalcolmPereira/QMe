@@ -56,7 +56,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return QMe Category
      */
     @GET(ID_PATH)
-    public QMeCategoryDetail searchById(@Path(ID_PARAM_STRING) long categoryId) throws QMeResourceException;
+    public QMeCategoryDetail searchById(@Path(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
 
     /**
      * Create QMeCategory
@@ -74,7 +74,7 @@ public interface CategoryAPI extends QMeAPI {
      * @return Category
      */
     @PUT(ROOT_PATH)
-    public QMeCategoryDetail update(@Path(ID_PARAM_STRING) long categoryId, @Body QMeCategory category) throws QMeResourceException;
+    public QMeCategoryDetail update(@Path(ID_PARAM_STRING) Long categoryId, @Body QMeCategory category) throws QMeResourceException;
 
     /**
      * Delete QMeCategory
@@ -82,6 +82,6 @@ public interface CategoryAPI extends QMeAPI {
      * @param categoryId Category ID
      */
     @DELETE(ID_PATH)
-    public void delete(@Path(ID_PARAM_STRING) long categoryId) throws QMeResourceException;
+    public void delete(@Path(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
 
 }

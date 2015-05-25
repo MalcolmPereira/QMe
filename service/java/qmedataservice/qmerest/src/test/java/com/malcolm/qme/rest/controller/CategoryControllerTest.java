@@ -26,6 +26,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,16 +54,53 @@ public class CategoryControllerTest {
     public void testList() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
-        when(categoryService.list()).thenReturn(QMeCategoryDetailFixtures.simpleCategoryList());
+        when(categoryService.list()).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetailList());
         mockMvc.perform(
            get("/qme/category").accept(MediaType.APPLICATION_JSON)
         )
            .andExpect(status().isOk())
            .andExpect(jsonPath("$", hasSize(5)))
            .andExpect(jsonPath("$[0].categoryId", is(1)))
+           .andExpect(jsonPath("$[1].categoryId", is(2)))
+           .andExpect(jsonPath("$[2].categoryId", is(3)))
+           .andExpect(jsonPath("$[3].categoryId", is(4)))
+           .andExpect(jsonPath("$[4].categoryId", is(5)))
         ;
 
     }
 
+    @Test
+    public void testSearchByName() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+        when(categoryService.searchByName("Simple Category 1")).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetailList());
+        mockMvc.perform(
+                get("/qme/category/search/Simple Category 1").accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].categoryId", is(1)))
+                .andExpect(jsonPath("$[1].categoryId", is(2)))
+                .andExpect(jsonPath("$[2].categoryId", is(3)))
+                .andExpect(jsonPath("$[3].categoryId", is(4)))
+                .andExpect(jsonPath("$[4].categoryId", is(5)))
+        ;
+
+    }
+
+    @Test
+    public void testSearchById() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+        when(categoryService.searchById(1L)).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetail());
+        mockMvc.perform(
+                get("/qme/category/1").accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
+        ;
+    }
 
 }

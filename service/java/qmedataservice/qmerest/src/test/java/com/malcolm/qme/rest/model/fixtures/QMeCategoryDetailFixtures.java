@@ -33,7 +33,7 @@ public class QMeCategoryDetailFixtures {
         qmeCategoryDetail.setCategoryLikes(0L);
         qmeCategoryDetail.setCreatedDate(LocalDateTime.now());
         qmeCategoryDetail.setCreatedUser(1L);
-        qmeCategoryDetail.setCategoryName("Test User");
+        qmeCategoryDetail.setCreatedUserName("Test User");
         return qmeCategoryDetail;
     }
 
@@ -43,7 +43,7 @@ public class QMeCategoryDetailFixtures {
 
      * @return Category List
      */
-    public static List<QMeCategoryDetail> simpleCategoryList(){
+    public static List<QMeCategoryDetail> simpleQMeCategoryDetailList(){
         List<QMeCategoryDetail> categoryList = new ArrayList<>();
 
         QMeCategoryDetail qmeCategoryDetail = new QMeCategoryDetail();
@@ -53,7 +53,7 @@ public class QMeCategoryDetailFixtures {
         qmeCategoryDetail.setCategoryLikes(0L);
         qmeCategoryDetail.setCreatedDate(LocalDateTime.now());
         qmeCategoryDetail.setCreatedUser(1L);
-        qmeCategoryDetail.setCategoryName("Test User");
+        qmeCategoryDetail.setCreatedUserName("Test User");
         categoryList.add(qmeCategoryDetail);
 
         qmeCategoryDetail = new QMeCategoryDetail();
@@ -63,7 +63,7 @@ public class QMeCategoryDetailFixtures {
         qmeCategoryDetail.setCategoryLikes(0L);
         qmeCategoryDetail.setCreatedDate(LocalDateTime.now());
         qmeCategoryDetail.setCreatedUser(1L);
-        qmeCategoryDetail.setCategoryName("Test User");
+        qmeCategoryDetail.setCreatedUserName("Test User");
         categoryList.add(qmeCategoryDetail);
 
         qmeCategoryDetail = new QMeCategoryDetail();
@@ -73,7 +73,7 @@ public class QMeCategoryDetailFixtures {
         qmeCategoryDetail.setCategoryLikes(0L);
         qmeCategoryDetail.setCreatedDate(LocalDateTime.now());
         qmeCategoryDetail.setCreatedUser(1L);
-        qmeCategoryDetail.setCategoryName("Test User");
+        qmeCategoryDetail.setCreatedUserName("Test User");
         categoryList.add(qmeCategoryDetail);
 
         qmeCategoryDetail = new QMeCategoryDetail();
@@ -83,7 +83,7 @@ public class QMeCategoryDetailFixtures {
         qmeCategoryDetail.setCategoryLikes(0L);
         qmeCategoryDetail.setCreatedDate(LocalDateTime.now());
         qmeCategoryDetail.setCreatedUser(1L);
-        qmeCategoryDetail.setCategoryName("Test User");
+        qmeCategoryDetail.setCreatedUserName("Test User");
         categoryList.add(qmeCategoryDetail);
 
         qmeCategoryDetail = new QMeCategoryDetail();
@@ -93,7 +93,7 @@ public class QMeCategoryDetailFixtures {
         qmeCategoryDetail.setCategoryLikes(0L);
         qmeCategoryDetail.setCreatedDate(LocalDateTime.now());
         qmeCategoryDetail.setCreatedUser(1L);
-        qmeCategoryDetail.setCategoryName("Test User");
+        qmeCategoryDetail.setCreatedUserName("Test User");
         categoryList.add(qmeCategoryDetail);
 
         return categoryList;
