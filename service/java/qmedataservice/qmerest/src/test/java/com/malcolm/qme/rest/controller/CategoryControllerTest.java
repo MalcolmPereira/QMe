@@ -11,16 +11,16 @@ import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryFixture;
 import com.malcolm.qme.rest.service.CategoryService;
-import org.junit.Before;
+import com.malcolm.qme.rest.service.QMeResourceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -39,9 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Malcolm
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CategoryControllerTest {
-
-    private MockMvc mockMvc;
+public class CategoryControllerTest extends QMeControllerTest{
 
     @Mock
     private CategoryService categoryService;
@@ -49,10 +47,9 @@ public class CategoryControllerTest {
     @InjectMocks
     private CategoryController categoryController;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+    @Override
+    public MockMvc getMockMVCInstance(final ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver) {
+        return MockMvcBuilders.standaloneSetup(categoryController).setHandlerExceptionResolvers(exceptionHandlerExceptionResolver).build();
     }
 
     @Test
@@ -66,6 +63,7 @@ public class CategoryControllerTest {
                 get("/qme/category")
                     .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
+                        .andDo(print())
                         .andExpect(jsonPath("$", hasSize(5)))
                         .andExpect(jsonPath("$[0].categoryId", is(1)))
                         .andExpect(jsonPath("$[1].categoryId", is(2)))
@@ -73,6 +71,24 @@ public class CategoryControllerTest {
                         .andExpect(jsonPath("$[3].categoryId", is(4)))
                         .andExpect(jsonPath("$[4].categoryId", is(5)))
         ;
+
+    }
+
+    @Test
+    public void testListQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.list()).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/category")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+
+        ;
+
 
     }
 
@@ -87,6 +103,7 @@ public class CategoryControllerTest {
                 get("/qme/category/search/Simple Category 1")
                     .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
+                        .andDo(print())
                         .andExpect(jsonPath("$", hasSize(5)))
                         .andExpect(jsonPath("$[0].categoryId", is(1)))
                         .andExpect(jsonPath("$[1].categoryId", is(2)))
@@ -141,6 +158,7 @@ public class CategoryControllerTest {
     public void testUpdate() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
+
         when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetail());
 
         QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
@@ -163,6 +181,7 @@ public class CategoryControllerTest {
     public void testDelete() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
+
         doNothing().when(categoryService).delete(1L);
 
 
