@@ -28,6 +28,7 @@ buildscript {
 dependencies {
 	compile project(':qmecore')
 	compile project(':qmespringds')
+	compile project(':qmesecurity')
 	
 	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"

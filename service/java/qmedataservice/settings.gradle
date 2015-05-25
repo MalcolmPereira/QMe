@@ -2,6 +2,7 @@
 include "qmecore"
 include "qmespringds"
 include 'qmerest'
+include 'qmesecurity'
 rootProject.name = 'qmedataservice'
 
 

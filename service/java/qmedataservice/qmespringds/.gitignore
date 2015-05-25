@@ -9,13 +9,6 @@ target/
 .classpath
 .settings
 .project
-qmedataservice.iml
-qmedataservice.ipr
-qmedataservice.iws
-qmecore.iml
-qmecore.ipr
-qmecore.iws
 qmespringds.iml
 qmespringds.ipr
 qmespringds.iws
-/coverage-report/

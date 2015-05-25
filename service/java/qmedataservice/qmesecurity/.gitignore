@@ -9,6 +9,7 @@ target/
 .classpath
 .settings
 .project
-qmecore.iml
-qmecore.ipr
-qmecore.iws
+qmesecurity.iml
+qmesecurity.ipr
+qmesecurity.iws
+
