@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.rest.api.CategoryAPI.java
  * Date      : 5/20/15
  * Developer : Malcolm
- * Purpose   : QMeCategory API Interface which services as a Contract for the REST Service
+ * Purpose   : QMe Category API Interface which services as a Contract for the REST Service
  */
 package com.malcolm.qme.rest.api;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Malcolm
  */
 public interface CategoryAPI extends QMeAPI {
-    /**
+        /**
      * QMeCategory API Root Path
      */
     String ROOT_PATH = APP_STRING + "/category";

@@ -63,6 +63,7 @@ public class QMeUserDetailsService implements UserDetailsService {
         userDetails.setUserEmail(user.getUserEmail());
         userDetails.setUserRegisteredDate(user.getUserRegisteredDate());
         userDetails.setUserUpdateDate(user.getUserUpdateDate());
+        userDetails.setUpdateUserID(user.getUpdateUserID());
        return userDetails;
     }
 }

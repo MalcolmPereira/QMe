@@ -51,6 +51,11 @@ public class QMeUserDetails implements UserDetails {
      * User Update Date
      */
     private LocalDateTime userUpdateDate;
+
+   /**
+     * Update User Id
+     */
+    private Long updateUserID;
     /**
      * Granted Authority or User Roles
      */
@@ -243,5 +248,22 @@ public class QMeUserDetails implements UserDetails {
      */
     public void setUserUpdateDate(LocalDateTime userUpdateDate) {
         this.userUpdateDate = userUpdateDate;
+    }
+
+    /**
+     * Get Update User ID
+     * @return Update User ID
+     */
+    public Long getUpdateUserID() {
+        return updateUserID;
+    }
+
+    /**
+     *  Set Update User ID
+     *
+     * @param updateUserID Update User ID
+     */
+    public void setUpdateUserID(Long updateUserID) {
+        this.updateUserID = updateUserID;
     }
 }
