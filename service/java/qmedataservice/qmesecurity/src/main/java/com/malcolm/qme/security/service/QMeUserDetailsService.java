@@ -24,7 +24,6 @@ import java.util.List;
  * @author Malcolm
  */
 @Service
-@Qualifier("QMeUserDetailsService")
 public class QMeUserDetailsService implements UserDetailsService {
 
     /**
