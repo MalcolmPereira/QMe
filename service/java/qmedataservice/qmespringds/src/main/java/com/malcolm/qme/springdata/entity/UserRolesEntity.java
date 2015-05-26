@@ -8,12 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 // Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Malcolm
@@ -44,6 +39,10 @@ public class UserRolesEntity implements java.io.Serializable {
 	 */
 	@Column(name = "ROLE_ID", nullable = false)
 	private Integer roleId;
+
+    @ManyToOne
+    @JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID", insertable = false, updatable = false)
+	private RoleEntity roleEntity;
 
 	/**
 	 * Public Constructor
@@ -92,6 +91,24 @@ public class UserRolesEntity implements java.io.Serializable {
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
+
+    /**
+     * Return Role Entity
+     *
+     * @return RoleEntity
+     */
+    public RoleEntity getRoleEntity() {
+        return roleEntity;
+    }
+
+    /**
+     * Set Role Entity
+     *
+     * @param roleEntity RoleEntity
+     */
+    public void setRoleEntity(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+    }
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

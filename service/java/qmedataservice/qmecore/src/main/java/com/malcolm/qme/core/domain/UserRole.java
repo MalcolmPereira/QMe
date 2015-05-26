@@ -21,6 +21,11 @@ public final class UserRole {
     private final Integer roleID;
 
     /**
+     * Role Name
+     */
+    private final String roleName;
+
+    /**
      * User Id
      */
     private final Long userID;
@@ -29,11 +34,26 @@ public final class UserRole {
      * Public Constructor
      * @param userRoleID User Role ID
      * @param roleID Role ID
+     * @param roleName Role Name
      * @param userID User ID
      */
-    public UserRole(Long userRoleID, Integer roleID, Long userID) {
+    public UserRole(Long userRoleID, Integer roleID, String roleName, Long userID) {
         this.userRoleID = userRoleID;
         this.roleID = roleID;
+        this.roleName = roleName;
+        this.userID = userID;
+    }
+
+    /**
+     * Public Constructor
+     * @param userRoleID User Role ID
+     * @param roleID Role ID
+     * @param userID User ID
+     */
+    public UserRole(Long userRoleID, Integer roleID,Long userID) {
+        this.userRoleID = userRoleID;
+        this.roleID = roleID;
+        this.roleName   = "";
         this.userID = userID;
     }
 
@@ -45,6 +65,7 @@ public final class UserRole {
     public UserRole(Integer roleID, Long userID) {
         this.userRoleID = 0L;
         this.roleID     = roleID;
+        this.roleName   = "";
         this.userID     = userID;
     }
 
@@ -62,6 +83,15 @@ public final class UserRole {
      */
     public Integer getRoleID() {
         return roleID;
+    }
+
+    /**
+     * Get Role Name
+     *
+     * @return
+     */
+    public String getRoleName() {
+        return roleName;
     }
 
     /**

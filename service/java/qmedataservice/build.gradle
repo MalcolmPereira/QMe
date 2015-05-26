@@ -1,10 +1,12 @@
 apply plugin: 'java' 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'war'
 
 buildscript {
 	ext {
-		javaVersion     = "1.8"
+		javaVersion         = "1.8"
+        servletAPIVersion   = "3.1.0"
         slf4jVersion	= "1.7.12"
         log4JVersion    = "1.2.16"
         junitVersion	= "4.12"
@@ -27,6 +29,9 @@ subprojects {
         mavenLocal()
     }
     dependencies {
+
+        compile("javax.servlet:javax.servlet-api:${servletAPIVersion}")
+
         compile ("org.slf4j:slf4j-api:${slf4jVersion}");
         compile ("log4j:log4j:${log4JVersion}");
 
@@ -35,6 +40,8 @@ subprojects {
         testCompile("org.mockito:mockito-core:${mockitoVersion}")
     }
 }
+
+
 
 
 

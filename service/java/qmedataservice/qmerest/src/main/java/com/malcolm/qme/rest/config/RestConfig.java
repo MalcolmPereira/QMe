@@ -14,10 +14,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdScalarSerializer;
+import com.malcolm.qme.security.config.QMeSecurityConfig;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.IOException;
@@ -31,6 +36,7 @@ import java.time.format.FormatStyle;
  * @author malcolm
  */
 @Configuration
+@Import(QMeSecurityConfig.class)
 @ComponentScan({"com.malcolm.qme.rest"})
 public class RestConfig {
 
@@ -43,10 +49,17 @@ public class RestConfig {
         return builder;
     }
 
+    @Bean
+    @Qualifier("BCryptPasswordEncoder")
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(-3);
+    }
+
+
     /**
      * JSON LocalDateTime Serializer
      */
-    public final class LocalDateTimeSerializer extends StdScalarSerializer<LocalDateTime> {
+    private final class LocalDateTimeSerializer extends StdScalarSerializer<LocalDateTime> {
         public LocalDateTimeSerializer() {
             super(LocalDateTime.class);
         }

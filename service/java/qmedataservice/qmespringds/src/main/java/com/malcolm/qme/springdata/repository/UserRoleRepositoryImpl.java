@@ -111,11 +111,22 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	 * @return UserRole
 	 */
 	private UserRole getUserRole(UserRolesEntity userRolesEntity) {
-		return new UserRole(
-				userRolesEntity.getUserRoleId(),
-				userRolesEntity.getRoleId(),
-				userRolesEntity.getUserId()
-		);
+        System.out.println(userRolesEntity.getRoleEntity());
+        if(userRolesEntity.getRoleEntity() != null){
+            return new UserRole(
+                    userRolesEntity.getUserRoleId(),
+                    userRolesEntity.getRoleId(),
+                    userRolesEntity.getRoleEntity().getRoleName(),
+                    userRolesEntity.getUserId()
+            );
+        }else {
+
+            return new UserRole(
+                    userRolesEntity.getUserRoleId(),
+                    userRolesEntity.getRoleId(),
+                    userRolesEntity.getUserId()
+            );
+        }
 	}
 
 }
