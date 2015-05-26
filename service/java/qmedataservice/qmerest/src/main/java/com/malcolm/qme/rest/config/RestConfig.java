@@ -49,11 +49,6 @@ public class RestConfig {
         return builder;
     }
 
-    @Bean
-    @Qualifier("BCryptPasswordEncoder")
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(-3);
-    }
 
 
     /**
