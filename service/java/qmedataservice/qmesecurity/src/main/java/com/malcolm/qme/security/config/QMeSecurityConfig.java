@@ -39,7 +39,6 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @Qualifier("BCryptPasswordEncoder")
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(-3);
     }
