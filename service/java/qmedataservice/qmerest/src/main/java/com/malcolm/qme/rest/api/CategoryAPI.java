@@ -6,10 +6,10 @@
  */
 package com.malcolm.qme.rest.api;
 
+import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import com.malcolm.qme.rest.service.QMeResourceException;
-import retrofit.http.*;
-import com.malcolm.qme.rest.model.QMeCategory;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Malcolm
  */
 public interface CategoryAPI extends QMeAPI {
-        /**
+    /**
      * QMeCategory API Root Path
      */
     String ROOT_PATH = APP_STRING + "/category";
@@ -37,8 +37,7 @@ public interface CategoryAPI extends QMeAPI {
      *
      * @return List of Category
      */
-    @GET(ROOT_PATH)
-    public List<QMeCategoryDetail> list() throws QMeResourceException;
+    List<QMeCategoryDetail> list() throws QMeResourceException;
 
     /**
      * Search by Name
@@ -46,8 +45,7 @@ public interface CategoryAPI extends QMeAPI {
      * @param categoryName Category Name
      * @return List of QMe Categories
      */
-    @GET(NAME_PATH)
-    public List<QMeCategoryDetail> searchByName(@Path(NAME_PARAM_STRING) String categoryName) throws QMeResourceException;
+    List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeResourceException;
 
     /**
      * Search by ID
@@ -55,8 +53,7 @@ public interface CategoryAPI extends QMeAPI {
      * @param categoryId Category ID
      * @return QMe Category
      */
-    @GET(ID_PATH)
-    public QMeCategoryDetail searchById(@Path(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
+    QMeCategoryDetail searchById(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
 
     /**
      * Create QMeCategory
@@ -64,8 +61,7 @@ public interface CategoryAPI extends QMeAPI {
      * @param category Category
      * @return Category
      */
-    @POST(ROOT_PATH)
-    public QMeCategoryDetail create(@Body QMeCategory category) throws QMeResourceException;
+    QMeCategoryDetail create(QMeCategory category) throws QMeResourceException;
 
     /**
      * Update QMeCategory
@@ -73,15 +69,13 @@ public interface CategoryAPI extends QMeAPI {
      * @param category Category
      * @return Category
      */
-    @PUT(ID_PATH)
-    public QMeCategoryDetail update(@Path(ID_PARAM_STRING) Long categoryId, @Body QMeCategory category) throws QMeResourceException;
+    QMeCategoryDetail update(@PathVariable(ID_PARAM_STRING) Long categoryId, QMeCategory category) throws QMeResourceException;
 
     /**
      * Delete QMeCategory
      *
      * @param categoryId Category ID
      */
-    @DELETE(ID_PATH)
-    public void delete(@Path(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
+    void delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
 
 }

@@ -22,5 +22,9 @@ public interface QMeAPI {
 	 * Name Parameter
 	 */
 	String NAME_PARAM_STRING 	= "name";
+	/**
+	 * Email Parameter
+	 */
+	String EMAIL_PARAM_STRING 	= "email";
 
 }

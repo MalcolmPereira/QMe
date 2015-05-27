@@ -6,24 +6,95 @@
  **/
 package com.malcolm.qme.rest.api;
 
+import com.malcolm.qme.rest.model.QMeUser;
+import com.malcolm.qme.rest.service.QMeResourceException;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+
 /**
  * @author Malcolm
  */
 public interface UserAPI extends QMeAPI {
     /**
-     * QMeCategory API Root Path
+     * QMeUser API Root Path
      */
     String ROOT_PATH = APP_STRING + "/user";
 
     /**
-     * QMeCategory API Get By ID Path
+     * QMeUser API Get By ID Path
      */
     String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
 
     /**
-     * QMeCategory API Search By Name
+     * QMeUser API Search By Name
      */
     String NAME_PATH = ROOT_PATH + "/search/{" + NAME_PARAM_STRING + "}";
 
+    /**
+     * QMeUser API Search By Email
+     */
+    String EMAIL_PATH = ROOT_PATH + "/search/email/{" + EMAIL_PARAM_STRING + "}";
 
+    /**
+     * QMeUser API Register User Path
+     */
+    String REGISTER_PATH = ROOT_PATH + "/register";
+
+
+    /**
+     * Get All Users
+     *
+     * @return List of Users
+     */
+    List<QMeUser> list() throws QMeResourceException;
+
+    /**
+     * Search by ID
+     *
+     * @param userId User ID
+     * @return QMe User
+     */
+    QMeUser searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+
+    /**
+     * Search by User Name
+     *
+     * @param userName User Name
+     * @return QMe User
+     */
+    QMeUser searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceException;
+
+    /**
+     * Search by User Email
+     *
+     * @param userEmail User Email
+     * @return QMe User
+     */
+    QMeUser searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+
+    /**
+     * Register New User
+     *
+     * @param user QMe User
+     * @return QMe User
+     * @throws QMeResourceException
+     */
+    public QMeUser create(QMeUser user) throws QMeResourceException;
+
+    /**
+     * Update QMe User
+     *
+     * @param user QMe User
+     * @return QMe User
+     */
+    public QMeUser update(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
+
+
+    /**
+     * Delete QMe User
+     *
+     * @param userId User Is
+     */
+    void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
 }
