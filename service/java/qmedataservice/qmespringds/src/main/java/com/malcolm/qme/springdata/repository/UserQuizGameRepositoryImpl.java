@@ -11,13 +11,11 @@ import com.malcolm.qme.core.domain.UserQuizGame;
 import com.malcolm.qme.core.repository.UserQuizGameRepository;
 import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
 import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

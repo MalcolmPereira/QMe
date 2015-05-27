@@ -6,15 +6,14 @@
  */
 package com.malcolm.qme.springdata.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.malcolm.qme.core.domain.AnswerReferenceMedia;
 import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
 import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Malcolm

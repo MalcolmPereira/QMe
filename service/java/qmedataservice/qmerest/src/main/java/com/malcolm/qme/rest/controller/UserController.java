@@ -8,9 +8,9 @@
 package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.UserAPI;
+import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
-import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +47,12 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException {
+        return null;
+    }
+
+    //FIXME: TODO!!!!
+    @Override
+    public QMeUserDetail resetPassword(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException {
         return null;
     }
 

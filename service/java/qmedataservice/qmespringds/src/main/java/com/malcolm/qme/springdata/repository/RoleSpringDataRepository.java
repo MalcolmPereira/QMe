@@ -6,9 +6,8 @@
  */
 package com.malcolm.qme.springdata.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.malcolm.qme.springdata.entity.RoleEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author Malcolm

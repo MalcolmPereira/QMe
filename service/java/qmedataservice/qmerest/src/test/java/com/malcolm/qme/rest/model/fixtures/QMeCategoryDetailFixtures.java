@@ -7,7 +7,6 @@
 
 package com.malcolm.qme.rest.model.fixtures;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 
 import java.time.LocalDateTime;

@@ -6,16 +6,15 @@
  */
 package com.malcolm.qme.springdata.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.malcolm.qme.core.domain.UserCategoryLikes;
 import com.malcolm.qme.core.repository.UserCategoryLikesRepository;
 import com.malcolm.qme.springdata.entity.UserCategoryLikesEntity;
 import com.malcolm.qme.springdata.entity.UserCategoryLikesEntityId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Malcolm

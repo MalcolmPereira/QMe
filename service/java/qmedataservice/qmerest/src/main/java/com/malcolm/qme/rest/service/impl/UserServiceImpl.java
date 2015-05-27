@@ -19,6 +19,7 @@ import com.malcolm.qme.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 /**
  * @author Malcolm
  */
+@Service
 public final class UserServiceImpl implements UserService {
 
     /**
@@ -42,44 +44,64 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public QMeUserDetail searchByUser(String userName) throws QMeResourceException {
-        return null;
+        User user = userRepo.findByUserName(userName);
+        if(user == null){
+            throw new QMeResourceNotFoundException("User with User  Name "+userName+" not found");
+        }
+        return getQMeUserDetail(user);
     }
 
     @Override
     public QMeUserDetail searchByEmail(String userEmail) throws QMeResourceException {
-        return null;
+        User user = userRepo.findByUserEmail(userEmail);
+        if(user == null){
+            throw new QMeResourceNotFoundException("User with User Email "+userEmail+" not found");
+        }
+        return getQMeUserDetail(user);
     }
 
     @Override
     public List<QMeUserDetail> list() throws QMeResourceException {
-        return null;
+        return  getQMeUserDetail(userRepo.findAll());
     }
 
     @Override
     public QMeUserDetail searchById(Long id) throws QMeResourceException {
-        return null;
+        User user = userRepo.findById(id);
+        if(user == null){
+            throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
+        }
+        return getQMeUserDetail(user);
     }
 
     @Override
     public QMeUserDetail save(QMeUser qMeUser, Long userId) throws QMeResourceException {
-        return null;
+        User user = getUser(qMeUser);
+        user = userRepo.save(user);
+        return getQMeUserDetail(user);
     }
 
     @Override
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceException {
-        return null;
+        User user = getUser(qMeUser,id,userId);
+        user = userRepo.update(user,userId);
+        return getQMeUserDetail(user);
     }
 
     @Override
     public void delete(Long id) throws QMeResourceException {
-
+        User user = userRepo.findById(id);
+        if(user == null){
+            throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
+        }
+        userRepo.delete(id);
     }
 
     /**
      * Get Use for Create
      *
      * @param qMeuser QMe User
-     * @return
+     * @return User
      * @throws QMeResourceException
      */
     private User getUser(QMeUser qMeuser) throws QMeResourceException {
@@ -116,7 +138,7 @@ public final class UserServiceImpl implements UserService {
      * Get Use for Update
      *
      * @param qMeuser QMe User
-     * @return
+     * @return User
      * @throws QMeResourceException
      */
     private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceException {
@@ -146,14 +168,13 @@ public final class UserServiceImpl implements UserService {
 
     }
 
-
     /**
      * Map User Domain Object to REST Model
      *
      * @param userList List of User
      * @return QMeUser Detail List
      */
-    private List<QMeUserDetail> getQMeCategoryDetail(List<User> userList) {
+    private List<QMeUserDetail> getQMeUserDetail(List<User> userList) {
         List<QMeUserDetail> qMeUsers = new ArrayList<>();
         if (userList == null) {
             return qMeUsers;

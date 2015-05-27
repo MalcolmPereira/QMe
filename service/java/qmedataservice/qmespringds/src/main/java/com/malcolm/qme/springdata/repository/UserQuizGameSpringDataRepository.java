@@ -6,13 +6,12 @@
  */
 package com.malcolm.qme.springdata.repository;
 
-import java.util.List;
-
+import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
-import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
+import java.util.List;
 
 /**
  * @author Malcolm

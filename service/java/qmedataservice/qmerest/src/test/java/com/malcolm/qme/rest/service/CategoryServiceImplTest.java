@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.rest.service.CategoryServiceImplTest.java
  * Date      : 5/23/15
  * Developer : Malcolm
- * Purpose   : Test Cases for Category Service Imple
+ * Purpose   : Test Cases for Category Service Implementation
  */
 
 package com.malcolm.qme.rest.service;
@@ -39,7 +39,7 @@ import static org.mockito.Mockito.when;
 public class CategoryServiceImplTest {
 
     @Mock
-    CategoryRepository categoryRepo;
+    private CategoryRepository categoryRepo;
 
     @InjectMocks
     private final CategoryService categoryService = new CategoryServiceImpl();
