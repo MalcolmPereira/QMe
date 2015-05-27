@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.rest.controller.CategoryControllerTest.java
  * Date      : 5/24/15
  * Developer : Malcolm
- * Purpose   : Test Case for Controller
+ * Purpose   : Test Case for Category Controller
  */
 
 package com.malcolm.qme.rest.controller;

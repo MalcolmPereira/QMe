@@ -16,7 +16,7 @@ public class QMeUserDetail extends QMeUser {
     /**
      * User Id
      */
-    private Long userID;
+    private Long userId;
     /**
      * User Registered Date
      */
@@ -37,15 +37,15 @@ public class QMeUserDetail extends QMeUser {
      * Get User ID
      * @return User ID
      */
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
     /**
      * Set User ID
-     * @param userID User ID
+     * @param userId User ID
      */
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**
@@ -120,7 +120,7 @@ public class QMeUserDetail extends QMeUser {
 
         QMeUserDetail that = (QMeUserDetail) o;
 
-        if (!getUserID().equals(that.getUserID())) return false;
+        if (!getUserId().equals(that.getUserId())) return false;
         if (getUserRegisteredDate() != null ? !getUserRegisteredDate().equals(that.getUserRegisteredDate()) : that.getUserRegisteredDate() != null)
             return false;
         if (getUserUpdateDate() != null ? !getUserUpdateDate().equals(that.getUserUpdateDate()) : that.getUserUpdateDate() != null)
@@ -134,7 +134,7 @@ public class QMeUserDetail extends QMeUser {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getUserID().hashCode();
+        result = 31 * result + getUserId().hashCode();
         result = 31 * result + (getUserRegisteredDate() != null ? getUserRegisteredDate().hashCode() : 0);
         result = 31 * result + (getUserUpdateDate() != null ? getUserUpdateDate().hashCode() : 0);
         result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
@@ -145,7 +145,7 @@ public class QMeUserDetail extends QMeUser {
     @Override
     public String toString() {
         return "QMeUserDetail{" +
-                "userID=" + userID +
+                "userID=" + userId +
                 ", userRegisteredDate=" + userRegisteredDate +
                 ", userUpdateDate=" + userUpdateDate +
                 ", updateUserID=" + updateUserID +

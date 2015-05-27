@@ -194,7 +194,7 @@ public final class UserServiceImpl implements UserService {
      */
     private QMeUserDetail getQMeUserDetail(User user) {
         QMeUserDetail qmeUserDetail = new QMeUserDetail();
-        qmeUserDetail.setUserID(user.getUserID());
+        qmeUserDetail.setUserId(user.getUserID());
         qmeUserDetail.setUserName(user.getUserName());
         qmeUserDetail.setUserFirstName(user.getUserFirstName());
         qmeUserDetail.setUserLastName(user.getUserLastName());

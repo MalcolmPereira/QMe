@@ -57,7 +57,7 @@ public class UserServiceImplTest {
         assertThat(userList.size(),equalTo(5));
 
         for (QMeUserDetail qmeUserDetail : userList) {
-            assertThat(qmeUserDetail.getUserID(), anyOf(
+            assertThat(qmeUserDetail.getUserId(), anyOf(
                             is(1L),
                             is(2L),
                             is(3L),
@@ -83,7 +83,7 @@ public class UserServiceImplTest {
 
         assertNotNull(userDetail);
 
-        assertThat(userDetail.getUserID(), equalTo(1L));
+        assertThat(userDetail.getUserId(), equalTo(1L));
         assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 
@@ -96,7 +96,7 @@ public class UserServiceImplTest {
 
         assertNotNull(userDetail);
 
-        assertThat(userDetail.getUserID(), equalTo(1L));
+        assertThat(userDetail.getUserId(), equalTo(1L));
         assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 
@@ -110,7 +110,7 @@ public class UserServiceImplTest {
 
         assertNotNull(userDetail);
 
-        assertThat(userDetail.getUserID(), equalTo(1L));
+        assertThat(userDetail.getUserId(), equalTo(1L));
         assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 
@@ -130,7 +130,7 @@ public class UserServiceImplTest {
 
         assertNotNull(userDetail);
 
-        assertThat(userDetail.getUserID(), equalTo(1L));
+        assertThat(userDetail.getUserId(), equalTo(1L));
         assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 
@@ -150,7 +150,7 @@ public class UserServiceImplTest {
 
         assertNotNull(userDetail);
 
-        assertThat(userDetail.getUserID(), equalTo(1L));
+        assertThat(userDetail.getUserId(), equalTo(1L));
         assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 
