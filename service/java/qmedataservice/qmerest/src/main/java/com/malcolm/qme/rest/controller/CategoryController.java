@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 /**
  * @author malcolm
  */
@@ -34,21 +37,36 @@ public class CategoryController implements CategoryAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody List<QMeCategoryDetail> list() throws QMeResourceException {
-        return categoryService.list();
+        List<QMeCategoryDetail> categoryDetails = categoryService.list();
+        for (QMeCategoryDetail qmeCategoryDetail : categoryDetails) {
+            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchByName(qmeCategoryDetail.getCategoryName())).withSelfRel());
+            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchById(qmeCategoryDetail.getCategoryId())).withSelfRel());
+        }
+        return categoryDetails;
     }
 
     @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeResourceException {
-       return categoryService.searchByName(categoryName);
+       List<QMeCategoryDetail> categoryDetails = categoryService.searchByName(categoryName);
+       for (QMeCategoryDetail qmeCategoryDetail : categoryDetails) {
+            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchByName(qmeCategoryDetail.getCategoryName())).withSelfRel());
+            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchById(qmeCategoryDetail.getCategoryId())).withSelfRel());
+       }
+       return categoryDetails;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeCategoryDetail searchById(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException {
-        return categoryService.searchById(categoryId);
+        QMeCategoryDetail qmeCategoryDetail = categoryService.searchById(categoryId);
+        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchByName(qmeCategoryDetail.getCategoryName())).withSelfRel());
+        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchById(qmeCategoryDetail.getCategoryId())).withSelfRel());
+        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).create(null)).withSelfRel());
+        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).update(qmeCategoryDetail.getCategoryId(), null)).withSelfRel());
+        return qmeCategoryDetail;
     }
 
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
