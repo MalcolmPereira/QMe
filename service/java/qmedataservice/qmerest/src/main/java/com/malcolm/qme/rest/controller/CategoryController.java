@@ -11,7 +11,7 @@ import com.malcolm.qme.rest.api.CategoryAPI;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import com.malcolm.qme.rest.service.CategoryService;
-import com.malcolm.qme.rest.service.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

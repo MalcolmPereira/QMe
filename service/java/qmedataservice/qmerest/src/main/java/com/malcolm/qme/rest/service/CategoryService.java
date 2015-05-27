@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.service;
 
+import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 

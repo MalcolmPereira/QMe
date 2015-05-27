@@ -7,8 +7,10 @@
 
 package com.malcolm.qme.rest.controller;
 
-import com.malcolm.qme.rest.service.QMeResourceException;
-import com.malcolm.qme.rest.service.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
+import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,10 +28,22 @@ public class QMeExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(QMeExceptionHandler.class);
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Request resource not found. please make sure resource id is valid and available for query or update.")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Requested resource not found. please make sure resource id is valid and available for query or update.")
     @ExceptionHandler(QMeResourceNotFoundException.class)
     public void handleResourceNotFoundException(HttpServletRequest request, Exception ex){
         logger.info("QMeResourceNotFoundException Occurred:: URL="+request.getRequestURL());
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid data for resource. please make sure valid parameters are submitted for create or update.")
+     @ExceptionHandler(QMeInvalidResourceDataException.class)
+     public void handleResourceDataException(HttpServletRequest request, Exception ex){
+        logger.info("QMeInvalidResourceDataException Occurred:: URL="+request.getRequestURL());
+    }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Duplicate data for resource. please make sure valid parameters are submitted for create or update.")
+    @ExceptionHandler(QMeResourceConflictException.class)
+    public void handleResourceConflictException(HttpServletRequest request, Exception ex){
+        logger.info("QMeResourceConflictException Occurred:: URL="+request.getRequestURL());
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "QMe Service Exception occured. Please retry request or contact system admin")

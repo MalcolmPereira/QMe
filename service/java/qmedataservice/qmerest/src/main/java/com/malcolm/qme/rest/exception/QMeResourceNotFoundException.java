@@ -1,11 +1,11 @@
 /**
- * Name      : com.malcolm.qme.rest.service.QMeResourceNotFoundException.java
+ * Name      : com.malcolm.qme.rest.exception.QMeResourceNotFoundException.java
  * Date      : 5/23/15
  * Developer : Malcolm
  * Purpose   : Exception class for resource not found
  */
 
-package com.malcolm.qme.rest.service;
+package com.malcolm.qme.rest.exception;
 
 /**
  * @author Malcolm

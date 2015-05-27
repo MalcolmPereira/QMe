@@ -1,16 +1,19 @@
 /**
- * Name      : com.malcolm.qme.rest.service.CategoryServiceImpl.java
+ * Name      : com.malcolm.qme.rest.service.impl.CategoryServiceImpl.java
  * Date      : 5/20/15
  * Developer : Malcolm
  * Purpose   : QMeCategory Service Implementation
  */
 
-package com.malcolm.qme.rest.service;
+package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
+import com.malcolm.qme.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
  * @Author: malcolm
  */
 @Service
-public final class CategoryServiceImpl implements CategoryService  {
+public final class CategoryServiceImpl implements CategoryService {
     /**
      * QMeCategory Repository
      */

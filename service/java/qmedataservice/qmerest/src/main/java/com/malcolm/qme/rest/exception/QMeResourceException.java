@@ -1,11 +1,11 @@
 /**
- * Name      : com.malcolm.qme.rest.service.QMeResourceException.java
+ * Name      : com.malcolm.qme.rest.exception.QMeResourceException.java
  * Date      : 5/23/15
  * Developer : Malcolm
  * Purpose   : QMe Resource Exception
  */
 
-package com.malcolm.qme.rest.service;
+package com.malcolm.qme.rest.exception;
 
 /**
  * @author Malcolm

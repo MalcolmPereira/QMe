@@ -8,7 +8,7 @@ package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
-import com.malcolm.qme.rest.service.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;

@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.rest.service;
 
+import com.malcolm.qme.rest.exception.QMeResourceException;
+
 import java.util.List;
 
 /**

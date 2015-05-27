@@ -7,7 +7,8 @@
 package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.model.QMeUser;
-import com.malcolm.qme.rest.service.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeUserDetail;
+import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -37,17 +38,21 @@ public interface UserAPI extends QMeAPI {
     String EMAIL_PATH = ROOT_PATH + "/search/email/{" + EMAIL_PARAM_STRING + "}";
 
     /**
+     * QMeUser API Reset Password
+     */
+    String RESET_PASSWORD_PATH = ROOT_PATH + "/reset/password/";
+
+    /**
      * QMeUser API Register User Path
      */
     String REGISTER_PATH = ROOT_PATH + "/register";
-
 
     /**
      * Get All Users
      *
      * @return List of Users
      */
-    List<QMeUser> list() throws QMeResourceException;
+    List<QMeUserDetail> list() throws QMeResourceException;
 
     /**
      * Search by ID
@@ -55,7 +60,7 @@ public interface UserAPI extends QMeAPI {
      * @param userId User ID
      * @return QMe User
      */
-    QMeUser searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+    QMeUserDetail searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
 
     /**
      * Search by User Name
@@ -63,7 +68,7 @@ public interface UserAPI extends QMeAPI {
      * @param userName User Name
      * @return QMe User
      */
-    QMeUser searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceException;
+    QMeUserDetail searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceException;
 
     /**
      * Search by User Email
@@ -71,7 +76,7 @@ public interface UserAPI extends QMeAPI {
      * @param userEmail User Email
      * @return QMe User
      */
-    QMeUser searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+    QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
 
     /**
      * Register New User
@@ -80,7 +85,7 @@ public interface UserAPI extends QMeAPI {
      * @return QMe User
      * @throws QMeResourceException
      */
-    public QMeUser create(QMeUser user) throws QMeResourceException;
+    public QMeUserDetail create(QMeUser user) throws QMeResourceException;
 
     /**
      * Update QMe User
@@ -88,7 +93,15 @@ public interface UserAPI extends QMeAPI {
      * @param user QMe User
      * @return QMe User
      */
-    public QMeUser update(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
+    public QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
+
+    /**
+     * Update QMe User
+     *
+     * @param user QMe User
+     * @return QMe User
+     */
+    public QMeUserDetail resetPassword(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
 
 
     /**
