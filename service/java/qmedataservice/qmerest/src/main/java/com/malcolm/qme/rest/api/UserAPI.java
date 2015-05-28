@@ -30,12 +30,12 @@ public interface UserAPI extends QMeAPI {
     /**
      * QMeUser API Search By Name
      */
-    String NAME_PATH = ROOT_PATH + "/search/{" + NAME_PARAM_STRING + "}";
+    String NAME_PATH = ROOT_PATH + "/search/{" + NAME_PARAM_STRING + ":.+}";
 
     /**
      * QMeUser API Search By Email
      */
-    String EMAIL_PATH = ROOT_PATH + "/search/email/{" + EMAIL_PARAM_STRING + "}";
+    String EMAIL_PATH = ROOT_PATH + "/searchemail/{" + EMAIL_PARAM_STRING + ":.+}";
 
     /**
      * QMeUser API Reset Password

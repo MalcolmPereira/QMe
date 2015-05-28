@@ -55,6 +55,11 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException {
+        System.out.println("Got userEmail "+userEmail);
+        QMeUserDetail t = userService.searchByEmail(userEmail);
+        System.out.println(t.getUserId());
+        System.out.println(t.getUserName());
+
         return userService.searchByEmail(userEmail);
     }
 

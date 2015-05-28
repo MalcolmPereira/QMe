@@ -6,6 +6,8 @@
  **/
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.fixtures.QMeUserDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeUserFixtures;
@@ -27,6 +29,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -73,6 +76,21 @@ public class UserControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testListQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.list()).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/user")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
+    }
+
+    @Test
     public void testSearchById() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
@@ -89,6 +107,38 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userFirstName", is("Simple 1")))
                 .andExpect(jsonPath("$.userLastName", is("Simple User 1")))
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
+        ;
+
+    }
+
+    @Test
+    public void testSearchByIdQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchById(1L)).thenThrow(new QMeResourceNotFoundException("Resource Not Found Error "));
+
+        mockMvc.perform(
+                get("/qme/user/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
+    public void testSearchByIdQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchById(1L)).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/user/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
         ;
 
     }
@@ -115,6 +165,38 @@ public class UserControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testSearchByUserNameQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByUser("suser1")).thenThrow(new QMeResourceNotFoundException("Resource Not Found Error "));
+
+        mockMvc.perform(
+                get("/qme/user/search/suser1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
+    public void testSearchByUserNameQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByUser("suser1")).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/user/search/suser1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
     public void testSearchByUserEmail() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
@@ -122,7 +204,7 @@ public class UserControllerTest extends QMeControllerTest {
         when(userService.searchByEmail("SimpleUser1@User.com")).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
 
         mockMvc.perform(
-                get("/qme/user/search/email/SimpleUser1@User.com")
+                get("/qme/user/searchemail/SimpleUser1@User.com")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -131,6 +213,38 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userFirstName", is("Simple 1")))
                 .andExpect(jsonPath("$.userLastName", is("Simple User 1")))
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
+        ;
+
+    }
+
+    @Test
+    public void testSearchByUserEmailQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeResourceNotFoundException("Resource Not Found Error "));
+
+        mockMvc.perform(
+                get("/qme/user/searchemail/SimpleUser1@User.com")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
+    public void testSearchByUserEmailQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/user/searchemail/SimpleUser1@User.com")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
         ;
 
     }
@@ -161,6 +275,26 @@ public class UserControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testCreateQMeResourceException() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.save(anyObject(), eq((Long) null))).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                post("/qme/user/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
+    }
+
+    @Test
     public void testUpdate() throws Exception {
 
         assertThat(mockMvc, notNullValue());
@@ -186,6 +320,46 @@ public class UserControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testUpdateQMeResourceNotFoundException() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.update(anyObject(), eq(1L), eq(1L))).thenThrow(new QMeResourceNotFoundException("Resource Not Found Error "));
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                put("/qme/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testUpdateQMeResourceException() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.update(anyObject(), eq(1L), eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                put("/qme/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
+    }
+
+    @Test
     public void testDelete() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
@@ -198,5 +372,34 @@ public class UserControllerTest extends QMeControllerTest {
                     .andExpect(status().isOk())
         ;
 
+    }
+
+    @Test
+    public void testDeleteQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        doThrow(new QMeResourceNotFoundException("Resource Not Found Error ")).when(userService).delete(1L);
+
+        mockMvc.perform(
+                delete("/qme/user/1"))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
+    public void testDeleteQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        doThrow(new QMeResourceException("Some Error in the Service")).when(userService).delete(1L);
+
+        mockMvc.perform(
+                delete("/qme/user/1"))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
     }
 }

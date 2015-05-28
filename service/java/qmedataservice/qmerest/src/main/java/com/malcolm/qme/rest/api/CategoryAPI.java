@@ -30,7 +30,7 @@ public interface CategoryAPI extends QMeAPI {
     /**
      * QMeCategory API Search By Name
      */
-    String NAME_PATH = ROOT_PATH + "/search/{" + NAME_PARAM_STRING + "}";
+    String NAME_PATH = ROOT_PATH + "/search/{" + NAME_PARAM_STRING + ":.+}";
 
     /**
      * Get All Categories
