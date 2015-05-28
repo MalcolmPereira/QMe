@@ -6,6 +6,8 @@
  **/
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeUser;
@@ -269,6 +271,46 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userFirstName", is("Simple 1")))
                 .andExpect(jsonPath("$.userLastName", is("Simple User 1")))
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
+        ;
+    }
+
+    @Test
+    public void testCreateQMeInvalidResourceDataException() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.save(anyObject(), eq((Long) null))).thenThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service"));
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                post("/qme/user/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testCreateQMeResourceConflictException() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.save(anyObject(), eq((Long) null))).thenThrow(new QMeResourceConflictException("Some conflicting data error in the Service"));
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                post("/qme/user/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andDo(print())
         ;
     }
 
