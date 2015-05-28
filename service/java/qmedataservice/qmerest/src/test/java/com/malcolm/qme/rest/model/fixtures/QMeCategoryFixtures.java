@@ -1,5 +1,5 @@
 /**
- * Name      : com.malcolm.qme.rest.model.fixtures.QMeCategoryFixture.java
+ * Name      : com.malcolm.qme.rest.model.fixtures.QMeCategoryFixtures.java
  * Date      : 5/25/15
  * Developer : Malcolm
  * Purpose   : Test Fixtures for QMe Category
@@ -13,7 +13,7 @@ import com.malcolm.qme.rest.model.QMeCategory;
 /**
  * @author Malcolm
  */
-public class QMeCategoryFixture extends QMeResourceFixture<QMeCategory>{
+public class QMeCategoryFixtures extends QMeResourceFixture<QMeCategory>{
 
     /**
      * Simple QMe Category

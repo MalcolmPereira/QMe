@@ -11,7 +11,7 @@ import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryDetailFixtures;
-import com.malcolm.qme.rest.model.fixtures.QMeCategoryFixture;
+import com.malcolm.qme.rest.model.fixtures.QMeCategoryFixtures;
 import com.malcolm.qme.rest.service.CategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -187,13 +187,13 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         when(categoryService.save(anyObject(),eq(1L))).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetail());
 
-        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
 
         mockMvc.perform(
                     post("/qme/category")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                        .content(QMeCategoryFixtures.toJson(qmeCategory))
                             .accept(MediaType.APPLICATION_JSON))
                                 .andDo(print())
                                 .andExpect(status().isOk())
@@ -210,13 +210,13 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         when(categoryService.save(anyObject(),eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
 
-        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
 
         mockMvc.perform(
                 post("/qme/category")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                        .content(QMeCategoryFixtures.toJson(qmeCategory))
                             .accept(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isInternalServerError())
                                 .andDo(print())
@@ -231,13 +231,13 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetail());
 
-        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
 
         mockMvc.perform(
                 put("/qme/category/1")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(QMeCategoryFixture.toJson(qmeCategory))
+                    .content(QMeCategoryFixtures.toJson(qmeCategory))
                         .accept(MediaType.APPLICATION_JSON))
                             .andDo(print())
                             .andExpect(status().isOk())
@@ -254,13 +254,13 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenThrow(new QMeResourceNotFoundException("Some Error in the Service"));
 
-        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
 
         mockMvc.perform(
                 put("/qme/category/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                        .content(QMeCategoryFixtures.toJson(qmeCategory))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print())
@@ -274,13 +274,13 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
 
-        QMeCategory qmeCategory = QMeCategoryFixture.simpleQMeCategory();
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
 
         mockMvc.perform(
                 put("/qme/category/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(QMeCategoryFixture.toJson(qmeCategory))
+                        .content(QMeCategoryFixtures.toJson(qmeCategory))
                         .accept(MediaType.APPLICATION_JSON))
                             .andExpect(status().isInternalServerError())
                             .andDo(print())

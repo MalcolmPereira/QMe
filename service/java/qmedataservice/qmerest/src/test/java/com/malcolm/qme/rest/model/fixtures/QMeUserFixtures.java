@@ -1,5 +1,5 @@
 /**
- * Name      : com.malcolm.qme.rest.model.fixtures.QMeUserFixture.java
+ * Name      : com.malcolm.qme.rest.model.fixtures.QMeUserFixtures.java
  * Date      : 5/27/2015
  * Developer : Malcolm
  * Purpose   : Test Fixtures for QMe User
@@ -11,7 +11,7 @@ import com.malcolm.qme.rest.model.QMeUser;
 /**
  * @author Malcolm
  */
-public class QMeUserFixture extends QMeResourceFixture<QMeUser>{
+public class QMeUserFixtures extends QMeResourceFixture<QMeUser>{
 
     /**
      * Simple QMe User
