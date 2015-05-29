@@ -7,6 +7,7 @@
 
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeUser;
@@ -23,12 +24,17 @@ import java.util.List;
  */
 @RestController
 public class UserController implements UserAPI {
-
     /**
      * Category Service
      */
     @Autowired
     private UserService userService;
+
+    /**
+     * AtomicTokenGenerator
+     */
+    @Autowired
+    private AtomicTokenGenerator atomicTokenGenerator;
 
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
