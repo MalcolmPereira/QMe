@@ -20,14 +20,16 @@ public interface UserRoleRepository extends QMeRepository<UserRole, Long> {
      *
      * @param userID User ID
      * @return UserRole for User ID
+     * @throws QMeException
      */
-    List<UserRole> findByUserId(Long userID);
+    List<UserRole> findByUserId(Long userID) throws QMeException;
 
     /**
      * Find By Role ID
      *
      * @param roleID Role ID
      * @return UserRole for Role ID
+     * @throws QMeException
      */
-    List<UserRole> findByRoleId(Integer roleID);
+    List<UserRole> findByRoleId(Integer roleID) throws QMeException;
 }

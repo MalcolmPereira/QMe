@@ -8,6 +8,7 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
@@ -44,57 +45,96 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public QMeUserDetail searchByUser(String userName) throws QMeResourceException {
-        User user = userRepo.findByUserName(userName);
-        if(user == null){
-            throw new QMeResourceNotFoundException("User with User  Name "+userName+" not found");
+        try{
+            User user = userRepo.findByUserName(userName);
+            if(user == null){
+                throw new QMeResourceNotFoundException("User with User  Name "+userName+" not found");
+            }
+            return getQMeUserDetail(user);
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
         }
-        return getQMeUserDetail(user);
     }
 
     @Override
     public QMeUserDetail searchByEmail(String userEmail) throws QMeResourceException {
-        User user = userRepo.findByUserEmail(userEmail);
-        if(user == null){
-            throw new QMeResourceNotFoundException("User with User Email "+userEmail+" not found");
+        try{
+            User user = userRepo.findByUserEmail(userEmail);
+            if(user == null){
+                throw new QMeResourceNotFoundException("User with User Email "+userEmail+" not found");
+            }
+            return getQMeUserDetail(user);
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
         }
-        return getQMeUserDetail(user);
     }
 
     @Override
     public List<QMeUserDetail> list() throws QMeResourceException {
-        return  getQMeUserDetail(userRepo.findAll());
+        try{
+            return  getQMeUserDetail(userRepo.findAll());
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
+        }catch(Exception err){
+            throw new QMeResourceException(err.getMessage(),err);
+        }
     }
 
     @Override
     public QMeUserDetail searchById(Long id) throws QMeResourceException {
-        User user = userRepo.findById(id);
-        if(user == null){
-            throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
+        try{
+            User user = userRepo.findById(id);
+            if(user == null){
+                throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
+            }
+            return getQMeUserDetail(user);
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
         }
-        return getQMeUserDetail(user);
     }
 
     @Override
     public QMeUserDetail save(QMeUser qMeUser, Long userId) throws QMeResourceException {
-        User user = getUser(qMeUser);
-        user = userRepo.save(user);
-        return getQMeUserDetail(user);
+        try{
+            User user = getUser(qMeUser);
+            user = userRepo.save(user);
+            return getQMeUserDetail(user);
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
+        }catch(Exception err){
+            throw new QMeResourceException(err.getMessage(),err);
+        }
     }
 
     @Override
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceException {
-        User user = getUser(qMeUser,id,userId);
-        user = userRepo.update(user,userId);
-        return getQMeUserDetail(user);
+        try{
+            User user = getUser(qMeUser,id,userId);
+            user = userRepo.update(user,userId);
+            return getQMeUserDetail(user);
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
+        }catch(Exception err){
+            throw new QMeResourceException(err.getMessage(),err);
+        }
     }
 
     @Override
     public void delete(Long id) throws QMeResourceException {
-        User user = userRepo.findById(id);
-        if(user == null){
-            throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
+        try{
+            User user = userRepo.findById(id);
+            if(user == null){
+                throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
+            }
+            userRepo.delete(id);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }
-        userRepo.delete(id);
     }
 
     /**
@@ -105,33 +145,39 @@ public final class UserServiceImpl implements UserService {
      * @throws QMeResourceException
      */
     private User getUser(QMeUser qMeuser) throws QMeResourceException {
-        if(qMeuser.getUserName() == null || qMeuser.getUserName().trim().length() == 0){
-            throw new QMeInvalidResourceDataException("Valid User Name is required");
+        try{
+            if(qMeuser.getUserName() == null || qMeuser.getUserName().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User Name is required");
+            }
+            if(qMeuser.getUserPassword() == null || qMeuser.getUserPassword().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User Password is required");
+            }
+            if(qMeuser.getUserEmail() == null || qMeuser.getUserEmail().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User Email is required");
+            }
+            if(qMeuser.getUserFirstName() == null || qMeuser.getUserFirstName().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User First Name is required");
+            }
+            User user = userRepo.findByUserName(qMeuser.getUserName());
+            if(user != null){
+                throw new QMeResourceConflictException("User with username already exists, please use valid user name");
+            }
+            user = userRepo.findByUserEmail(qMeuser.getUserEmail());
+            if(user != null){
+                throw new QMeResourceConflictException("User with email address already exists, please use valid unique user email address");
+            }
+            return new User(
+                    qMeuser.getUserName(),
+                    passcodeEncoder.encode(qMeuser.getUserPassword()),
+                    qMeuser.getUserFirstName(),
+                    qMeuser.getUserLastName(),
+                    qMeuser.getUserEmail()
+            );
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }
-        if(qMeuser.getUserPassword() == null || qMeuser.getUserPassword().trim().length() == 0){
-            throw new QMeInvalidResourceDataException("Valid User Password is required");
-        }
-        if(qMeuser.getUserEmail() == null || qMeuser.getUserEmail().trim().length() == 0){
-            throw new QMeInvalidResourceDataException("Valid User Email is required");
-        }
-        if(qMeuser.getUserFirstName() == null || qMeuser.getUserFirstName().trim().length() == 0){
-            throw new QMeInvalidResourceDataException("Valid User First Name is required");
-        }
-        User user = userRepo.findByUserName(qMeuser.getUserName());
-        if(user != null){
-            throw new QMeResourceConflictException("User with username already exists, please use valid user name");
-        }
-        user = userRepo.findByUserEmail(qMeuser.getUserEmail());
-        if(user != null){
-            throw new QMeResourceConflictException("User with email address already exists, please use valid unique user email address");
-        }
-        return new User(
-                qMeuser.getUserName(),
-                passcodeEncoder.encode(qMeuser.getUserPassword()),
-                qMeuser.getUserFirstName(),
-                qMeuser.getUserLastName(),
-                qMeuser.getUserEmail()
-        );
     }
 
     /**
@@ -142,29 +188,34 @@ public final class UserServiceImpl implements UserService {
      * @throws QMeResourceException
      */
     private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceException {
-        User currentUser = userRepo.findById(userId);
-        if(currentUser == null){
-            throw new QMeResourceNotFoundException("User with User  ID "+userId+" not found");
+        try{
+            User currentUser = userRepo.findById(userId);
+            if(currentUser == null){
+                throw new QMeResourceNotFoundException("User with User  ID "+userId+" not found");
+            }
+            String firstName = currentUser.getUserFirstName();
+            if(qMeuser.getUserFirstName() != null && qMeuser.getUserFirstName().trim().length() > 0){
+                firstName = qMeuser.getUserFirstName();
+            }
+            String lastName = currentUser.getUserLastName();
+            if(qMeuser.getUserLastName() != null){
+                lastName = qMeuser.getUserLastName();
+            }
+            return new User(
+                    currentUser.getUserID(),
+                    currentUser.getUserName(),
+                    currentUser.getUserPassword(),
+                    firstName,
+                    lastName,
+                    currentUser.getUserEmail(),
+                    currentUser.getUserRegisteredDate(),
+                    LocalDateTime.now(),
+                    updateUserId
+            );
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }
-        String firstName = currentUser.getUserFirstName();
-        if(qMeuser.getUserFirstName() != null && qMeuser.getUserFirstName().trim().length() > 0){
-            firstName = qMeuser.getUserFirstName();
-        }
-        String lastName = currentUser.getUserLastName();
-        if(qMeuser.getUserLastName() != null){
-            lastName = qMeuser.getUserLastName();
-        }
-        return new User(
-                currentUser.getUserID(),
-                currentUser.getUserName(),
-                currentUser.getUserPassword(),
-                firstName,
-                lastName,
-                currentUser.getUserEmail(),
-                currentUser.getUserRegisteredDate(),
-                LocalDateTime.now(),
-                updateUserId
-        );
 
     }
 

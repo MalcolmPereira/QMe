@@ -10,10 +10,7 @@ import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserQuizLikes;
-import com.malcolm.qme.core.repository.CategoryRepository;
-import com.malcolm.qme.core.repository.QuizRepository;
-import com.malcolm.qme.core.repository.UserQuizLikesRepository;
-import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,7 +60,7 @@ public class UserQuizLikesRepositoryImplTest {
     private UserQuizLikesRepository userQuizLikesRepository;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userQuizLikesRepository);
         final List<UserQuizLikes> userQuizLikesList = userQuizLikesRepository.findAll();
         assertNotNull(userQuizLikesList);
@@ -71,7 +68,7 @@ public class UserQuizLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userQuizLikesRepository);
         UserQuizLikes userQuizLikes = new UserQuizLikes(1L, 1L);
         userQuizLikes = userQuizLikesRepository.findById(userQuizLikes);
@@ -81,7 +78,7 @@ public class UserQuizLikesRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(userRepo);
 
         assertNotNull(categoryRepo);
@@ -138,7 +135,7 @@ public class UserQuizLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
         assertNotNull(userRepo);
 
         assertNotNull(categoryRepo);
@@ -201,7 +198,7 @@ public class UserQuizLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuizId() {
+    public void testFindByQuizId() throws QMeException {
         assertNotNull(userRepo);
 
         assertNotNull(categoryRepo);

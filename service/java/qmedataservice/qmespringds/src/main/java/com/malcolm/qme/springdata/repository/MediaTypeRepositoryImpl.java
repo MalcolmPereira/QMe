@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.MediaType;
 import com.malcolm.qme.core.repository.MediaTypeRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.MediaTypeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,36 +30,56 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	private MediaTypeSpringDataRepository mediaTypeSpringDataRepository;
 
 	@Override
-	public List<MediaType> findAll() {
-		return(getMediaType(mediaTypeSpringDataRepository.findAll()));
-	}
-
-	@Override
-	public MediaType findById(Integer id) {
-		final MediaTypeEntity mediaTypeEntity = mediaTypeSpringDataRepository.findOne(id);
-		if(mediaTypeEntity != null){
-			return getMediaType(mediaTypeEntity);
+	public List<MediaType> findAll() throws QMeException {
+		try{
+			return(getMediaType(mediaTypeSpringDataRepository.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public MediaType save(MediaType mediaType) {
-		MediaTypeEntity mediaTypeEntity = getMediaTypeEntity(mediaType);
-		mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);
-		return getMediaType(mediaTypeEntity);
+	public MediaType findById(Integer id) throws QMeException {
+		try{
+			final MediaTypeEntity mediaTypeEntity = mediaTypeSpringDataRepository.findOne(id);
+			if(mediaTypeEntity != null){
+				return getMediaType(mediaTypeEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public MediaType update(MediaType mediaType, Long updateUserId) {
-		MediaTypeEntity mediaTypeEntity = getMediaTypeEntity(mediaType);
-		mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);
-		return getMediaType(mediaTypeEntity);
+	public MediaType save(MediaType mediaType) throws QMeException {
+		try{
+			MediaTypeEntity mediaTypeEntity = getMediaTypeEntity(mediaType);
+			mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);
+			return getMediaType(mediaTypeEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(Integer id) {
-		mediaTypeSpringDataRepository.delete(id);
+	public MediaType update(MediaType mediaType, Long updateUserId) throws QMeException {
+		try{
+			MediaTypeEntity mediaTypeEntity = getMediaTypeEntity(mediaType);
+			mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);
+			return getMediaType(mediaTypeEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void delete(Integer id) throws QMeException {
+		try{
+			mediaTypeSpringDataRepository.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**

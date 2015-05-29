@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuiz;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,37 +31,61 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	
 	@Override
-	public List<UserQuiz> findAll() {
-		return (getUserQuiz(userQuizSpringDataRepository.findAll()));
+	public List<UserQuiz> findAll() throws QMeException {
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public List<UserQuiz> findByUserId(Long userID) {
-		return (getUserQuiz(userQuizSpringDataRepository.findByUserId(userID)));
+	public List<UserQuiz> findByUserId(Long userID) throws QMeException {
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findByUserId(userID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public List<UserQuiz> findCompletedByUserId(Long userID) {
-		return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID,(byte)1)));
+	public List<UserQuiz> findCompletedByUserId(Long userID) throws QMeException {
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID,(byte)1)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public List<UserQuiz> findPendingByUserId(Long userID) {
-		return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID,(byte)0)));
+	public List<UserQuiz> findPendingByUserId(Long userID) throws QMeException {
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID,(byte)0)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public List<UserQuiz> findByQuizId(Long quizID) {
-		return (getUserQuiz(userQuizSpringDataRepository.findByQuizId(quizID)));
+	public List<UserQuiz> findByQuizId(Long quizID) throws QMeException {
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findByQuizId(quizID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 	
 	@Override
-	public UserQuiz findById(Long id) {
-		UserQuizEntity userQuizEntity = userQuizSpringDataRepository.findOne(id);
-		if(userQuizEntity != null){
-			return  getUserQuiz(userQuizEntity);
+	public UserQuiz findById(Long id) throws QMeException {
+		try{
+			UserQuizEntity userQuizEntity = userQuizSpringDataRepository.findOne(id);
+			if(userQuizEntity != null){
+				return  getUserQuiz(userQuizEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override

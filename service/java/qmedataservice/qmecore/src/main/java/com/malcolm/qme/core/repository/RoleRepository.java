@@ -16,6 +16,7 @@ public interface RoleRepository extends QMeRepository<Role,Integer> {
      * Find User By Role Name
      * @param roleName Role Name
      * @return Role List by role name
+     * @throws QMeException
      */
-    Role findByRoleName(String roleName);
+    Role findByRoleName(String roleName) throws QMeException;
 }

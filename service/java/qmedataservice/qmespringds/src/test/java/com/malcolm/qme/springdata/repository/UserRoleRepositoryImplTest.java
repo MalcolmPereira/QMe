@@ -10,6 +10,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.Role;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
@@ -56,7 +57,7 @@ public class UserRoleRepositoryImplTest {
     private RoleRepository roleRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userRoleRepository);
         List<UserRole> userRoles = userRoleRepository.findAll();
         assertNotNull(userRoles);
@@ -64,7 +65,7 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userRoleRepository);
         UserRole userRole = userRoleRepository.findById(1L);
         assertNotNull(userRole);
@@ -72,7 +73,7 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(userRoleRepository);
 
@@ -127,7 +128,7 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
 
         assertNotNull(userRoleRepository);
 
@@ -185,7 +186,7 @@ public class UserRoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindByRoleId() {
+    public void testFindByRoleId() throws QMeException {
 
         assertNotNull(userRoleRepository);
 

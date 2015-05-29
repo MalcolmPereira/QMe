@@ -22,7 +22,8 @@ public interface AnswerOptionMediaRepository extends QMeRepository<AnswerOptionM
      *
      * @param answerOptionID Answer Option ID
      * @return AnswerOptionMedia List for Answer Option ID
+     * @throws QMeException
      */
-    List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID);
+     List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID) throws QMeException;
 
 }

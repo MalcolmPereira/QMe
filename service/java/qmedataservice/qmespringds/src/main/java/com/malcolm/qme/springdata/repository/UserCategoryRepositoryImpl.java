@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserCategory;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserCategoryRepository;
 import com.malcolm.qme.springdata.entity.UserCategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,41 +29,65 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
     private UserCategorySpringDataRepository userCategorySpringDataRepository;
 	
 	@Override
-	public List<UserCategory> findAll() {
-		return(getUserCategory(userCategorySpringDataRepository.findAll()));
+	public List<UserCategory> findAll() throws QMeException {
+		try{
+			return(getUserCategory(userCategorySpringDataRepository.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 	
 	@Override
-	public List<UserCategory> findByUserID(Long userID) {
-		return(getUserCategory(userCategorySpringDataRepository.findByUserId(userID)));
-	}
-
-	@Override
-	public UserCategory findById(Long id) {
-		UserCategoryEntity userCategoryEntity = userCategorySpringDataRepository.findOne(id);
-		if(userCategoryEntity != null){
-			return getUserCategory(userCategoryEntity);
+	public List<UserCategory> findByUserID(Long userID) throws QMeException {
+		try{
+			return(getUserCategory(userCategorySpringDataRepository.findByUserId(userID)));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public UserCategory save(UserCategory userCategory) {
-		UserCategoryEntity userCategoryEntity = getUserCategoryEntity(userCategory);
-		userCategoryEntity = userCategorySpringDataRepository.save(userCategoryEntity);
-		return getUserCategory(userCategoryEntity);
+	public UserCategory findById(Long id) throws QMeException {
+		try{
+			UserCategoryEntity userCategoryEntity = userCategorySpringDataRepository.findOne(id);
+			if(userCategoryEntity != null){
+				return getUserCategory(userCategoryEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public UserCategory update(UserCategory userCategory, Long updateUserId) {
-		UserCategoryEntity userCategoryEntity = getUserCategoryEntity(userCategory);
-		userCategoryEntity = userCategorySpringDataRepository.save(userCategoryEntity);
-		return getUserCategory(userCategoryEntity);
+	public UserCategory save(UserCategory userCategory) throws QMeException {
+		try{
+			UserCategoryEntity userCategoryEntity = getUserCategoryEntity(userCategory);
+			userCategoryEntity = userCategorySpringDataRepository.save(userCategoryEntity);
+			return getUserCategory(userCategoryEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(Long id) {
-		userCategorySpringDataRepository.delete(id);
+	public UserCategory update(UserCategory userCategory, Long updateUserId) throws QMeException {
+		try{
+			UserCategoryEntity userCategoryEntity = getUserCategoryEntity(userCategory);
+			userCategoryEntity = userCategorySpringDataRepository.save(userCategoryEntity);
+			return getUserCategory(userCategoryEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+		try{
+			userCategorySpringDataRepository.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**

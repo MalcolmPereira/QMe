@@ -20,6 +20,7 @@ public interface AnswerOptionRepository extends QMeRepository<AnswerOption,Long>
      *
      * @param questionID Question ID
      * @return Answer Options for Question ID
+     * @throws QMeException
      */
-    List<AnswerOption> findByQuestionId(Long questionID);
+    List<AnswerOption> findByQuestionId(Long questionID) throws QMeException;
 }

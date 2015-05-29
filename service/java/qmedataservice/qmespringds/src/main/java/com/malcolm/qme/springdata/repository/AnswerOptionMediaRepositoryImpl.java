@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.AnswerOptionMedia;
 import com.malcolm.qme.core.repository.AnswerOptionMediaRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.AnswerOptionMediaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,41 +29,65 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 	private AnswerOptionMediaSpringDataRepository answerOptionMediaSpringDataRepository;
 
 	@Override
-	public List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID) {
-		return(getAnswerOptionMedia(answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID)));
-	}
-
-	@Override
-	public List<AnswerOptionMedia> findAll() {
-		return(getAnswerOptionMedia(answerOptionMediaSpringDataRepository.findAll()));
-	}
-
-	@Override
-	public AnswerOptionMedia findById(Long id) {
-		final AnswerOptionMediaEntity answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(id);
-		if(answerOptionMediaEntity != null){
-			return getAnswerOptionMedia(answerOptionMediaEntity);
+	public List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID) throws QMeException {
+		try {
+			return (getAnswerOptionMedia(answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID)));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public AnswerOptionMedia save(AnswerOptionMedia answerOptionMedia) {
-		AnswerOptionMediaEntity answerOptionMediaEntity = getAnswerOptionMediaEntity(answerOptionMedia);
-		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-		return getAnswerOptionMedia(answerOptionMediaEntity);
+	public List<AnswerOptionMedia> findAll() throws QMeException {
+        try{
+		    return(getAnswerOptionMedia(answerOptionMediaSpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public AnswerOptionMedia update(AnswerOptionMedia answerOptionMedia, Long updateUserId) {
-		AnswerOptionMediaEntity answerOptionMediaEntity = getAnswerOptionMediaEntity(answerOptionMedia);
-		answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-		return getAnswerOptionMedia(answerOptionMediaEntity);
+	public AnswerOptionMedia findById(Long id) throws QMeException {
+		try{
+            final AnswerOptionMediaEntity answerOptionMediaEntity = answerOptionMediaSpringDataRepository.findOne(id);
+		    if(answerOptionMediaEntity != null){
+			    return getAnswerOptionMedia(answerOptionMediaEntity);
+		    }
+		    return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public void delete(Long id) {
-		answerOptionMediaSpringDataRepository.delete(id);
+	public AnswerOptionMedia save(AnswerOptionMedia answerOptionMedia) throws QMeException {
+        try{
+		    AnswerOptionMediaEntity answerOptionMediaEntity = getAnswerOptionMediaEntity(answerOptionMedia);
+		    answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
+		    return getAnswerOptionMedia(answerOptionMediaEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
+	@Override
+	public AnswerOptionMedia update(AnswerOptionMedia answerOptionMedia, Long updateUserId) throws QMeException {
+        try{
+		    AnswerOptionMediaEntity answerOptionMediaEntity = getAnswerOptionMediaEntity(answerOptionMedia);
+		    answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
+		    return getAnswerOptionMedia(answerOptionMediaEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+        try{
+		    answerOptionMediaSpringDataRepository.delete(id);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	/**

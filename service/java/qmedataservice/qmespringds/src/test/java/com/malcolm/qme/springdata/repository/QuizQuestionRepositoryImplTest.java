@@ -10,10 +10,7 @@ import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.domain.QuizQuestion;
-import com.malcolm.qme.core.repository.CategoryRepository;
-import com.malcolm.qme.core.repository.QuestionRepository;
-import com.malcolm.qme.core.repository.QuizQuestionRepository;
-import com.malcolm.qme.core.repository.QuizRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,7 +60,7 @@ public class QuizQuestionRepositoryImplTest {
     private QuizRepository quizRepository;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(quizQuestionRepository);
         final List<QuizQuestion> quizQuestionList = quizQuestionRepository.findAll();
         assertNotNull(quizQuestionList);
@@ -71,7 +68,7 @@ public class QuizQuestionRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(quizQuestionRepository);
         final QuizQuestion quizQuestion = quizQuestionRepository.findById(1L);
         assertNotNull(quizQuestion);
@@ -79,7 +76,7 @@ public class QuizQuestionRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(categoryRepo);
 
@@ -183,7 +180,7 @@ public class QuizQuestionRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuizId() {
+    public void testFindByQuizId() throws QMeException {
 
         assertNotNull(categoryRepo);
 
@@ -290,7 +287,7 @@ public class QuizQuestionRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuestionId() {
+    public void testFindByQuestionId() throws QMeException {
 
         assertNotNull(categoryRepo);
 

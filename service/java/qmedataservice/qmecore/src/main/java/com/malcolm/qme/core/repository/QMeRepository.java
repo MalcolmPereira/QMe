@@ -17,14 +17,14 @@ interface QMeRepository<T,I> {
      * Find all
      * @return List of T
      */
-     List<T> findAll();
+     List<T> findAll() throws QMeException;
 
     /**
      * Find By Id
      * @param id ID of Entity
      * @return One Object of type  T
      */
-     T findById(I id);
+     T findById(I id) throws QMeException;
 
     /**
      * Save
@@ -32,7 +32,7 @@ interface QMeRepository<T,I> {
      * @param t Object of type  T
      * @return Object of type  T
      */
-     T save(T t);
+     T save(T t) throws QMeException;
 
     /**
      * Update
@@ -41,12 +41,12 @@ interface QMeRepository<T,I> {
      * @param updateUserId Update User ID
      * @return Object of type  T
      */
-     T update(T t, Long updateUserId);
+     T update(T t, Long updateUserId) throws QMeException;
 
     /**
      * Delete
      *
      * @param id ID of Entity
      */
-     void delete(I id);
+     void delete(I id) throws QMeException;
 }

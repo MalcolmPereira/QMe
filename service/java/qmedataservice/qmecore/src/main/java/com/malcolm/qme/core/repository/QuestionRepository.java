@@ -20,13 +20,15 @@ public interface QuestionRepository extends QMeRepository<Question,Long> {
      *
      * @param categoryID Category ID
      * @return Question List for Category ID
+     * @throws QMeException
      */
-    List<Question> findByCategoryId(Long categoryID);
+    List<Question> findByCategoryId(Long categoryID) throws QMeException;
 
     /**
      * Find By Most Liked
      *
      * @return Questions sorted by Likes
+     * @throws QMeException
      */
-    List<Question> findByMostLiked();
+    List<Question> findByMostLiked() throws QMeException;
 }

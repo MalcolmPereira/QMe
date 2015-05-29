@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Question;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.entity.QuestionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,51 +30,79 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     private QuestionSpringDataRepository questionSpringDataRepository;
 	
     @Override
-	public List<Question> findByCategoryId(Long categoryID) {
-    	return(getQuestion(questionSpringDataRepository.findByCatId(categoryID)));
+	public List<Question> findByCategoryId(Long categoryID) throws QMeException {
+		try{
+    	    return(getQuestion(questionSpringDataRepository.findByCatId(categoryID)));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public List<Question> findByMostLiked() {
-		return(getQuestion(questionSpringDataRepository.findTop50ByOrderByQuestionLikesDesc()));
+	public List<Question> findByMostLiked() throws QMeException {
+        try{
+		    return(getQuestion(questionSpringDataRepository.findTop50ByOrderByQuestionLikesDesc()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
     
 	@Override
-	public List<Question> findAll() {
-		return(getQuestion(questionSpringDataRepository.findAll()));
-	}
-
-	@Override
-	public Question findById(Long id) {
-		QuestionEntity questionEntity = questionSpringDataRepository.findOne(id);
-		if(questionEntity != null){
-            return getQuestion(questionEntity);
+	public List<Question> findAll() throws QMeException {
+        try{
+		    return(getQuestion(questionSpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
         }
-        return null;
 	}
 
 	@Override
-	public Question save(Question question) {
-		QuestionEntity questionEntity =  getQuestionEntity(question);
-		questionEntity.setQuestionCreateDate(LocalDateTime.now());
-		questionEntity.setQuestionUpdateDate(LocalDateTime.now());
-		questionEntity.setQuestionUpdateUser(question.getCreateUserID());
-		questionEntity = questionSpringDataRepository.save(questionEntity);
-        return getQuestion(questionEntity);
+	public Question findById(Long id) throws QMeException {
+        try{
+		    QuestionEntity questionEntity = questionSpringDataRepository.findOne(id);
+		    if(questionEntity != null){
+                return getQuestion(questionEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public Question update(Question question, Long updateUserId) {
-		QuestionEntity questionEntity =  getQuestionEntity(question);
-		questionEntity.setQuestionUpdateDate(LocalDateTime.now());
-		questionEntity.setQuestionUpdateUser(updateUserId);
-		questionEntity = questionSpringDataRepository.save(questionEntity);
-        return getQuestion(questionEntity);
+	public Question save(Question question) throws QMeException {
+        try{
+		    QuestionEntity questionEntity =  getQuestionEntity(question);
+		    questionEntity.setQuestionCreateDate(LocalDateTime.now());
+		    questionEntity.setQuestionUpdateDate(LocalDateTime.now());
+		    questionEntity.setQuestionUpdateUser(question.getCreateUserID());
+		    questionEntity = questionSpringDataRepository.save(questionEntity);
+            return getQuestion(questionEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public void delete(Long id) {
-		questionSpringDataRepository.delete(id);
+	public Question update(Question question, Long updateUserId) throws QMeException {
+        try{
+            QuestionEntity questionEntity =  getQuestionEntity(question);
+            questionEntity.setQuestionUpdateDate(LocalDateTime.now());
+            questionEntity.setQuestionUpdateUser(updateUserId);
+            questionEntity = questionSpringDataRepository.save(questionEntity);
+            return getQuestion(questionEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+        try{
+		    questionSpringDataRepository.delete(id);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	/**

@@ -19,6 +19,7 @@ public interface UserCategoryRepository extends QMeRepository<UserCategory,Long>
      * Find By User ID
      * @param userID  User ID
      * @return UserCategory by User ID
+     * @throws QMeException
      */
-    List<UserCategory> findByUserID(Long userID);
+    List<UserCategory> findByUserID(Long userID) throws QMeException;
 }

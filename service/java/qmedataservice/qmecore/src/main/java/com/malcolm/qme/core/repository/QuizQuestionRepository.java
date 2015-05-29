@@ -18,13 +18,15 @@ public interface QuizQuestionRepository extends QMeRepository<QuizQuestion,Long>
      * Find By Quiz Id
      * @param quizID Quiz Id
      * @return QuizQuestion List for Quiz ID
+     * @throws QMeException
      */
-    List<QuizQuestion> findByQuizId(Long quizID);
+    List<QuizQuestion> findByQuizId(Long quizID) throws QMeException;
 
     /**
      * Find By Question Id
      * @param questionID Question Id
      * @return QuizQuestion List for Question ID
+     * @throws QMeException
      */
-    List<QuizQuestion> findByQuestionId(Long questionID);
+    List<QuizQuestion> findByQuestionId(Long questionID) throws QMeException;
 }

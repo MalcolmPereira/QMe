@@ -10,6 +10,7 @@ import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserCategoryLikes;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserCategoryLikesRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
@@ -56,7 +57,7 @@ public class UserCategoryLikesRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userCategoryLikesRepo);
         List<UserCategoryLikes> userCategoryLikesList = userCategoryLikesRepo.findAll();
         assertNotNull(userCategoryLikesList);
@@ -64,7 +65,7 @@ public class UserCategoryLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userCategoryLikesRepo);
         UserCategoryLikes userCategoryLikes = new UserCategoryLikes(1L, 1L);
         userCategoryLikes = userCategoryLikesRepo.findById(userCategoryLikes);
@@ -74,7 +75,7 @@ public class UserCategoryLikesRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(userCategoryLikesRepo);
 
@@ -117,7 +118,7 @@ public class UserCategoryLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
 
         assertNotNull(userCategoryLikesRepo);
 

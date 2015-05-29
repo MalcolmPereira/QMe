@@ -8,6 +8,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuizGame;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizGameRepository;
 import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
 import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
@@ -30,57 +31,85 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     private UserQuizGameSpringDataRepository userQuizGameSpringDataRepository;
 
     @Override
-    public List<UserQuizGame> findAll() {
-        return(getUserQuizGame(userQuizGameSpringDataRepository.findAll()));
+    public List<UserQuizGame> findAll() throws QMeException {
+        try{
+            return(getUserQuizGame(userQuizGameSpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
     }
     
     @Override
-    public List<UserQuizGame> findByUserId(Long userID) {
-    	return(getUserQuizGame(userQuizGameSpringDataRepository.findByUserId(userID)));
-    }
-
-    @Override
-    public UserQuizGame findByGameToken(Long userGameToken) {
-    	return(getUserQuizGame(userQuizGameSpringDataRepository.findByGameToken(userGameToken)));
-    }
-
-    @Override
-    public UserQuizGame findById(UserQuizGame userQuizGame) {
-    	UserQuizGameEntityId id = getUserQuizGameEntityId(userQuizGame);
-    	UserQuizGameEntity userQuizGameEntity = userQuizGameSpringDataRepository.findOne(id);
-        if(userQuizGameEntity != null){
-           return getUserQuizGame(userQuizGameEntity);
+    public List<UserQuizGame> findByUserId(Long userID) throws QMeException {
+        try{
+    	    return(getUserQuizGame(userQuizGameSpringDataRepository.findByUserId(userID)));
+        }catch(Exception err){
+            throw new QMeException(err);
         }
-        return null;
     }
 
     @Override
-    public UserQuizGame save(UserQuizGame userQuizGame) {
-        UserQuizGameEntity userQuizGameEntity = getUserQuizGameEntity(userQuizGame);
-        userQuizGameEntity.setStartDate(LocalDateTime.now());
-        userQuizGameEntity = userQuizGameSpringDataRepository.save(userQuizGameEntity);
-        return getUserQuizGame(userQuizGameEntity);
+    public UserQuizGame findByGameToken(Long userGameToken) throws QMeException {
+        try{
+    	    return(getUserQuizGame(userQuizGameSpringDataRepository.findByGameToken(userGameToken)));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
     }
 
     @Override
-    public UserQuizGame update(UserQuizGame userQuizGame, Long updateUserId) {
-        UserQuizGameEntity userQuizGameEntity = getUserQuizGameEntity(userQuizGame);
-        userQuizGameEntity.setEndDate(LocalDateTime.now());
-        userQuizGameEntity = userQuizGameSpringDataRepository.save(userQuizGameEntity);
-        return getUserQuizGame(userQuizGameEntity);
+    public UserQuizGame findById(UserQuizGame userQuizGame) throws QMeException {
+        try{
+            UserQuizGameEntityId id = getUserQuizGameEntityId(userQuizGame);
+            UserQuizGameEntity userQuizGameEntity = userQuizGameSpringDataRepository.findOne(id);
+            if(userQuizGameEntity != null){
+               return getUserQuizGame(userQuizGameEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
     }
 
     @Override
-    public void delete(UserQuizGame userQuizGame) {
-    	UserQuizGameEntityId id = getUserQuizGameEntityId(userQuizGame);
-        userQuizGameSpringDataRepository.delete(id);
+    public UserQuizGame save(UserQuizGame userQuizGame) throws QMeException {
+        try{
+            UserQuizGameEntity userQuizGameEntity = getUserQuizGameEntity(userQuizGame);
+            userQuizGameEntity.setStartDate(LocalDateTime.now());
+            userQuizGameEntity = userQuizGameSpringDataRepository.save(userQuizGameEntity);
+            return getUserQuizGame(userQuizGameEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
+    public UserQuizGame update(UserQuizGame userQuizGame, Long updateUserId) throws QMeException {
+        try{
+            UserQuizGameEntity userQuizGameEntity = getUserQuizGameEntity(userQuizGame);
+            userQuizGameEntity.setEndDate(LocalDateTime.now());
+            userQuizGameEntity = userQuizGameSpringDataRepository.save(userQuizGameEntity);
+            return getUserQuizGame(userQuizGameEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
+    public void delete(UserQuizGame userQuizGame) throws QMeException {
+        try{
+            UserQuizGameEntityId id = getUserQuizGameEntityId(userQuizGame);
+            userQuizGameSpringDataRepository.delete(id);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
     }
     
     /**
      * Map UserQuizGame Domain Object to UserQuizGameEntity
      *
-     * @param userQuizGame
-     * @return
+     * @param userQuizGame User Quiz Game
+     * @return UserQuizGameEntityId
      */
     private UserQuizGameEntityId getUserQuizGameEntityId(UserQuizGame userQuizGame){
         UserQuizGameEntityId userQuizGameEntityId = new UserQuizGameEntityId();
@@ -114,7 +143,7 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
      * @return UserQuizGame List
      */
     private List<UserQuizGame> getUserQuizGame(List<UserQuizGameEntity> userQuizGameEntities){
-        List<UserQuizGame> UserQuizGameList = new ArrayList<UserQuizGame>();
+        List<UserQuizGame> UserQuizGameList = new ArrayList<>();
         if(userQuizGameEntities == null){
             return UserQuizGameList;
         }

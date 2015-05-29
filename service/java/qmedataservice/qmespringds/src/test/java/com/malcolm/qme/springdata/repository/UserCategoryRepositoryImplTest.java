@@ -11,6 +11,7 @@ import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserCategory;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserCategoryRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
@@ -56,7 +57,7 @@ public class UserCategoryRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userCategoryRepo);
         List<UserCategory> userCategoryList = userCategoryRepo.findAll();
         assertNotNull(userCategoryList);
@@ -64,7 +65,7 @@ public class UserCategoryRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userCategoryRepo);
         UserCategory userCategory = userCategoryRepo.findById(1L);
         assertNotNull(userCategory);
@@ -72,7 +73,7 @@ public class UserCategoryRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(userCategoryRepo);
 
@@ -114,7 +115,7 @@ public class UserCategoryRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
 
         assertNotNull(userCategoryRepo);
 

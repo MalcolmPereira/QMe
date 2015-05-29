@@ -11,6 +11,7 @@ import com.malcolm.qme.core.domain.AnswerOptionMedia;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.repository.AnswerOptionMediaRepository;
 import com.malcolm.qme.core.repository.AnswerOptionRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -55,7 +56,7 @@ public class AnswerOptionMediaRepositoryImplTest {
     private QuestionRepository questionRepository;
 
     @Test
-    public void testFetchAll() {
+    public void testFetchAll() throws QMeException {
         assertNotNull(answerOptionMediaRepository);
         List<AnswerOptionMedia> answerOptionMediaList = answerOptionMediaRepository.findAll();
         assertNotNull(answerOptionMediaList);
@@ -63,7 +64,7 @@ public class AnswerOptionMediaRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(answerOptionMediaRepository);
         final AnswerOptionMedia answerOptionMedia = answerOptionMediaRepository.findById(1L);
         assertNotNull(answerOptionMedia);
@@ -71,7 +72,7 @@ public class AnswerOptionMediaRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(answerOptionMediaRepository);
 
@@ -128,7 +129,7 @@ public class AnswerOptionMediaRepositoryImplTest {
     }
 
     @Test
-    public void testFindByAnswerOptionId() {
+    public void testFindByAnswerOptionId() throws QMeException {
 
         assertNotNull(answerOptionMediaRepository);
 

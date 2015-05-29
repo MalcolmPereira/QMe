@@ -9,6 +9,7 @@ package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeCategory;
@@ -38,9 +39,12 @@ public final class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceException{
-        //TODO:Catch Specific Errors
         try{
             return getQMeCategoryDetail(categoryRepo.findCategoryNameLike(categoryName));
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }catch(Exception err){
             throw new QMeResourceException(err.getMessage(),err);
         }
@@ -49,9 +53,12 @@ public final class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<QMeCategoryDetail> list() throws QMeResourceException {
-        //TODO:Catch Specific Errors
         try{
             return getQMeCategoryDetail(categoryRepo.findAll());
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }catch(Exception err){
             throw new QMeResourceException(err.getMessage(),err);
         }
@@ -59,49 +66,68 @@ public final class CategoryServiceImpl implements CategoryService {
 
     @Override
     public QMeCategoryDetail searchById(Long id) throws QMeResourceException {
-        Category category     =  categoryRepo.findById(id);
-        if(category == null){
-            throw new QMeResourceNotFoundException("Category with Category ID "+id+" not found");
+        try{
+            Category category     =  categoryRepo.findById(id);
+            if(category == null){
+                throw new QMeResourceNotFoundException("Category with Category ID "+id+" not found");
+            }
+            return getQMeCategoryDetail(category);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
+        }catch(Exception err){
+            throw new QMeResourceException(err.getMessage(),err);
         }
-        return getQMeCategoryDetail(category);
     }
 
     @Override
     public QMeCategoryDetail save(QMeCategory qMeCategory, Long userId) throws QMeResourceException {
-        Category category     =  getCategory(qMeCategory,userId);
-        //TODO:Catch Specific Errors
         try{
+            Category category     =  getCategory(qMeCategory,userId);
             category = categoryRepo.save(category);
             return getQMeCategoryDetail(category);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }catch(Exception err){
             throw new QMeResourceException(err.getMessage(),err);
         }
+
     }
 
     @Override
     public QMeCategoryDetail update(QMeCategory qMeCategory, Long categoryID, Long userId) throws QMeResourceException {
-        Category category     =  getCategory(qMeCategory,categoryID,userId);
-        //TODO:Catch Specific Errors
         try{
+            Category category =  getCategory(qMeCategory,categoryID,userId);
             category = categoryRepo.update(category, userId);
             return getQMeCategoryDetail(category);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
         }catch(Exception err){
             throw new QMeResourceException(err.getMessage(),err);
         }
+
     }
 
     @Override
     public void delete(Long id) throws QMeResourceException {
-        Category category     =  categoryRepo.findById(id);
-        if(category == null){
-            throw new QMeResourceNotFoundException("Category with Category ID "+id+" not found");
-        }
-        //TODO:Catch Specific Errors
         try{
+            Category category     =  categoryRepo.findById(id);
+
+            if(category == null){
+                throw new QMeResourceNotFoundException("Category with Category ID "+id+" not found");
+            }
+
             categoryRepo.delete(id);
-        }catch(Exception err){
+
+        }catch(QMeException err){
             throw new QMeResourceException(err.getMessage(),err);
         }
+
     }
 
     /**
@@ -112,13 +138,18 @@ public final class CategoryServiceImpl implements CategoryService {
      * @return
      */
     private Category getCategory(QMeCategory qMeCategory,Long userID) throws QMeResourceException {
-        if(qMeCategory.getParentCategoryId() != null){
-            Category category     =  categoryRepo.findById(qMeCategory.getParentCategoryId());
-            if(category == null){
-                throw new QMeResourceNotFoundException("Category with Category ID "+qMeCategory.getParentCategoryId()+" not found");
+        try{
+            if(qMeCategory.getParentCategoryId() != null){
+                Category category     =  categoryRepo.findById(qMeCategory.getParentCategoryId());
+                if(category == null){
+                    throw new QMeResourceNotFoundException("Category with Category ID "+qMeCategory.getParentCategoryId()+" not found");
+                }
             }
+            return new Category(qMeCategory.getParentCategoryId(),qMeCategory.getCategoryName(),userID);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
         }
-        return new Category(qMeCategory.getParentCategoryId(),qMeCategory.getCategoryName(),userID);
     }
 
     /**
@@ -130,27 +161,31 @@ public final class CategoryServiceImpl implements CategoryService {
      * @throws QMeResourceException
      */
     private Category getCategory(QMeCategory qMeCategory, Long categoryID,Long userID) throws QMeResourceException {
-       Category category     =  categoryRepo.findById(categoryID);
-       if(category == null){
-           throw new QMeResourceNotFoundException("Category with Category ID "+categoryID+" not found");
-       }
-       Long parentCategoryID = category.getCategoryParentID();
-       if(qMeCategory.getParentCategoryId() != null ){
-           Category parentCategory     =  categoryRepo.findById(qMeCategory.getParentCategoryId());
-           if(parentCategory == null){
-               throw new QMeResourceNotFoundException("Category with Category ID "+qMeCategory.getParentCategoryId()+" not found");
-           }
-           parentCategoryID = qMeCategory.getParentCategoryId();
-       }
-       String categoryName   =  (qMeCategory.getCategoryName() == null) ? category.getCategoryName() : qMeCategory.getCategoryName();
-       return new Category(
-               category.getCategoryID(),
-               parentCategoryID,
-               categoryName,
-               category.getCategoryLikes(),
-               LocalDateTime.now(),
-               userID
-       );
+        try{
+               Category category     =  categoryRepo.findById(categoryID);
+               if(category == null){
+                   throw new QMeResourceNotFoundException("Category with Category ID "+categoryID+" not found");
+               }
+               Long parentCategoryID = category.getCategoryParentID();
+               if(qMeCategory.getParentCategoryId() != null ){
+                   Category parentCategory     =  categoryRepo.findById(qMeCategory.getParentCategoryId());
+                   if(parentCategory == null){
+                       throw new QMeResourceNotFoundException("Category with Category ID "+qMeCategory.getParentCategoryId()+" not found");
+                   }
+                   parentCategoryID = qMeCategory.getParentCategoryId();
+               }
+               String categoryName   =  (qMeCategory.getCategoryName() == null) ? category.getCategoryName() : qMeCategory.getCategoryName();
+               return new Category(
+                       category.getCategoryID(),
+                       parentCategoryID,
+                       categoryName,
+                       category.getCategoryLikes(),
+                       LocalDateTime.now(),
+                       userID
+               );
+        }catch(QMeException err){
+           throw new QMeResourceException(err.getMessage(),err);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class QuizRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(quizRepository);
         final List<Quiz> quizList = quizRepository.findAll();
         assertNotNull(quizList);
@@ -55,7 +56,7 @@ public class QuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(quizRepository);
         final Quiz quiz = quizRepository.findById(1L);
         assertNotNull(quiz);
@@ -63,7 +64,7 @@ public class QuizRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(quizRepository);
 
         Quiz quiz = new Quiz(
@@ -105,7 +106,7 @@ public class QuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindByCatId() {
+    public void testFindByCatId() throws QMeException {
 
         assertNotNull(categoryRepo);
 
@@ -171,7 +172,7 @@ public class QuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuizNameIgnoreCaseLike() {
+    public void testFindByQuizNameIgnoreCaseLike() throws QMeException {
 
         assertNotNull(quizRepository);
 
@@ -238,7 +239,7 @@ public class QuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindTop50ByOrderByQuizLikesDesc() {
+    public void testFindTop50ByOrderByQuizLikesDesc() throws QMeException {
         assertNotNull(quizRepository);
 
         Quiz quiz = new Quiz(

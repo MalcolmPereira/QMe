@@ -20,30 +20,34 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz, Long> {
      *
      * @param userID User ID
      * @return UserQuiz by User ID
+     * @throws QMeException
      */
-    List<UserQuiz> findByUserId(Long userID);
+    List<UserQuiz> findByUserId(Long userID) throws QMeException;
 
     /**
      * Find Completed Quiz By User ID
      *
      * @param userID User ID
      * @return Completed UserQuiz List by User ID
+     * @throws QMeException
      */
-    List<UserQuiz> findCompletedByUserId(Long userID);
+    List<UserQuiz> findCompletedByUserId(Long userID) throws QMeException;
 
     /**
      * Find Pending Quiz By User ID
      *
      * @param userID User ID
      * @return Pending UserQuiz List by User ID
+     * @throws QMeException
      */
-    List<UserQuiz> findPendingByUserId(Long userID);
+    List<UserQuiz> findPendingByUserId(Long userID) throws QMeException;
 
     /**
      * Find By Quiz ID
      *
      * @param quizID Quiz ID
      * @return UserQuiz by Quiz ID
+     * @throws QMeException
      */
-    List<UserQuiz> findByQuizId(Long quizID);
+    List<UserQuiz> findByQuizId(Long quizID) throws QMeException;
 }

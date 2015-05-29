@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.AnswerReferenceMedia;
 import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,41 +30,67 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 
 
 	@Override
-	public List<AnswerReferenceMedia> findByQuestionId(Long questionID) {
-		return(getAnswerReferenceMedia(answerReferenceMediaSpringDataRepository.findByQuestionId(questionID)));
+	public List<AnswerReferenceMedia> findByQuestionId(Long questionID) throws QMeException {
+		try{
+
+            return(getAnswerReferenceMedia(answerReferenceMediaSpringDataRepository.findByQuestionId(questionID)));
+
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+	@Override
+	public List<AnswerReferenceMedia> findAll() throws QMeException {
+        try{
+		    return(getAnswerReferenceMedia(answerReferenceMediaSpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public List<AnswerReferenceMedia> findAll() {
-		return(getAnswerReferenceMedia(answerReferenceMediaSpringDataRepository.findAll()));
+	public AnswerReferenceMedia findById(Long id) throws QMeException {
+        try{
+		    final AnswerReferenceMediaEntity answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.findOne(id);
+		    if(answerReferenceMediaEntity != null){
+			    return getAnswerReferenceMedia(answerReferenceMediaEntity);
+		    }
+		    return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public AnswerReferenceMedia findById(Long id) {
-		final AnswerReferenceMediaEntity answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.findOne(id);
-		if(answerReferenceMediaEntity != null){
-			return getAnswerReferenceMedia(answerReferenceMediaEntity);
-		}
-		return null;
+	public AnswerReferenceMedia save(AnswerReferenceMedia answerReferenceMedia) throws QMeException {
+		try{
+            AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
+		    answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
+		    return getAnswerReferenceMedia(answerReferenceMediaEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public AnswerReferenceMedia save(AnswerReferenceMedia answerReferenceMedia) {
-		AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
-		answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
-		return getAnswerReferenceMedia(answerReferenceMediaEntity);
+	public AnswerReferenceMedia update(AnswerReferenceMedia answerReferenceMedia, Long updateUserId) throws QMeException {
+		try{
+            AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
+		    answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
+		    return getAnswerReferenceMedia(answerReferenceMediaEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public AnswerReferenceMedia update(AnswerReferenceMedia answerReferenceMedia, Long updateUserId) {
-		AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
-		answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
-		return getAnswerReferenceMedia(answerReferenceMediaEntity);
-	}
-
-	@Override
-	public void delete(Long id) {
-		answerReferenceMediaSpringDataRepository.delete(id);
+	public void delete(Long id) throws QMeException {
+        try{
+		    answerReferenceMediaSpringDataRepository.delete(id);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	/**

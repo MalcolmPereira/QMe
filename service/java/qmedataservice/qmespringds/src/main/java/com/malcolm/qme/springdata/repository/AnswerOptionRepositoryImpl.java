@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.AnswerOption;
 import com.malcolm.qme.core.repository.AnswerOptionRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.AnswerOptionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,41 +39,65 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	private static final String CORRECT = "1";
 
 	@Override
-	public List<AnswerOption> findByQuestionId(Long questionID) {
-		return(getAnswerOption(answerOptionSpringDataRepository.findByQuestionId(questionID)));
-	}
-
-	@Override
-	public List<AnswerOption> findAll() {
-		return(getAnswerOption(answerOptionSpringDataRepository.findAll()));
-	}
-
-	@Override
-	public AnswerOption findById(Long id) {
-		final AnswerOptionEntity answerOptionEntity = answerOptionSpringDataRepository.findOne(id);
-		if (answerOptionEntity != null){
-			return getAnswerOption(answerOptionEntity);
+	public List<AnswerOption> findByQuestionId(Long questionID) throws QMeException {
+		try{
+			return(getAnswerOption(answerOptionSpringDataRepository.findByQuestionId(questionID)));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public AnswerOption save(AnswerOption answerOption) {
-		AnswerOptionEntity answerOptionEntity = getAnswerOptionEntity(answerOption);
-		answerOptionEntity = answerOptionSpringDataRepository.save(answerOptionEntity);
-		return getAnswerOption(answerOptionEntity);
+	public List<AnswerOption> findAll() throws QMeException {
+        try{
+		    return(getAnswerOption(answerOptionSpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public AnswerOption update(AnswerOption answerOption, Long updateUserId) {
-		AnswerOptionEntity answerOptionEntity = getAnswerOptionEntity(answerOption);
-		answerOptionEntity = answerOptionSpringDataRepository.save(answerOptionEntity);
-		return getAnswerOption(answerOptionEntity);
+	public AnswerOption findById(Long id) throws QMeException {
+        try{
+		    final AnswerOptionEntity answerOptionEntity = answerOptionSpringDataRepository.findOne(id);
+		    if (answerOptionEntity != null){
+			    return getAnswerOption(answerOptionEntity);
+		    }
+		    return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public void delete(Long id) {
-		answerOptionSpringDataRepository.delete(id);
+	public AnswerOption save(AnswerOption answerOption) throws QMeException {
+        try{
+		    AnswerOptionEntity answerOptionEntity = getAnswerOptionEntity(answerOption);
+		    answerOptionEntity = answerOptionSpringDataRepository.save(answerOptionEntity);
+		    return getAnswerOption(answerOptionEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
+	@Override
+	public AnswerOption update(AnswerOption answerOption, Long updateUserId) throws QMeException {
+        try{
+		    AnswerOptionEntity answerOptionEntity = getAnswerOptionEntity(answerOption);
+		    answerOptionEntity = answerOptionSpringDataRepository.save(answerOptionEntity);
+		    return getAnswerOption(answerOptionEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+        try{
+		    answerOptionSpringDataRepository.delete(id);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	/**

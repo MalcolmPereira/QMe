@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -39,7 +40,7 @@ public class UserRepositoryImplTest {
 
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userRepo);
         List<User> users = userRepo.findAll();
         assertNotNull(users);
@@ -47,7 +48,7 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userRepo);
         User user = userRepo.findById(1L);
         assertNotNull(user);
@@ -56,7 +57,7 @@ public class UserRepositoryImplTest {
 
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(userRepo);
 
         User user = new User("UserRepositoryImplTest", "Test", "Test", "Test", "UserRepositoryImplTest@test.com");
@@ -95,7 +96,7 @@ public class UserRepositoryImplTest {
 
 
     @Test
-    public void testFindByUserName() {
+    public void testFindByUserName() throws QMeException {
 
         assertNotNull(userRepo);
 
@@ -141,7 +142,7 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserEmail() {
+    public void testFindByUserEmail() throws QMeException {
 
         assertNotNull(userRepo);
 

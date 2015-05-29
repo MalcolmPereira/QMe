@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.MediaType;
 import com.malcolm.qme.core.repository.MediaTypeRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,7 @@ public class MediaTypeRepositoryImplTest {
     private MediaTypeRepository mediaTypeRepository;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(mediaTypeRepository);
         final List<MediaType> mediaTypeList = mediaTypeRepository.findAll();
         assertNotNull(mediaTypeList);
@@ -45,7 +46,7 @@ public class MediaTypeRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(mediaTypeRepository);
         final MediaType mediaType = mediaTypeRepository.findById(1);
         assertNotNull(mediaType);
@@ -53,7 +54,7 @@ public class MediaTypeRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(mediaTypeRepository);
         MediaType mediaType = new MediaType("MediaTypeRepositoryImplTest");
         mediaType = mediaTypeRepository.save(mediaType);

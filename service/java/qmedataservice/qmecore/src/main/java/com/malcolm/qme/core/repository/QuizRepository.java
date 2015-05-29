@@ -20,20 +20,23 @@ public interface QuizRepository extends QMeRepository<Quiz,Long> {
      *
      * @param categoryID Category ID
      * @return Quiz List for Category ID
+     * @throws QMeException
      */
-    List<Quiz> findByCategoryId(Long categoryID);
+    List<Quiz> findByCategoryId(Long categoryID) throws QMeException;
 
     /**
      * Find By Most Liked
      *
-     * @return Quiz List sorted by likes.
+     * @return Quiz List sorted by likes
+     * @throws QMeException
      */
-    List<Quiz> findByMostLiked();
+    List<Quiz> findByMostLiked() throws QMeException;
 
     /**
      * Find By Quiz Name Like
      * @param quizName Quiz Name
      * @return Quiz List matching name like
+     * @throws QMeException
      */
-    List<Quiz> findQuizNameLike(String quizName);
+    List<Quiz> findQuizNameLike(String quizName) throws QMeException;
 }

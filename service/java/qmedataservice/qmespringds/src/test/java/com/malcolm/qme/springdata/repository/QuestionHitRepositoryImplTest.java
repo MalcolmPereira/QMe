@@ -10,6 +10,7 @@ import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.domain.QuestionHit;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionHitRepository;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
@@ -55,7 +56,7 @@ public class QuestionHitRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(questionHitRepository);
         List<QuestionHit> questionHitList = questionHitRepository.findAll();
         assertNotNull(questionHitList);
@@ -63,7 +64,7 @@ public class QuestionHitRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(questionHitRepository);
         QuestionHit questionHit = questionHitRepository.findById(1L);
         assertNotNull(questionHit);
@@ -72,7 +73,7 @@ public class QuestionHitRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(questionHitRepository);
 

@@ -10,6 +10,7 @@ package com.malcolm.qme.rest.service;
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.fixtures.CategoryFixtures;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
@@ -46,7 +47,7 @@ public class CategoryServiceImplTest {
 
 
     @Test
-    public void testList() throws QMeResourceException {
+    public void testList() throws QMeResourceException, QMeException {
 
         when(categoryRepo.findAll()).thenReturn((List)CategoryFixtures.simpleCategoryList());
 
@@ -73,7 +74,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void testSearchById() throws QMeResourceException {
+    public void testSearchById() throws QMeResourceException, QMeException {
 
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
 
@@ -85,7 +86,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void testSearchByName() throws QMeResourceException {
+    public void testSearchByName() throws QMeResourceException, QMeException  {
         when(categoryRepo.findCategoryNameLike("Simple Category 1")).thenReturn(CategoryFixtures.simpleCategoryList());
 
         List<QMeCategoryDetail> categoryList = categoryService.searchByName("Simple Category 1");
@@ -111,7 +112,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void testCreate() throws QMeResourceException {
+    public void testCreate() throws QMeResourceException , QMeException {
         when(categoryRepo.save(Matchers.<Category>anyObject())).thenReturn(CategoryFixtures.simpleCategory());
 
         QMeCategory qmeCategory = new QMeCategory();
@@ -125,7 +126,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void testUpdate() throws QMeResourceException {
+    public void testUpdate() throws QMeResourceException , QMeException {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(categoryRepo.update(Matchers.<Category>anyObject(), eq(1L))).thenReturn(CategoryFixtures.simpleCategory());
 
@@ -140,7 +141,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void testDelete() throws QMeResourceException {
+    public void testDelete() throws QMeResourceException , QMeException {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         doNothing().when(categoryRepo).delete(1L);
         categoryService.delete(1L);

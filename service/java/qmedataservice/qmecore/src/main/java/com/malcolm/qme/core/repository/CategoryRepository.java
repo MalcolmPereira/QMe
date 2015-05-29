@@ -19,6 +19,7 @@ public interface CategoryRepository extends QMeRepository<Category,Long> {
      * Find By Category Name Like
      * @param categoryName Category Name Like
      * @return Category List matching category name like
+     * @throws QMeException
      */
-    List<Category> findCategoryNameLike(String categoryName);
+    List<Category> findCategoryNameLike(String categoryName) throws QMeException;
 }

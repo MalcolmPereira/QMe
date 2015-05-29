@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.AnswerOption;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.repository.AnswerOptionRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -46,7 +47,7 @@ public class AnswerOptionRepositoryImplTest {
     private QuestionRepository questionRepository;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(answerOptionRepository);
         final List<AnswerOption> answerOptions = answerOptionRepository.findAll();
         assertNotNull(answerOptions);
@@ -54,7 +55,7 @@ public class AnswerOptionRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(answerOptionRepository);
         final AnswerOption answerOption = answerOptionRepository.findById(1L);
         assertNotNull(answerOption);
@@ -62,7 +63,7 @@ public class AnswerOptionRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(answerOptionRepository);
 
         assertNotNull(questionRepository);
@@ -100,7 +101,7 @@ public class AnswerOptionRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuestionId() {
+    public void testFindByQuestionId() throws QMeException {
         assertNotNull(answerOptionRepository);
 
         assertNotNull(questionRepository);

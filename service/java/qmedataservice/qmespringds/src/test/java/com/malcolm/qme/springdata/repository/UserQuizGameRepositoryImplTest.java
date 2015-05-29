@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserQuizGame;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizGameRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
@@ -48,7 +49,7 @@ public class UserQuizGameRepositoryImplTest {
     private UserRepository userRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userQuizGameRepo);
         final List<UserQuizGame> userQuizGameList = userQuizGameRepo.findAll();
         assertNotNull(userQuizGameList);
@@ -56,7 +57,7 @@ public class UserQuizGameRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userQuizGameRepo);
         UserQuizGame userQuizGame = new UserQuizGame(1L, 1L, 1L);
         userQuizGame = userQuizGameRepo.findById(userQuizGame);
@@ -67,7 +68,7 @@ public class UserQuizGameRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(userRepo);
 
@@ -116,7 +117,7 @@ public class UserQuizGameRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
 
         assertNotNull(userRepo);
 
@@ -179,7 +180,7 @@ public class UserQuizGameRepositoryImplTest {
     }
 
     @Test
-    public void testFndByGameToken() {
+    public void testFindByGameToken() throws QMeException {
 
         assertNotNull(userRepo);
 

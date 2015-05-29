@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,7 @@ public class CategoryRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(categoryRepo);
         List<Category> categoryList = categoryRepo.findAll();
         assertNotNull(categoryList);
@@ -45,7 +46,7 @@ public class CategoryRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(categoryRepo);
         Category category = categoryRepo.findById(1L);
         assertNotNull(category);
@@ -53,7 +54,7 @@ public class CategoryRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(categoryRepo);
 
         Category category = new Category("CategoryRepositoryImplTest", 1L);
@@ -86,7 +87,7 @@ public class CategoryRepositoryImplTest {
     }
 
     @Test
-    public void testFindCategoryNameLike() {
+    public void testFindCategoryNameLike() throws QMeException {
         assertNotNull(categoryRepo);
 
         Category category = new Category("CategoryRepositoryImplTest Name", 1L);

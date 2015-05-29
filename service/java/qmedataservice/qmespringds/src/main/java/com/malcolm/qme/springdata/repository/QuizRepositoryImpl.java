@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Quiz;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.springdata.entity.QuizEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,56 +30,88 @@ public class QuizRepositoryImpl implements QuizRepository {
 	private QuizSpringDataRepository quizSpringDataRepository;
 
 	@Override
-	public List<Quiz> findAll() {
-		return(getQuiz(quizSpringDataRepository.findAll()));
-	}
-
-	@Override
-	public List<Quiz> findByCategoryId(Long categoryID) {
-		return(getQuiz(quizSpringDataRepository.findByCatId(categoryID)));
-	}
-
-	@Override
-	public List<Quiz> findByMostLiked() {
-		return(getQuiz(quizSpringDataRepository.findTop50ByOrderByQuizLikesDesc()));
-	}
-
-	@Override
-	public List<Quiz> findQuizNameLike(String quizName) {
-		return(getQuiz(quizSpringDataRepository.findByQuizNameIgnoreCaseLike(quizName)));
-	}
-
-	@Override
-	public Quiz findById(Long id) {
-		final QuizEntity quizEntity = quizSpringDataRepository.findOne(id);
-		if(quizEntity != null){
-			return getQuiz(quizEntity);
+	public List<Quiz> findAll() throws QMeException {
+		try{
+			return(getQuiz(quizSpringDataRepository.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public Quiz save(Quiz quiz) {
-		QuizEntity quizEntity = getQuizEntity(quiz);
-		quizEntity.setQuizCreateDate(LocalDateTime.now());
-		quizEntity.setQuizUpdateDate(LocalDateTime.now());
-		quizEntity.setQuizUpdateUser(quizEntity.getQuizCreateUser());
-		quizEntity = quizSpringDataRepository.save(quizEntity);
-		return getQuiz(quizEntity);
+	public List<Quiz> findByCategoryId(Long categoryID) throws QMeException {
+		try{
+			return(getQuiz(quizSpringDataRepository.findByCatId(categoryID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public Quiz update(Quiz quiz, Long updateUserId) {
-		QuizEntity quizEntity = getQuizEntity(quiz);
-		quizEntity.setQuizUpdateDate(LocalDateTime.now());
-		quizEntity.setQuizUpdateUser(updateUserId);
-		quizEntity = quizSpringDataRepository.save(quizEntity);
-		return getQuiz(quizEntity);
+	public List<Quiz> findByMostLiked() throws QMeException {
+		try{
+			return(getQuiz(quizSpringDataRepository.findTop50ByOrderByQuizLikesDesc()));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(Long id) {
-		quizSpringDataRepository.delete(id);
+	public List<Quiz> findQuizNameLike(String quizName) throws QMeException {
+		try{
+			return(getQuiz(quizSpringDataRepository.findByQuizNameIgnoreCaseLike(quizName)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public Quiz findById(Long id) throws QMeException {
+		try{
+			final QuizEntity quizEntity = quizSpringDataRepository.findOne(id);
+			if(quizEntity != null){
+				return getQuiz(quizEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public Quiz save(Quiz quiz) throws QMeException {
+		try{
+			QuizEntity quizEntity = getQuizEntity(quiz);
+			quizEntity.setQuizCreateDate(LocalDateTime.now());
+			quizEntity.setQuizUpdateDate(LocalDateTime.now());
+			quizEntity.setQuizUpdateUser(quizEntity.getQuizCreateUser());
+			quizEntity = quizSpringDataRepository.save(quizEntity);
+			return getQuiz(quizEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public Quiz update(Quiz quiz, Long updateUserId) throws QMeException {
+		try{
+			QuizEntity quizEntity = getQuizEntity(quiz);
+			quizEntity.setQuizUpdateDate(LocalDateTime.now());
+			quizEntity.setQuizUpdateUser(updateUserId);
+			quizEntity = quizSpringDataRepository.save(quizEntity);
+			return getQuiz(quizEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+		try{
+			quizSpringDataRepository.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**

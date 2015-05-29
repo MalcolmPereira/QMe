@@ -20,6 +20,7 @@ public interface AnswerReferenceMediaRepository extends QMeRepository<AnswerRefe
      *
      * @param questionID Question ID
      * @return Answer Reference Media List for Question ID
+     * @throws QMeException
      */
-    List<AnswerReferenceMedia> findByQuestionId(Long questionID);
+    List<AnswerReferenceMedia> findByQuestionId(Long questionID) throws QMeException;
 }

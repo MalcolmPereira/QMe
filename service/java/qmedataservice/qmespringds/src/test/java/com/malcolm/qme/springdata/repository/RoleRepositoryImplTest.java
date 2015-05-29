@@ -8,6 +8,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Role;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class RoleRepositoryImplTest {
     private RoleRepository roleRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(roleRepo);
         List<Role> roles = roleRepo.findAll();
         assertNotNull(roles);
@@ -46,7 +47,7 @@ public class RoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(roleRepo);
         Role role = roleRepo.findById(1);
         assertNotNull(role);
@@ -54,7 +55,7 @@ public class RoleRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(roleRepo);
 
         Role role = new Role("RoleRepositoryImplTest", "RoleRepositoryImplTest Desc");
@@ -82,7 +83,7 @@ public class RoleRepositoryImplTest {
     }
 
     @Test
-    public void testFindByRoleName() {
+    public void testFindByRoleName() throws QMeException {
         assertNotNull(roleRepo);
 
         Role role = new Role("RoleSpringDataRepositoryTest NAME", "RoleSpringDataRepositoryTest NAME Desc");

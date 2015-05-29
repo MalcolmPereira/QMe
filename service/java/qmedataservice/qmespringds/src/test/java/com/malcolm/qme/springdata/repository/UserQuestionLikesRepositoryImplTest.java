@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserQuestionLikes;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.core.repository.UserQuestionLikesRepository;
 import com.malcolm.qme.core.repository.UserRepository;
@@ -56,7 +57,7 @@ public class UserQuestionLikesRepositoryImplTest {
     private UserQuestionLikesRepository userQuestionLikesRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userQuestionLikesRepo);
         List<UserQuestionLikes> userQuestionLikesList = userQuestionLikesRepo.findAll();
         assertNotNull(userQuestionLikesList);
@@ -64,7 +65,7 @@ public class UserQuestionLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userQuestionLikesRepo);
         UserQuestionLikes userQuestionLikes = new UserQuestionLikes(1L, 1L);
         userQuestionLikes = userQuestionLikesRepo.findById(userQuestionLikes);
@@ -74,7 +75,7 @@ public class UserQuestionLikesRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(userQuestionLikesRepo);
 
@@ -119,7 +120,7 @@ public class UserQuestionLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
 
         assertNotNull(userQuestionLikesRepo);
 
@@ -173,7 +174,7 @@ public class UserQuestionLikesRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuestionId() {
+    public void testFindByQuestionId() throws QMeException {
 
         assertNotNull(userQuestionLikesRepo);
 

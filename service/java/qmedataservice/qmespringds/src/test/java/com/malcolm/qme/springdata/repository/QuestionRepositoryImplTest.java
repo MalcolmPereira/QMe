@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -46,7 +47,7 @@ public class QuestionRepositoryImplTest {
     private CategoryRepository categoryRepo;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(questionRepository);
         final List<Question> questionList = questionRepository.findAll();
         assertNotNull(questionList);
@@ -54,7 +55,7 @@ public class QuestionRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(questionRepository);
         final Question question = questionRepository.findById(1L);
         assertNotNull(question);
@@ -62,7 +63,7 @@ public class QuestionRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
         assertNotNull(questionRepository);
 
         Question question = new Question(1L, "QuestionRepositoryImplTest Question", "QuestionRepositoryImplTest Answer", 1L);
@@ -101,7 +102,7 @@ public class QuestionRepositoryImplTest {
     }
 
     @Test
-    public void testFindByCatId() {
+    public void testFindByCatId() throws QMeException {
 
         assertNotNull(questionRepository);
 
@@ -158,7 +159,7 @@ public class QuestionRepositoryImplTest {
     }
 
     @Test
-    public void findByMostLiked() {
+    public void findByMostLiked() throws QMeException {
 
         assertNotNull(questionRepository);
 

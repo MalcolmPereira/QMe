@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.AnswerReferenceMedia;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
     private QuestionRepository questionRepository;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(answerReferenceMediaRepository);
         final List<AnswerReferenceMedia> answerReferenceMediaList = answerReferenceMediaRepository.findAll();
         assertNotNull(answerReferenceMediaList);
@@ -56,7 +57,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(answerReferenceMediaRepository);
         final AnswerReferenceMedia answerReferenceMedia = answerReferenceMediaRepository.findById(1L);
         assertNotNull(answerReferenceMedia);
@@ -64,7 +65,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(answerReferenceMediaRepository);
 
@@ -108,7 +109,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuestionId() {
+    public void testFindByQuestionId() throws QMeException {
 
         assertNotNull(answerReferenceMediaRepository);
 

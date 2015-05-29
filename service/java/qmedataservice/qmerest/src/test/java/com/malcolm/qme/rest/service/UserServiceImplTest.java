@@ -8,6 +8,7 @@ package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeUser;
@@ -48,7 +49,7 @@ public class UserServiceImplTest {
     private final UserService userService = new UserServiceImpl();
 
     @Test
-    public void testList() throws QMeResourceException {
+    public void testList() throws QMeResourceException , QMeException {
         when(userRepo.findAll()).thenReturn((List) UserFixtures.simpleUserList());
 
         List<QMeUserDetail> userList = userService.list();
@@ -75,7 +76,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSearchById() throws QMeResourceException {
+    public void testSearchById() throws QMeResourceException , QMeException {
 
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
 
@@ -88,7 +89,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSearchByUser() throws QMeResourceException {
+    public void testSearchByUser() throws QMeResourceException , QMeException {
 
         when(userRepo.findByUserName("suser1")).thenReturn(UserFixtures.simpleUser());
 
@@ -102,7 +103,7 @@ public class UserServiceImplTest {
 
 
     @Test
-    public void testSearchByEmail() throws QMeResourceException {
+    public void testSearchByEmail() throws QMeResourceException, QMeException  {
 
         when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
 
@@ -115,7 +116,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testCreate() throws QMeResourceException {
+    public void testCreate() throws QMeResourceException , QMeException {
         when(userRepo.save(Matchers.<User>anyObject())).thenReturn(UserFixtures.simpleUser());
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
 
@@ -135,7 +136,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testUpdate() throws QMeResourceException {
+    public void testUpdate() throws QMeResourceException , QMeException {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
 
@@ -155,7 +156,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testDelete() throws QMeResourceException {
+    public void testDelete() throws QMeResourceException , QMeException {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         doNothing().when(userRepo).delete(1L);
         userService.delete(1L);

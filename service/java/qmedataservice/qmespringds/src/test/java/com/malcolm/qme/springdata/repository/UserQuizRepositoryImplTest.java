@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserQuiz;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.core.repository.UserRepository;
@@ -58,7 +59,7 @@ public class UserQuizRepositoryImplTest {
     private QuizRepository quizRepository;
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws QMeException {
         assertNotNull(userQuizRepository);
         List<UserQuiz> userQuizList = userQuizRepository.findAll();
         assertNotNull(userQuizList);
@@ -66,7 +67,7 @@ public class UserQuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById() throws QMeException {
         assertNotNull(userQuizRepository);
         UserQuiz userQuiz = userQuizRepository.findById(1L);
         assertNotNull(userQuiz);
@@ -74,7 +75,7 @@ public class UserQuizRepositoryImplTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws QMeException {
 
         assertNotNull(userQuizRepository);
 
@@ -151,7 +152,7 @@ public class UserQuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void testFindByUserId() throws QMeException {
 
         assertNotNull(userQuizRepository);
 
@@ -247,7 +248,7 @@ public class UserQuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindByQuizId() {
+    public void testFindByQuizId() throws QMeException {
 
         assertNotNull(userQuizRepository);
 
@@ -343,7 +344,7 @@ public class UserQuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindCompletedByUserId() {
+    public void testFindCompletedByUserId() throws QMeException {
 
         assertNotNull(userQuizRepository);
 
@@ -435,7 +436,7 @@ public class UserQuizRepositoryImplTest {
     }
 
     @Test
-    public void testFindPendingByUserId() {
+    public void testFindPendingByUserId() throws QMeException {
 
         assertNotNull(userQuizRepository);
 

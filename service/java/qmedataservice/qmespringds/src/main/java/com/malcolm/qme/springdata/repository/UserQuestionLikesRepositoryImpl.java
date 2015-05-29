@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuestionLikes;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuestionLikesRepository;
 import com.malcolm.qme.springdata.entity.UserQuestionLikesEntity;
 import com.malcolm.qme.springdata.entity.UserQuestionLikesEntityId;
@@ -29,48 +30,76 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
     private UserQuestionLikesSpringDataRepository userQuestionLikesSpringDataRepository;
 	
     @Override
-	public List<UserQuestionLikes> findAll() {
-    	return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findAll()));
+	public List<UserQuestionLikes> findAll() throws QMeException {
+		try{
+    		return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
     
     @Override
-	public List<UserQuestionLikes> findByUserId(Long userID) {
-    	return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByUserId(userID)));
+	public List<UserQuestionLikes> findByUserId(Long userID) throws QMeException {
+		try{
+    		return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByUserId(userID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public List<UserQuestionLikes> findByQuestionId(Long questionID) {
-		return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByQuestionId(questionID)));
+	public List<UserQuestionLikes> findByQuestionId(Long questionID) throws QMeException {
+		try{
+			return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByQuestionId(questionID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public UserQuestionLikes findById(UserQuestionLikes userQuestionLikes) {
-		UserQuestionLikesEntityId  userQuestionLikesEntityId = getUserQuestionLikesEntityId(userQuestionLikes);
-		UserQuestionLikesEntity userQuestionLikesEntity = userQuestionLikesSpringDataRepository.findOne(userQuestionLikesEntityId);  
-		if(userQuestionLikesEntity != null){
-            return getUserQuestionLikes(userQuestionLikesEntity);
-        }
-        return null;
+	public UserQuestionLikes findById(UserQuestionLikes userQuestionLikes) throws QMeException {
+		try{
+			UserQuestionLikesEntityId  userQuestionLikesEntityId = getUserQuestionLikesEntityId(userQuestionLikes);
+			UserQuestionLikesEntity userQuestionLikesEntity = userQuestionLikesSpringDataRepository.findOne(userQuestionLikesEntityId);
+			if(userQuestionLikesEntity != null){
+				return getUserQuestionLikes(userQuestionLikesEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public UserQuestionLikes save(UserQuestionLikes userQuestionLikes) {
-		UserQuestionLikesEntity userQuestionLikesEntity = getUserQuestionLikesEntity(userQuestionLikes);
-		userQuestionLikesEntity =  userQuestionLikesSpringDataRepository.save(userQuestionLikesEntity);
-		return getUserQuestionLikes(userQuestionLikesEntity);
+	public UserQuestionLikes save(UserQuestionLikes userQuestionLikes) throws QMeException {
+		try{
+			UserQuestionLikesEntity userQuestionLikesEntity = getUserQuestionLikesEntity(userQuestionLikes);
+			userQuestionLikesEntity =  userQuestionLikesSpringDataRepository.save(userQuestionLikesEntity);
+			return getUserQuestionLikes(userQuestionLikesEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public UserQuestionLikes update(UserQuestionLikes userQuestionLikes, Long updateUserId) {
-		UserQuestionLikesEntity userQuestionLikesEntity = getUserQuestionLikesEntity(userQuestionLikes);
-		userQuestionLikesEntity =  userQuestionLikesSpringDataRepository.save(userQuestionLikesEntity);
-		return getUserQuestionLikes(userQuestionLikesEntity);
+	public UserQuestionLikes update(UserQuestionLikes userQuestionLikes, Long updateUserId) throws QMeException {
+		try{
+			UserQuestionLikesEntity userQuestionLikesEntity = getUserQuestionLikesEntity(userQuestionLikes);
+			userQuestionLikesEntity =  userQuestionLikesSpringDataRepository.save(userQuestionLikesEntity);
+			return getUserQuestionLikes(userQuestionLikesEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(UserQuestionLikes userQuestionLikes) {
-		UserQuestionLikesEntityId  userQuestionLikesEntityId = getUserQuestionLikesEntityId(userQuestionLikes);
-		userQuestionLikesSpringDataRepository.delete(userQuestionLikesEntityId);
+	public void delete(UserQuestionLikes userQuestionLikes) throws QMeException {
+		try{
+			UserQuestionLikesEntityId  userQuestionLikesEntityId = getUserQuestionLikesEntityId(userQuestionLikes);
+			userQuestionLikesSpringDataRepository.delete(userQuestionLikesEntityId);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**

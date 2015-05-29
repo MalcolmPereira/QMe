@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserRole;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.springdata.entity.UserRolesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,46 +29,74 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	private UserRoleSpringDataRepository userRoleSpringDataRepository;
 
 	@Override
-	public List<UserRole> findAll() {
-		return (getUserRole(userRoleSpringDataRepository.findAll()));
-	}
-
-	@Override
-	public List<UserRole> findByUserId(Long userID) {
-		return (getUserRole(userRoleSpringDataRepository.findByUserId(userID)));
-	}
-
-	@Override
-	public List<UserRole> findByRoleId(Integer roleID) {
-		return (getUserRole(userRoleSpringDataRepository.findByRoleId(roleID)));
-	}
-
-	@Override
-	public UserRole findById(Long id) {
-		UserRolesEntity userRolesEntity = userRoleSpringDataRepository.findOne(id);
-		if(userRolesEntity != null){
-			return getUserRole(userRolesEntity);
+	public List<UserRole> findAll() throws QMeException {
+		try{
+			return (getUserRole(userRoleSpringDataRepository.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public UserRole save(UserRole userRole) {
-		UserRolesEntity userRolesEntity = getUserRoleEntity(userRole);
-		userRoleSpringDataRepository.save(userRolesEntity);
-		return getUserRole(userRolesEntity);
+	public List<UserRole> findByUserId(Long userID) throws QMeException {
+		try{
+			return (getUserRole(userRoleSpringDataRepository.findByUserId(userID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public UserRole update(UserRole userRole, Long updateUserId) {
-		UserRolesEntity userRolesEntity = getUserRoleEntity(userRole);
-		userRoleSpringDataRepository.save(userRolesEntity);
-		return getUserRole(userRolesEntity);
+	public List<UserRole> findByRoleId(Integer roleID) throws QMeException {
+		try{
+			return (getUserRole(userRoleSpringDataRepository.findByRoleId(roleID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(Long id) {
-		userRoleSpringDataRepository.delete(id);
+	public UserRole findById(Long id) throws QMeException {
+		try{
+			UserRolesEntity userRolesEntity = userRoleSpringDataRepository.findOne(id);
+			if(userRolesEntity != null){
+				return getUserRole(userRolesEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public UserRole save(UserRole userRole) throws QMeException {
+		try{
+			UserRolesEntity userRolesEntity = getUserRoleEntity(userRole);
+			userRoleSpringDataRepository.save(userRolesEntity);
+			return getUserRole(userRolesEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public UserRole update(UserRole userRole, Long updateUserId) throws QMeException {
+		try{
+			UserRolesEntity userRolesEntity = getUserRoleEntity(userRole);
+			userRoleSpringDataRepository.save(userRolesEntity);
+			return getUserRole(userRolesEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+		try{
+			userRoleSpringDataRepository.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**

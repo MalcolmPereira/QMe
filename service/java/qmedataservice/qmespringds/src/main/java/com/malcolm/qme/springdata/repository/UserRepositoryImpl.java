@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,62 +29,90 @@ public class UserRepositoryImpl implements UserRepository {
 	private UserSpringDataRepository userSpringDataRepo;
 
 	@Override
-	public User findByUserName(String userName) {
-		UserEntity userEntity = userSpringDataRepo
-				.findByUserNameIgnoreCase(userName);
-		if (userEntity != null) {
-			return getUser(userEntity);
+	public User findByUserName(String userName) throws QMeException {
+		try{
+			UserEntity userEntity = userSpringDataRepo
+					.findByUserNameIgnoreCase(userName);
+			if (userEntity != null) {
+				return getUser(userEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public User findByUserEmail(String userEmail) {
-		UserEntity userEntity = userSpringDataRepo
-				.findByUserEmailIgnoreCase(userEmail);
-		if (userEntity != null) {
-			return getUser(userEntity);
+	public User findByUserEmail(String userEmail) throws QMeException {
+		try{
+			UserEntity userEntity = userSpringDataRepo
+					.findByUserEmailIgnoreCase(userEmail);
+			if (userEntity != null) {
+				return getUser(userEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public List<User> findAll() {
-		return (getUsers(userSpringDataRepo.findAll()));
-	}
-
-	@Override
-	public User findById(Long id) {
-		UserEntity userEntity = userSpringDataRepo.findOne(id);
-		if (userEntity != null) {
-			return getUser(userEntity);
+	public List<User> findAll() throws QMeException {
+		try{
+			return (getUsers(userSpringDataRepo.findAll()));
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
-		return null;
 	}
 
 	@Override
-	public User save(User user) {
-		UserEntity userEntity = getUserEntity(user);
-		userEntity.setUserRegisteredDate(LocalDateTime.now());
-		userEntity.setUserUpdatedDate(LocalDateTime.now());
-		userEntity = userSpringDataRepo.save(userEntity);
-		userEntity.setUpdateUser(userEntity.getUserId());
-		userEntity = userSpringDataRepo.save(userEntity);
-		return getUser(userEntity);
+	public User findById(Long id) throws QMeException {
+		try{
+			UserEntity userEntity = userSpringDataRepo.findOne(id);
+			if (userEntity != null) {
+				return getUser(userEntity);
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public User update(User user, Long updateUserId) {
-		UserEntity userEntity = getUserEntity(user);
-		userEntity.setUserUpdatedDate(LocalDateTime.now());
-		userEntity.setUpdateUser(updateUserId);
-		userEntity = userSpringDataRepo.save(userEntity);
-		return getUser(userEntity);
+	public User save(User user) throws QMeException {
+		try{
+			UserEntity userEntity = getUserEntity(user);
+			userEntity.setUserRegisteredDate(LocalDateTime.now());
+			userEntity.setUserUpdatedDate(LocalDateTime.now());
+			userEntity = userSpringDataRepo.save(userEntity);
+			userEntity.setUpdateUser(userEntity.getUserId());
+			userEntity = userSpringDataRepo.save(userEntity);
+			return getUser(userEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(Long id) {
-		userSpringDataRepo.delete(id);
+	public User update(User user, Long updateUserId) throws QMeException {
+		try{
+			UserEntity userEntity = getUserEntity(user);
+			userEntity.setUserUpdatedDate(LocalDateTime.now());
+			userEntity.setUpdateUser(updateUserId);
+			userEntity = userSpringDataRepo.save(userEntity);
+			return getUser(userEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void delete(Long id) throws QMeException {
+		try{
+			userSpringDataRepo.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**

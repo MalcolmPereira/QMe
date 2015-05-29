@@ -20,14 +20,16 @@ public interface UserQuestionLikesRepository extends QMeRepository<UserQuestionL
      *
      * @param userID User ID
      * @return UserQuestionLikes by User ID
+     * @throws QMeException
      */
-    List<UserQuestionLikes> findByUserId(Long userID);
+    List<UserQuestionLikes> findByUserId(Long userID) throws QMeException;
 
     /**
      * Find By Question ID
      *
      * @param questionID Question ID
      * @return UserQuestionLikes by Question ID
+     * @throws QMeException
      */
-    List<UserQuestionLikes> findByQuestionId(Long questionID);
+    List<UserQuestionLikes> findByQuestionId(Long questionID) throws QMeException;
 }

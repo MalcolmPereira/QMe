@@ -18,14 +18,16 @@ public interface UserRepository extends QMeRepository<User, Long> {
      *
      * @param userName User Name
      * @return User for unique user name
+     * @throws QMeException
      */
-    User findByUserName(String userName);
+    User findByUserName(String userName) throws QMeException;
 
     /**
      * Find User By User Email
      *
      * @param userEmail User Email
      * @return User for unique user email
+     * @throws QMeException
      */
-    User findByUserEmail(String userEmail);
+    User findByUserEmail(String userEmail) throws QMeException;
 }

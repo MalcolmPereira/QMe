@@ -19,7 +19,8 @@ public interface UserCategoryLikesRepository extends QMeRepository<UserCategoryL
      *
      * @param userID User ID
      * @return UserCategoryLikes by User ID
+     * @throws QMeException
      */
-    List<UserCategoryLikes> findByUserId(Long userID);
+    List<UserCategoryLikes> findByUserId(Long userID) throws QMeException;
 
 }

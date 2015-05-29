@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,44 +30,67 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     private CategorySpringDataRepository categorySpringDataRepository;
 	
 	@Override
-	public List<Category> findAll() {
-        return(getCategory(categorySpringDataRepository.findAll()));
+	public List<Category> findAll() throws QMeException {
+        try{
+            return(getCategory(categorySpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
     @Override
-    public List<Category> findCategoryNameLike(String categoryName) {
-        return(getCategory(categorySpringDataRepository.findByCatNameIgnoreCaseLike(categoryName)));
-    }
-
-	@Override
-	public Category findById(Long id) {
-        CategoryEntity categoryEntity = categorySpringDataRepository.findOne(id);
-        if(categoryEntity != null){
-            return getCategory(categoryEntity);
+    public List<Category> findCategoryNameLike(String categoryName) throws QMeException {
+        try{
+            return(getCategory(categorySpringDataRepository.findByCatNameIgnoreCaseLike(categoryName)));
+        }catch(Exception err){
+            throw new QMeException(err);
         }
-        return null;
+    }
+
+	@Override
+	public Category findById(Long id) throws QMeException {
+        try{
+            CategoryEntity categoryEntity = categorySpringDataRepository.findOne(id);
+            if(categoryEntity != null){
+                return getCategory(categoryEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 
 
     }
 
 	@Override
-	public Category save(Category category) {
-        CategoryEntity categoryEntity = getCategoryEntity(category);
-        categoryEntity = categorySpringDataRepository.save(categoryEntity);
-        return getCategory(categoryEntity);
+	public Category save(Category category) throws QMeException {
+        try{
+            CategoryEntity categoryEntity = getCategoryEntity(category);
+            categoryEntity = categorySpringDataRepository.save(categoryEntity);
+            return getCategory(categoryEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public Category update(Category category, Long updateUserId) {
-        CategoryEntity categoryEntity = getCategoryEntity(category);
-        categoryEntity = categorySpringDataRepository.save(categoryEntity);
-        return getCategory(categoryEntity);
+	public Category update(Category category, Long updateUserId) throws QMeException {
+        try{
+            CategoryEntity categoryEntity = getCategoryEntity(category);
+            categoryEntity = categorySpringDataRepository.save(categoryEntity);
+            return getCategory(categoryEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
-	public void delete(Long id) {
-        categorySpringDataRepository.delete(id);
-
+	public void delete(Long id) throws QMeException {
+        try{
+            categorySpringDataRepository.delete(id);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	/**

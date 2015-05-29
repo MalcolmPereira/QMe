@@ -19,14 +19,16 @@ public interface UserQuizGameRepository extends QMeRepository<UserQuizGame,UserQ
      *
      * @param userID User ID
      * @return UserQuizGame List by User ID
+     * @throws QMeException
      */
-    List<UserQuizGame> findByUserId(Long userID);
+    List<UserQuizGame> findByUserId(Long userID) throws QMeException;
 
     /**
      * Find By Game Token
      *
      * @param userGameToken User Game Token
      * @return UserQuizGame by User Game Token
+     * @throws QMeException
      */
-    UserQuizGame findByGameToken(Long userGameToken);
+    UserQuizGame findByGameToken(Long userGameToken)throws QMeException;
 }
