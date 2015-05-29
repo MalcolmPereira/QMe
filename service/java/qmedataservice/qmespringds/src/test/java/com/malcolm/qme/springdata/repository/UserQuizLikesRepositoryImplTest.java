@@ -90,7 +90,7 @@ public class UserQuizLikesRepositoryImplTest {
         User user = new User("UserQuizLikesRepositoryImplTest", "Test", "Test", "Test", "UserQuizLikesRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
 
@@ -147,7 +147,7 @@ public class UserQuizLikesRepositoryImplTest {
         User user = new User("UserQuizLikesRepositoryImplTestByUserID", "Test", "Test", "Test", "UserQuizLikesRepositoryImplTestByUserID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
 
@@ -210,7 +210,7 @@ public class UserQuizLikesRepositoryImplTest {
         User user = new User("UserQuizLikesRepositoryImplTestByUserID", "Test", "Test", "Test", "UserQuizLikesRepositoryImplTestByUserID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
 

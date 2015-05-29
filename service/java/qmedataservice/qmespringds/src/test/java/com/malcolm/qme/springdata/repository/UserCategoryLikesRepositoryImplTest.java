@@ -86,7 +86,7 @@ public class UserCategoryLikesRepositoryImplTest {
         User user = new User("UserCategoryLikesRepositoryImplTest", "Test", "Test", "Test", "UserCategoryLikesRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Category category = new Category("UserCategoryLikesRepositoryImplTest", userID);
@@ -129,7 +129,7 @@ public class UserCategoryLikesRepositoryImplTest {
         User user = new User("UCatLikesRepositoryImplTestByUser", "Test", "Test", "Test", "UCatLikesRepositoryImplTestByUser@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Category category = new Category("UCatLikesRepositoryImplTestByUser", userID);

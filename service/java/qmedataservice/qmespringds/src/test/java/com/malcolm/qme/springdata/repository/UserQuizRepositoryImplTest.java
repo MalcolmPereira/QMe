@@ -86,7 +86,7 @@ public class UserQuizRepositoryImplTest {
         User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
@@ -163,7 +163,7 @@ public class UserQuizRepositoryImplTest {
         User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
@@ -259,7 +259,7 @@ public class UserQuizRepositoryImplTest {
         User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
@@ -355,7 +355,7 @@ public class UserQuizRepositoryImplTest {
         User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
@@ -447,7 +447,7 @@ public class UserQuizRepositoryImplTest {
         User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(

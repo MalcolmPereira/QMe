@@ -8,6 +8,8 @@ package com.malcolm.qme.core.repository;
 
 import com.malcolm.qme.core.domain.User;
 
+import java.time.LocalDateTime;
+
 
 /**
  * @author Malcolm
@@ -30,4 +32,43 @@ public interface UserRepository extends QMeRepository<User, Long> {
      * @throws QMeException
      */
     User findByUserEmail(String userEmail) throws QMeException;
+
+    /**
+     * Add Password Reset Token
+     *
+     * @param resetToken Unique Generated Reset Token
+     * @param userId User ID for whom password reset is requested
+     * @return Reset Token
+     * @throws QMeException
+     */
+     void addResetToken(Long resetToken, Long userId) throws QMeException;
+
+    /**
+     * Get Create Time for Password Reset Token
+     * @param resetToken Unique Generated Reset Token
+     * @param userId User ID for whom password reset is requested
+     * @return Reset Token Created Time
+     * @throws QMeException
+     */
+    LocalDateTime getResetTokenCreateTime(Long resetToken, Long userId) throws QMeException;
+
+    /**
+     * Delete Reset Token
+     *
+     * @param resetToken Unique Generated Reset Token
+     * @param userId User ID for whom password reset is requested
+     * @throws QMeException
+     */
+    void deleteResetToken(Long resetToken, Long userId) throws QMeException;
+
+    /**
+     * Reset User Password for password reset token
+     *
+     * @param resetToken  Unique Generated Reset Token
+     * @param userId Long userId
+     * @param userPassword Encrypted Password
+     * @return User
+     * @throws QMeException
+     */
+    User resetUserPassword(Long resetToken, Long userId, String userPassword) throws QMeException;
 }

@@ -10,6 +10,8 @@ import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.entity.UserEntity;
+import com.malcolm.qme.springdata.entity.UserPasswordResetEntity;
+import com.malcolm.qme.springdata.entity.UserPasswordResetEntityId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +29,12 @@ public class UserRepositoryImpl implements UserRepository {
 	 */
 	@Autowired
 	private UserSpringDataRepository userSpringDataRepo;
+
+	/**
+	 * Spring Data UserPassword Reset Entity Repository
+	 */
+	@Autowired
+	private UserPasswordResetSpringDataRepository userPasswordResetDataRepo;
 
 	@Override
 	public User findByUserName(String userName) throws QMeException {
@@ -112,6 +120,97 @@ public class UserRepositoryImpl implements UserRepository {
 			userSpringDataRepo.delete(id);
 		}catch(Exception err){
 			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void addResetToken(Long resetToken, Long userId) throws QMeException{
+		try{
+			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
+			id.setUserId(userId);
+			id.setResetToken(resetToken);
+			UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity();
+			userPasswordResetEntity.setId(id);
+			userPasswordResetEntity.setCreatedTimestamp(LocalDateTime.now());
+			userPasswordResetDataRepo.save(userPasswordResetEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public LocalDateTime getResetTokenCreateTime(Long resetToken, Long userId) throws QMeException{
+		try{
+			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
+			id.setUserId(userId);
+			id.setResetToken(resetToken);
+			UserPasswordResetEntity userPasswordResetEntity = userPasswordResetDataRepo.findOne(id);
+			if(userPasswordResetEntity != null){
+				return userPasswordResetEntity.getCreatedTimestamp();
+			}
+			return null;
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
+	@Override
+	public void deleteResetToken(Long resetToken, Long userId) throws QMeException{
+		try{
+			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
+			id.setUserId(userId);
+			id.setResetToken(resetToken);
+			userPasswordResetDataRepo.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+
+	}
+
+	@Override
+	public User resetUserPassword(Long resetToken, Long userId, String userPassword) throws QMeException {
+
+		UserPasswordResetEntityId id = new UserPasswordResetEntityId();
+		id.setUserId(userId);
+		id.setResetToken(resetToken);
+		UserPasswordResetEntity userPasswordResetEntity = userPasswordResetDataRepo.findOne(id);
+
+		if(userPasswordResetEntity != null){
+			Long resetTokenUserID = userPasswordResetEntity.getId().getUserId();
+			if(!resetTokenUserID.equals(userId)){
+				throw new QMeException("Invalid Reset token, User Does Not Match Found", new Exception("Invalid Reset token, User Does Not Match Found"));
+			}
+
+			UserEntity userEntity = userSpringDataRepo.findOne(userId);
+
+			if (userEntity != null) {
+				User existingUser = getUser(userEntity);
+
+				User updateUser = new User(
+						existingUser.getUserID(),
+						existingUser.getUserName(),
+						userPassword,
+						existingUser.getUserFirstName(),
+						existingUser.getUserLastName(),
+						existingUser.getUserEmail(),
+						existingUser.getUserRegisteredDate(),
+						LocalDateTime.now(),
+						existingUser.getUserID()
+				);
+				UserEntity updateUserEntity = getUserEntity(updateUser);
+				updateUserEntity.setUserUpdatedDate(LocalDateTime.now());
+				updateUserEntity.setUpdateUser(existingUser.getUserID());
+				updateUserEntity = userSpringDataRepo.save(updateUserEntity);
+
+				userPasswordResetDataRepo.delete(id);
+
+				return getUser(updateUserEntity);
+
+			}
+			throw new QMeException("Invalid Reset token, User Not Found", new Exception("Invalid Reset token, User Not Found"));
+
+		}else{
+			throw new QMeException("Invalid Reset token", new Exception("Reset Token Invalid"));
 		}
 	}
 

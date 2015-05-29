@@ -86,7 +86,7 @@ public class UserQuestionLikesRepositoryImplTest {
         User user = new User("UserQuestionLikesRepositoryImplTest", "Test", "Test", "Test", "UserQuestionLikesRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Question question = new Question(1L, "UserQuestionLikesRepositoryImplTest Question", "UserQuestionLikesRepositoryImplTest Answer", 1L);
@@ -131,7 +131,7 @@ public class UserQuestionLikesRepositoryImplTest {
         User user = new User("UserQuestionLikesRepositoryImplTestByUser", "Test", "Test", "Test", "UserQuestionLikesRepositoryImplTestByUser@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Question question = new Question(1L, "UserQuestionLikesRepositoryImplTestByUser Question", "UserQuestionLikesRepositoryImplTestByUser Answer", 1L);
@@ -185,7 +185,7 @@ public class UserQuestionLikesRepositoryImplTest {
         User user = new User("UserQuestionLikesRepositoryImplTestByQID", "Test", "Test", "Test", "UserQuestionLikesRepositoryImplTestByQID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Question question = new Question(1L, "UserQuestionLikesRepositoryImplTestByQID Question", "UserQuestionLikesRepositoryImplTestByQID Answer", 1L);

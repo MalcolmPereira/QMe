@@ -77,7 +77,7 @@ public class UserQuizGameRepositoryImplTest {
         User user = new User("UserQuizGameRepositoryImplTest", "Test", "Test", "Test", "UserQuizGameRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         final Long userID = user.getUserID();
 
         UserQuizGame userQuizGame = new UserQuizGame(21234L, userID, 1L);
@@ -126,7 +126,7 @@ public class UserQuizGameRepositoryImplTest {
         User user = new User("UserQuizGameRepositoryImplTestByUserID", "Test", "Test", "Test", "UserQuizGameRepositoryImplTestByUserID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         final Long userID = user.getUserID();
 
         UserQuizGame userQuizGame = new UserQuizGame(212345L, userID, 1L);
@@ -189,7 +189,7 @@ public class UserQuizGameRepositoryImplTest {
         User user = new User("UserQuizGameRepositoryImplTestByTK", "Test", "Test", "Test", "UserQuizGameRepositoryImplTestByTK@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
         final Long userID = user.getUserID();
 
         UserQuizGame userQuizGame = new UserQuizGame(2123456L, userID, 1L);

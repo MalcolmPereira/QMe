@@ -22,6 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
                 RoleRepositoryImplTest.class,
                 UserSpringDataRepositoryTest.class,
                 UserRepositoryImplTest.class,
+                UserPasswordResetSpringDataRepositoryTest.class,
                 UserRoleSpringDataRepositoryTest.class,
                 UserRoleRepositoryImplTest.class,
                 CategorySpringDataRepositoryTest.class,

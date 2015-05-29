@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -63,7 +64,7 @@ public class UserRepositoryImplTest {
         User user = new User("UserRepositoryImplTest", "Test", "Test", "Test", "UserRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
 
         Long userID = user.getUserID();
         user = userRepo.findById(userID);
@@ -103,7 +104,7 @@ public class UserRepositoryImplTest {
         User user = new User("UserRepositoryImplTestUserName", "Test", "Test", "Test", "UserRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
 
         Long userID = user.getUserID();
         user = userRepo.findById(userID);
@@ -149,7 +150,7 @@ public class UserRepositoryImplTest {
         User user = new User("UserRepositoryImplTestUserName1", "Test", "Test", "Test", "UserRepositoryImplTestUserName1@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
 
         Long userID = user.getUserID();
         user = userRepo.findById(userID);
@@ -187,5 +188,58 @@ public class UserRepositoryImplTest {
 
     }
 
+    @Test
+    public void testAddResetToken() throws QMeException, InterruptedException {
 
+        assertNotNull(userRepo);
+
+        User user = new User("URepoImplTestUserNamePassReset1", "Test", "Test", "Test", "URepoImplTestUserNamePassReset1@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
+
+        userRepo.addResetToken(1L, userID);
+
+        LocalDateTime tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        assertNotNull(tokenTime);
+
+        userRepo.deleteResetToken(1L, userID);
+
+        tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        assertNull(tokenTime);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+    }
+
+    @Test
+    public void testResetUserPassword() throws QMeException, InterruptedException {
+        assertNotNull(userRepo);
+
+        User user = new User("URepoImplTestUserNamePassReset2", "Test", "Test", "Test", "URepoImplTestUserNamePassReset2@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
+
+        userRepo.addResetToken(1L, userID);
+
+        LocalDateTime tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        assertNotNull(tokenTime);
+
+        user =  userRepo.resetUserPassword(1L, userID,"SomeNew");
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+        assertThat(user.getUserPassword(), equalTo("SomeNew"));
+
+        tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        assertNull(tokenTime);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
+    }
 }

@@ -84,7 +84,7 @@ public class UserRoleRepositoryImplTest {
         User user = new User("RoleRepositoryImplTest", "Test", "Test", "Test", "RoleRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
 
         Long userID = user.getUserID();
         user = userRepo.findById(userID);
@@ -139,7 +139,7 @@ public class UserRoleRepositoryImplTest {
         User user = new User("RoleRepositoryImplTest ByUserID ", "Test", "Test", "Test", "RoleRepositoryImplTestByUserID@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
 
         Long userID = user.getUserID();
         user = userRepo.findById(userID);
@@ -197,7 +197,7 @@ public class UserRoleRepositoryImplTest {
         User user = new User("RoleRepositoryImplTest ByRoleId ", "Test", "Test", "Test", "RoleRepositoryImplTestByRoleId@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
-        assertThat(Long.valueOf(user.getUserID()).intValue(), greaterThan(0));
+        assertThat(user.getUserID(), greaterThan(0L));
 
         Long userID = user.getUserID();
         user = userRepo.findById(userID);
