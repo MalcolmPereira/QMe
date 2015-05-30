@@ -6,6 +6,8 @@ apply plugin: 'spring-boot'
 buildscript {
 	ext {
 		javaVersion 		= "1.8"
+		javaMailVersion		= "1.5.3"
+		jafVersion			= "1.1.1"
 		springVersion 		= "4.1.6.RELEASE"
 		springBootVersion   = '1.2.3.RELEASE'
 		springHateosVersion = "0.17.0.RELEASE"
@@ -35,14 +37,21 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
 	
 	compile("org.springframework:spring-core:${springVersion}")
+	compile("org.springframework:spring-context-support:${springVersion}")
 	compile("org.springframework:spring-test:${springVersion}")
 	compile("org.springframework:spring-webmvc:${springVersion}")
 	compile("org.springframework.hateoas:spring-hateoas:${springHateosVersion}")
 	compile("org.springframework:spring-context:${springVersion}")
 	compile("org.springframework:spring-beans:${springVersion}")
 	compile("org.springframework:spring-aop:${springVersion}")
-	
 
+	compile("javax.mail:javax.mail-api:${javaMailVersion}")
+	compile("com.sun.mail:javax.mail:${javaMailVersion}")
+	compile("javax.activation:activation:${jafVersion}")
 
     testCompile("com.jayway.jsonpath:json-path:${jsonpathVersion}")
+}
+
+bootRun {
+	systemProperties = System.properties
 }

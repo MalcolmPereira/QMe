@@ -26,9 +26,4 @@ public interface QMeAPI {
 	 * Email Parameter
 	 */
 	String EMAIL_PARAM_STRING 	= "email";
-    /**
-     * Token Parameter
-     */
-    String TOKEN_PARAM_STRING 	= "token";
-
 }

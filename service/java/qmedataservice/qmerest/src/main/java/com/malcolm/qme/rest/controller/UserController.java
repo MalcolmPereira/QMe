@@ -15,6 +15,7 @@ import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,12 +70,6 @@ public class UserController implements UserAPI {
         return userService.searchByEmail(userEmail);
     }
 
-    //FIXME: TODO!!!!
-    @Override
-    public QMeUserDetail resetPassword(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException {
-        return null;
-    }
-
     @RequestMapping(value=REGISTER_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
@@ -95,5 +90,20 @@ public class UserController implements UserAPI {
     @Override
     public void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException {
         userService.delete(userId);
+    }
+
+    @Override
+    public String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException {
+        return null;
+    }
+
+    @Override
+    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(EMAIL_RETURN_URL_PARAM_STRING) String url) throws QMeResourceException {
+
+    }
+
+    @Override
+    public void checkToken(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(TOKEN_PARAM_STRING) Long token, @PathVariable(PASSWORD_PARAM_STRING) String userPassword) throws QMeResourceException {
+
     }
 }

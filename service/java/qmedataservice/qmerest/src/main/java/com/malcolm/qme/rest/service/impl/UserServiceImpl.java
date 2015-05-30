@@ -19,10 +19,19 @@ import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +51,12 @@ public final class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passcodeEncoder;
+
+    /**
+     * Category Service
+     */
+    @Autowired
+    private JavaMailSenderImpl javaMailSender;
 
     @Override
     public QMeUserDetail searchByUser(String userName) throws QMeResourceException {
@@ -256,5 +271,66 @@ public final class UserServiceImpl implements UserService {
         //Fixme: Need to add updated  user name
         qmeUserDetail.setUpdateUserName("");
         return qmeUserDetail;
+    }
+
+    /**
+     * Send Email Link for Password Reset
+     *
+     * @param userName User Name for whom password reset is requested
+     * @param userEmail User Email for whom password reset is requested
+     * @param resetToken Reset Token for password request
+     * @param url URL for password reset form when users clicks on the email link
+     * @throws QMeResourceException
+     */
+    private void sendEmail(String userName, String userEmail, Long resetToken, String url)  throws QMeResourceException {
+        if(javaMailSender.getUsername() == null || javaMailSender.getUsername().trim().length() == 0 ||
+                javaMailSender.getPassword() == null || javaMailSender.getPassword().trim().length() == 0){
+            throw new QMeResourceException("System Configuration Error, Please configue mail server details correctly");
+        }
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(javaMailSender.getUsername());
+
+            helper.setSubject("QMe Application Password Reset Request");
+            helper.setTo(userEmail);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("<html><head><title>QMe Application Password Reset</title></head><body>");
+            stringBuilder.append("<h2><b>Password Reset Requested For : </b></h2>");
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Use Name : ");
+            stringBuilder.append(userName);
+            stringBuilder.append("<br/>");
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Use Email : ");
+            stringBuilder.append(userEmail);
+            stringBuilder.append("<br/>");
+            LocalDateTime now = LocalDateTime.now();
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested : ");
+            stringBuilder.append(now.format(DateTimeFormatter.ofPattern(TOKEN_VALIDITY_DATE_PATTERN)));
+            stringBuilder.append("<br/>");
+            LocalDateTime validUntil = now.plusMinutes(TOKEN_VALIDITY_MINUTES);
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;  Valid Until : ");
+            stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(TOKEN_VALIDITY_DATE_PATTERN)));
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<br/>");
+
+            stringBuilder.append("If you have not requested password reset, please ignore this email.");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("To reset password, please click on link below or copy/paste the link into a new browser window.");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<a href=\"http://localhost:8080\">http://localhost:8080</>");
+            stringBuilder.append("<br/>");
+
+            helper.setText(stringBuilder.toString(),true);
+
+
+            javaMailSender.send(message);
+
+        }catch (MessagingException messagingErr){
+            throw new QMeResourceException("System  Error, Error Sending Email Message",messagingErr);
+        }
     }
 }

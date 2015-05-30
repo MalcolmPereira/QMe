@@ -31,6 +31,8 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String REGISTER_PATH = "*/register";
 
+    private static final String RESET_PATH = "*/reset/*";
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -53,6 +55,7 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(REGISTER_PATH).permitAll()
+                .antMatchers(RESET_PATH).permitAll()
                 .anyRequest().authenticated().and().httpBasic()
                 .and().logout().permitAll()
         ;

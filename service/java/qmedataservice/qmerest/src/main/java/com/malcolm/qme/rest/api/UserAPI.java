@@ -38,14 +38,42 @@ public interface UserAPI extends QMeAPI {
     String EMAIL_PATH = ROOT_PATH + "/searchemail/{" + EMAIL_PARAM_STRING + ":.+}";
 
     /**
-     * QMeUser API Reset Password
-     */
-    String RESET_PASSWORD_PATH = ROOT_PATH + "/reset/password/";
-
-    /**
      * QMeUser API Register User Path
      */
     String REGISTER_PATH = ROOT_PATH + "/register";
+
+    /**
+     * QMeUser API Reset Path
+     */
+    String RESET_PATH = ROOT_PATH + "/reset";
+
+    /**
+     * QMeUser API Forgot User Name
+     */
+    String FORGOT_USERNAME_PATH = RESET_PATH + "/forgotusername";
+
+    /**
+     * QMeUser API Forgot Password
+     */
+    String FORGOT_PASSWORD_PATH = RESET_PATH + "/forgotpassword";
+
+    /**
+     * QMeUser API Validate Token Path
+     */
+    String RESET_PASSWORD_PATH = RESET_PATH + "/resetpassword";
+
+    /**
+     * Token Parameter
+     */
+    String TOKEN_PARAM_STRING 	= "token";
+    /**
+     * Token Parameter
+     */
+    String EMAIL_RETURN_URL_PARAM_STRING 	= "emailReturnURL";
+    /**
+     * Password Parameter
+     */
+    String PASSWORD_PARAM_STRING 	= "passwordParam";
 
     /**
      * Get All Users
@@ -96,18 +124,37 @@ public interface UserAPI extends QMeAPI {
     public QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
 
     /**
-     * Update QMe User
-     *
-     * @param user QMe User
-     * @return QMe User
-     */
-    public QMeUserDetail resetPassword(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
-
-
-    /**
      * Delete QMe User
      *
      * @param userId User Is
      */
     void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+
+    /**
+     * Forgot User Name
+     *
+     * @param userEmail User Email
+     * @return QMeUser User Details
+     */
+    public String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+
+    /**
+     * Forgot Passsword
+     *
+     * @param userEmail User Email
+     * @param url Reset URL that will be sent to user email
+     * @throws QMeResourceException
+     */
+    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(EMAIL_RETURN_URL_PARAM_STRING)  String url) throws QMeResourceException;
+
+   /**
+     * Reset Password
+     *
+     * @param userEmail User Email
+     * @param token valid token
+     * @param userPassword reset password
+     * @throws QMeResourceException
+     */
+    public void checkToken(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(TOKEN_PARAM_STRING)  Long token, @PathVariable(PASSWORD_PARAM_STRING) String userPassword) throws QMeResourceException;
+
 }
