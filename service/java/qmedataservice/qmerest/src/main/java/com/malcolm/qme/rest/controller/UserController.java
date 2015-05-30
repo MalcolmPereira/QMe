@@ -103,7 +103,7 @@ public class UserController implements UserAPI {
     }
 
     @Override
-    public void checkToken(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(TOKEN_PARAM_STRING) Long token, @PathVariable(PASSWORD_PARAM_STRING) String userPassword) throws QMeResourceException {
+    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(TOKEN_PARAM_STRING) Long token, @PathVariable(PASSWORD_PARAM_STRING) String userPassword) throws QMeResourceException {
 
     }
 }
