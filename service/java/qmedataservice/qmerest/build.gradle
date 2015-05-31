@@ -33,9 +33,11 @@ dependencies {
 	
 	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"
+		exclude module: "logback-classic"
     }
-    compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
-	
+    compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"){
+		exclude module: "logback-classic"
+	}
 	compile("org.springframework:spring-core:${springVersion}")
 	compile("org.springframework:spring-context-support:${springVersion}")
 	compile("org.springframework:spring-test:${springVersion}")
