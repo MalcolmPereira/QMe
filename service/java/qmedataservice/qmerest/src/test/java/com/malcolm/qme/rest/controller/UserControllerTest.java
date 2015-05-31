@@ -33,6 +33,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -408,8 +409,8 @@ public class UserControllerTest extends QMeControllerTest {
 
         mockMvc.perform(
                 delete("/qme/user/1"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(status().isOk())
         ;
 
     }
@@ -438,6 +439,54 @@ public class UserControllerTest extends QMeControllerTest {
 
         mockMvc.perform(
                 delete("/qme/user/1"))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testForgotUserName() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
+
+        mockMvc.perform(
+                get("/qme/user/reset/forgotusername/SimpleUser1@User.com")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("suser1")))
+                .andDo(print())
+                ;
+        ;
+
+    }
+
+    @Test
+    public void testForgotUserNameQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeResourceNotFoundException("Resource Not Found Error "));
+
+        mockMvc.perform(
+                get("/qme/user/reset/forgotusername/SimpleUser1@User.com")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testForgotUserNameQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeResourceException("Some Error in the Service "));
+
+        mockMvc.perform(
+                get("/qme/user/reset/forgotusername/SimpleUser1@User.com")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;

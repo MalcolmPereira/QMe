@@ -41,4 +41,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      */
     QMeUserDetail searchByEmail(String userEmail) throws QMeResourceException;
 
+
+    void forgotPassword(String userEmail, String url) throws QMeResourceException;
+
 }

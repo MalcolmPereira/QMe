@@ -10,11 +10,15 @@ package com.malcolm.qme.rest.controller;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +29,12 @@ import java.util.List;
  */
 @RestController
 public class UserController implements UserAPI {
+
+    /**
+     * Logger
+     */
+    private static Logger LOG = LoggerFactory.getLogger(UserController.class);
+
     /**
      * Category Service
      */
@@ -41,6 +51,7 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody List<QMeUserDetail> list() throws QMeResourceException {
+        LOG.debug("User List called ");
         return userService.list();
     }
 
@@ -48,6 +59,8 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException {
+        LOG.debug("User Search By ID for  "+userId);
+
         return userService.searchById(userId);
     }
 
@@ -55,6 +68,7 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceException {
+        LOG.debug("User Search By User Name for  "+userName);
         return userService.searchByUser(userName);
     }
 
@@ -62,25 +76,23 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException {
-        System.out.println("Got userEmail "+userEmail);
-        QMeUserDetail t = userService.searchByEmail(userEmail);
-        System.out.println(t.getUserId());
-        System.out.println(t.getUserName());
-
+        LOG.debug("User Search By User Email for  "+userEmail);
         return userService.searchByEmail(userEmail);
     }
 
     @RequestMapping(value=REGISTER_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeUserDetail create(QMeUser user) throws QMeResourceException {
+    public @ResponseBody QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceException {
+        LOG.debug("Create User called for  "+user); //TODO: Need to remove this debug
         return userService.save(user,null);
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException {
+    public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUser user) throws QMeResourceException {
+        LOG.debug("Update User called for  "+user);  //TODO: Need to remove this debug
         //TODO:Add Security and User Id from Principal
         return userService.update(user, userId, 1L);
     }
@@ -89,21 +101,30 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException {
+        LOG.debug("Delete User called for  "+userId);
         userService.delete(userId);
     }
 
+
+    @RequestMapping(value=FORGOT_USERNAME_PATH,method=RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException {
-        return null;
+    public @ResponseBody String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException {
+        QMeUserDetail qMeUserDetail  = userService.searchByEmail(userEmail);
+        return qMeUserDetail.getUserName();
     }
 
+    @RequestMapping(value=FORGOT_PASSWORD_PATH,method=RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(EMAIL_RETURN_URL_PARAM_STRING) String url) throws QMeResourceException {
-
+    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException {
+        userService.forgotPassword(userEmail,url);
     }
 
+    @RequestMapping(value=RESET_PASSWORD_PATH,method=RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(TOKEN_PARAM_STRING) Long token, @PathVariable(PASSWORD_PARAM_STRING) String userPassword) throws QMeResourceException {
+    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException {
 
     }
 }

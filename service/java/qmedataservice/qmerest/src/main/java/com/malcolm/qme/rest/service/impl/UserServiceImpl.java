@@ -10,6 +10,7 @@ package com.malcolm.qme.rest.service.impl;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
@@ -42,9 +43,6 @@ import java.util.stream.Collectors;
 @Service
 public final class UserServiceImpl implements UserService {
 
-    /**
-     * Spring Data UserEntity Repository
-     */
     @Autowired
     @Qualifier("UserRepository")
     private UserRepository userRepo;
@@ -52,9 +50,9 @@ public final class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passcodeEncoder;
 
-    /**
-     * Category Service
-     */
+    @Autowired
+    private AtomicTokenGenerator atomicTokenGenerator;
+
     @Autowired
     private JavaMailSenderImpl javaMailSender;
 
@@ -151,6 +149,36 @@ public final class UserServiceImpl implements UserService {
 
         }
     }
+
+    @Override
+    public void forgotPassword(String userEmail, String url) throws QMeResourceException {
+        try{
+            if(url == null || url.trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid application url redirect parameter ");
+            }
+            if(userEmail == null || userEmail.trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid user email address ");
+            }
+
+            userEmail = userEmail.trim();
+            url = url.trim();
+
+            User user =  userRepo.findByUserEmail(userEmail);
+            if(user == null){
+                throw new QMeResourceNotFoundException("User with User email "+userEmail+" not found");
+            }
+
+            Long resetToken = atomicTokenGenerator.generateUniqueResetToken();
+            userRepo.addResetToken(resetToken,user.getUserID());
+
+            sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url+"?token="+resetToken);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
+        }
+    }
+
 
     /**
      * Get Use for Create
@@ -321,8 +349,13 @@ public final class UserServiceImpl implements UserService {
             stringBuilder.append("To reset password, please click on link below or copy/paste the link into a new browser window.");
             stringBuilder.append("<br/>");
             stringBuilder.append("<br/>");
-            stringBuilder.append("<a href=\"http://localhost:8080\">http://localhost:8080</>");
+            stringBuilder.append("<a href=\"");
+            stringBuilder.append(url);
+            stringBuilder.append("\">");
+            stringBuilder.append(url);
+            stringBuilder.append("</a>");
             stringBuilder.append("<br/>");
+            stringBuilder.append("</body></html");
 
             helper.setText(stringBuilder.toString(),true);
 

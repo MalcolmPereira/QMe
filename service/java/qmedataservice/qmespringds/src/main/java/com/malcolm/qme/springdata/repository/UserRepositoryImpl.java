@@ -126,6 +126,11 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public void addResetToken(Long resetToken, Long userId) throws QMeException{
 		try{
+			List<UserPasswordResetEntity> resetTokenList = userPasswordResetDataRepo.findByUserId(userId);
+			for (UserPasswordResetEntity userPasswordResetEntity : resetTokenList){
+				userPasswordResetDataRepo.delete(userPasswordResetEntity.getId());
+			}
+
 			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
 			id.setUserId(userId);
 			id.setResetToken(resetToken);
@@ -133,6 +138,7 @@ public class UserRepositoryImpl implements UserRepository {
 			userPasswordResetEntity.setId(id);
 			userPasswordResetEntity.setCreatedTimestamp(LocalDateTime.now());
 			userPasswordResetDataRepo.save(userPasswordResetEntity);
+
 		}catch(Exception err){
 			throw new QMeException(err);
 		}

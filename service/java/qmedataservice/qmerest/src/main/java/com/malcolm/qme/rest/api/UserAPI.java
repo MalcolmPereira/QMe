@@ -7,9 +7,11 @@
 package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -50,30 +52,17 @@ public interface UserAPI extends QMeAPI {
     /**
      * QMeUser API Forgot User Name
      */
-    String FORGOT_USERNAME_PATH = RESET_PATH + "/forgotusername";
+    String FORGOT_USERNAME_PATH = RESET_PATH + "/forgotusername/{" + EMAIL_PARAM_STRING + ":.+}";
 
     /**
      * QMeUser API Forgot Password
      */
-    String FORGOT_PASSWORD_PATH = RESET_PATH + "/forgotpassword";
+    String FORGOT_PASSWORD_PATH = RESET_PATH + "/forgotpassword/{" + EMAIL_PARAM_STRING + ":.+}";
 
     /**
      * QMeUser API Validate Token Path
      */
-    String RESET_PASSWORD_PATH = RESET_PATH + "/resetpassword";
-
-    /**
-     * Token Parameter
-     */
-    String TOKEN_PARAM_STRING 	= "token";
-    /**
-     * Token Parameter
-     */
-    String EMAIL_RETURN_URL_PARAM_STRING 	= "emailReturnURL";
-    /**
-     * Password Parameter
-     */
-    String PASSWORD_PARAM_STRING 	= "passwordParam";
+    String RESET_PASSWORD_PATH = RESET_PATH + "/resetpassword/{" + EMAIL_PARAM_STRING + ":.+}";
 
     /**
      * Get All Users
@@ -113,7 +102,7 @@ public interface UserAPI extends QMeAPI {
      * @return QMe User
      * @throws QMeResourceException
      */
-    public QMeUserDetail create(QMeUser user) throws QMeResourceException;
+    public QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceException;
 
     /**
      * Update QMe User
@@ -121,7 +110,7 @@ public interface UserAPI extends QMeAPI {
      * @param user QMe User
      * @return QMe User
      */
-    public QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, QMeUser user) throws QMeResourceException;
+    public QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUser user) throws QMeResourceException;
 
     /**
      * Delete QMe User
@@ -145,16 +134,15 @@ public interface UserAPI extends QMeAPI {
      * @param url Reset URL that will be sent to user email
      * @throws QMeResourceException
      */
-    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(EMAIL_RETURN_URL_PARAM_STRING)  String url) throws QMeResourceException;
+    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException;
 
    /**
      * Reset Password
      *
      * @param userEmail User Email
-     * @param token valid token
-     * @param userPassword reset password
+     * @param userpassword User Password reset token
      * @throws QMeResourceException
      */
-    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @PathVariable(TOKEN_PARAM_STRING)  Long token, @PathVariable(PASSWORD_PARAM_STRING) String userPassword) throws QMeResourceException;
+    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException;
 
 }

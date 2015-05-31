@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdScalarSerializer;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.security.config.QMeSecurityConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -35,6 +37,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @Import(QMeSecurityConfig.class)
 @ComponentScan({"com.malcolm.qme.rest"})
 public class RestConfig {
+
+    /**
+     * Logger
+     */
+    private static Logger LOG = LoggerFactory.getLogger(RestConfig.class);
+
 
     @Autowired
     private Environment environment;
@@ -65,11 +73,14 @@ public class RestConfig {
 
                     Long lastTime = LAST_TIME_MS.get();
 
-                    if (lastTime >= now)
-                        now = lastTime+1;
+                    if (lastTime >= now) {
+                        now = lastTime + 1;
+                    }
 
-                    if (LAST_TIME_MS.compareAndSet(lastTime, now))
+                    if (LAST_TIME_MS.compareAndSet(lastTime, now)) {
+                        LOG.debug("Returning reset token: "+now);
                         return now;
+                    }
                 }
             }
         };
@@ -81,10 +92,12 @@ public class RestConfig {
 
         String userName = environment.getProperty(MAIL_SMTP_USERNAME);
         if(userName == null || userName.trim().length() == 0){
+            LOG.debug("Getting User Name from System Properties ");
             userName = environment.getProperty(MAIL_SMTP_USERNAME_SYS);
         }
         String passWord = environment.getProperty(MAIL_SMTP_PASSWORD);
         if(passWord == null || passWord.trim().length() == 0){
+            LOG.debug("Getting User Password from System Properties ");
             passWord = environment.getProperty(MAIL_SMTP_PASSWORD_SYS);
         }
         sender.setUsername(userName);
@@ -98,6 +111,7 @@ public class RestConfig {
         if(authType == null){
             authType = SMPT_AUTH_TYPE.TLS;
         }
+        LOG.debug("Got Mail auth type "+authType);
         if(SMPT_AUTH_TYPE.TLS == authType){
             sender.setJavaMailProperties(mailTLS());
         }else if(SMPT_AUTH_TYPE.SSL == authType){

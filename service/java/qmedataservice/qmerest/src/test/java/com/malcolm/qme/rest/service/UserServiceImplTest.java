@@ -10,6 +10,7 @@ import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
@@ -20,8 +21,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 import static org.hamcrest.Matchers.anyOf;
@@ -45,17 +49,23 @@ public class UserServiceImplTest {
     @Mock
     public PasswordEncoder passwordEncoder;
 
+    @Mock
+    public AtomicTokenGenerator atomicTokenGenerator;
+
+    @Mock
+    public JavaMailSenderImpl javaMailSender;
+
     @InjectMocks
     private final UserService userService = new UserServiceImpl();
 
     @Test
-    public void testList() throws QMeResourceException , QMeException {
+    public void testList() throws QMeResourceException, QMeException {
         when(userRepo.findAll()).thenReturn((List) UserFixtures.simpleUserList());
 
         List<QMeUserDetail> userList = userService.list();
 
         assertNotNull(userList);
-        assertThat(userList.size(),equalTo(5));
+        assertThat(userList.size(), equalTo(5));
 
         for (QMeUserDetail qmeUserDetail : userList) {
             assertThat(qmeUserDetail.getUserId(), anyOf(
@@ -76,7 +86,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSearchById() throws QMeResourceException , QMeException {
+    public void testSearchById() throws QMeResourceException, QMeException {
 
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
 
@@ -89,7 +99,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSearchByUser() throws QMeResourceException , QMeException {
+    public void testSearchByUser() throws QMeResourceException, QMeException {
 
         when(userRepo.findByUserName("suser1")).thenReturn(UserFixtures.simpleUser());
 
@@ -103,7 +113,7 @@ public class UserServiceImplTest {
 
 
     @Test
-    public void testSearchByEmail() throws QMeResourceException, QMeException  {
+    public void testSearchByEmail() throws QMeResourceException, QMeException {
 
         when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
 
@@ -116,7 +126,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testCreate() throws QMeResourceException , QMeException {
+    public void testCreate() throws QMeResourceException, QMeException {
         when(userRepo.save(Matchers.<User>anyObject())).thenReturn(UserFixtures.simpleUser());
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
 
@@ -127,7 +137,7 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
 
-        QMeUserDetail userDetail = userService.save(qmeUser,1L);
+        QMeUserDetail userDetail = userService.save(qmeUser, 1L);
 
         assertNotNull(userDetail);
 
@@ -136,7 +146,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testUpdate() throws QMeResourceException , QMeException {
+    public void testUpdate() throws QMeResourceException, QMeException {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
 
@@ -156,9 +166,25 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testDelete() throws QMeResourceException , QMeException {
+    public void testDelete() throws QMeResourceException, QMeException {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         doNothing().when(userRepo).delete(1L);
         userService.delete(1L);
+    }
+
+    @Test
+    public void testForgotPassword() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
+        when(atomicTokenGenerator.generateUniqueResetToken()).thenReturn(1L);
+        doNothing().when(userRepo).addResetToken(1L, 1L);
+
+        when(javaMailSender.getUsername()).thenReturn("someusername");
+        when(javaMailSender.getPassword()).thenReturn("somepassword");
+        when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session)null));
+
+
+        doNothing().when(javaMailSender).send(Matchers.<MimeMessage>anyObject());
+
+        userService.forgotPassword("SimpleUser1@User.com", "some url");
     }
 }

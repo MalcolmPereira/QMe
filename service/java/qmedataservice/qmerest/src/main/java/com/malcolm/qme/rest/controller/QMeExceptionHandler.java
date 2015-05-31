@@ -30,25 +30,45 @@ public class QMeExceptionHandler {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Requested resource not found. please make sure resource id is valid and available for query or update.")
     @ExceptionHandler(QMeResourceNotFoundException.class)
-    public void handleResourceNotFoundException(HttpServletRequest request, Exception ex){
+    public void handleResourceNotFoundException(HttpServletRequest request, QMeResourceNotFoundException ex){
+        if(ex.getCause() != null){
+            ex.getCause().printStackTrace();
+        }else{
+            ex.printStackTrace();
+        }
         logger.info("QMeResourceNotFoundException Occurred:: URL="+request.getRequestURL());
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid data for resource. please make sure valid parameters are submitted for create or update.")
      @ExceptionHandler(QMeInvalidResourceDataException.class)
-     public void handleResourceDataException(HttpServletRequest request, Exception ex){
+     public void handleResourceDataException(HttpServletRequest request, QMeInvalidResourceDataException ex){
+        if(ex.getCause() != null){
+            ex.getCause().printStackTrace();
+        }else{
+            ex.printStackTrace();
+        }
         logger.info("QMeInvalidResourceDataException Occurred:: URL="+request.getRequestURL());
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Duplicate data for resource. please make sure valid parameters are submitted for create or update.")
     @ExceptionHandler(QMeResourceConflictException.class)
-    public void handleResourceConflictException(HttpServletRequest request, Exception ex){
+    public void handleResourceConflictException(HttpServletRequest request, QMeResourceConflictException ex){
+        if(ex.getCause() != null){
+            ex.getCause().printStackTrace();
+        }else{
+            ex.printStackTrace();
+        }
         logger.info("QMeResourceConflictException Occurred:: URL="+request.getRequestURL());
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "QMe Service Exception occured. Please retry request or contact system admin")
     @ExceptionHandler(QMeResourceException.class)
-    public void handleResourceException(HttpServletRequest request, Exception ex){
+    public void handleResourceException(HttpServletRequest request, QMeResourceException ex){
+        if(ex.getCause() != null){
+            ex.getCause().printStackTrace();
+        }else{
+            ex.printStackTrace();
+        }
         logger.info("QMeResourceException Occurred:: URL="+request.getRequestURL());
     }
 
