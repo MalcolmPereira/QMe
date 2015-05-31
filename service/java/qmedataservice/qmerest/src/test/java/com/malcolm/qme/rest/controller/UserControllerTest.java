@@ -570,8 +570,6 @@ public class UserControllerTest extends QMeControllerTest {
 
         when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
 
-
-        //"SimpleUser1@User.com", (any(QMeResetPassword.class))
         mockMvc.perform(
                 put("/qme/user/reset/resetpassword/SimpleUser1@User.com")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -582,4 +580,65 @@ public class UserControllerTest extends QMeControllerTest {
         ;
 
     }
+
+    @Test
+    public void testResetPasswordQMeInvalidResourceDataException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        QMeResetPassword qMeResetPassword  = QMeResetPasswordFixtures.simpleQMeResetPassword();
+
+        when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenThrow(new QMeInvalidResourceDataException("some invalid err"));
+
+        mockMvc.perform(
+                put("/qme/user/reset/resetpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeResetPasswordFixtures.toJson(qMeResetPassword))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+        ;
+
+    }
+
+    @Test
+    public void testResetPasswordQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        QMeResetPassword qMeResetPassword  = QMeResetPasswordFixtures.simpleQMeResetPassword();
+
+        when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenThrow(new QMeResourceNotFoundException("Resource Not Found Error "));
+
+        mockMvc.perform(
+                put("/qme/user/reset/resetpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeResetPasswordFixtures.toJson(qMeResetPassword))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+        ;
+
+    }
+
+    @Test
+    public void testResetPasswordQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        QMeResetPassword qMeResetPassword  = QMeResetPasswordFixtures.simpleQMeResetPassword();
+
+        when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenThrow(new QMeResourceException("Some Server Error "));
+
+        mockMvc.perform(
+                put("/qme/user/reset/resetpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeResetPasswordFixtures.toJson(qMeResetPassword))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isInternalServerError())
+        ;
+    }
 }
+
+

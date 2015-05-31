@@ -205,6 +205,11 @@ public class UserServiceImplTest {
         qMeResetPassword.setUserName("suser1");
         qMeResetPassword.setUserPassword("somepssword");
 
-        userService.resetPassword("SimpleUser1@User.com",qMeResetPassword);
+        QMeUserDetail userDetail = userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+
+        assertNotNull(userDetail);
+
+        assertThat(userDetail.getUserId(), equalTo(1L));
+        assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 }
