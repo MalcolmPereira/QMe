@@ -19,9 +19,10 @@ public class UserFixtures {
 
     /**
      * Return Simple User
+     *
      * @return User
      */
-    public static User simpleUser(){
+    public static User simpleUser() {
         return new User(1L, "suser1", "spassword1", "Simple 1", "Simple User 1", "SimpleUser1@User.com", LocalDateTime.now(), LocalDateTime.now(), 1L);
     }
 
@@ -30,7 +31,7 @@ public class UserFixtures {
      *
      * @return User List
      */
-    public static List<User> simpleUserList(){
+    public static List<User> simpleUserList() {
         List<User> userList = new ArrayList<>();
         userList.add(
                 new User(1L, "suser1", "spassword1", "Simple 1", "Simple User 1", "SimpleUser1@User.com", LocalDateTime.now(), LocalDateTime.now(), 1L)
@@ -49,6 +50,5 @@ public class UserFixtures {
         );
         return userList;
     }
-
 
 }

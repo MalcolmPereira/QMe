@@ -10,7 +10,9 @@ import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
+import com.malcolm.qme.rest.model.fixtures.QMeResetPasswordFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeUserDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeUserFixtures;
 import com.malcolm.qme.rest.service.UserService;
@@ -33,7 +35,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -558,5 +559,27 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isInternalServerError())
         ;
+    }
+
+    @Test
+    public void testResetPassword() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        QMeResetPassword qMeResetPassword  = QMeResetPasswordFixtures.simpleQMeResetPassword();
+
+        when(userService.resetPassword(any(String.class),any(QMeResetPassword.class))).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
+
+
+        //"SimpleUser1@User.com", (any(QMeResetPassword.class))
+        mockMvc.perform(
+                put("/qme/user/reset/resetpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeResetPasswordFixtures.toJson(qMeResetPassword))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+        ;
+
     }
 }
