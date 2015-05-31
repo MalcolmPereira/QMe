@@ -457,7 +457,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("suser1")))
                 .andDo(print())
-                ;
+        ;
         ;
 
     }
@@ -489,6 +489,74 @@ public class UserControllerTest extends QMeControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testForgotPassword() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        doNothing().when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+
+        mockMvc.perform(
+                put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("http://localhost:8080")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+        ;
+    }
+
+    @Test
+    public void testForgotPasswordQMeInvalidResourceDataException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        doThrow(new QMeInvalidResourceDataException("some invalid err")).when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+
+        mockMvc.perform(
+                put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("http://localhost:8080")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+        ;
+    }
+
+    @Test
+    public void testForgotPasswordQMeResourceNotFoundException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        doThrow(new QMeResourceNotFoundException("some resource not found  err")).when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+
+        mockMvc.perform(
+                put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("http://localhost:8080")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+        ;
+    }
+
+    @Test
+    public void testForgotPasswordQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        doThrow(new QMeResourceException("some resource err")).when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+
+        mockMvc.perform(
+                put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("http://localhost:8080")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isInternalServerError())
         ;
     }
 }
