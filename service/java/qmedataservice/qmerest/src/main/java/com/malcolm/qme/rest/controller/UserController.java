@@ -124,7 +124,7 @@ public class UserController implements UserAPI {
     @RequestMapping(value=RESET_PASSWORD_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException {
-
+    public @ResponseBody QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException {
+        return userService.resetPassword(userEmail, userpassword);
     }
 }

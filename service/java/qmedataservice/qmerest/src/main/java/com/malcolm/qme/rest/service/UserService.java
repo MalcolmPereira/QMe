@@ -7,6 +7,7 @@
 package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 
@@ -41,7 +42,20 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      */
     QMeUserDetail searchByEmail(String userEmail) throws QMeResourceException;
 
-
+    /**
+     * Forgot Password
+     *
+     * @param userEmail User Email for whom password reset is requested
+     * @param url Redirect URL for reseting user password
+     * @throws QMeResourceException
+     */
     void forgotPassword(String userEmail, String url) throws QMeResourceException;
+
+    /**
+     * Reset User Password
+     * @param userEmail User Email for whom password reset is requested
+     * @param qMeResetPassword QMe Reset Password
+     */
+    QMeUserDetail resetPassword(String userEmail, QMeResetPassword qMeResetPassword) throws QMeResourceException;
 
 }

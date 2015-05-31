@@ -15,6 +15,7 @@ import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
@@ -179,6 +180,41 @@ public final class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public QMeUserDetail resetPassword(String userEmail, QMeResetPassword qMeResetPassword) throws QMeResourceException {
+        try{
+            if(userEmail == null || userEmail.trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid user email address ");
+            }
+            userEmail = userEmail.trim();
+
+            User user =  userRepo.findByUserEmail(userEmail);
+            if(user == null){
+                throw new QMeResourceNotFoundException("User with User email "+userEmail+" not found");
+            }
+
+            Long resetToken = qMeResetPassword.getToken();
+
+            LocalDateTime tokenCreatedTime = userRepo.getResetTokenCreateTime(resetToken,user.getUserID());
+            if(tokenCreatedTime == null){
+                throw new QMeInvalidResourceDataException("Reset Token not found for "+userEmail);
+            }
+            tokenCreatedTime = tokenCreatedTime.plusMinutes(TOKEN_VALIDITY_MINUTES);
+
+            if(  LocalDateTime.now().isAfter(tokenCreatedTime)) {
+                userRepo.deleteResetToken(resetToken,user.getUserID());
+                throw new QMeInvalidResourceDataException("Reset Token expired for  "+userEmail);
+            }
+
+            user = userRepo.resetUserPassword(resetToken,user.getUserID(),passcodeEncoder.encode(qMeResetPassword.getUserPassword()));
+
+            return getQMeUserDetail(user);
+
+        }catch(QMeException err){
+            throw new QMeResourceException(err.getMessage(),err);
+
+        }
+    }
 
     /**
      * Get Use for Create

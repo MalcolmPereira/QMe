@@ -143,6 +143,6 @@ public interface UserAPI extends QMeAPI {
      * @param userpassword User Password reset token
      * @throws QMeResourceException
      */
-    public void resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException;
+    public QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException;
 
 }
