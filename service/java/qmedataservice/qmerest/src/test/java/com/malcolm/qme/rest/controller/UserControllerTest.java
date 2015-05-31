@@ -515,7 +515,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doThrow(new QMeInvalidResourceDataException("some invalid err")).when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+        doThrow(new QMeInvalidResourceDataException("some invalid err")).when(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
@@ -532,7 +532,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doThrow(new QMeResourceNotFoundException("some resource not found  err")).when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+        doThrow(new QMeResourceNotFoundException("some resource not found  err")).when(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
@@ -549,7 +549,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doThrow(new QMeResourceException("some resource err")).when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+        doThrow(new QMeResourceException("some resource err")).when(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
@@ -568,7 +568,7 @@ public class UserControllerTest extends QMeControllerTest {
 
         QMeResetPassword qMeResetPassword  = QMeResetPasswordFixtures.simpleQMeResetPassword();
 
-        when(userService.resetPassword(any(String.class),any(QMeResetPassword.class))).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
+        when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
 
 
         //"SimpleUser1@User.com", (any(QMeResetPassword.class))

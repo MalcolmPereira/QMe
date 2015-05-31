@@ -193,6 +193,15 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeResourceNotFoundException("User with User email "+userEmail+" not found");
             }
 
+            String userName = qMeResetPassword.getUserName();
+            if(userName == null || userName.trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid user name provided");
+            }
+            userName = userName.trim();
+            if(!user.getUserName().equalsIgnoreCase(userName)){
+                throw new QMeInvalidResourceDataException("User name does not match for  "+userEmail);
+            }
+
             Long resetToken = qMeResetPassword.getToken();
 
             LocalDateTime tokenCreatedTime = userRepo.getResetTokenCreateTime(resetToken,user.getUserID());
@@ -362,15 +371,11 @@ public final class UserServiceImpl implements UserService {
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("<html><head><title>QMe Application Password Reset</title></head><body>");
-            stringBuilder.append("<h2><b>Password Reset Requested For : </b></h2>");
-            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Use Name : ");
-            stringBuilder.append(userName);
-            stringBuilder.append("<br/>");
-            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Use Email : ");
-            stringBuilder.append(userEmail);
+            stringBuilder.append("<h2><b>Password Reset Requested : </b></h2>");
+
             stringBuilder.append("<br/>");
             LocalDateTime now = LocalDateTime.now();
-            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested : ");
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested Date: ");
             stringBuilder.append(now.format(DateTimeFormatter.ofPattern(TOKEN_VALIDITY_DATE_PATTERN)));
             stringBuilder.append("<br/>");
             LocalDateTime validUntil = now.plusMinutes(TOKEN_VALIDITY_MINUTES);
