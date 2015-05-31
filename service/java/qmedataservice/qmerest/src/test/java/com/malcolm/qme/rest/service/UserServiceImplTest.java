@@ -12,6 +12,7 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.impl.UserServiceImpl;
@@ -26,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.anyOf;
@@ -186,5 +188,23 @@ public class UserServiceImplTest {
         doNothing().when(javaMailSender).send(Matchers.<MimeMessage>anyObject());
 
         userService.forgotPassword("SimpleUser1@User.com", "some url");
+    }
+
+    @Test
+    public void testResetPassword() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
+
+        when(userRepo.getResetTokenCreateTime(1L, 1L)).thenReturn(LocalDateTime.now());
+
+        when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
+
+        when(userRepo.resetUserPassword(1L, 1L,"someencodedvalue")).thenReturn(UserFixtures.simpleUser());
+
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken(1L);
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword("somepssword");
+
+        userService.resetPassword("SimpleUser1@User.com",qMeResetPassword);
     }
 }
