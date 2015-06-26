@@ -1,0 +1,4 @@
+.ng-hide, 
+.ng-show {
+  display: none !important;
+}
