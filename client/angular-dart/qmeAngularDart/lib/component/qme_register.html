@@ -3,6 +3,40 @@
     <div class="panel-heading">
       <h3 class="panel-title">Register New User</h3>
     </div>
-    <div class="panel-body"></div>
+    <div class="panel-body">
+        <div class="container-fluid">
+        <form name="registerForm" class="form-horizontal">
+            <div style="margin-bottom: 25px" class="form-group">
+                <label for="userEmail">User Email:</label>
+                <input ng-model="user.userEmail" id="userEmail" maxlength="128" min="5" type="email" placeholder="email@domain.com" class="form-control" ng-required="true">
+            </div>
+            <div style="margin-bottom: 25px" class="form-group">
+                <label for="userName">User Alias:</label>
+                <input ng-model="user.userName" id="userName" maxlength="128" min="5" type="text" placeholder="username" class="form-control" ng-required="true">
+            </div>
+            <div style="margin-bottom: 25px" class="form-group">
+                <label for="userPassword">User Password:</label>
+                <input ng-model="user.userPassword"  id="userPassword" maxlength="128" min="5" type="text" placeholder="password" class="form-control" ng-required="true">
+            </div>
+            <div style="margin-bottom: 25px" class="form-group">
+                <label for="userPasswordConfirm">Confirm User Password:</label>
+                <input ng-model="user.userPasswordConfirm" id="userPasswordConfirm" maxlength="128" min="5" type="text" placeholder="password" class="form-control" ng-required="true">
+            </div>
+            <div style="margin-bottom: 25px" class="form-group">
+                <label for="userFirstName">User First Name:</label>
+                <input ng-model="user.userFirstName" id="userFirstName" maxlength="128" min="5" type="text" placeholder="first name" class="form-control" ng-required="true">
+            </div>
+            <div style="margin-bottom: 25px" class="form-group">
+                <label for="userLastName">User Last Name:</label>
+                <input ng-model="user.userLastName" id="userLastName" maxlength="128" min="5" type="text" placeholder="last name" class="form-control">
+            </div>
+            <button id="submitRegisterButton" type="submit" class="btn btn-info btn-sm" ng-click="registerUser()" ng-disabled="registerForm.invalid">Submit</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="resetButton" type="reset" class="btn btn-info btn-sm">Reset</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+        </form>
+        </div>
+    </div>
   </div>
 </div>
