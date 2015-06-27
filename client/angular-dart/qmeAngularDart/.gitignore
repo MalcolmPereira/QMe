@@ -1,6 +1,12 @@
 .buildlog
 .DS_Store
 .idea
+.classpath
+.settings
+.project
+qmeAngularDart.iml
+qmeAngularDart.ipr
+qmeAngularDart.iws
 .pub/
 build/
 packages
