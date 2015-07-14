@@ -17,9 +17,22 @@ class QMeRegisterComponent {
     //}
 
     void registerUser() {
+      if (!QmeErrorHolder.instance.isError) {
         print(user.userEmail);
         print(user.userPassword);
         QmeErrorHolder.instance.setError("some error message");
+      }
     }
+
+    void validatePassword() {
+        if(user.userPassword != user.userPasswordConfirm){
+          QmeErrorHolder.instance.setError("Password do not match, please confirm password");
+          user.userPasswordConfirm ="";
+        }else{
+          QmeErrorHolder.instance.removeError();
+        }
+
+    }
+
 
 }

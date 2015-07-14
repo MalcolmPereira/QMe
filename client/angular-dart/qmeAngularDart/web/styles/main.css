@@ -2,3 +2,6 @@
 .ng-show {
   display: none !important;
 }
+input.ng-dirty.ng-invalid{
+  border: 2px red solid;
+}
