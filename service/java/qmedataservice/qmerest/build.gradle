@@ -38,14 +38,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"){
 		exclude module: "logback-classic"
 	}
-	compile("org.springframework:spring-core:${springVersion}")
-	compile("org.springframework:spring-context-support:${springVersion}")
-	compile("org.springframework:spring-test:${springVersion}")
-	compile("org.springframework:spring-webmvc:${springVersion}")
-	compile("org.springframework.hateoas:spring-hateoas:${springHateosVersion}")
 	compile("org.springframework:spring-context:${springVersion}")
-	compile("org.springframework:spring-beans:${springVersion}")
-	compile("org.springframework:spring-aop:${springVersion}")
+	compile("org.springframework:spring-context-support:${springVersion}")
+    compile("org.springframework:spring-test:${springVersion}")
+	compile("org.springframework.hateoas:spring-hateoas:${springHateosVersion}")
+
 
 	compile("javax.mail:javax.mail-api:${javaMailVersion}")
 	compile("com.sun.mail:javax.mail:${javaMailVersion}")

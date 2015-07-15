@@ -19,7 +19,7 @@ buildscript {
 
 dependencies {
 	compile project(':qmecore')
-	compile("org.springframework:spring-core:${springVersion}")
+	compile("org.springframework:spring-context:${springVersion}")
 	compile("org.springframework:spring-test:${springVersion}")
 	compile("org.springframework.data:spring-data-jpa:${springDataVersion}")
 	compile("org.hibernate:hibernate-core:${hibernateVersion}")
