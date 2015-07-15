@@ -1,5 +1,9 @@
 library qme;
 import 'package:angular/angular.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:html';
+import 'dart:convert';
+
 
 part 'component/qme_header.dart';
 part 'component/qme_error.dart';
