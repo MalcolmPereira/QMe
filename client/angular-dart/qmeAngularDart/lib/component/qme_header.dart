@@ -28,12 +28,14 @@ class QMeHeaderComponent {
     String username = "testadmin";
     String password = "testtest";
     final auth = CryptoUtils.bytesToBase64(UTF8.encode("$username:$password"));
-    request.open("GET", url, false,"","");
+    request.open("GET", url, async:false, user:"testadmin", password:"testtest");
     request.setRequestHeader('authorization',"Basic $auth");
     request.setRequestHeader('content-type',"application/json");
     request.setRequestHeader("accept", "application/json");
     request.setRequestHeader("Access-Control-Allow-Origin", "*");
-    request.send();
+    request.setRequestHeader("Access-Control-Request-Method","GET");
+
+  request.send();
 
 
 
