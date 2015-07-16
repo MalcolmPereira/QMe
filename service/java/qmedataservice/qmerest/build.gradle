@@ -1,40 +1,43 @@
-apply plugin: 'java' 
+buildscript {
+	ext {
+		springBootVersion       = '1.2.5.RELEASE'
+        springHateosVersion     = "0.17.0.RELEASE"
+        javaMailVersion		    = "1.5.3"
+        jafVersion			    = "1.1.1"
+        jsonpathVersion         = "2.0.0"
+	}
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+    repositories {
+        maven {
+            url "http://repo.spring.io/plugins-release"
+        }
+        maven {
+            url "http://repo.spring.io/milestone"
+        }
+        maven {
+            url "http://repo.spring.io/release"
+        }
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-
-buildscript {
-	ext {
-		javaVersion 		= "1.8"
-		javaMailVersion		= "1.5.3"
-		jafVersion			= "1.1.1"
-		springVersion 		= "4.1.6.RELEASE"
-		springBootVersion   = '1.2.3.RELEASE'
-		springHateosVersion = "0.17.0.RELEASE"
-		jsonpathVersion     = "2.0.0"
-	}
-    repositories {
-    	mavenCentral()
-        mavenLocal()
-		maven {
-    		url "http://repo.spring.io/plugins-release"
-        }
-	}
-	dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-
-}
 
 dependencies {
 	compile project(':qmecore')
 	compile project(':qmespringds')
 	compile project(':qmesecurity')
-	
-	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"
 		exclude module: "logback-classic"
     }
+
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"){
 		exclude module: "logback-classic"
 	}

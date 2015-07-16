@@ -2,21 +2,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-buildscript {
-	ext {
-		javaVersion 		= "1.8"
-        springVersion 		= "4.1.6.RELEASE"
-        springSecurityVersion = "4.0.1.RELEASE"
-	}
-    repositories {
-    	mavenCentral()
-        mavenLocal()
-		maven {
-    		url "http://repo.spring.io/plugins-release"
-        }
-	}
-}
-
 dependencies {
 
     compile project(':qmecore')
