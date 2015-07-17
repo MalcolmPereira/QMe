@@ -34,7 +34,7 @@ public class QMeCORSFilter implements Filter {
     /*
     * Allow Origin Domain
     */
-    private static final String ALLOW_ORIGIN_DOMAIN = "http://localhost";
+    private static final String ALLOW_ORIGIN_LOCAL_DOMAIN = "http://localhost:63342";
 
     /**
      * Allow Methods
@@ -44,7 +44,7 @@ public class QMeCORSFilter implements Filter {
     /**
      * Methods
      */
-    private static final String ALLOW_METHODS = "POST, GET, OPTIONS, DELETE";
+    private static final String ALLOW_METHODS = "POST,GET,DELETE,PUT";
 
     /**
      * Allow Control Maximum Age
@@ -73,10 +73,16 @@ public class QMeCORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_ALL);
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_LOCAL_DOMAIN);
         response.setHeader(ACCESS_CONTROL_ALLOW_METHODS,ALLOW_METHODS );
-        response.setHeader(ACCESS_CONTROL_MAX_AGE,MAX_AGE );
-        response.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ALLOW_HEADERS_REQUESTED_WITH);
+        response.setHeader("Access-Control-Allow-Credentials","true" );
+        response.setHeader("Access-Control-Request-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+        response.setHeader("Access-Control-Allow-Headers","content-type,accept,Authorization,authorization" );
+
+
+
+        //response.setHeader(ACCESS_CONTROL_MAX_AGE,MAX_AGE );
+        //response.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ALLOW_HEADERS_REQUESTED_WITH);
         chain.doFilter(req, res);
     }
 
