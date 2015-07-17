@@ -20,15 +20,17 @@ class QMeHeaderComponent {
   }
 
   void performSignIn() {
-    String username = "testadmin";
-    String password = "testtest";
+    String username = user.userEmail;
+    String password = user.userPassword;
+    print(username );
+    print(password );
     final auth = CryptoUtils.bytesToBase64(UTF8.encode("$username:$password"));
     HttpRequest.request(
-         'http://localhost:8080/qme/category',
-         method:'GET',
+         "http://localhost:8080/qme/user/search/$username",
+         method:"GET",
          withCredentials:true,
-         responseType:'application/json',
-         mimeType:'application/json',
+         responseType:"application/json",
+         mimeType:"application/json",
          requestHeaders:
          {
             "Authorization":"Basic $auth",
@@ -39,26 +41,6 @@ class QMeHeaderComponent {
     .then((HttpRequest resp) {
 
     });
-
-    /*
-    HttpRequest.requestCrossOrigin("http://localhost:8080/qme/category",)
-    HttpRequest request = new HttpRequest();
-    var url = "http://localhost:8080/qme/category";
-
-    final auth = CryptoUtils.bytesToBase64(UTF8.encode("$username:$password"));
-    request.open("GET", url);
-
-    request.setRequestHeader('authorization',"Basic $auth");
-    request.setRequestHeader('content-type',"application/json");
-    request.setRequestHeader("accept", "application/json");
-    request.setRequestHeader("Access-Control-Allow-Origin", "*");
-
-    request.send();
-
-    print(user.userEmail);
-    print(user.userPassword);
-    //QmeErrorHolder.instance.setError("some error message");
-    */
   }
 
   void routeRegistration() {
