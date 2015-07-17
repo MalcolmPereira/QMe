@@ -22,24 +22,33 @@ class QMeHeaderComponent {
   void performSignIn() {
     String username = user.userEmail;
     String password = user.userPassword;
-    print(username );
-    print(password );
     final auth = CryptoUtils.bytesToBase64(UTF8.encode("$username:$password"));
     HttpRequest.request(
-         "http://localhost:8080/qme/user/search/$username",
-         method:"GET",
+         QMeAppModule.user_service_search + "$username",
+         method:QMeAppModule.service_get,
          withCredentials:true,
-         responseType:"application/json",
-         mimeType:"application/json",
+         responseType:QMeAppModule.service_json,
+         mimeType:QMeAppModule.service_json,
          requestHeaders:
          {
-            "Authorization":"Basic $auth",
-            "content-type":"text/plain",
-            "accept":"application/json"
+            "Authorization":"$QMeAppModule.service_auth_basic $auth",
+            "content-type":QMeAppModule.service_json,
+            "accept":QMeAppModule.service_json
          }
       )
     .then((HttpRequest resp) {
+        if (resp.readyState == HttpRequest.DONE && (resp.status == 200 || resp.status == 0)){
+          print("this is success !!!");
+          print(resp.responseText);
 
+        }else if (resp.readyState == HttpRequest.DONE && (resp.status != 200 && resp.status != 0)){
+          print("this is error !!!");
+          print(resp.responseText);
+        }
+    })
+    .catchError((error) {
+      print("this is in error!!!");
+      print(error.target.responseText); // Current target should be you HttpRequest
     });
   }
 
