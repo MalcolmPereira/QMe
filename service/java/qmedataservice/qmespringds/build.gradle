@@ -5,8 +5,22 @@ apply plugin: 'idea'
 dependencies {
 	compile project(':qmecore')
 	compile("org.springframework:spring-context:${springVersion}")
-	compile("org.springframework:spring-test:${springVersion}")
-	compile("org.springframework.data:spring-data-jpa:${springDataVersion}")
+	compile("org.springframework:spring-tx:${springVersion}")
+    compile("org.springframework:spring-aop:${springVersion}")
+
+    compile("org.springframework.data:spring-data-jpa:${springDataVersion}"){
+        exclude module: "spring-core"
+        exclude module: "spring-beans"
+        exclude module: "spring-aop"
+        exclude module: "spring-tx"
+        exclude module: "spring-context"
+        exclude module: "spring-context-support"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
+	}
+
+    compile("org.springframework:spring-test:${springVersion}")
+
 	compile("org.hibernate:hibernate-core:${hibernateVersion}")
 	compile("org.hibernate:hibernate-entitymanager:${hibernateVersion}")
 	compile("mysql:mysql-connector-java:${mySQLDriverVersion}")

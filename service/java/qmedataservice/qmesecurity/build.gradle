@@ -8,8 +8,25 @@ dependencies {
     compile project(':qmespringds')
 
     compile("org.springframework:spring-context:${springVersion}")
-	compile("org.springframework.security:spring-security-config:${springSecurityVersion}")
-	compile("org.springframework.security:spring-security-web:${springSecurityVersion}")
+
+    compile("org.springframework.security:spring-security-config:${springSecurityVersion}"){
+        exclude module: "spring-core"
+        exclude module: "spring-beans"
+        exclude module: "spring-aop"
+        exclude module: "spring-tx"
+        exclude module: "spring-context"
+        exclude module: "spring-context-support"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
+    }
+	compile("org.springframework.security:spring-security-web:${springSecurityVersion}"){
+        exclude module: "spring-core"
+        exclude module: "spring-beans"
+        exclude module: "spring-aop"
+        exclude module: "spring-tx"
+        exclude module: "spring-context"
+        exclude module: "spring-context-support"
+    }
 
 	compile("org.springframework:spring-test:${springVersion}")
 

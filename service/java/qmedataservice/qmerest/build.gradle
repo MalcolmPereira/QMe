@@ -33,18 +33,39 @@ dependencies {
 	compile project(':qmespringds')
 	compile project(':qmesecurity')
 
+    compile("org.springframework:spring-web:${springVersion}")
+    compile("org.springframework:spring-webmvc:${springVersion}")
+    compile("org.springframework:spring-context:${springVersion}")
+    compile("org.springframework:spring-context-support:${springVersion}")
+    compile("org.springframework:spring-test:${springVersion}")
+
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"
 		exclude module: "logback-classic"
+        exclude module: "spring-core"
+        exclude module: "spring-beans"
+        exclude module: "spring-aop"
+        exclude module: "spring-tx"
+        exclude module: "spring-context"
+        exclude module: "spring-context-support"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
     }
 
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"){
-		exclude module: "logback-classic"
-	}
-	compile("org.springframework:spring-context:${springVersion}")
-	compile("org.springframework:spring-context-support:${springVersion}")
-    compile("org.springframework:spring-test:${springVersion}")
-	compile("org.springframework.hateoas:spring-hateoas:${springHateosVersion}")
+        exclude module: "logback-classic"
+    }
+
+    compile("org.springframework.hateoas:spring-hateoas:${springHateosVersion}"){
+        exclude module: "spring-core"
+        exclude module: "spring-beans"
+        exclude module: "spring-aop"
+        exclude module: "spring-tx"
+        exclude module: "spring-context"
+        exclude module: "spring-context-support"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
+    }
 
 
 	compile("javax.mail:javax.mail-api:${javaMailVersion}")
