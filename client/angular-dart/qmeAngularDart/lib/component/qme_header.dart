@@ -13,6 +13,8 @@ class QMeHeaderComponent {
 
   bool isResetingPassword;
 
+  bool signedIn = false;
+
   Router router;
 
   QMeHeaderComponent(Router router) {
@@ -40,15 +42,18 @@ class QMeHeaderComponent {
         if (resp.readyState == HttpRequest.DONE && (resp.status == 200 || resp.status == 0)){
           print("this is success !!!");
           print(resp.responseText);
+          this.signedIn = true;
 
         }else if (resp.readyState == HttpRequest.DONE && (resp.status != 200 && resp.status != 0)){
           print("this is error !!!");
           print(resp.responseText);
+          this.signedIn = false;
         }
     })
     .catchError((error) {
-      print("this is in error!!!");
-      print(error.target.responseText); // Current target should be you HttpRequest
+        print("this is in error!!!");
+        print(error.target.responseText); // Current target should be you HttpRequest
+        this.signedIn = false;
     });
   }
 
