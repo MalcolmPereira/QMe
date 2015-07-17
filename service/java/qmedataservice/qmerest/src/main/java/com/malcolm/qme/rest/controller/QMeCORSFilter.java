@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class QMeCORSFilter implements Filter {
     /*
-     * Allow Origin
-     */
+   * Allow Origin
+   */
     private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
     /*
      * Allow All Origin
@@ -44,7 +44,7 @@ public class QMeCORSFilter implements Filter {
     /**
      * Methods
      */
-    private static final String ALLOW_METHODS = "POST,GET,DELETE,PUT";
+    private static final String ALLOW_METHODS = "GET,OPTIONS,POST,DELETE,PUT";
 
     /**
      * Allow Control Maximum Age
@@ -62,9 +62,25 @@ public class QMeCORSFilter implements Filter {
     private static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
 
     /**
-     * Allow Headers Requested With
+     * Allow Credentials
      */
-    private static final String ALLOW_HEADERS_REQUESTED_WITH = "x-requested-with";
+    private static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
+
+    /**
+     * Allow Credentials True
+     */
+    private static final String ACCESS_CONTROL_ALLOW_CREDENTIALS_TRUE = "true";
+
+    /**
+     * Allow Control Request Headers
+     */
+    private static final String ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers";
+
+    /**
+     * Control Header Names
+     */
+    private static final String ACCESS_CONTROL_HEADERS_NAME = "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization";
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -75,14 +91,10 @@ public class QMeCORSFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_LOCAL_DOMAIN);
         response.setHeader(ACCESS_CONTROL_ALLOW_METHODS,ALLOW_METHODS );
-        response.setHeader("Access-Control-Allow-Credentials","true" );
-        response.setHeader("Access-Control-Request-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
-        response.setHeader("Access-Control-Allow-Headers","content-type,accept,Authorization,authorization" );
-
-
-
-        //response.setHeader(ACCESS_CONTROL_MAX_AGE,MAX_AGE );
-        //response.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ALLOW_HEADERS_REQUESTED_WITH);
+        response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS,ACCESS_CONTROL_ALLOW_CREDENTIALS_TRUE );
+        response.setHeader(ACCESS_CONTROL_REQUEST_HEADERS, ACCESS_CONTROL_HEADERS_NAME);
+        response.setHeader(ACCESS_CONTROL_ALLOW_HEADERS,ACCESS_CONTROL_HEADERS_NAME);
+        response.setHeader(ACCESS_CONTROL_MAX_AGE, MAX_AGE);
         chain.doFilter(req, res);
     }
 
