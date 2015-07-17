@@ -41,10 +41,22 @@ public class QMeUserDetailsService implements UserDetailsService {
     @Qualifier("UserRoleRepository")
     private UserRoleRepository userRoleRepository;
 
+    /**
+     * Email Char
+     */
+    private static final String EMAIL_CHAR = "@";
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try{
-            User user = userRepo.findByUserName(username);
+            User user = null;
+            if(username != null && username.indexOf(EMAIL_CHAR) > -1){
+                user = userRepo.findByUserEmail(username);
+
+            }else{
+                user = userRepo.findByUserName(username);
+            }
+
             if(user == null){
                 throw new UsernameNotFoundException("User " + username + " not found ");
             }
