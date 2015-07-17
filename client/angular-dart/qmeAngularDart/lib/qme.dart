@@ -39,8 +39,6 @@ class QMeAppModule extends Module {
 
   static const service_delete = "DELETE";
 
-  static const service_auth_basic = "Basic";
-
   static const service_url = "http://localhost:8080/qme/";
 
   static const service_user = "user/";

@@ -33,7 +33,7 @@ class QMeHeaderComponent {
          mimeType:QMeAppModule.service_json,
          requestHeaders:
          {
-            "Authorization":"$QMeAppModule.service_auth_basic $auth",
+            "Authorization":"Basic $auth",
             "content-type":QMeAppModule.service_json,
             "accept":QMeAppModule.service_json
          }
