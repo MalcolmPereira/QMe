@@ -21,38 +21,28 @@ class QMeHeaderComponent {
     this.router = router;
   }
 
-  void performSignIn() {
-    String username = user.userEmail;
-    String password = user.userPassword;
-    final auth = CryptoUtils.bytesToBase64(UTF8.encode("$username:$password"));
-    HttpRequest.request(
-         QMeAppModule.user_service_search + "$username",
-         method:QMeAppModule.service_get,
-         withCredentials:true,
-         responseType:QMeAppModule.service_json,
-         mimeType:QMeAppModule.service_json,
-         requestHeaders:
-         {
-            "Authorization":"Basic $auth",
-            "content-type":QMeAppModule.service_json,
-            "accept":QMeAppModule.service_json
-         }
-      )
-    .then((HttpRequest resp) {
-        if (resp.readyState == HttpRequest.DONE && (resp.status == 200 || resp.status == 0)){
-          this.signedIn = true;
+  void validateLogin(resp){
+    print("in request complete");
+    if (resp.readyState == HttpRequest.DONE && resp.status == 200) {
+      QmeErrorHolder.instance.removeError();
+      this.signedIn = true;
+    } else if (resp.readyState == HttpRequest.DONE && (resp.status == 401 || resp.status == 404)) {
+      QmeErrorHolder.instance.setError("Error connecting to QMe service, please validate credentials and retry request");
+      this.signedIn = false;
+    } else if (resp.readyState == HttpRequest.DONE && resp.status == 0) {
+      QmeErrorHolder.instance.setError("Error connecting to QMe service, please retry request");
+      this.signedIn = false;
+    }else{
+      QmeErrorHolder.instance.setError("Error connecting to QMe service, please retry request");
+      this.signedIn = false;
+    }
+  }
 
-        }else if (resp.readyState == HttpRequest.DONE && (resp.status != 200 && resp.status != 0)){
-          QmeErrorHolder.instance.setError("Error connecting to QMe service, please validate credentials and retry request");
-          this.signedIn = false;
-        }
-    })
-    .catchError((error) {
-        if(error.target.status == 0 ){
-          QmeErrorHolder.instance.setError("Error connecting to QMe service, please retry request");
-        }
-        this.signedIn = false;
-    });
+  void performSignIn() {
+    QmeErrorHolder.instance.removeError();
+    String username = user.userEmail;
+    String url = QMeAppModule.user_service_search + "$username";
+    QMeAppModule.executeHttp(user.userEmail, user.userPassword,url, QMeAppModule.service_get, "", validateLogin);
   }
 
   void routeRegistration() {

@@ -29,6 +29,21 @@ class QMeAppModule extends Module {
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
   }
 
+  static void executeHttp(String username, String password, String url, String method, String data, callBack) {
+    final auth = CryptoUtils.bytesToBase64(UTF8.encode("$username:$password"));
+    var httpRequest = new HttpRequest();
+    httpRequest.onReadyStateChange.listen((e) => callBack(httpRequest));
+    httpRequest
+      ..open(
+        method,
+        url
+    )
+    ..setRequestHeader("Authorization","Basic $auth")
+    ..setRequestHeader("content-type",service_json)
+    ..setRequestHeader("accept",service_json)
+    ..send(data);
+  }
+
   static const service_json = "application/json";
 
   static const service_get = "GET";
