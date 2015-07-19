@@ -25,6 +25,12 @@ class QMeHeaderComponent {
     print("in request complete");
     if (resp.readyState == HttpRequest.DONE && resp.status == 200) {
       QmeErrorHolder.instance.removeError();
+      Map parsedMap = JSON.decode(resp.responseText);
+      if(parsedMap["userFirstName"] == null){
+        querySelector("#loginName").text = parsedMap["userEmail"];
+      }else{
+        querySelector("#loginName").text = parsedMap["userFirstName"] +" "+  parsedMap["userLastName"];
+      }
       this.signedIn = true;
     } else if (resp.readyState == HttpRequest.DONE && (resp.status == 401 || resp.status == 404)) {
       QmeErrorHolder.instance.setError("Error connecting to QMe service, please validate credentials and retry request");
