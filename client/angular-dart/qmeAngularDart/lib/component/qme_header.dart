@@ -40,19 +40,17 @@ class QMeHeaderComponent {
       )
     .then((HttpRequest resp) {
         if (resp.readyState == HttpRequest.DONE && (resp.status == 200 || resp.status == 0)){
-          print("this is success !!!");
-          print(resp.responseText);
           this.signedIn = true;
 
         }else if (resp.readyState == HttpRequest.DONE && (resp.status != 200 && resp.status != 0)){
-          print("this is error !!!");
-          print(resp.responseText);
+          QmeErrorHolder.instance.setError("Error connecting to QMe service, please validate credentials and retry request");
           this.signedIn = false;
         }
     })
     .catchError((error) {
-        print("this is in error!!!");
-        print(error.target.responseText); // Current target should be you HttpRequest
+        if(error.target.status == 0 ){
+          QmeErrorHolder.instance.setError("Error connecting to QMe service, please retry request");
+        }
         this.signedIn = false;
     });
   }
@@ -70,6 +68,14 @@ class QMeHeaderComponent {
   void cancelResetRegistration() {
     this.isRegistering = false;
     this.isResetingPassword = false;
+    this.router.go('welcome', {});
+  }
+
+  void logout() {
+    this.isRegistering = false;
+    this.isResetingPassword = false;
+    this.signedIn = false;
+    this.user = new QMeUser();
     this.router.go('welcome', {});
   }
 }
