@@ -4,34 +4,31 @@ testHeaderComponent() {
 
   describe("[HeaderComponent]", () {
 
-    beforeEach(setUpInjector);
+    setUpAngular(
+        injectables: [TestBed,QMeHeaderComponent],
+        templates: ["component/qme_header.html"]);
 
-    afterEach(tearDownInjector);
+    html() => '<qme-header></qme-header>';
 
-    describe("[Default Header Mode]", () {
+    scope() => {
+                "signedIn": false,
+                "isRegistering" : false,
+                "isResetingPassword":false
+              };
 
-      html() => '<qme-header></qme-header>';
+    it("should display the given address", compileComponent(
+        html(),
+        scope(),
+        (qmeHeader, tb){
+          print(qmeHeader.querySelector("#loginName"));
+          expect(qmeHeader.querySelector("#emailField")).toBeNotNull();
+          expect(qmeHeader.querySelector("#passwordField")).toBeNotNull();
+          expect(qmeHeader.querySelector("#signInButton")).toBeNotNull();
+          expect(qmeHeader.querySelector("#registerButton")).toBeNotNull();
+          expect(qmeHeader.querySelector("#forgotButton")).toBeNotNull();
+          expect(qmeHeader.querySelector("#loginName")).toBeNotNull();
 
-      scope() => {};
-
-      beforeEach(() {
-
-        module((Module _) => _
-          ..bind(TestBed)
-          ..bind(QMeHeaderComponent)
-        );
-      });
-
-      beforeEach(loadTemplates(["component/qme_header.html"]));
-
-      it("Check for Default Components", compileComponent(html(), scope(), (shadowRoot) {
-          expect(shadowRoot.querySelector("#signInButton")).toBeNotNull();
-
-          print(shadowRoot.querySelector("#signInButton"));
-
-          //expect(shadowRoot.query("input[type=agenda-item]")).toBeNull();
-      }));
-    });
-
-  });
+        }
+    ));
+});
 }

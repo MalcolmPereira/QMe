@@ -23,6 +23,19 @@ main(){
   guinness.initSpecs();
 }
 
+setUpAngular({List templates, List injectables}) {
+
+  beforeEach(setUpInjector);
+
+  afterEach(tearDownInjector);
+
+  beforeEach(
+      module((Module m) => injectables.forEach(m.bind))
+  );
+
+  beforeEach(loadTemplates(templates));
+}
+
 loadTemplates(List<String> templates){
 
   return () {
@@ -37,22 +50,19 @@ loadTemplates(List<String> templates){
   };
 }
 
-compileComponent(String html, Map scope, callback){
-  return async(() {
-    inject((TestBed tb) {
-      final s = tb.rootScope.createChild(scope);
+compileComponent(String html, Map scopeData, callback){
 
-      final el = tb.compile(html, scope: s);
+  return async(inject((TestBed tb, Scope scope) {
 
-      microLeap();
+    scopeData.forEach((k, v) => scope.context[k] = v);
 
-      digest();
+    final el = tb.compile(html, scope: scope);
 
-      callback(el);
-    });
-  });
+    microLeap();
+
+    tb.rootScope.apply();
+
+    callback(el, tb);
+  }));
 }
 
-digest(){
-  inject((TestBed tb) { tb.rootScope.apply(); });
-}
