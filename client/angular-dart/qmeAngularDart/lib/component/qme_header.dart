@@ -1,6 +1,7 @@
 part of qme;
 
 @Component(
+    publishAs: 'qme-header',
     selector: 'qme-header',
     templateUrl: 'packages/qme/component/qme_header.html',
     useShadowDom: false)

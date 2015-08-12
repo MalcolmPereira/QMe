@@ -24,13 +24,17 @@ main(){
 }
 
 loadTemplates(List<String> templates){
-  updateCache(template, response) => inject((TemplateCache cache) => cache.put(template, response));
 
-  final futures = templates.map((template) =>
-  html.HttpRequest.request('packages/qme/' + template, method: "GET").
-  then((_) => updateCache(template, new HttpResponse(200, _.response))));
+  return () {
 
-  return Future.wait(futures);
+    updateCache(template, response) => inject((TemplateCache cache) => cache.put(template, response));
+
+
+    final futures = templates.map((template) => html.HttpRequest.request('packages/qme/$template', method: "GET").
+    then((_) => updateCache("packages/qme/$template", new HttpResponse(200, _.response))));
+
+    return Future.wait(futures);
+  };
 }
 
 compileComponent(String html, Map scope, callback){
