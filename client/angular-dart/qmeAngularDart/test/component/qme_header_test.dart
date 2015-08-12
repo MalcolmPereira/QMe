@@ -16,7 +16,7 @@ testHeaderComponent() {
                 "isResetingPassword":false
               };
 
-    it("should display the given address", compileComponent(
+    it("Should display default controls", compileComponent(
         html(),
         scope(),
         (qmeHeader, tb){
