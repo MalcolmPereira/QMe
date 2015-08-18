@@ -16,11 +16,15 @@
         qmeRegister.userFirstName = "";
         qmeRegister.userLastName = "";
 
+        qmeRegister.validatePasswordFields = validatePassword;
+
         function validatePassword(){
-            //TODO:
-            //Make http call to service and log in user
-            //qmeFlashService.Error("testing");
-            qmeHeader.userName = "tocallservice";
+            if(qmeRegister.userPassword != qmeRegister.userPasswordConfirm){
+                qmeFlashService.Error("Password do not match, please confirm password");
+                qmeRegister.userPasswordConfirm ="";
+            }else{
+                qmeFlashService.Clear();
+            }
         }
 
         function registerUser(){

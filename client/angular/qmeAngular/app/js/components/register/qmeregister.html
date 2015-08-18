@@ -20,7 +20,7 @@
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPasswordConfirm">Confirm User Password:</label>
-                        <input ng-model="qmeRegister.userPasswordConfirm" id="userPasswordConfirm" maxlength="128" min="5" type="password" placeholder="password" class="form-control" ng-required="true" ng-change="qmeRegister.validatePassword()">
+                        <input ng-model="qmeRegister.userPasswordConfirm" id="userPasswordConfirm" maxlength="128" min="5" type="password" placeholder="confirm password" class="form-control" ng-required="true" ng-model-options="{ updateOn: 'blur' }" ng-change="qmeRegister.validatePasswordFields()">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userFirstName">User First Name:</label>
@@ -30,7 +30,7 @@
                         <label for="userLastName">User Last Name:</label>
                         <input ng-model="qmeRegister.userLastName" id="userLastName" maxlength="128" min="5" type="text" placeholder="last name" class="form-control">
                     </div>
-                    <button id="submitRegisterButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeRegister.registerUser()" ng-disabled="registerForm.invalid">Submit</button>
+                    <button id="submitRegisterButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeRegister.registerUser()" ng-disabled="registerForm.$invalid">Submit</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="resetButton" type="reset" class="btn btn-info btn-sm">Reset</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
