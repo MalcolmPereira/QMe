@@ -1,6 +1,5 @@
 var qmeApp;
 
-
 (function () {
     'use strict';
 
