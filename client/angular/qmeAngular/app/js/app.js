@@ -19,6 +19,11 @@ var qmeApp;
                 templateUrl: 'js/components/home/qmemain.html',
                 controllerAs: 'qmeHome'
             })
+            .when('/reset', {
+                controller: 'qmeResetPassword',
+                templateUrl: 'js/components/reset/qmeforgotpassword.html',
+                controllerAs: 'qmeResetPassword'
+            })
             .otherwise({ redirectTo: '/home' });
     }
 

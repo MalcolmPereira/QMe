@@ -41,7 +41,7 @@
 
         function routeResetPassword(){
             qmeHeader.isResetingPassword = true;
-            $location.path( '/resetpassword' );
+            $location.path( '/reset' );
         }
 
         function cancelResetRegistration(){
