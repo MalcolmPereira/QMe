@@ -3,9 +3,9 @@
 
     qmeApp.controller('qmeHeader', QMeHeaderController);
 
-    QMeHeaderController.$inject = ['qmeFlashService'];
+    QMeHeaderController.$inject = ['qmeFlashService','$location'];
 
-    function QMeHeaderController(qmeFlashService) {
+    function QMeHeaderController(qmeFlashService,$location) {
 
         var qmeHeader = this;
 

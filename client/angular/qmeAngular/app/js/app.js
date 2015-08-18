@@ -5,9 +5,9 @@ var qmeApp;
 
     qmeApp = angular.module('qmeApp', ['ngRoute']).config(config);
 
-    config.$inject = ['$routeProvider', '$locationProvider'];
+    config.$inject = ['$routeProvider'];
 
-    function config($routeProvider, $locationProvider) {
+    function config($routeProvider) {
         $routeProvider
             .when('/register', {
                 controller: 'qmeRegister',
