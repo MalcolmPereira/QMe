@@ -17,7 +17,6 @@
         });
 
         describe('QMeHeader Defaults', function(){
-
             it('Ensure user is not signed - signedIn is false', function() {
                 expect(ctrl.signedIn ).toBe(false);
             });
@@ -35,13 +34,16 @@
             });
         });
 
-        describe('QMeHeader Check Valid Email Address', function(){
-            it('Check Valid Email Adress is validated ', function() {
+        describe('QMeHeader Peform Sign in', function(){
+            it('Ensure user email is valid ', function() {
                 expect(ctrl.userEmail ).toBe('');
-                ctrl.userEmail = "invalidEmail";
-                ctrl.performSignIn();
+                ctrl.userEmail = 'invalidemail';
+                expect(ctrl.userEmail ).toBe('invalidemail');
+                console.log(ctrl.userEmail);
+                console.log(ctrl.userEmail.$error);
             });
         });
+
 
     });
 

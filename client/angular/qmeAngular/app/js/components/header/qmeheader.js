@@ -15,6 +15,7 @@
 
         qmeHeader.userEmail = "";
         qmeHeader.userPassword = "";
+        qmeHeader.userName = "";
 
         qmeHeader.performSignIn = performSignIn;
         qmeHeader.routeRegistration = routeRegistration;
@@ -26,7 +27,11 @@
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
             qmeHeader.signedIn = true;
-            qmeFlashService.Error("testing");
+
+            //TODO:
+            //Make http call to service and log in user
+            //qmeFlashService.Error("testing");
+            qmeHeader.userName = "tocallservice";
         }
 
         function routeRegistration(){
