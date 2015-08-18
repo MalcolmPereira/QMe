@@ -1,0 +1,15 @@
+### Bower ###
+lib
+.bower-cache
+.bower-registry
+.bower-tmp
+
+# Dependency directory
+node_modules
+
+*.iml
+
+## Directory-based project format:
+.idea/
+*.ipr
+*.iws
