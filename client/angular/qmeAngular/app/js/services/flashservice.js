@@ -12,6 +12,7 @@
 
         flashService.Success = Success;
         flashService.Error = Error;
+        flashService.Clear = clearFlashMessage;
 
         initFlashService();
 
@@ -21,15 +22,15 @@
             $rootScope.$on('$locationChangeStart', function () {
                 clearFlashMessage();
             });
+        }
 
-            function clearFlashMessage() {
-                var flash = $rootScope.flash;
-                if (flash) {
-                    if (!flash.keepAfterLocationChange) {
-                        delete $rootScope.flash;
-                    } else {
-                        flash.keepAfterLocationChange = false;
-                    }
+        function clearFlashMessage() {
+            var flash = $rootScope.flash;
+            if (flash) {
+                if (!flash.keepAfterLocationChange) {
+                    delete $rootScope.flash;
+                } else {
+                    flash.keepAfterLocationChange = false;
                 }
             }
         }

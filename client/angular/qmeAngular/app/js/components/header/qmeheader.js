@@ -23,8 +23,6 @@
         qmeHeader.logout = logout
 
         function performSignIn(){
-            console.log("got useremail " +qmeHeader.userEmail);
-            console.log("got userpasword " +qmeHeader.userPassword);
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
             qmeHeader.signedIn = true;
@@ -44,9 +42,13 @@
         }
 
         function logout(){
-
+            qmeHeader.isRegistering = false;
+            qmeHeader.isResetingPassword = false;
+            qmeHeader.signedIn = false;
+            qmeHeader.userEmail = "";
+            qmeHeader.userPassword = "";
+            qmeFlashService.Clear();
         }
-
     }
 
 })();
