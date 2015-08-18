@@ -35,15 +35,19 @@
         }
 
         function routeRegistration(){
-
+            qmeHeader.isRegistering = true;
+            $location.path( '/register' );
         }
 
         function routeResetPassword(){
-
+            qmeHeader.isResetingPassword = true;
+            $location.path( '/resetpassword' );
         }
 
         function cancelResetRegistration(){
-
+            qmeHeader.isRegistering = false;
+            qmeHeader.isResetingPassword = false;
+            $location.path( '/' );
         }
 
         function logout(){
