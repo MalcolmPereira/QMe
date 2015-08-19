@@ -4,7 +4,7 @@
 
     angular.module('qmeApp').run(function($httpBackend) {
 
-        // this is the creation of a new resource
+        // Dummy login method
         $httpBackend.whenPOST('/login').respond(function(method, url, data) {
 
             var params = angular.fromJson(data);
