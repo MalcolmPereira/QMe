@@ -4,7 +4,7 @@ var qmeApp;
     'use strict';
 
     qmeApp = angular
-        .module('qmeApp', ['ngRoute'])
+        .module('qmeApp', ['ngMockE2E','ngRoute'])
         .constant(
             'AUTH_EVENTS', {
                     loginSuccess: 'auth-login-success',
@@ -38,7 +38,6 @@ var qmeApp;
         .config(config);
 
     config.$inject = ['$routeProvider'];
-
     function config($routeProvider) {
         $routeProvider
             .when('/register', {
@@ -58,5 +57,6 @@ var qmeApp;
             })
             .otherwise({ redirectTo: '/home' });
     }
+
 
 })();

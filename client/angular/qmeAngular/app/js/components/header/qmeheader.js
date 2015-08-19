@@ -3,22 +3,26 @@
 
     qmeApp.controller('qmeHeader', QMeHeaderController);
 
-    QMeHeaderController.$inject = ['qmeFlashService','qmeAuthService','$location','$rootScope','USER_ROLES','AUTH_EVENTS'];
+    QMeHeaderController.$inject = ['qmeFlashService','qmeAuthService','$location','$scope','$rootScope','USER_ROLES','AUTH_EVENTS'];
 
-    function QMeHeaderController(qmeFlashService,qmeAuthService,$location,$rootScope,USER_ROLES,AUTH_EVENTS) {
+    function QMeHeaderController(qmeFlashService,qmeAuthService,$location,$scope,$rootScope,USER_ROLES,AUTH_EVENTS) {
+
+        $scope.currentUser = null;
+        $scope.userRoles = USER_ROLES;
+        $scope.isAuthorized = qmeAuthService.isAuthorized;
+        $scope.setCurrentUser = function (user) {
+            $scope.currentUser = user;
+        };
 
         var qmeHeader = this;
-
         qmeHeader.isRegistering = false;
         qmeHeader.isResetingPassword = false;
         qmeHeader.signedIn = false;
-
         qmeHeader.userEmail = "";
         qmeHeader.userPassword = "";
         qmeHeader.userName = "";
 
         qmeHeader.performSignIn = function (){
-
             var credentials = {
                 "username": qmeHeader.userEmail,
                 "password": qmeHeader.userPassword
@@ -26,11 +30,11 @@
 
             qmeAuthService.login(credentials).then(function (user) {
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                qmeHeader.userName = user.name;
+                $scope.setCurrentUser(user);
             }, function () {
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                $scope.currentUser = null;
             });
-
 
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
