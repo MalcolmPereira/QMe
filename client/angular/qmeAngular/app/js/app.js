@@ -3,7 +3,37 @@ var qmeApp;
 (function () {
     'use strict';
 
-    qmeApp = angular.module('qmeApp', ['ngRoute']).config(config);
+    qmeApp = angular
+        .module('qmeApp', ['ngRoute'])
+        .constant(
+            'AUTH_EVENTS', {
+                    loginSuccess: 'auth-login-success',
+                    loginFailed: 'auth-login-failed',
+                    logoutSuccess: 'auth-logout-success',
+                    sessionTimeout: 'auth-session-timeout',
+                    notAuthenticated: 'auth-not-authenticated',
+                    notAuthorized: 'auth-not-authorized'
+             }
+        )
+        .constant(
+            'USER_ROLES', {
+                admin: 'admin',
+                user: 'user'
+            }
+        )
+        .service('qmeSession', function () {
+            this.create = function (sessionId, userId, userRole) {
+                this.id = sessionId;
+                this.userId = userId;
+                this.userRole = userRole;
+            };
+            this.destroy = function () {
+                this.id = null;
+                this.userId = null;
+                this.userRole = null;
+            };
+        })
+        .config(config);
 
     config.$inject = ['$routeProvider'];
 

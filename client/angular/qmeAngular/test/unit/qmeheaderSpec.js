@@ -34,17 +34,6 @@
             });
         });
 
-        describe('QMeHeader Peform Sign in', function(){
-            it('Ensure user email is valid ', function() {
-                expect(ctrl.userEmail ).toBe('');
-                ctrl.userEmail = 'invalidemail';
-                expect(ctrl.userEmail ).toBe('invalidemail');
-                console.log(ctrl.userEmail);
-                console.log(ctrl.userEmail.$error);
-            });
-        });
-
-
     });
 
 })();

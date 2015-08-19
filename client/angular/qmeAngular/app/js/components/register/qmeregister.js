@@ -16,9 +16,7 @@
         qmeRegister.userFirstName = "";
         qmeRegister.userLastName = "";
 
-        qmeRegister.validatePasswordFields = validatePassword;
-
-        function validatePassword(){
+        qmeRegister.validatePassword = function (){
             if(qmeRegister.userPassword != qmeRegister.userPasswordConfirm){
                 qmeFlashService.Error("Password do not match, please confirm password");
                 qmeRegister.userPasswordConfirm ="";
@@ -27,7 +25,7 @@
             }
         }
 
-        function registerUser(){
+        qmeRegister.registerUser = function (){
             //TODO:
             //Make http call to service and log in user
             //qmeFlashService.Error("testing");

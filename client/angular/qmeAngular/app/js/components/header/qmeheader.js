@@ -3,9 +3,9 @@
 
     qmeApp.controller('qmeHeader', QMeHeaderController);
 
-    QMeHeaderController.$inject = ['qmeFlashService','$location'];
+    QMeHeaderController.$inject = ['qmeFlashService','qmeAuthService','$location','$scope','USER_ROLES','AUTH_EVENTS'];
 
-    function QMeHeaderController(qmeFlashService,$location) {
+    function QMeHeaderController(qmeFlashService,qmeAuthService,$location,$scope,USER_ROLES,AUTH_EVENTS) {
 
         var qmeHeader = this;
 
@@ -17,13 +17,7 @@
         qmeHeader.userPassword = "";
         qmeHeader.userName = "";
 
-        qmeHeader.performSignIn = performSignIn;
-        qmeHeader.routeRegistration = routeRegistration;
-        qmeHeader.routeResetPassword = routeResetPassword;
-        qmeHeader.cancelResetRegistration = cancelResetRegistration;
-        qmeHeader.logout = logout
-
-        function performSignIn(){
+        qmeHeader.performSignIn = function (){
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
             qmeHeader.signedIn = true;
@@ -34,23 +28,23 @@
             qmeHeader.userName = "tocallservice";
         }
 
-        function routeRegistration(){
+        qmeHeader.routeRegistration = function (){
             qmeHeader.isRegistering = true;
             $location.path( '/register' );
         }
 
-        function routeResetPassword(){
+        qmeHeader.routeResetPassword = function (){
             qmeHeader.isResetingPassword = true;
             $location.path( '/reset' );
         }
 
-        function cancelResetRegistration(){
+        qmeHeader.cancelResetRegistration = function (){
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
             $location.path( '/' );
         }
 
-        function logout(){
+        qmeHeader.logout = function (){
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
             qmeHeader.signedIn = false;

@@ -16,8 +16,6 @@
 
         initFlashService();
 
-        return flashService;
-
         function initFlashService() {
             $rootScope.$on('$locationChangeStart', function () {
                 clearFlashMessage();
@@ -50,6 +48,8 @@
                 keepAfterLocationChange: keepAfterLocationChange
             };
         }
+
+        return flashService;
     }
 
 })();
