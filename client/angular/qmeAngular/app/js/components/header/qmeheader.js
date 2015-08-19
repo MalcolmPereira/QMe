@@ -3,9 +3,9 @@
 
     qmeApp.controller('qmeHeader', QMeHeaderController);
 
-    QMeHeaderController.$inject = ['qmeFlashService','qmeAuthService','$location','$scope','USER_ROLES','AUTH_EVENTS'];
+    QMeHeaderController.$inject = ['qmeFlashService','qmeAuthService','$location','$rootScope','USER_ROLES','AUTH_EVENTS'];
 
-    function QMeHeaderController(qmeFlashService,qmeAuthService,$location,$scope,USER_ROLES,AUTH_EVENTS) {
+    function QMeHeaderController(qmeFlashService,qmeAuthService,$location,$rootScope,USER_ROLES,AUTH_EVENTS) {
 
         var qmeHeader = this;
 
@@ -18,6 +18,20 @@
         qmeHeader.userName = "";
 
         qmeHeader.performSignIn = function (){
+
+            var credentials = {
+                "username": qmeHeader.userEmail,
+                "password": qmeHeader.userPassword
+            };
+
+            qmeAuthService.login(credentials).then(function (user) {
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                qmeHeader.userName = user.name;
+            }, function () {
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+            });
+
+
             qmeHeader.isRegistering = false;
             qmeHeader.isResetingPassword = false;
             qmeHeader.signedIn = true;
@@ -25,7 +39,7 @@
             //TODO:
             //Make http call to service and log in user
             //qmeFlashService.Error("testing");
-            qmeHeader.userName = "tocallservice";
+
         }
 
         qmeHeader.routeRegistration = function (){
