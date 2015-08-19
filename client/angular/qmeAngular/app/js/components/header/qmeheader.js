@@ -27,23 +27,22 @@
                 "username": qmeHeader.userEmail,
                 "password": qmeHeader.userPassword
             };
-
             qmeAuthService.login(credentials).then(function (user) {
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 $scope.setCurrentUser(user);
+                qmeHeader.signedIn = true;
+                qmeHeader.isRegistering = false;
+                qmeHeader.isResetingPassword = false;
+                qmeHeader.userName = user.name;
+
             }, function () {
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 $scope.currentUser = null;
+                qmeHeader.signedIn = false;
+                qmeHeader.isRegistering = false;
+                qmeHeader.isResetingPassword = false;
+                qmeFlashService.Error("Error connecting to QMe service, please validate credentials and retry request");
             });
-
-            qmeHeader.isRegistering = false;
-            qmeHeader.isResetingPassword = false;
-            qmeHeader.signedIn = true;
-
-            //TODO:
-            //Make http call to service and log in user
-            //qmeFlashService.Error("testing");
-
         }
 
         qmeHeader.routeRegistration = function (){
