@@ -1,20 +1,41 @@
 (function () {
     qmeApp.factory('qmeUserSession', function () {
 
-        var qmeUserSession = this;
+        var qmeUserSession = {};
 
-        qmeUserSession.create = function (sessionIdVal, userIdVal, userNameVal, userRoleVal) {
-            this.id = sessionIdVal;
-            this.userId = userIdVal;
-            this.userName = userNameVal;
-            this.userRole = userRoleVal;
+        var _sessionid = null;
+        var _userid    = null;
+        var _username  = null;
+        var _userrole  = null;
+
+        qmeUserSession.create = function (sessionid, userid , username, userrole) {
+            _sessionid = sessionid;
+            _userid = userid ;
+            _username = username;
+            _userrole = userrole;
         };
         qmeUserSession.destroy = function () {
-            this.id = null;
-            this.userId = null;
-            this.userName = null;
-            this.userRole = null;
+            _sessionid = null;
+            _userid    = null;
+            _username  = null;
+            _userrole  = null;
         };
+
+        qmeUserSession.sessionid = function () {
+            return _sessionid
+        }
+
+        qmeUserSession.userid = function () {
+            return _userid
+        }
+
+        qmeUserSession.username = function () {
+            return _username
+        }
+
+        qmeUserSession.userrole = function () {
+            return _userrole
+        }
 
         return qmeUserSession;
     })

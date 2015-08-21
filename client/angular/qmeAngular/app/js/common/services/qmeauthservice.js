@@ -4,37 +4,14 @@
 
     qmeApp.service('qmeAuthService', QMeAuthService);
 
-    QMeAuthService.$inject = ['$http','qmeUserSession','QME_CONSTANTS'];
+    QMeAuthService.$inject = ['$http','QME_CONSTANTS'];
 
-    function QMeAuthService($http,qmeUserSession,QME_CONSTANTS) {
+    function QMeAuthService($http,QME_CONSTANTS) {
 
         var qmeAuthService = this;
 
         qmeAuthService.login = function (credentials) {
-            return $http
-                .post(QME_CONSTANTS.authendpoint, credentials)
-                .then(function (res) {
-                    qmeUserSession.create('sessionId123',res.data.id,res.data.name,res.data.role);
-                    return res.data;
-                });
-        };
-
-        qmeAuthService.logout = function () {
-            qmeUserSession.destroy();
-        };
-
-        qmeAuthService.isSignedIn= function () {
-            if(qmeUserSession.userId && qmeUserSession.userId !== null){
-                return true;
-            }else{
-                return false;
-            }
-
-        };
-
-        qmeAuthService.isAdminUser= function () {
-            return (qmeAuthService.isSignedIn() &&
-            qmeUserSession.userRole === QME_CONSTANTS.adminrole);
+            return $http.post(QME_CONSTANTS.authendpoint, credentials);
         };
     }
 })();
