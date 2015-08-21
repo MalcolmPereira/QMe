@@ -9,6 +9,8 @@
 
         var qmeHeader = this;
 
+        qmeHeader.isRegistering = false;
+        qmeHeader.isResetingPassword = false;
         qmeHeader.userEmail = "";
         qmeHeader.userPassword = "";
         qmeHeader.userName = "";
@@ -28,13 +30,13 @@
             };
             qmeAuthService.login(credentials).then(function (user) {
                 qmeHeader.userName = user.name;
-                qmeHeader.signedIn = true;
-                console.log(user);
             });
         }
 
         qmeHeader.logout = function (){
             qmeAuthService.logout();
+            qmeHeader.isRegistering = false;
+            qmeHeader.isResetingPassword = false;
             qmeHeader.userEmail = "";
             qmeHeader.userPassword = "";
             qmeHeader.userName = "";

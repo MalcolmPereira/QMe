@@ -24,14 +24,17 @@
         };
 
         qmeAuthService.isSignedIn= function () {
-            return qmeUserSession.userId;
+            if(qmeUserSession.userId && qmeUserSession.userId !== null){
+                return true;
+            }else{
+                return false;
+            }
+
         };
 
         qmeAuthService.isAdminUser= function () {
             return (qmeAuthService.isSignedIn() &&
             qmeUserSession.userRole === QME_CONSTANTS.adminrole);
         };
-
     }
-
 })();
