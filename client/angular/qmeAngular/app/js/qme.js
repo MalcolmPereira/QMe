@@ -43,7 +43,7 @@ var qmeApp;
                 })
                 .state('home', {
                     url: "/home",
-                    templateUrl: 'js/home/qmehome.tmp.html',
+                    templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
                     controllerAs: 'qmeHome'
                 })
