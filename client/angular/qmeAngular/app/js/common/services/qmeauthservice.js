@@ -13,5 +13,6 @@
         qmeAuthService.login = function (credentials) {
             return $http.post(QME_CONSTANTS.authendpoint, credentials);
         };
+
     }
 })();

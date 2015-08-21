@@ -2,21 +2,21 @@
 
     'use strict';
 
-    qmeApp.factory('qmeFlashService', QMeFlashService);
+    qmeApp.service('qmeFlashService', QMeFlashService);
 
     QMeFlashService.$inject = ['$rootScope'];
 
     function QMeFlashService($rootScope) {
 
-        var flashService = this;
+        var qmeFlashService = this;
 
-        flashService.Success = Success;
-        flashService.Error   = Error;
-        flashService.Clear   = clearFlashMessage;
+        qmeFlashService.Success = Success;
+        qmeFlashService.Error   = Error;
+        qmeFlashService.Clear   = clearFlashMessage;
 
-        initFlashService();
+        initQMeFlashService();
 
-        function initFlashService() {
+        function initQMeFlashService() {
             $rootScope.$on('$locationChangeStart', function () {
                 clearFlashMessage();
             });
@@ -48,6 +48,5 @@
                 keepAfterLocationChange: keepAfterLocationChange
             };
         }
-        return flashService;
     }
 })();

@@ -61,11 +61,10 @@ var qmeApp;
                         };
 
                         if(params.username.indexOf('admin') > -1){
-                            //return [200, adminuser,{}];
+                            return [200, adminuser,{}];
                         }else{
-                            //return [200, user,{}];
+                            return [200, user,{}];
                         }
-                        return [404, user,{}];
 
                 });
                 $httpBackend.whenGET(/js\//).passThrough();
