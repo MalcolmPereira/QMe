@@ -8,11 +8,11 @@
 
     function QMeFlashService($rootScope) {
 
-        var flashService = {};
+        var flashService = this;
 
         flashService.Success = Success;
-        flashService.Error = Error;
-        flashService.Clear = clearFlashMessage;
+        flashService.Error   = Error;
+        flashService.Clear   = clearFlashMessage;
 
         initFlashService();
 
@@ -48,8 +48,6 @@
                 keepAfterLocationChange: keepAfterLocationChange
             };
         }
-
         return flashService;
     }
-
 })();

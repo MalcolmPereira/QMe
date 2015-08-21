@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    qmeApp.controller('qmeRegister', QMeRegisterController);
+    qmeApp.controller('qmeRegisterCtrl', QMeRegisterController);
 
     QMeRegisterController.$inject = ['qmeFlashService'];
 

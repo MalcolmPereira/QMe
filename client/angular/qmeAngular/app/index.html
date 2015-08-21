@@ -8,27 +8,63 @@
 </head>
 <body>
 
-<div ng-include src="'js/components/header/qmeheader.html'"></div>
+<!-- NAVIGATION -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="qmeHeaderCtrl as qmeHeader">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><span>QMe Application</span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+           <form name="qmeHeader.signInForm" class="navbar-form navbar-right" ng-show="!qmeHeader.isRegistering && !qmeHeader.isResetingPassword && !qmeHeader.isSignedIn()" >
+                <div class="form-group">
+                    <input type="email" id="emailField" ng-model="qmeHeader.userEmail" placeholder="email@example.com" class="form-control" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="passwordField" ng-model="qmeHeader.userPassword" placeholder="Password" class="form-control" ng-required="true">
+                </div>
+                <button id="signInButton" type="submit" class="btn btn-success btn-sm"  ng-click="qmeHeader.performSignIn()" ng-disabled="qmeHeader.signInForm.$invalid">Sign in</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="registerButton" type="button" class="btn btn-info btn-xs" ng-click="qmeHeader.routeRegistration()">Register</button>
+                &nbsp;
+                <button id="forgotButton" type="button" class="btn btn-info btn-xs" ng-click="qmeHeader.routeResetPassword()">Forgot Password</button>
+            </form>
+            <button ng-show="(qmeHeader.isRegistering || qmeHeader.isResetingPassword) && !qmeHeader.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeHeader.cancelResetRegistration()">Home</button>
+            <ul class="nav navbar-nav navbar-right" ng-show="qmeHeader.isSignedIn()">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName">  {{qmeHeader.userName}} </span> &nbsp; <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li ng-show="qmeHeader.isAdmin()" ><a href="#" ng-click="qmeHeader.alert('some admin route')">Admin</a></li>
+                        <li><a href="#" ng-click="qmeHeader.alert('some user route')">User</a></li>
+                        <li><a href="#" ng-click="qmeHeader.logout()">Sign-out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="container-fluid">
     <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
 </div>
 
-<ng-view></ng-view>
+<div ui-view></div>
 
 <script src="lib/jquery/dist/jquery.min.js"></script>
 <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="lib/angular/angular.js"></script>
-<script src="lib/angular-route/angular-route.js"></script>
-<script src="lib/angular-resource/angular-resource.js"></script>
 <script src="lib/angular-mocks/angular-mocks.js"></script>
-<script src="js/app.js"></script>
-<script src="js/app-mockbackend.js"></script>
-<script src="js/services/flashservice.js"></script>
-<script src="js/services/authservice.js"></script>
-<script src="js/components/header/qmeheader.js"></script>
-<script src="js/components/home/qmemain.js"></script>
-<script src="js/components/register/qmeregister.js"></script>
-<script src="js/components/reset/qmeforgotpassword.js"></script>
+<script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="js/qme.js"></script>
+<script src="js/common/services/qmeauthservice.js"></script>
+<script src="js/common/services/qmeflashservice.js"></script>
+<script src="js/header/qmeheader.js"></script>
+<script src="js/home/qmehome.js"></script>
+<script src="js/register/qmeregister.js"></script>
+<script src="js/reset/qmeforgotpassword.js"></script>
+
+
+
 </body>
 </html>
