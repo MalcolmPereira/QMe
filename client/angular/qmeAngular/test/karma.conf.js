@@ -22,6 +22,7 @@ module.exports = function(config){
             'app/lib/angular-ui-router/release/angular-ui-router.min.js',
             'app/lib/angular-resource/angular-resource.js',
             'app/lib/angular-mocks/angular-mocks.js',
+            'app/js/qme.js',
             'app/js/**/*.js',
             'app/js/**/*.html',
             'test/unit/**/*.js',
