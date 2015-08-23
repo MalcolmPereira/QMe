@@ -21,17 +21,17 @@ var qmeApp;
 
             $stateProvider
 
-                .state('register', {
-                    url: "/register",
-                    templateUrl: 'js/register/qmeregister.tmpl.html',
-                    controller: 'qmeRegisterCtrl',
-                    controllerAs: 'qmeRegister'
-                })
                 .state('home', {
                     url: "/home",
                     templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
                     controllerAs: 'qmeHome'
+                })
+                .state('register', {
+                    url: "/register",
+                    templateUrl: 'js/register/qmeregister.tmpl.html',
+                    controller: 'qmeRegisterCtrl',
+                    controllerAs: 'qmeRegister'
                 })
                 .state('reset', {
                     url: "/reset",
