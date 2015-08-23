@@ -1,6 +1,7 @@
 (function () {
     'use strict';
 
+    /*
     describe('QMe Header Controller', function() {
 
         var scope, ctrl;
@@ -35,5 +36,6 @@
         });
 
     });
+    */
 
 })();

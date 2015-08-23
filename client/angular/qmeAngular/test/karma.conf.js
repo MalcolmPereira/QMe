@@ -3,38 +3,61 @@ module.exports = function(config){
 
         basePath : '../',
 
-        files : [
-            'app/lib/angular/angular.js',
-            'app/lib/angular-route/angular-route.js',
-            'app/lib/angular-resource/angular-resource.js',
-            'app/lib/angular-animate/angular-animate.js',
-            'app/lib/angular-mocks/angular-mocks.js',
-            'app/js/**/*.js',
-            'test/unit/**/*.js',
-            'app/js/**/*.html'
-        ],
+        frameworks: ['jasmine'],
+
+        browsers : ['Chrome'],
 
         autoWatch : true,
 
-        frameworks: ['jasmine'],
-
-        browsers : ['Chrome', 'Firefox'],
-
         plugins : [
-            'karma-firefox-launcher',
+            'karma-chrome-launcher',
             'karma-jasmine',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-ng-html2js-preprocessor',
+            'ng-html2js'
         ],
+
+        files : [
+            'app/lib/angular/angular.js',
+            'app/lib/angular-ui-router/release/angular-ui-router.min.js',
+            'app/lib/angular-resource/angular-resource.js',
+            'app/lib/angular-mocks/angular-mocks.js',
+            'app/js/**/*.js',
+            'app/js/**/*.html',
+            'test/unit/**/*.js',
+
+        ],
+
+        exclude: [],
+
+        ngHtml2JsPreprocessor: {
+            moduleName: 'qmeApp'
+        },
+
+        preprocessors: {
+            'src/**/*.js': ['coverage'],
+            'app/**/*.html': ['ng-html2js']
+        },
+
+        colors: true,
+
+        reporters: ['progress', 'coverage'],
 
         junitReporter : {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         },
 
-        preprocessors: {
-            'src/*.js': ['coverage'],
-            'app/js/**/*.htm;': 'html2js'
-        }
+        // level of logging
+        // config.LOG_DISABLE ||
+        // config.LOG_ERROR ||
+        // config.LOG_WARN ||
+        // config.LOG_INFO ||
+        // config.LOG_DEBUG
+        logLevel: config.LOG_INFO,
+
+        singleRun: false
+
 
     });
 };
