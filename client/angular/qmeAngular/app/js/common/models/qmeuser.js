@@ -1,4 +1,7 @@
 (function () {
+
+    'use strict';
+
     angular.module(qmeApp)
         .factory('qmeUserSession', function () {
 
