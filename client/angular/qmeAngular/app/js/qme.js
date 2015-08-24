@@ -68,6 +68,7 @@ var qmeApp;
 
                 });
                 $httpBackend.whenGET(/js\//).passThrough();
+
     });
 
 })();

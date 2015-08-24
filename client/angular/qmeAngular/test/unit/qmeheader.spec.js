@@ -3,15 +3,15 @@
 
     describe('Unit: QMe Header Controller', function() {
 
-        var scope, ctrl;
+        var scope, ctrl ;
 
         beforeEach(module('qmeApp'));
-
-
 
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
             ctrl  = $controller('qmeHeaderCtrl', {$scope: scope});
+
+
         }));
 
         it('Should have a qmeHeader controller', function() {
@@ -43,6 +43,9 @@
                ctrl.userEmail = "testuser@test.com";
                ctrl.userPassword = "testpassword";
                ctrl.performSignIn();
+
+
+
                expect(ctrl.userEmail ).not.toBe('');
                expect(ctrl.userEmail ).toBe('testuser@test.com');
                expect(ctrl.userPassword ).not.toBe('');
