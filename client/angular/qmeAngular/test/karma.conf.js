@@ -31,23 +31,26 @@ module.exports = function(config){
 
         exclude: [],
 
+        reporters: ['progress', 'coverage'],
+
         ngHtml2JsPreprocessor: {
             moduleName: 'qmeApp'
         },
-
         preprocessors: {
-            'src/**/*.js': ['coverage'],
-            'app/**/*.html': ['ng-html2js']
+            'app/js/**/*.js': ['coverage'],
         },
-
-        colors: true,
-
-        reporters: ['progress', 'coverage'],
-
+        coverageReporter: {
+            type : 'html',
+            dir : 'coverage/',
+            subdir: 'report'
+        }
+        ,
         junitReporter : {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         },
+
+        colors: true,
 
         // level of logging
         // config.LOG_DISABLE ||
