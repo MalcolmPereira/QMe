@@ -4,9 +4,7 @@
 
     describe('Controller: QMe Home Controller', function() {
 
-        var qmeAuthService;
-
-        beforeEach(module('qmeApp'));
+       beforeEach(module('qmeApp'));
 
     });
 })();
