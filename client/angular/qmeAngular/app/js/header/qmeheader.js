@@ -34,13 +34,7 @@
                 "username": qmeHeader.userEmail,
                 "password": qmeHeader.userPassword
             };
-            var username = qmeAuthService.login(credentials);
-            if(username && username !== null ){
-                qmeHeader.userName = username;
-            }else{
-                qmeHeader.isRegistering = false;
-                qmeHeader.isResetingPassword = false;
-            }
+            qmeAuthService.login(credentials);
         }
 
         qmeHeader.logout = function (){

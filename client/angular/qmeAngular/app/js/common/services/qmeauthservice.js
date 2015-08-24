@@ -29,6 +29,7 @@
                 })
                 .finally(function () {
                     //TODO - some logging
+                    console.log("finally cleaning up ");
                 });
             ;
         };

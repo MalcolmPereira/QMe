@@ -1,26 +1,29 @@
 (function () {
     'use strict';
 
-    /*
-    describe('QMe Header Controller', function() {
+    describe('Unit: QMe Header Controller', function() {
 
         var scope, ctrl;
 
         beforeEach(module('qmeApp'));
 
+
+
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
-            ctrl  = $controller('qmeHeader', {$scope: scope});
+            ctrl  = $controller('qmeHeaderCtrl', {$scope: scope});
         }));
 
         it('Should have a qmeHeader controller', function() {
             expect(ctrl).toBeDefined();
         });
 
+
         describe('QMeHeader Defaults', function(){
             it('Ensure user is not signed - signedIn is false', function() {
-                expect(ctrl.signedIn ).toBe(false);
+                expect(ctrl.isSignedIn() ).toBe(false);
             });
+
             it('Ensure user is not registering - isRegistering  is false', function() {
                 expect(ctrl.isRegistering ).toBe(false);
             });
@@ -35,7 +38,23 @@
             });
         });
 
+       describe('QMeHeader Perform SignIn With Non Admin User', function(){
+           it('Ensure user sign-on is valid ', function() {
+               ctrl.userEmail = "testuser@test.com";
+               ctrl.userPassword = "testpassword";
+               ctrl.performSignIn();
+               expect(ctrl.userEmail ).not.toBe('');
+               expect(ctrl.userEmail ).toBe('testuser@test.com');
+               expect(ctrl.userPassword ).not.toBe('');
+               expect(ctrl.userPassword ).toBe('testpassword');
+
+               expect(ctrl.isSignedIn() ).toBe(true);
+               //expect(ctrl.isAdmin() ).toBe(false);
+           });
+
+
+        });
     });
-    */
+
 
 })();
