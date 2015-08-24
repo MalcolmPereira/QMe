@@ -1,11 +1,11 @@
-var qmeApp;
+var qmeApp = "qmeApp";
 
 (function () {
 
     'use strict';
 
-    qmeApp = angular
-        .module('qmeApp', ['ui.router','ngMockE2E'])
+    angular
+        .module(qmeApp, ['ui.router','ngMockE2E'])
 
         .constant(
                 'QME_CONSTANTS', {

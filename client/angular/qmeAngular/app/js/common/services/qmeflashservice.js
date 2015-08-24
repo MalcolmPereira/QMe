@@ -2,7 +2,8 @@
 
     'use strict';
 
-    qmeApp.service('qmeFlashService', QMeFlashService);
+    angular.module(qmeApp)
+        .service('qmeFlashService', QMeFlashService);
 
     QMeFlashService.$inject = ['$rootScope'];
 

@@ -1,7 +1,8 @@
 (function () {
     'use strict';
 
-    qmeApp.controller('qmeRegisterCtrl', QMeRegisterController);
+    angular.module(qmeApp)
+        .controller('qmeRegisterCtrl', QMeRegisterController);
 
     QMeRegisterController.$inject = ['qmeFlashService'];
 

@@ -2,7 +2,8 @@
 
     "use strict";
 
-    qmeApp.service('qmeAuthService', QMeAuthService);
+    angular.module(qmeApp)
+        .service('qmeAuthService', QMeAuthService);
 
     QMeAuthService.$inject = ['$http','qmeFlashService','qmeUserSession','QME_CONSTANTS'];
 

@@ -1,5 +1,6 @@
 (function () {
-    qmeApp.factory('qmeUserSession', function () {
+    angular.module(qmeApp)
+        .factory('qmeUserSession', function () {
 
         var qmeUserSession = {};
 

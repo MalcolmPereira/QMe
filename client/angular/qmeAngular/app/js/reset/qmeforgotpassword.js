@@ -1,7 +1,8 @@
 (function () {
     'use strict';
 
-    qmeApp.controller('qmeResetPasswordCtrl', QMeResetPasswordController);
+    angular.module(qmeApp)
+        .controller('qmeResetPasswordCtrl', QMeResetPasswordController);
 
     function QMeResetPasswordController() {
 
