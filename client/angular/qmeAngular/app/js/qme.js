@@ -49,17 +49,33 @@ var qmeApp = "qmeApp";
         .run(function($httpBackend) {
                 $httpBackend.whenGET('/login/user@user').respond(function(method, url, data) {
                     var user = {
-                        "id":1234,
-                        "name":"test user",
-                        "role": "user"
+                        "userName": "testuser",
+                        "userPassword": null,
+                        "userFirstName": "Test",
+                        "userLastName": "User",
+                        "userEmail": "test.user@gmail.com",
+                        "userId": 1,
+                        "userRegisteredDate": "2015-28-05 13:35:29",
+                        "userUpdateDate": "2015-28-05 13:35:29",
+                        "updateUserID": 0,
+                        "updateUserName": "",
+                        "role": ['user']
                     };
                     return [200, user,{}];
                 });
                 $httpBackend.whenGET('/login/admin@admin').respond(function(method, url, data) {
                     var adminuser = {
-                        "id":1234,
-                        "name":"admin user",
-                        "role": "admin"
+                        "userName": "testadmin",
+                        "userPassword": null,
+                        "userFirstName": "Test",
+                        "userLastName": "Admin",
+                        "userEmail": "test.admin@gmail.com",
+                        "userId": 1,
+                        "userRegisteredDate": "2015-28-05 13:35:29",
+                        "userUpdateDate": "2015-28-05 13:35:29",
+                        "updateUserID": 0,
+                        "updateUserName": "",
+                        "role": ['admin','user']
                     };
                     return [200, adminuser,{}];
                 });

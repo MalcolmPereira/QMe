@@ -25,7 +25,17 @@
 
         qmeHeader.userName = function (){
             if(qmeHeader.isSignedIn()){
-                return qmeAuthService.username();
+                if(qmeAuthService.user() && qmeAuthService.user().userfirstname() && qmeAuthService.user().userfirstname().length > 0
+                    && qmeAuthService.user().userlastname() && qmeAuthService.user().userlastname().length > 0
+                ){
+                   return   qmeAuthService.user().userfirstname() + " "+ qmeAuthService.user().userlastname();
+
+                }else if(qmeAuthService.user() && qmeAuthService.user().userfirstname() && qmeAuthService.user().userfirstname().length > 0){
+                    return   qmeAuthService.user().userfirstname();
+
+                }else{
+                    return qmeAuthService.username();
+                }
             }
             return "";
         }

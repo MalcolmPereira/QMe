@@ -28,9 +28,17 @@
                 "password": "testpassword"
             };
             var user = {
-                "id":1234,
-                "name":"test user",
-                "role": "user"
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userId": 1,
+                "userRegisteredDate": "2015-28-05 13:35:29",
+                "userUpdateDate": "2015-28-05 13:35:29",
+                "updateUserID": 0,
+                "updateUserName": "",
+                "role": ['user']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             console.log(qmeContants.authendpoint);
@@ -39,21 +47,30 @@
             httpBackend.flush();
             expect(qmeAuthService.isSignedIn()).toBe(true);
             expect(qmeAuthService.isAdmin()).toBe(false);
-            expect(qmeAuthService.username()).toBe('test user');
+            expect(qmeAuthService.username()).toBe('testuser');
             expect(qmeAuthService.user()).toBeDefined();
         });
+
 
         it('Should have QMe User for valid admin login ', function() {
             expect(qmeAuthService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             var credentials = {
-                "username": "testuser",
+                "username": "testadmin",
                 "password": "testpassword"
             };
             var user = {
-                "id":1234,
-                "name":"admin user",
-                "role": "admin"
+                "userName": "testadmin",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "Admin",
+                "userEmail": "test.admin@gmail.com",
+                "userId": 1,
+                "userRegisteredDate": "2015-28-05 13:35:29",
+                "userUpdateDate": "2015-28-05 13:35:29",
+                "updateUserID": 0,
+                "updateUserName": "",
+                "role": ['admin','user']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
@@ -61,9 +78,10 @@
             httpBackend.flush();
             expect(qmeAuthService.isSignedIn()).toBe(true);
             expect(qmeAuthService.isAdmin()).toBe(true);
-            expect(qmeAuthService.username()).toBe('admin user');
+            expect(qmeAuthService.username()).toBe('testadmin');
             expect(qmeAuthService.user()).toBeDefined();
         });
+
 
         it('Should have No QMe User for valid logout ', function() {
             expect(qmeAuthService).toBeDefined();
@@ -73,9 +91,17 @@
                 "password": "testpassword"
             };
             var user = {
-                "id":1234,
-                "name":"admin user",
-                "role": "admin"
+                "userName": "testadmin",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "Admin",
+                "userEmail": "test.admin@gmail.com",
+                "userId": 1,
+                "userRegisteredDate": "2015-28-05 13:35:29",
+                "userUpdateDate": "2015-28-05 13:35:29",
+                "updateUserID": 0,
+                "updateUserName": "",
+                "role": ['admin','user']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
@@ -83,13 +109,14 @@
             httpBackend.flush();
             expect(qmeAuthService.isSignedIn()).toBe(true);
             expect(qmeAuthService.isAdmin()).toBe(true);
-            expect(qmeAuthService.username()).toBe('admin user');
+            expect(qmeAuthService.username()).toBe('testadmin');
             expect(qmeAuthService.user()).toBeDefined();
             qmeAuthService.logout();
             expect(qmeAuthService.isSignedIn()).toBe(false);
             expect(qmeAuthService.isAdmin()).toBe(false);
             expect(qmeAuthService.username()).toBe(null);
         });
+
         it('Should have valid error for server error ', function() {
             expect(qmeAuthService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -109,6 +136,7 @@
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('Error Connecting to service');
         });
+
         it('Should have valid error for user not found error ', function() {
             expect(qmeAuthService).toBeDefined();
             expect(scope.flash).not.toBeDefined();

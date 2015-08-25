@@ -17,7 +17,15 @@
         });
 
         it('Should have create new qmeUser model', function() {
-            qmeUser.create('session1234','someauthtoken', '1234' , 'someuser', 'admin');
+            qmeUser.create(
+                    'session1234',
+                    'someauthtoken',
+                    '1234' ,
+                    'someuser',
+                    'some',
+                    'user',
+                    'someuser@some.com',
+                    'admin');
             expect(qmeUser).toBeDefined();
             expect(qmeUser.sessionid()).toBe('session1234');
             expect(qmeUser.authtoken()).toBe('someauthtoken');
@@ -27,7 +35,15 @@
         });
 
         it('Should have destroyed qmeUser model', function() {
-            qmeUser.create('session1234', 'someauthtoken', '1234' , 'someuser', 'admin');
+            qmeUser.create(
+                    'session1234',
+                    'someauthtoken',
+                    '1234' ,
+                    'someuser',
+                    'some',
+                    'user',
+                    'someuser@some.com',
+                    'admin');
             expect(qmeUser).toBeDefined();
             expect(qmeUser.sessionid()).toBe('session1234');
             expect(qmeUser.authtoken()).toBe('someauthtoken');

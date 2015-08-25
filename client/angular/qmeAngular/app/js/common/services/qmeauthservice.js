@@ -23,9 +23,17 @@
             //SessionId is hard coded and is not used need to be fixed.
 
             $resource(QME_CONSTANTS.authendpoint+credentials.username).get(function(res){
-                console.log("got res",res);
 
-                qmeUserSession.create('sessionId123',authToken,res.id,res.name,res.role);
+                qmeUserSession.create(
+                        'sessionId123',
+                        authToken,
+                        res.userId,
+                        res.userName,
+                        res.userFirstName,
+                        res.userLastName,
+                        res.userEmail,
+                        res.role
+                );
 
             },function(error){
                 if(error && error.status && error.status == 404){
@@ -46,7 +54,7 @@
 
         qmeAuthService.isAdmin = function(){
             return (qmeAuthService.isSignedIn() &&
-            qmeUserSession.userrole() === QME_CONSTANTS.adminrole);
+            qmeUserSession.userrole() && qmeUserSession.userrole().length > 0 && qmeUserSession.userrole().indexOf(QME_CONSTANTS.adminrole) > -1);
         }
 
         qmeAuthService.logout = function (){
