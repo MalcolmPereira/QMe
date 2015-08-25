@@ -18,9 +18,10 @@ module.exports = function(config){
         ],
 
         files : [
-            'app/lib/angular/angular.js',
+            'app/lib/angular/angular.min.js',
             'app/lib/angular-ui-router/release/angular-ui-router.min.js',
-            'app/lib/angular-resource/angular-resource.js',
+            'app/lib/angular-resource/angular-resource.min.js',
+            'app/lib/angular-base64/angular-base64.min.js',
             'app/lib/angular-mocks/angular-mocks.js',
             'app/js/qme.js',
             'app/js/**/*.js',
