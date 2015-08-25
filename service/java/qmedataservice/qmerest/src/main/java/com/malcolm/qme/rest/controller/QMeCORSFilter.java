@@ -34,7 +34,7 @@ public class QMeCORSFilter implements Filter {
     /*
     * Allow Origin Domain
     */
-    private static final String ALLOW_ORIGIN_LOCAL_DOMAIN = "http://localhost:8080";
+    private static final String ALLOW_ORIGIN_LOCAL_DOMAIN = "http://localhost:8000";
 
     /**
      * Allow Methods
@@ -89,7 +89,7 @@ public class QMeCORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_ALL);
+        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_LOCAL_DOMAIN);
         response.setHeader(ACCESS_CONTROL_ALLOW_METHODS,ALLOW_METHODS );
         response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS,ACCESS_CONTROL_ALLOW_CREDENTIALS_TRUE );
         response.setHeader(ACCESS_CONTROL_REQUEST_HEADERS, ACCESS_CONTROL_HEADERS_NAME);
