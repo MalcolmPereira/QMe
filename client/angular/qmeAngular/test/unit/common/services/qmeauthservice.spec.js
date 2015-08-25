@@ -134,7 +134,7 @@
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Error Connecting to service');
+            expect(scope.flash.message).toBe('Oops.....Error Connecting to service, please retry in some time.');
         });
 
         it('Should have valid error for user not found error ', function() {
@@ -154,7 +154,7 @@
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('User not found');
+            expect(scope.flash.message).toBe('Error Connecting to service, entered user credential not found.');
         });
 
     });

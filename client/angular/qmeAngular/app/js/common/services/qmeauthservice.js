@@ -15,6 +15,8 @@
 
         qmeAuthService.login = function (credentials) {
 
+            qmeFlashService.Clear();
+
             //TODO: Fix Basic Authentication and Session ID
             //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
             var authToken = 'Basic ' + $base64.encode(credentials.username + ':' + credentials.password);
@@ -36,10 +38,14 @@
                 );
 
             },function(error){
-                if(error && error.status && error.status == 404){
-                    qmeFlashService.Error("User not found");
+                if(error && error.status && error.status == 401){
+                    qmeFlashService.Error("Oops.....User not authorized, please register or click on forgot password.");
+
+                }else if(error && error.status && error.status == 404){
+                    qmeFlashService.Error("Error Connecting to service, entered user credential not found.");
+
                 }else{
-                    qmeFlashService.Error("Error Connecting to service");
+                    qmeFlashService.Error("Oops.....Error Connecting to service, please retry in some time.");
                 }
              });
         }
