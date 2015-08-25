@@ -15,7 +15,7 @@
         it('Unit: Check Valid QMe Constants', function () {
             expect(qmeContants.success).toBe('success');
             expect(qmeContants.error).toBe('error');
-            expect(qmeContants.authendpoint).toBe('/login');
+            expect(qmeContants.authendpoint).toBeDefined();
             expect(qmeContants.adminrole).toBe('admin');
         });
 

@@ -5,14 +5,17 @@ var qmeApp = "qmeApp";
     'use strict';
 
     angular
-        .module(qmeApp, ['ui.router','ngMockE2E'])
+
+        .module(qmeApp, ['ui.router','ngResource','base64','ngMockE2E'])
 
         .constant(
                 'QME_CONSTANTS', {
-                        success: 'success',
-                        error: 'error',
-                        authendpoint: '/login',
-                        adminrole: 'admin'
+                      success: 'success',
+                      error: 'error',
+                      serviceurl: 'http://localhost:8080/qme',
+                      //authendpoint: 'http://localhost:8080/qme/user/searchemail/',
+                      authendpoint: '/login/',
+                      adminrole: 'admin'
                 }
         )
         .config(function($stateProvider, $urlRouterProvider) {
@@ -41,34 +44,26 @@ var qmeApp = "qmeApp";
                 })
         })
 
+
         //Mock For Testing only
         .run(function($httpBackend) {
-
-                //Dummy Login Method
-                $httpBackend.whenPOST('/login').respond(function(method, url, data) {
-                        var params = angular.fromJson(data);
-                        console.log("got username in mock service",params.username);
-                        console.log("got password in mock service",params.password);
-                        var user = {
-                            "id":1234,
-                            "name":"test user",
-                            "role": "user"
-                        };
-                        var adminuser = {
-                            "id":1234,
-                            "name":"admin user",
-                            "role": "admin"
-                        };
-
-                        if(params.username.indexOf('admin') > -1){
-                            return [200, adminuser,{}];
-                        }else{
-                            return [200, user,{}];
-                        }
-
+                $httpBackend.whenGET('/login/user@user').respond(function(method, url, data) {
+                    var user = {
+                        "id":1234,
+                        "name":"test user",
+                        "role": "user"
+                    };
+                    return [200, user,{}];
+                });
+                $httpBackend.whenGET('/login/admin@admin').respond(function(method, url, data) {
+                    var adminuser = {
+                        "id":1234,
+                        "name":"admin user",
+                        "role": "admin"
+                    };
+                    return [200, adminuser,{}];
                 });
                 $httpBackend.whenGET(/js\//).passThrough();
 
     });
-
 })();
