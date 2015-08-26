@@ -14,7 +14,7 @@ var qmeApp = "qmeApp";
                       error: 'error',
                       serviceurl: 'http://localhost:8080/qme',
                       authendpoint: 'http://localhost:8080/qme/user/searchemail/',
-                      adminrole: 'admin'
+                      adminrole: 'ADMIN'
                 }
         )
         .config(function($stateProvider, $urlRouterProvider) {

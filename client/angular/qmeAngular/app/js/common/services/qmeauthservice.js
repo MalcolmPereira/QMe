@@ -34,7 +34,7 @@
                         res.userFirstName,
                         res.userLastName,
                         res.userEmail,
-                        res.role
+                        res.userRoles
                 );
 
             },function(error){
@@ -59,8 +59,11 @@
         }
 
         qmeAuthService.isAdmin = function(){
-            return (qmeAuthService.isSignedIn() &&
-            qmeUserSession.userrole() && qmeUserSession.userrole().length > 0 && qmeUserSession.userrole().indexOf(QME_CONSTANTS.adminrole) > -1);
+            return (
+            qmeAuthService.isSignedIn() &&
+            qmeUserSession.userrole() &&
+            qmeUserSession.userrole().length > 0 &&
+            qmeUserSession.userrole().indexOf(QME_CONSTANTS.adminrole) > -1);
         }
 
         qmeAuthService.logout = function (){
