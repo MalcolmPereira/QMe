@@ -7,6 +7,7 @@
 package com.malcolm.qme.core.domain.fixtures;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.domain.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,6 +50,19 @@ public class UserFixtures {
                 new User(5L, "suser5", "spassword5", "Simple 5", "Simple User 5", "SimpleUser5@User.com", LocalDateTime.now(), LocalDateTime.now(), 5L)
         );
         return userList;
+    }
+
+    /**
+     * Return Simple User List
+     *
+     * @return User List
+     */
+    public static List<UserRole> simpleUserRoleList() {
+        List<UserRole> userRoleList = new ArrayList<>();
+        userRoleList.add(
+                new UserRole(1L, 1, "ADMIN", 1L)
+        );
+        return userRoleList;
     }
 
 }

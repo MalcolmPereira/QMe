@@ -8,8 +8,10 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
@@ -49,6 +51,10 @@ public final class UserServiceImpl implements UserService {
     private UserRepository userRepo;
 
     @Autowired
+    @Qualifier("UserRoleRepository")
+    private UserRoleRepository userRoleRepo;
+
+    @Autowired
     private PasswordEncoder passcodeEncoder;
 
     @Autowired
@@ -64,7 +70,9 @@ public final class UserServiceImpl implements UserService {
             if(user == null){
                 throw new QMeResourceNotFoundException("User with User  Name "+userName+" not found");
             }
-            return getQMeUserDetail(user);
+            QMeUserDetail qMeUserDetail =  getQMeUserDetail(user);
+            setUserRoles(qMeUserDetail);
+            return  qMeUserDetail;
         }catch(QMeException err){
             throw new QMeResourceException(err.getMessage(),err);
         }
@@ -77,7 +85,9 @@ public final class UserServiceImpl implements UserService {
             if(user == null){
                 throw new QMeResourceNotFoundException("User with User Email "+userEmail+" not found");
             }
-            return getQMeUserDetail(user);
+            QMeUserDetail qMeUserDetail =  getQMeUserDetail(user);
+            setUserRoles(qMeUserDetail);
+            return  qMeUserDetail;
         }catch(QMeException err){
             throw new QMeResourceException(err.getMessage(),err);
         }
@@ -97,12 +107,14 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public QMeUserDetail searchById(Long id) throws QMeResourceException {
-        try{
+        try {
             User user = userRepo.findById(id);
             if(user == null){
                 throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
             }
-            return getQMeUserDetail(user);
+            QMeUserDetail qMeUserDetail =  getQMeUserDetail(user);
+            setUserRoles(qMeUserDetail);
+            return  qMeUserDetail;
         }catch(QMeException err){
             throw new QMeResourceException(err.getMessage(),err);
         }
@@ -124,9 +136,9 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceException {
-        try{
+        try {
             User user = getUser(qMeUser,id,userId);
-            user = userRepo.update(user,userId);
+            user = userRepo.update(user, userId);
             return getQMeUserDetail(user);
         }catch(QMeException err){
             throw new QMeResourceException(err.getMessage(),err);
@@ -138,7 +150,7 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) throws QMeResourceException {
-        try{
+        try {
             User user = userRepo.findById(id);
             if(user == null){
                 throw new QMeResourceNotFoundException("User with User Id "+id+" not found");
@@ -172,7 +184,7 @@ public final class UserServiceImpl implements UserService {
             Long resetToken = atomicTokenGenerator.generateUniqueResetToken();
             userRepo.addResetToken(resetToken,user.getUserID());
 
-            sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url+"?token="+resetToken);
+            sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url + "?token=" + resetToken);
 
         }catch(QMeException err){
             throw new QMeResourceException(err.getMessage(),err);
@@ -204,7 +216,7 @@ public final class UserServiceImpl implements UserService {
 
             Long resetToken = qMeResetPassword.getToken();
 
-            LocalDateTime tokenCreatedTime = userRepo.getResetTokenCreateTime(resetToken,user.getUserID());
+            LocalDateTime tokenCreatedTime = userRepo.getResetTokenCreateTime(resetToken, user.getUserID());
             if(tokenCreatedTime == null){
                 throw new QMeInvalidResourceDataException("Reset Token not found for "+userEmail);
             }
@@ -226,7 +238,7 @@ public final class UserServiceImpl implements UserService {
     }
 
     /**
-     * Get Use for Create
+     * Get User for Create
      *
      * @param qMeuser QMe User
      * @return User
@@ -269,7 +281,21 @@ public final class UserServiceImpl implements UserService {
     }
 
     /**
-     * Get Use for Update
+     * Set User Roles
+     * @param qMeUserDetail QMe User Details
+     * @throws QMeException
+     */
+    private void setUserRoles(QMeUserDetail qMeUserDetail) throws QMeException {
+        List<UserRole> userRoles = userRoleRepo.findByUserId(qMeUserDetail.getUserId());
+        List<String> userRoleList = new ArrayList<>();
+        for(UserRole userRole : userRoles){
+            userRoleList.add(userRole.getRoleName());
+        }
+        qMeUserDetail.setUserRoles(userRoleList);
+    }
+
+    /**
+     * Get User for Update
      *
      * @param qMeuser QMe User
      * @return User
@@ -343,6 +369,7 @@ public final class UserServiceImpl implements UserService {
         qmeUserDetail.setUpdateUserID(user.getUpdateUserID());
         //Fixme: Need to add updated  user name
         qmeUserDetail.setUpdateUserName("");
+
         return qmeUserDetail;
     }
 

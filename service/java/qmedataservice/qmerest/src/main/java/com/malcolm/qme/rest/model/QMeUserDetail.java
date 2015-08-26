@@ -8,6 +8,7 @@
 package com.malcolm.qme.rest.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Malcolm
@@ -33,6 +34,7 @@ public class QMeUserDetail extends QMeUser {
      * QMeCategory Created User Name
      */
     private String updateUserName;
+
     /**
      * Get User ID
      * @return User ID

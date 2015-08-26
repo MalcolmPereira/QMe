@@ -7,6 +7,8 @@
 
 package com.malcolm.qme.rest.model;
 
+import java.util.List;
+
 /**
  * @author Malcolm
  */
@@ -31,6 +33,10 @@ public class QMeUser extends QMeResource {
      * User Email
      */
     private String userEmail;
+    /**
+     * QMe User Roles
+     */
+    private List<String> userRoles;
 
     /**
      * Get User Name
@@ -110,6 +116,22 @@ public class QMeUser extends QMeResource {
      */
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    /**
+     * Get User Roles
+     * @return userRoles for user
+     */
+    public List<String> getUserRoles() {
+        return userRoles;
+    }
+
+    /**
+     * Set User Roles
+     * @param userRoles to be set
+     */
+    public void setUserRoles(List<String> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override

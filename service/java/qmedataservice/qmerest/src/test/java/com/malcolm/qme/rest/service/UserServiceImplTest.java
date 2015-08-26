@@ -10,6 +10,7 @@ import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeResetPassword;
@@ -47,6 +48,9 @@ public class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepo;
+
+    @Mock
+    private UserRoleRepository userRoleRepo;
 
     @Mock
     public PasswordEncoder passwordEncoder;
@@ -91,6 +95,7 @@ public class UserServiceImplTest {
     public void testSearchById() throws QMeResourceException, QMeException {
 
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(UserFixtures.simpleUserRoleList());
 
         QMeUserDetail userDetail = userService.searchById(1L);
 
@@ -104,6 +109,7 @@ public class UserServiceImplTest {
     public void testSearchByUser() throws QMeResourceException, QMeException {
 
         when(userRepo.findByUserName("suser1")).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(UserFixtures.simpleUserRoleList());
 
         QMeUserDetail userDetail = userService.searchByUser("suser1");
 
@@ -118,6 +124,7 @@ public class UserServiceImplTest {
     public void testSearchByEmail() throws QMeResourceException, QMeException {
 
         when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(UserFixtures.simpleUserRoleList());
 
         QMeUserDetail userDetail = userService.searchByEmail("SimpleUser1@User.com");
 
