@@ -38,7 +38,7 @@
                 "userUpdateDate": "2015-28-05 13:35:29",
                 "updateUserID": 0,
                 "updateUserName": "",
-                "role": ['user']
+                "userRoles": ['USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             console.log(qmeContants.authendpoint);
@@ -70,7 +70,7 @@
                 "userUpdateDate": "2015-28-05 13:35:29",
                 "updateUserID": 0,
                 "updateUserName": "",
-                "role": ['admin','user']
+                "userRoles": ['ADMIN','USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
@@ -101,7 +101,7 @@
                 "userUpdateDate": "2015-28-05 13:35:29",
                 "updateUserID": 0,
                 "updateUserName": "",
-                "role": ['admin','user']
+                "userRoles": ['ADMIN','USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
