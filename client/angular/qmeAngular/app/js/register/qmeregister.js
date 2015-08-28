@@ -6,6 +6,9 @@
 
     QMeRegisterController.$inject = ['qmeFlashService'];
 
+    //
+    //qmeUserService
+
     function QMeRegisterController(qmeFlashService) {
 
         var qmeRegister = this;
@@ -17,7 +20,7 @@
         qmeRegister.userFirstName = "";
         qmeRegister.userLastName = "";
 
-        qmeRegister.validatePassword = function (){
+        qmeRegister.validatePasswordFields = function (){
             if(qmeRegister.userPassword != qmeRegister.userPasswordConfirm){
                 qmeFlashService.Error("Password do not match, please confirm password");
                 qmeRegister.userPasswordConfirm ="";
@@ -27,10 +30,14 @@
         }
 
         qmeRegister.registerUser = function (){
-            //TODO:
-            //Make http call to service and log in user
-            //qmeFlashService.Error("testing");
-            //qmeHeader.userName = "tocallservice";
+            var user = {
+                "userName": qmeRegister.userName,
+                "userPassword": qmeRegister.userPassword ,
+                "userFirstName": qmeRegister.userFirstName,
+                "userLastName": qmeRegister.userLastName,
+                "userEmail": qmeRegister.userEmail
+            }
+            //qmeUserService.register(user);
         }
 
     }

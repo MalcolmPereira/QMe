@@ -1,12 +1,15 @@
 (function () {
+
     'use strict';
 
     angular.module(qmeApp)
         .service('qmeUserService', QMeUserService);
 
-    QMeUserService.$inject = ['$resource','qmeFlashService','qmeUserSession','QME_CONSTANTS'];
+    QMeUserService.$inject = ['$http','$resource','$base64','qmeFlashService','qmeUserSession','QME_CONSTANTS'];
 
-    function QMeUserService($resource,qmeFlashService,qmeUserSession,QME_CONSTANTS) {
+    function QMeUserService($http,$resource,$base64,qmeFlashService,qmeUserSession,QME_CONSTANTS) {
+
+        var qmeUserService = this;
 
     }
 });

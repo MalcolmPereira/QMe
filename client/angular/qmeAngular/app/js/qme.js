@@ -12,7 +12,8 @@ var qmeApp = "qmeApp";
                 'QME_CONSTANTS', {
                       success: 'success',
                       error: 'error',
-                      serviceurl: 'http://localhost:8080/qme',
+                      serviceurl: 'http://localhost:8080/qme/',
+                      userapi: 'user/',
                       authendpoint: 'http://localhost:8080/qme/user/searchemail/',
                       adminrole: 'ADMIN'
                 }
