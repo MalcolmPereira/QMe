@@ -6,10 +6,10 @@
         .service('qmeUserService',QMeUserService);
 
 
-    QMeUserService.$inject = ['$http','$resource','$base64','qmeFlashService','qmeUserSession','QME_CONSTANTS'];
+    QMeUserService.$inject = ['$q','$resource','qmeFlashService','qmeAuthService','QME_CONSTANTS'];
 
 
-    function QMeUserService($http,$resource,$base64,qmeFlashService,qmeUserSession,QME_CONSTANTS) {
+    function QMeUserService($q,$resource,qmeFlashService,qmeAuthService,QME_CONSTANTS) {
 
         var qmeUserService = this;
 
@@ -17,29 +17,20 @@
 
             qmeFlashService.Clear();
 
+            var registeredUserPromise = $q.defer();
+
             $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"register")
 
                 .save(user
                 ,
                 function(res){
-
-                    var authToken = 'Basic ' + $base64.encode(user.userName + ':' + user.userPassword);
-
-                    qmeUserSession.create(
-                        'sessionId123',
-                        authToken,
-                        res.userId,
-                        res.userName,
-                        res.userFirstName,
-                        res.userLastName,
-                        res.userEmail,
-                        res.userRoles
-                    );
+                    res.userPassword = user.userPassword
+                    qmeAuthService.registeredUser(res);
+                    registeredUserPromise.resolve(res);
+                    registeredUserPromise.$digest;
                 }
                 ,
                 function(error){
-                    console.log("got some error",error);
-
                     if(error && error.status && error.status == 400){
                         qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
 
@@ -49,8 +40,10 @@
                     }else{
                         qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
                     }
-
+                    registeredUserPromise.reject({});
                 });
+
+            return registeredUserPromise.promise;
         }
 
     }

@@ -41,7 +41,6 @@
                 "userRoles": ['USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
-            console.log(qmeContants.authendpoint);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
             qmeAuthService.login(credentials);
             httpBackend.flush();

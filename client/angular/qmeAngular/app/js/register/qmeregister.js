@@ -4,9 +4,9 @@
     angular.module(qmeApp)
         .controller('qmeRegisterCtrl', QMeRegisterController);
 
-    QMeRegisterController.$inject = ['qmeFlashService','qmeUserService'];
+    QMeRegisterController.$inject = ['$state','qmeFlashService','qmeUserService'];
 
-    function QMeRegisterController(qmeFlashService,qmeUserService) {
+    function QMeRegisterController($state,qmeFlashService,qmeUserService) {
 
         var qmeRegister = this;
 
