@@ -4,7 +4,7 @@
     angular.module(qmeApp)
         .controller('qmeHeaderCtrl', QMeHeaderController);
 
-    QMeHeaderController.$inject = ['$state','qmeAuthService'];
+    QMeHeaderController.$inject = ['$state','qmeAuthService','qmeUserService'];
 
     function QMeHeaderController($state,qmeAuthService) {
 

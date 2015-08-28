@@ -4,12 +4,9 @@
     angular.module(qmeApp)
         .controller('qmeRegisterCtrl', QMeRegisterController);
 
-    QMeRegisterController.$inject = ['qmeFlashService'];
+    QMeRegisterController.$inject = ['qmeFlashService','qmeUserService'];
 
-    //
-    //qmeUserService
-
-    function QMeRegisterController(qmeFlashService) {
+    function QMeRegisterController(qmeFlashService,qmeUserService) {
 
         var qmeRegister = this;
 
@@ -37,7 +34,7 @@
                 "userLastName": qmeRegister.userLastName,
                 "userEmail": qmeRegister.userEmail
             }
-            //qmeUserService.register(user);
+            qmeUserService.register(user);
         }
 
     }
