@@ -27,7 +27,6 @@
                     res.userPassword = user.userPassword
                     qmeAuthService.registeredUser(res);
                     registeredUserPromise.resolve(res);
-                    registeredUserPromise.$digest;
                 }
                 ,
                 function(error){
@@ -41,6 +40,7 @@
                         qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
                     }
                     registeredUserPromise.reject({});
+
                 });
 
             return registeredUserPromise.promise;
