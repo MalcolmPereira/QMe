@@ -3,12 +3,14 @@
 
     describe('Controller: QMe Header Controller', function() {
 
-        var scope,  ctrl;
+        var scope, httpBackend, ctrl,qmeContants;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function($rootScope, $controller) {
+        beforeEach(inject(function($rootScope, $controller,$httpBackend,_QME_CONSTANTS_) {
             scope = $rootScope.$new();
+            httpBackend = $httpBackend;
+            qmeContants = _QME_CONSTANTS_;
             ctrl  = $controller('qmeHeaderCtrl', {
                 $scope: scope
             });
@@ -38,123 +40,60 @@
             });
         });
 
-       describe('QMeHeader Perform SignIn With Non Admin User', function(){
+       it('Ensure user sign-on is valid ', function() {
+           ctrl.userEmail = "testuser@test.com";
+           ctrl.userPassword = "testpassword";
+           var user = {
+               "userName": "testuser",
+               "userPassword": null,
+               "userFirstName": "Test",
+               "userLastName": "User",
+               "userEmail": "test.user@gmail.com",
+               "userId": 1,
+               "userRegisteredDate": "2015-28-05 13:35:29",
+               "userUpdateDate": "2015-28-05 13:35:29",
+               "updateUserID": 0,
+               "updateUserName": "",
+               "userRoles": ['USER']
+           };
+           httpBackend.expectGET(qmeContants.authendpoint+ctrl.userEmail).respond(200,user);
+           httpBackend.whenGET(/js\//).respond(200,{});
+           ctrl.performSignIn();
+           httpBackend.flush();
+           expect(ctrl.userEmail ).not.toBe('');
+           expect(ctrl.userEmail ).toBe('testuser@test.com');
+           expect(ctrl.userPassword ).not.toBe('');
+           expect(ctrl.userPassword ).toBe('testpassword');
+           expect(ctrl.isSignedIn() ).toBe(true);
+           expect(ctrl.isAdmin() ).toBe(false);
+       });
 
-           var authServiceMock ;
-
-           beforeEach(function(){
-               authServiceMock = {
-                   login:function(){
-                       return;
-                   }
-                   ,
-                   isSignedIn:function(){
-                       return true;
-                   }
-                   ,
-                   isAdmin:function(){
-                       return false;
-                   },
-                   logout:function (){
-                       return;
-                   }
-                   ,
-                   user:function(){
-                       return {};
-                   }
-                   ,
-                   username: function(){
-                       return "test user";
-                   }
-               };
-           });
-
-           beforeEach(inject(function($rootScope, $controller) {
-               scope = $rootScope.$new();
-               ctrl  = $controller('qmeHeaderCtrl', {
-                   $scope: scope,
-                   qmeAuthService: authServiceMock
-               });
-           }));
-
-
-           it('Ensure user sign-on is valid ', function() {
-
-               spyOn(authServiceMock, 'login').and.callThrough();
-
-               ctrl.userEmail = "testuser@test.com";
-               ctrl.userPassword = "testpassword";
-               ctrl.performSignIn();
-               expect(authServiceMock.login).toHaveBeenCalled();
-               expect(ctrl.userEmail ).not.toBe('');
-               expect(ctrl.userEmail ).toBe('testuser@test.com');
-               expect(ctrl.userPassword ).not.toBe('');
-               expect(ctrl.userPassword ).toBe('testpassword');
-               expect(ctrl.isSignedIn() ).toBe(true);
-               expect(ctrl.isAdmin() ).toBe(false);
-           });
-
-        });
-
-        describe('QMeHeader Perform SignIn With Admin User', function(){
-
-            var authServiceMock ;
-
-            beforeEach(function(){
-                authServiceMock = {
-                    login:function(){
-                        return;
-                    }
-                    ,
-                    isSignedIn:function(){
-                        return true;
-                    }
-                    ,
-                    isAdmin:function(){
-                        return true;
-                    },
-                    logout:function (){
-                        return;
-                    }
-                    ,
-                    user:function(){
-                        return {};
-                    }
-                    ,
-                    username: function(){
-                        return "test user";
-                    }
-                };
-            });
-
-            beforeEach(inject(function($rootScope, $controller) {
-                scope = $rootScope.$new();
-                ctrl  = $controller('qmeHeaderCtrl', {
-                    $scope: scope,
-                    qmeAuthService: authServiceMock
-                });
-            }));
-
-
-            it('Ensure user sign-on is valid ', function() {
-
-                spyOn(authServiceMock, 'login').and.callThrough();
-
-                ctrl.userEmail = "testuser@test.com";
-                ctrl.userPassword = "testpassword";
-                ctrl.performSignIn();
-                expect(authServiceMock.login).toHaveBeenCalled();
-                expect(ctrl.userEmail ).not.toBe('');
-                expect(ctrl.userEmail ).toBe('testuser@test.com');
-                expect(ctrl.userPassword ).not.toBe('');
-                expect(ctrl.userPassword ).toBe('testpassword');
-                expect(ctrl.isSignedIn() ).toBe(true);
-                expect(ctrl.isAdmin() ).toBe(true);
-            });
-
-        });
-
+       it('Ensure user sign-on is valid ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var user = {
+               "userName": "testadmin",
+               "userPassword": null,
+               "userFirstName": "Test",
+               "userLastName": "Admin",
+               "userEmail": "test.admin@gmail.com",
+               "userId": 1,
+               "userRegisteredDate": "2015-28-05 13:35:29",
+               "userUpdateDate": "2015-28-05 13:35:29",
+               "updateUserID": 0,
+               "updateUserName": "",
+               "userRoles": ['ADMIN','USER']
+            };
+           httpBackend.expectGET(qmeContants.authendpoint+ctrl.userEmail).respond(200,user);
+           httpBackend.whenGET(/js\//).respond(200,{});
+           ctrl.performSignIn();
+           httpBackend.flush();
+           expect(ctrl.userEmail ).not.toBe('');
+           expect(ctrl.userEmail ).toBe('testuser@test.com');
+           expect(ctrl.userPassword ).not.toBe('');
+           expect(ctrl.userPassword ).toBe('testpassword');
+           expect(ctrl.isSignedIn() ).toBe(true);
+           expect(ctrl.isAdmin() ).toBe(true);
+       });
     });
-
-
 })();

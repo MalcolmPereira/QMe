@@ -20,9 +20,9 @@
             expect(scope.flash).not.toBeDefined();
         });
 
+
         it('Should have QMe User for valid user login ', function() {
             expect(qmeAuthService).toBeDefined();
-            expect(scope.flash).not.toBeDefined();
             var credentials = {
                 "username": "testuser",
                 "password": "testpassword"
@@ -42,13 +42,23 @@
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
-            qmeAuthService.login(credentials);
+            qmeAuthService
+            .login(credentials)
+                .then(
+                    function(res){
+                        expect(qmeAuthService.isSignedIn()).toBe(true);
+                        expect(qmeAuthService.isAdmin()).toBe(false);
+                        expect(qmeAuthService.username()).toBe('testuser');
+                        expect(qmeAuthService.user()).toBeDefined();
+                    },
+                    function(error){
+
+                    }
+                );
             httpBackend.flush();
-            expect(qmeAuthService.isSignedIn()).toBe(true);
-            expect(qmeAuthService.isAdmin()).toBe(false);
-            expect(qmeAuthService.username()).toBe('testuser');
-            expect(qmeAuthService.user()).toBeDefined();
+
         });
+
 
 
         it('Should have QMe User for valid admin login ', function() {
@@ -73,16 +83,22 @@
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
-            qmeAuthService.login(credentials);
+            qmeAuthService
+            .login(credentials)
+                .then(
+                    function(res){
+                        expect(qmeAuthService.isSignedIn()).toBe(true);
+                        expect(qmeAuthService.isAdmin()).toBe(true);
+                        expect(qmeAuthService.username()).toBe('testadmin');
+                        expect(qmeAuthService.user()).toBeDefined();
+                    },
+                    function(error){
+                    }
+            );
             httpBackend.flush();
-            expect(qmeAuthService.isSignedIn()).toBe(true);
-            expect(qmeAuthService.isAdmin()).toBe(true);
-            expect(qmeAuthService.username()).toBe('testadmin');
-            expect(qmeAuthService.user()).toBeDefined();
         });
 
-
-        it('Should have No QMe User for valid logout ', function() {
+         it('Should have No QMe User for valid logout ', function() {
             expect(qmeAuthService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             var credentials = {
@@ -104,17 +120,25 @@
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
-            qmeAuthService.login(credentials);
+            qmeAuthService
+            .login(credentials)
+                .then(
+                    function(res){
+                        expect(qmeAuthService.isSignedIn()).toBe(true);
+                        expect(qmeAuthService.isAdmin()).toBe(true);
+                        expect(qmeAuthService.username()).toBe('testadmin');
+                        expect(qmeAuthService.user()).toBeDefined();
+                        qmeAuthService.logout();
+                        expect(qmeAuthService.isSignedIn()).toBe(false);
+                        expect(qmeAuthService.isAdmin()).toBe(false);
+                        expect(qmeAuthService.username()).toBe(null);
+                    },
+                    function(error){
+                    }
+            );
             httpBackend.flush();
-            expect(qmeAuthService.isSignedIn()).toBe(true);
-            expect(qmeAuthService.isAdmin()).toBe(true);
-            expect(qmeAuthService.username()).toBe('testadmin');
-            expect(qmeAuthService.user()).toBeDefined();
-            qmeAuthService.logout();
-            expect(qmeAuthService.isSignedIn()).toBe(false);
-            expect(qmeAuthService.isAdmin()).toBe(false);
-            expect(qmeAuthService.username()).toBe(null);
         });
+
 
         it('Should have valid error for server error ', function() {
             expect(qmeAuthService).toBeDefined();
@@ -124,17 +148,20 @@
                 "password": "testpassword"
             };
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(500,{});
-            qmeAuthService.login(credentials);
+            qmeAuthService
+            .login(credentials)
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(qmeAuthService.isSignedIn()).toBe(false);
+                        expect(qmeAuthService.isAdmin()).toBe(false);
+                        expect(qmeAuthService.username()).toBe(null);
+                        expect(error.status).toBe(500);
+                    }
+                );
             httpBackend.flush();
-            expect(qmeAuthService.isSignedIn()).toBe(false);
-            expect(qmeAuthService.isAdmin()).toBe(false);
-            expect(qmeAuthService.username()).toBe(null);
-            expect(scope.flash).toBeDefined();
-            expect(scope.flash.type).toBeDefined();
-            expect(scope.flash.type).toBe('error');
-            expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Oops.....Error Connecting to service, please retry in some time.');
-        });
+         });
 
         it('Should have valid error for user not found error ', function() {
             expect(qmeAuthService).toBeDefined();
@@ -144,17 +171,20 @@
                 "password": "testpassword"
             };
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(404,{});
-            qmeAuthService.login(credentials);
-            httpBackend.flush();
-            expect(qmeAuthService.isSignedIn()).toBe(false);
-            expect(qmeAuthService.isAdmin()).toBe(false);
-            expect(qmeAuthService.username()).toBe(null);
-            expect(scope.flash).toBeDefined();
-            expect(scope.flash.type).toBeDefined();
-            expect(scope.flash.type).toBe('error');
-            expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Error Connecting to service, entered user credential not found.');
-        });
+            qmeAuthService
+                .login(credentials)
+                .then(
+                    function(res){
 
+                    },
+                    function(error){
+                        expect(qmeAuthService.isSignedIn()).toBe(false);
+                        expect(qmeAuthService.isAdmin()).toBe(false);
+                        expect(qmeAuthService.username()).toBe(null);
+                        expect(error.status).toBe(404);
+                    }
+            );
+            httpBackend.flush();
+        });
     });
 })();

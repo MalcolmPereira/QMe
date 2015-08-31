@@ -4,9 +4,9 @@
     angular.module(qmeApp)
         .controller('qmeHeaderCtrl', QMeHeaderController);
 
-    QMeHeaderController.$inject = ['$state','qmeAuthService','qmeUserService'];
+    QMeHeaderController.$inject = ['$state','qmeFlashService','qmeAuthService','qmeUserService'];
 
-    function QMeHeaderController($state,qmeAuthService) {
+    function QMeHeaderController($state,qmeFlashService, qmeAuthService,qmeUserService) {
 
         var qmeHeader = this;
 
@@ -41,11 +41,33 @@
         }
 
         qmeHeader.performSignIn = function (){
+
+            qmeFlashService.Clear();
+
             var credentials = {
                 "username": qmeHeader.userEmail,
                 "password": qmeHeader.userPassword
             };
-            qmeAuthService.login(credentials);
+
+            qmeAuthService.login(credentials)
+
+                .then(
+
+                function(res){
+                    $state.go('home', {});
+                },
+                function(error){
+                    if(error && error.status && error.status == 401){
+                        qmeFlashService.Error("Oops.....User not authorized, please register or click on forgot password.");
+
+                    }else if(error && error.status && error.status == 404){
+                        qmeFlashService.Error("Error Connecting to service, entered user credential not found.");
+
+                    }else{
+                        qmeFlashService.Error("Oops.....Error Connecting to service, please retry in some time.");
+                    }
+                }
+            );
         }
 
         qmeHeader.logout = function (){
@@ -71,6 +93,5 @@
             qmeHeader.isResetingPassword = false;
             $state.go('home', {});
         }
-
     }
 })();

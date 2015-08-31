@@ -6,18 +6,16 @@
         .service('qmeUserService',QMeUserService);
 
 
-    QMeUserService.$inject = ['$q','$resource','qmeFlashService','qmeAuthService','QME_CONSTANTS'];
+    QMeUserService.$inject = ['$q','$resource','qmeAuthService','QME_CONSTANTS'];
 
 
-    function QMeUserService($q,$resource,qmeFlashService,qmeAuthService,QME_CONSTANTS) {
+    function QMeUserService($q,$resource,qmeAuthService,QME_CONSTANTS) {
 
         var qmeUserService = this;
 
         qmeUserService.register = function(user){
 
-            qmeFlashService.Clear();
-
-            var registeredUserPromise = $q.defer();
+           var registeredUserPromise = $q.defer();
 
             $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"register")
 
@@ -30,19 +28,8 @@
                 }
                 ,
                 function(error){
-                    if(error && error.status && error.status == 400){
-                        qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
-
-                    }else if(error && error.status && error.status == 409){
-                        qmeFlashService.Error("Oops...User with same email address already exists please enter valid unique email address.");
-
-                    }else{
-                        qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
-                    }
-                    registeredUserPromise.reject({});
-
+                    registeredUserPromise.reject(error);
                 });
-
             return registeredUserPromise.promise;
         }
 

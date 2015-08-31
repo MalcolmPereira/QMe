@@ -27,6 +27,8 @@
         }
 
         qmeRegister.registerUser = function (){
+            qmeFlashService.Clear();
+
             var user = {
                 "userName": qmeRegister.userName,
                 "userPassword": qmeRegister.userPassword ,
@@ -34,9 +36,25 @@
                 "userLastName": qmeRegister.userLastName,
                 "userEmail": qmeRegister.userEmail
             }
-            qmeUserService.register(user);
+            qmeUserService
+                .register(user)
+                .then(
+                function(res){
+                    $state.go('home', {});
+                },
+                function(error){
+                    console.log("got error",error);
+                    if(error && error.status && error.status == 400){
+                        qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
+
+                    }else if(error && error.status && error.status == 409){
+                        qmeFlashService.Error("Oops...User with same email address already exists please enter valid unique email address.");
+
+                    }else{
+                        qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                    }
+                }
+            );
         }
-
     }
-
 })();
