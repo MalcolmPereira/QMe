@@ -7,6 +7,8 @@
 package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeRole;
 
 /**
@@ -14,11 +16,12 @@ import com.malcolm.qme.rest.model.QMeRole;
  */
 public interface RoleService extends QMeService<QMeRole, QMeRole, Integer>{
     /**
-     * Find User By Role Name
+     * Find Role By Role Name
      *
      * @param roleName Role Name
      * @return Role List by role name
-     * @throws QMeResourceException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    QMeRole findByRoleName(String roleName) throws QMeResourceException;
+    QMeRole findByRoleName(String roleName) throws QMeResourceNotFoundException,QMeServerException;
 }

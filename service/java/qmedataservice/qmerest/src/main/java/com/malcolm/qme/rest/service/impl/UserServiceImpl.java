@@ -13,26 +13,19 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
-import com.malcolm.qme.rest.exception.QMeResourceConflictException;
-import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -64,7 +57,7 @@ public final class UserServiceImpl implements UserService {
     private JavaMailSenderImpl javaMailSender;
 
     @Override
-    public QMeUserDetail searchByUser(String userName) throws QMeResourceException {
+    public QMeUserDetail searchByUser(String userName) throws QMeResourceNotFoundException,QMeServerException {
         try{
             User user = userRepo.findByUserName(userName);
             if(user == null){
@@ -73,13 +66,14 @@ public final class UserServiceImpl implements UserService {
             QMeUserDetail qMeUserDetail =  getQMeUserDetail(user);
             setUserRoles(qMeUserDetail);
             return  qMeUserDetail;
+
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserDetail searchByEmail(String userEmail) throws QMeResourceException {
+    public QMeUserDetail searchByEmail(String userEmail) throws QMeResourceNotFoundException,QMeServerException {
         try{
             User user = userRepo.findByUserEmail(userEmail);
             if(user == null){
@@ -88,25 +82,24 @@ public final class UserServiceImpl implements UserService {
             QMeUserDetail qMeUserDetail =  getQMeUserDetail(user);
             setUserRoles(qMeUserDetail);
             return  qMeUserDetail;
+
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public List<QMeUserDetail> list() throws QMeResourceException {
+    public List<QMeUserDetail> list() throws QMeServerException {
         try{
             return  getQMeUserDetail(userRepo.findAll());
-        }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
 
-        }catch(Exception err){
-            throw new QMeResourceException(err.getMessage(),err);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserDetail searchById(Long id) throws QMeResourceException {
+    public QMeUserDetail searchById(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try {
             User user = userRepo.findById(id);
             if(user == null){
@@ -116,40 +109,35 @@ public final class UserServiceImpl implements UserService {
             setUserRoles(qMeUserDetail);
             return  qMeUserDetail;
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserDetail save(QMeUser qMeUser, Long userId) throws QMeResourceException {
-        try{
+    public QMeUserDetail save(QMeUser qMeUser, Long userId) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
+        try {
             User user = getUser(qMeUser);
             user = userRepo.save(user);
             return getQMeUserDetail(user);
-        }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
 
-        }catch(Exception err){
-            throw new QMeResourceException(err.getMessage(),err);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceException {
+    public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
         try {
             User user = getUser(qMeUser,id,userId);
             user = userRepo.update(user, userId);
             return getQMeUserDetail(user);
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
-
-        }catch(Exception err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public void delete(Long id) throws QMeResourceException {
+    public void delete(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try {
             User user = userRepo.findById(id);
             if(user == null){
@@ -158,13 +146,13 @@ public final class UserServiceImpl implements UserService {
             userRepo.delete(id);
 
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
 
         }
     }
 
     @Override
-    public void forgotPassword(String userEmail, String url) throws QMeResourceException {
+    public void forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
         try{
             if(url == null || url.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid application url redirect parameter ");
@@ -187,13 +175,12 @@ public final class UserServiceImpl implements UserService {
             sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url + "?token=" + resetToken);
 
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
-
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserDetail resetPassword(String userEmail, QMeResetPassword qMeResetPassword) throws QMeResourceException {
+    public QMeUserDetail resetPassword(String userEmail, QMeResetPassword qMeResetPassword) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException  {
         try{
             if(userEmail == null || userEmail.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid user email address ");
@@ -232,7 +219,7 @@ public final class UserServiceImpl implements UserService {
             return getQMeUserDetail(user);
 
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
 
         }
     }
@@ -244,7 +231,7 @@ public final class UserServiceImpl implements UserService {
      * @return User
      * @throws QMeResourceException
      */
-    private User getUser(QMeUser qMeuser) throws QMeResourceException {
+    private User getUser(QMeUser qMeuser) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
             if(qMeuser.getUserName() == null || qMeuser.getUserName().trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Valid User Name is required");
@@ -275,8 +262,7 @@ public final class UserServiceImpl implements UserService {
             );
 
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
-
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
@@ -301,7 +287,7 @@ public final class UserServiceImpl implements UserService {
      * @return User
      * @throws QMeResourceException
      */
-    private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceException {
+    private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceNotFoundException,QMeServerException {
         try{
             User currentUser = userRepo.findById(userId);
             if(currentUser == null){
@@ -327,10 +313,8 @@ public final class UserServiceImpl implements UserService {
                     updateUserId
             );
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
-
+            throw new QMeServerException(err.getMessage(),err);
         }
-
     }
 
     /**
@@ -382,10 +366,10 @@ public final class UserServiceImpl implements UserService {
      * @param url URL for password reset form when users clicks on the email link
      * @throws QMeResourceException
      */
-    private void sendEmail(String userName, String userEmail, Long resetToken, String url)  throws QMeResourceException {
+    private void sendEmail(String userName, String userEmail, Long resetToken, String url)  throws QMeServerException {
         if(javaMailSender.getUsername() == null || javaMailSender.getUsername().trim().length() == 0 ||
                 javaMailSender.getPassword() == null || javaMailSender.getPassword().trim().length() == 0){
-            throw new QMeResourceException("System Configuration Error, Please configue mail server details correctly");
+            throw new QMeServerException("System Configuration Error, Please configue mail server details correctly");
         }
         try {
 
@@ -431,7 +415,7 @@ public final class UserServiceImpl implements UserService {
             javaMailSender.send(message);
 
         }catch (MessagingException messagingErr){
-            throw new QMeResourceException("System  Error, Error Sending Email Message",messagingErr);
+            throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
         }
     }
 }

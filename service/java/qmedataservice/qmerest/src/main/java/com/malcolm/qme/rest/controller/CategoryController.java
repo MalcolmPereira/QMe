@@ -8,7 +8,7 @@
 package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.CategoryAPI;
-import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import com.malcolm.qme.rest.service.CategoryService;
@@ -43,7 +43,7 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody List<QMeCategoryDetail> list() throws QMeResourceException {
+    public @ResponseBody List<QMeCategoryDetail> list() throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {
         LOG.debug("Category List called ");
         List<QMeCategoryDetail> categoryDetails = categoryService.list();
         for (QMeCategoryDetail qmeCategoryDetail : categoryDetails) {
@@ -57,7 +57,7 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeResourceException {
+    public @ResponseBody List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {
         LOG.debug("Category Search By Name Like called for  "+categoryName);
 
         List<QMeCategoryDetail> categoryDetails = categoryService.searchByName(categoryName);
@@ -72,7 +72,7 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeCategoryDetail searchById(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException {
+    public @ResponseBody QMeCategoryDetail searchById(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {
         LOG.debug("Category Search By ID for  "+categoryId);
 
         QMeCategoryDetail qmeCategoryDetail = categoryService.searchById(categoryId);
@@ -88,8 +88,13 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeCategoryDetail create(@RequestBody QMeCategory category) throws QMeResourceException {
-        LOG.debug("Create Category called for   "+category);
+    public @ResponseBody QMeCategoryDetail create(@RequestBody QMeCategory category) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
+        if(category.getParentCategoryId() != null){
+            QMeCategoryDetail qmeCategoryDetail = categoryService.searchById(category.getParentCategoryId());
+            if(qmeCategoryDetail == null){
+                throw new QMeResourceNotFoundException("Category with Category ID "+qmeCategoryDetail.getParentCategoryId()+" not found");
+            }
+        }
         //TODO:Add Security and User Id from Principal
         return categoryService.save(category,1L);
     }
@@ -97,7 +102,7 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeCategoryDetail update(@PathVariable(ID_PARAM_STRING) Long categoryId,@RequestBody QMeCategory category) throws QMeResourceException {
+    public @ResponseBody QMeCategoryDetail update(@PathVariable(ID_PARAM_STRING) Long categoryId,@RequestBody QMeCategory category) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         LOG.debug("Update Category called for   "+category);
         //TODO:Add Security and User Id from Principal
         return categoryService.update(category, categoryId,1L);
@@ -106,7 +111,7 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException {
+    public void delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceNotFoundException,QMeServerException {
         LOG.debug("Delete Category called for categoryId  "+categoryId);
         categoryService.delete(categoryId);
     }

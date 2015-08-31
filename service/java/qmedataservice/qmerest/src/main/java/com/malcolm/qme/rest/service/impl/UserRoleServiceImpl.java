@@ -14,10 +14,7 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
-import com.malcolm.qme.rest.exception.QMeResourceConflictException;
-import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeUserRole;
 import com.malcolm.qme.rest.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +44,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
     private UserRepository userRepo;
 
     @Override
-    public List<QMeUserRole> findByUserId(Long userID) throws QMeResourceException {
+    public List<QMeUserRole> findByUserId(Long userID) throws QMeResourceNotFoundException,QMeServerException {
         try{
             List<UserRole> userRoleList = userRoleRepo.findByUserId(userID);
             if(userRoleList == null || userRoleList.size() ==  0){
@@ -55,12 +52,12 @@ public final class UserRoleServiceImpl implements UserRoleService {
             }
             return getQMeUserRoleDetail(userRoleList);
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public List<QMeUserRole> findByRoleId(Integer roleID) throws QMeResourceException {
+    public List<QMeUserRole> findByRoleId(Integer roleID) throws QMeResourceNotFoundException,QMeServerException {
         try{
             List<UserRole> userRoleList = userRoleRepo.findByRoleId(roleID);
             if(userRoleList == null || userRoleList.size() ==  0){
@@ -68,21 +65,21 @@ public final class UserRoleServiceImpl implements UserRoleService {
             }
             return getQMeUserRoleDetail(userRoleList);
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public List<QMeUserRole> list() throws QMeResourceException {
+    public List<QMeUserRole> list() throws QMeServerException {
         try{
             return getQMeUserRoleDetail(userRoleRepo.findAll());
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserRole searchById(Long id) throws QMeResourceException {
+    public QMeUserRole searchById(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try{
             UserRole userRole = userRoleRepo.findById(id);
             if(userRole == null){
@@ -90,40 +87,35 @@ public final class UserRoleServiceImpl implements UserRoleService {
             }
             return getQMeUserRoleDetail(userRole);
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserRole save(QMeUserRole qMeUserRole, Long userId) throws QMeResourceException {
+    public QMeUserRole save(QMeUserRole qMeUserRole, Long userId) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
-            UserRole userRole = getUserRole(qMeUserRole);
+            UserRole userRole = null;
+            userRole = getUserRole(qMeUserRole);
             userRole = userRoleRepo.save(userRole);
             return getQMeUserRoleDetail(userRole);
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
-
-        }catch(Exception err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserRole update(QMeUserRole qMeUserRole, Long id, Long userId) throws QMeResourceException {
+    public QMeUserRole update(QMeUserRole qMeUserRole, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
             UserRole userRole = getUserRole(qMeUserRole);
             userRole = userRoleRepo.update(userRole, userId);
             return getQMeUserRoleDetail(userRole);
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
-
-        }catch(Exception err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public void delete(Long id) throws QMeResourceException {
+    public void delete(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try{
             UserRole userRole = userRoleRepo.findById(id);
             if(userRole == null){
@@ -132,7 +124,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
             userRoleRepo.delete(id);
 
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
 
     }
@@ -140,11 +132,13 @@ public final class UserRoleServiceImpl implements UserRoleService {
     /**
      * Get UserRole for Create
      *
-     * @param qmeUserRole QMe User Role
-     * @return UserRole User Role
-     * @throws QMeResourceException
+     * @param qmeUserRole
+     * @return
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceConflictException
+     * @throws QMeServerException
      */
-    private UserRole getUserRole(QMeUserRole qmeUserRole) throws QMeResourceException {
+    private UserRole getUserRole(QMeUserRole qmeUserRole) throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeServerException {
         try{
             if(qmeUserRole.getRoleID() == null || qmeUserRole.getRoleID() == 0){
                 throw new QMeInvalidResourceDataException("Valid Role Id is required");
@@ -152,6 +146,9 @@ public final class UserRoleServiceImpl implements UserRoleService {
             if(qmeUserRole.getUserID() == null || qmeUserRole.getUserID() == 0){
                 throw new QMeInvalidResourceDataException("Valid User Id is required");
             }
+            //FIXME:
+            //TODO: Moce this to controlled code to check existence when adding!!!
+            /*
             Role role = roleRepo.findById(qmeUserRole.getRoleID());
             if(role == null){
                 throw new QMeResourceNotFoundException("Role with Role  Id "+qmeUserRole.getRoleID()+" not found");
@@ -160,6 +157,9 @@ public final class UserRoleServiceImpl implements UserRoleService {
             if(user == null){
                 throw new QMeResourceNotFoundException("User with User Id "+qmeUserRole.getUserID()+" not found");
             }
+            */
+            //FIXME:
+
             List<UserRole> userRoleList = userRoleRepo.findByUserId(qmeUserRole.getUserID());
             if(userRoleList != null && userRoleList.size() ==  0){
                 for (UserRole userRole : userRoleList){
@@ -170,7 +170,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
             }
             return new UserRole(qmeUserRole.getRoleID(),qmeUserRole.getUserID());
         }catch(QMeException err){
-            throw new QMeResourceException(err.getMessage(),err);
+            throw new QMeServerException(err.getMessage(),err);
         }
     }
 

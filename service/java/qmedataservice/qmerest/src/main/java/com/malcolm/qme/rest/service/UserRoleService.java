@@ -7,6 +7,8 @@
 package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserRole;
 
 import java.util.List;
@@ -17,20 +19,22 @@ import java.util.List;
 public interface UserRoleService extends QMeService<QMeUserRole, QMeUserRole, Long>{
 
     /**
-     * Find By User ID
+     * Find Roles By User ID
      *
      * @param userID User ID
-     * @return UserRole for User ID
-     * @throws QMeResourceException
+     * @return UserRole List for User ID
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    List<QMeUserRole> findByUserId(Long userID) throws QMeResourceException;
+    List<QMeUserRole> findByUserId(Long userID) throws QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Find By Role ID
      *
      * @param roleID Role ID
      * @return UserRole for Role ID
-     * @throws QMeResourceException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    List<QMeUserRole> findByRoleId(Integer roleID) throws QMeResourceException;
+    List<QMeUserRole> findByRoleId(Integer roleID) throws QMeResourceNotFoundException,QMeServerException;
 }
