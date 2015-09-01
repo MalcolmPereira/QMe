@@ -6,7 +6,10 @@
  */
 package com.malcolm.qme.rest.service;
 
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
@@ -30,32 +33,42 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * Search By User Name
      * @param userName User Name
      * @return QMe User Detail
-     * @throws QMeResourceException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    QMeUserDetail searchByUser(String userName) throws QMeResourceException;
+    QMeUserDetail searchByUser(String userName) throws QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Search By Email
+     *
      * @param userEmail User Email
      * @return QMe User Detail
-     * @throws QMeResourceException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    QMeUserDetail searchByEmail(String userEmail) throws QMeResourceException;
+    QMeUserDetail searchByEmail(String userEmail) throws QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Forgot Password
      *
      * @param userEmail User Email for whom password reset is requested
      * @param url Redirect URL for reseting user password
-     * @throws QMeResourceException
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    void forgotPassword(String userEmail, String url) throws QMeResourceException;
+    void forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Reset User Password
+     *
      * @param userEmail User Email for whom password reset is requested
      * @param qMeResetPassword QMe Reset Password
+     * @return QMe User Detail
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-    QMeUserDetail resetPassword(String userEmail, QMeResetPassword qMeResetPassword) throws QMeResourceException;
+    QMeUserDetail resetPassword(String userEmail, QMeResetPassword qMeResetPassword) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
 }

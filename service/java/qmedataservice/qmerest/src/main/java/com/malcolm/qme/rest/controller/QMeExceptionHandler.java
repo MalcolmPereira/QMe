@@ -7,10 +7,7 @@
 
 package com.malcolm.qme.rest.controller;
 
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
-import com.malcolm.qme.rest.exception.QMeResourceConflictException;
-import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -61,15 +58,15 @@ public class QMeExceptionHandler {
         logger.info("QMeResourceConflictException Occurred:: URL="+request.getRequestURL());
     }
 
+
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "QMe Service Exception occured. Please retry request or contact system admin")
-    @ExceptionHandler(QMeResourceException.class)
-    public void handleResourceException(HttpServletRequest request, QMeResourceException ex){
+    @ExceptionHandler(QMeServerException.class)
+    public void handleResourceException(HttpServletRequest request, QMeServerException ex){
         if(ex.getCause() != null){
             ex.getCause().printStackTrace();
         }else{
             ex.printStackTrace();
         }
-        logger.info("QMeResourceException Occurred:: URL="+request.getRequestURL());
+        logger.info("QMeServerException Occurred:: URL="+request.getRequestURL());
     }
-
 }

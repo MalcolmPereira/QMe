@@ -7,6 +7,8 @@
 package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 
@@ -22,6 +24,8 @@ public interface CategoryService extends QMeService<QMeCategoryDetail,QMeCategor
      *
      * @param categoryName Category Name
      * @return QMeCategoryDetail List
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
-     List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceException;
+     List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceNotFoundException,QMeServerException;
 }
