@@ -32,7 +32,7 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String REGISTER_PATH = "/qme/user/register";
 
-    private static final String RESET_PATH = "/qme/user/reset/*";
+    private static final String RESET_PATH = "/qme/user/reset/**";
 
     @Autowired
     private UserDetailsService userDetailsService;
