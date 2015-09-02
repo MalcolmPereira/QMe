@@ -11,16 +11,16 @@
                         <input ng-model="qmeRegister.userEmail" name="userEmail" id="userEmail" maxlength="128" min="5" type="email" placeholder="email@example.com" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
-                        <label for="userName">User Alias:</label>
-                        <input ng-model="qmeRegister.userName" id="userName" maxlength="128" min="5" type="text" placeholder="username" class="form-control" ng-required="true">
-                    </div>
-                    <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPassword">User Password:</label>
                         <input ng-model="qmeRegister.userPassword"  id="userPassword" maxlength="128" min="5" type="password" placeholder="password" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPasswordConfirm">Confirm User Password:</label>
                         <input ng-model="qmeRegister.userPasswordConfirm" id="userPasswordConfirm" maxlength="128" min="5" type="password" placeholder="confirm password" class="form-control" ng-required="true" ng-model-options="{ updateOn: 'blur' }" ng-change="qmeRegister.validatePasswordFields()">
+                    </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="userName">User Alias:</label>
+                        <input ng-model="qmeRegister.userName" id="userName" maxlength="128" min="5" type="text" placeholder="username" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userFirstName">User First Name:</label>

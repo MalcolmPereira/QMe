@@ -22,7 +22,7 @@
                 .save(user
                 ,
                 function(res){
-                    res.userPassword = user.userPassword
+                    res.userPassword = user.userPassword;
                     qmeAuthService.registeredUser(res);
                     registeredUserPromise.resolve(res);
                 }
@@ -31,7 +31,24 @@
                     registeredUserPromise.reject(error);
                 });
             return registeredUserPromise.promise;
-        }
+        };
+
+        qmeUserService.resetPassword = function(useremail){
+           var resetPasswordUserPromise = $q.defer();
+
+            $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"reset/forgotpassword/"+useremail,null,{'reset':{method:'PUT'}})
+                .reset({}, "someurl"
+                ,function(res){
+                    resetPasswordUserPromise.resolve(res);
+
+                },
+                function(error){
+                    resetPasswordUserPromise.reject(error);
+                }
+            );
+            return resetPasswordUserPromise.promise;
+
+        };
 
     }
 })();
