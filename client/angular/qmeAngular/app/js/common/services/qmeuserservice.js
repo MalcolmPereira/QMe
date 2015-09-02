@@ -37,7 +37,7 @@
            var resetPasswordUserPromise = $q.defer();
 
             $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"reset/forgotpassword/"+useremail,null,{'reset':{method:'PUT'}})
-                .reset({}, "someurl"
+                .reset({}, QME_CONSTANTS.reseturl
                 ,function(res){
                     resetPasswordUserPromise.resolve(res);
 

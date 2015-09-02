@@ -12,6 +12,7 @@ var qmeApp = "qmeApp";
                 'QME_CONSTANTS', {
                       success: 'success',
                       error: 'error',
+                      reseturl: 'http://localhost:8000/app/#/resetpassword/',
                       serviceurl: 'http://localhost:8080/qme/',
                       userapi: 'user/',
                       authendpoint: 'http://localhost:8080/qme/user/searchemail/',
