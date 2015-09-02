@@ -42,5 +42,11 @@ var qmeApp = "qmeApp";
                     controller: 'qmeResetPasswordCtrl',
                     controllerAs: 'qmeReset'
                 })
+                .state('resetpassword', {
+                    url: "/resetpassword",
+                    templateUrl: 'js/reset/qmeresetpassword.tmpl.html',
+                    controller: 'qmeResetPasswordCtrl',
+                    controllerAs: 'qmeReset'
+                })
         })
 })();
