@@ -4,12 +4,13 @@
     angular.module(qmeApp)
         .controller('qmeResetPasswordCtrl', QMeResetPasswordController);
 
-    QMeResetPasswordController.$inject = ['$state','qmeFlashService','qmeAuthService','qmeUserService'];
+    QMeResetPasswordController.$inject = ['$state','$stateParams','qmeFlashService','qmeAuthService','qmeUserService'];
 
-    function QMeResetPasswordController($state,qmeFlashService,qmeAuthService,qmeUserService) {
+    function QMeResetPasswordController($state,$stateParams,qmeFlashService,qmeAuthService,qmeUserService) {
 
         var qmeReset = this;
 
+        //qmeReset.token = "";
         qmeReset.userEmail = "";
         qmeReset.userPassword = "";
         qmeReset.userPasswordConfirm = "";
@@ -29,6 +30,7 @@
         };
 
         qmeReset.submitResetPassword = function(){
+            console.log("$stateParams.token",$stateParams.token);
         };
     }
 

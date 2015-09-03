@@ -44,7 +44,7 @@ var qmeApp = "qmeApp";
                     controllerAs: 'qmeReset'
                 })
                 .state('resetpassword', {
-                    url: "/resetpassword",
+                    url: "/resetpassword/:token",
                     templateUrl: 'js/reset/qmeresetpassword.tmpl.html',
                     controller: 'qmeResetPasswordCtrl',
                     controllerAs: 'qmeReset'
