@@ -12,7 +12,7 @@
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
             ctrl  = $controller('qmeHeaderCtrl', {
-                $scope: scope
+                $scope: scope,
             });
         }));
 
@@ -25,12 +25,11 @@
             it('Ensure user is not signed - signedIn is false', function() {
                 expect(ctrl.isSignedIn() ).toBe(false);
             });
-
             it('Ensure user is not registering - isRegistering  is false', function() {
-                expect(ctrl.isRegistering ).toBe(false);
+                expect(ctrl.isRegistering() ).toBe(false);
             });
             it('Ensure user is not resetting password  - isResetingPassword is false', function() {
-                expect(ctrl.isResetingPassword ).toBe(false);
+                expect(ctrl.isResetingPassword() ).toBe(false);
             });
             it('Ensure user email is empty - userEmail is empty ', function() {
                 expect(ctrl.userEmail ).toBe('');
