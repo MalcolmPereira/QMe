@@ -24,7 +24,7 @@
             }else{
                 qmeFlashService.Clear();
             }
-        }
+        };
 
         qmeRegister.registerUser = function (){
             qmeFlashService.Clear();
@@ -55,6 +55,6 @@
                     }
                 }
             );
-        }
+        };
     }
 })();

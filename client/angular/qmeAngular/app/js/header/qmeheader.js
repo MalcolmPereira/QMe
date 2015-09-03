@@ -6,22 +6,20 @@
 
     QMeHeaderController.$inject = ['$state','qmeFlashService','qmeAuthService','qmeUserService'];
 
-    function QMeHeaderController($state,qmeFlashService, qmeAuthService,qmeUserService) {
+    function QMeHeaderController($state,qmeFlashService, qmeAuthService) {
 
         var qmeHeader = this;
 
-        qmeHeader.isRegistering = false;
-        qmeHeader.isResetingPassword = false;
         qmeHeader.userEmail = "";
         qmeHeader.userPassword = "";
 
         qmeHeader.isSignedIn = function(){
             return qmeAuthService.isSignedIn();
-        }
+        };
 
         qmeHeader.isAdmin = function(){
             return qmeAuthService.isAdmin();
-        }
+        };
 
         qmeHeader.userName = function (){
             if(qmeHeader.isSignedIn()){
@@ -38,7 +36,7 @@
                 }
             }
             return "";
-        }
+        };
 
         qmeHeader.performSignIn = function (){
 
@@ -68,30 +66,39 @@
                     }
                 }
             );
-        }
+        };
 
         qmeHeader.logout = function (){
             qmeAuthService.logout();
-            qmeHeader.isRegistering = false;
-            qmeHeader.isResetingPassword = false;
+            qmeAuthService.endRegistering();
+            qmeAuthService.endResetting()
             qmeHeader.userEmail = "";
             qmeHeader.userPassword = "";
-        }
+        };
 
         qmeHeader.routeRegistration = function (){
-            qmeHeader.isRegistering = true;
+            qmeAuthService.startRegistering();
             $state.go('register', {});
-        }
+        };
 
         qmeHeader.routeResetPassword = function (){
-            qmeHeader.isResetingPassword = true;
-            $state.go('reset', {});
-        }
+            qmeAuthService.startResetting();
+             $state.go('reset', {});
+        };
 
         qmeHeader.cancelResetRegistration = function (){
-            qmeHeader.isRegistering = false;
-            qmeHeader.isResetingPassword = false;
+            qmeAuthService.endRegistering();
+            qmeAuthService.endResetting()
             $state.go('home', {});
+        };
+
+        qmeHeader.isRegistering = function(){
+            return  qmeAuthService.isRegistering();
         }
+
+        qmeHeader.isResetingPassword = function(){
+            return  qmeAuthService.isResetting();
+        }
+
     }
 })();

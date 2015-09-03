@@ -49,35 +49,35 @@
 
         qmeUserSession.sessionid = function () {
             return _sessionid
-        }
+        };
 
         qmeUserSession.authtoken = function () {
            return _authtoken
-        }
+        };
 
         qmeUserSession.userid = function () {
             return _userid
-        }
+        };
 
         qmeUserSession.username = function () {
             return _username
-        }
+        };
 
         qmeUserSession.userfirstname= function () {
            return _userfirstname
-        }
+        };
 
         qmeUserSession.userlastname= function () {
                 return _userlastname
-        }
+        };
 
         qmeUserSession.useremail= function () {
                 return _useremail
-        }
+        };
 
         qmeUserSession.userrole = function () {
             return _userrole
-        }
+        };
 
         return qmeUserSession;
     })

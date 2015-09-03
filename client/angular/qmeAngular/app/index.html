@@ -16,7 +16,7 @@
             <a class="navbar-brand" href="#"><span>QMe Application</span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-           <form name="qmeHeader.signInForm" class="navbar-form navbar-right" ng-show="!qmeHeader.isRegistering && !qmeHeader.isResetingPassword && !qmeHeader.isSignedIn()" >
+           <form name="qmeHeader.signInForm" class="navbar-form navbar-right" ng-show="!qmeHeader.isRegistering() && !qmeHeader.isResetingPassword() && !qmeHeader.isSignedIn()" >
                 <div class="form-group">
                     <input type="email" id="emailField" ng-model="qmeHeader.userEmail" placeholder="email@example.com" class="form-control" ng-required="true">
                 </div>
@@ -29,7 +29,7 @@
                 &nbsp;
                 <button id="forgotButton" type="button" class="btn btn-info btn-xs" ng-click="qmeHeader.routeResetPassword()">Forgot Password</button>
             </form>
-            <button ng-show="(qmeHeader.isRegistering || qmeHeader.isResetingPassword) && !qmeHeader.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeHeader.cancelResetRegistration()">Home</button>
+            <button ng-show="(qmeHeader.isRegistering() || qmeHeader.isResetingPassword()) && !qmeHeader.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeHeader.cancelResetRegistration()">Home</button>
             <ul class="nav navbar-nav navbar-right" ng-show="qmeHeader.isSignedIn()">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

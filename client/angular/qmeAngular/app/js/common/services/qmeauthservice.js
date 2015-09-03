@@ -13,6 +13,10 @@
 
         var qmeAuthService = this;
 
+        qmeAuthService.registering = false;
+
+        qmeAuthService.resetting   = false;
+
         qmeAuthService.login = function (credentials) {
 
             var loginPromise = $q.defer();
@@ -100,5 +104,30 @@
         qmeAuthService.username = function(){
             return qmeUserSession.username();
         };
+
+        qmeAuthService.startRegistering = function(){
+            qmeAuthService.registering = true;
+        };
+
+        qmeAuthService.endRegistering = function(){
+            qmeAuthService.registering = false;
+        };
+
+        qmeAuthService.isRegistering = function(){
+            return qmeAuthService.registering;
+        };
+
+        qmeAuthService.startResetting = function(){
+            qmeAuthService.resetting  = true;
+        };
+
+        qmeAuthService.endResetting = function(){
+            qmeAuthService.resetting   = false;
+        };
+
+        qmeAuthService.isResetting = function(){
+            return qmeAuthService.resetting;
+        };
+
     }
 })();
