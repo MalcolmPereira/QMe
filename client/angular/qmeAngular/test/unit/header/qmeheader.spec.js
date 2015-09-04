@@ -20,24 +20,22 @@
             expect(ctrl).toBeDefined();
         });
 
-
-        describe('QMeHeader Defaults', function(){
-            it('Ensure user is not signed - signedIn is false', function() {
-                expect(ctrl.isSignedIn() ).toBe(false);
-            });
-            it('Ensure user is not registering - isRegistering  is false', function() {
-                expect(ctrl.isRegistering() ).toBe(false);
-            });
-            it('Ensure user is not resetting password  - isResetingPassword is false', function() {
-                expect(ctrl.isResetingPassword() ).toBe(false);
-            });
-            it('Ensure user email is empty - userEmail is empty ', function() {
-                expect(ctrl.userEmail ).toBe('');
-            });
-            it('Ensure user password is empty - userPassword is empty ', function() {
-                expect(ctrl.userPassword ).toBe('');
-            });
+        it('Ensure user is not signed - signedIn is false', function() {
+            expect(ctrl.isSignedIn() ).toBe(false);
         });
+        it('Ensure user is not registering - isRegistering  is false', function() {
+            expect(ctrl.isRegistering() ).toBe(false);
+        });
+        it('Ensure user is not resetting password  - isResetingPassword is false', function() {
+            expect(ctrl.isResetingPassword() ).toBe(false);
+        });
+        it('Ensure user email is empty - userEmail is empty ', function() {
+            expect(ctrl.userEmail ).toBe('');
+        });
+        it('Ensure user password is empty - userPassword is empty ', function() {
+            expect(ctrl.userPassword ).toBe('');
+        });
+
 
        it('Ensure user sign-on is valid ', function() {
            ctrl.userEmail = "testuser@test.com";
