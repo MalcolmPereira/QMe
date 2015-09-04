@@ -43,7 +43,6 @@
                     $state.go('home', {});
                 },
                 function(error){
-                    console.log("got error",error);
                     if(error && error.status && error.status == 400){
                         qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
 

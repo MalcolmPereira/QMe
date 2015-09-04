@@ -10,9 +10,11 @@
 
         beforeEach(inject(function($rootScope, $state, $controller, $httpBackend,_QME_CONSTANTS_) {
             scope = $rootScope.$new();
+            state = $state;
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
             ctrl  = $controller('qmeRegisterCtrl', {
+                $state: state,
                 $scope: scope,
                 userEmail:"",
                 userName:"",
@@ -43,16 +45,16 @@
         });
 
         it('Should check for non matching passwords ', function() {
-            ctrl.userPassword = 'password1'
-            ctrl.userPasswordConfirm = 'password2'
+            ctrl.userPassword = 'password1';
+            ctrl.userPasswordConfirm = 'password2';
             ctrl.validatePasswordFields();
             expect(scope.flash).toBeDefined();
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('Password do not match, please confirm password');
-            ctrl.userPassword = 'password1'
-            ctrl.userPasswordConfirm = 'password1'
+            ctrl.userPassword = 'password1';
+            ctrl.userPasswordConfirm = 'password1';
             ctrl.validatePasswordFields();
             ctrl.validatePasswordFields();
             expect(scope.flash).not.toBeDefined();
@@ -71,7 +73,7 @@
                 "userFirstName": ctrl.userFirstName,
                 "userLastName": ctrl.userLastName,
                 "userEmail": ctrl.userEmail
-            }
+            };
             httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(400,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
@@ -82,6 +84,97 @@
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('Oops.....Invalid request for user registration, please make sure all required fields are valid.');
 
+        });
+
+
+        it('Should handle 409 Error for duplicate data ', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userName = "someusername";
+            ctrl.userPassword = "somepassword";
+            ctrl.userPasswordConfirm= "somepassword";
+            ctrl.userFirstName = "firstname";
+            ctrl.userLastName = "lastname";
+            var user = {
+                "userName": ctrl.userName,
+                "userPassword": ctrl.userPassword ,
+                "userFirstName": ctrl.userFirstName,
+                "userLastName": ctrl.userLastName,
+                "userEmail": ctrl.userEmail
+            };
+            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(409,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.registerUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops...User with same email address already exists please enter valid unique email address.');
+        });
+
+        it('Should handle 500 Error for server error ', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userName = "someusername";
+            ctrl.userPassword = "somepassword";
+            ctrl.userPasswordConfirm= "somepassword";
+            ctrl.userFirstName = "firstname";
+            ctrl.userLastName = "lastname";
+            var user = {
+                "userName": ctrl.userName,
+                "userPassword": ctrl.userPassword ,
+                "userFirstName": ctrl.userFirstName,
+                "userLastName": ctrl.userLastName,
+                "userEmail": ctrl.userEmail
+            };
+            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.registerUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error registering new user, please retry in some time.');
+        });
+
+        it('Should handle valid user registration ', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userName = "someusername";
+            ctrl.userPassword = "somepassword";
+            ctrl.userPasswordConfirm= "somepassword";
+            ctrl.userFirstName = "firstname";
+            ctrl.userLastName = "lastname";
+            var user = {
+                "userName": ctrl.userName,
+                "userPassword": ctrl.userPassword ,
+                "userFirstName": ctrl.userFirstName,
+                "userLastName": ctrl.userLastName,
+                "userEmail": ctrl.userEmail
+            };
+            var registerdUser = {
+                "userName": "testadmin",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "Admin",
+                "userEmail": "test.admin@gmail.com",
+                "userId": 1,
+                "userRegisteredDate": "2015-28-05 13:35:29",
+                "userUpdateDate": "2015-28-05 13:35:29",
+                "updateUserID": 0,
+                "updateUserName": "",
+                "userRoles": ['ADMIN','USER']
+            };
+            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(200,registerdUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.registerUser();
+            httpBackend.flush();
+            expect(scope.flash).not.toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current.name).toBe('home');
+            expect(state.current.url).toBe('/home');
+            expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');
+            expect(state.current.controller).toBe('qmeHomeCtrl');
+            expect(state.current.controllerAs).toBe('qmeHome');
         });
 
     });
