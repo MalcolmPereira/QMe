@@ -47,6 +47,23 @@
             );
             return resetPasswordUserPromise.promise;
         };
-
+        qmeUserService.submitResetPassword = function(usertoken, useremail, userpassword){
+            var resetPasswordUserPromise = $q.defer();
+            var resetrequest = {
+                    token:usertoken,
+                    userName:useremail,
+                    userPassword:userpassword
+            };
+            $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"reset/resetpassword/"+useremail,{},{'resetpassword':{method:'PUT'}})
+                .resetpassword({}, resetrequest
+                ,function(res){
+                    resetPasswordUserPromise.resolve(res);
+                },
+                function(error){
+                    resetPasswordUserPromise.reject(error);
+                }
+            );
+            return resetPasswordUserPromise.promise;
+        };
     }
 })();

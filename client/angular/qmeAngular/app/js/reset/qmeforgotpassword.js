@@ -42,9 +42,19 @@
                         }
                     }
                 );
-            ;
         };
+
         qmeReset.submitResetPassword = function(){
+            qmeUserService
+                   .submitResetPassword($stateParams.token,qmeReset.userEmail,qmeReset.userPassword)
+                   .then(
+                        function (res){
+                            console.log("hello test all good");
+                        },
+                        function (error){
+                            console.log("hello test got error ",error);
+                        }
+                    );
             console.log("$stateParams.token",$stateParams.token);
         };
     }
