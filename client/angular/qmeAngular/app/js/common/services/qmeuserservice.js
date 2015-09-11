@@ -40,14 +40,12 @@
                 .reset({}, QME_CONSTANTS.reseturl
                 ,function(res){
                     resetPasswordUserPromise.resolve(res);
-
                 },
                 function(error){
                     resetPasswordUserPromise.reject(error);
                 }
             );
             return resetPasswordUserPromise.promise;
-
         };
 
     }

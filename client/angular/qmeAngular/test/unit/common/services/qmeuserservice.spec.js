@@ -137,5 +137,61 @@
             );
             httpBackend.flush();
         });
+
+        it('Should submit reset request with url for password reset ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            var useremail = "some-email"
+            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+useremail,qmeContants.reseturl).respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .resetPassword(useremail)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+                    }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should return user not found error 404 on password reset ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            var useremail = "some-email"
+            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+useremail,qmeContants.reseturl).respond(404,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .resetPassword(useremail)
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                    expect(error.status).toBe(404);
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should return internal server error 500  on password reset ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            var useremail = "some-email"
+            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+useremail,qmeContants.reseturl).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .resetPassword(useremail)
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                    expect(error.status).toBe(500);
+                }
+            );
+            httpBackend.flush();
+        });
     });
 })();

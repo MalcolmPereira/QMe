@@ -26,9 +26,24 @@
         };
 
         qmeReset.submitReset = function(){
-            qmeUserService.resetPassword(qmeReset.userEmail);
-        };
+            qmeUserService
+                .resetPassword(qmeReset.userEmail)
+                .then(
+                    function (res){
+                        qmeFlashService.Success("User password reset request submitted successfully, please validate your email address to complete reset.");
+                        $state.go('home', {});
+                    },
+                    function (error){
+                        if(error && error.status && error.status == 404){
+                            qmeFlashService.Error("Entered user email not found. Please ener valid existing user email.");
 
+                        }else{
+                            qmeFlashService.Error("Oops.....Error connecting to service for reset password, please retry in some time.");
+                        }
+                    }
+                );
+            ;
+        };
         qmeReset.submitResetPassword = function(){
             console.log("$stateParams.token",$stateParams.token);
         };
