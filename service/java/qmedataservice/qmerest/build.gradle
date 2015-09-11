@@ -1,7 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion       = '1.2.5.RELEASE'
-        springHateosVersion     = "0.17.0.RELEASE"
+        springHateosVersion     = "0.19.0.RELEASE"
         javaMailVersion		    = "1.5.3"
         jafVersion			    = "1.1.1"
         jsonpathVersion         = "2.0.0"
