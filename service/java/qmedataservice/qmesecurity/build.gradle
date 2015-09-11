@@ -26,8 +26,10 @@ dependencies {
         exclude module: "spring-tx"
         exclude module: "spring-context"
         exclude module: "spring-context-support"
+        exclude module: "spring-web"
+        exclude module: "spring-webmvc"
     }
-
+    compile("org.springframework:spring-web:${springVersion}")
 	compile("org.springframework:spring-test:${springVersion}")
 
 }
