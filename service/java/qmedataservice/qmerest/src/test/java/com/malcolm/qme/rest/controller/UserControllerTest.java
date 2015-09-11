@@ -6,10 +6,7 @@
  **/
 package com.malcolm.qme.rest.controller;
 
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
-import com.malcolm.qme.rest.exception.QMeResourceConflictException;
-import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.fixtures.QMeResetPasswordFixtures;
@@ -82,7 +79,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.list()).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(userService.list()).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/user")
@@ -134,7 +131,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.searchById(1L)).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(userService.searchById(1L)).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/user/1")
@@ -187,7 +184,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.searchByUser("suser1")).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(userService.searchByUser("suser1")).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/user/search/suser1")
@@ -240,7 +237,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/user/searchemail/SimpleUser1@User.com")
@@ -322,7 +319,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.save(anyObject(), eq((Long) null))).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(userService.save(anyObject(), eq((Long) null))).thenThrow(new QMeServerException("Some Error in the Service"));
 
         QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
 
@@ -387,7 +384,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.update(anyObject(), eq(1L), eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(userService.update(anyObject(), eq(1L), eq(1L))).thenThrow(new QMeServerException("Some Error in the Service"));
 
         QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
 
@@ -436,7 +433,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doThrow(new QMeResourceException("Some Error in the Service")).when(userService).delete(1L);
+        doThrow(new QMeServerException("Some Error in the Service")).when(userService).delete(1L);
 
         mockMvc.perform(
                 delete("/qme/user/1"))
@@ -483,7 +480,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeResourceException("Some Error in the Service "));
+        when(userService.searchByEmail("SimpleUser1@User.com")).thenThrow(new QMeServerException("Some Error in the Service "));
 
         mockMvc.perform(
                 get("/qme/user/reset/forgotusername/SimpleUser1@User.com")
@@ -549,7 +546,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doThrow(new QMeResourceException("some resource err")).when(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
+        doThrow(new QMeServerException("some resource err")).when(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
@@ -628,7 +625,7 @@ public class UserControllerTest extends QMeControllerTest {
 
         QMeResetPassword qMeResetPassword  = QMeResetPasswordFixtures.simpleQMeResetPassword();
 
-        when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenThrow(new QMeResourceException("Some Server Error "));
+        when(userService.resetPassword(any(String.class), any(QMeResetPassword.class))).thenThrow(new QMeServerException("Some Server Error "));
 
         mockMvc.perform(
                 put("/qme/user/reset/resetpassword/SimpleUser1@User.com")

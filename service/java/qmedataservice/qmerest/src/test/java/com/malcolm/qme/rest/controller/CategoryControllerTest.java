@@ -9,6 +9,7 @@ package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryFixtures;
@@ -79,7 +80,7 @@ public class CategoryControllerTest extends QMeControllerTest{
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
 
-        when(categoryService.list()).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(categoryService.list()).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/category")
@@ -119,7 +120,7 @@ public class CategoryControllerTest extends QMeControllerTest{
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
 
-        when(categoryService.searchByName("Simple Category 1")).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(categoryService.searchByName("Simple Category 1")).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/category/search/Simple Category 1")
@@ -169,7 +170,7 @@ public class CategoryControllerTest extends QMeControllerTest{
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
 
-        when(categoryService.searchById(1L)).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(categoryService.searchById(1L)).thenThrow(new QMeServerException("Some Error in the Service"));
 
         mockMvc.perform(
                 get("/qme/category/1")
@@ -208,7 +209,7 @@ public class CategoryControllerTest extends QMeControllerTest{
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
 
-        when(categoryService.save(anyObject(),eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(categoryService.save(anyObject(),eq(1L))).thenThrow(new QMeServerException("Some Error in the Service"));
 
         QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
@@ -272,7 +273,7 @@ public class CategoryControllerTest extends QMeControllerTest{
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
 
-        when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenThrow(new QMeResourceException("Some Error in the Service"));
+        when(categoryService.update(anyObject(),eq(1L),eq(1L))).thenThrow(new QMeServerException("Some Error in the Service"));
 
         QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
 
@@ -321,7 +322,7 @@ public class CategoryControllerTest extends QMeControllerTest{
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
 
-        doThrow(new QMeResourceException("Some Error in the Service")).when(categoryService).delete(1L);
+        doThrow(new QMeServerException("Some Error in the Service")).when(categoryService).delete(1L);
 
         mockMvc.perform(
                 delete("/qme/category/1"))
