@@ -65,12 +65,12 @@ public class UserPasswordResetSpringDataRepositoryTest {
         userPasswordResetEntity = userPasswordResetSpringDataRepo.save(userPasswordResetEntity);
         assertNotNull(userPasswordResetEntity);
         assertThat(userPasswordResetEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userPasswordResetEntity.getId().getResetToken(), equalTo(1L));
+        assertThat(userPasswordResetEntity.getId().getResetToken(), equalTo("somerandomtoken"));
 
         userPasswordResetEntity = userPasswordResetSpringDataRepo.findOne(userPasswordResetEntityId);
         assertNotNull(userPasswordResetEntity);
         assertThat(userPasswordResetEntity.getId().getUserId(), equalTo(userID));
-        assertThat(userPasswordResetEntity.getId().getResetToken(), equalTo(1L));
+        assertThat(userPasswordResetEntity.getId().getResetToken(), equalTo("somerandomtoken"));
 
         userPasswordResetSpringDataRepo.delete(userPasswordResetEntityId);
         userPasswordResetEntity = userPasswordResetSpringDataRepo.findOne(userPasswordResetEntityId);
