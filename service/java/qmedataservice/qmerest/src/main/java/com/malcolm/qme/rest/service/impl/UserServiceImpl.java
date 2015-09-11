@@ -197,7 +197,7 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeInvalidResourceDataException("Invalid user name provided");
             }
             userName = userName.trim();
-            if(!user.getUserName().equalsIgnoreCase(userName)){
+            if(!user.getUserEmail().equalsIgnoreCase(userName)){
                 throw new QMeInvalidResourceDataException("User name does not match for  "+userEmail);
             }
 
