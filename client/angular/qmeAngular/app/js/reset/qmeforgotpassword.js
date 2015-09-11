@@ -52,7 +52,14 @@
                             console.log("hello test all good");
                         },
                         function (error){
-                            console.log("hello test got error ",error);
+                            if(error && error.status && error.status == 404) {
+                                qmeFlashService.Error("Entered user email not found. Please ener valid existing user email.");
+                            }else if(error && error.status && error.status == 400){
+                                 qmeFlashService.Error("Reset token invalid, Please ener valid reset token.");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error connecting to service for reset password, please retry in some time.");
+                            }
                         }
                     );
             console.log("$stateParams.token",$stateParams.token);
