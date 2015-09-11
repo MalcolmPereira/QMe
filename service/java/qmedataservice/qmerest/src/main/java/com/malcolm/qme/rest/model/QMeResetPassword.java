@@ -14,7 +14,7 @@ public class QMeResetPassword {
      /**
      * Reset Token
      */
-    private Long token;
+    private String token;
 
     /**
      * User Name
@@ -30,7 +30,7 @@ public class QMeResetPassword {
      * Get Token
      * @return User Token
      */
-    public Long getToken() {
+    public String getToken() {
         return token;
     }
 
@@ -38,7 +38,7 @@ public class QMeResetPassword {
      * Set User Token
      * @param token User Token
      */
-    public void setToken(Long token) {
+    public void setToken(String token) {
         this.token = token;
     }
 

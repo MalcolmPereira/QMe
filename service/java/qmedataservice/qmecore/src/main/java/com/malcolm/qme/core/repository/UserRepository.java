@@ -38,10 +38,9 @@ public interface UserRepository extends QMeRepository<User, Long> {
      *
      * @param resetToken Unique Generated Reset Token
      * @param userId User ID for whom password reset is requested
-     * @return Reset Token
      * @throws QMeException
      */
-     void addResetToken(Long resetToken, Long userId) throws QMeException;
+     void addResetToken(String resetToken, Long userId) throws QMeException;
 
     /**
      * Get Create Time for Password Reset Token
@@ -50,7 +49,7 @@ public interface UserRepository extends QMeRepository<User, Long> {
      * @return Reset Token Created Time
      * @throws QMeException
      */
-    LocalDateTime getResetTokenCreateTime(Long resetToken, Long userId) throws QMeException;
+    LocalDateTime getResetTokenCreateTime(String resetToken, Long userId) throws QMeException;
 
     /**
      * Delete Reset Token
@@ -59,7 +58,7 @@ public interface UserRepository extends QMeRepository<User, Long> {
      * @param userId User ID for whom password reset is requested
      * @throws QMeException
      */
-    void deleteResetToken(Long resetToken, Long userId) throws QMeException;
+    void deleteResetToken(String resetToken, Long userId) throws QMeException;
 
     /**
      * Reset User Password for password reset token
@@ -70,5 +69,5 @@ public interface UserRepository extends QMeRepository<User, Long> {
      * @return User
      * @throws QMeException
      */
-    User resetUserPassword(Long resetToken, Long userId, String userPassword) throws QMeException;
+    User resetUserPassword(String resetToken, Long userId, String userPassword) throws QMeException;
 }

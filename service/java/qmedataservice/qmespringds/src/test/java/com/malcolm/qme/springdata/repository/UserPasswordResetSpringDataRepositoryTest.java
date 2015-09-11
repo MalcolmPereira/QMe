@@ -58,7 +58,7 @@ public class UserPasswordResetSpringDataRepositoryTest {
         UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity();
         UserPasswordResetEntityId userPasswordResetEntityId = new UserPasswordResetEntityId();
         userPasswordResetEntityId.setUserId(userID);
-        userPasswordResetEntityId.setResetToken(1L);
+        userPasswordResetEntityId.setResetToken("somerandomtoken");
         userPasswordResetEntity.setId(userPasswordResetEntityId);
         userPasswordResetEntity.setCreatedTimestamp(LocalDateTime.now());
 

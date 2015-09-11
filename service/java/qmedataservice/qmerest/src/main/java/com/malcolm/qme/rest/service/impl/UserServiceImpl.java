@@ -169,7 +169,7 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeResourceNotFoundException("User with User email "+userEmail+" not found");
             }
 
-            Long resetToken = atomicTokenGenerator.generateUniqueResetToken();
+            String resetToken = atomicTokenGenerator.generateUniqueResetToken();
             userRepo.addResetToken(resetToken,user.getUserID());
 
             sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url + "?token=" + resetToken);
@@ -201,7 +201,7 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeInvalidResourceDataException("User name does not match for  "+userEmail);
             }
 
-            Long resetToken = qMeResetPassword.getToken();
+            String resetToken = qMeResetPassword.getToken();
 
             LocalDateTime tokenCreatedTime = userRepo.getResetTokenCreateTime(resetToken, user.getUserID());
             if(tokenCreatedTime == null){
@@ -366,7 +366,7 @@ public final class UserServiceImpl implements UserService {
      * @param url URL for password reset form when users clicks on the email link
      * @throws QMeResourceException
      */
-    private void sendEmail(String userName, String userEmail, Long resetToken, String url)  throws QMeServerException {
+    private void sendEmail(String userName, String userEmail, String resetToken, String url)  throws QMeServerException {
         if(javaMailSender.getUsername() == null || javaMailSender.getUsername().trim().length() == 0 ||
                 javaMailSender.getPassword() == null || javaMailSender.getPassword().trim().length() == 0){
             throw new QMeServerException("System Configuration Error, Please configue mail server details correctly");

@@ -22,7 +22,7 @@ public class QMeResetPasswordFixtures extends QMeResourceFixture<QMeResetPasswor
      */
     public static QMeResetPassword simpleQMeResetPassword(){
         QMeResetPassword qMeResetPassword = new QMeResetPassword();
-        qMeResetPassword.setToken(1L);
+        qMeResetPassword.setToken("somerandomtoken");
         qMeResetPassword.setUserName("suser1");
         qMeResetPassword.setUserPassword("somepassword");
         return qMeResetPassword;

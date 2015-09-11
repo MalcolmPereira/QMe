@@ -199,14 +199,14 @@ public class UserRepositoryImplTest {
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
-        userRepo.addResetToken(1L, userID);
+        userRepo.addResetToken("somerandomtoken", userID);
 
-        LocalDateTime tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        LocalDateTime tokenTime = userRepo.getResetTokenCreateTime("somerandomtoken", userID);
         assertNotNull(tokenTime);
 
-        userRepo.deleteResetToken(1L, userID);
+        userRepo.deleteResetToken("somerandomtoken", userID);
 
-        tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        tokenTime = userRepo.getResetTokenCreateTime("somerandomtoken", userID);
         assertNull(tokenTime);
 
         userRepo.delete(userID);
@@ -224,17 +224,17 @@ public class UserRepositoryImplTest {
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
-        userRepo.addResetToken(1L, userID);
+        userRepo.addResetToken("somerandomtoken", userID);
 
-        LocalDateTime tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        LocalDateTime tokenTime = userRepo.getResetTokenCreateTime("somerandomtoken", userID);
         assertNotNull(tokenTime);
 
-        user =  userRepo.resetUserPassword(1L, userID,"SomeNew");
+        user =  userRepo.resetUserPassword("somerandomtoken", userID,"SomeNew");
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(userID));
         assertThat(user.getUserPassword(), equalTo("SomeNew"));
 
-        tokenTime = userRepo.getResetTokenCreateTime(1L, userID);
+        tokenTime = userRepo.getResetTokenCreateTime("somerandomtoken", userID);
         assertNull(tokenTime);
 
         userRepo.delete(userID);

@@ -184,8 +184,8 @@ public class UserServiceImplTest {
     @Test
     public void testForgotPassword() throws QMeResourceException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
-        when(atomicTokenGenerator.generateUniqueResetToken()).thenReturn(1L);
-        doNothing().when(userRepo).addResetToken(1L, 1L);
+        when(atomicTokenGenerator.generateUniqueResetToken()).thenReturn("somerandomtoken");
+        doNothing().when(userRepo).addResetToken("somerandomtoken", 1L);
 
         when(javaMailSender.getUsername()).thenReturn("someusername");
         when(javaMailSender.getPassword()).thenReturn("somepassword");
@@ -201,14 +201,14 @@ public class UserServiceImplTest {
     public void testResetPassword() throws QMeResourceException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
 
-        when(userRepo.getResetTokenCreateTime(1L, 1L)).thenReturn(LocalDateTime.now());
+        when(userRepo.getResetTokenCreateTime("somerandomtoken", 1L)).thenReturn(LocalDateTime.now());
 
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
 
-        when(userRepo.resetUserPassword(1L, 1L,"someencodedvalue")).thenReturn(UserFixtures.simpleUser());
+        when(userRepo.resetUserPassword("somerandomtoken", 1L,"someencodedvalue")).thenReturn(UserFixtures.simpleUser());
 
         QMeResetPassword qMeResetPassword = new QMeResetPassword();
-        qMeResetPassword.setToken(1L);
+        qMeResetPassword.setToken("somerandomtoken");
         qMeResetPassword.setUserName("suser1");
         qMeResetPassword.setUserPassword("somepssword");
 

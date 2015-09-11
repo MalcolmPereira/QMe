@@ -21,12 +21,13 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.crypto.codec.Hex;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author malcolm
@@ -42,6 +43,10 @@ public class RestConfig {
      */
     private static Logger LOG = LoggerFactory.getLogger(RestConfig.class);
 
+    /**
+     * Token Key Length
+     */
+    private static final int TOKEN_KEY_LENGTH = 32;
 
     @Autowired
     private Environment environment;
@@ -58,29 +63,10 @@ public class RestConfig {
 
     @Bean
     public AtomicTokenGenerator atomicTokenGenerator() {
-
         return new AtomicTokenGenerator(){
-
-            private final AtomicLong LAST_TIME_MS = new AtomicLong();
-
             @Override
-            public Long generateUniqueResetToken() {
-
-                Long now = System.currentTimeMillis();
-
-                while(true) {
-
-                    Long lastTime = LAST_TIME_MS.get();
-
-                    if (lastTime >= now) {
-                        now = lastTime + 1;
-                    }
-
-                    if (LAST_TIME_MS.compareAndSet(lastTime, now)) {
-                        LOG.debug("Returning reset token: "+now);
-                        return now;
-                    }
-                }
+            public String generateUniqueResetToken() {
+                return new String(Hex.encode(KeyGenerators.secureRandom(TOKEN_KEY_LENGTH).generateKey()));
             }
         };
     }

@@ -27,7 +27,7 @@ public class UserPasswordResetEntityId implements java.io.Serializable {
      * Reset Token
      */
     @Column(name = "RESET_TOKEN", unique = true, nullable = false)
-	private Long resetToken;
+	private String resetToken;
 
     /**
      * Public Constructor
@@ -41,7 +41,7 @@ public class UserPasswordResetEntityId implements java.io.Serializable {
      * @param userId User Id
      * @param resetToken Reset Token
      */
-	public UserPasswordResetEntityId(Long userId, Long resetToken) {
+	public UserPasswordResetEntityId(Long userId, String resetToken) {
 		this.userId = userId;
 		this.resetToken = resetToken;
 	}
@@ -66,7 +66,7 @@ public class UserPasswordResetEntityId implements java.io.Serializable {
      * Get Reset Token
      * @return Reset Token
      */
-	public Long getResetToken() {
+	public String getResetToken() {
 		return this.resetToken;
 	}
 
@@ -74,7 +74,7 @@ public class UserPasswordResetEntityId implements java.io.Serializable {
      * Set Reset Token
      * @param resetToken Reset Token
      */
-	public void setResetToken(Long resetToken) {
+	public void setResetToken(String resetToken) {
 		this.resetToken = resetToken;
 	}
 

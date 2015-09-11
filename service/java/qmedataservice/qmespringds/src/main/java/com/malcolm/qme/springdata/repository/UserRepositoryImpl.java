@@ -124,7 +124,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void addResetToken(Long resetToken, Long userId) throws QMeException{
+	public void addResetToken(String resetToken, Long userId) throws QMeException{
 		try{
 			List<UserPasswordResetEntity> resetTokenList = userPasswordResetDataRepo.findByUserId(userId);
 			for (UserPasswordResetEntity userPasswordResetEntity : resetTokenList){
@@ -145,7 +145,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public LocalDateTime getResetTokenCreateTime(Long resetToken, Long userId) throws QMeException{
+	public LocalDateTime getResetTokenCreateTime(String resetToken, Long userId) throws QMeException{
 		try{
 			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
 			id.setUserId(userId);
@@ -161,7 +161,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void deleteResetToken(Long resetToken, Long userId) throws QMeException{
+	public void deleteResetToken(String resetToken, Long userId) throws QMeException{
 		try{
 			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
 			id.setUserId(userId);
@@ -174,7 +174,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public User resetUserPassword(Long resetToken, Long userId, String userPassword) throws QMeException {
+	public User resetUserPassword(String resetToken, Long userId, String userPassword) throws QMeException {
 
 		UserPasswordResetEntityId id = new UserPasswordResetEntityId();
 		id.setUserId(userId);

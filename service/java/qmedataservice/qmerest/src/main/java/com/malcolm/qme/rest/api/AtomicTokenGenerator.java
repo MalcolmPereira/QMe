@@ -14,5 +14,5 @@ public interface AtomicTokenGenerator {
      * Generate Password Reset Token
      * @return Long
      */
-    Long generateUniqueResetToken();
+    String generateUniqueResetToken();
 }
