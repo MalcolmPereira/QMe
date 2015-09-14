@@ -73,37 +73,34 @@ public class RestConfig {
 
     @Bean
     public JavaMailSenderImpl javaMailSender(){
-        JavaMailSenderImpl sender = new JavaMailSenderImpl();
-
-        String userName = environment.getProperty(MAIL_SMTP_USERNAME);
+        String userName = environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
         if(userName == null || userName.trim().length() == 0){
             LOG.debug("Getting User Name from System Properties ");
-            userName = environment.getProperty(MAIL_SMTP_USERNAME_SYS);
+            userName = environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME_SYS);
         }
-        String passWord = environment.getProperty(MAIL_SMTP_PASSWORD);
+        String passWord = environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD);
         if(passWord == null || passWord.trim().length() == 0){
             LOG.debug("Getting User Password from System Properties ");
-            passWord = environment.getProperty(MAIL_SMTP_PASSWORD_SYS);
+            passWord = environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD_SYS);
         }
-        sender.setUsername(userName);
-        sender.setPassword(passWord);
-
-        String authTypeStr = environment.getProperty(MAIL_SMTP_AUTH_TYPE);
+        String authTypeStr = environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH_TYPE);
         if(authTypeStr == null || authTypeStr.trim().length() == 0){
-            authTypeStr = SMPT_AUTH_TYPE.TLS.getAuthType();
+            authTypeStr = QMeMailSender.SMPT_AUTH_TYPE.TLS.getAuthType();
         }
-        SMPT_AUTH_TYPE authType = SMPT_AUTH_TYPE.fromString(authTypeStr);
+        QMeMailSender.SMPT_AUTH_TYPE authType = QMeMailSender.SMPT_AUTH_TYPE.fromString(authTypeStr);
         if(authType == null){
-            authType = SMPT_AUTH_TYPE.TLS;
+            authType = QMeMailSender.SMPT_AUTH_TYPE.TLS;
         }
         LOG.debug("Got Mail auth type "+authType);
-        if(SMPT_AUTH_TYPE.TLS == authType){
-            sender.setJavaMailProperties(mailTLS());
-        }else if(SMPT_AUTH_TYPE.SSL == authType){
-            sender.setJavaMailProperties(mailSSL());
+        Properties mailProperties = null;
+        if(QMeMailSender.SMPT_AUTH_TYPE.TLS == authType){
+            mailProperties = mailTLS();
+        }else if(QMeMailSender.SMPT_AUTH_TYPE.SSL == authType){
+            mailProperties = mailSSL();
         }else{
-            sender.setJavaMailProperties(mailTLS());
+            mailProperties = mailTLS();
         }
+        JavaMailSenderImpl sender = new QMeMailSender(userName,passWord,mailProperties);
         return sender;
     }
 
@@ -131,10 +128,10 @@ public class RestConfig {
         return new Properties() {
             private static final long serialVersionUID = 6067241928722086747L;
             {
-                setProperty(MAIL_SMTP_AUTH,environment.getProperty(MAIL_SMTP_AUTH));
-                setProperty(MAIL_SMTP_HOST,environment.getProperty(MAIL_SMTP_HOST));
-                setProperty(MAIL_SMTP_PORT,environment.getProperty(MAIL_SMTP_PORT_TLS));
-                setProperty(MAIL_SMTP_START_TLS,environment.getProperty(MAIL_SMTP_START_TLS));
+                setProperty(QMeMailSender.MAIL_SMTP_AUTH,environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH));
+                setProperty(QMeMailSender.MAIL_SMTP_HOST,environment.getProperty(QMeMailSender.MAIL_SMTP_HOST));
+                setProperty(QMeMailSender.MAIL_SMTP_PORT,environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS));
+                setProperty(QMeMailSender.MAIL_SMTP_START_TLS,environment.getProperty(QMeMailSender.MAIL_SMTP_START_TLS));
             }
         };
     }
@@ -148,68 +145,12 @@ public class RestConfig {
         return new Properties() {
             private static final long serialVersionUID = 6067341928721086747L;
             {
-                setProperty(MAIL_SMTP_AUTH,environment.getProperty(MAIL_SMTP_AUTH));
-                setProperty(MAIL_SMTP_HOST,environment.getProperty(MAIL_SMTP_HOST));
-                setProperty(MAIL_SMTP_PORT,environment.getProperty(MAIL_SMTP_PORT_SSL));
-                setProperty(MAIL_SMTP_SSL_SOCKET_CLASS,environment.getProperty(MAIL_SMTP_SSL_SOCKET_CLASS));
-                setProperty(MAIL_SMTP_SSL_SOCKET_PORT,environment.getProperty(MAIL_SMTP_SSL_SOCKET_PORT));
+                setProperty(QMeMailSender.MAIL_SMTP_AUTH,environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH));
+                setProperty(QMeMailSender.MAIL_SMTP_HOST,environment.getProperty(QMeMailSender.MAIL_SMTP_HOST));
+                setProperty(QMeMailSender.MAIL_SMTP_PORT,environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL));
+                setProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS,environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS));
+                setProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT,environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT));
             }
         };
-    }
-
-    /**
-     * Mail Properties Parameters
-     */
-    private static final String MAIL_SMTP_USERNAME = "mail.smtp.username";
-    private static final String MAIL_SMTP_PASSWORD = "mail.smtp.password";
-    private static final String MAIL_SMTP_USERNAME_SYS = "mail.smtp.username.sys";
-    private static final String MAIL_SMTP_PASSWORD_SYS = "mail.smtp.password.sys";
-    private static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
-    private static final String MAIL_SMTP_AUTH_TYPE = "mail.smtp.auth.type";
-    private static final String MAIL_SMTP_HOST = "mail.smtp.host";
-    private static final String MAIL_SMTP_PORT = "mail.smtp.port";
-    private static final String MAIL_SMTP_PORT_TLS = "mail.smtp.port.tls";
-    private static final String MAIL_SMTP_START_TLS = "mail.smtp.starttls.enable";
-    private static final String MAIL_SMTP_PORT_SSL = "mail.smtp.port.ssl";
-    private static final String MAIL_SMTP_SSL_SOCKET_PORT = "mail.smtp.socketFactory.port";
-    private static final String MAIL_SMTP_SSL_SOCKET_CLASS = "mail.smtp.socketFactory.class";
-
-    enum SMPT_AUTH_TYPE {
-        TLS("TLS"),
-        SSL("SSL")
-        ;
-        private String authType;
-
-        /**
-         * Enum Constructor
-         * @param authType
-         */
-        SMPT_AUTH_TYPE(String authType){
-            this.authType = authType;
-        }
-
-        /**
-         * Get Auth Type
-         * @return Auth Type String
-         */
-        public String getAuthType(){
-            return authType;
-        }
-
-        /**
-         * Get Auth Type Enum
-         * @param text
-         * @return
-         */
-        public static SMPT_AUTH_TYPE fromString(String text) {
-            if (text != null) {
-                for (SMPT_AUTH_TYPE authType : SMPT_AUTH_TYPE.values()) {
-                    if (text.equalsIgnoreCase(authType.getAuthType())) {
-                        return authType;
-                    }
-                }
-            }
-            return null;
-        }
     }
 }

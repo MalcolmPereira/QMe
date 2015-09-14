@@ -373,6 +373,8 @@ public final class UserServiceImpl implements UserService {
         }
         try {
 
+            url = url+"/"+resetToken;
+
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setFrom(javaMailSender.getUsername());

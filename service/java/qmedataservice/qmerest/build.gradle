@@ -2,8 +2,7 @@ buildscript {
 	ext {
 		springBootVersion       = '1.2.5.RELEASE'
         springHateosVersion     = "0.19.0.RELEASE"
-        javaMailVersion		    = "1.5.3"
-        jafVersion			    = "1.1.1"
+        javaMailVersion		    = "1.5.4"
         jsonpathVersion         = "2.0.0"
 	}
     dependencies {
@@ -67,11 +66,7 @@ dependencies {
         exclude module: "spring-webmvc"
     }
 
-
-	compile("javax.mail:javax.mail-api:${javaMailVersion}")
 	compile("com.sun.mail:javax.mail:${javaMailVersion}")
-	compile("javax.activation:activation:${jafVersion}")
-
     testCompile("com.jayway.jsonpath:json-path:${jsonpathVersion}")
 }
 
