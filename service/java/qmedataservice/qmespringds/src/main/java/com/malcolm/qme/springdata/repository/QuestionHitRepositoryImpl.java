@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-@Repository("QuestionHitRepository")
+@Repository(value = "QuestionHitRepository")
 public class QuestionHitRepositoryImpl implements QuestionHitRepository {
 
     /**

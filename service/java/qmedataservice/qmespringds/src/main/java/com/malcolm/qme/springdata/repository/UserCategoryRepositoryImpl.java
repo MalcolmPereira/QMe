@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-@Repository("UserCategoryRepository")
+@Repository(value = "UserCategoryRepository")
 public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 	
 	 /**

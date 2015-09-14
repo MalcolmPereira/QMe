@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-@Repository("AnswerOptionRepository")
+@Repository(value = "AnswerOptionRepository")
 public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 
 	/**

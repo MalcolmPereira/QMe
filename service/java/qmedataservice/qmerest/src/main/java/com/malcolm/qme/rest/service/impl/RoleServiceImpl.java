@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public final class RoleServiceImpl implements RoleService {
 
     @Autowired
-    @Qualifier("RoleRepository")
+    @Qualifier(value = "RoleRepository")
     private RoleRepository roleRepo;
 
     @Override

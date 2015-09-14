@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-@Repository("UserRoleRepository")
+@Repository(value = "UserRoleRepository")
 public class UserRoleRepositoryImpl implements UserRoleRepository {
 
 	/**

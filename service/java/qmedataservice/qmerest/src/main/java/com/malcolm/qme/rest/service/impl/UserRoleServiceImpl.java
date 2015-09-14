@@ -32,15 +32,15 @@ import java.util.stream.Collectors;
 public final class UserRoleServiceImpl implements UserRoleService {
 
     @Autowired
-    @Qualifier("UserRoleRepository")
+    @Qualifier(value = "UserRoleRepository")
     private UserRoleRepository userRoleRepo;
 
     @Autowired
-    @Qualifier("RoleRepository")
+    @Qualifier(value = "RoleRepository")
     private RoleRepository roleRepo;
 
     @Autowired
-    @Qualifier("UserRepository")
+    @Qualifier(value = "UserRepository")
     private UserRepository userRepo;
 
     @Override

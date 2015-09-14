@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-@Repository("UserRepository")
+@Repository(value = "UserRepository")
 public class UserRepositoryImpl implements UserRepository {
 	/**
 	 * Spring Data UserEntity Repository

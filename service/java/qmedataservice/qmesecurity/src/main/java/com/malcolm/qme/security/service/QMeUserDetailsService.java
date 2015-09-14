@@ -31,14 +31,14 @@ public class QMeUserDetailsService implements UserDetailsService {
      * Spring Data UserEntity Repository
      */
     @Autowired
-    @Qualifier("UserRepository")
+    @Qualifier(value = "UserRepository")
     private UserRepository userRepo;
 
     /**
      * Spring Data UserEntity Repository
      */
     @Autowired
-    @Qualifier("UserRoleRepository")
+    @Qualifier(value = "UserRoleRepository")
     private UserRoleRepository userRoleRepository;
 
     /**

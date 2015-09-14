@@ -20,7 +20,7 @@ import java.util.List;
  * @author malcolm
  *
  */
-@Repository("MediaTypeRepository")
+@Repository(value = "MediaTypeRepository")
 public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 
 	/**

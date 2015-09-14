@@ -40,11 +40,11 @@ import java.util.stream.Collectors;
 public final class UserServiceImpl implements UserService {
 
     @Autowired
-    @Qualifier("UserRepository")
+    @Qualifier(value = "UserRepository")
     private UserRepository userRepo;
 
     @Autowired
-    @Qualifier("UserRoleRepository")
+    @Qualifier(value = "UserRoleRepository")
     private UserRoleRepository userRoleRepo;
 
     @Autowired

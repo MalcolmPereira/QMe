@@ -32,7 +32,7 @@ public final class CategoryServiceImpl implements CategoryService {
      * QMeCategory Repository
      */
     @Autowired
-    @Qualifier("CategoryRepository")
+    @Qualifier(value = "CategoryRepository")
     private CategoryRepository categoryRepo;
 
 

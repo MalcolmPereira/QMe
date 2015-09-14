@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-@Repository("UserQuizGameRepository")
+@Repository(value = "UserQuizGameRepository")
 public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
     /**
      * Spring Data UserEntity Repository
