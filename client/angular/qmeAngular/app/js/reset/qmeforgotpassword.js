@@ -30,8 +30,8 @@
                 .resetPassword(qmeReset.userEmail)
                 .then(
                     function (res){
-                        qmeFlashService.Success("User password reset request submitted successfully, please validate your email address to complete reset.");
                         $state.go('home', {});
+                        qmeFlashService.Success("User password reset request submitted successfully, please validate your email address to complete reset.");
                     },
                     function (error){
                         if(error && error.status && error.status == 404){
@@ -46,14 +46,15 @@
 
         qmeReset.submitResetPassword = function(){
             qmeUserService
-                   .submitResetPassword($stateParams.token,qmeReset.userEmail,qmeReset.userPassword)
+                   .submitResetPassword($stateParams.token,$stateParams.username,qmeReset.userEmail,qmeReset.userPassword)
                    .then(
                         function (res){
-                            console.log("hello test all good");
+                            $state.go('home', {});
                         },
                         function (error){
                             if(error && error.status && error.status == 404) {
                                 qmeFlashService.Error("Entered user email not found. Please ener valid existing user email.");
+
                             }else if(error && error.status && error.status == 400){
                                  qmeFlashService.Error("Reset token invalid, Please ener valid reset token.");
 
@@ -63,6 +64,7 @@
                         }
                     );
             console.log("$stateParams.token",$stateParams.token);
+            console.log("$stateParams.username",$stateParams.username);
         };
     }
 
