@@ -30,9 +30,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @ComponentScan({"com.malcolm.qme.security"})
 public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String QME_OPTIONS = "/qme/**";
+
     private static final String REGISTER_PATH = "/qme/user/register";
 
-    private static final String RESET_PATH = "/qme/user/reset/**";
+    private static final String RESET_FORGOT_PASSWORD_PATH = "/qme/user/reset/forgotpassword/**";
+
+    private static final String RESET_RESET_PASSWORD_PATH = "/qme/user/reset/resetpassword/**";
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -55,10 +59,11 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(REGISTER_PATH).permitAll()
-                .antMatchers(RESET_PATH).permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/qme/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/qme/user/register/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/qme/user/reset/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, RESET_FORGOT_PASSWORD_PATH).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, RESET_RESET_PASSWORD_PATH).permitAll()
+                .antMatchers(HttpMethod.PUT, RESET_FORGOT_PASSWORD_PATH).permitAll()
+                .antMatchers(HttpMethod.PUT, RESET_RESET_PASSWORD_PATH).permitAll()
                 .anyRequest().authenticated().and().httpBasic()
                 .and().logout().permitAll()
 
