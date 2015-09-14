@@ -57,6 +57,8 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(REGISTER_PATH).permitAll()
                 .antMatchers(RESET_PATH).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/qme/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/qme/user/register/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/qme/user/reset/**").permitAll()
                 .anyRequest().authenticated().and().httpBasic()
                 .and().logout().permitAll()
 

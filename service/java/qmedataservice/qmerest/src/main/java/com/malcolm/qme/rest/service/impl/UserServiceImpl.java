@@ -56,6 +56,11 @@ public final class UserServiceImpl implements UserService {
     @Autowired
     private JavaMailSenderImpl javaMailSender;
 
+    /**
+     * Forward Slash
+     */
+    private static final String FORWARD_SLASH = "/";
+
     @Override
     public QMeUserDetail searchByUser(String userName) throws QMeResourceNotFoundException,QMeServerException {
         try{
@@ -172,7 +177,7 @@ public final class UserServiceImpl implements UserService {
             String resetToken = atomicTokenGenerator.generateUniqueResetToken();
             userRepo.addResetToken(resetToken,user.getUserID());
 
-            sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url + "?token=" + resetToken);
+            sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url);
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
@@ -372,8 +377,11 @@ public final class UserServiceImpl implements UserService {
             throw new QMeServerException("System Configuration Error, Please configue mail server details correctly");
         }
         try {
-
-            url = url+"/"+resetToken;
+            if(url.endsWith(FORWARD_SLASH)){
+                url = url+resetToken+FORWARD_SLASH+userName;
+            }else{
+                url = url+FORWARD_SLASH+resetToken+FORWARD_SLASH+userName;
+            }
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
