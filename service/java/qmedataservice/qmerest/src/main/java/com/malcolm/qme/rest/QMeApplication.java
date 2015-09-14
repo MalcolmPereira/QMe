@@ -11,11 +11,13 @@ import com.malcolm.qme.rest.config.RestConfig;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 /**
  * @author malcolm
  */
+@SpringBootApplication
 @EnableAutoConfiguration
 @Import({RestConfig.class,QMeSpringDataJPAConfig.class})
 public class QMeApplication {
