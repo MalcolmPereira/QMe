@@ -495,7 +495,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doNothing().when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+        when(userService.forgotPassword("SimpleUser1@User.com", "someurl")).thenReturn(true);
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")

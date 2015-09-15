@@ -57,7 +57,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    void forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
+    boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Reset User Password

@@ -157,7 +157,7 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
+    public boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
         try{
             if(url == null || url.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid application url redirect parameter ");
@@ -178,6 +178,8 @@ public final class UserServiceImpl implements UserService {
             userRepo.addResetToken(resetToken,user.getUserID());
 
             sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url);
+
+            return true;
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
