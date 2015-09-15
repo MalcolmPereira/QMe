@@ -102,7 +102,7 @@ public interface UserAPI extends QMeAPI {
      * @return QMe User
      * @throws QMeResourceException
      */
-    public QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceException;
+    QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceException;
 
     /**
      * Update QMe User
@@ -110,14 +110,14 @@ public interface UserAPI extends QMeAPI {
      * @param user QMe User
      * @return QMe User
      */
-    public QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUser user) throws QMeResourceException;
+    QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUser user) throws QMeResourceException;
 
     /**
      * Delete QMe User
      *
      * @param userId User Is
      */
-    void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+    Boolean delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
 
     /**
      * Forgot User Name
@@ -125,7 +125,7 @@ public interface UserAPI extends QMeAPI {
      * @param userEmail User Email
      * @return QMeUser User Details
      */
-    public String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+    String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
 
     /**
      * Forgot Passsword
@@ -134,7 +134,7 @@ public interface UserAPI extends QMeAPI {
      * @param url Reset URL that will be sent to user email
      * @throws QMeResourceException
      */
-    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException;
+    Boolean forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException;
 
    /**
      * Reset Password
@@ -143,6 +143,6 @@ public interface UserAPI extends QMeAPI {
      * @param userpassword User Password reset token
      * @throws QMeResourceException
      */
-    public QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException;
+    QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException;
 
 }

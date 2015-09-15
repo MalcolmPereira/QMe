@@ -97,8 +97,9 @@ public class UserController implements UserAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
+    public @ResponseBody Boolean delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
         userService.delete(userId);
+        return Boolean.TRUE;
     }
 
 
@@ -113,8 +114,9 @@ public class UserController implements UserAPI {
     @RequestMapping(value=FORGOT_PASSWORD_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
+    public @ResponseBody Boolean forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
         userService.forgotPassword(userEmail,url);
+        return Boolean.TRUE;
     }
 
     @RequestMapping(value=RESET_PASSWORD_PATH,method=RequestMethod.PUT)

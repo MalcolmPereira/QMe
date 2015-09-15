@@ -76,6 +76,6 @@ public interface CategoryAPI extends QMeAPI {
      *
      * @param categoryId Category ID
      */
-    void delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
+    Boolean delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
 
 }
