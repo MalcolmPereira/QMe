@@ -7,13 +7,6 @@
 
 package com.malcolm.qme.security.config;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,15 +19,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.savedrequest.NullRequestCache;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -44,14 +42,45 @@ import java.io.IOException;
 @Configuration
 @ComponentScan({"com.malcolm.qme.security"})
 public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    /**
+     * QMe Options for Pre-Flight Requests
+     */
     private static final String QME_OPTIONS = "/qme/**";
 
+    /**
+     * Register Path
+     */
     private static final String REGISTER_PATH = "/qme/user/register";
 
+    /**
+     * Forgot Password Path
+     */
     private static final String RESET_FORGOT_PASSWORD_PATH = "/qme/user/reset/forgotpassword/**";
 
+    /**
+     * Reset Password Path
+     */
     private static final String RESET_RESET_PASSWORD_PATH = "/qme/user/reset/resetpassword/**";
+
+    /**
+     * QMe Logout
+     */
+    private static final String QME_LOGOUT = "/qme/logout";
+
+    /**
+     * QMe CRF Token
+     */
+    private static final String QME_CRF_TOKEN_NAME = "XSRF-TOKEN";
+
+    /**
+     * QMe CRF Token Header Name
+     */
+    private static final String QME_CRF_TOKEN_HEADER_NAME = "X-XSRF-TOKEN";
+
+    /**
+     * QMe CSRF Token Path
+     */
+    private static final String QME_TOKEN_PATH = "/qme/";
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -68,57 +97,46 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
-        //http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher(REGISTER_PATH)).disable();
-        //http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher(RESET_FORGOT_PASSWORD_PATH)).disable();
-        //http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher(RESET_RESET_PASSWORD_PATH)).disable();
-
         http
             .httpBasic()
-            .and()
-            .authorizeRequests()
+        .and()
+            .logout()
+                .logoutUrl(QME_LOGOUT)
+                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+                .invalidateHttpSession(true)
+                .deleteCookies(QME_CRF_TOKEN_NAME)
+         .and()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
-                .antMatchers(HttpMethod.PUT, QME_OPTIONS).permitAll()
-                .antMatchers(REGISTER_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH).permitAll().anyRequest()
+                .antMatchers(REGISTER_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
                 .authenticated()
-                .and()
+         .and()
                 .csrf()
-                .ignoringAntMatchers(REGISTER_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH)
-                .csrfTokenRepository(csrfTokenRepository())
-                .and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-            ;
+                .ignoringAntMatchers(REGISTER_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH,QME_LOGOUT)
+                .csrfTokenRepository(qmeCSRFTokenRepository())
+         .and()
+                .addFilterAfter(qmeCSRFilter(), CsrfFilter.class)
 
-        /*
-        http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher(REGISTER_PATH)).disable();
-
-        http.requestCache().requestCache(new NullRequestCache());
-
-        http.authorizeRequests()
-                .antMatchers(REGISTER_PATH).permitAll()
-                .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
-                .antMatchers(HttpMethod.OPTIONS, RESET_FORGOT_PASSWORD_PATH).permitAll()
-                .antMatchers(HttpMethod.OPTIONS, RESET_RESET_PASSWORD_PATH).permitAll()
-                .antMatchers(HttpMethod.PUT, RESET_FORGOT_PASSWORD_PATH).permitAll()
-                .antMatchers(HttpMethod.PUT, RESET_RESET_PASSWORD_PATH).permitAll()
-                .anyRequest().authenticated().and().httpBasic()
-                .and().logout().permitAll()
-
-        ;
-        */
-
+         ;
     }
 
-    private Filter csrfHeaderFilter() {
+    /**
+     * QMe CSRF Filter
+     * @return Filter
+     */
+    private Filter qmeCSRFilter() {
+
         return new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
                 CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
                 if (csrf != null) {
-                    Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
+                    Cookie cookie = WebUtils.getCookie(request, QME_CRF_TOKEN_NAME);
                     String token = csrf.getToken();
                     if (cookie == null || token != null && !token.equals(cookie.getValue())) {
-                        cookie = new Cookie("XSRF-TOKEN", token);
-                        cookie.setPath("/qme/");
+                        cookie = new Cookie(QME_CRF_TOKEN_NAME, token);
+                        cookie.setSecure(true);
+                        cookie.setPath(QME_TOKEN_PATH);
                         response.addCookie(cookie);
                     }
                 }
@@ -127,12 +145,15 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    private CsrfTokenRepository csrfTokenRepository() {
+    /**
+     * QME CSRF Token Repository
+     * @return
+     */
+    private CsrfTokenRepository qmeCSRFTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
+        repository.setHeaderName(QME_CRF_TOKEN_HEADER_NAME);
         return repository;
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){
