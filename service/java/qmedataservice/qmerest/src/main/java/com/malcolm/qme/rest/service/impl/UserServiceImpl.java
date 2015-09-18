@@ -61,6 +61,11 @@ public final class UserServiceImpl implements UserService {
      */
     private static final String FORWARD_SLASH = "/";
 
+    /**
+     * Default User Role
+     */
+    private static final Integer DEFAULT_USER_ROLE = 1;
+
     @Override
     public QMeUserDetail searchByUser(String userName) throws QMeResourceNotFoundException,QMeServerException {
         try{
@@ -123,6 +128,9 @@ public final class UserServiceImpl implements UserService {
         try {
             User user = getUser(qMeUser);
             user = userRepo.save(user);
+            //Assign Default User Role to newly created user
+            UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
+            userRoleRepo.save(userRole);
             return getQMeUserDetail(user);
 
         }catch(QMeException err){
