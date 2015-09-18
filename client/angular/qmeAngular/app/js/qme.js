@@ -19,7 +19,9 @@ var qmeApp = "qmeApp";
                       adminrole: 'ADMIN'
                 }
         )
-        .config(function($stateProvider, $urlRouterProvider) {
+        .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
+
+            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
             $urlRouterProvider.otherwise('/home');
 
