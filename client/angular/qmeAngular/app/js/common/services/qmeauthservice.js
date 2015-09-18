@@ -24,7 +24,8 @@
             //TODO: Fix Basic Authentication and Session ID
             //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
             var authToken = 'Basic ' + $base64.encode(credentials.username + ':' + credentials.password);
-            $http.defaults.headers.common['Authorization'] = authToken;
+            //$http.defaults.headers.common['Authorization'] = authToken;
+            $http.defaults.headers.common.Authorization = authToken;
 
             //SessionId is hard coded and is not used need to be fixed.
 
@@ -62,7 +63,8 @@
             //TODO: Fix Basic Authentication and Session ID
             //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
             var authToken = 'Basic ' + $base64.encode(registeredUser.userEmail + ':' + registeredUser.userPassword);
-            $http.defaults.headers.common['Authorization'] = authToken;
+            //$http.defaults.headers.common['Authorization'] = authToken;
+            $http.defaults.headers.common.Authorization = authToken;
 
             //SessionId is hard coded and is not used need to be fixed.
             qmeUserSession.create(

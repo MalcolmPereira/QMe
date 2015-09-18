@@ -6,16 +6,19 @@
         .service('qmeUserService',QMeUserService);
 
 
-    QMeUserService.$inject = ['$q','$resource','qmeAuthService','QME_CONSTANTS'];
+    QMeUserService.$inject = ['$q','$http','$resource','qmeAuthService','QME_CONSTANTS'];
 
 
-    function QMeUserService($q,$resource,qmeAuthService,QME_CONSTANTS) {
+    function QMeUserService($q,$http,$resource,qmeAuthService,QME_CONSTANTS) {
 
         var qmeUserService = this;
 
         qmeUserService.register = function(user){
 
            var registeredUserPromise = $q.defer();
+
+            $http.defaults.headers.common.Authorization = undefined;
+            $http.defaults.headers.common.withCredentials = false;
 
             $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"register")
 
@@ -36,6 +39,8 @@
         qmeUserService.resetPassword = function(useremail){
            var resetPasswordUserPromise = $q.defer();
 
+            $http.defaults.headers.common.Authorization = undefined;
+
             $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"reset/forgotpassword/"+useremail,null,{'reset':{method:'PUT'}})
                 .reset({}, QME_CONSTANTS.reseturl
                 ,function(res){
@@ -49,6 +54,9 @@
         };
         qmeUserService.submitResetPassword = function(usertoken,username, useremail, userpassword){
             var resetPasswordUserPromise = $q.defer();
+
+            $http.defaults.headers.common.Authorization = undefined;
+
             var resetrequest = {
                     token:usertoken,
                     userName:username,
