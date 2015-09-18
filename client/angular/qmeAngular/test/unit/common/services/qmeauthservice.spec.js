@@ -120,6 +120,7 @@
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
             httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
+            httpBackend.expectPOST(qmeContants.logoutendpoint).respond(200,user);
             qmeAuthService
             .login(credentials)
                 .then(

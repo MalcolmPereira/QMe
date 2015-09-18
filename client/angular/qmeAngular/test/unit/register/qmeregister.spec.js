@@ -165,6 +165,7 @@
                 "userRoles": ['ADMIN','USER']
             };
             httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(200,registerdUser);
+            httpBackend.expectPOST(qmeContants.logoutendpoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
             httpBackend.flush();

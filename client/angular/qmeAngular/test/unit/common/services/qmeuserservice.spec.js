@@ -125,6 +125,7 @@
                 "userRoles": []
             };
             httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(200,registereduser);
+            httpBackend.expectPOST(qmeContants.logoutendpoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .register(user)
