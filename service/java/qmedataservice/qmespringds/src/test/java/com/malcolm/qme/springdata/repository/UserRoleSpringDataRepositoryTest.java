@@ -74,7 +74,7 @@ public class UserRoleSpringDataRepositoryTest {
 
         assertNotNull(roleSpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserRoleSpringDataRepositoryTest", "Test", "Test", "UserRoleSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserRoleSpringDataRepositoryTest", "Test", "Test", "UserRoleSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -130,7 +130,7 @@ public class UserRoleSpringDataRepositoryTest {
 
         assertNotNull(roleSpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserRoleSpringDataRepositoryTest ByUserID", "Test", "Test", "UserRoleSpringDataRepositoryTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserRoleSpringDataRepositoryTest ByUserID", "Test", "Test", "UserRoleSpringDataRepositoryTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -190,7 +190,7 @@ public class UserRoleSpringDataRepositoryTest {
 
         assertNotNull(roleSpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserRoleSpringDataRepositoryTest ByRoleId", "Test", "Test", "UserRoleSpringDataRepositoryTestByRoleId@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserRoleSpringDataRepositoryTest ByRoleId", "Test", "Test", "UserRoleSpringDataRepositoryTestByRoleId@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

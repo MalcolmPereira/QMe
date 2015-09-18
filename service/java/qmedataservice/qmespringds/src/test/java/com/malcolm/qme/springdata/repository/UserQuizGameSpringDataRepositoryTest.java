@@ -72,7 +72,7 @@ public class UserQuizGameSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UserQuizGameSpringDataRepositoryTest",
                 "Test", "Test", "UserQuizGameSpringDataRepositoryTest@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -131,7 +131,7 @@ public class UserQuizGameSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UserQuizGameSpringDataRepositoryTestByID",
                 "Test", "Test", "UserQuizGameSpringDataRepositoryTestByID@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -205,7 +205,7 @@ public class UserQuizGameSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UserQuizGameSpringDataRepositoryTestByTK",
                 "Test", "Test", "UserQuizGameSpringDataRepositoryTestByTK@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

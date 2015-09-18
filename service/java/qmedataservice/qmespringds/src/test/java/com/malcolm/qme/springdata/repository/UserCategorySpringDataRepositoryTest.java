@@ -84,7 +84,7 @@ public class UserCategorySpringDataRepositoryTest {
 
         assertNotNull(categorySpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTest", "Test", "Test", "UserCategorySpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTest", "Test", "Test", "UserCategorySpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -127,7 +127,7 @@ public class UserCategorySpringDataRepositoryTest {
 
         assertNotNull(categorySpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTestByUserID", "Test", "Test", "UserCategorySpringDataRepositoryTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserCategorySpringDataRepositoryTestByUserID", "Test", "Test", "UserCategorySpringDataRepositoryTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

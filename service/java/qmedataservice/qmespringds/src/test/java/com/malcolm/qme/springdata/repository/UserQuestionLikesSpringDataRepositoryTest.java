@@ -79,7 +79,7 @@ public class UserQuestionLikesSpringDataRepositoryTest {
 
         assertNotNull(questionSpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UserQuestionLikesSpringDataRepositoryTest", "Test", "Test", "UserQuestionLikesSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserQuestionLikesSpringDataRepositoryTest", "Test", "Test", "UserQuestionLikesSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -132,7 +132,7 @@ public class UserQuestionLikesSpringDataRepositoryTest {
 
         assertNotNull(questionSpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByUserID", "Test", "Test", "UQuestLikesSpringDataRepoTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByUserID", "Test", "Test", "UQuestLikesSpringDataRepoTestByUserID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -193,7 +193,7 @@ public class UserQuestionLikesSpringDataRepositoryTest {
 
         assertNotNull(questionSpringDataRepository);
 
-        UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByQID", "Test", "Test", "UQuestLikesSpringDataRepoTestByQID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UQuestLikesSpringDataRepoTestByQID", "Test", "Test", "UQuestLikesSpringDataRepoTestByQID@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

@@ -79,7 +79,9 @@ public class UserRepositoryImplTest {
                 "First Name Updated",
                 "Last Name Updated",
                 user.getUserEmail(),
-                user.getUserRegisteredDate(), LocalDateTime.now(),
+                user.getUserRegisteredDate(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 2L);
 
         userUpdate = userRepo.update(userUpdate, 2L);
@@ -126,7 +128,9 @@ public class UserRepositoryImplTest {
                 "First Name Updated",
                 "Last Name Updated",
                 user.getUserEmail(),
-                user.getUserRegisteredDate(), LocalDateTime.now(),
+                user.getUserRegisteredDate(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 2L);
 
         userUpdate = userRepo.update(userUpdate, 2L);
@@ -172,7 +176,9 @@ public class UserRepositoryImplTest {
                 "First Name Updated",
                 "Last Name Updated",
                 user.getUserEmail(),
-                user.getUserRegisteredDate(), LocalDateTime.now(),
+                user.getUserRegisteredDate(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 2L);
 
         userUpdate = userRepo.update(userUpdate, 2L);

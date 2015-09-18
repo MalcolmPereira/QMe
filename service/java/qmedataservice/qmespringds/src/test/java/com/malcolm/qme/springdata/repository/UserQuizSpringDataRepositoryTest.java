@@ -74,7 +74,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UserQuizSpringDataRepositoryTest",
                 "Test", "Test", "UserQuizSpringDataRepositoryTest@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -140,7 +140,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UQuizSpringDataRepositoryTestByUserID",
                 "Test", "Test", "UQuizSpringDataRepositoryTestByUserID@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -225,7 +225,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UQuizSpringDataRepositoryTestByQuizID",
                 "Test", "Test", "UQuizSpringDataRepositoryTestByQuizID@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -310,7 +310,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UQuizSpringDataRepositoryTestByQuizStatus",
                 "Test", "Test", "UQuizSpringDataRepositoryTestByQuizStatus@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

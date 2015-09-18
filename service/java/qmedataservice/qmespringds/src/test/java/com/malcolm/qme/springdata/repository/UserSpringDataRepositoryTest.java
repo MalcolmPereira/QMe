@@ -54,7 +54,7 @@ public class UserSpringDataRepositoryTest {
     public void testCRUD() {
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTest", "Test", "Test", "UserSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTest", "Test", "Test", "UserSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -80,7 +80,7 @@ public class UserSpringDataRepositoryTest {
     public void testFindByUserNameIgnoreCase() {
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName", "Test", "Test", "UserSpringDataRepositoryTestUserName@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName", "Test", "Test", "UserSpringDataRepositoryTestUserName@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -116,7 +116,7 @@ public class UserSpringDataRepositoryTest {
     public void findByUserEmailIgnoreCase() {
         assertNotNull(userSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName1", "Test", "Test", "UserSpringDataRepositoryTestUserName1@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserSpringDataRepositoryTestUserName1", "Test", "Test", "UserSpringDataRepositoryTestUserName1@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));

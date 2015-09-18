@@ -49,7 +49,7 @@ public class UserPasswordResetSpringDataRepositoryTest {
 
         assertNotNull(userPasswordResetSpringDataRepo);
 
-        UserEntity userEntity = new UserEntity("UserPasswordResetSpringDataRepositoryTest", "Test", "Test", "UserPasswordResetSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity("UserPasswordResetSpringDataRepositoryTest", "Test", "Test", "UserPasswordResetSpringDataRepositoryTest@test.com", "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
