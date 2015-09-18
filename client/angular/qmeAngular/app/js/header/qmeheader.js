@@ -74,6 +74,7 @@
             qmeAuthService.endResetting()
             qmeHeader.userEmail = "";
             qmeHeader.userPassword = "";
+            qmeHeader.signInForm.$setPristine()
         };
 
         qmeHeader.routeRegistration = function (){
@@ -89,6 +90,7 @@
         qmeHeader.cancelResetRegistration = function (){
             qmeAuthService.endRegistering();
             qmeAuthService.endResetting()
+            qmeHeader.signInForm.$setPristine()
             $state.go('home', {});
         };
 
@@ -99,6 +101,5 @@
         qmeHeader.isResetingPassword = function(){
             return  qmeAuthService.isResetting();
         }
-
     }
 })();
