@@ -325,6 +325,7 @@ public final class UserServiceImpl implements UserService {
                     currentUser.getUserEmail(),
                     currentUser.getUserRegisteredDate(),
                     LocalDateTime.now(),
+                    currentUser.getUserLastLoginDate(),
                     updateUserId
             );
         }catch(QMeException err){

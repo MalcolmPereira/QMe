@@ -201,6 +201,7 @@ public class UserRepositoryImpl implements UserRepository {
 						existingUser.getUserEmail(),
 						existingUser.getUserRegisteredDate(),
 						LocalDateTime.now(),
+                        LocalDateTime.now(),
 						existingUser.getUserID()
 				);
 				UserEntity updateUserEntity = getUserEntity(updateUser);
@@ -275,10 +276,13 @@ public class UserRepositoryImpl implements UserRepository {
 	 * @return User
 	 */
 	private User getUser(UserEntity userEntity) {
-		return new User(userEntity.getUserId(), userEntity.getUserName(),
+		return new User(
+                userEntity.getUserId(), userEntity.getUserName(),
 				userEntity.getUserPasscode(), userEntity.getUserFirstName(),
 				userEntity.getUserLastName(), userEntity.getUserEmail(),
 				userEntity.getUserRegisteredDate(),
-				userEntity.getUserUpdatedDate(), userEntity.getUpdateUser());
+				userEntity.getUserUpdatedDate(),
+                userEntity.getUserLastLoginDate(),
+                userEntity.getUpdateUser());
 	}
 }

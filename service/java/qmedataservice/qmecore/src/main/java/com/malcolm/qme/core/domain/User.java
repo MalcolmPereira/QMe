@@ -45,6 +45,10 @@ public final class User {
      */
     private final LocalDateTime userUpdateDate;
     /**
+     * User Last Login Date
+     */
+    private final LocalDateTime userLastLoginDate;
+    /**
      * Update User Id
      */
     private final Long  updateUserID;
@@ -60,9 +64,10 @@ public final class User {
      * @param userEmail Unique User Email
      * @param userRegisteredDate User Registered Date
      * @param userUpdateDate User Update Date
+     * @param userLastLoginDate User Last Login Date
      * @param updateUserID Update User ID
      */
-    public User(Long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, LocalDateTime userRegisteredDate, LocalDateTime userUpdateDate, Long updateUserID) {
+    public User(Long userID, String userName, String userPassword, String userFirstName, String userLastName, String userEmail, LocalDateTime userRegisteredDate, LocalDateTime userUpdateDate,LocalDateTime userLastLoginDate, Long updateUserID) {
         this.userID = userID;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -71,6 +76,7 @@ public final class User {
         this.userEmail = userEmail;
         this.userRegisteredDate = userRegisteredDate;
         this.userUpdateDate = userUpdateDate;
+        this.userLastLoginDate = userLastLoginDate;
         this.updateUserID = updateUserID;
     }
 
@@ -92,6 +98,7 @@ public final class User {
         this.userEmail = userEmail;
         this.userRegisteredDate = LocalDateTime.now();
         this.userUpdateDate = LocalDateTime.now();
+        this.userLastLoginDate = LocalDateTime.now();
         this.updateUserID = 0L;
     }
 
@@ -158,6 +165,14 @@ public final class User {
      */
     public LocalDateTime getUserUpdateDate() {
         return userUpdateDate;
+    }
+
+    /**
+     * Return User Last Login Date
+     * @return User Last Login Date
+     */
+    public LocalDateTime getUserLastLoginDate() {
+        return userLastLoginDate;
     }
 
     /**

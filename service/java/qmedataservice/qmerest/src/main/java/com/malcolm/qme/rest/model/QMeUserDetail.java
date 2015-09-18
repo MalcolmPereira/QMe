@@ -27,6 +27,10 @@ public class QMeUserDetail extends QMeUser {
      */
     private  LocalDateTime userUpdateDate;
     /**
+     * User Last Login Date
+     */
+    private  LocalDateTime userLastLoginDate;
+    /**
      * Update User Id
      */
     private Long  updateUserID;
@@ -83,6 +87,22 @@ public class QMeUserDetail extends QMeUser {
     }
 
     /**
+     * Get User Last Login Date
+     * @return User Last Login Date
+     */
+    public LocalDateTime getUserLastLoginDate() {
+        return userLastLoginDate;
+    }
+
+    /**
+     * Set User Last Login Date
+     * @param userLastLoginDate User Last Login Date
+     */
+    public void setUserLastLoginDate(LocalDateTime userLastLoginDate) {
+        this.userLastLoginDate = userLastLoginDate;
+    }
+
+    /**
      * Get Update User ID
      * @return  Update User ID
      */
@@ -122,34 +142,34 @@ public class QMeUserDetail extends QMeUser {
 
         QMeUserDetail that = (QMeUserDetail) o;
 
-        if (!getUserId().equals(that.getUserId())) return false;
-        if (getUserRegisteredDate() != null ? !getUserRegisteredDate().equals(that.getUserRegisteredDate()) : that.getUserRegisteredDate() != null)
-            return false;
-        if (getUserUpdateDate() != null ? !getUserUpdateDate().equals(that.getUserUpdateDate()) : that.getUserUpdateDate() != null)
-            return false;
-        if (getUpdateUserID() != null ? !getUpdateUserID().equals(that.getUpdateUserID()) : that.getUpdateUserID() != null)
-            return false;
-        return !(getUpdateUserName() != null ? !getUpdateUserName().equals(that.getUpdateUserName()) : that.getUpdateUserName() != null);
+        if (!userId.equals(that.userId)) return false;
+        if (!userRegisteredDate.equals(that.userRegisteredDate)) return false;
+        if (!userUpdateDate.equals(that.userUpdateDate)) return false;
+        if (!userLastLoginDate.equals(that.userLastLoginDate)) return false;
+        if (!updateUserID.equals(that.updateUserID)) return false;
+        return updateUserName.equals(that.updateUserName);
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getUserId().hashCode();
-        result = 31 * result + (getUserRegisteredDate() != null ? getUserRegisteredDate().hashCode() : 0);
-        result = 31 * result + (getUserUpdateDate() != null ? getUserUpdateDate().hashCode() : 0);
-        result = 31 * result + (getUpdateUserID() != null ? getUpdateUserID().hashCode() : 0);
-        result = 31 * result + (getUpdateUserName() != null ? getUpdateUserName().hashCode() : 0);
+        result = 31 * result + userId.hashCode();
+        result = 31 * result + userRegisteredDate.hashCode();
+        result = 31 * result + userUpdateDate.hashCode();
+        result = 31 * result + userLastLoginDate.hashCode();
+        result = 31 * result + updateUserID.hashCode();
+        result = 31 * result + updateUserName.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         return "QMeUserDetail{" +
-                "userID=" + userId +
+                "userId=" + userId +
                 ", userRegisteredDate=" + userRegisteredDate +
                 ", userUpdateDate=" + userUpdateDate +
+                ", userLastLoginDate=" + userLastLoginDate +
                 ", updateUserID=" + updateUserID +
                 ", updateUserName='" + updateUserName + '\'' +
                 '}';
