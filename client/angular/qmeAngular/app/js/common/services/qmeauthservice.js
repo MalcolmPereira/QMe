@@ -96,6 +96,8 @@
         };
 
         qmeAuthService.logout = function (){
+            $http.defaults.headers.common.Authorization = undefined;
+            $resource(QME_CONSTANTS.logoutendpoint).save();
             qmeUserSession.destroy();
         };
 

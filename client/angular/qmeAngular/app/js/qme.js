@@ -16,11 +16,14 @@ var qmeApp = "qmeApp";
                       serviceurl: 'http://localhost:8080/qme/',
                       userapi: 'user/',
                       authendpoint: 'http://localhost:8080/qme/user/searchemail/',
+                      logoutendpoint: 'http://localhost:8080/qme/logout',
                       adminrole: 'ADMIN'
                 }
         )
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
 
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
             $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
             $urlRouterProvider.otherwise('/home');

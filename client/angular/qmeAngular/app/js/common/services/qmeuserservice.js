@@ -18,7 +18,6 @@
            var registeredUserPromise = $q.defer();
 
             $http.defaults.headers.common.Authorization = undefined;
-            $http.defaults.headers.common.withCredentials = false;
 
             $resource(QME_CONSTANTS.serviceurl+QME_CONSTANTS.userapi+"register")
 
