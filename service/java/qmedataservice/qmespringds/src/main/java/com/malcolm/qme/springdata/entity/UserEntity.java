@@ -19,7 +19,9 @@ import java.time.LocalDateTime;
 		@UniqueConstraint(columnNames = "USER_NAME") })
 public class UserEntity implements java.io.Serializable {
 
-
+	/**
+	 * Generated Serialized version id
+	 */
 	private static final long serialVersionUID = -1985435715851605163L;
 
 	/**
@@ -73,6 +75,12 @@ public class UserEntity implements java.io.Serializable {
 	private LocalDateTime userUpdatedDate;
 
 	/**
+	 * User Last Login Date
+	 */
+	@Column(name = "USER_LAST_LOGIN_DATE", nullable = false, length = 19)
+	private LocalDateTime userLastLoginDate;
+
+	/**
 	 * Update User
 	 */
 	@Column(name = "UPDATE_USER")
@@ -97,7 +105,7 @@ public class UserEntity implements java.io.Serializable {
 	 */
 	public UserEntity(String userName, String userFirstName,
 			String userLastName, String userEmail, String userPasscode,
-			LocalDateTime userRegisteredDate, LocalDateTime userUpdatedDate) {
+			LocalDateTime userRegisteredDate, LocalDateTime userUpdatedDate, LocalDateTime userLastLoginDate) {
 		this.userName = userName;
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
@@ -105,6 +113,7 @@ public class UserEntity implements java.io.Serializable {
 		this.userPasscode = userPasscode;
 		this.userRegisteredDate = userRegisteredDate;
 		this.userUpdatedDate = userUpdatedDate;
+		this.userLastLoginDate = userLastLoginDate;
 	}
 
 
@@ -221,6 +230,20 @@ public class UserEntity implements java.io.Serializable {
 		this.userUpdatedDate = userUpdatedDate;
 	}
 
+    /**
+     * @return the userLastLoginDate
+     */
+    public LocalDateTime getUserLastLoginDate() {
+        return userLastLoginDate;
+    }
+
+    /**
+     * @param userLastLoginDate the userLastLoginDate to set
+     */
+    public void setUserLastLoginDate(LocalDateTime userLastLoginDate) {
+        this.userLastLoginDate = userLastLoginDate;
+    }
+
 	/**
 	 * @return the updateUser
 	 */
@@ -235,127 +258,55 @@ public class UserEntity implements java.io.Serializable {
 		this.updateUser = updateUser;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((updateUser == null) ? 0 : updateUser.hashCode());
-		result = (prime * result)
-				+ ((userEmail == null) ? 0 : userEmail.hashCode());
-		result = (prime * result)
-				+ ((userFirstName == null) ? 0 : userFirstName.hashCode());
-		result = (prime * result) + ((userId == null) ? 0 : userId.hashCode());
-		result = (prime * result)
-				+ ((userLastName == null) ? 0 : userLastName.hashCode());
-		result = (prime * result)
-				+ ((userName == null) ? 0 : userName.hashCode());
-		result = (prime * result)
-				+ ((userPasscode == null) ? 0 : userPasscode.hashCode());
-		result = (prime
-				* result)
-				+ ((userRegisteredDate == null) ? 0 : userRegisteredDate
-						.hashCode());
-		result = (prime * result)
-				+ ((userUpdatedDate == null) ? 0 : userUpdatedDate.hashCode());
-		return result;
-	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserEntity other = (UserEntity) obj;
-		if (updateUser == null) {
-			if (other.updateUser != null) {
-				return false;
-			}
-		} else if (!updateUser.equals(other.updateUser)) {
-			return false;
-		}
-		if (userEmail == null) {
-			if (other.userEmail != null) {
-				return false;
-			}
-		} else if (!userEmail.equals(other.userEmail)) {
-			return false;
-		}
-		if (userFirstName == null) {
-			if (other.userFirstName != null) {
-				return false;
-			}
-		} else if (!userFirstName.equals(other.userFirstName)) {
-			return false;
-		}
-		if (userId == null) {
-			if (other.userId != null) {
-				return false;
-			}
-		} else if (!userId.equals(other.userId)) {
-			return false;
-		}
-		if (userLastName == null) {
-			if (other.userLastName != null) {
-				return false;
-			}
-		} else if (!userLastName.equals(other.userLastName)) {
-			return false;
-		}
-		if (userName == null) {
-			if (other.userName != null) {
-				return false;
-			}
-		} else if (!userName.equals(other.userName)) {
-			return false;
-		}
-		if (userPasscode == null) {
-			if (other.userPasscode != null) {
-				return false;
-			}
-		} else if (!userPasscode.equals(other.userPasscode)) {
-			return false;
-		}
-		if (userRegisteredDate == null) {
-			if (other.userRegisteredDate != null) {
-				return false;
-			}
-		} else if (!userRegisteredDate.equals(other.userRegisteredDate)) {
-			return false;
-		}
-		if (userUpdatedDate == null) {
-			if (other.userUpdatedDate != null) {
-				return false;
-			}
-		} else if (!userUpdatedDate.equals(other.userUpdatedDate)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "UserEntity [userId=" + userId + ", userName=" + userName
-				+ ", userFirstName=" + userFirstName + ", userLastName="
-				+ userLastName + ", userEmail=" + userEmail + ", userPasscode="
-				+ userPasscode + ", userRegisteredDate=" + userRegisteredDate
-				+ ", userUpdatedDate=" + userUpdatedDate + ", updateUser="
-				+ updateUser + "]";
-	}
+        UserEntity that = (UserEntity) o;
 
+        if (!userId.equals(that.userId)) return false;
+        if (!userName.equals(that.userName)) return false;
+        if (!userFirstName.equals(that.userFirstName)) return false;
+        if (!userLastName.equals(that.userLastName)) return false;
+        if (!userEmail.equals(that.userEmail)) return false;
+        if (!userPasscode.equals(that.userPasscode)) return false;
+        if (!userRegisteredDate.equals(that.userRegisteredDate)) return false;
+        if (!userUpdatedDate.equals(that.userUpdatedDate)) return false;
+        if (!userLastLoginDate.equals(that.userLastLoginDate)) return false;
+        return updateUser.equals(that.updateUser);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId.hashCode();
+        result = 31 * result + userName.hashCode();
+        result = 31 * result + userFirstName.hashCode();
+        result = 31 * result + userLastName.hashCode();
+        result = 31 * result + userEmail.hashCode();
+        result = 31 * result + userPasscode.hashCode();
+        result = 31 * result + userRegisteredDate.hashCode();
+        result = 31 * result + userUpdatedDate.hashCode();
+        result = 31 * result + userLastLoginDate.hashCode();
+        result = 31 * result + updateUser.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userFirstName='" + userFirstName + '\'' +
+                ", userLastName='" + userLastName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPasscode='" + userPasscode + '\'' +
+                ", userRegisteredDate=" + userRegisteredDate +
+                ", userUpdatedDate=" + userUpdatedDate +
+                ", userLastLoginDate=" + userLastLoginDate +
+                ", updateUser=" + updateUser +
+                '}';
+    }
 }
