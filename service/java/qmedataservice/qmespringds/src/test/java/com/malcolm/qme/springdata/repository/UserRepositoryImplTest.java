@@ -99,6 +99,49 @@ public class UserRepositoryImplTest {
 
     }
 
+    @Test
+    public void testUserStagingAndRegistration() throws QMeException {
+        assertNotNull(userRepo);
+
+        User user = new User("UserRepositoryImplStaginTest", "Test", "Test", "Test", "UserRepositoryImplStaginTest@test.com");
+        String stagingToken = userRepo.stageUserRegistration(user);
+        assertNotNull(stagingToken);
+        assertThat(stagingToken.length(), greaterThan(0));
+
+        user = userRepo.confirmUserRegistration(stagingToken);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+
+        Long userID = user.getUserID();
+        user = userRepo.findById(userID);
+        assertNotNull(user);
+        assertThat(user.getUserID(), equalTo(userID));
+
+        User userUpdate = new User(
+                user.getUserID(),
+                user.getUserName(),
+                user.getUserPassword(),
+                "First Name Updated",
+                "Last Name Updated",
+                user.getUserEmail(),
+                user.getUserRegisteredDate(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                2L);
+
+        userUpdate = userRepo.update(userUpdate, 2L);
+
+        assertNotNull(userUpdate);
+        assertThat(userUpdate.getUserID(), equalTo(userID));
+        assertThat(userUpdate.getUserFirstName(), equalTo("First Name Updated"));
+        assertThat(userUpdate.getUserLastName(), equalTo("Last Name Updated"));
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+    }
+
 
     @Test
     public void testFindByUserName() throws QMeException {

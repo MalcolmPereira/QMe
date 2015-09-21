@@ -138,10 +138,15 @@ public class UserRepositoryImpl implements UserRepository {
             }
             User user = getUser(userStagingEntity);
             UserEntity userEntity = getUserEntity(user);
+
             userEntity = userSpringDataRepo.save(userEntity);
             userEntity.setUpdateUser(userEntity.getUserId());
             userEntity = userSpringDataRepo.save(userEntity);
+
+            userStagingSpringDataRepository.delete(userStagingEntity.getUserId());
+
             return getUser(userEntity);
+
         }catch(Exception err){
             throw new QMeException(err);
         }
