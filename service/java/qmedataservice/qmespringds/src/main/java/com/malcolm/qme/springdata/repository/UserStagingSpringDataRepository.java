@@ -9,6 +9,8 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.springdata.entity.UserStagingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Malcolm
  */
@@ -34,4 +36,11 @@ public interface UserStagingSpringDataRepository extends JpaRepository<UserStagi
      * @return UserEntity List
      */
     UserStagingEntity findByUserEmailIgnoreCase(String userEmail);
+
+    /**
+     * Delete Staging Users Staged more than 5 days ago
+     * @param userStagingDate
+     */
+    void deleteByUserStagingDateLessThan(LocalDateTime userStagingDate);
+
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,6 +50,18 @@ public class UserRepositoryImpl implements UserRepository {
      * Registration Token Key Length
      */
     private static final int TOKEN_KEY_LENGTH = 32;
+
+    /**
+     * Maximum Days to Stage User to Confirm User Registration
+     */
+    private static final int MAX_STAGING_DAYS = 5;
+
+    /**
+     * Date Pattern
+     */
+    private static final String DATE_PATTERN = "yyyy-MM-dd HH:MM:ss";
+
+
 
 	@Override
 	public User findByUserName(String userName) throws QMeException {
@@ -127,6 +140,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+    @Transactional
 	public User save(User user) throws QMeException {
 		try{
 			UserEntity userEntity = getUserEntity(user);
@@ -156,6 +170,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public User confirmUserRegistration(String userRegistrationToken) throws QMeException {
         try{
             UserStagingEntity userStagingEntity = userStagingSpringDataRepository.findByStagingTokenIgnoreCase(userRegistrationToken);
@@ -170,6 +185,7 @@ public class UserRepositoryImpl implements UserRepository {
             userEntity = userSpringDataRepo.save(userEntity);
 
             userStagingSpringDataRepository.delete(userStagingEntity.getUserId());
+            userStagingSpringDataRepository.deleteByUserStagingDateLessThan(LocalDateTime.now().minusDays(MAX_STAGING_DAYS));
 
             return getUser(userEntity);
 
@@ -201,6 +217,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+    @Transactional
 	public void addResetToken(String resetToken, Long userId) throws QMeException{
 		try{
 			List<UserPasswordResetEntity> resetTokenList = userPasswordResetDataRepo.findByUserId(userId);
