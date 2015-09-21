@@ -50,7 +50,13 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Register Path
      */
-    private static final String REGISTER_PATH = "/qme/user/register";
+    private static final String REGISTER_PATH = "/qme/user/stage/**";
+
+    /**
+     * Register Confirmation Path
+     */
+    private static final String REGISTER_CONFIRM_PATH = "/qme/user/confirm";
+
 
     /**
      * Forgot Password Path
@@ -108,11 +114,11 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
          .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
-                .antMatchers(REGISTER_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
+                .antMatchers(REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
                 .authenticated()
          .and()
                 .csrf()
-                .ignoringAntMatchers(REGISTER_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH,QME_LOGOUT)
+                .ignoringAntMatchers(REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH,QME_LOGOUT)
                 .csrfTokenRepository(qmeCSRFTokenRepository())
          .and()
                 .addFilterAfter(qmeCSRFilter(), CsrfFilter.class)
