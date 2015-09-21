@@ -12,7 +12,10 @@ import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.entity.UserEntity;
 import com.malcolm.qme.springdata.entity.UserPasswordResetEntity;
 import com.malcolm.qme.springdata.entity.UserPasswordResetEntityId;
+import com.malcolm.qme.springdata.entity.UserStagingEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Hex;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -30,11 +33,22 @@ public class UserRepositoryImpl implements UserRepository {
 	@Autowired
 	private UserSpringDataRepository userSpringDataRepo;
 
+    /**
+     * Spring Data UserStaginEntity Repository
+     */
+    @Autowired
+    private UserStagingSpringDataRepository userStagingSpringDataRepository;
+
 	/**
 	 * Spring Data UserPassword Reset Entity Repository
 	 */
 	@Autowired
 	private UserPasswordResetSpringDataRepository userPasswordResetDataRepo;
+
+    /**
+     * Registration Token Key Length
+     */
+    private static final int TOKEN_KEY_LENGTH = 32;
 
 	@Override
 	public User findByUserName(String userName) throws QMeException {
@@ -102,6 +116,36 @@ public class UserRepositoryImpl implements UserRepository {
 			throw new QMeException(err);
 		}
 	}
+
+    @Override
+    public String stageUserRegistration(User user) throws QMeException {
+        try{
+            UserStagingEntity userEntity = getUserStagingEntity(user);
+            userStagingSpringDataRepository.save(userEntity);
+            return userEntity.getStagingToken();
+
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
+    public User confirmUserRegistration(String userRegistrationToken) throws QMeException {
+        try{
+            UserStagingEntity userStagingEntity = userStagingSpringDataRepository.findByStagingTokenIgnoreCase(userRegistrationToken);
+            if(userStagingEntity == null){
+                throw new QMeException("Invalid user registration staging token");
+            }
+            User user = getUser(userStagingEntity);
+            UserEntity userEntity = getUserEntity(user);
+            userEntity = userSpringDataRepo.save(userEntity);
+            userEntity.setUpdateUser(userEntity.getUserId());
+            userEntity = userSpringDataRepo.save(userEntity);
+            return getUser(userEntity);
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
 
 	@Override
 	public User update(User user, Long updateUserId) throws QMeException {
@@ -277,6 +321,27 @@ public class UserRepositoryImpl implements UserRepository {
 		return userEntity;
 	}
 
+    /**
+     * Map User Domain Object to UserStagingEntity
+     *
+     * @param user User
+     * @return UserStagingEntity
+     */
+    private UserStagingEntity getUserStagingEntity(User user) {
+        UserStagingEntity userStagingEntity = new UserStagingEntity();
+        if (user.getUserName() != null
+                && user.getUserName().trim().length() != 0) {
+            userStagingEntity.setUserName(user.getUserName());
+        }
+        userStagingEntity.setUserPasscode(user.getUserPassword());
+        userStagingEntity.setUserFirstName(user.getUserFirstName());
+        userStagingEntity.setUserLastName(user.getUserLastName());
+        userStagingEntity.setUserEmail(user.getUserEmail());
+        userStagingEntity.setUserStagingDate(LocalDateTime.now());
+        userStagingEntity.setStagingToken(new String(Hex.encode(KeyGenerators.secureRandom(TOKEN_KEY_LENGTH).generateKey())));
+        return userStagingEntity;
+    }
+
 	/**
 	 * Map UserEntity to User Domain Object
 	 * 
@@ -311,4 +376,18 @@ public class UserRepositoryImpl implements UserRepository {
 				userEntity.getUserLoginDate(),
                 userEntity.getUpdateUser());
 	}
+
+    /**
+     * Map UserStagingEntity to User Domain Object
+     *
+     * @param userStagingEntity UserStagingEntity
+     * @return User
+     */
+    private User getUser(UserStagingEntity userStagingEntity) {
+        return new User(
+                userStagingEntity.getUserName(),
+                userStagingEntity.getUserPasscode(), userStagingEntity.getUserFirstName(),
+                userStagingEntity.getUserLastName(), userStagingEntity.getUserEmail(),
+                userStagingEntity.getUserStagingDate());
+    }
 }

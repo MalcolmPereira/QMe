@@ -70,6 +70,24 @@ public interface UserRepository extends QMeRepository<User, Long> {
     User updateLoginDate(Long userId) throws QMeException;
 
     /**
+     * Stage User Registration
+     *
+     * @param user user attempteing to register
+     * @return staging token which needs to be confimed
+     * @throws QMeException
+     */
+    String stageUserRegistration(User user)throws QMeException;
+
+    /**
+     * Confirm User Registration
+     *
+     * @param userRegistrationToken
+     * @return
+     * @throws QMeException
+     */
+     User confirmUserRegistration(String userRegistrationToken) throws QMeException;
+
+    /**
      * Reset User Password for password reset token
      *
      * @param resetToken  Unique Generated Reset Token

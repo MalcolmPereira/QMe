@@ -83,7 +83,13 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
-        return userService.save(user,null);
+        return userService.save(user, null);
+    }
+
+    @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.GET)
+    @Override
+    public Boolean confirmRegistration(@PathVariable(ID_PARAM_STRING) String registrationToken) throws QMeResourceException {
+        return null;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
@@ -101,7 +107,6 @@ public class UserController implements UserAPI {
         userService.delete(userId);
         return Boolean.TRUE;
     }
-
 
     @RequestMapping(value=FORGOT_USERNAME_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)

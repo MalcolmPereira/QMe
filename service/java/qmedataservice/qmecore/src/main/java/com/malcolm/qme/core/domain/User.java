@@ -110,6 +110,30 @@ public final class User {
     }
 
     /**
+     * Public Constructor
+     *
+     * @param userName Unique User Name
+     * @param userPassword Encrypted User Password
+     * @param userFirstName User First Name
+     * @param userLastName User Last Name
+     * @param userEmail Unique User Email
+     * @param userStagedDate Staged Date
+     */
+    public User(String userName, String userPassword, String userFirstName, String userLastName, String userEmail, LocalDateTime userStagedDate) {
+        this.userID = 0L;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userEmail = userEmail;
+        this.userRegisteredDate = userStagedDate;
+        this.userUpdateDate = LocalDateTime.now();
+        this.userLastLoginDate = LocalDateTime.now();
+        this.userLoginDate  = LocalDateTime.now();
+        this.updateUserID = 0L;
+    }
+
+    /**
      * Return User Id
      * @return User Id
      */

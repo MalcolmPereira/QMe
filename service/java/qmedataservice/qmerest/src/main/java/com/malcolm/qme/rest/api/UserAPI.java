@@ -45,6 +45,11 @@ public interface UserAPI extends QMeAPI {
     String REGISTER_PATH = ROOT_PATH + "/register";
 
     /**
+     * QMeUser API User Registration Confirm User Path
+     */
+    String REGISTER_CONFIRM_PATH = ROOT_PATH + "/confirm{" + ID_PARAM_STRING + ":.+}";
+
+    /**
      * QMeUser API Reset Path
      */
     String RESET_PATH = ROOT_PATH + "/reset";
@@ -118,6 +123,14 @@ public interface UserAPI extends QMeAPI {
      * @param userId User Is
      */
     Boolean delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+
+    /**
+     * Forgot Passsword
+     *
+     * @param registrationToken User Registration Token
+     * @throws QMeResourceException
+     */
+    Boolean confirmRegistration(@PathVariable(ID_PARAM_STRING) String registrationToken) throws QMeResourceException;
 
     /**
      * Forgot User Name
