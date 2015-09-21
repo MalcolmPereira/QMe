@@ -22,9 +22,14 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
     int TOKEN_VALIDITY_MINUTES = 180;
 
     /**
+     * Maximum Days to Confirm User Registration
+     */
+    int REGISTRATION_CONFIRMATION_MAX_DAYS = 5;
+
+    /**
      * Token Validity date pattern
      */
-    String TOKEN_VALIDITY_DATE_PATTERN = "MM-dd-YYYY HH:mm:ss";
+    String DATE_PATTERN = "MM-dd-YYYY HH:mm:ss";
 
     /**
      * Search By User Name
@@ -53,7 +58,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @return stagingToken
      * @throws QMeServerException
      */
-    String stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
+    Boolean stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
 
     /**
      * Confirm User Registration
@@ -75,7 +80,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
+    Boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Reset User Password

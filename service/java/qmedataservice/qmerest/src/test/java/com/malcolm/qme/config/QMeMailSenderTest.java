@@ -65,6 +65,70 @@ public class QMeMailSenderTest {
     //Umcomment to run test
     //Enter valid Email Credentials Here
     //@Test
+    public void testQMeMailSendRegistrationEmail() throws MessagingException {
+
+        Properties prop = new Properties();
+        prop.put(QMeMailSender.MAIL_SMTP_AUTH, "true");
+        prop.put(QMeMailSender.MAIL_SMTP_HOST, "smtp.gmail.com");
+        prop.put(QMeMailSender.MAIL_SMTP_PORT, "587");
+        prop.put(QMeMailSender.MAIL_SMTP_START_TLS, "true");
+
+        //Update these values for testing
+        String userName     = "";
+        String password     = "";
+        String toemail      = "";
+
+        String appurl       = "http://some.application.user/sometoken123456789012345678";
+
+        QMeMailSender sender = new QMeMailSender(userName,password,prop);
+        assertNotNull(sender);
+
+
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(sender.getUsername());
+
+        helper.setSubject("QMe Application User Registration Confirmation");
+        helper.setTo(toemail);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<html><head><title>QMe Application User Registation Confirmation</title></head><body>");
+        stringBuilder.append("<h2><b>User Registration Accepted : </b></h2>");
+
+        stringBuilder.append("<br/>");
+        LocalDateTime now = LocalDateTime.now();
+        stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested Date: ");
+        stringBuilder.append(now.format(DateTimeFormatter.ofPattern(UserService.DATE_PATTERN)));
+        stringBuilder.append("<br/>");
+        LocalDateTime validUntil = now.plusDays(UserService.REGISTRATION_CONFIRMATION_MAX_DAYS);
+        stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;  Valid Until : ");
+        stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(UserService.DATE_PATTERN)));
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<br/>");
+
+        stringBuilder.append("If you have not recently registered for QMe Application, please ignore this email.");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("To confirm registration, please click on link below or copy/paste the link into a new browser window.");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<a href=\"");
+        stringBuilder.append(appurl);
+        stringBuilder.append("\">");
+        stringBuilder.append(appurl);
+        stringBuilder.append("</a>");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("</body></html");
+
+        helper.setText(stringBuilder.toString(),true);
+
+        sender.send(message);
+
+    }
+
+    //Umcomment to run test
+    //Enter valid Email Credentials Here
+    //@Test
     public void testQMeMailSendEmail() throws MessagingException {
         Properties prop = new Properties();
         prop.put(QMeMailSender.MAIL_SMTP_AUTH, "true");
@@ -97,11 +161,11 @@ public class QMeMailSenderTest {
         stringBuilder.append("<br/>");
         LocalDateTime now = LocalDateTime.now();
         stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested Date: ");
-        stringBuilder.append(now.format(DateTimeFormatter.ofPattern(UserService.TOKEN_VALIDITY_DATE_PATTERN)));
+        stringBuilder.append(now.format(DateTimeFormatter.ofPattern(UserService.DATE_PATTERN)));
         stringBuilder.append("<br/>");
         LocalDateTime validUntil = now.plusMinutes(UserService.TOKEN_VALIDITY_MINUTES);
         stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;  Valid Until : ");
-        stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(UserService.TOKEN_VALIDITY_DATE_PATTERN)));
+        stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(UserService.DATE_PATTERN)));
         stringBuilder.append("<br/>");
         stringBuilder.append("<br/>");
 

@@ -139,11 +139,12 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
+    public Boolean stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
         try {
-            User user           = getStagingUser(qMeUser);
-            String stagingToken = userRepo.stageUserRegistration(user);
-            return stagingToken;
+             User user           = getStagingUser(qMeUser);
+             String stagingToken = userRepo.stageUserRegistration(user);
+             sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, url);
+             return Boolean.TRUE;
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }
@@ -191,7 +192,7 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
+    public Boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
         try{
             if(url == null || url.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid application url redirect parameter ");
@@ -213,7 +214,7 @@ public final class UserServiceImpl implements UserService {
 
             sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url);
 
-            return true;
+            return Boolean.TRUE;
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
@@ -451,6 +452,74 @@ public final class UserServiceImpl implements UserService {
         return qmeUserDetail;
     }
 
+
+
+    /**
+     * Send Email Link to Confirm User Registration
+     *
+     * @param userEmail User Email for whom password reset is requested
+     * @param stagingToken Stagin Token for user
+     * @param url URL to complete user registration process
+     * @throws QMeResourceException
+     */
+    private void sendConfirmRegistrationEmail(String userEmail, String stagingToken, String url)  throws QMeServerException {
+        if(javaMailSender.getUsername() == null || javaMailSender.getUsername().trim().length() == 0 ||
+                javaMailSender.getPassword() == null || javaMailSender.getPassword().trim().length() == 0){
+            throw new QMeServerException("System Configuration Error, Please configue mail server details correctly");
+        }
+        try {
+            if(url.endsWith(FORWARD_SLASH)){
+                url = url+stagingToken;
+            }else{
+                url = url+FORWARD_SLASH+stagingToken;
+            }
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(javaMailSender.getUsername());
+
+            helper.setSubject("QMe Application User Registration Confirmation");
+            helper.setTo(userEmail);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("<html><head><title>QMe Application User Registation Confirmation</title></head><body>");
+            stringBuilder.append("<h2><b>User Registration Accepted : </b></h2>");
+
+            stringBuilder.append("<br/>");
+            LocalDateTime now = LocalDateTime.now();
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested Date: ");
+            stringBuilder.append(now.format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+            stringBuilder.append("<br/>");
+            LocalDateTime validUntil = now.plusDays(REGISTRATION_CONFIRMATION_MAX_DAYS);
+            stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;  Valid Until : ");
+            stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<br/>");
+
+            stringBuilder.append("If you have not recently registered for QMe Application, please ignore this email.");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("To confirm registration, please click on link below or copy/paste the link into a new browser window.");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("<a href=\"");
+            stringBuilder.append(url);
+            stringBuilder.append("\">");
+            stringBuilder.append(url);
+            stringBuilder.append("</a>");
+            stringBuilder.append("<br/>");
+            stringBuilder.append("</body></html");
+
+            helper.setText(stringBuilder.toString(),true);
+
+            javaMailSender.send(message);
+
+        }catch (MessagingException messagingErr){
+            throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
+        }
+    }
+
+
     /**
      * Send Email Link for Password Reset
      *
@@ -486,11 +555,11 @@ public final class UserServiceImpl implements UserService {
             stringBuilder.append("<br/>");
             LocalDateTime now = LocalDateTime.now();
             stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp; Requested Date: ");
-            stringBuilder.append(now.format(DateTimeFormatter.ofPattern(TOKEN_VALIDITY_DATE_PATTERN)));
+            stringBuilder.append(now.format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
             stringBuilder.append("<br/>");
             LocalDateTime validUntil = now.plusMinutes(TOKEN_VALIDITY_MINUTES);
             stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;  Valid Until : ");
-            stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(TOKEN_VALIDITY_DATE_PATTERN)));
+            stringBuilder.append(validUntil.format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
             stringBuilder.append("<br/>");
             stringBuilder.append("<br/>");
 
@@ -517,6 +586,4 @@ public final class UserServiceImpl implements UserService {
             throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
         }
     }
-
-
 }
