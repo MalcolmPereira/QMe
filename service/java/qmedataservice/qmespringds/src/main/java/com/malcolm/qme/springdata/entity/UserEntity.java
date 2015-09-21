@@ -81,6 +81,13 @@ public class UserEntity implements java.io.Serializable {
 	private LocalDateTime userLastLoginDate;
 
 	/**
+	 * User Login Date
+	 */
+	@Column(name = "USER_LOGIN_DATE", nullable = false, length = 19)
+	private LocalDateTime userLoginDate;
+
+
+	/**
 	 * Update User
 	 */
 	@Column(name = "UPDATE_USER")
@@ -105,7 +112,7 @@ public class UserEntity implements java.io.Serializable {
 	 */
 	public UserEntity(String userName, String userFirstName,
 			String userLastName, String userEmail, String userPasscode,
-			LocalDateTime userRegisteredDate, LocalDateTime userUpdatedDate, LocalDateTime userLastLoginDate) {
+			LocalDateTime userRegisteredDate, LocalDateTime userUpdatedDate,LocalDateTime userLastLoginDate) {
 		this.userName = userName;
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
@@ -114,6 +121,7 @@ public class UserEntity implements java.io.Serializable {
 		this.userRegisteredDate = userRegisteredDate;
 		this.userUpdatedDate = userUpdatedDate;
 		this.userLastLoginDate = userLastLoginDate;
+        this.userLoginDate = LocalDateTime.now();
 	}
 
 
@@ -244,7 +252,22 @@ public class UserEntity implements java.io.Serializable {
         this.userLastLoginDate = userLastLoginDate;
     }
 
-	/**
+
+    /**
+     * @return the userLoginDate
+     */
+    public LocalDateTime getUserLoginDate() {
+        return userLoginDate;
+    }
+
+    /**
+     * @param userLoginDate the userLoginDate to set
+     */
+    public void setUserLoginDate(LocalDateTime userLoginDate) {
+        this.userLoginDate = userLoginDate;
+    }
+
+    /**
 	 * @return the updateUser
 	 */
 	public Long getUpdateUser() {
@@ -274,8 +297,11 @@ public class UserEntity implements java.io.Serializable {
         if (!userPasscode.equals(that.userPasscode)) return false;
         if (!userRegisteredDate.equals(that.userRegisteredDate)) return false;
         if (!userUpdatedDate.equals(that.userUpdatedDate)) return false;
-        if (!userLastLoginDate.equals(that.userLastLoginDate)) return false;
-        return updateUser.equals(that.updateUser);
+        if (userLastLoginDate != null ? !userLastLoginDate.equals(that.userLastLoginDate) : that.userLastLoginDate != null)
+            return false;
+        if (userLoginDate != null ? !userLoginDate.equals(that.userLoginDate) : that.userLoginDate != null)
+            return false;
+        return !(updateUser != null ? !updateUser.equals(that.updateUser) : that.updateUser != null);
 
     }
 
@@ -289,8 +315,9 @@ public class UserEntity implements java.io.Serializable {
         result = 31 * result + userPasscode.hashCode();
         result = 31 * result + userRegisteredDate.hashCode();
         result = 31 * result + userUpdatedDate.hashCode();
-        result = 31 * result + userLastLoginDate.hashCode();
-        result = 31 * result + updateUser.hashCode();
+        result = 31 * result + (userLastLoginDate != null ? userLastLoginDate.hashCode() : 0);
+        result = 31 * result + (userLoginDate != null ? userLoginDate.hashCode() : 0);
+        result = 31 * result + (updateUser != null ? updateUser.hashCode() : 0);
         return result;
     }
 
@@ -306,6 +333,7 @@ public class UserEntity implements java.io.Serializable {
                 ", userRegisteredDate=" + userRegisteredDate +
                 ", userUpdatedDate=" + userUpdatedDate +
                 ", userLastLoginDate=" + userLastLoginDate +
+                ", userLoginDate=" + userLoginDate +
                 ", updateUser=" + updateUser +
                 '}';
     }

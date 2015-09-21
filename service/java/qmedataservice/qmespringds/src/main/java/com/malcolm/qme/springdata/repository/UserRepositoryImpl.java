@@ -92,7 +92,9 @@ public class UserRepositoryImpl implements UserRepository {
 			UserEntity userEntity = getUserEntity(user);
 			userEntity.setUserRegisteredDate(LocalDateTime.now());
 			userEntity.setUserUpdatedDate(LocalDateTime.now());
-			userEntity = userSpringDataRepo.save(userEntity);
+            userEntity.setUserLastLoginDate(LocalDateTime.now());
+            userEntity.setUserLoginDate(LocalDateTime.now());
+            userEntity = userSpringDataRepo.save(userEntity);
 			userEntity.setUpdateUser(userEntity.getUserId());
 			userEntity = userSpringDataRepo.save(userEntity);
 			return getUser(userEntity);
@@ -202,6 +204,7 @@ public class UserRepositoryImpl implements UserRepository {
 						existingUser.getUserRegisteredDate(),
 						LocalDateTime.now(),
                         LocalDateTime.now(),
+						LocalDateTime.now(),
 						existingUser.getUserID()
 				);
 				UserEntity updateUserEntity = getUserEntity(updateUser);
@@ -246,6 +249,13 @@ public class UserRepositoryImpl implements UserRepository {
 		if (user.getUserUpdateDate() != null) {
 			userEntity.setUserUpdatedDate(user.getUserUpdateDate());
 		}
+        if (user.getUserLastLoginDate() != null) {
+            userEntity.setUserLastLoginDate(user.getUserLastLoginDate());
+        }
+        if (user.getUserLoginDate() != null) {
+            userEntity.setUserLoginDate(user.getUserLoginDate());
+        }
+
 		if (user.getUpdateUserID() > 0) {
 			userEntity.setUpdateUser(user.getUpdateUserID());
 		}
@@ -283,6 +293,7 @@ public class UserRepositoryImpl implements UserRepository {
 				userEntity.getUserRegisteredDate(),
 				userEntity.getUserUpdatedDate(),
                 userEntity.getUserLastLoginDate(),
+				userEntity.getUserLoginDate(),
                 userEntity.getUpdateUser());
 	}
 }
