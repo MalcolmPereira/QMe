@@ -68,8 +68,10 @@ public class QMeUserDetailsService implements UserDetailsService {
                 roleCounter++;
             }
             if(userRoleArr.length == 0  ){
-                throw new UsernameNotFoundException("User " + username + " has associated roles");
+                throw new UsernameNotFoundException("User " + username + " has no associated roles");
             }
+
+            user = userRepo.updateLoginDate(user.getUserID());
 
             QMeUserDetails userDetails = (QMeUserDetails) QMeUserDetails.create(user.getUserID(), user.getUserName(), user.getUserPassword(), userRoleArr);
             userDetails.setUserFirstName(user.getUserFirstName());
@@ -77,6 +79,7 @@ public class QMeUserDetailsService implements UserDetailsService {
             userDetails.setUserEmail(user.getUserEmail());
             userDetails.setUserRegisteredDate(user.getUserRegisteredDate());
             userDetails.setUserUpdateDate(user.getUserUpdateDate());
+            userDetails.setUserLastLoginDate(user.getUserLastLoginDate());
             userDetails.setUpdateUserID(user.getUpdateUserID());
             return userDetails;
 

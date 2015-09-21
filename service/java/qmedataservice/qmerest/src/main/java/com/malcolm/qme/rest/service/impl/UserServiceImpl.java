@@ -367,6 +367,7 @@ public final class UserServiceImpl implements UserService {
         qmeUserDetail.setUserEmail(user.getUserEmail());
         qmeUserDetail.setUserRegisteredDate(user.getUserRegisteredDate());
         qmeUserDetail.setUserUpdateDate(user.getUserUpdateDate());
+        qmeUserDetail.setUserLastLoginDate(user.getUserLastLoginDate());
         qmeUserDetail.setUpdateUserID(user.getUpdateUserID());
         //Fixme: Need to add updated  user name
         qmeUserDetail.setUpdateUserName("");

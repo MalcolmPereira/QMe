@@ -51,8 +51,11 @@ public class QMeUserDetails implements UserDetails {
      * User Update Date
      */
     private LocalDateTime userUpdateDate;
-
-   /**
+    /**
+     * User Last Login Date
+     */
+    private LocalDateTime userLastLoginDate;
+    /**
      * Update User Id
      */
     private Long updateUserID;
@@ -248,6 +251,24 @@ public class QMeUserDetails implements UserDetails {
      */
     public void setUserUpdateDate(LocalDateTime userUpdateDate) {
         this.userUpdateDate = userUpdateDate;
+    }
+
+    /**
+     * User Last Loging Date
+     *
+     * @return User Last Login Date
+     */
+    public LocalDateTime getUserLastLoginDate() {
+        return userLastLoginDate;
+    }
+
+    /**
+     * Set User Last Login Date
+     *
+     * @param userLastLoginDate Set User Last Login Date Date
+     */
+    public void setUserLastLoginDate(LocalDateTime userLastLoginDate) {
+        this.userLastLoginDate = userLastLoginDate;
     }
 
     /**
