@@ -143,22 +143,24 @@ public final class UserServiceImpl implements UserService {
         try {
              User user           = getStagingUser(qMeUser);
              String stagingToken = userRepo.stageUserRegistration(user);
-             sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, url);
-             return Boolean.TRUE;
+             if(stagingToken != null && stagingToken.length() > 0){
+                 sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, url);
+                 return Boolean.TRUE;
+             }
+             return Boolean.FALSE;
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }
     }
 
     @Override
-    public QMeUserDetail confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
+    public Boolean confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
         try {
             User user = userRepo.confirmUserRegistration(stagingToken);
             //Assign Default User Role to newly created user
             UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
             userRoleRepo.save(userRole);
-            return getQMeUserDetail(user);
-
+            return Boolean.TRUE;
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }

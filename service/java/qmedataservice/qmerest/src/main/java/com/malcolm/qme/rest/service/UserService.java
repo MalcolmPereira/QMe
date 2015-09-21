@@ -55,7 +55,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      *
      * @param qMeUser QMeUser model
      * @param url Redirect URL for confirming staged user
-     * @return stagingToken
+     * @return Boolean - Staging successful/unsuccessful
      * @throws QMeServerException
      */
     Boolean stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
@@ -64,12 +64,12 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * Confirm User Registration
      *
      * @param stagingToken
-     * @return  QMe User Detail
+     * @return  Boolean - Staging successful/unsuccessful
      * @throws QMeInvalidResourceDataException
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    QMeUserDetail confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
+    Boolean confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Forgot Password

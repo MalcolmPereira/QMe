@@ -86,11 +86,20 @@ public class UserController implements UserAPI {
         return userService.save(user, null);
     }
 
-    @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.GET)
+    @RequestMapping(value=STAGING_PATH,method=RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public Boolean confirmRegistration(@PathVariable(ID_PARAM_STRING) String registrationToken) throws QMeResourceException {
-        return null;
+    public @ResponseBody Boolean stageUser(@PathVariable(REG_CONFIRM_URL_PARAM) String appUrl, @RequestBody QMeUser user) throws QMeResourceException{
+       return userService.stageUser(user,appUrl);
     }
+
+    @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public @ResponseBody Boolean confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException{
+        return Boolean.FALSE;
+    }
+
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)

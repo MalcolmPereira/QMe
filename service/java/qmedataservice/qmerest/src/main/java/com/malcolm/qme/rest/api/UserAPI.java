@@ -6,7 +6,7 @@
  **/
 package com.malcolm.qme.rest.api;
 
-import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
@@ -45,9 +45,19 @@ public interface UserAPI extends QMeAPI {
     String REGISTER_PATH = ROOT_PATH + "/register";
 
     /**
+     * Registration Confirm URL Param
+     */
+    String REG_CONFIRM_URL_PARAM 	= "confirm_url";
+
+    /**
+     * QMeUser API Stage User Path
+     */
+    String STAGING_PATH = ROOT_PATH + "/stage/{" + REG_CONFIRM_URL_PARAM + ":.+}";
+
+    /**
      * QMeUser API User Registration Confirm User Path
      */
-    String REGISTER_CONFIRM_PATH = ROOT_PATH + "/confirm{" + ID_PARAM_STRING + ":.+}";
+    String REGISTER_CONFIRM_PATH = ROOT_PATH + "/confirm";
 
     /**
      * QMeUser API Reset Path
@@ -110,6 +120,25 @@ public interface UserAPI extends QMeAPI {
     QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceException;
 
     /**
+     * Stage User
+     *
+     * @param appUrl - application url to complete registration
+     * @param user - User
+     * @return Boolean - Staging successful
+     * @throws QMeResourceException
+     */
+    Boolean stageUser(@PathVariable(REG_CONFIRM_URL_PARAM) String appUrl, @RequestBody QMeUser user) throws QMeResourceException;
+
+    /**
+     * Confirm User Registration
+     *
+     * @param registrationToken
+     * @return Boolean - User Registration Completed
+     * @throws QMeResourceException
+     */
+    Boolean confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException;
+
+    /**
      * Update QMe User
      *
      * @param user QMe User
@@ -124,13 +153,6 @@ public interface UserAPI extends QMeAPI {
      */
     Boolean delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
 
-    /**
-     * Forgot Passsword
-     *
-     * @param registrationToken User Registration Token
-     * @throws QMeResourceException
-     */
-    Boolean confirmRegistration(@PathVariable(ID_PARAM_STRING) String registrationToken) throws QMeResourceException;
 
     /**
      * Forgot User Name
