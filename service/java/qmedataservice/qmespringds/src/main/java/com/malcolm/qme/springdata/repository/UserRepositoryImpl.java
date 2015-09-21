@@ -175,7 +175,23 @@ public class UserRepositoryImpl implements UserRepository {
 
 	}
 
-	@Override
+    @Override
+    public User updateLoginDate(Long userId) throws QMeException {
+        try{
+            UserEntity userEntity = userSpringDataRepo.findOne(userId);
+            if (userEntity != null) {
+                userEntity.setUserLastLoginDate(userEntity.getUserLoginDate());
+                userEntity.setUserLoginDate(LocalDateTime.now());
+                userEntity = userSpringDataRepo.save(userEntity);
+                return getUser(userEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
 	public User resetUserPassword(String resetToken, Long userId, String userPassword) throws QMeException {
 
 		UserPasswordResetEntityId id = new UserPasswordResetEntityId();
@@ -255,7 +271,6 @@ public class UserRepositoryImpl implements UserRepository {
         if (user.getUserLoginDate() != null) {
             userEntity.setUserLoginDate(user.getUserLoginDate());
         }
-
 		if (user.getUpdateUserID() > 0) {
 			userEntity.setUpdateUser(user.getUpdateUserID());
 		}

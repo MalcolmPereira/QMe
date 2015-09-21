@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -217,6 +218,31 @@ public class UserRepositoryImplTest {
 
         tokenTime = userRepo.getResetTokenCreateTime("somerandomtoken", userID);
         assertNull(tokenTime);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+    }
+
+    @Test
+    public void testUpdateLoginDate() throws QMeException, InterruptedException {
+        assertNotNull(userRepo);
+
+        User user = new User("URepoImplTestUserNamePassReset1", "Test", "Test", "Test", "URepoImplTestUserNamePassReset1@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertNotNull(user.getUserLastLoginDate());
+        assertNotNull(user.getUserLoginDate());
+
+        assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
+        LocalDateTime loginDate     = user.getUserLoginDate();
+
+        user = userRepo.updateLoginDate(userID);
+        assertNotNull(user);
+        assertNotNull(user.getUserLastLoginDate());
+        assertNotNull(user.getUserLoginDate());
+        assertThat(user.getUserLastLoginDate().format(DateTimeFormatter.ISO_DATE_TIME).substring(0,16), equalTo(loginDate.format(DateTimeFormatter.ISO_DATE_TIME).substring(0,16)));
 
         userRepo.delete(userID);
         user = userRepo.findById(userID);

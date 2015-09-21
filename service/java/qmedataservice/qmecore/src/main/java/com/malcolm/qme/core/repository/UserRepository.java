@@ -61,6 +61,15 @@ public interface UserRepository extends QMeRepository<User, Long> {
     void deleteResetToken(String resetToken, Long userId) throws QMeException;
 
     /**
+     * Update Login Date for User
+     *
+     * @param userId for User
+     * @return User
+     * @throws QMeException
+     */
+    User updateLoginDate(Long userId) throws QMeException;
+
+    /**
      * Reset User Password for password reset token
      *
      * @param resetToken  Unique Generated Reset Token
