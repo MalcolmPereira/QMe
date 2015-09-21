@@ -103,7 +103,7 @@ public class UserRepositoryImplTest {
     public void testUserStagingAndRegistration() throws QMeException {
         assertNotNull(userRepo);
 
-        User user = new User("UserRepositoryImplStaginTest", "Test", "Test", "Test", "UserRepositoryImplStaginTest@test.com");
+        User user = new User("UserRepositoryImplStagingTest", "Test", "Test", "Test", "UserRepositoryImplStagingTest@test.com");
         String stagingToken = userRepo.stageUserRegistration(user);
         assertNotNull(stagingToken);
         assertThat(stagingToken.length(), greaterThan(0));
@@ -142,6 +142,28 @@ public class UserRepositoryImplTest {
         assertNull(user);
     }
 
+    @Test
+    public void testUserStagingFindByUserName() throws QMeException {
+        assertNotNull(userRepo);
+
+        String userName = "URepoImplStagingFindUserName" + System.currentTimeMillis();
+
+        User user = new User(userName, "Test", "Test", "Test", userName+"@test.com");
+        String stagingToken = userRepo.stageUserRegistration(user);
+        assertNotNull(stagingToken);
+        assertThat(stagingToken.length(), greaterThan(0));
+
+        user = userRepo.findStagedUserByUserName(userName);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+
+        user = userRepo.confirmUserRegistration(stagingToken);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+
+        user = userRepo.findStagedUserByUserName(userName);
+        assertNull(user);
+    }
 
     @Test
     public void testFindByUserName() throws QMeException {
@@ -240,6 +262,31 @@ public class UserRepositoryImplTest {
         assertNull(user);
 
     }
+
+
+    @Test
+    public void testUserStagingFindByUserEmail() throws QMeException {
+        assertNotNull(userRepo);
+
+        String userName = "URepoImplStagingFindUserEmail" + System.currentTimeMillis();
+
+        User user = new User(userName, "Test", "Test", "Test", userName+"@test.com");
+        String stagingToken = userRepo.stageUserRegistration(user);
+        assertNotNull(stagingToken);
+        assertThat(stagingToken.length(), greaterThan(0));
+
+        user = userRepo.findStagedUserByUserEmail(userName+"@test.com");
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+
+        user = userRepo.confirmUserRegistration(stagingToken);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+
+        user = userRepo.findStagedUserByUserEmail(userName+"@test.com");
+        assertNull(user);
+    }
+
 
     @Test
     public void testAddResetToken() throws QMeException, InterruptedException {

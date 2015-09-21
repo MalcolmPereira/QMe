@@ -20,4 +20,18 @@ public interface UserStagingSpringDataRepository extends JpaRepository<UserStagi
      * @return
      */
     UserStagingEntity findByStagingTokenIgnoreCase(String stagingToken);
+
+    /**
+     * Find By User Name
+     * @param userName User Name
+     * @return UserEntity List
+     */
+    UserStagingEntity findByUserNameIgnoreCase(String userName);
+
+    /**
+     * Find By User Email
+     * @param userEmail User Email
+     * @return UserEntity List
+     */
+    UserStagingEntity findByUserEmailIgnoreCase(String userEmail);
 }

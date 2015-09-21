@@ -6,10 +6,7 @@
  */
 package com.malcolm.qme.rest.service;
 
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
-import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
-import com.malcolm.qme.rest.exception.QMeServerException;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
@@ -47,6 +44,27 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @throws QMeServerException
      */
     QMeUserDetail searchByEmail(String userEmail) throws QMeResourceNotFoundException,QMeServerException;
+
+    /**
+     * Stage User in Staging Table for User Registration.
+     *
+     * @param qMeUser QMeUser model
+     * @param url Redirect URL for confirming staged user
+     * @return stagingToken
+     * @throws QMeServerException
+     */
+    String stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
+
+    /**
+     * Confirm User Registration
+     *
+     * @param stagingToken
+     * @return  QMe User Detail
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
+     */
+    QMeUserDetail confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Forgot Password

@@ -64,7 +64,20 @@ public class UserRepositoryImpl implements UserRepository {
 		}
 	}
 
-	@Override
+    @Override
+    public User findStagedUserByUserName(String userName) throws QMeException {
+        try{
+            UserStagingEntity userStagingEntity = userStagingSpringDataRepository.findByUserNameIgnoreCase(userName);
+            if (userStagingEntity != null) {
+                return getUser(userStagingEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
 	public User findByUserEmail(String userEmail) throws QMeException {
 		try{
 			UserEntity userEntity = userSpringDataRepo
@@ -77,6 +90,19 @@ public class UserRepositoryImpl implements UserRepository {
 			throw new QMeException(err);
 		}
 	}
+
+    @Override
+    public User findStagedUserByUserEmail(String userEmail) throws QMeException {
+        try{
+            UserStagingEntity userStagingEntity =userStagingSpringDataRepository.findByUserEmailIgnoreCase(userEmail);
+            if (userStagingEntity != null) {
+                return getUser(userStagingEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
 
 	@Override
 	public List<User> findAll() throws QMeException {
@@ -389,10 +415,25 @@ public class UserRepositoryImpl implements UserRepository {
      * @return User
      */
     private User getUser(UserStagingEntity userStagingEntity) {
-        return new User(
-                userStagingEntity.getUserName(),
-                userStagingEntity.getUserPasscode(), userStagingEntity.getUserFirstName(),
-                userStagingEntity.getUserLastName(), userStagingEntity.getUserEmail(),
-                userStagingEntity.getUserStagingDate());
+        if (userStagingEntity.getUserId() > 0) {
+            return new User(userStagingEntity.getUserId(),
+                    userStagingEntity.getUserName(),
+                    userStagingEntity.getUserPasscode(),
+                    userStagingEntity.getUserFirstName(),
+                    userStagingEntity.getUserLastName(),
+                    userStagingEntity.getUserEmail(),
+                    userStagingEntity.getUserStagingDate(),
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    userStagingEntity.getUserId()
+            );
+        }else {
+            return new User(
+                    userStagingEntity.getUserName(),
+                    userStagingEntity.getUserPasscode(), userStagingEntity.getUserFirstName(),
+                    userStagingEntity.getUserLastName(), userStagingEntity.getUserEmail(),
+                    userStagingEntity.getUserStagingDate());
+        }
     }
 }

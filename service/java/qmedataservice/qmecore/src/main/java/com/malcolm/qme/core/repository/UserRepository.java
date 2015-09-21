@@ -70,6 +70,24 @@ public interface UserRepository extends QMeRepository<User, Long> {
     User updateLoginDate(Long userId) throws QMeException;
 
     /**
+     * Find Any Staged User By User Name
+     *
+     * @param userName User Name
+     * @return User for unique user name
+     * @throws QMeException
+     */
+    User findStagedUserByUserName(String userName) throws QMeException;
+
+    /**
+     * Find Any Staged User By User Email
+     *
+     * @param userEmail User Email
+     * @return User for unique user email
+     * @throws QMeException
+     */
+    User findStagedUserByUserEmail(String userEmail) throws QMeException;
+    
+    /**
      * Stage User Registration
      *
      * @param user user attempteing to register

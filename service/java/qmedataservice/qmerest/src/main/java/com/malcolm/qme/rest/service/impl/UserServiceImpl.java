@@ -139,6 +139,32 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
+        try {
+            User user           = getStagingUser(qMeUser);
+            String stagingToken = userRepo.stageUserRegistration(user);
+            return stagingToken;
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
+    public QMeUserDetail confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
+        try {
+            User user = userRepo.confirmUserRegistration(stagingToken);
+            //Assign Default User Role to newly created user
+            UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
+            userRoleRepo.save(userRole);
+            return getQMeUserDetail(user);
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+
+    @Override
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
         try {
             User user = getUser(qMeUser,id,userId);
@@ -265,6 +291,56 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeResourceConflictException("User with username already exists, please use valid user name");
             }
             user = userRepo.findByUserEmail(qMeuser.getUserEmail());
+            if(user != null){
+                throw new QMeResourceConflictException("User with email address already exists, please use valid unique user email address");
+            }
+            return new User(
+                    qMeuser.getUserName(),
+                    passcodeEncoder.encode(qMeuser.getUserPassword()),
+                    qMeuser.getUserFirstName(),
+                    qMeuser.getUserLastName(),
+                    qMeuser.getUserEmail()
+            );
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    /**
+     * Get User for Staging
+     *
+     * @param qMeuser QMe User
+     * @return User
+     * @throws QMeResourceException
+     */
+    private User getStagingUser(QMeUser qMeuser) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
+        try{
+            if(qMeuser.getUserName() == null || qMeuser.getUserName().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User Name is required");
+            }
+            if(qMeuser.getUserPassword() == null || qMeuser.getUserPassword().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User Password is required");
+            }
+            if(qMeuser.getUserEmail() == null || qMeuser.getUserEmail().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User Email is required");
+            }
+            if(qMeuser.getUserFirstName() == null || qMeuser.getUserFirstName().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid User First Name is required");
+            }
+            User user = userRepo.findByUserName(qMeuser.getUserName());
+            if(user != null){
+                throw new QMeResourceConflictException("User with username already exists, please use valid user name");
+            }
+            user = userRepo.findStagedUserByUserName(qMeuser.getUserName());
+            if(user != null){
+                throw new QMeResourceConflictException("User with username already exists, please use valid user name");
+            }
+            user = userRepo.findByUserEmail(qMeuser.getUserEmail());
+            if(user != null){
+                throw new QMeResourceConflictException("User with email address already exists, please use valid unique user email address");
+            }
+            user = userRepo.findStagedUserByUserEmail(qMeuser.getUserEmail());
             if(user != null){
                 throw new QMeResourceConflictException("User with email address already exists, please use valid unique user email address");
             }
@@ -441,4 +517,6 @@ public final class UserServiceImpl implements UserService {
             throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
         }
     }
+
+
 }
