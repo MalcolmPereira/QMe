@@ -7,7 +7,7 @@
 package com.malcolm.qme.rest.api;
 
 /**
- * @Author: malcolm
+ * @author Malcolm
  */
 public interface AtomicTokenGenerator {
     /**

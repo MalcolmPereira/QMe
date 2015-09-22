@@ -77,7 +77,7 @@ public class AnswerReferenceMediaSpringDataRepositoryTest {
         AnswerReferenceMediaEntity answerReferenceMediaEntity = new AnswerReferenceMediaEntity();
         answerReferenceMediaEntity.setQuestionId(questionID);
         answerReferenceMediaEntity.setMediaTypeId(1);
-        answerReferenceMediaEntity.setRefMedia(new String("Testing").getBytes());
+        answerReferenceMediaEntity.setRefMedia("Testing".getBytes());
         answerReferenceMediaEntity = answerReferenceMediaSpringDataRepo.save(answerReferenceMediaEntity);
         assertNotNull(answerReferenceMediaEntity);
         assertThat(answerReferenceMediaEntity.getAnswerRefMediaId(), greaterThan(0L));
@@ -89,7 +89,7 @@ public class AnswerReferenceMediaSpringDataRepositoryTest {
         assertThat(answerReferenceMediaEntity.getAnswerRefMediaId(), equalTo(answerReferenceMediaID));
         assertThat(new String(answerReferenceMediaEntity.getRefMedia()), equalTo("Testing"));
 
-        answerReferenceMediaEntity.setRefMedia(new String("TestingNEW").getBytes());
+        answerReferenceMediaEntity.setRefMedia("TestingNEW".getBytes());
         answerReferenceMediaEntity = answerReferenceMediaSpringDataRepo.save(answerReferenceMediaEntity);
         assertNotNull(answerReferenceMediaEntity);
         assertThat(answerReferenceMediaEntity.getAnswerRefMediaId(), equalTo(answerReferenceMediaID));
@@ -127,7 +127,7 @@ public class AnswerReferenceMediaSpringDataRepositoryTest {
         AnswerReferenceMediaEntity answerReferenceMediaEntity = new AnswerReferenceMediaEntity();
         answerReferenceMediaEntity.setQuestionId(questionID);
         answerReferenceMediaEntity.setMediaTypeId(1);
-        answerReferenceMediaEntity.setRefMedia(new String("Testing").getBytes());
+        answerReferenceMediaEntity.setRefMedia("Testing".getBytes());
         answerReferenceMediaEntity = answerReferenceMediaSpringDataRepo.save(answerReferenceMediaEntity);
         assertNotNull(answerReferenceMediaEntity);
         assertThat(answerReferenceMediaEntity.getAnswerRefMediaId(), greaterThan(0L));
@@ -139,7 +139,7 @@ public class AnswerReferenceMediaSpringDataRepositoryTest {
         assertThat(answerReferenceMediaEntity.getAnswerRefMediaId(), equalTo(answerReferenceMediaID));
         assertThat(new String(answerReferenceMediaEntity.getRefMedia()), equalTo("Testing"));
 
-        answerReferenceMediaEntity.setRefMedia(new String("TestingNEW").getBytes());
+        answerReferenceMediaEntity.setRefMedia("TestingNEW".getBytes());
         answerReferenceMediaEntity = answerReferenceMediaSpringDataRepo.save(answerReferenceMediaEntity);
         assertNotNull(answerReferenceMediaEntity);
         assertThat(answerReferenceMediaEntity.getAnswerRefMediaId(), equalTo(answerReferenceMediaID));

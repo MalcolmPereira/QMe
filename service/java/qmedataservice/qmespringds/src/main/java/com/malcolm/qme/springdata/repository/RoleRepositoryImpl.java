@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -120,13 +121,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 	 * @return Role List
 	 */
 	private List<Role> getRole(List<RoleEntity> roleEntities){
-		List<Role> roleList = new ArrayList<Role>();
+		List<Role> roleList = new ArrayList<>();
         if(roleEntities == null){
             return roleList;
         }
-        for (RoleEntity roleEntity : roleEntities){
-        	roleList.add(getRole(roleEntity));
-        }
+		roleList.addAll(roleEntities.stream().map(this::getRole).collect(Collectors.toList()));
         return roleList;
 	}
 	

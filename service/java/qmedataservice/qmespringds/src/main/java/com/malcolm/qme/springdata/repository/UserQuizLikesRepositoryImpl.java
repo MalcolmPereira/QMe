@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -143,9 +144,7 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 		 if (userQuizLikesEntities == null) {
 			 return userQuizLikesList;
 		 }
-		 for (final UserQuizLikesEntity userQuizLikesEntity : userQuizLikesEntities) {
-			 userQuizLikesList.add(getUserQuizLikes(userQuizLikesEntity));
-		 }
+		 userQuizLikesList.addAll(userQuizLikesEntities.stream().map(this::getUserQuizLikes).collect(Collectors.toList()));
 		 return userQuizLikesList;
 	 }
 

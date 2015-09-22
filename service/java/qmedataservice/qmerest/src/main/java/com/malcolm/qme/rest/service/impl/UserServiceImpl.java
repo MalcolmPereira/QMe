@@ -273,7 +273,9 @@ public final class UserServiceImpl implements UserService {
      *
      * @param qMeuser QMe User
      * @return User
-     * @throws QMeResourceException
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceConflictException
+     * @throws QMeServerException
      */
     private User getUser(QMeUser qMeuser) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
@@ -315,7 +317,9 @@ public final class UserServiceImpl implements UserService {
      *
      * @param qMeuser QMe User
      * @return User
-     * @throws QMeResourceException
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceConflictException
+     * @throws QMeServerException
      */
     private User getStagingUser(QMeUser qMeuser) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
@@ -367,19 +371,18 @@ public final class UserServiceImpl implements UserService {
      */
     private void setUserRoles(QMeUserDetail qMeUserDetail) throws QMeException {
         List<UserRole> userRoles = userRoleRepo.findByUserId(qMeUserDetail.getUserId());
-        List<String> userRoleList = new ArrayList<>();
-        for(UserRole userRole : userRoles){
-            userRoleList.add(userRole.getRoleName());
-        }
+        List<String> userRoleList = userRoles.stream().map(UserRole::getRoleName).collect(Collectors.toList());
         qMeUserDetail.setUserRoles(userRoleList);
     }
+
 
     /**
      * Get User for Update
      *
      * @param qMeuser QMe User
      * @return User
-     * @throws QMeResourceException
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
     private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceNotFoundException,QMeServerException {
         try{
@@ -454,20 +457,19 @@ public final class UserServiceImpl implements UserService {
         return qmeUserDetail;
     }
 
-
-
     /**
+     *
      * Send Email Link to Confirm User Registration
      *
      * @param userEmail User Email for whom password reset is requested
-     * @param stagingToken Stagin Token for user
+     * @param stagingToken Staging Token for user
      * @param url URL to complete user registration process
-     * @throws QMeResourceException
+     * @throws QMeServerException
      */
     private void sendConfirmRegistrationEmail(String userEmail, String stagingToken, String url)  throws QMeServerException {
         if(javaMailSender.getUsername() == null || javaMailSender.getUsername().trim().length() == 0 ||
                 javaMailSender.getPassword() == null || javaMailSender.getPassword().trim().length() == 0){
-            throw new QMeServerException("System Configuration Error, Please configue mail server details correctly");
+            throw new QMeServerException("System Configuration Error, Please configure mail server details correctly");
         }
         try {
             if(url.endsWith(FORWARD_SLASH)){
@@ -484,7 +486,7 @@ public final class UserServiceImpl implements UserService {
             helper.setTo(userEmail);
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("<html><head><title>QMe Application User Registation Confirmation</title></head><body>");
+            stringBuilder.append("<html><head><title>QMe Application User Registration Confirmation</title></head><body>");
             stringBuilder.append("<h2><b>User Registration Accepted : </b></h2>");
 
             stringBuilder.append("<br/>");
@@ -529,12 +531,12 @@ public final class UserServiceImpl implements UserService {
      * @param userEmail User Email for whom password reset is requested
      * @param resetToken Reset Token for password request
      * @param url URL for password reset form when users clicks on the email link
-     * @throws QMeResourceException
+     * @throws QMeServerException
      */
     private void sendEmail(String userName, String userEmail, String resetToken, String url)  throws QMeServerException {
         if(javaMailSender.getUsername() == null || javaMailSender.getUsername().trim().length() == 0 ||
                 javaMailSender.getPassword() == null || javaMailSender.getPassword().trim().length() == 0){
-            throw new QMeServerException("System Configuration Error, Please configue mail server details correctly");
+            throw new QMeServerException("System Configuration Error, Please configure mail server details correctly");
         }
         try {
             if(url.endsWith(FORWARD_SLASH)){

@@ -153,7 +153,7 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * QME CSRF Token Repository
-     * @return
+     * @return CsrfTokenRepository
      */
     private CsrfTokenRepository qmeCSRFTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

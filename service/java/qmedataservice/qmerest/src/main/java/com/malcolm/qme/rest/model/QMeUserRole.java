@@ -35,7 +35,7 @@ public class QMeUserRole extends QMeResource {
      * Get User Role ID
      * @return userRoleID
      */
-    public Long getUserRoleID() {
+    private Long getUserRoleID() {
         return userRoleID;
     }
 
@@ -67,7 +67,7 @@ public class QMeUserRole extends QMeResource {
      * Get Role Name
      * @return roleName role name
      */
-    public String getRoleName() {
+    private String getRoleName() {
         return roleName;
     }
 
@@ -103,12 +103,7 @@ public class QMeUserRole extends QMeResource {
 
         QMeUserRole that = (QMeUserRole) o;
 
-        if (getUserRoleID() != null ? !getUserRoleID().equals(that.getUserRoleID()) : that.getUserRoleID() != null)
-            return false;
-        if (getRoleID() != null ? !getRoleID().equals(that.getRoleID()) : that.getRoleID() != null) return false;
-        if (getRoleName() != null ? !getRoleName().equals(that.getRoleName()) : that.getRoleName() != null)
-            return false;
-        return !(getUserID() != null ? !getUserID().equals(that.getUserID()) : that.getUserID() != null);
+        return !(getUserRoleID() != null ? !getUserRoleID().equals(that.getUserRoleID()) : that.getUserRoleID() != null) && !(getRoleID() != null ? !getRoleID().equals(that.getRoleID()) : that.getRoleID() != null) && !(getRoleName() != null ? !getRoleName().equals(that.getRoleName()) : that.getRoleName() != null) && !(getUserID() != null ? !getUserID().equals(that.getUserID()) : that.getUserID() != null);
 
     }
 

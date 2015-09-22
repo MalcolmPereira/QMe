@@ -25,8 +25,8 @@ public class QMeResourceFixture<T> {
     /**
      *  Convert an object to JSON using Jackson's ObjectMapper
      *
-     * @param o
-     * @return
+     * @param o Object
+     * @return String
      * @throws Exception
      */
     public static String toJson(Object o) throws Exception{
@@ -36,8 +36,8 @@ public class QMeResourceFixture<T> {
     /**
      * Convert to Resource Object from JSON String
      *
-     * @param jsonStr
-     * @return
+     * @param jsonStr JSON String
+     * @return Object Type
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
@@ -48,8 +48,8 @@ public class QMeResourceFixture<T> {
     /**
      * Convert to Resource List from JSON String
      *
-     * @param jsonStr
-     * @return
+     * @param jsonStr JSON String
+     * @return List of Resource
      * @throws Exception
      */
     @SuppressWarnings("unchecked")

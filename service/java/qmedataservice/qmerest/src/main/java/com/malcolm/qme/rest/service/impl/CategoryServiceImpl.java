@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author: malcolm
+ * @author Malcolm
  */
 @Service
 public final class CategoryServiceImpl implements CategoryService {
@@ -115,8 +115,8 @@ public final class CategoryServiceImpl implements CategoryService {
     /**
      * Get Category for Create
      *
-     * @param qMeCategory
-     * @param userID
+     * @param qMeCategory Category
+     * @param userID User Id
      * @return Category domain object
      */
     private Category getCategory(QMeCategory qMeCategory,Long userID)  {
@@ -125,11 +125,13 @@ public final class CategoryServiceImpl implements CategoryService {
 
     /**
      * Get Category for Update
-     * @param qMeCategory
-     * @param categoryID
-     *  @param userID
-     * @return
-     * @throws QMeResourceException
+     *
+     * @param qMeCategory Category
+     * @param categoryID Category Id
+     * @param userID User Id
+     * @return Category
+     * @throws QMeResourceNotFoundException
+     * @throws QMeServerException
      */
     private Category getCategory(QMeCategory qMeCategory, Long categoryID,Long userID) throws QMeResourceNotFoundException, QMeServerException {
         try{

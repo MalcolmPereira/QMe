@@ -15,14 +15,19 @@ public class QMeResourceException extends Exception {
     /**
      * Error Message
      */
-    private String errorMessage;
+    private final String errorMessage;
+
+    /**
+     * Throwable Error
+     */
+    private Throwable error;
 
     /**
      * Public Constructor
      *
      * @param errorMessage Error Message
      */
-    public QMeResourceException(String errorMessage){
+    QMeResourceException(String errorMessage){
         super(errorMessage);
         this.errorMessage = errorMessage;
     }
@@ -32,12 +37,26 @@ public class QMeResourceException extends Exception {
      * @param errorMessage Error Message
      * @param error error
      */
-    public QMeResourceException(String errorMessage,Throwable error){
+    QMeResourceException(String errorMessage, Throwable error){
         super(errorMessage,error);
         this.errorMessage = errorMessage;
-        /*
-      Error
+        this.error = error;
+    }
+
+    /**
+     * Get Error Message
+     * @return String Error Message
      */
-        Throwable error1 = error;
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     * Get Error
+     *
+     * @return Throwable
+     */
+    public Throwable getError() {
+        return error;
     }
 }

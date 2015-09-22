@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
- * @Author: malcolm
+ * @author Malcolm
  */
 @Converter(autoApply = true)
 public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,Timestamp> {

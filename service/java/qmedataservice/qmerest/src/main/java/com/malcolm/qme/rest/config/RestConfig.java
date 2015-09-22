@@ -41,7 +41,7 @@ public class RestConfig {
     /**
      * Logger
      */
-    private static Logger LOG = LoggerFactory.getLogger(RestConfig.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RestConfig.class);
 
     /**
      * Token Key Length
@@ -63,12 +63,7 @@ public class RestConfig {
 
     @Bean
     public AtomicTokenGenerator atomicTokenGenerator() {
-        return new AtomicTokenGenerator(){
-            @Override
-            public String generateUniqueResetToken() {
-                return new String(Hex.encode(KeyGenerators.secureRandom(TOKEN_KEY_LENGTH).generateKey()));
-            }
-        };
+        return () -> new String(Hex.encode(KeyGenerators.secureRandom(TOKEN_KEY_LENGTH).generateKey()));
     }
 
     @Bean
@@ -92,7 +87,7 @@ public class RestConfig {
             authType = QMeMailSender.SMPT_AUTH_TYPE.TLS;
         }
         LOG.debug("Got Mail auth type "+authType);
-        Properties mailProperties = null;
+        Properties mailProperties;
         if(QMeMailSender.SMPT_AUTH_TYPE.TLS == authType){
             mailProperties = mailTLS();
         }else if(QMeMailSender.SMPT_AUTH_TYPE.SSL == authType){

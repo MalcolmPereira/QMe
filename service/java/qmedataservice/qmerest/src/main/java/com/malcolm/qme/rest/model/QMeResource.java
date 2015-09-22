@@ -14,5 +14,5 @@ import java.io.Serializable;
 /**
  * @author Malcolm
  */
-public abstract class QMeResource extends ResourceSupport implements Serializable {
+abstract class QMeResource extends ResourceSupport implements Serializable {
 }

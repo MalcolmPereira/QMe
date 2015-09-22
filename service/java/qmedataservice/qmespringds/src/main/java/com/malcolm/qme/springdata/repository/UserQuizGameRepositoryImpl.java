@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -147,9 +148,7 @@ public class UserQuizGameRepositoryImpl implements UserQuizGameRepository {
         if(userQuizGameEntities == null){
             return UserQuizGameList;
         }
-        for (UserQuizGameEntity userQuizGameEntity : userQuizGameEntities){
-            UserQuizGameList.add(getUserQuizGame(userQuizGameEntity));
-        }
+        UserQuizGameList.addAll(userQuizGameEntities.stream().map(this::getUserQuizGame).collect(Collectors.toList()));
         return UserQuizGameList;
     }
 

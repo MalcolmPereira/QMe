@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -113,13 +114,11 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 	 * @return UserCategory List
 	 */
 	private List<UserCategory> getUserCategory(List<UserCategoryEntity> userCategoryEntities){
-		List<UserCategory> userCategoryList = new ArrayList<UserCategory>();
+		List<UserCategory> userCategoryList = new ArrayList<>();
 		if(userCategoryEntities == null){
             return userCategoryList;
         }
-        for (UserCategoryEntity userCategoryEntity : userCategoryEntities){
-        	userCategoryList.add(getUserCategory(userCategoryEntity));
-        }
+		userCategoryList.addAll(userCategoryEntities.stream().map(this::getUserCategory).collect(Collectors.toList()));
         return userCategoryList;
 	}
 	

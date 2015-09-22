@@ -89,7 +89,8 @@ public class QuestionRepositoryImplTest {
                 question.getQuestionUpdateDate(),
                 question.getUpdateUserID());
 
-        question = questionRepository.save(questionUpdates);
+        questionRepository.save(questionUpdates);
+
         question = questionRepository.findById(questionID);
         assertNotNull(question);
         assertThat(question.getQuestionID(), equalTo(questionID));
@@ -178,7 +179,7 @@ public class QuestionRepositoryImplTest {
         assertThat(question.getQuestionID(), greaterThan(0L));
         final Long question1ID = question.getQuestionID();
         for (int i = 0; i < 100; i++) {
-            Question questionUpdates = null;
+            Question questionUpdates;
 
             if (question.getLikes() == null) {
                 questionUpdates = new Question(
@@ -217,7 +218,7 @@ public class QuestionRepositoryImplTest {
         assertThat(question.getQuestionID(), greaterThan(0L));
         final Long question2ID = question.getQuestionID();
         for (int i = 0; i < 10; i++) {
-            Question questionUpdates = null;
+            Question questionUpdates;
 
             if (question.getLikes() == null) {
                 questionUpdates = new Question(

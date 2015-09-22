@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
 
 /**
- * @uthor malcolm
+ * @author malcolm
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {QMeSpringDataJPAConfig.class})

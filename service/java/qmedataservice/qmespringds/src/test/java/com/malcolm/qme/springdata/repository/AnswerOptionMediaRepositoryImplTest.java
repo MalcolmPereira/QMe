@@ -93,7 +93,7 @@ public class AnswerOptionMediaRepositoryImplTest {
         assertThat(answerOption.getAnswerOptionID(), greaterThan(0L));
         final Long answerOptionID = answerOption.getAnswerOptionID();
 
-        AnswerOptionMedia answerOptionMedia = new AnswerOptionMedia(answerOptionID, 1, new String("testing").getBytes());
+        AnswerOptionMedia answerOptionMedia = new AnswerOptionMedia(answerOptionID, 1, "testing".getBytes());
         answerOptionMedia = answerOptionMediaRepository.save(answerOptionMedia);
         assertNotNull(answerOptionMedia);
         assertThat(answerOptionMedia.getAnswerOptionMediaID(), greaterThan(0L));
@@ -108,7 +108,7 @@ public class AnswerOptionMediaRepositoryImplTest {
                 answerOptionMedia.getAnswerOptionMediaID(),
                 answerOptionMedia.getAnswerOptionID(),
                 answerOptionMedia.getMediaTypeID(),
-                new String("testing updates").getBytes());
+                "testing updates".getBytes());
         answerOptionMediaUpdates = answerOptionMediaRepository.save(answerOptionMediaUpdates);
         assertNotNull(answerOptionMediaUpdates);
         assertThat(answerOptionMediaUpdates.getAnswerOptionMediaID(), equalTo(answerOptionMediaID));
@@ -150,7 +150,7 @@ public class AnswerOptionMediaRepositoryImplTest {
         assertThat(answerOption.getAnswerOptionID(), greaterThan(0L));
         final Long answerOptionID = answerOption.getAnswerOptionID();
 
-        AnswerOptionMedia answerOptionMedia = new AnswerOptionMedia(answerOptionID, 1, new String("testing").getBytes());
+        AnswerOptionMedia answerOptionMedia = new AnswerOptionMedia(answerOptionID, 1, "testing".getBytes());
         answerOptionMedia = answerOptionMediaRepository.save(answerOptionMedia);
         assertNotNull(answerOptionMedia);
         assertThat(answerOptionMedia.getAnswerOptionMediaID(), greaterThan(0L));
@@ -171,7 +171,7 @@ public class AnswerOptionMediaRepositoryImplTest {
                 answerOptionMedia.getAnswerOptionMediaID(),
                 answerOptionMedia.getAnswerOptionID(),
                 answerOptionMedia.getMediaTypeID(),
-                new String("testing updates").getBytes());
+                "testing updates".getBytes());
         answerOptionMediaUpdates = answerOptionMediaRepository.save(answerOptionMediaUpdates);
         assertNotNull(answerOptionMediaUpdates);
         assertThat(answerOptionMediaUpdates.getAnswerOptionMediaID(), equalTo(answerOptionMediaID));

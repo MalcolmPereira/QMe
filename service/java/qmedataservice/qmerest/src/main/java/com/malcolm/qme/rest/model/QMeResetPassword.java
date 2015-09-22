@@ -52,7 +52,7 @@ public class QMeResetPassword {
 
     /**
      * Set User Name
-     * @param userName
+     * @param userName User Name
      */
     public void setUserName(String userName) {
         this.userName = userName;

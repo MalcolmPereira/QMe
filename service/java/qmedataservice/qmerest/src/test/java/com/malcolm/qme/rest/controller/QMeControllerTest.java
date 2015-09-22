@@ -21,7 +21,7 @@ public abstract class QMeControllerTest {
     /**
      * MockMVC Instance
      */
-    protected MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -40,8 +40,8 @@ public abstract class QMeControllerTest {
     /**
      * Abstract method to get Mock MVC Instance
      *
-     * @param exceptionHandlerExceptionResolver
-     * @return
+     * @param exceptionHandlerExceptionResolver Exception Handler Resolver
+     * @return MockMvc Instance
      */
-    public abstract MockMvc getMockMVCInstance(final ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver);
+    protected abstract MockMvc getMockMVCInstance(final ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver);
 }

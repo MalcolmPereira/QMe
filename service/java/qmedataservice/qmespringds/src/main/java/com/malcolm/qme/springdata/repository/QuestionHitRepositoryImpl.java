@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -109,13 +110,11 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
      * @return QuestionHit
      */
     private List<QuestionHit> getQuestionHit(List<QuestionHitEntity> questionHitEntities){
-        List<QuestionHit> questionHitList = new ArrayList<QuestionHit>();
+        List<QuestionHit> questionHitList = new ArrayList<>();
         if(questionHitEntities == null){
             return questionHitList;
         }
-        for (QuestionHitEntity questionHitEntity : questionHitEntities){
-            questionHitList.add(getQuestionHit(questionHitEntity));
-        }
+        questionHitList.addAll(questionHitEntities.stream().map(this::getQuestionHit).collect(Collectors.toList()));
         return questionHitList;
 
     }

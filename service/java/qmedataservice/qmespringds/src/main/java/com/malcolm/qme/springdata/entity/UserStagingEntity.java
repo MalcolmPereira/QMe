@@ -221,12 +221,7 @@ public class UserStagingEntity implements java.io.Serializable {
 
         if (!userId.equals(that.userId)) return false;
         if (!userName.equals(that.userName)) return false;
-        if (!userFirstName.equals(that.userFirstName)) return false;
-        if (!userLastName.equals(that.userLastName)) return false;
-        if (!userEmail.equals(that.userEmail)) return false;
-        if (!userPasscode.equals(that.userPasscode)) return false;
-        if (!userStagingDate.equals(that.userStagingDate)) return false;
-        return stagingToken.equals(that.stagingToken);
+        return userFirstName.equals(that.userFirstName) && userLastName.equals(that.userLastName) && userEmail.equals(that.userEmail) && userPasscode.equals(that.userPasscode) && userStagingDate.equals(that.userStagingDate) && stagingToken.equals(that.stagingToken);
 
     }
 

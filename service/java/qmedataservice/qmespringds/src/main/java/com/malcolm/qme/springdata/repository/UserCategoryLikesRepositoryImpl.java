@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -96,8 +97,8 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	/**
 	 * Map UserCategoryLikes Domain Object to UserCategoryLikesEntityId
 	 * 
-	 * @param userCategoryLikes
-	 * @return
+	 * @param userCategoryLikes User Categories Like
+	 * @return User Categories Likes Entity Id
 	 */
 	private UserCategoryLikesEntityId getUserCategoryLikesEntityId(UserCategoryLikes userCategoryLikes){
 		UserCategoryLikesEntityId userCategoryLikesEntityId = new UserCategoryLikesEntityId();
@@ -128,13 +129,11 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	 * @return UserCategoryLikes List
 	 */
 	private List<UserCategoryLikes> getUserCategoryLikes(List<UserCategoryLikesEntity> userCategoryLikesEntities){
-		List<UserCategoryLikes> userCategoryLikesList = new ArrayList<UserCategoryLikes>();
+		List<UserCategoryLikes> userCategoryLikesList = new ArrayList<>();
         if(userCategoryLikesEntities == null){
             return userCategoryLikesList;
         }
-        for (UserCategoryLikesEntity userCategoryLikesEntity : userCategoryLikesEntities){
-        	userCategoryLikesList.add(getUserCategoryLikes(userCategoryLikesEntity));
-        }
+		userCategoryLikesList.addAll(userCategoryLikesEntities.stream().map(this::getUserCategoryLikes).collect(Collectors.toList()));
         return userCategoryLikesList;
 	}
 	

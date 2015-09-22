@@ -63,7 +63,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
     /**
      * Confirm User Registration
      *
-     * @param stagingToken
+     * @param stagingToken User Staging Token
      * @return  Boolean - Staging successful/unsuccessful
      * @throws QMeInvalidResourceDataException
      * @throws QMeResourceNotFoundException
@@ -75,7 +75,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * Forgot Password
      *
      * @param userEmail User Email for whom password reset is requested
-     * @param url Redirect URL for reseting user password
+     * @param url Redirect URL for resetting user password
      * @throws QMeInvalidResourceDataException
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException

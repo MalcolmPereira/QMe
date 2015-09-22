@@ -90,8 +90,8 @@ public interface UserRepository extends QMeRepository<User, Long> {
     /**
      * Stage User Registration
      *
-     * @param user user attempteing to register
-     * @return staging token which needs to be confimed
+     * @param user user attempting to register
+     * @return staging token which needs to be confirmed
      * @throws QMeException
      */
     String stageUserRegistration(User user)throws QMeException;
@@ -99,8 +99,8 @@ public interface UserRepository extends QMeRepository<User, Long> {
     /**
      * Confirm User Registration
      *
-     * @param userRegistrationToken
-     * @return
+     * @param userRegistrationToken User Registration Token
+     * @return User
      * @throws QMeException
      */
      User confirmUserRegistration(String userRegistrationToken) throws QMeException;

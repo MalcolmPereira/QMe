@@ -110,7 +110,9 @@ public final class RoleServiceImpl implements RoleService {
      *
      * @param qMeRole QMe User
      * @return Role
-     * @throws QMeResourceException
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceConflictException
+     * @throws QMeServerException
      */
     private Role getRole(QMeRole qMeRole) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
         try{

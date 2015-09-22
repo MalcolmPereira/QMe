@@ -78,7 +78,8 @@ public class QuestionSpringDataRepositoryTest {
 
         questionEntity.setQuestionText("QuestionSpringDataRepositoryTest Question UPDATE");
         questionEntity.setQuestionAnswer("QuestionSpringDataRepositoryTest Answer UPDATE");
-        questionEntity = questionSpringDataRepository.save(questionEntity);
+
+        questionSpringDataRepository.save(questionEntity);
         questionEntity = questionSpringDataRepository.findOne(questionID);
         assertNotNull(questionEntity);
         assertThat(questionEntity.getQuestionText(), equalTo("QuestionSpringDataRepositoryTest Question UPDATE"));

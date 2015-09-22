@@ -18,19 +18,19 @@ import java.util.Collections;
 /**
  * @author Malcolm
  */
-public class QMeUserDetails implements UserDetails {
+class QMeUserDetails implements UserDetails {
     /**
      * User Id
      */
-    private Long userID;
+    private final Long userID;
     /**
      * User Name
      */
-    private String userName;
+    private final String userName;
     /**
      * User Password
      */
-    private String userPassword;
+    private final String userPassword;
     /**
      * User First Name
      */
@@ -62,7 +62,7 @@ public class QMeUserDetails implements UserDetails {
     /**
      * Granted Authority or User Roles
      */
-    private Collection<GrantedAuthority> authorities;
+    private final Collection<GrantedAuthority> authorities;
 
     /**
      * Created New QMeUserDetails
@@ -71,7 +71,7 @@ public class QMeUserDetails implements UserDetails {
      * @param username User Name
      * @param password Encrypted Password
      * @param authorities Authorities Array
-     * @return
+     * @return User Details
      */
     public static UserDetails create(Long userId, String username, String password, String...authorities) {
         return new QMeUserDetails(userId, username, password, authorities);
@@ -80,9 +80,9 @@ public class QMeUserDetails implements UserDetails {
     /**
      * Private Constructor Create New QMeUser
      *
-     * @param userId
-     * @param username
-     * @param password
+     * @param userId User Id
+     * @param username User Name
+     * @param password Password
      */
     @SuppressWarnings("unchecked")
     private QMeUserDetails(Long userId, String username, String password) {
@@ -254,7 +254,7 @@ public class QMeUserDetails implements UserDetails {
     }
 
     /**
-     * User Last Loging Date
+     * User Last Logging Date
      *
      * @return User Last Login Date
      */

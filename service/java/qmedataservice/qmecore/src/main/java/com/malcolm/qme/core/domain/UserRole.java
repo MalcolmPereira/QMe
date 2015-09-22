@@ -88,7 +88,7 @@ public final class UserRole {
     /**
      * Get Role Name
      *
-     * @return
+     * @return String Role Name
      */
     public String getRoleName() {
         return roleName;

@@ -11,7 +11,7 @@ import com.malcolm.qme.rest.exception.*;
 import java.util.List;
 
 /**
- * @author: Malcolm
+ * @author Malcolm
  * D - Resource Details
  * T - Resource for Create and Update
  * I - ID for Resource
@@ -39,7 +39,7 @@ public interface QMeService<D,T,I> {
      * Save Resource
      *
      * @param t Resource to creates
-     * @param userId
+     * @param userId User Id
      * @return Resource
      * @throws QMeInvalidResourceDataException
      * @throws QMeResourceConflictException
@@ -53,7 +53,7 @@ public interface QMeService<D,T,I> {
      * @param t Resource to update
      * @param id id for resource
      * @param userId update user id
-     * @return
+     * @return Object Type
      * @throws QMeResourceNotFoundException
      * @throws QMeInvalidResourceDataException
      * @throws QMeResourceConflictException

@@ -18,8 +18,8 @@ public interface UserStagingSpringDataRepository extends JpaRepository<UserStagi
     /**
      * Find By Staging Token
      *
-     * @param stagingToken
-     * @return
+     * @param stagingToken User Staging Token
+     * @return User Staging Entity
      */
     UserStagingEntity findByStagingTokenIgnoreCase(String stagingToken);
 
@@ -39,7 +39,7 @@ public interface UserStagingSpringDataRepository extends JpaRepository<UserStagi
 
     /**
      * Delete Staging Users Staged more than 5 days ago
-     * @param userStagingDate
+     * @param userStagingDate User Staging Date
      */
     void deleteByUserStagingDateLessThan(LocalDateTime userStagingDate);
 

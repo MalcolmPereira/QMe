@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author malcolm
@@ -104,13 +105,11 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	 * @return MediaType List
 	 */
 	private List<MediaType> getMediaType(List<MediaTypeEntity> mediaTypeEntities){
-		final List<MediaType> mediaTypeList = new ArrayList<MediaType>();
+		final List<MediaType> mediaTypeList = new ArrayList<>();
 		if(mediaTypeEntities == null){
 			return mediaTypeList;
 		}
-		for (final MediaTypeEntity mediaTypeEntity : mediaTypeEntities){
-			mediaTypeList.add(getMediaType(mediaTypeEntity));
-		}
+		mediaTypeList.addAll(mediaTypeEntities.stream().map(this::getMediaType).collect(Collectors.toList()));
 		return mediaTypeList;
 
 	}

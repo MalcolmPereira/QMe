@@ -284,26 +284,19 @@ public class UserEntity implements java.io.Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-        UserEntity that = (UserEntity) o;
+		UserEntity that = (UserEntity) o;
 
-        if (!userId.equals(that.userId)) return false;
-        if (!userName.equals(that.userName)) return false;
-        if (!userFirstName.equals(that.userFirstName)) return false;
-        if (!userLastName.equals(that.userLastName)) return false;
-        if (!userEmail.equals(that.userEmail)) return false;
-        if (!userPasscode.equals(that.userPasscode)) return false;
-        if (!userRegisteredDate.equals(that.userRegisteredDate)) return false;
-        if (!userUpdatedDate.equals(that.userUpdatedDate)) return false;
-        if (userLastLoginDate != null ? !userLastLoginDate.equals(that.userLastLoginDate) : that.userLastLoginDate != null)
-            return false;
-        if (userLoginDate != null ? !userLoginDate.equals(that.userLoginDate) : that.userLoginDate != null)
-            return false;
-        return !(updateUser != null ? !updateUser.equals(that.updateUser) : that.updateUser != null);
+		if (!userId.equals(that.userId)) return false;
+		if (!userName.equals(that.userName)) return false;
+		if (!userFirstName.equals(that.userFirstName)) return false;
+		if (!userLastName.equals(that.userLastName)) return false;
+		if (!userEmail.equals(that.userEmail)) return false;
+		return userPasscode.equals(that.userPasscode) && userRegisteredDate.equals(that.userRegisteredDate) && userUpdatedDate.equals(that.userUpdatedDate) && !(userLastLoginDate != null ? !userLastLoginDate.equals(that.userLastLoginDate) : that.userLastLoginDate != null) && !(userLoginDate != null ? !userLoginDate.equals(that.userLoginDate) : that.userLoginDate != null) && !(updateUser != null ? !updateUser.equals(that.updateUser) : that.updateUser != null);
 
-    }
+	}
 
     @Override
     public int hashCode() {

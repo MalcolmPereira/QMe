@@ -142,24 +142,18 @@ public class QMeUser extends QMeResource {
 
         QMeUser qMeUser = (QMeUser) o;
 
-        if (!getUserName().equals(qMeUser.getUserName())) return false;
-        if (!getUserPassword().equals(qMeUser.getUserPassword())) return false;
-        if (getUserFirstName() != null ? !getUserFirstName().equals(qMeUser.getUserFirstName()) : qMeUser.getUserFirstName() != null)
-            return false;
-        if (getUserLastName() != null ? !getUserLastName().equals(qMeUser.getUserLastName()) : qMeUser.getUserLastName() != null)
-            return false;
-        return getUserEmail().equals(qMeUser.getUserEmail());
+        return userName.equals(qMeUser.userName) && userPassword.equals(qMeUser.userPassword) && userFirstName.equals(qMeUser.userFirstName) && userLastName.equals(qMeUser.userLastName) && userEmail.equals(qMeUser.userEmail);
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getUserName().hashCode();
-        result = 31 * result + getUserPassword().hashCode();
-        result = 31 * result + (getUserFirstName() != null ? getUserFirstName().hashCode() : 0);
-        result = 31 * result + (getUserLastName() != null ? getUserLastName().hashCode() : 0);
-        result = 31 * result + getUserEmail().hashCode();
+        result = 31 * result + userName.hashCode();
+        result = 31 * result + userPassword.hashCode();
+        result = 31 * result + userFirstName.hashCode();
+        result = 31 * result + userLastName.hashCode();
+        result = 31 * result + userEmail.hashCode();
         return result;
     }
 

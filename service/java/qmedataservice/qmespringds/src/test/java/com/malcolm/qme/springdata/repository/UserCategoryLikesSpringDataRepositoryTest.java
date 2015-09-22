@@ -98,7 +98,7 @@ public class UserCategoryLikesSpringDataRepositoryTest {
         userCategoryLikesEntityId.setCatId(catID);
         userCategoryLikesEntity.setId(userCategoryLikesEntityId);
 
-        userCategoryLikesEntity = userCategoryLikesSpringDataRepo.save(userCategoryLikesEntity);
+        userCategoryLikesSpringDataRepo.save(userCategoryLikesEntity);
 
 
         userCategoryLikesEntity = userCategoryLikesSpringDataRepo.findOne(userCategoryLikesEntityId);
@@ -146,7 +146,7 @@ public class UserCategoryLikesSpringDataRepositoryTest {
         userCategoryLikesEntityId.setCatId(catID);
         userCategoryLikesEntity.setId(userCategoryLikesEntityId);
 
-        userCategoryLikesEntity = userCategoryLikesSpringDataRepo.save(userCategoryLikesEntity);
+        userCategoryLikesSpringDataRepo.save(userCategoryLikesEntity);
 
         userCategoryLikesEntity = userCategoryLikesSpringDataRepo.findOne(userCategoryLikesEntityId);
         assertNotNull(userCategoryLikesEntity);

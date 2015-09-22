@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -127,13 +128,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	 * @return Category List
 	 */
 	private List<Category> getCategory(List<CategoryEntity> categoryEntities){
-		List<Category> categoryList = new ArrayList<Category>();
+		List<Category> categoryList = new ArrayList<>();
 		if(categoryEntities == null){
 			return categoryList;
 		}
-		for (CategoryEntity categoryEntity : categoryEntities){
-			categoryList.add(getCategory(categoryEntity));
-		}
+        categoryList.addAll(categoryEntities.stream().map(this::getCategory).collect(Collectors.toList()));
 		return categoryList;
 
 	}

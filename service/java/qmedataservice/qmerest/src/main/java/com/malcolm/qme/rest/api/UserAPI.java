@@ -132,7 +132,7 @@ public interface UserAPI extends QMeAPI {
     /**
      * Confirm User Registration
      *
-     * @param registrationToken
+     * @param registrationToken Registration Token
      * @return Boolean - User Registration Completed
      * @throws QMeResourceException
      */
@@ -163,7 +163,7 @@ public interface UserAPI extends QMeAPI {
     String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
 
     /**
-     * Forgot Passsword
+     * Forgot Password
      *
      * @param userEmail User Email
      * @param url Reset URL that will be sent to user email

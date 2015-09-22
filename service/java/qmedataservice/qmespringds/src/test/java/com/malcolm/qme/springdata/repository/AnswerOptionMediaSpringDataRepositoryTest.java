@@ -93,7 +93,7 @@ public class AnswerOptionMediaSpringDataRepositoryTest {
         assertThat(answerOptionEntity.getOptionId(), greaterThan(0L));
         final Long answerOptionID = answerOptionEntity.getOptionId();
 
-        AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID, 1, new String("testing").getBytes());
+        AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID, 1, "testing".getBytes());
         answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
         assertNotNull(answerOptionMediaEntity);
         assertThat(answerOptionMediaEntity.getOptionMediaId(), greaterThan(0L));
@@ -104,7 +104,7 @@ public class AnswerOptionMediaSpringDataRepositoryTest {
         assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
         assertThat(new String(answerOptionMediaEntity.getOptionMedia()), equalTo("testing"));
 
-        answerOptionMediaEntity.setOptionMedia(new String("testing updates").getBytes());
+        answerOptionMediaEntity.setOptionMedia("testing updates".getBytes());
         answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
         assertNotNull(answerOptionMediaEntity);
         assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));
@@ -153,7 +153,7 @@ public class AnswerOptionMediaSpringDataRepositoryTest {
         assertThat(answerOptionEntity.getOptionId(), greaterThan(0L));
         final Long answerOptionID = answerOptionEntity.getOptionId();
 
-        AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID, 1, new String("testing").getBytes());
+        AnswerOptionMediaEntity answerOptionMediaEntity = new AnswerOptionMediaEntity(answerOptionID, 1, "testing".getBytes());
         answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
         assertNotNull(answerOptionMediaEntity);
         assertThat(answerOptionMediaEntity.getOptionMediaId(), greaterThan(0L));
@@ -170,7 +170,7 @@ public class AnswerOptionMediaSpringDataRepositoryTest {
         assertThat(answerOptionMediaEntityList.get(0).getOptionMediaId(), equalTo(answerOptionMediaID));
         assertThat(new String(answerOptionMediaEntityList.get(0).getOptionMedia()), equalTo("testing"));
 
-        answerOptionMediaEntity.setOptionMedia(new String("testing updates").getBytes());
+        answerOptionMediaEntity.setOptionMedia("testing updates".getBytes());
         answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
         assertNotNull(answerOptionMediaEntity);
         assertThat(answerOptionMediaEntity.getOptionMediaId(), equalTo(answerOptionMediaID));

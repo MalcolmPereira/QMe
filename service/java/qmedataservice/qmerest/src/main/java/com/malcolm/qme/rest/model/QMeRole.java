@@ -80,19 +80,16 @@ public class QMeRole extends QMeResource {
 
         QMeRole qMeRole = (QMeRole) o;
 
-        if (getRoleID() != null ? !getRoleID().equals(qMeRole.getRoleID()) : qMeRole.getRoleID() != null) return false;
-        if (getRoleName() != null ? !getRoleName().equals(qMeRole.getRoleName()) : qMeRole.getRoleName() != null)
-            return false;
-        return !(getRoleDesc() != null ? !getRoleDesc().equals(qMeRole.getRoleDesc()) : qMeRole.getRoleDesc() != null);
+        return roleID.equals(qMeRole.roleID) && roleName.equals(qMeRole.roleName) && roleDesc.equals(qMeRole.roleDesc);
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (getRoleID() != null ? getRoleID().hashCode() : 0);
-        result = 31 * result + (getRoleName() != null ? getRoleName().hashCode() : 0);
-        result = 31 * result + (getRoleDesc() != null ? getRoleDesc().hashCode() : 0);
+        result = 31 * result + roleID.hashCode();
+        result = 31 * result + roleName.hashCode();
+        result = 31 * result + roleDesc.hashCode();
         return result;
     }
 

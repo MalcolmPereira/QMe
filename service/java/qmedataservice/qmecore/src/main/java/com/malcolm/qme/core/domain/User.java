@@ -234,12 +234,7 @@ public final class User {
         if (!userPassword.equals(user.userPassword)) return false;
         if (!userFirstName.equals(user.userFirstName)) return false;
         if (!userLastName.equals(user.userLastName)) return false;
-        if (!userEmail.equals(user.userEmail)) return false;
-        if (!userRegisteredDate.equals(user.userRegisteredDate)) return false;
-        if (!userUpdateDate.equals(user.userUpdateDate)) return false;
-        if (!userLastLoginDate.equals(user.userLastLoginDate)) return false;
-        if (!userLoginDate.equals(user.userLoginDate)) return false;
-        return !(updateUserID != null ? !updateUserID.equals(user.updateUserID) : user.updateUserID != null);
+        return userEmail.equals(user.userEmail) && userRegisteredDate.equals(user.userRegisteredDate) && userUpdateDate.equals(user.userUpdateDate) && userLastLoginDate.equals(user.userLastLoginDate) && userLoginDate.equals(user.userLoginDate) && !(updateUserID != null ? !updateUserID.equals(user.updateUserID) : user.updateUserID != null);
 
     }
 

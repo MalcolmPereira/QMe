@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -133,17 +134,15 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	/**
      * Map QuestionEntity to Question Domain Object
      *
-     * @param questionEntities
-     * @return
+     * @param questionEntities Question Entities
+     * @return List of Questions
      */
     private List<Question> getQuestion(List<QuestionEntity> questionEntities){
-    	 List<Question> questionList = new ArrayList<Question>();
+    	 List<Question> questionList = new ArrayList<>();
          if(questionEntities == null){
              return questionList;
          }
-         for (QuestionEntity questionEntity : questionEntities){
-        	 questionList.add(getQuestion(questionEntity));
-         }
+		questionList.addAll(questionEntities.stream().map(this::getQuestion).collect(Collectors.toList()));
          return questionList;
     }
 	

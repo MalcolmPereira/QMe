@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -35,7 +36,7 @@ public class UserRepositoryImpl implements UserRepository {
 	private UserSpringDataRepository userSpringDataRepo;
 
     /**
-     * Spring Data UserStaginEntity Repository
+     * Spring Data UserStagingEntity Repository
      */
     @Autowired
     private UserStagingSpringDataRepository userStagingSpringDataRepository;
@@ -397,13 +398,11 @@ public class UserRepositoryImpl implements UserRepository {
 	 * @return User List
 	 */
 	private List<User> getUsers(List<UserEntity> userEntities) {
-		List<User> userList = new ArrayList<User>();
+		List<User> userList = new ArrayList<>();
 		if (userEntities == null) {
 			return userList;
 		}
-		for (UserEntity userEntity : userEntities) {
-			userList.add(getUser(userEntity));
-		}
+		userList.addAll(userEntities.stream().map(this::getUser).collect(Collectors.toList()));
 		return userList;
 	}
 

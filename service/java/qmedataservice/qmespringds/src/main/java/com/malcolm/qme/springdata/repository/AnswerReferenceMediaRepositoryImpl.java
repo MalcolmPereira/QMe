@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -121,13 +122,11 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 	 * @return AnswerReferenceMedia List
 	 */
 	private List<AnswerReferenceMedia> getAnswerReferenceMedia(List<AnswerReferenceMediaEntity> answerReferenceMediaEntities){
-		final List<AnswerReferenceMedia> answerReferenceMediaList = new ArrayList<AnswerReferenceMedia>();
+		final List<AnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
 		if(answerReferenceMediaEntities == null){
 			return answerReferenceMediaList;
 		}
-		for (final AnswerReferenceMediaEntity answerReferenceMediaEntity : answerReferenceMediaEntities){
-			answerReferenceMediaList.add(getAnswerReferenceMedia(answerReferenceMediaEntity));
-		}
+		answerReferenceMediaList.addAll(answerReferenceMediaEntities.stream().map(this::getAnswerReferenceMedia).collect(Collectors.toList()));
 		return answerReferenceMediaList;
 	}
 

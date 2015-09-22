@@ -1,24 +1,21 @@
 /**
  * Name      : com.malcolm.qme.rest.model.fixtures.QMeResetPasswordFixtures.java
- * Date      : 5/31/15
- * Developer : malcolm
- * Purpose   : TODO:
+ * Date      : 5/31/2015
+ * Developer : Malcolm
+ * Purpose   : QMe Reset Password Fixture
  */
-
-package com.malcolm.qme.rest.model.fixtures;/**
- * Created by malcolm on 5/31/15.
- */
+package com.malcolm.qme.rest.model.fixtures;
 
 import com.malcolm.qme.rest.model.QMeResetPassword;
 
 /**
- * @Author: malcolm
+ * @author Malcolm
  */
 public class QMeResetPasswordFixtures extends QMeResourceFixture<QMeResetPassword>{
 
     /**
      * Return Simple QMe Reset Password
-     * @return
+     * @return QMeResetPassword
      */
     public static QMeResetPassword simpleQMeResetPassword(){
         QMeResetPassword qMeResetPassword = new QMeResetPassword();

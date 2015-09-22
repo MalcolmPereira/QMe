@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author: malcolm
+ * @author Malcolm
  */
 @ControllerAdvice
 public class QMeExceptionHandler {

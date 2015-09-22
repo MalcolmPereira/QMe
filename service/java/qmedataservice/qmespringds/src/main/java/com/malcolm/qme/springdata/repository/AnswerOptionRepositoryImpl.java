@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -128,13 +129,11 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	 * @return AnswerOption List
 	 */
 	private List<AnswerOption> getAnswerOption(List<AnswerOptionEntity> answerOptionEntities){
-		final List<AnswerOption> optionList = new ArrayList<AnswerOption>();
+		final List<AnswerOption> optionList = new ArrayList<>();
 		if(answerOptionEntities == null){
 			return optionList;
 		}
-		for (final AnswerOptionEntity answerOptionEntity : answerOptionEntities){
-			optionList.add(getAnswerOption(answerOptionEntity));
-		}
+		optionList.addAll(answerOptionEntities.stream().map(this::getAnswerOption).collect(Collectors.toList()));
 		return optionList;
 	}
 
@@ -145,7 +144,7 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	 * @return AnswerOption
 	 */
 	private AnswerOption getAnswerOption(AnswerOptionEntity answerOptionEntity){
-		Boolean optionCorrect = Boolean.FALSE;
+		Boolean optionCorrect;
 		if(answerOptionEntity.getIscorrect() == 0){
 			optionCorrect = Boolean.FALSE;
 		}else{

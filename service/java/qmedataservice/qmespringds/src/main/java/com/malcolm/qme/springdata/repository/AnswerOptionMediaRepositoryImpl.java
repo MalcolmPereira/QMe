@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -119,13 +120,11 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 	 * @return AnswerOptionMedia List
 	 */
 	private List<AnswerOptionMedia> getAnswerOptionMedia(List<AnswerOptionMediaEntity> answerOptionMediaEntities){
-		final List<AnswerOptionMedia> optionMediaList = new ArrayList<AnswerOptionMedia>();
+		final List<AnswerOptionMedia> optionMediaList = new ArrayList<>();
 		if(answerOptionMediaEntities == null){
 			return optionMediaList;
 		}
-		for (final AnswerOptionMediaEntity answerOptionMediaEntity : answerOptionMediaEntities){
-			optionMediaList.add(getAnswerOptionMedia(answerOptionMediaEntity));
-		}
+		optionMediaList.addAll(answerOptionMediaEntities.stream().map(this::getAnswerOptionMedia).collect(Collectors.toList()));
 		return optionMediaList;
 	}
 

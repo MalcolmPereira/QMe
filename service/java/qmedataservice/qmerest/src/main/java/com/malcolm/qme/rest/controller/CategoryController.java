@@ -32,7 +32,7 @@ public class CategoryController implements CategoryAPI {
     /**
      * Logger
      */
-    private static Logger LOG = LoggerFactory.getLogger(CategoryController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
 
     /**
      * Category Service
@@ -92,7 +92,7 @@ public class CategoryController implements CategoryAPI {
         if(category.getParentCategoryId() != null){
             QMeCategoryDetail qmeCategoryDetail = categoryService.searchById(category.getParentCategoryId());
             if(qmeCategoryDetail == null){
-                throw new QMeResourceNotFoundException("Category with Category ID "+qmeCategoryDetail.getParentCategoryId()+" not found");
+                throw new QMeResourceNotFoundException("Category with Category ID "+category.getParentCategoryId()+" not found");
             }
         }
         //TODO:Add Security and User Id from Principal

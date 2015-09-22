@@ -7,8 +7,6 @@
 
 package com.malcolm.qme.rest.service.impl;
 
-import com.malcolm.qme.core.domain.Role;
-import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
@@ -94,7 +92,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
     @Override
     public QMeUserRole save(QMeUserRole qMeUserRole, Long userId) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
-            UserRole userRole = null;
+            UserRole userRole;
             userRole = getUserRole(qMeUserRole);
             userRole = userRoleRepo.save(userRole);
             return getQMeUserRoleDetail(userRole);
@@ -132,8 +130,8 @@ public final class UserRoleServiceImpl implements UserRoleService {
     /**
      * Get UserRole for Create
      *
-     * @param qmeUserRole
-     * @return
+     * @param qmeUserRole Qme User Role
+     * @return User Role
      * @throws QMeInvalidResourceDataException
      * @throws QMeResourceConflictException
      * @throws QMeServerException
@@ -147,7 +145,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
                 throw new QMeInvalidResourceDataException("Valid User Id is required");
             }
             //FIXME:
-            //TODO: Moce this to controlled code to check existence when adding!!!
+            //TODO: Update this to controlled code to check existence when adding!!!
             /*
             Role role = roleRepo.findById(qmeUserRole.getRoleID());
             if(role == null){
@@ -163,7 +161,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
             List<UserRole> userRoleList = userRoleRepo.findByUserId(qmeUserRole.getUserID());
             if(userRoleList != null && userRoleList.size() ==  0){
                 for (UserRole userRole : userRoleList){
-                    if(userRole.getRoleID() == qmeUserRole.getRoleID()){
+                    if(userRole.getRoleID().equals(qmeUserRole.getRoleID())){
                         throw new QMeResourceConflictException("Role with role id "+qmeUserRole.getRoleID()+" already assigned to user "+qmeUserRole.getUserID() +", please assign unique role to user");
                     }
                 }

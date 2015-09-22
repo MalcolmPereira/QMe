@@ -8,7 +8,6 @@
 package com.malcolm.qme.rest.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Malcolm
@@ -134,6 +133,7 @@ public class QMeUserDetail extends QMeUser {
         this.updateUserName = updateUserName;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,12 +142,7 @@ public class QMeUserDetail extends QMeUser {
 
         QMeUserDetail that = (QMeUserDetail) o;
 
-        if (!userId.equals(that.userId)) return false;
-        if (!userRegisteredDate.equals(that.userRegisteredDate)) return false;
-        if (!userUpdateDate.equals(that.userUpdateDate)) return false;
-        if (!userLastLoginDate.equals(that.userLastLoginDate)) return false;
-        if (!updateUserID.equals(that.updateUserID)) return false;
-        return updateUserName.equals(that.updateUserName);
+        return userId.equals(that.userId) && userRegisteredDate.equals(that.userRegisteredDate) && !(userUpdateDate != null ? !userUpdateDate.equals(that.userUpdateDate) : that.userUpdateDate != null) && !(userLastLoginDate != null ? !userLastLoginDate.equals(that.userLastLoginDate) : that.userLastLoginDate != null);
 
     }
 
@@ -156,10 +151,8 @@ public class QMeUserDetail extends QMeUser {
         int result = super.hashCode();
         result = 31 * result + userId.hashCode();
         result = 31 * result + userRegisteredDate.hashCode();
-        result = 31 * result + userUpdateDate.hashCode();
-        result = 31 * result + userLastLoginDate.hashCode();
-        result = 31 * result + updateUserID.hashCode();
-        result = 31 * result + updateUserName.hashCode();
+        result = 31 * result + (userUpdateDate != null ? userUpdateDate.hashCode() : 0);
+        result = 31 * result + (userLastLoginDate != null ? userLastLoginDate.hashCode() : 0);
         return result;
     }
 

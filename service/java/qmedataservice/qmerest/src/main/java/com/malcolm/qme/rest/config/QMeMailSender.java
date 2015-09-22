@@ -20,11 +20,11 @@ public final class QMeMailSender extends JavaMailSenderImpl{
         SSL("SSL")
         ;
 
-        private String authType;
+        private final String authType;
 
         /**
          * Enum Constructor
-         * @param authType
+         * @param authType Authentication Type
          */
         SMPT_AUTH_TYPE(String authType){
             this.authType = authType;
@@ -40,8 +40,8 @@ public final class QMeMailSender extends JavaMailSenderImpl{
 
         /**
          * Get Auth Type Enum
-         * @param text
-         * @return
+         * @param text Authentication Type Text
+         * @return SMTP_AUTH_TYPE
          */
         public static SMPT_AUTH_TYPE fromString(String text) {
             if (text != null) {
@@ -116,9 +116,9 @@ public final class QMeMailSender extends JavaMailSenderImpl{
     /**
      * Public Constructor
      *
-     * @param userName
-     * @param password
-     * @param mailProperties
+     * @param userName User Name
+     * @param password Password
+     * @param mailProperties MailProperties
      */
     public QMeMailSender(String userName, String password, Properties mailProperties) {
         if(userName == null || userName.trim().length() == 0){
@@ -139,19 +139,6 @@ public final class QMeMailSender extends JavaMailSenderImpl{
         if(!mailProperties.containsKey(MAIL_SMTP_PORT)){
             throw new IllegalArgumentException("Invalid mail properties for QMe Mail Sender, please specify valid smtp mail properties with port key");
         }
-        /*
-      User Name
-     */
-        String userName1 = userName;
-        /*
-      Password
-     */
-        String password1 = password;
-        /*
-      Mail Properties
-     */
-        Properties mailProperties1 = mailProperties;
-
         this.setUsername(userName);
         this.setPassword(password);
         this.setJavaMailProperties(mailProperties);

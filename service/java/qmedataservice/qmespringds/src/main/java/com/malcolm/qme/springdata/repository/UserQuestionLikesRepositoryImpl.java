@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -105,8 +106,8 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	/**
 	 * Map UserQuestionLikes Domain Object to UserQuestionLikesEntityId 
 	 * 
-	 * @param userQuestionLikes
-	 * @return
+	 * @param userQuestionLikes User Questions Like
+	 * @return User Question Likes Entity Id
 	 */
 	private UserQuestionLikesEntityId getUserQuestionLikesEntityId(UserQuestionLikes userQuestionLikes){
 		UserQuestionLikesEntityId  userQuestionLikesEntityId = new UserQuestionLikesEntityId();
@@ -138,13 +139,11 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	 * @return UserQuestionLikes List
 	 */
 	private List<UserQuestionLikes> getUserQuestionLikes(List<UserQuestionLikesEntity> userQuestionLikesEntities){
-		List<UserQuestionLikes> userQuestionLikesList = new ArrayList<UserQuestionLikes>();
+		List<UserQuestionLikes> userQuestionLikesList = new ArrayList<>();
 		if(userQuestionLikesEntities == null){
             return userQuestionLikesList;
         }
-		for (UserQuestionLikesEntity userQuestionLikesEntity : userQuestionLikesEntities){
-			userQuestionLikesList.add(getUserQuestionLikes(userQuestionLikesEntity));
-	    }
+		userQuestionLikesList.addAll(userQuestionLikesEntities.stream().map(this::getUserQuestionLikes).collect(Collectors.toList()));
 	    return userQuestionLikesList;
 	}
 	

@@ -24,7 +24,7 @@ public class QMeApplication {
     /**
      * Run the Application
      *
-     * @param args
+     * @param args Main Program Arguments
      */
     public static void main(String[] args) {
         SpringApplication.run(QMeApplication.class, args);

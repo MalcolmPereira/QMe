@@ -253,7 +253,7 @@ public class QuizRepositoryImplTest {
         assertThat(quiz.getQuizID(), equalTo(quizID1));
         assertThat(quiz.getQuizName(), equalTo("QuizRepositoryImplTestByLikes Quiz1"));
         for (int i = 0; i < 100; i++) {
-            Quiz quizUpdate = null;
+            Quiz quizUpdate;
             if (quiz.getLikes() == null) {
                 quizUpdate = new Quiz(
                         quiz.getQuizID(),
@@ -282,7 +282,7 @@ public class QuizRepositoryImplTest {
                         1L);
 
             }
-            quizUpdate = quizRepository.update(quizUpdate, 1L);
+            quizRepository.update(quizUpdate, 1L);
         }
 
         quiz = new Quiz(
@@ -296,7 +296,7 @@ public class QuizRepositoryImplTest {
         assertThat(quiz.getQuizID(), equalTo(quizID2));
         assertThat(quiz.getQuizName(), equalTo("QuizRepositoryImplTestByLikes Quiz2"));
         for (int i = 0; i < 10; i++) {
-            Quiz quizUpdate = null;
+            Quiz quizUpdate;
             if (quiz.getLikes() == null) {
                 quizUpdate = new Quiz(
                         quiz.getQuizID(),
@@ -325,7 +325,7 @@ public class QuizRepositoryImplTest {
                         1L);
 
             }
-            quizUpdate = quizRepository.update(quizUpdate, 1L);
+            quizRepository.update(quizUpdate, 1L);
         }
 
         quiz = new Quiz(

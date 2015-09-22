@@ -77,7 +77,7 @@ public class QMeSpringDataJPAConfig {
      *
      * @return Hibernate Properties
      */
-    protected Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         return new Properties() {
             private static final long serialVersionUID = 6067241928722086747L;
             {

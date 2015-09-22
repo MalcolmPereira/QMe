@@ -78,39 +78,21 @@ public class UserPasswordResetEntityId implements java.io.Serializable {
 		this.resetToken = resetToken;
 	}
 
-	@Override
-	public boolean equals(Object other) {
-		if ((this == other)) {
-			return true;
-		}
-		if ((other == null)) {
-			return false;
-		}
-		if (!(other instanceof UserPasswordResetEntityId)) {
-			return false;
-		}
-		final UserPasswordResetEntityId castOther = (UserPasswordResetEntityId) other;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		return ((this.getUserId() == castOther.getUserId()) || ((this
-				.getUserId() != null) && (castOther.getUserId() != null) && this
-				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getResetToken() == castOther.getResetToken()) || ((this
-						.getResetToken() != null)
-						&& (castOther.getResetToken() != null) && this
-						.getResetToken().equals(castOther.getResetToken())));
-	}
+        UserPasswordResetEntityId that = (UserPasswordResetEntityId) o;
 
-	@Override
-	public int hashCode() {
-		int result = 17;
+        return userId.equals(that.userId) && resetToken.equals(that.resetToken);
 
-		result = (37 * result)
-				+ (getUserId() == null ? 0 : this.getUserId().hashCode());
-		result = (37
-				* result)
-				+ (getResetToken() == null ? 0 : this.getResetToken()
-						.hashCode());
-		return result;
-	}
+    }
 
+    @Override
+    public int hashCode() {
+        int result = userId.hashCode();
+        result = 31 * result + resetToken.hashCode();
+        return result;
+    }
 }

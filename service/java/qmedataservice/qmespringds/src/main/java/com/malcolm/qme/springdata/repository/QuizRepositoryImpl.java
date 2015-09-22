@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -145,13 +146,11 @@ public class QuizRepositoryImpl implements QuizRepository {
 	 * @return Quiz List
 	 */
 	private List<Quiz> getQuiz(List<QuizEntity> quizEntities){
-		final List<Quiz> quizList = new ArrayList<Quiz>();
+		final List<Quiz> quizList = new ArrayList<>();
 		if(quizEntities == null){
 			return quizList;
 		}
-		for (final QuizEntity quizEntity : quizEntities){
-			quizList.add(getQuiz(quizEntity));
-		}
+		quizList.addAll(quizEntities.stream().map(this::getQuiz).collect(Collectors.toList()));
 		return quizList;
 	}
 

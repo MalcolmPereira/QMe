@@ -79,7 +79,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
         final Long questionID = question.getQuestionID();
 
 
-        AnswerReferenceMedia answerReferenceMedia = new AnswerReferenceMedia(questionID, 1, new String("Testing").getBytes());
+        AnswerReferenceMedia answerReferenceMedia = new AnswerReferenceMedia(questionID, 1, "Testing".getBytes());
         answerReferenceMedia = answerReferenceMediaRepository.save(answerReferenceMedia);
         assertNotNull(answerReferenceMedia);
         assertThat(answerReferenceMedia.getAnswerRefMediaID(), greaterThan(0L));
@@ -92,7 +92,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
         AnswerReferenceMedia answerReferenceMediaUpdate = new AnswerReferenceMedia(
                 answerReferenceMedia.getAnswerRefMediaID(),
                 questionID,
-                1, new String("TestingNEW").getBytes());
+                1, "TestingNEW".getBytes());
         answerReferenceMediaUpdate = answerReferenceMediaRepository.save(answerReferenceMediaUpdate);
         assertNotNull(answerReferenceMediaUpdate);
         assertThat(answerReferenceMediaUpdate.getAnswerRefMediaID(), equalTo(answerReferenceMediaID));
@@ -123,7 +123,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
         final Long questionID = question.getQuestionID();
 
 
-        AnswerReferenceMedia answerReferenceMedia = new AnswerReferenceMedia(questionID, 1, new String("Testing").getBytes());
+        AnswerReferenceMedia answerReferenceMedia = new AnswerReferenceMedia(questionID, 1, "Testing".getBytes());
         answerReferenceMedia = answerReferenceMediaRepository.save(answerReferenceMedia);
         assertNotNull(answerReferenceMedia);
         assertThat(answerReferenceMedia.getAnswerRefMediaID(), greaterThan(0L));
@@ -146,7 +146,7 @@ public class AnswerReferenceMediaRepositoryImplTest {
         AnswerReferenceMedia answerReferenceMediaUpdate = new AnswerReferenceMedia(
                 answerReferenceMedia.getAnswerRefMediaID(),
                 questionID,
-                1, new String("TestingNEW").getBytes());
+                1, "TestingNEW".getBytes());
         answerReferenceMediaUpdate = answerReferenceMediaRepository.save(answerReferenceMediaUpdate);
         assertNotNull(answerReferenceMediaUpdate);
         assertThat(answerReferenceMediaUpdate.getAnswerRefMediaID(), equalTo(answerReferenceMediaID));
