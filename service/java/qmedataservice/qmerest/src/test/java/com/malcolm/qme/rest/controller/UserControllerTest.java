@@ -456,8 +456,6 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$", is("suser1")))
                 .andDo(print())
         ;
-        ;
-
     }
 
     @Test

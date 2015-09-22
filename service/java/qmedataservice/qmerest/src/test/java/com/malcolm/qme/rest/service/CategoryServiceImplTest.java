@@ -49,7 +49,7 @@ public class CategoryServiceImplTest {
     @Test
     public void testList() throws QMeResourceException, QMeException {
 
-        when(categoryRepo.findAll()).thenReturn((List)CategoryFixtures.simpleCategoryList());
+        when(categoryRepo.findAll()).thenReturn(CategoryFixtures.simpleCategoryList());
 
         List<QMeCategoryDetail> categoryList = categoryService.list();
         assertNotNull(categoryList);

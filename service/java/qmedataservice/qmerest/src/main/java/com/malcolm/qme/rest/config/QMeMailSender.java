@@ -114,21 +114,6 @@ public final class QMeMailSender extends JavaMailSenderImpl{
     public static final String MAIL_SMTP_SSL_SOCKET_CLASS      = "mail.smtp.socketFactory.class";
 
     /**
-     * Mail Properties
-     */
-    private final Properties mailProperties;
-
-    /**
-     * User Name
-     */
-    private final String userName;
-
-    /**
-     * Password
-     */
-    private final String password;
-
-   /**
      * Public Constructor
      *
      * @param userName
@@ -154,9 +139,18 @@ public final class QMeMailSender extends JavaMailSenderImpl{
         if(!mailProperties.containsKey(MAIL_SMTP_PORT)){
             throw new IllegalArgumentException("Invalid mail properties for QMe Mail Sender, please specify valid smtp mail properties with port key");
         }
-        this.userName = userName;
-        this.password = password;
-        this.mailProperties = mailProperties;
+        /*
+      User Name
+     */
+        String userName1 = userName;
+        /*
+      Password
+     */
+        String password1 = password;
+        /*
+      Mail Properties
+     */
+        Properties mailProperties1 = mailProperties;
 
         this.setUsername(userName);
         this.setPassword(password);

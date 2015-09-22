@@ -100,8 +100,7 @@ public class RestConfig {
         }else{
             mailProperties = mailTLS();
         }
-        JavaMailSenderImpl sender = new QMeMailSender(userName,passWord,mailProperties);
-        return sender;
+        return new QMeMailSender(userName,passWord,mailProperties);
     }
 
     /**

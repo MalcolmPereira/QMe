@@ -66,7 +66,7 @@ public class UserServiceImplTest {
 
     @Test
     public void testList() throws QMeResourceException, QMeException {
-        when(userRepo.findAll()).thenReturn((List) UserFixtures.simpleUserList());
+        when(userRepo.findAll()).thenReturn(UserFixtures.simpleUserList());
 
         List<QMeUserDetail> userList = userService.list();
 

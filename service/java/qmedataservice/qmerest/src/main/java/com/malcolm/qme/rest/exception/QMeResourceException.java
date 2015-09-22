@@ -18,11 +18,6 @@ public class QMeResourceException extends Exception {
     private String errorMessage;
 
     /**
-     * Error
-     */
-    private Throwable error;
-
-    /**
      * Public Constructor
      *
      * @param errorMessage Error Message
@@ -40,6 +35,9 @@ public class QMeResourceException extends Exception {
     public QMeResourceException(String errorMessage,Throwable error){
         super(errorMessage,error);
         this.errorMessage = errorMessage;
-        this.error = error;
+        /*
+      Error
+     */
+        Throwable error1 = error;
     }
 }
