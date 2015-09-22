@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
+apply plugin: "jacoco"
 
 repositories {
     maven {
@@ -16,6 +17,19 @@ repositories {
     mavenCentral()
 }
 
+jacoco {
+    toolVersion = "0.7.5.201505241946"
+    reportsDir = file("$buildDir/qmeJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/qmeJacocoHtml"
+    }
+}
+
 sourceCompatibility = 1.8
 
 targetCompatibility = 1.8
@@ -27,6 +41,7 @@ subprojects {
 
     apply plugin: 'idea'
 
+    apply plugin: "jacoco"
 
     sourceCompatibility = 1.8
 
