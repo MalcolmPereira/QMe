@@ -1,9 +1,10 @@
 buildscript {
 	ext {
-		springBootVersion       = '1.2.5.RELEASE'
+		springBootVersion       = '1.2.6.RELEASE'
         springHateosVersion     = "0.19.0.RELEASE"
         javaMailVersion		    = "1.5.4"
         jsonpathVersion         = "2.0.0"
+        aspectJWeaverVersion    = "1.8.7"
 	}
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -37,6 +38,7 @@ dependencies {
     compile("org.springframework:spring-context:${springVersion}")
     compile("org.springframework:spring-context-support:${springVersion}")
     compile("org.springframework:spring-test:${springVersion}")
+    compile("org.aspectj:aspectjweaver:${aspectJWeaverVersion}")
 
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"
