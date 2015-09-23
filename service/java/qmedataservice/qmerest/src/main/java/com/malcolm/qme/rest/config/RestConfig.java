@@ -4,7 +4,6 @@
  * Developer : Malcolm
  * Purpose   : Configuration for REST MVC
  */
-
 package com.malcolm.qme.rest.config;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -86,7 +85,7 @@ public class RestConfig {
         if(authType == null){
             authType = QMeMailSender.SMPT_AUTH_TYPE.TLS;
         }
-        LOG.debug("Got Mail auth type "+authType);
+        LOG.debug("Got Mail auth type " + authType);
         Properties mailProperties;
         if(QMeMailSender.SMPT_AUTH_TYPE.TLS == authType){
             mailProperties = mailTLS();

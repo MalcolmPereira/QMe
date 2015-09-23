@@ -37,14 +37,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class QMeUserDetailsServiceTest {
 
-    @InjectMocks
-    private  QMeUserDetailsService qMeUserDetailsService;
-
     @Mock
     private UserRepository userRepo;
 
     @Mock
     private UserRoleRepository userRoleRepository;
+
+    @InjectMocks
+    private  QMeUserDetailsService qMeUserDetailsService;
 
     @Before
     public void initMocks(){
