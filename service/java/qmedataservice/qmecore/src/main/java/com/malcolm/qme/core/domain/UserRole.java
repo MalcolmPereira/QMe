@@ -109,15 +109,19 @@ public final class UserRole {
 
         UserRole userRole = (UserRole) o;
 
-        return getUserRoleID().equals(userRole.getUserRoleID()) && getRoleID().equals(userRole.getRoleID()) && getUserID().equals(userRole.getUserID());
+        if (!userRoleID.equals(userRole.userRoleID)) return false;
+        if (!roleID.equals(userRole.roleID)) return false;
+        if (!roleName.equals(userRole.roleName)) return false;
+        return userID.equals(userRole.userID);
 
     }
 
     @Override
     public int hashCode() {
-        int result = getUserRoleID().hashCode();
-        result = 31 * result + getRoleID().hashCode();
-        result = 31 * result + getUserID().hashCode();
+        int result = userRoleID.hashCode();
+        result = 31 * result + roleID.hashCode();
+        result = 31 * result + roleName.hashCode();
+        result = 31 * result + userID.hashCode();
         return result;
     }
 
