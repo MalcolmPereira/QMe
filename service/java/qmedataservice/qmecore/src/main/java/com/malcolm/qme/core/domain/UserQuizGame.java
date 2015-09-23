@@ -133,18 +133,17 @@ public final class UserQuizGame {
 
         UserQuizGame that = (UserQuizGame) o;
 
-        return getUserGameToken().equals(that.getUserGameToken()) && getUserID().equals(that.getUserID()) && getCategoryID().equals(that.getCategoryID()) && !(getUserGameScore() != null ? !getUserGameScore().equals(that.getUserGameScore()) : that.getUserGameScore() != null) && !(getQuizStartDate() != null ? !getQuizStartDate().equals(that.getQuizStartDate()) : that.getQuizStartDate() != null) && !(getQuizEndDate() != null ? !getQuizEndDate().equals(that.getQuizEndDate()) : that.getQuizEndDate() != null);
+        if (!userGameToken.equals(that.userGameToken)) return false;
+        if (!userID.equals(that.userID)) return false;
+        return categoryID.equals(that.categoryID);
 
     }
 
     @Override
     public int hashCode() {
-        int result = getUserGameToken().hashCode();
-        result = 31 * result + getUserID().hashCode();
-        result = 31 * result + getCategoryID().hashCode();
-        result = 31 * result + (getUserGameScore() != null ? getUserGameScore().hashCode() : 0);
-        result = 31 * result + (getQuizStartDate() != null ? getQuizStartDate().hashCode() : 0);
-        result = 31 * result + (getQuizEndDate() != null ? getQuizEndDate().hashCode() : 0);
+        int result = userGameToken.hashCode();
+        result = 31 * result + userID.hashCode();
+        result = 31 * result + categoryID.hashCode();
         return result;
     }
 
