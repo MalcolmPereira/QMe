@@ -49,8 +49,12 @@ public class QMeUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try{
+            if(username == null || username.trim().length() == 0){
+                throw new UsernameNotFoundException("User " + username + " not found ");
+            }
+
             User user;
-            if(username != null && username.contains(EMAIL_CHAR)){
+            if(username.contains(EMAIL_CHAR)){
                 user = userRepo.findByUserEmail(username);
 
             }else{

@@ -54,7 +54,6 @@ public class QMeSecurityConfigTest {
         boolean isConfigured = false;
         try {
             qMeSecurityConfig.configureGlobal(authenticationBuilder);
-            System.out.println(authenticationBuilder.getDefaultUserDetailsService());
             isConfigured = true;
         }catch(Exception err){
             err.printStackTrace();
@@ -76,6 +75,7 @@ public class QMeSecurityConfigTest {
             isConfigured = false;
         }
         assertThat(isConfigured, equalTo(true));
+        //TODO: Can we get the security paths that were confirgured?
     }
 
     @Test
