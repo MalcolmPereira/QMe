@@ -2,7 +2,7 @@
  * Name      : com.malcolm.qme.springdata.entity.LocalDateTimeConverter.java
  * Date      : 5/23/15
  * Developer : Malcolm
- * Purpose   : LocalDateTime Convertor
+ * Purpose   : LocalDateTime Converter
  */
 
 package com.malcolm.qme.springdata.entity;
