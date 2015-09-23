@@ -178,14 +178,16 @@ public class UserRepositoryImpl implements UserRepository {
             if(userStagingEntity == null){
                 throw new QMeException("Invalid user registration staging token");
             }
-            User user = getUser(userStagingEntity);
-            UserEntity userEntity = getUserEntity(user);
+            long stagingUserID = userStagingEntity.getUserId();
+            userStagingEntity.setUserId(null);
 
+            User user = getUser(userStagingEntity);
+			UserEntity userEntity = getUserEntity(user);
             userEntity = userSpringDataRepo.save(userEntity);
             userEntity.setUpdateUser(userEntity.getUserId());
             userEntity = userSpringDataRepo.save(userEntity);
 
-            userStagingSpringDataRepository.delete(userStagingEntity.getUserId());
+            userStagingSpringDataRepository.delete(stagingUserID);
             userStagingSpringDataRepository.deleteByUserStagingDateLessThan(LocalDateTime.now().minusDays(MAX_STAGING_DAYS));
 
             return getUser(userEntity);
@@ -431,7 +433,7 @@ public class UserRepositoryImpl implements UserRepository {
      * @return User
      */
     private User getUser(UserStagingEntity userStagingEntity) {
-        if (userStagingEntity.getUserId() > 0) {
+        if (userStagingEntity.getUserId() != null && userStagingEntity.getUserId() > 0) {
             return new User(userStagingEntity.getUserId(),
                     userStagingEntity.getUserName(),
                     userStagingEntity.getUserPasscode(),

@@ -102,7 +102,9 @@ public class UserRepositoryImplTest {
     public void testUserStagingAndRegistration() throws QMeException {
         assertNotNull(userRepo);
 
-        User user = new User("UserRepositoryImplStagingTest", "Test", "Test", "Test", "UserRepositoryImplStagingTest@test.com");
+        String userName = "UserRepositoryImplStagingTest" + System.currentTimeMillis();
+
+        User user = new User(userName, "Test", "Test", "Test", userName+"@test.com");
         String stagingToken = userRepo.stageUserRegistration(user);
         assertNotNull(stagingToken);
         assertThat(stagingToken.length(), greaterThan(0));
