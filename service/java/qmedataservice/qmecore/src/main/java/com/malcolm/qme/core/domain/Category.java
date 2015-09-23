@@ -141,7 +141,6 @@ public final class Category {
 		return categoryLikes;
 	}
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,20 +148,17 @@ public final class Category {
 
         Category category = (Category) o;
 
-        return getCategoryID().equals(category.getCategoryID()) &&
-               !(getCategoryParentID() != null ? !getCategoryParentID().equals(category.getCategoryParentID()) : category.getCategoryParentID() != null) &&
-                getCategoryName().equals(category.getCategoryName()) && !(getCategoryCreateDate() != null ? !getCategoryCreateDate().equals(category.getCategoryCreateDate()) : category.getCategoryCreateDate() != null) &&
-                !(getCategoryCreateUserID() != null ? !getCategoryCreateUserID().equals(category.getCategoryCreateUserID()) : category.getCategoryCreateUserID() != null);
+        if (!categoryID.equals(category.categoryID)) return false;
+        if (!categoryParentID.equals(category.categoryParentID)) return false;
+        return categoryName.equals(category.categoryName);
 
     }
 
     @Override
     public int hashCode() {
-        int result = getCategoryID().hashCode();
-        result = 31 * result + (getCategoryParentID() != null ? getCategoryParentID().hashCode() : 0);
-        result = 31 * result + getCategoryName().hashCode();
-        result = 31 * result + (getCategoryCreateDate() != null ? getCategoryCreateDate().hashCode() : 0);
-        result = 31 * result + (getCategoryCreateUserID() != null ? getCategoryCreateUserID().hashCode() : 0);
+        int result = categoryID.hashCode();
+        result = 31 * result + categoryParentID.hashCode();
+        result = 31 * result + categoryName.hashCode();
         return result;
     }
 

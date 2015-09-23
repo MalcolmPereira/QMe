@@ -4,7 +4,6 @@
  * Developer : Malcolm
  * Purpose   : QMe Answer Option Domain Class
  */
-
 package com.malcolm.qme.core.domain;
 
 /**
