@@ -39,6 +39,7 @@ public class QMeException extends Exception {
      */
     public QMeException(Throwable cause) {
         super(cause);
+        this.error = cause;
         if(cause != null){
             this.errorMessage = cause.getLocalizedMessage();
         }else{
