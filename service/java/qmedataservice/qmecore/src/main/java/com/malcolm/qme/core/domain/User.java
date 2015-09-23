@@ -222,6 +222,7 @@ public final class User {
         return updateUserID;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -234,7 +235,7 @@ public final class User {
         if (!userPassword.equals(user.userPassword)) return false;
         if (!userFirstName.equals(user.userFirstName)) return false;
         if (!userLastName.equals(user.userLastName)) return false;
-        return userEmail.equals(user.userEmail) && userRegisteredDate.equals(user.userRegisteredDate) && userUpdateDate.equals(user.userUpdateDate) && userLastLoginDate.equals(user.userLastLoginDate) && userLoginDate.equals(user.userLoginDate) && !(updateUserID != null ? !updateUserID.equals(user.updateUserID) : user.updateUserID != null);
+        return userEmail.equals(user.userEmail);
 
     }
 
@@ -246,11 +247,6 @@ public final class User {
         result = 31 * result + userFirstName.hashCode();
         result = 31 * result + userLastName.hashCode();
         result = 31 * result + userEmail.hashCode();
-        result = 31 * result + userRegisteredDate.hashCode();
-        result = 31 * result + userUpdateDate.hashCode();
-        result = 31 * result + userLastLoginDate.hashCode();
-        result = 31 * result + userLoginDate.hashCode();
-        result = 31 * result + (updateUserID != null ? updateUserID.hashCode() : 0);
         return result;
     }
 
