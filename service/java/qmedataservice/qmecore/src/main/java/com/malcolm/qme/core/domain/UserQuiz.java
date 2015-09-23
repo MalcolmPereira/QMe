@@ -185,102 +185,34 @@ public final class UserQuiz {
 		return quizComplete;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		UserQuiz userQuiz = (UserQuiz) o;
+
+		if (!userQuizID.equals(userQuiz.userQuizID)) return false;
+		if (!userID.equals(userQuiz.userID)) return false;
+		if (!quizID.equals(userQuiz.quizID)) return false;
+		if (!categoryID.equals(userQuiz.categoryID)) return false;
+		return userQuizToken.equals(userQuiz.userQuizToken);
+
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((categoryID == null) ? 0 : categoryID.hashCode());
-		result = prime * result
-				+ ((quizComplete == null) ? 0 : quizComplete.hashCode());
-		result = prime * result
-				+ ((quizEndDate == null) ? 0 : quizEndDate.hashCode());
-		result = prime * result + ((quizID == null) ? 0 : quizID.hashCode());
-		result = prime * result
-				+ ((quizMaxScore == null) ? 0 : quizMaxScore.hashCode());
-		result = prime * result
-				+ ((quizStartDate == null) ? 0 : quizStartDate.hashCode());
-		result = prime * result
-				+ ((quizUserScore == null) ? 0 : quizUserScore.hashCode());
-		result = prime * result + ((userID == null) ? 0 : userID.hashCode());
-		result = prime * result
-				+ ((userQuizID == null) ? 0 : userQuizID.hashCode());
-		result = prime * result
-				+ ((userQuizToken == null) ? 0 : userQuizToken.hashCode());
+		int result = userQuizID.hashCode();
+		result = 31 * result + userID.hashCode();
+		result = 31 * result + quizID.hashCode();
+		result = 31 * result + categoryID.hashCode();
+		result = 31 * result + userQuizToken.hashCode();
 		return result;
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserQuiz other = (UserQuiz) obj;
-		if (categoryID == null) {
-			if (other.categoryID != null)
-				return false;
-		} else if (!categoryID.equals(other.categoryID))
-			return false;
-		if (quizComplete == null) {
-			if (other.quizComplete != null)
-				return false;
-		} else if (!quizComplete.equals(other.quizComplete))
-			return false;
-		if (quizEndDate == null) {
-			if (other.quizEndDate != null)
-				return false;
-		} else if (!quizEndDate.equals(other.quizEndDate))
-			return false;
-		if (quizID == null) {
-			if (other.quizID != null)
-				return false;
-		} else if (!quizID.equals(other.quizID))
-			return false;
-		if (quizMaxScore == null) {
-			if (other.quizMaxScore != null)
-				return false;
-		} else if (!quizMaxScore.equals(other.quizMaxScore))
-			return false;
-		if (quizStartDate == null) {
-			if (other.quizStartDate != null)
-				return false;
-		} else if (!quizStartDate.equals(other.quizStartDate))
-			return false;
-		if (quizUserScore == null) {
-			if (other.quizUserScore != null)
-				return false;
-		} else if (!quizUserScore.equals(other.quizUserScore))
-			return false;
-		if (userID == null) {
-			if (other.userID != null)
-				return false;
-		} else if (!userID.equals(other.userID))
-			return false;
-		if (userQuizID == null) {
-			if (other.userQuizID != null)
-				return false;
-		} else if (!userQuizID.equals(other.userQuizID))
-			return false;
-		if (userQuizToken == null) {
-			if (other.userQuizToken != null)
-				return false;
-		} else if (!userQuizToken.equals(other.userQuizToken))
-			return false;
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "UserQuiz [userQuizID=" + userQuizID + ", userID=" + userID
