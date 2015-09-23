@@ -83,9 +83,58 @@ public class RestConfigTest{
     }
 
     @Test
+    public void testJavaMailSenderTLSSystemProp() throws Exception {
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME)).thenReturn(null);
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME_SYS)).thenReturn("some user name");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD)).thenReturn(null);
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD_SYS)).thenReturn("some user password");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH_TYPE)).thenReturn(null);
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH)).thenReturn("true");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_HOST)).thenReturn("some host");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS)).thenReturn("some port");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_START_TLS)).thenReturn("true");
+        JavaMailSenderImpl mailSender = restConfig.javaMailSender();
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME_SYS);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PASSWORD);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PASSWORD_SYS);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_AUTH_TYPE);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_AUTH);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_HOST);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_START_TLS);
+        assertNotNull(mailSender);
+    }
+
+
+    @Test
     public void testJavaMailSenderSSL() throws Exception {
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME)).thenReturn("some user name");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD)).thenReturn("some user password");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH_TYPE)).thenReturn("SSL");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH)).thenReturn("true");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_HOST)).thenReturn("some host");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL)).thenReturn("some port");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS)).thenReturn("some class");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT)).thenReturn("some port");
+        JavaMailSenderImpl mailSender = restConfig.javaMailSender();
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PASSWORD);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_AUTH_TYPE);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_AUTH);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_HOST);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT);
+        assertNotNull(mailSender);
+    }
+
+    @Test
+    public void testJavaMailSenderSSLSystem() throws Exception {
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME)).thenReturn(null);
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_USERNAME_SYS)).thenReturn("some user name");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD)).thenReturn(null);
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_PASSWORD_SYS)).thenReturn("some user password");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH_TYPE)).thenReturn("SSL");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_AUTH)).thenReturn("true");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_HOST)).thenReturn("some host");
