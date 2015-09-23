@@ -1,10 +1,10 @@
 /**
- * Name      : com.malcolm.qme.config.QMeMailSenderTest.java
+ * Name      : com.malcolm.qme.rest.config.QMeMailSenderTest.java
  * Date      : 9/14/15
  * Developer : Malcolm
  * Purpose   : Test Cases for QMeMailSender
  */
-package com.malcolm.qme.config;
+package com.malcolm.qme.rest.config;
 
 import com.malcolm.qme.rest.config.QMeMailSender;
 import com.malcolm.qme.rest.service.UserService;
