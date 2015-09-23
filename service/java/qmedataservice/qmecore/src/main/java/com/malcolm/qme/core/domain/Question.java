@@ -205,106 +205,33 @@ public final class Question {
 		return updateUserID;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Question question = (Question) o;
+
+		if (!questionID.equals(question.questionID)) return false;
+		if (!categoryID.equals(question.categoryID)) return false;
+		if (!questionText.equals(question.questionText)) return false;
+		return answer.equals(question.answer);
+
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
-		result = prime * result
-				+ ((categoryID == null) ? 0 : categoryID.hashCode());
-		result = prime * result
-				+ ((createUserID == null) ? 0 : createUserID.hashCode());
-		result = prime * result + ((likes == null) ? 0 : likes.hashCode());
-		result = prime
-				* result
-				+ ((questionCreateDate == null) ? 0 : questionCreateDate
-						.hashCode());
-		result = prime * result
-				+ ((questionID == null) ? 0 : questionID.hashCode());
-		result = prime * result
-				+ ((questionPoint == null) ? 0 : questionPoint.hashCode());
-		result = prime * result
-				+ ((questionText == null) ? 0 : questionText.hashCode());
-		result = prime
-				* result
-				+ ((questionUpdateDate == null) ? 0 : questionUpdateDate
-						.hashCode());
-		result = prime * result
-				+ ((updateUserID == null) ? 0 : updateUserID.hashCode());
+		int result = questionID.hashCode();
+		result = 31 * result + categoryID.hashCode();
+		result = 31 * result + questionText.hashCode();
+		result = 31 * result + answer.hashCode();
 		return result;
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Question other = (Question) obj;
-		if (answer == null) {
-			if (other.answer != null)
-				return false;
-		} else if (!answer.equals(other.answer))
-			return false;
-		if (categoryID == null) {
-			if (other.categoryID != null)
-				return false;
-		} else if (!categoryID.equals(other.categoryID))
-			return false;
-		if (createUserID == null) {
-			if (other.createUserID != null)
-				return false;
-		} else if (!createUserID.equals(other.createUserID))
-			return false;
-		if (likes == null) {
-			if (other.likes != null)
-				return false;
-		} else if (!likes.equals(other.likes))
-			return false;
-		if (questionCreateDate == null) {
-			if (other.questionCreateDate != null)
-				return false;
-		} else if (!questionCreateDate.equals(other.questionCreateDate))
-			return false;
-		if (questionID == null) {
-			if (other.questionID != null)
-				return false;
-		} else if (!questionID.equals(other.questionID))
-			return false;
-		if (questionPoint == null) {
-			if (other.questionPoint != null)
-				return false;
-		} else if (!questionPoint.equals(other.questionPoint))
-			return false;
-		if (questionText == null) {
-			if (other.questionText != null)
-				return false;
-		} else if (!questionText.equals(other.questionText))
-			return false;
-		if (questionUpdateDate == null) {
-			if (other.questionUpdateDate != null)
-				return false;
-		} else if (!questionUpdateDate.equals(other.questionUpdateDate))
-			return false;
-		if (updateUserID == null) {
-			if (other.updateUserID != null)
-				return false;
-		} else if (!updateUserID.equals(other.updateUserID))
-			return false;
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "Question [questionID=" + questionID + ", categoryID="
