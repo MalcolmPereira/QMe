@@ -35,7 +35,7 @@ public class QMeUserRole extends QMeResource {
      * Get User Role ID
      * @return userRoleID
      */
-    private Long getUserRoleID() {
+    public Long getUserRoleID() {
         return userRoleID;
     }
 
@@ -67,7 +67,7 @@ public class QMeUserRole extends QMeResource {
      * Get Role Name
      * @return roleName role name
      */
-    private String getRoleName() {
+    public String getRoleName() {
         return roleName;
     }
 
@@ -95,35 +95,4 @@ public class QMeUserRole extends QMeResource {
         this.userID = userID;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        QMeUserRole that = (QMeUserRole) o;
-
-        return !(getUserRoleID() != null ? !getUserRoleID().equals(that.getUserRoleID()) : that.getUserRoleID() != null) && !(getRoleID() != null ? !getRoleID().equals(that.getRoleID()) : that.getRoleID() != null) && !(getRoleName() != null ? !getRoleName().equals(that.getRoleName()) : that.getRoleName() != null) && !(getUserID() != null ? !getUserID().equals(that.getUserID()) : that.getUserID() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getUserRoleID() != null ? getUserRoleID().hashCode() : 0);
-        result = 31 * result + (getRoleID() != null ? getRoleID().hashCode() : 0);
-        result = 31 * result + (getRoleName() != null ? getRoleName().hashCode() : 0);
-        result = 31 * result + (getUserID() != null ? getUserID().hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "QMeUserRole{" +
-                "userRoleID=" + userRoleID +
-                ", roleID=" + roleID +
-                ", roleName='" + roleName + '\'' +
-                ", userID=" + userID +
-                '}';
-    }
 }

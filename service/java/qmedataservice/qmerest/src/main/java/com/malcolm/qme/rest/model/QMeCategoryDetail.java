@@ -4,7 +4,6 @@
  * Developer : Malcolm
  * Purpose   : QMeCategory Details Model for REST Service Controller
  */
-
 package com.malcolm.qme.rest.model;
 
 import java.time.LocalDateTime;

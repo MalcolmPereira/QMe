@@ -72,33 +72,4 @@ public class QMeRole extends QMeResource {
         this.roleDesc = roleDesc;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        QMeRole qMeRole = (QMeRole) o;
-
-        return roleID.equals(qMeRole.roleID) && roleName.equals(qMeRole.roleName) && roleDesc.equals(qMeRole.roleDesc);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + roleID.hashCode();
-        result = 31 * result + roleName.hashCode();
-        result = 31 * result + roleDesc.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "QMeRole{" +
-                "roleID=" + roleID +
-                ", roleName='" + roleName + '\'' +
-                ", roleDesc='" + roleDesc + '\'' +
-                '}';
-    }
 }

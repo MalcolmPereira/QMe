@@ -134,37 +134,4 @@ public class QMeUserDetail extends QMeUser {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        QMeUserDetail that = (QMeUserDetail) o;
-
-        return userId.equals(that.userId) && userRegisteredDate.equals(that.userRegisteredDate) && !(userUpdateDate != null ? !userUpdateDate.equals(that.userUpdateDate) : that.userUpdateDate != null) && !(userLastLoginDate != null ? !userLastLoginDate.equals(that.userLastLoginDate) : that.userLastLoginDate != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + userId.hashCode();
-        result = 31 * result + userRegisteredDate.hashCode();
-        result = 31 * result + (userUpdateDate != null ? userUpdateDate.hashCode() : 0);
-        result = 31 * result + (userLastLoginDate != null ? userLastLoginDate.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "QMeUserDetail{" +
-                "userId=" + userId +
-                ", userRegisteredDate=" + userRegisteredDate +
-                ", userUpdateDate=" + userUpdateDate +
-                ", userLastLoginDate=" + userLastLoginDate +
-                ", updateUserID=" + updateUserID +
-                ", updateUserName='" + updateUserName + '\'' +
-                '}';
-    }
 }

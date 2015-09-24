@@ -134,37 +134,4 @@ public class QMeUser extends QMeResource {
         this.userRoles = userRoles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        QMeUser qMeUser = (QMeUser) o;
-
-        return userName.equals(qMeUser.userName) && userPassword.equals(qMeUser.userPassword) && userFirstName.equals(qMeUser.userFirstName) && userLastName.equals(qMeUser.userLastName) && userEmail.equals(qMeUser.userEmail);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
-        result = 31 * result + userPassword.hashCode();
-        result = 31 * result + userFirstName.hashCode();
-        result = 31 * result + userLastName.hashCode();
-        result = 31 * result + userEmail.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "QMeUser{" +
-                "userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userFirstName='" + userFirstName + '\'' +
-                ", userLastName='" + userLastName + '\'' +
-                ", userEmail='" + userEmail + '\'' +
-                '}';
-    }
 }
