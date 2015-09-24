@@ -6,7 +6,6 @@
  */
 package com.malcolm.qme.rest.config;
 
-import com.malcolm.qme.rest.config.QMeMailSender;
 import com.malcolm.qme.rest.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,6 +56,36 @@ public class QMeMailSenderTest {
         prop.put(QMeMailSender.MAIL_SMTP_AUTH, "true");
         prop.put(QMeMailSender.MAIL_SMTP_HOST, "smtp.gmail.com");
         prop.put(QMeMailSender.MAIL_SMTP_PORT, "587");
+        prop.put(QMeMailSender.MAIL_SMTP_START_TLS, "true");
+        QMeMailSender sender = new QMeMailSender("someuser","somepassword",prop);
+        assertNotNull(sender);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidQMeMailConfigMailAuthError(){
+        Properties prop = new Properties();
+        prop.put(QMeMailSender.MAIL_SMTP_HOST, "smtp.gmail.com");
+        prop.put(QMeMailSender.MAIL_SMTP_PORT, "587");
+        prop.put(QMeMailSender.MAIL_SMTP_START_TLS, "true");
+        QMeMailSender sender = new QMeMailSender("someuser","somepassword",prop);
+        assertNotNull(sender);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidQMeMailConfigMailHostError(){
+        Properties prop = new Properties();
+        prop.put(QMeMailSender.MAIL_SMTP_AUTH, "true");
+        prop.put(QMeMailSender.MAIL_SMTP_PORT, "587");
+        prop.put(QMeMailSender.MAIL_SMTP_START_TLS, "true");
+        QMeMailSender sender = new QMeMailSender("someuser","somepassword",prop);
+        assertNotNull(sender);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidQMeMailConfigMailPortError(){
+        Properties prop = new Properties();
+        prop.put(QMeMailSender.MAIL_SMTP_AUTH, "true");
+        prop.put(QMeMailSender.MAIL_SMTP_HOST, "smtp.gmail.com");
         prop.put(QMeMailSender.MAIL_SMTP_START_TLS, "true");
         QMeMailSender sender = new QMeMailSender("someuser","somepassword",prop);
         assertNotNull(sender);
