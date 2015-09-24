@@ -130,7 +130,7 @@ public class RoleServiceImplTest {
       public void testUpdateConflict() throws Exception {
         when(roleRepo.findByRoleName("role name")).thenReturn(RoleFixtures.simpleRole());
         QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
-        qMeRole = roleService.update(qMeRole,1,1L);
+        roleService.update(qMeRole,1,1L);
         verify(roleRepo).findByRoleName("role name");
     }
 

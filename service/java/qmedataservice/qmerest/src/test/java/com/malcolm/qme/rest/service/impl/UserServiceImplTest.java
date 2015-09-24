@@ -17,7 +17,6 @@ import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
-import com.malcolm.qme.rest.service.impl.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,8 +37,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Malcolm
@@ -71,6 +69,8 @@ public class UserServiceImplTest {
 
         List<QMeUserDetail> userList = userService.list();
 
+        verify(userRepo).findAll();
+
         assertNotNull(userList);
         assertThat(userList.size(), equalTo(5));
 
@@ -100,6 +100,9 @@ public class UserServiceImplTest {
 
         QMeUserDetail userDetail = userService.searchById(1L);
 
+        verify(userRepo).findById(1L);
+        verify(userRoleRepo).findByUserId(1L);
+
         assertNotNull(userDetail);
 
         assertThat(userDetail.getUserId(), equalTo(1L));
@@ -113,6 +116,9 @@ public class UserServiceImplTest {
         when(userRoleRepo.findByUserId(1L)).thenReturn(UserFixtures.simpleUserRoleList());
 
         QMeUserDetail userDetail = userService.searchByUser("suser1");
+
+        verify(userRepo).findByUserName("suser1");
+        verify(userRoleRepo).findByUserId(1L);
 
         assertNotNull(userDetail);
 
@@ -128,6 +134,10 @@ public class UserServiceImplTest {
         when(userRoleRepo.findByUserId(1L)).thenReturn(UserFixtures.simpleUserRoleList());
 
         QMeUserDetail userDetail = userService.searchByEmail("SimpleUser1@User.com");
+
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+        verify(userRoleRepo).findByUserId(1L);
+
 
         assertNotNull(userDetail);
 
@@ -149,6 +159,10 @@ public class UserServiceImplTest {
 
         QMeUserDetail userDetail = userService.save(qmeUser, 1L);
 
+        verify(userRepo).save(Matchers.<User>anyObject());
+        verify(passwordEncoder).encode(Matchers.<String>anyObject());
+
+
         assertNotNull(userDetail);
 
         assertThat(userDetail.getUserId(), equalTo(1L));
@@ -169,6 +183,10 @@ public class UserServiceImplTest {
 
         QMeUserDetail userDetail = userService.update(qmeUser, 1L, 1L);
 
+        verify(userRepo).findById(1L);
+        verify(userRepo).update(Matchers.<User>anyObject(), eq(1L));
+
+
         assertNotNull(userDetail);
 
         assertThat(userDetail.getUserId(), equalTo(1L));
@@ -180,6 +198,8 @@ public class UserServiceImplTest {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         doNothing().when(userRepo).delete(1L);
         userService.delete(1L);
+        verify(userRepo).findById(1L);
+        verify(userRepo).delete(1L);
     }
 
     @Test
@@ -190,12 +210,16 @@ public class UserServiceImplTest {
 
         when(javaMailSender.getUsername()).thenReturn("someusername");
         when(javaMailSender.getPassword()).thenReturn("somepassword");
-        when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session)null));
-
+        when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) null));
 
         doNothing().when(javaMailSender).send(Matchers.<MimeMessage>anyObject());
 
         userService.forgotPassword("SimpleUser1@User.com", "some url");
+
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+        verify(atomicTokenGenerator).generateUniqueResetToken();
+        verify(userRepo).addResetToken("somerandomtoken", 1L);
+        verify(javaMailSender).send(Matchers.<MimeMessage>anyObject());
     }
 
     @Test
@@ -206,7 +230,7 @@ public class UserServiceImplTest {
 
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
 
-        when(userRepo.resetUserPassword("somerandomtoken", 1L,"someencodedvalue")).thenReturn(UserFixtures.simpleUser());
+        when(userRepo.resetUserPassword("somerandomtoken", 1L, "someencodedvalue")).thenReturn(UserFixtures.simpleUser());
 
         QMeResetPassword qMeResetPassword = new QMeResetPassword();
         qMeResetPassword.setToken("somerandomtoken");
@@ -214,6 +238,15 @@ public class UserServiceImplTest {
         qMeResetPassword.setUserPassword("somepssword");
 
         QMeUserDetail userDetail = userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+
+        verify(userRepo).getResetTokenCreateTime("somerandomtoken", 1L);
+
+        verify(passwordEncoder).encode(Matchers.<String>anyObject());
+
+        verify(userRepo).resetUserPassword("somerandomtoken", 1L, "someencodedvalue");
+
 
         assertNotNull(userDetail);
 
