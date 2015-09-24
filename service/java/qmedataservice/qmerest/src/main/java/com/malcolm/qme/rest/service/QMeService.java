@@ -45,7 +45,7 @@ public interface QMeService<D,T,I> {
      * @throws QMeResourceConflictException
      * @throws QMeServerException
      */
-    D save(T t, Long userId) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException;
+    D save(T t, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException;
 
     /**
      * Update Resource

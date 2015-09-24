@@ -9,9 +9,9 @@ package com.malcolm.qme.rest.model.fixtures;
 import com.malcolm.qme.rest.model.QMeRole;
 
 /**
- * Created by malcolm on 9/23/15.
+ * @author Malcolm
  */
-public class QMeRoleFixtures {
+public class QMeRoleFixtures extends QMeResourceFixture<QMeRole>{
 
     /**
      * Simple QMe Role

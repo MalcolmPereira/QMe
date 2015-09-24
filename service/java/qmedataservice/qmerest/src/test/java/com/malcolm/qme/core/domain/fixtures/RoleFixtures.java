@@ -4,7 +4,6 @@
  * Developer : Malcolm
  * Purpose   : Test Fixtures for Role
  */
-
 package com.malcolm.qme.core.domain.fixtures;
 
 import com.malcolm.qme.core.domain.Role;
@@ -27,10 +26,10 @@ public class RoleFixtures {
     }
 
     /**
-     * Simple Category
+     * Simple Role List
      *
 
-     * @return Category List
+     * @return Role List
      */
     public static List<Role> simpleRoleList(){
         List<Role> roleList = new ArrayList<>();
