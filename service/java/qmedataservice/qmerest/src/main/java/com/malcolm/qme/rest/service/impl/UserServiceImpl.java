@@ -157,7 +157,6 @@ public final class UserServiceImpl implements UserService {
     public Boolean confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
         try {
             User user = userRepo.confirmUserRegistration(stagingToken);
-            //Assign Default User Role to newly created user
             UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
             userRoleRepo.save(userRole);
             return Boolean.TRUE;
