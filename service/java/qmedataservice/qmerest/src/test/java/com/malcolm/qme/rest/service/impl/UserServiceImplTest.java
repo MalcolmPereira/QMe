@@ -1,10 +1,10 @@
 /**
- * Name      : com.malcolm.qme.rest.service.UserServiceImplTest.java
+ * Name      : com.malcolm.qme.rest.service.impl.UserServiceImplTest.java
  * Date      : 5/27/2015
  * Developer : Malcolm
  * Purpose   : Test Cases for User Service Implementation
  **/
-package com.malcolm.qme.rest.service;
+package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
@@ -16,6 +16,7 @@ import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeResetPassword;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
+import com.malcolm.qme.rest.service.UserService;
 import com.malcolm.qme.rest.service.impl.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;

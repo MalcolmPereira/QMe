@@ -1,11 +1,11 @@
 /**
- * Name      : com.malcolm.qme.rest.service.CategoryServiceImplTest.java
+ * Name      : com.malcolm.qme.rest.service.impl.CategoryServiceImplTest.java
  * Date      : 5/23/15
  * Developer : Malcolm
  * Purpose   : Test Cases for Category Service Implementation
  */
 
-package com.malcolm.qme.rest.service;
+package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.fixtures.CategoryFixtures;
@@ -14,7 +14,7 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
-import com.malcolm.qme.rest.service.impl.CategoryServiceImpl;
+import com.malcolm.qme.rest.service.CategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,6 +31,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -52,6 +53,8 @@ public class CategoryServiceImplTest {
         when(categoryRepo.findAll()).thenReturn(CategoryFixtures.simpleCategoryList());
 
         List<QMeCategoryDetail> categoryList = categoryService.list();
+
+        verify(categoryRepo).findAll();
         assertNotNull(categoryList);
         assertThat(categoryList.size(),equalTo(5));
         for (QMeCategoryDetail qmeCategory : categoryList) {
@@ -79,6 +82,8 @@ public class CategoryServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
 
         QMeCategoryDetail qmeCategory = categoryService.searchById(1L);
+
+        verify(categoryRepo).findById(1L);
         assertNotNull(qmeCategory);
         assertThat(qmeCategory.getCategoryId(),equalTo(1L));
         assertThat(qmeCategory.getCategoryName(),equalTo("Simple Category 1"));
@@ -90,6 +95,9 @@ public class CategoryServiceImplTest {
         when(categoryRepo.findCategoryNameLike("Simple Category 1")).thenReturn(CategoryFixtures.simpleCategoryList());
 
         List<QMeCategoryDetail> categoryList = categoryService.searchByName("Simple Category 1");
+
+        verify(categoryRepo).findCategoryNameLike("Simple Category 1");
+
         assertNotNull(categoryList);
         assertThat(categoryList.size(),equalTo(5));
         for (QMeCategoryDetail qmeCategory : categoryList) {
@@ -119,6 +127,8 @@ public class CategoryServiceImplTest {
         qmeCategory.setCategoryName("Simple Category 1");
         QMeCategoryDetail qmeCategoryDetail = categoryService.save(qmeCategory,1L);
 
+        verify(categoryRepo).save(Matchers.<Category>anyObject());
+
         assertNotNull(qmeCategoryDetail);
         assertThat(qmeCategoryDetail.getCategoryId(),equalTo(1L));
         assertThat(qmeCategoryDetail.getCategoryName(),equalTo("Simple Category 1"));
@@ -134,6 +144,9 @@ public class CategoryServiceImplTest {
         qmeCategory.setCategoryName("Simple Category 1");
         QMeCategoryDetail qmeCategoryDetail = categoryService.update(qmeCategory, 1L, 1L);
 
+        verify(categoryRepo).findById(1L);
+        verify(categoryRepo).update(Matchers.<Category>anyObject(), eq(1L));
+
         assertNotNull(qmeCategoryDetail);
         assertThat(qmeCategoryDetail.getCategoryId(),equalTo(1L));
         assertThat(qmeCategoryDetail.getCategoryName(),equalTo("Simple Category 1"));
@@ -145,5 +158,7 @@ public class CategoryServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         doNothing().when(categoryRepo).delete(1L);
         categoryService.delete(1L);
+        verify(categoryRepo).findById(1L);
+        verify(categoryRepo).delete(1L);
     }
 }

@@ -37,8 +37,8 @@ public class QMeExceptionHandler {
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid data for resource. please make sure valid parameters are submitted for create or update.")
-     @ExceptionHandler(QMeInvalidResourceDataException.class)
-     public void handleResourceDataException(HttpServletRequest request, QMeInvalidResourceDataException ex){
+    @ExceptionHandler(QMeInvalidResourceDataException.class)
+    public void handleResourceDataException(HttpServletRequest request, QMeInvalidResourceDataException ex){
         if(ex.getCause() != null){
             ex.getCause().printStackTrace();
         }else{

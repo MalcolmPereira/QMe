@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,6 +34,9 @@ public class QMeCORSFilterTest  {
     @Mock
     private FilterChain chain;
 
+    @Mock
+    private FilterConfig config;
+
     @Test
     public void testDoFilter() throws Exception {
         doNothing().when(res).setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
@@ -50,4 +54,17 @@ public class QMeCORSFilterTest  {
         verify(res).setHeader("Access-Control-Allow-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,x-csrftoken,X-XSRF-TOKEN");
         verify(res).setHeader("Access-Control-Max-Age", "3600");
     }
+
+    @Test
+    public void testInit() throws Exception {
+        QMeCORSFilter filter = new QMeCORSFilter();
+        filter.init(config);
+    }
+
+    @Test
+    public void testDestroy() throws Exception {
+        QMeCORSFilter filter = new QMeCORSFilter();
+        filter.destroy();
+    }
+
 }
