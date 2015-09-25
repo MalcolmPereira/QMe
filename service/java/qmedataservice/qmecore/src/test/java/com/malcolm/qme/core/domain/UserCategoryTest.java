@@ -44,7 +44,7 @@ public class UserCategoryTest {
     public void testEquals(){
         UserCategory userCategory1 = new UserCategory(1L, 1L, 1L);
         UserCategory userCategory2 = new UserCategory(1L, 1L, 1L);
-        assertTrue(userCategory1.equals(userCategory1));
+        assertTrue(userCategory1.equals(userCategory2));
         userCategory1 = new UserCategory(1L, 1L, 1L);
         userCategory2 = new UserCategory(1L, 2L, 1L);
         assertFalse(userCategory1.equals(userCategory2));

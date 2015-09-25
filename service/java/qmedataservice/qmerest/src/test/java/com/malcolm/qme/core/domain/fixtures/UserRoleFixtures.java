@@ -38,7 +38,7 @@ public class UserRoleFixtures {
         userRoleList.add(new UserRole(2L, 2, "role name 2", 2L));
         userRoleList.add(new UserRole(3L, 3, "role name 3", 3L));
         userRoleList.add(new UserRole(4L, 4, "role name 4", 4L));
-        userRoleList.add(new UserRole(5L, 5, "role name 5", 5L));;
+        userRoleList.add(new UserRole(5L, 5, "role name 5", 5L));
         return userRoleList;
     }
 

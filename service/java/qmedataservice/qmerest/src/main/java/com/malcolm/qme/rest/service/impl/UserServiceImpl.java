@@ -228,16 +228,19 @@ public final class UserServiceImpl implements UserService {
             if(userEmail == null || userEmail.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid user email address ");
             }
-
-            if(qMeResetPassword == null || qMeResetPassword.getToken() == null || qMeResetPassword.getToken().trim().length() == 0){
+            if(qMeResetPassword == null ){
                 throw new QMeInvalidResourceDataException("Invalid reset token ");
             }
 
-            if(qMeResetPassword == null || qMeResetPassword.getUserPassword() == null || qMeResetPassword.getUserPassword().trim().length() == 0){
+            if(qMeResetPassword.getToken() == null || qMeResetPassword.getToken().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid reset token ");
+            }
+
+            if(qMeResetPassword.getUserPassword() == null || qMeResetPassword.getUserPassword().trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid user password ");
             }
 
-            if(qMeResetPassword == null || qMeResetPassword.getUserName() == null || qMeResetPassword.getUserName().trim().length() == 0){
+            if(qMeResetPassword.getUserName() == null || qMeResetPassword.getUserName().trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid user name ");
             }
 

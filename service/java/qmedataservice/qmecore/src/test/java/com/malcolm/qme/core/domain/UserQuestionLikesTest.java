@@ -42,7 +42,7 @@ public class UserQuestionLikesTest {
     public void testHashCode(){
         UserQuestionLikes userQuestionLikes1 = new UserQuestionLikes(1L, 1L);
         UserQuestionLikes userQuestionLikes2 = new UserQuestionLikes(1L, 1L);
-        assertThat(userQuestionLikes1.hashCode(), equalTo(userQuestionLikes1.hashCode()));
+        assertThat(userQuestionLikes1.hashCode(), equalTo(userQuestionLikes2.hashCode()));
         userQuestionLikes1 = new UserQuestionLikes(1L, 1L);
         userQuestionLikes2 = new UserQuestionLikes(1L, 2L);
         assertNotEquals(userQuestionLikes1.hashCode(),userQuestionLikes2.hashCode());

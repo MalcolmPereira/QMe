@@ -31,7 +31,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -77,7 +76,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test(expected = QMeServerException.class)
-    public void testListQMeExcetpion() throws QMeResourceException, QMeException {
+    public void testListQMeException() throws QMeResourceException, QMeException {
         when(categoryRepo.findAll()).thenThrow(QMeException.class);
         categoryService.list();
         verify(categoryRepo).findAll();

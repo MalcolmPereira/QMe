@@ -159,19 +159,19 @@ public class UserTest {
     public void testHashCode(){
         User user1 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         User user2 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
-        assertThat(user1.hashCode(), equalTo(user1.hashCode()));
+        assertThat(user1.hashCode(), equalTo(user2.hashCode()));
         user1 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email1", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         user2 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email2", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         assertNotEquals(user1.hashCode(),user2.hashCode());
         user1 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email");
         user2 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email");
-        assertThat(user1.hashCode(), equalTo(user1.hashCode()));
+        assertThat(user1.hashCode(), equalTo(user2.hashCode()));
         user1 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email1");
         user2 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email2");
         assertNotEquals(user1.hashCode(), user2.hashCode());
         user1 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now());
         user2 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now());
-        assertThat(user1.hashCode(), equalTo(user1.hashCode()));
+        assertThat(user1.hashCode(), equalTo(user2.hashCode()));
         user1 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email1", LocalDateTime.now());
         user2 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email2", LocalDateTime.now());
         assertNotEquals(user1.hashCode(),user2.hashCode());

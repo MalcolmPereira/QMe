@@ -6,7 +6,6 @@
  */
 package com.malcolm.qme.security.config;
 
-import com.malcolm.qme.core.domain.Category;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -22,8 +21,6 @@ import org.springframework.security.web.csrf.CsrfToken;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,9 +29,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -74,7 +69,7 @@ public class QMeSecurityConfigTest {
         when(authenticationBuilder.userDetailsService(Matchers.<UserDetailsService>anyObject())).thenReturn(daoAuthenticationConfigurer);
         when(daoAuthenticationConfigurer.passwordEncoder(Matchers.<PasswordEncoder>anyObject())).thenReturn(null);
         QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
-        boolean isConfigured = false;
+        boolean isConfigured;
         try {
             qMeSecurityConfig.configureGlobal(authenticationBuilder);
             isConfigured = true;
@@ -89,7 +84,7 @@ public class QMeSecurityConfigTest {
     public void testConfigure() throws Exception {
         HttpSecurity httpSecurity = new HttpSecurity(objectPostProcessor,authenticationBuilder,sharedObjects);
         QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
-        boolean isConfigured = false;
+        boolean isConfigured;
         try {
             qMeSecurityConfig.configure(httpSecurity);
             isConfigured = true;
@@ -98,7 +93,7 @@ public class QMeSecurityConfigTest {
             isConfigured = false;
         }
         assertThat(isConfigured, equalTo(true));
-        //TODO: Can we get the security paths that were confirgured?
+        //TODO: Can we get the security paths that were configured?
     }
 
     @Test
@@ -116,7 +111,7 @@ public class QMeSecurityConfigTest {
         when(req.getAttribute(CsrfToken.class.getName())).thenReturn(mockToken);
         when(mockToken.getToken()).thenReturn("sometoken");
         Cookie cookies[] = new Cookie[1];
-        Cookie qmeCookie = new Cookie("XSRF-TOKEN", "somecookier");
+        Cookie qmeCookie = new Cookie("XSRF-TOKEN", "somecookie");
         cookies[0] =qmeCookie;
         when(req.getCookies()).thenReturn(cookies);
         doNothing().when(res).addCookie(Matchers.<Cookie>anyObject());

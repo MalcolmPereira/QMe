@@ -44,13 +44,16 @@ public class QuizQuestionTest {
     public void testEquals(){
         QuizQuestion quizQuestion1 = new QuizQuestion(1L, 1L, 1L);
         QuizQuestion quizQuestion2 = new QuizQuestion(1L, 1L, 1L);
-        assertTrue(quizQuestion1.equals(quizQuestion1));
+        assertTrue(quizQuestion1.equals(quizQuestion2));
+
         quizQuestion1 = new QuizQuestion(1L, 1L, 1L);
         quizQuestion2 = new QuizQuestion(1L, 2L, 3L);
         assertFalse(quizQuestion1.equals(quizQuestion2));
+
         quizQuestion1 =  new QuizQuestion(1L, 1L);
         quizQuestion2 =  new QuizQuestion(1L, 1L);
-        assertTrue(quizQuestion1.equals(quizQuestion1));
+        assertTrue(quizQuestion1.equals(quizQuestion2));
+
         quizQuestion1 =  new QuizQuestion(1L, 1L);
         quizQuestion2 =  new QuizQuestion(1L, 2L);
         assertFalse(quizQuestion1.equals(quizQuestion2));
