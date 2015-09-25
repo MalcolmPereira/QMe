@@ -8,9 +8,12 @@ package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Role;
 import com.malcolm.qme.core.domain.fixtures.RoleFixtures;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeRole;
 import com.malcolm.qme.rest.model.fixtures.QMeRoleFixtures;
 import com.malcolm.qme.rest.service.RoleService;
@@ -70,6 +73,12 @@ public class RoleServiceImplTest {
         }
     }
 
+    @Test(expected = QMeServerException.class)
+    public void testListQMeException() throws Exception {
+        when(roleRepo.findAll()).thenThrow(QMeException.class);
+        roleService.list();
+    }
+
     @Test
     public void testSearchById() throws Exception {
         when(roleRepo.findById(1)).thenReturn(RoleFixtures.simpleRole());
@@ -79,6 +88,20 @@ public class RoleServiceImplTest {
         assertThat(qMeRole.getRoleID(), equalTo(1));
         assertThat(qMeRole.getRoleName(), equalTo("role name"));
         assertThat(qMeRole.getRoleDesc(), equalTo("role desc"));
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testSearchByIdNotFound() throws Exception {
+        when(roleRepo.findById(1)).thenReturn(null);
+        roleService.searchById(1);
+        verify(roleRepo).findById(1);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSearchByIdQMeException() throws Exception {
+        when(roleRepo.findById(1)).thenThrow(QMeException.class);
+        roleService.searchById(1);
+        verify(roleRepo).findById(1);
     }
 
     @Test
@@ -92,17 +115,55 @@ public class RoleServiceImplTest {
         assertThat(qMeRole.getRoleDesc(), equalTo("role desc"));
     }
 
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testFindByRoleNameNotFound() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenReturn(null);
+        roleService.findByRoleName("role name");
+        verify(roleRepo).findByRoleName("role name");
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testFindByRoleQMeException() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenThrow(QMeException.class);
+        roleService.findByRoleName("role name");
+        verify(roleRepo).findByRoleName("role name");
+    }
 
     @Test
     public void testSave() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenReturn(null);
         when(roleRepo.save(Matchers.<Role>anyObject())).thenReturn(RoleFixtures.simpleRole());
         QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
         qMeRole = roleService.save(qMeRole,1L);
+        verify(roleRepo).findByRoleName("role name");
         verify(roleRepo).save(Matchers.<Role>anyObject());
         assertNotNull(qMeRole);
         assertThat(qMeRole.getRoleID(), equalTo(1));
         assertThat(qMeRole.getRoleName(), equalTo("role name"));
         assertThat(qMeRole.getRoleDesc(), equalTo("role desc"));
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidRoleName() throws Exception {
+        QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
+        qMeRole.setRoleName(null);
+        roleService.save(qMeRole, 1L);
+    }
+
+    @Test(expected = QMeResourceConflictException.class)
+    public void testSaveRoleExists() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenReturn(RoleFixtures.simpleRole());
+        QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
+        roleService.save(qMeRole, 1L);
+        verify(roleRepo).findByRoleName("role name");
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSaveRoleQMeException() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenThrow(QMeException.class);
+        QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
+        roleService.save(qMeRole, 1L);
+        verify(roleRepo).findByRoleName("role name");
     }
 
     @Test

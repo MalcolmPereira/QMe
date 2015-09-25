@@ -10,12 +10,14 @@ import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.domain.fixtures.RoleFixtures;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
 import com.malcolm.qme.core.domain.fixtures.UserRoleFixtures;
+import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserRole;
 import com.malcolm.qme.rest.model.fixtures.QMeUserRoleFixtures;
 import com.malcolm.qme.rest.service.UserRoleService;
@@ -83,6 +85,12 @@ public class UserRoleServiceImplTest {
         }
     }
 
+    @Test(expected = QMeServerException.class)
+    public void testListQMeException() throws Exception {
+        when(userRoleRepo.findAll()).thenThrow(QMeException.class);
+        userRoleService.list();
+    }
+
     @Test
     public void testFindByUserId() throws Exception {
         when(userRoleRepo.findByUserId(1L)).thenReturn(UserRoleFixtures.simpleUserRoleListForUser());
@@ -105,6 +113,18 @@ public class UserRoleServiceImplTest {
                     is("role name 3")
             ));
         }
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testFindByUserIdUserNotFound() throws Exception {
+        when(userRoleRepo.findByUserId(1L)).thenReturn(null);
+        userRoleService.findByUserId(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testFindByUserIdQMeException() throws Exception {
+        when(userRoleRepo.findByUserId(1L)).thenThrow(QMeException.class);
+        userRoleService.findByUserId(1L);
     }
 
     @Test
@@ -131,6 +151,19 @@ public class UserRoleServiceImplTest {
         }
     }
 
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testFindByRoleIdRoleNotFound() throws Exception {
+        when(userRoleRepo.findByRoleId(1)).thenReturn(null);
+        userRoleService.findByRoleId(1);
+        verify(userRoleRepo).findByRoleId(1);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testFindByRoleIdRoleQMeException() throws Exception {
+        when(userRoleRepo.findByRoleId(1)).thenThrow(QMeException.class);
+        userRoleService.findByRoleId(1);
+        verify(userRoleRepo).findByRoleId(1);
+    }
 
 
     @Test
@@ -144,6 +177,18 @@ public class UserRoleServiceImplTest {
         assertThat(userRole.getUserRoleID(), equalTo(1L));
         assertThat(userRole.getRoleID(), equalTo(1));
         assertThat(userRole.getRoleName(), equalTo("role name"));
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testSearchByIdNotFound() throws Exception {
+        when(userRoleRepo.findById(1L)).thenReturn(null);
+        userRoleService.searchById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSearchByIdQMeException() throws Exception {
+        when(userRoleRepo.findById(1L)).thenThrow(QMeException.class);
+        userRoleService.searchById(1L);
     }
 
     @Test
@@ -177,12 +222,20 @@ public class UserRoleServiceImplTest {
     public void testSaveInvalidUserId() throws Exception {
         QMeUserRole userRole = QMeUserRoleFixtures.simpleQMeUserRole();
         userRole.setUserID(null);
-        userRoleService.save(userRole,1L);
+        userRoleService.save(userRole, 1L);
     }
 
     @Test(expected = QMeResourceNotFoundException.class)
     public void testSaveNoRoleById() throws Exception {
         when(roleRepo.findById(1)).thenReturn(null);
+        QMeUserRole userRole = QMeUserRoleFixtures.simpleQMeUserRole();
+        userRoleService.save(userRole, 1L);
+        verify(roleRepo).findById(1);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSaveGetUserQMeException() throws Exception {
+        when(roleRepo.findById(1)).thenThrow(QMeException.class);
         QMeUserRole userRole = QMeUserRoleFixtures.simpleQMeUserRole();
         userRoleService.save(userRole, 1L);
         verify(roleRepo).findById(1);
@@ -211,12 +264,48 @@ public class UserRoleServiceImplTest {
         verify(userRoleRepo).findByUserId(1L);
     }
 
+    @Test(expected = QMeServerException.class)
+    public void testSaveQMeException() throws Exception {
+        when(roleRepo.findById(1)).thenReturn(RoleFixtures.simpleRole());
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(UserRoleFixtures.simpleUserRoleListForUserDiff());
+        when(userRoleRepo.save(Matchers.<UserRole>anyObject())).thenThrow(QMeException.class);
+
+        QMeUserRole userRole = QMeUserRoleFixtures.simpleQMeUserRole();
+        userRoleService.save(userRole,1L);
+
+        verify(roleRepo).findById(1);
+        verify(userRepo).findById(1L);
+        verify(userRoleRepo).findByUserId(1L);
+        verify(userRoleRepo).save(Matchers.<UserRole>anyObject());
+    }
+
     @Test
     public void testUpdate() throws Exception {
         when(roleRepo.findById(1)).thenReturn(RoleFixtures.simpleRole());
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         when(userRoleRepo.findByUserId(1L)).thenReturn(UserRoleFixtures.simpleUserRoleListForUserDiff());
         when(userRoleRepo.update(Matchers.<UserRole>anyObject(), eq(1L))).thenReturn(UserRoleFixtures.simpleUserRole());
+        QMeUserRole userRole = QMeUserRoleFixtures.simpleQMeUserRole();
+
+        userRole = userRoleService.update(userRole,1L,1L);
+
+        verify(roleRepo).findById(1);
+        verify(userRepo).findById(1L);
+        verify(userRoleRepo).findByUserId(1L);
+        verify(userRoleRepo).update(Matchers.<UserRole>anyObject(), eq(1L));
+        assertNotNull(userRole);
+        assertThat(userRole.getUserRoleID(), equalTo(1L));
+        assertThat(userRole.getRoleID(), equalTo(1));
+        assertThat(userRole.getRoleName(), equalTo("role name"));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testUpdateQMeException() throws Exception {
+        when(roleRepo.findById(1)).thenReturn(RoleFixtures.simpleRole());
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(UserRoleFixtures.simpleUserRoleListForUserDiff());
+        when(userRoleRepo.update(Matchers.<UserRole>anyObject(), eq(1L))).thenThrow(QMeException.class);
         QMeUserRole userRole = QMeUserRoleFixtures.simpleQMeUserRole();
 
         userRole = userRoleService.update(userRole,1L,1L);
@@ -238,5 +327,19 @@ public class UserRoleServiceImplTest {
         userRoleService.delete(1L);
         verify(userRoleRepo).findById(1L);
         verify(userRoleRepo).delete(1L);
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testDeleteNotFound() throws Exception {
+        when(userRoleRepo.findById(1L)).thenReturn(null);
+        userRoleService.delete(1L);
+        verify(userRoleRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testDeleteQMeException() throws Exception {
+        when(userRoleRepo.findById(1L)).thenThrow(QMeException.class);
+        userRoleService.delete(1L);
+        verify(userRoleRepo).findById(1L);
     }
 }
