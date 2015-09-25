@@ -161,8 +161,13 @@ public class UserRepositoryImplTest {
         user = userRepo.confirmUserRegistration(stagingToken);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
 
         user = userRepo.findStagedUserByUserName(userName);
+        assertNull(user);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
         assertNull(user);
     }
 
@@ -283,8 +288,13 @@ public class UserRepositoryImplTest {
         user = userRepo.confirmUserRegistration(stagingToken);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
 
-        user = userRepo.findStagedUserByUserEmail(userName+"@test.com");
+                user = userRepo.findStagedUserByUserEmail(userName + "@test.com");
+        assertNull(user);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
         assertNull(user);
     }
 
