@@ -12,8 +12,15 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizGameRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntity;
+import com.malcolm.qme.springdata.entity.UserQuizGameEntityId;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,6 +32,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -40,13 +48,24 @@ public class UserQuizGameRepositoryImplTest {
     @Qualifier("UserQuizGameRepository")
     private UserQuizGameRepository userQuizGameRepo;
 
-
     /**
      * Spring Data UserEntity Repository
      */
     @Autowired
     @Qualifier("UserRepository")
     private UserRepository userRepo;
+
+    @Mock
+    private UserQuizGameSpringDataRepository userQuizGameSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private UserQuizGameRepository userQuizGameRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        userQuizGameRepositoryWithMock = new UserQuizGameRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -239,4 +258,61 @@ public class UserQuizGameRepositoryImplTest {
         assertNull(user);
     }
 
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<UserQuizGame> userQuizGameList = userQuizGameRepositoryWithMock.findAll();
+        verify(userQuizGameSpringDataRepositoryMOCK).findAll();
+        assertNotNull(userQuizGameList);
+        assertThat(userQuizGameList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userQuizGameRepositoryWithMock.findAll();
+        verify(userQuizGameSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserIdQMeException() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizGameRepositoryWithMock.findByUserId(1L);
+        verify(userQuizGameSpringDataRepositoryMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByGameTokenQMeException() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.findByGameToken(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizGameRepositoryWithMock.findByGameToken(1L);
+        verify(userQuizGameSpringDataRepositoryMOCK).findByGameToken(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.findOne(Matchers.<UserQuizGameEntityId>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizGameRepositoryWithMock.findById(new UserQuizGame(2123456L, 1L, 1L));
+        verify(userQuizGameSpringDataRepositoryMOCK).findOne(Matchers.<UserQuizGameEntityId>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.save(Matchers.<UserQuizGameEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizGameRepositoryWithMock.save(new UserQuizGame(2123456L, 1L, 1L));
+        verify(userQuizGameSpringDataRepositoryMOCK).save(Matchers.<UserQuizGameEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(userQuizGameSpringDataRepositoryMOCK.save(Matchers.<UserQuizGameEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizGameRepositoryWithMock.update(new UserQuizGame(2123456L, 1L, 1L), 1L);
+        verify(userQuizGameSpringDataRepositoryMOCK).save(Matchers.<UserQuizGameEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(userQuizGameSpringDataRepositoryMOCK).delete(Matchers.<UserQuizGameEntityId>anyObject());
+        userQuizGameRepositoryWithMock.delete(new UserQuizGame(2123456L, 1L, 1L));
+        verify(userQuizGameSpringDataRepositoryMOCK).delete(Matchers.<UserQuizGameEntityId>anyObject());
+    }
 }

@@ -11,8 +11,14 @@ import com.malcolm.qme.core.domain.Role;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.RoleEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,6 +29,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -38,9 +45,17 @@ public class RoleRepositoryImplTest {
     @Qualifier("RoleRepository")
     private RoleRepository roleRepo;
 
+    @Mock
     private RoleSpringDataRepository roleSpringDataRepositoryMOCK;
 
+    @InjectMocks
     private RoleRepository roleRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        roleRepositoryWithMock = new RoleRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -120,6 +135,56 @@ public class RoleRepositoryImplTest {
         roleRepo.delete(roleID);
         role = roleRepo.findById(roleID);
         assertNull(role);
+    }
 
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<Role> roleList = roleRepositoryWithMock.findAll();
+        verify(roleSpringDataRepositoryMOCK).findAll();
+        assertNotNull(roleList);
+        assertThat(roleList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        roleRepositoryWithMock.findAll();
+        verify(roleSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByRoleNameQMeException() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.findByRoleNameIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
+        roleRepositoryWithMock.findByRoleName("test");
+        verify(roleSpringDataRepositoryMOCK).findByRoleNameIgnoreCase("test");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.findOne(1)).thenThrow(new RuntimeException("some error"));
+        roleRepositoryWithMock.findById(1);
+        verify(roleSpringDataRepositoryMOCK).findOne(1);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.save(Matchers.<RoleEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        roleRepositoryWithMock.save(new Role("RoleRepositoryImplTest", "RoleRepositoryImplTest Desc"));
+        verify(roleSpringDataRepositoryMOCK).save(Matchers.<RoleEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.save(Matchers.<RoleEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        roleRepositoryWithMock.update(new Role("RoleRepositoryImplTest", "RoleRepositoryImplTest Desc"), 1L);
+        verify(roleSpringDataRepositoryMOCK).save(Matchers.<RoleEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(roleSpringDataRepositoryMOCK).delete(1);
+        roleRepositoryWithMock.delete(1);
+        verify(roleSpringDataRepositoryMOCK).delete(1);
     }
 }

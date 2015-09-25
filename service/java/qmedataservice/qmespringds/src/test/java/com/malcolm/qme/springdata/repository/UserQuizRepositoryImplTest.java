@@ -14,8 +14,12 @@ import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,6 +31,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -50,13 +56,24 @@ public class UserQuizRepositoryImplTest {
     @Qualifier("UserRepository")
     private UserRepository userRepo;
 
-
     /**
      * Quiz Repository
      */
     @Autowired
     @Qualifier("QuizRepository")
     private QuizRepository quizRepository;
+
+    @Mock
+    private UserQuizSpringDataRepository userQuizSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private UserQuizRepository userQuizRepositoryWithMOCK;
+
+    @Before
+    public void initMocks(){
+        userQuizRepositoryWithMOCK = new UserQuizRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -523,6 +540,57 @@ public class UserQuizRepositoryImplTest {
         quizRepository.delete(quizID);
         quiz = quizRepository.findById(quizID);
         assertNull(quiz);
+    }
+
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<UserQuiz> userQuizList = userQuizRepositoryWithMOCK.findAll();
+        verify(userQuizSpringDataRepositoryMOCK).findAll();
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findAll();
+        verify(userQuizSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserIDQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findByUserId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindCompletedByUserIdQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findByUserIdAndQuizComplete(1L, (byte) 1)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findCompletedByUserId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findByUserIdAndQuizComplete(1L, (byte) 1);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindPendingByUserIdQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findByUserIdAndQuizComplete(1L,(byte)0)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findCompletedByUserId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findByUserIdAndQuizComplete(1L, (byte) 0);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByQuizIdQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findByQuizId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findByQuizId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findByQuizId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findById(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findOne(1L);
     }
 
 }

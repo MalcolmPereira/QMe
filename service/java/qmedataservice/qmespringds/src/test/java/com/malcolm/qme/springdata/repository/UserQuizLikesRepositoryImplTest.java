@@ -12,8 +12,15 @@ import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserQuizLikes;
 import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.UserQuizLikesEntity;
+import com.malcolm.qme.springdata.entity.UserQuizLikesEntityId;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +31,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -58,6 +66,19 @@ public class UserQuizLikesRepositoryImplTest {
     @Autowired
     @Qualifier("UserQuizLikesRepository")
     private UserQuizLikesRepository userQuizLikesRepository;
+
+    @Mock
+    private UserQuizLikesSpringDataRepository userQuizLikesSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private UserQuizLikesRepository userQuizLikesRepositoryWithMock;
+
+
+    @Before
+    public void initMocks(){
+        userQuizLikesRepositoryWithMock = new UserQuizLikesRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -260,4 +281,61 @@ public class UserQuizLikesRepositoryImplTest {
         assertNull(user);
     }
 
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        final List<UserQuizLikes> userQuizLikesList = userQuizLikesRepositoryWithMock.findAll();
+        verify(userQuizLikesSpringDataRepositoryMOCK).findAll();
+        assertNotNull(userQuizLikesList);
+        assertThat(userQuizLikesList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userQuizLikesRepositoryWithMock.findAll();
+        verify(userQuizLikesSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserIDQMeException() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizLikesRepositoryWithMock.findByUserId(1L);
+        verify(userQuizLikesSpringDataRepositoryMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByQuizIDQMeException() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.findByQuizId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizLikesRepositoryWithMock.findByQuizId(1L);
+        verify(userQuizLikesSpringDataRepositoryMOCK).findByQuizId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.findOne(Matchers.<UserQuizLikesEntityId>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizLikesRepositoryWithMock.findById(new UserQuizLikes(1L, 1L));
+        verify(userQuizLikesSpringDataRepositoryMOCK).findOne(Matchers.<UserQuizLikesEntityId>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.save(Matchers.<UserQuizLikesEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizLikesRepositoryWithMock.save(new UserQuizLikes(1L, 1L));
+        verify(userQuizLikesSpringDataRepositoryMOCK).save(Matchers.<UserQuizLikesEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(userQuizLikesSpringDataRepositoryMOCK.save(Matchers.<UserQuizLikesEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizLikesRepositoryWithMock.update(new UserQuizLikes(1L, 1L), 1L);
+        verify(userQuizLikesSpringDataRepositoryMOCK).save(Matchers.<UserQuizLikesEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(userQuizLikesSpringDataRepositoryMOCK).delete(Matchers.<UserQuizLikesEntityId>anyObject());
+        userQuizLikesRepositoryWithMock.delete(new UserQuizLikes(1L, 1L));
+        verify(userQuizLikesSpringDataRepositoryMOCK).delete(Matchers.<UserQuizLikesEntityId>anyObject());
+    }
 }

@@ -15,8 +15,14 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserCategoryRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.UserCategoryEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,6 +33,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -55,6 +62,18 @@ public class UserCategoryRepositoryImplTest {
     @Autowired
     @Qualifier("CategoryRepository")
     private CategoryRepository categoryRepo;
+
+    @Mock
+    private UserCategorySpringDataRepository userCategorySpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private UserCategoryRepository userCategoryRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        userCategoryRepositoryWithMock = new UserCategoryRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -160,5 +179,56 @@ public class UserCategoryRepositoryImplTest {
         user = userRepo.findById(userID);
         assertNull(user);
 
+    }
+
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userCategorySpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<UserCategory> userCategoryList = userCategoryRepositoryWithMock.findAll();
+        verify(userCategorySpringDataRepositoryMOCK).findAll();
+        assertNotNull(userCategoryList);
+        assertThat(userCategoryList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userCategorySpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userCategoryRepositoryWithMock.findAll();
+        verify(userCategorySpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserIdQMeException() throws QMeException {
+        when(userCategorySpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userCategoryRepositoryWithMock.findByUserID(1L);
+        verify(userCategorySpringDataRepositoryMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(userCategorySpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userCategoryRepositoryWithMock.findById(1L);
+        verify(userCategorySpringDataRepositoryMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(userCategorySpringDataRepositoryMOCK.save(Matchers.<UserCategoryEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userCategoryRepositoryWithMock.save(new UserCategory(1L, 1L));
+        verify(userCategorySpringDataRepositoryMOCK).save(Matchers.<UserCategoryEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(userCategorySpringDataRepositoryMOCK.save(Matchers.<UserCategoryEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userCategoryRepositoryWithMock.update(new UserCategory(1L, 1L), 1L);
+        verify(userCategorySpringDataRepositoryMOCK).save(Matchers.<UserCategoryEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(userCategorySpringDataRepositoryMOCK).delete(1L);
+        userCategoryRepositoryWithMock.delete(1L);
+        verify(userCategorySpringDataRepositoryMOCK).delete(1L);
     }
 }
