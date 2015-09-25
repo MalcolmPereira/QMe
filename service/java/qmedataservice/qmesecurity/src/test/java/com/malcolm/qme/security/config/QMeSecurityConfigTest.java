@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.security.config;
 
+import com.malcolm.qme.core.domain.Category;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -17,12 +18,22 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,6 +56,18 @@ public class QMeSecurityConfigTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private HttpServletRequest req;
+
+    @Mock
+    private HttpServletResponse res;
+
+    @Mock
+    private FilterChain chain;
+
+    @Mock
+    private CsrfToken mockToken;
 
     @Test
     public void testConfigureGlobal() throws Exception {
@@ -82,5 +105,29 @@ public class QMeSecurityConfigTest {
     public void testPasswordEncoder() throws Exception {
         QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
         assertNotNull(qMeSecurityConfig.passwordEncoder());
+    }
+
+    @Test
+    public void testGetCSRFilter() throws Exception {
+        QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
+        Filter csrfFilter = qMeSecurityConfig.getCSRFilter();
+        assertNotNull(csrfFilter);
+
+        when(req.getAttribute(CsrfToken.class.getName())).thenReturn(mockToken);
+        when(mockToken.getToken()).thenReturn("sometoken");
+        Cookie cookies[] = new Cookie[1];
+        Cookie qmeCookie = new Cookie("XSRF-TOKEN", "somecookier");
+        cookies[0] =qmeCookie;
+        when(req.getCookies()).thenReturn(cookies);
+        doNothing().when(res).addCookie(Matchers.<Cookie>anyObject());
+        doNothing().when(chain).doFilter(req,res);
+
+        csrfFilter.doFilter(req, res, chain);
+
+        verify(req).getAttribute(CsrfToken.class.getName());
+        verify(mockToken).getToken();
+        verify(req).getCookies();
+        verify(res).addCookie(Matchers.<Cookie>anyObject());
+        verify(chain).doFilter(req, res);
     }
 }

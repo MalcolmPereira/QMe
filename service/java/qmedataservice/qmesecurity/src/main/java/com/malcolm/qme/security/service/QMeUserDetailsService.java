@@ -60,7 +60,6 @@ public class QMeUserDetailsService implements UserDetailsService {
             }else{
                 user = userRepo.findByUserName(username);
             }
-
             if(user == null){
                 throw new UsernameNotFoundException("User " + username + " not found ");
             }

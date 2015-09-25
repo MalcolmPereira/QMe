@@ -99,6 +99,14 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passcodeEncoder);
     }
 
+    /**
+     * Get CSRFilter
+     * @return csrfFilter
+     */
+    public Filter getCSRFilter(){
+        return qmeCSRFilter();
+    }
+
     //TODO: Fix Basic Authentication (Need to have OAuth here)
     @Override
     protected void configure(final HttpSecurity http) throws Exception {

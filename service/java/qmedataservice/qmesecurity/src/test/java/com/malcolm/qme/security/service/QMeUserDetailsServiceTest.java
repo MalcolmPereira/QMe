@@ -129,7 +129,15 @@ public class QMeUserDetailsServiceTest {
     public void testLoadUserByUserEmailNotFound() throws QMeException {
         User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         when(userRepo.findByUserEmail("Email@Email")).thenReturn(null);
-        UserDetails userDetails = qMeUserDetailsService.loadUserByUsername("Email@Email");
+        qMeUserDetailsService.loadUserByUsername("Email@Email");
+        verify(userRepo).findByUserEmail("Email@Email");
+    }
+
+    @Test(expected = UsernameNotFoundException.class)
+    public void testLoadUserByUserEmailQMeEXception() throws QMeException {
+        User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
+        when(userRepo.findByUserEmail("Email@Email")).thenThrow(QMeException.class);
+        qMeUserDetailsService.loadUserByUsername("Email@Email");
         verify(userRepo).findByUserEmail("Email@Email");
     }
 }
