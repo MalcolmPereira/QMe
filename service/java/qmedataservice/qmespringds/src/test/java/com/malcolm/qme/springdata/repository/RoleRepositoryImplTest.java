@@ -38,6 +38,10 @@ public class RoleRepositoryImplTest {
     @Qualifier("RoleRepository")
     private RoleRepository roleRepo;
 
+    private RoleSpringDataRepository roleSpringDataRepositoryMOCK;
+
+    private RoleRepository roleRepositoryWithMock;
+
     @Test
     public void testFindAll() throws QMeException {
         assertNotNull(roleRepo);

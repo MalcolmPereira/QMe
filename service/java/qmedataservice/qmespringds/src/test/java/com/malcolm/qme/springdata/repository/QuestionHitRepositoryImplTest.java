@@ -14,8 +14,14 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionHitRepository;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.QuestionHitEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,6 +32,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -54,6 +61,18 @@ public class QuestionHitRepositoryImplTest {
     @Autowired
     @Qualifier("CategoryRepository")
     private CategoryRepository categoryRepo;
+
+    @Mock
+    private QuestionHitSpringDataRepository questionHitSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private QuestionHitRepository questionHitRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        questionHitRepositoryWithMock = new QuestionHitRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -123,5 +142,49 @@ public class QuestionHitRepositoryImplTest {
         categoryRepo.delete(catID);
         category = categoryRepo.findById(catID);
         assertNull(category);
+    }
+
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(questionHitSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<QuestionHit> questionHitList = questionHitRepositoryWithMock.findAll();
+        verify(questionHitSpringDataRepositoryMOCK).findAll();
+        assertNotNull(questionHitList);
+        assertThat(questionHitList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(questionHitSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        questionHitRepositoryWithMock.findAll();
+        verify(questionHitSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(questionHitSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        questionHitRepositoryWithMock.findById(1L);
+        verify(questionHitSpringDataRepositoryMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(questionHitSpringDataRepositoryMOCK.save(Matchers.<QuestionHitEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        questionHitRepositoryWithMock.save(new QuestionHit(1L, 1L, 0L, 0L, 0L));
+        verify(questionHitSpringDataRepositoryMOCK).save(Matchers.<QuestionHitEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(questionHitSpringDataRepositoryMOCK.save(Matchers.<QuestionHitEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        questionHitRepositoryWithMock.update(new QuestionHit(1L, 1L, 0L, 0L, 0L), 1L);
+        verify(questionHitSpringDataRepositoryMOCK).save(Matchers.<QuestionHitEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(questionHitSpringDataRepositoryMOCK).delete(1L);
+        questionHitRepositoryWithMock.delete(1L);
+        verify(questionHitSpringDataRepositoryMOCK).delete(1L);
     }
 }

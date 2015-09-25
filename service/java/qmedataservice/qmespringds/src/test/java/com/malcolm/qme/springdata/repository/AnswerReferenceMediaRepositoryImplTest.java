@@ -12,8 +12,14 @@ import com.malcolm.qme.core.repository.AnswerReferenceMediaRepository;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.AnswerReferenceMediaEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +30,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -40,6 +47,17 @@ public class AnswerReferenceMediaRepositoryImplTest {
     @Qualifier("AnswerReferenceMediaRepository")
     private AnswerReferenceMediaRepository answerReferenceMediaRepository;
 
+    @Mock
+    private AnswerReferenceMediaSpringDataRepository answerReferenceMediaSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private AnswerReferenceMediaRepository answerReferenceMediaRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        answerReferenceMediaRepositoryWithMock = new AnswerReferenceMediaRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     /**
      * Question Repository
@@ -170,5 +188,56 @@ public class AnswerReferenceMediaRepositoryImplTest {
         questionRepository.delete(questionID);
         question = questionRepository.findById(questionID);
         assertNull(question);
+    }
+
+    @Test
+    public void testFindByQuestionIdNullReturn() throws QMeException {
+        when(answerReferenceMediaSpringDataRepositoryMOCK.findByQuestionId(1L)).thenReturn(null);
+        List<AnswerReferenceMedia> answerReferenceMediaList = answerReferenceMediaRepositoryWithMock.findByQuestionId(1L);
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).findByQuestionId(1L);
+        assertNotNull(answerReferenceMediaList);
+        assertThat(answerReferenceMediaList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByQuestionIdQMeException() throws QMeException {
+        when(answerReferenceMediaSpringDataRepositoryMOCK.findByQuestionId(1L)).thenThrow(new RuntimeException("some error"));
+        answerReferenceMediaRepositoryWithMock.findByQuestionId(1L);
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).findByQuestionId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(answerReferenceMediaSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        answerReferenceMediaRepositoryWithMock.findAll();
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIdQMeException() throws QMeException {
+        when(answerReferenceMediaSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        answerReferenceMediaRepositoryWithMock.findById(1L);
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(answerReferenceMediaSpringDataRepositoryMOCK.save(Matchers.<AnswerReferenceMediaEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        answerReferenceMediaRepositoryWithMock.save(new AnswerReferenceMedia(1L, 1, "Testing".getBytes()));
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).save(Matchers.<AnswerReferenceMediaEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(answerReferenceMediaSpringDataRepositoryMOCK.save(Matchers.<AnswerReferenceMediaEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        answerReferenceMediaRepositoryWithMock.update(new AnswerReferenceMedia(1L, 1, "Testing".getBytes()), 1L);
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).save(Matchers.<AnswerReferenceMediaEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(answerReferenceMediaSpringDataRepositoryMOCK).delete(1L);
+        answerReferenceMediaRepositoryWithMock.delete(1L);
+        verify(answerReferenceMediaSpringDataRepositoryMOCK).delete(1L);
     }
 }

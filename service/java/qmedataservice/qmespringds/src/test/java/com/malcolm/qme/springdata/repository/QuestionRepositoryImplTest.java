@@ -12,8 +12,14 @@ import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.QuestionEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +30,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -45,6 +52,18 @@ public class QuestionRepositoryImplTest {
     @Autowired
     @Qualifier("CategoryRepository")
     private CategoryRepository categoryRepo;
+
+    @Mock
+    private QuestionSpringDataRepository questionSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private QuestionRepository questionRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        questionRepositoryWithMock = new QuestionRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -287,4 +306,63 @@ public class QuestionRepositoryImplTest {
         assertNull(category);
 
     }
+
+    @Test
+    public void testFindByCategoryIdNullReturn() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.findByCatId(1L)).thenReturn(null);
+        List<Question> questionList= questionRepositoryWithMock.findByCategoryId(1L);
+        verify(questionSpringDataRepositoryMOCK).findByCatId(1L);
+        assertNotNull(questionList);
+        assertThat(questionList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByCategoryIdQMeException() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.findByCatId(1L)).thenThrow(new RuntimeException("some error"));
+        questionRepositoryWithMock.findByCategoryId(1L);
+        verify(questionSpringDataRepositoryMOCK).findByCatId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByMostLikedQMeException() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.findTop50ByOrderByQuestionLikesDesc()).thenThrow(new RuntimeException("some error"));
+        questionRepositoryWithMock.findByMostLiked();
+        verify(questionSpringDataRepositoryMOCK).findTop50ByOrderByQuestionLikesDesc();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        questionRepositoryWithMock.findAll();
+        verify(questionSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIdQMeException() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        questionRepositoryWithMock.findById(1L);
+        verify(questionSpringDataRepositoryMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.save(Matchers.<QuestionEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        questionRepositoryWithMock.save(new Question(1L, "QuestionRepositoryImplTest Question", "QuestionRepositoryImplTest Answer", 1L));
+        verify(questionSpringDataRepositoryMOCK).save(Matchers.<QuestionEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(questionSpringDataRepositoryMOCK.save(Matchers.<QuestionEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        questionRepositoryWithMock.update(new Question(1L, "QuestionRepositoryImplTest Question", "QuestionRepositoryImplTest Answer", 1L), 1L);
+        verify(questionSpringDataRepositoryMOCK).save(Matchers.<QuestionEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(questionSpringDataRepositoryMOCK).delete(1L);
+        questionRepositoryWithMock.delete(1L);
+        verify(questionSpringDataRepositoryMOCK).delete(1L);
+    }
+
 }
