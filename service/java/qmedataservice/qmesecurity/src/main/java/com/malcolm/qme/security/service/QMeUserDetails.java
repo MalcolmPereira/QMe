@@ -78,6 +78,19 @@ class QMeUserDetails implements UserDetails {
     }
 
     /**
+     * Created New QMeUserDetails
+     *
+     * @param userId User ID
+     * @param username User Name
+     * @param password Encrypted Password
+     * @param authorities Authorities Array
+     * @return User Details
+     */
+    public static UserDetails create(Long userId, String username, String password, Collection<GrantedAuthority> authorities) {
+        return new QMeUserDetails(userId, username, password, authorities);
+    }
+
+    /**
      * Private Constructor Create New QMeUser
      *
      * @param userId User Id

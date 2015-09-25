@@ -65,6 +65,9 @@ public class QMeUserDetailsService implements UserDetailsService {
                 throw new UsernameNotFoundException("User " + username + " not found ");
             }
             List<UserRole> userRoles   =  userRoleRepository.findByUserId(user.getUserID());
+            if(userRoles == null){
+                throw new UsernameNotFoundException("User " + username + " has no associated roles");
+            }
             String[]       userRoleArr = new String[userRoles.size()];
             int roleCounter = 0;
             for(UserRole userRole : userRoles){

@@ -8,9 +8,15 @@ package com.malcolm.qme.security.service;
 
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.Matchers.anyOf;
@@ -21,12 +27,32 @@ import static org.junit.Assert.assertThat;
 /**
  * @author malcolm
  */
+@RunWith(MockitoJUnitRunner.class)
 public class QMeUserDetailsTest  {
+
+    @Mock
+    private GrantedAuthority authority;
 
     @Test
     public void testCreate() throws Exception {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
         assertNotNull(qMeUserDetails);
+    }
+
+    @Test
+    public void testCreateNoRoles() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password");
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getAuthorities());
+    }
+
+    @Test
+    public void testCreateWithAuthority() throws Exception {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password",authorities);
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getAuthorities());
     }
 
     @Test

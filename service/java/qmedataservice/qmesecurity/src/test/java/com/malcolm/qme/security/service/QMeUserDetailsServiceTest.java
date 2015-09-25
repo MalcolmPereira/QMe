@@ -85,6 +85,26 @@ public class QMeUserDetailsServiceTest {
         verify(userRepo).findByUserName("Some User Name");
     }
 
+    @Test(expected = UsernameNotFoundException.class)
+    public void testLoadUserByUsernameRoleNotFound() throws QMeException {
+        User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
+        when(userRepo.findByUserName("Some User Name")).thenReturn(user);
+        when(userRoleRepository.findByUserId(1L)).thenReturn(null);
+        qMeUserDetailsService.loadUserByUsername("Some User Name");
+        verify(userRepo).findByUserName("Some User Name");
+        verify(userRoleRepository).findByUserId(1L);
+    }
+
+    @Test(expected = UsernameNotFoundException.class)
+    public void testLoadUserByUsernameEmptyRole() throws QMeException {
+        User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
+        when(userRepo.findByUserName("Some User Name")).thenReturn(user);
+        when(userRoleRepository.findByUserId(1L)).thenReturn(new ArrayList<UserRole>());
+        qMeUserDetailsService.loadUserByUsername("Some User Name");
+        verify(userRepo).findByUserName("Some User Name");
+        verify(userRoleRepository).findByUserId(1L);
+    }
+
     @Test
     public void testLoadUserByUserEmail() throws QMeException {
         User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
@@ -112,5 +132,4 @@ public class QMeUserDetailsServiceTest {
         UserDetails userDetails = qMeUserDetailsService.loadUserByUsername("Email@Email");
         verify(userRepo).findByUserEmail("Email@Email");
     }
-
 }
