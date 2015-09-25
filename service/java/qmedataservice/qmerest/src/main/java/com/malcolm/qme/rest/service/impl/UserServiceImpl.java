@@ -228,6 +228,19 @@ public final class UserServiceImpl implements UserService {
             if(userEmail == null || userEmail.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid user email address ");
             }
+
+            if(qMeResetPassword == null || qMeResetPassword.getToken() == null || qMeResetPassword.getToken().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid reset token ");
+            }
+
+            if(qMeResetPassword == null || qMeResetPassword.getUserPassword() == null || qMeResetPassword.getUserPassword().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid user password ");
+            }
+
+            if(qMeResetPassword == null || qMeResetPassword.getUserName() == null || qMeResetPassword.getUserName().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Invalid user name ");
+            }
+
             userEmail = userEmail.trim();
 
             User user =  userRepo.findByUserEmail(userEmail);
@@ -236,22 +249,17 @@ public final class UserServiceImpl implements UserService {
             }
 
             String userName = qMeResetPassword.getUserName();
-            if(userName == null || userName.trim().length() == 0){
-                throw new QMeInvalidResourceDataException("Invalid user name provided");
-            }
             userName = userName.trim();
             if(!user.getUserName().equalsIgnoreCase(userName)){
                 throw new QMeInvalidResourceDataException("User name does not match for  "+userEmail);
             }
 
             String resetToken = qMeResetPassword.getToken();
-
             LocalDateTime tokenCreatedTime = userRepo.getResetTokenCreateTime(resetToken, user.getUserID());
             if(tokenCreatedTime == null){
                 throw new QMeInvalidResourceDataException("Reset Token not found for "+userEmail);
             }
             tokenCreatedTime = tokenCreatedTime.plusMinutes(TOKEN_VALIDITY_MINUTES);
-
             if(  LocalDateTime.now().isAfter(tokenCreatedTime)) {
                 userRepo.deleteResetToken(resetToken,user.getUserID());
                 throw new QMeInvalidResourceDataException("Reset Token expired for  "+userEmail);

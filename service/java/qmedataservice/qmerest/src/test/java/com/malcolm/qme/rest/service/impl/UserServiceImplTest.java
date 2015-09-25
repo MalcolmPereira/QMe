@@ -7,6 +7,7 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
@@ -198,6 +199,7 @@ public class UserServiceImplTest {
         when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(null);
         when(userRepo.save(Matchers.<User>anyObject())).thenReturn(UserFixtures.simpleUser());
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
+        when(userRoleRepo.save(Matchers.<UserRole>anyObject())).thenReturn(null);
 
         QMeUser qmeUser = new QMeUser();
         qmeUser.setUserName("suser6");
@@ -212,6 +214,8 @@ public class UserServiceImplTest {
         verify(userRepo).findByUserEmail("SimpleUser6@User.com");
         verify(userRepo).save(Matchers.<User>anyObject());
         verify(passwordEncoder).encode(Matchers.<String>anyObject());
+        verify(userRoleRepo).save(Matchers.<UserRole>anyObject());
+
 
         assertNotNull(userDetail);
 
@@ -290,6 +294,20 @@ public class UserServiceImplTest {
     }
 
     @Test(expected = QMeServerException.class)
+    public void testSaveGetUserQMeExceptionEmail() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenThrow(QMeException.class);
+        QMeUser qmeUser = new QMeUser();
+        qmeUser.setUserName("suser6");
+        qmeUser.setUserPassword("spassword6");
+        qmeUser.setUserFirstName("Simple 6");
+        qmeUser.setUserLastName("Simple User 6");
+        qmeUser.setUserEmail("SimpleUser6@User.com");
+        userService.save(qmeUser, 1L);
+        verify(userRepo).findByUserEmail("SimpleUser6@User.com");
+    }
+
+
+    @Test(expected = QMeServerException.class)
     public void testSaveQMeException() throws QMeResourceException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(null);
         when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(null);
@@ -344,6 +362,32 @@ public class UserServiceImplTest {
         verify(javaMailSender,atLeastOnce()).getPassword();
         verify(javaMailSender).createMimeMessage();
         verify(javaMailSender).send(Matchers.<MimeMessage>anyObject());
+    }
+
+    @Test
+    public void testStageUserNoSuccess() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
+        when(userRepo.findByUserName("suser6")).thenReturn(null);
+        when(userRepo.findStagedUserByUserName("suser6")).thenReturn(null);
+        when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(null);
+        when(userRepo.findStagedUserByUserEmail("SimpleUser6@User.com")).thenReturn(null);
+        when(userRepo.stageUserRegistration(Matchers.<User>anyObject())).thenReturn(null);
+        when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
+
+        QMeUser qmeUser = new QMeUser();
+        qmeUser.setUserName("suser6");
+        qmeUser.setUserPassword("spassword6");
+        qmeUser.setUserFirstName("Simple 6");
+        qmeUser.setUserLastName("Simple User 6");
+        qmeUser.setUserEmail("SimpleUser6@User.com");
+        Boolean staged = userService.stageUser(qmeUser, "some url");
+
+        assertThat(staged, equalTo(Boolean.FALSE));
+
+        verify(userRepo).findByUserName("suser6");
+        verify(userRepo).findStagedUserByUserName("suser6");
+        verify(userRepo).findByUserEmail("SimpleUser6@User.com");
+        verify(userRepo).findStagedUserByUserEmail("SimpleUser6@User.com");
+        verify(userRepo).stageUserRegistration(Matchers.<User>anyObject());
     }
 
     @Test(expected = QMeInvalidResourceDataException.class)
@@ -418,6 +462,19 @@ public class UserServiceImplTest {
         verify(userRepo).findStagedUserByUserName("suser6");
     }
 
+    @Test(expected = QMeServerException.class)
+    public void testStageGetUserQMeException() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenThrow(QMeException.class);
+        QMeUser qmeUser = new QMeUser();
+        qmeUser.setUserName("suser6");
+        qmeUser.setUserPassword("spassword6");
+        qmeUser.setUserFirstName("Simple 6");
+        qmeUser.setUserLastName("Simple User 6");
+        qmeUser.setUserEmail("SimpleUser6@User.com");
+        userService.stageUser(qmeUser, "some url");
+        verify(userRepo).findByUserEmail("SimpleUser6@User.com");
+    }
+
     @Test(expected = QMeResourceConflictException.class)
     public void testStageUserConflictUserEmail() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(UserFixtures.simpleUser());
@@ -444,6 +501,50 @@ public class UserServiceImplTest {
         userService.stageUser(qmeUser, "some url");
         verify(userRepo).findByUserEmail("SimpleUser6@User.com");
         verify(userRepo).findStagedUserByUserEmail("SimpleUser6@User.com");
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testStageUserQMeException() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
+        when(userRepo.findByUserName("suser6")).thenReturn(null);
+        when(userRepo.findStagedUserByUserName("suser6")).thenReturn(null);
+        when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(null);
+        when(userRepo.findStagedUserByUserEmail("SimpleUser6@User.com")).thenReturn(null);
+        when(userRepo.stageUserRegistration(Matchers.<User>anyObject())).thenThrow(QMeException.class);
+        when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
+
+        QMeUser qmeUser = new QMeUser();
+        qmeUser.setUserName("suser6");
+        qmeUser.setUserPassword("spassword6");
+        qmeUser.setUserFirstName("Simple 6");
+        qmeUser.setUserLastName("Simple User 6");
+        qmeUser.setUserEmail("SimpleUser6@User.com");
+        Boolean staged = userService.stageUser(qmeUser, "some url");
+
+        assertThat(staged, equalTo(Boolean.TRUE));
+
+        verify(userRepo).findByUserName("suser6");
+        verify(userRepo).findStagedUserByUserName("suser6");
+        verify(userRepo).findByUserEmail("SimpleUser6@User.com");
+        verify(userRepo).findStagedUserByUserEmail("SimpleUser6@User.com");
+        verify(userRepo).stageUserRegistration(Matchers.<User>anyObject());
+        verify(passwordEncoder).encode(Matchers.<String>anyObject());
+    }
+
+    @Test
+    public void testConfirmRegistration() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException, QMeResourceNotFoundException {
+        when(userRepo.confirmUserRegistration("some token")).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.save(Matchers.<UserRole>anyObject())).thenReturn(null);
+        Boolean registered = userService.confirmUserRegistration("some token");
+        verify(userRepo).confirmUserRegistration("some token");
+        verify(userRoleRepo).save(Matchers.<UserRole>anyObject());
+        assertThat(registered, equalTo(Boolean.TRUE));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testConfirmRegistrationQMeException() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException, QMeResourceNotFoundException {
+        when(userRepo.confirmUserRegistration("some token")).thenThrow(QMeException.class);
+        userService.confirmUserRegistration("some token");
+        verify(userRepo).confirmUserRegistration("some token");
     }
 
     @Test
@@ -498,8 +599,23 @@ public class UserServiceImplTest {
         verify(userRepo).delete(1L);
     }
 
-    @Test
-    public void testForgotPassword() throws QMeResourceException, QMeException {
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testDeleteUserNotFound() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(null);
+        userService.delete(1L);
+        verify(userRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testDeleteQMeException() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenThrow(QMeException.class);
+        userService.delete(1L);
+        verify(userRepo).findById(1L);
+    }
+
+
+     @Test
+     public void testForgotPassword() throws QMeResourceException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
         when(atomicTokenGenerator.generateUniqueResetToken()).thenReturn("somerandomtoken");
         doNothing().when(userRepo).addResetToken("somerandomtoken", 1L);
@@ -516,6 +632,30 @@ public class UserServiceImplTest {
         verify(atomicTokenGenerator).generateUniqueResetToken();
         verify(userRepo).addResetToken("somerandomtoken", 1L);
         verify(javaMailSender).send(Matchers.<MimeMessage>anyObject());
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testForgotPasswordInvalidURL() throws QMeResourceException, QMeException {
+        userService.forgotPassword("SimpleUser1@User.com", null);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testForgotPasswordInvalidEmil() throws QMeResourceException, QMeException {
+        userService.forgotPassword(null, "som url");
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testForgotPasswordUserNotFound() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(null);
+        userService.forgotPassword("SimpleUser1@User.com", "some url");
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testForgotPasswordQMeException() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenThrow(QMeException.class);
+        userService.forgotPassword("SimpleUser1@User.com", "some url");
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
     }
 
     @Test
@@ -548,5 +688,107 @@ public class UserServiceImplTest {
 
         assertThat(userDetail.getUserId(), equalTo(1L));
         assertThat(userDetail.getUserName(), equalTo("suser1"));
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordInvalidEmail() throws QMeResourceException, QMeException {
+        userService.resetPassword(null, null);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordInvalidToken() throws QMeResourceException, QMeException {
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken(null);
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword("somepssword");
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordInvalidUserName() throws QMeResourceException, QMeException {
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName(null);
+        qMeResetPassword.setUserPassword("somepssword");
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordInvalidUserPassword() throws QMeResourceException, QMeException {
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword(null);
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testResetPasswordUserNotFound() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(null);
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword("somepssword");
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordUserNotMatching() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName("suserdiffone");
+        qMeResetPassword.setUserPassword("somepssword");
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordInvalidTokenCreateTime() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
+
+        when(userRepo.getResetTokenCreateTime("somerandomtoken", 1L)).thenReturn(null);
+
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword("somepssword");
+
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+
+        verify(userRepo).getResetTokenCreateTime("somerandomtoken", 1L);
+
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testResetPasswordInvalidTokenExpired() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenReturn(UserFixtures.simpleUser());
+
+        when(userRepo.getResetTokenCreateTime("somerandomtoken", 1L)).thenReturn(LocalDateTime.now().minusDays(5));
+
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword("somepssword");
+
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
+
+        verify(userRepo).findByUserEmail("SimpleUser1@User.com");
+
+        verify(userRepo).getResetTokenCreateTime("somerandomtoken", 1L);
+
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testResetPasswordQMeException() throws QMeResourceException, QMeException {
+        when(userRepo.findByUserEmail("SimpleUser1@User.com")).thenThrow(QMeException.class);
+        QMeResetPassword qMeResetPassword = new QMeResetPassword();
+        qMeResetPassword.setToken("somerandomtoken");
+        qMeResetPassword.setUserName("suser1");
+        qMeResetPassword.setUserPassword("somepssword");
+        userService.resetPassword("SimpleUser1@User.com", qMeResetPassword);
     }
 }
