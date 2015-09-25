@@ -159,11 +159,21 @@ public class RoleServiceImplTest {
     }
 
     @Test(expected = QMeServerException.class)
-    public void testSaveRoleQMeException() throws Exception {
+    public void testSaveGetRoleQMeException() throws Exception {
         when(roleRepo.findByRoleName("role name")).thenThrow(QMeException.class);
         QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
         roleService.save(qMeRole, 1L);
         verify(roleRepo).findByRoleName("role name");
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSaveQMeException() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenReturn(null);
+        when(roleRepo.save(Matchers.<Role>anyObject())).thenThrow(QMeException.class);
+        QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
+        roleService.save(qMeRole,1L);
+        verify(roleRepo).findByRoleName("role name");
+        verify(roleRepo).save(Matchers.<Role>anyObject());
     }
 
     @Test
@@ -180,24 +190,51 @@ public class RoleServiceImplTest {
         assertThat(qMeRole.getRoleDesc(), equalTo("role desc"));
     }
 
+    @Test(expected = QMeServerException.class)
+    public void testUpdateQMeException() throws Exception {
+        when(roleRepo.findByRoleName("role name")).thenReturn(null);
+        when(roleRepo.update(Matchers.<Role>anyObject(), eq(1L))).thenThrow(QMeException.class);
+        QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
+        roleService.update(qMeRole, 1, 1L);
+        verify(roleRepo).findByRoleName("role name");
+        verify(roleRepo).update(Matchers.<Role>anyObject(), eq(1L));
+    }
+
+
     @Test (expected = QMeInvalidResourceDataException.class)
     public void testUpdateInvalidData() throws Exception {
         QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
         qMeRole.setRoleName("");
-        roleService.update(qMeRole, 1,1L);
+        roleService.update(qMeRole, 1, 1L);
     }
 
     @Test (expected = QMeResourceConflictException.class)
       public void testUpdateConflict() throws Exception {
         when(roleRepo.findByRoleName("role name")).thenReturn(RoleFixtures.simpleRole());
         QMeRole qMeRole = QMeRoleFixtures.simpleQMeRole();
-        roleService.update(qMeRole,1,1L);
+        roleService.update(qMeRole, 1, 1L);
         verify(roleRepo).findByRoleName("role name");
     }
 
     @Test
     public void testDelete() throws Exception {
         when(roleRepo.findById(1)).thenReturn(RoleFixtures.simpleRole());
+        doNothing().when(roleRepo).delete(1);
+        roleService.delete(1);
+        verify(roleRepo).findById(1);
+        verify(roleRepo).delete(1);
+    }
+
+    @Test (expected = QMeResourceNotFoundException.class)
+    public void testDeleteNotFound() throws Exception {
+        when(roleRepo.findById(1)).thenReturn(null);
+        roleService.delete(1);
+        verify(roleRepo).findById(1);
+    }
+
+    @Test (expected = QMeServerException.class)
+    public void testDeleteQMeException() throws Exception {
+        when(roleRepo.findById(1)).thenThrow(QMeException.class);
         doNothing().when(roleRepo).delete(1);
         roleService.delete(1);
         verify(roleRepo).findById(1);
