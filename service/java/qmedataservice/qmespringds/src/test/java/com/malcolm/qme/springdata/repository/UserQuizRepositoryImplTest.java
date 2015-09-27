@@ -594,7 +594,6 @@ public class UserQuizRepositoryImplTest {
         verify(userQuizSpringDataRepositoryMOCK).findOne(1L);
     }
 
-    /*
     @Test(expected = QMeException.class)
     public void testSaveQMeException() throws QMeException {
         when(userQuizSpringDataRepositoryMOCK.save(Matchers.<UserQuizEntity>anyObject())).thenThrow(new RuntimeException("some error"));
@@ -609,11 +608,12 @@ public class UserQuizRepositoryImplTest {
         verify(userQuizSpringDataRepositoryMOCK).save(Matchers.<UserQuizEntity>anyObject());
     }
 
+
     @Test(expected = QMeException.class)
     public void testDeleteQMeException() throws QMeException {
         doThrow(new RuntimeException("some error")).when(userQuizSpringDataRepositoryMOCK).delete(1L);
         userQuizRepositoryWithMOCK.delete(1L);
         verify(userQuizSpringDataRepositoryMOCK).delete(1L);
     }
-    */
+
 }

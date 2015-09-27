@@ -52,7 +52,7 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	@Override
 	public List<UserQuiz> findCompletedByUserId(Long userID) throws QMeException {
 		try{
-			return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID,(byte)1)));
+			return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID, (byte) 1)));
 		}catch(Exception err){
 			throw new QMeException(err);
 		}
@@ -61,7 +61,7 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	@Override
 	public List<UserQuiz> findPendingByUserId(Long userID) throws QMeException {
 		try{
-			return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID,(byte)0)));
+			return (getUserQuiz(userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID, (byte) 0)));
 		}catch(Exception err){
 			throw new QMeException(err);
 		}
@@ -90,27 +90,39 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	}
 
 	@Override
-	public UserQuiz save(UserQuiz userQuiz) {
-		UserQuizEntity userQuizEntity = getUserQuizEntity(userQuiz);
-		userQuizEntity.setQuizStartDate(LocalDateTime.now());
-		userQuizEntity.setQuizUserScore(0);
-		userQuizEntity.setQuizComplete((byte)0);
-		userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
-		return  getUserQuiz(userQuizEntity);
+	public UserQuiz save(UserQuiz userQuiz) throws QMeException {
+		try{
+			UserQuizEntity userQuizEntity = getUserQuizEntity(userQuiz);
+			userQuizEntity.setQuizStartDate(LocalDateTime.now());
+			userQuizEntity.setQuizUserScore(0);
+			userQuizEntity.setQuizComplete((byte)0);
+			userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
+			return  getUserQuiz(userQuizEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public UserQuiz update(UserQuiz userQuiz, Long updateUserId) {
-		UserQuizEntity userQuizEntity = getUserQuizEntity(userQuiz);
-		userQuizEntity.setQuizEndDate(LocalDateTime.now());
-		userQuizEntity.setQuizComplete((byte)1);
-		userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
-		return  getUserQuiz(userQuizEntity);
+	public UserQuiz update(UserQuiz userQuiz, Long updateUserId) throws QMeException {
+		try{
+			UserQuizEntity userQuizEntity = getUserQuizEntity(userQuiz);
+			userQuizEntity.setQuizEndDate(LocalDateTime.now());
+			userQuizEntity.setQuizComplete((byte)1);
+			userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
+			return  getUserQuiz(userQuizEntity);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
-	public void delete(Long id) {
-		userQuizSpringDataRepository.delete(id);
+	public void delete(Long id) throws QMeException{
+		try{
+			userQuizSpringDataRepository.delete(id);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	/**
