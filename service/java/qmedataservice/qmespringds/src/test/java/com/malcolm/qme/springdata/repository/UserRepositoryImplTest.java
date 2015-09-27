@@ -10,8 +10,12 @@ import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,6 +43,20 @@ public class UserRepositoryImplTest {
     @Qualifier("UserRepository")
     private UserRepository userRepo;
 
+
+    @Mock
+    private UserSpringDataRepository userSpringDataRepoMOCK;
+
+
+    @InjectMocks
+    private UserRepository userRepositoryWithMock;
+
+
+    @Before
+    public void initMocks(){
+        userRepositoryWithMock = new UserRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
