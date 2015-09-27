@@ -288,50 +288,51 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
 	public User resetUserPassword(String resetToken, Long userId, String userPassword) throws QMeException {
+		try {
+			UserPasswordResetEntityId id = new UserPasswordResetEntityId();
+			id.setUserId(userId);
+			id.setResetToken(resetToken);
+			UserPasswordResetEntity userPasswordResetEntity = userPasswordResetDataRepo.findOne(id);
 
-		UserPasswordResetEntityId id = new UserPasswordResetEntityId();
-		id.setUserId(userId);
-		id.setResetToken(resetToken);
-		UserPasswordResetEntity userPasswordResetEntity = userPasswordResetDataRepo.findOne(id);
+			if (userPasswordResetEntity != null) {
+				UserEntity userEntity = userSpringDataRepo.findOne(userId);
 
-		if(userPasswordResetEntity != null){
-			Long resetTokenUserID = userPasswordResetEntity.getId().getUserId();
-			if(!resetTokenUserID.equals(userId)){
-				throw new QMeException("Invalid Reset token, User Does Not Match Found", new Exception("Invalid Reset token, User Does Not Match Found"));
+				if (userEntity != null) {
+					User existingUser = getUser(userEntity);
+
+					User updateUser = new User(
+							existingUser.getUserID(),
+							existingUser.getUserName(),
+							userPassword,
+							existingUser.getUserFirstName(),
+							existingUser.getUserLastName(),
+							existingUser.getUserEmail(),
+							existingUser.getUserRegisteredDate(),
+							LocalDateTime.now(),
+							LocalDateTime.now(),
+							LocalDateTime.now(),
+							existingUser.getUserID()
+					);
+					UserEntity updateUserEntity = getUserEntity(updateUser);
+					updateUserEntity.setUserUpdatedDate(LocalDateTime.now());
+					updateUserEntity.setUpdateUser(existingUser.getUserID());
+					updateUserEntity = userSpringDataRepo.save(updateUserEntity);
+
+					userPasswordResetDataRepo.delete(id);
+
+					return getUser(updateUserEntity);
+
+				}
+
+				throw new QMeException("Invalid Reset token, User Not Found", new Exception("Invalid Reset token, User Not Found"));
+
+			} else {
+				throw new QMeException("Invalid Reset token", new Exception("Reset Token Invalid"));
 			}
-
-			UserEntity userEntity = userSpringDataRepo.findOne(userId);
-
-			if (userEntity != null) {
-				User existingUser = getUser(userEntity);
-
-				User updateUser = new User(
-						existingUser.getUserID(),
-						existingUser.getUserName(),
-						userPassword,
-						existingUser.getUserFirstName(),
-						existingUser.getUserLastName(),
-						existingUser.getUserEmail(),
-						existingUser.getUserRegisteredDate(),
-						LocalDateTime.now(),
-                        LocalDateTime.now(),
-						LocalDateTime.now(),
-						existingUser.getUserID()
-				);
-				UserEntity updateUserEntity = getUserEntity(updateUser);
-				updateUserEntity.setUserUpdatedDate(LocalDateTime.now());
-				updateUserEntity.setUpdateUser(existingUser.getUserID());
-				updateUserEntity = userSpringDataRepo.save(updateUserEntity);
-
-				userPasswordResetDataRepo.delete(id);
-
-				return getUser(updateUserEntity);
-
-			}
-			throw new QMeException("Invalid Reset token, User Not Found", new Exception("Invalid Reset token, User Not Found"));
-
-		}else{
-			throw new QMeException("Invalid Reset token", new Exception("Reset Token Invalid"));
+		}catch(QMeException err){
+			throw err;
+		}catch(Exception err){
+			throw new QMeException(err);
 		}
 	}
 

@@ -10,10 +10,15 @@ import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.UserEntity;
+import com.malcolm.qme.springdata.entity.UserPasswordResetEntity;
+import com.malcolm.qme.springdata.entity.UserPasswordResetEntityId;
+import com.malcolm.qme.springdata.entity.UserStagingEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +28,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -47,10 +54,14 @@ public class UserRepositoryImplTest {
     @Mock
     private UserSpringDataRepository userSpringDataRepoMOCK;
 
+    @Mock
+    private UserStagingSpringDataRepository userStagingSpringDataRepositoryMOCK;
+
+    @Mock
+    private UserPasswordResetSpringDataRepository userPasswordResetDataRepoMOCK;
 
     @InjectMocks
     private UserRepository userRepositoryWithMock;
-
 
     @Before
     public void initMocks(){
@@ -299,7 +310,7 @@ public class UserRepositoryImplTest {
         assertNotNull(stagingToken);
         assertThat(stagingToken.length(), greaterThan(0));
 
-        user = userRepo.findStagedUserByUserEmail(userName+"@test.com");
+        user = userRepo.findStagedUserByUserEmail(userName + "@test.com");
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
 
@@ -361,7 +372,7 @@ public class UserRepositoryImplTest {
         assertNotNull(user);
         assertNotNull(user.getUserLastLoginDate());
         assertNotNull(user.getUserLoginDate());
-        assertThat(user.getUserLastLoginDate().format(DateTimeFormatter.ISO_DATE_TIME).substring(0,16), equalTo(loginDate.format(DateTimeFormatter.ISO_DATE_TIME).substring(0,16)));
+        assertThat(user.getUserLastLoginDate().format(DateTimeFormatter.ISO_DATE_TIME).substring(0, 16), equalTo(loginDate.format(DateTimeFormatter.ISO_DATE_TIME).substring(0, 16)));
 
         userRepo.delete(userID);
         user = userRepo.findById(userID);
@@ -396,4 +407,254 @@ public class UserRepositoryImplTest {
         assertNull(user);
 
     }
+
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userSpringDataRepoMOCK.findAll()).thenReturn(null);
+        List<User> users = userRepositoryWithMock.findAll();
+        verify(userSpringDataRepoMOCK).findAll();
+        assertNotNull(users);
+        assertThat(users.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userSpringDataRepoMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.findAll();
+        verify(userSpringDataRepoMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserNameQMeException() throws QMeException {
+        when(userSpringDataRepoMOCK.findByUserNameIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.findByUserName("test");
+        verify(userSpringDataRepoMOCK).findByUserNameIgnoreCase("test");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindStagedByUserNameQMeException() throws QMeException {
+        when(userStagingSpringDataRepositoryMOCK.findByUserNameIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.findStagedUserByUserName("test");
+        verify(userStagingSpringDataRepositoryMOCK).findByUserNameIgnoreCase("test");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserEmailQMeException() throws QMeException {
+        when(userSpringDataRepoMOCK.findByUserEmailIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.findByUserEmail("test");
+        verify(userSpringDataRepoMOCK).findByUserEmailIgnoreCase("test");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindStagedByUserEmailQMeException() throws QMeException {
+        when(userStagingSpringDataRepositoryMOCK.findByUserEmailIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.findStagedUserByUserEmail("test");
+        verify(userStagingSpringDataRepositoryMOCK).findByUserEmailIgnoreCase("test");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIdQMeException() throws QMeException {
+        when(userSpringDataRepoMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.findById(1L);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(userSpringDataRepoMOCK.save(Matchers.<UserEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.save(new User("UserRepositoryImplTestUserName", "Test", "Test", "Test", "UserRepositoryImplTest@test.com"));
+        verify(userSpringDataRepoMOCK).save(Matchers.<UserEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testStageQMeException() throws QMeException {
+        when(userStagingSpringDataRepositoryMOCK.save(Matchers.<UserStagingEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.stageUserRegistration(new User("UserRepositoryImplTestUserName", "Test", "Test", "Test", "UserRepositoryImplTest@test.com"));
+        verify(userStagingSpringDataRepositoryMOCK).save(Matchers.<UserStagingEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testConfirmUserRegistrationNoTokenQMeException() throws QMeException {
+        when(userStagingSpringDataRepositoryMOCK.findByStagingTokenIgnoreCase("sometoken")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.confirmUserRegistration("sometoken");
+        verify(userStagingSpringDataRepositoryMOCK).findByStagingTokenIgnoreCase("sometoken");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testConfirmUserRegistrationQMeException() throws QMeException {
+        UserStagingEntity userStagingEntity = new UserStagingEntity();
+        userStagingEntity.setUserId(1L);
+        userStagingEntity.setUserName("test");
+        userStagingEntity.setUserPasscode("test");
+        userStagingEntity.setUserFirstName("test");
+        userStagingEntity.setUserLastName("test");
+        userStagingEntity.setUserEmail("test");
+        userStagingEntity.setUserStagingDate(LocalDateTime.now());
+        when(userStagingSpringDataRepositoryMOCK.findByStagingTokenIgnoreCase("sometoken")).thenReturn(userStagingEntity);
+        when(userSpringDataRepoMOCK.save(Matchers.<UserEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.confirmUserRegistration("sometoken");
+        verify(userStagingSpringDataRepositoryMOCK).findByStagingTokenIgnoreCase("sometoken");
+        verify(userSpringDataRepoMOCK).save(Matchers.<UserEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(userSpringDataRepoMOCK.save(Matchers.<UserEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.update(new User("UserRepositoryImplTestUserName", "Test", "Test", "Test", "UserRepositoryImplTest@test.com"), 1L);
+        verify(userSpringDataRepoMOCK).save(Matchers.<UserEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(userSpringDataRepoMOCK).delete(1L);
+        userRepositoryWithMock.delete(1L);
+        verify(userSpringDataRepoMOCK).delete(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testAddResetTokenFindQMeException() throws QMeException {
+        when(userPasswordResetDataRepoMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.addResetToken("sometoken", 1L);
+        verify(userPasswordResetDataRepoMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testAddResetTokenDeleteTokenQMeException() throws QMeException {
+        List<UserPasswordResetEntity> resetTokenList = new ArrayList<>();
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        resetTokenList.add(new UserPasswordResetEntity(resetToken, LocalDateTime.now()));
+        when(userPasswordResetDataRepoMOCK.findByUserId(1L)).thenReturn(resetTokenList);
+        doThrow(new RuntimeException("some error")).when(userPasswordResetDataRepoMOCK).delete(resetToken);
+        userRepositoryWithMock.addResetToken("sometoken", 1L);
+        verify(userPasswordResetDataRepoMOCK).findByUserId(1L);
+        verify(userPasswordResetDataRepoMOCK).delete(resetToken);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testAddResetTokenSaveokenQMeException() throws QMeException {
+        List<UserPasswordResetEntity> resetTokenList = new ArrayList<>();
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        resetTokenList.add(new UserPasswordResetEntity(resetToken,LocalDateTime.now()));
+        when(userPasswordResetDataRepoMOCK.findByUserId(1L)).thenReturn(resetTokenList);
+        doNothing().when(userPasswordResetDataRepoMOCK).delete(resetToken);
+        when(userPasswordResetDataRepoMOCK.save(Matchers.<UserPasswordResetEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.addResetToken("sometoken", 1L);
+        verify(userPasswordResetDataRepoMOCK).findByUserId(1L);
+        verify(userPasswordResetDataRepoMOCK).delete(resetToken);
+        verify(userPasswordResetDataRepoMOCK).save(Matchers.<UserPasswordResetEntity>anyObject());
+
+    }
+
+    @Test(expected = QMeException.class)
+    public void testGetResetTokenCreateTimeQMeException() throws QMeException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.getResetTokenCreateTime("sometoken", 1L);
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteTokenQMeException() throws QMeException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        doThrow(new RuntimeException("some error")).when(userPasswordResetDataRepoMOCK).delete(resetToken);
+        userRepositoryWithMock.deleteResetToken("sometoken", 1L);
+        verify(userPasswordResetDataRepoMOCK).delete(resetToken);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateLoginDateFindQMeException() throws QMeException, InterruptedException {
+        when(userSpringDataRepoMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.updateLoginDate(1L);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateLoginDateQMeException() throws QMeException, InterruptedException {
+        UserEntity userEntity = new UserEntity();
+        when(userSpringDataRepoMOCK.findOne(1L)).thenReturn(userEntity);
+        when(userSpringDataRepoMOCK.save(Matchers.<UserEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.updateLoginDate(1L);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+        verify(userSpringDataRepoMOCK).save(Matchers.<UserEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testResetPasswordFindQMeException() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testResetPasswordFindNullReturnQMeException() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(null);
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testResetPasswordFindUserQMeException() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity(resetToken,LocalDateTime.now());
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(userPasswordResetEntity);
+        when(userSpringDataRepoMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testResetPasswordSaveUserQMeException() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity(resetToken,LocalDateTime.now());
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(userPasswordResetEntity);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserId(1L);
+        userEntity.setUserName("test");
+        userEntity.setUserPasscode("test");
+        userEntity.setUserFirstName("test");
+        userEntity.setUserLastName("test");
+        userEntity.setUserEmail("test");
+        userEntity.setUserRegisteredDate(LocalDateTime.now());
+        userEntity.setUserUpdatedDate(LocalDateTime.now());
+        userEntity.setUserLastLoginDate(LocalDateTime.now());
+        userEntity.setUserLoginDate(LocalDateTime.now());
+        userEntity.setUpdateUser(1L);
+        when(userSpringDataRepoMOCK.findOne(1L)).thenReturn(userEntity);
+        when(userSpringDataRepoMOCK.save(Matchers.<UserEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+        verify(userSpringDataRepoMOCK).save(Matchers.<UserEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testResetPasswordDeleteTokenUserQMeException() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity(resetToken,LocalDateTime.now());
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(userPasswordResetEntity);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserId(1L);
+        userEntity.setUserName("test");
+        userEntity.setUserPasscode("test");
+        userEntity.setUserFirstName("test");
+        userEntity.setUserLastName("test");
+        userEntity.setUserEmail("test");
+        userEntity.setUserRegisteredDate(LocalDateTime.now());
+        userEntity.setUserUpdatedDate(LocalDateTime.now());
+        userEntity.setUserLastLoginDate(LocalDateTime.now());
+        userEntity.setUserLoginDate(LocalDateTime.now());
+        userEntity.setUpdateUser(1L);
+        when(userSpringDataRepoMOCK.findOne(1L)).thenReturn(userEntity);
+        when(userSpringDataRepoMOCK.save(Matchers.<UserEntity>anyObject())).thenReturn(userEntity);
+        doThrow(new RuntimeException("some error")).when(userPasswordResetDataRepoMOCK).delete(resetToken);
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+        verify(userSpringDataRepoMOCK).save(Matchers.<UserEntity>anyObject());
+        verify(userPasswordResetDataRepoMOCK).delete(resetToken);
+    }
+
 }
