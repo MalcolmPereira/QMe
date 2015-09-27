@@ -15,8 +15,14 @@ import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import com.malcolm.qme.springdata.entity.UserRolesEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,6 +33,9 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Malcolm
@@ -55,6 +64,18 @@ public class UserRoleRepositoryImplTest {
     @Autowired
     @Qualifier("RoleRepository")
     private RoleRepository roleRepo;
+
+    @Mock
+    private UserRoleSpringDataRepository userRoleSpringDataRepositoryMOCK;
+
+    @InjectMocks
+    private UserRoleRepository userRoleRepositoryWithMock;
+
+    @Before
+    public void initMocks(){
+        userRoleRepositoryWithMock = new UserRoleRepositoryImpl();
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testFindAll() throws QMeException {
@@ -243,4 +264,63 @@ public class UserRoleRepositoryImplTest {
         assertNull(user);
 
     }
+
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<UserRole> userRoles = userRoleRepositoryWithMock.findAll();
+        verify(userRoleSpringDataRepositoryMOCK).findAll();
+        assertNotNull(userRoles);
+        assertThat(userRoles.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.findAll();
+        verify(userRoleSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserIdQMeException() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.findByUserId(1L);
+        verify(userRoleSpringDataRepositoryMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByRoleIdQMeException() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.findByRoleId(1)).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.findByRoleId(1);
+        verify(userRoleSpringDataRepositoryMOCK).findByRoleId(1);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIdQMeException() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.findById(1L);
+        verify(userRoleSpringDataRepositoryMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.save(Matchers.<UserRolesEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.save(new UserRole(1, 1L));
+        verify(userRoleSpringDataRepositoryMOCK).save(Matchers.<UserRolesEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(userRoleSpringDataRepositoryMOCK.save(Matchers.<UserRolesEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.update(new UserRole(1, 1L), 1L);
+        verify(userRoleSpringDataRepositoryMOCK).save(Matchers.<UserRolesEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(userRoleSpringDataRepositoryMOCK).delete(1L);
+        userRoleRepositoryWithMock.delete(1L);
+        verify(userRoleSpringDataRepositoryMOCK).delete(1L);
+    }
+
 }
