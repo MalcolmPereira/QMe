@@ -162,7 +162,7 @@ public class UserRepositoryImpl implements UserRepository {
     public String stageUserRegistration(User user) throws QMeException {
         try{
             UserStagingEntity userEntity = getUserStagingEntity(user);
-            userStagingSpringDataRepository.save(userEntity);
+			userEntity = userStagingSpringDataRepository.save(userEntity);
             return userEntity.getStagingToken();
 
         }catch(Exception err){

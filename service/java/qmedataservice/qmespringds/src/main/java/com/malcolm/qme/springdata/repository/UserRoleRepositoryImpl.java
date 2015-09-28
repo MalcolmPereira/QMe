@@ -73,7 +73,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	public UserRole save(UserRole userRole) throws QMeException {
 		try{
 			UserRolesEntity userRolesEntity = getUserRoleEntity(userRole);
-			userRoleSpringDataRepository.save(userRolesEntity);
+			userRolesEntity = userRoleSpringDataRepository.save(userRolesEntity);
 			return getUserRole(userRolesEntity);
 		}catch(Exception err){
 			throw new QMeException(err);
@@ -84,7 +84,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	public UserRole update(UserRole userRole, Long updateUserId) throws QMeException {
 		try{
 			UserRolesEntity userRolesEntity = getUserRoleEntity(userRole);
-			userRoleSpringDataRepository.save(userRolesEntity);
+			userRolesEntity = userRoleSpringDataRepository.save(userRolesEntity);
 			return getUserRole(userRolesEntity);
 		}catch(Exception err){
 			throw new QMeException(err);
@@ -138,7 +138,6 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	 * @return UserRole
 	 */
 	private UserRole getUserRole(UserRolesEntity userRolesEntity) {
-        System.out.println(userRolesEntity.getRoleEntity());
         if(userRolesEntity.getRoleEntity() != null){
             return new UserRole(
                     userRolesEntity.getUserRoleId(),

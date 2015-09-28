@@ -314,6 +314,10 @@ public class UserRoleRepositoryImplTest {
         when(userRoleSpringDataRepositoryMOCK.save(Matchers.<UserRolesEntity>anyObject())).thenThrow(new RuntimeException("some error"));
         userRoleRepositoryWithMock.update(new UserRole(1, 1L), 1L);
         verify(userRoleSpringDataRepositoryMOCK).save(Matchers.<UserRolesEntity>anyObject());
+
+        when(userRoleSpringDataRepositoryMOCK.save(Matchers.<UserRolesEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userRoleRepositoryWithMock.update(new UserRole(1L,1,"test", 1L), 1L);
+        verify(userRoleSpringDataRepositoryMOCK).save(Matchers.<UserRolesEntity>anyObject());
     }
 
     @Test(expected = QMeException.class)
