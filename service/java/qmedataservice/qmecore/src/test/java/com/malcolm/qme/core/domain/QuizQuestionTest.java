@@ -45,6 +45,7 @@ public class QuizQuestionTest {
         QuizQuestion quizQuestion1 = new QuizQuestion(1L, 1L, 1L);
         QuizQuestion quizQuestion2 = new QuizQuestion(1L, 1L, 1L);
         assertTrue(quizQuestion1.equals(quizQuestion2));
+        assertTrue(quizQuestion1.equals(quizQuestion1));
 
         quizQuestion1 = new QuizQuestion(1L, 1L, 1L);
         quizQuestion2 = new QuizQuestion(1L, 2L, 3L);
@@ -57,6 +58,8 @@ public class QuizQuestionTest {
         quizQuestion1 =  new QuizQuestion(1L, 1L);
         quizQuestion2 =  new QuizQuestion(1L, 2L);
         assertFalse(quizQuestion1.equals(quizQuestion2));
+        assertFalse(quizQuestion1.equals(null));
+        assertFalse(quizQuestion1.equals(""));
     }
 
     @Test

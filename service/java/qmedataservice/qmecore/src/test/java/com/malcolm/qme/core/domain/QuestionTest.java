@@ -125,6 +125,7 @@ public class QuestionTest {
         Question question1 = new Question(1L, 1L, "Some Question Text","Some Answer", 1, 1L,LocalDateTime.now(), 1L,LocalDateTime.now(), 1L);
         Question question2 = new Question(1L, 1L, "Some Question Text","Some Answer", 1, 1L,LocalDateTime.now(), 1L,LocalDateTime.now(), 1L);
         assertTrue(question1.equals(question2));
+        assertTrue(question1.equals(question1));
         question1 = new Question(1L, 1L, "Some Question Text1","Some Answer1", 1, 1L,LocalDateTime.now(), 1L,LocalDateTime.now(), 1L);
         question2 = new Question(2L, 2L, "Some Question Text2","Some Answer2", 1, 1L,LocalDateTime.now(), 1L,LocalDateTime.now(), 1L);
         assertFalse(question1.equals(question2));
@@ -140,6 +141,8 @@ public class QuestionTest {
         question1 = new Question(1L, "Some Question Text1","Some Answer1", 1L);
         question2 = new Question(2L, "Some Question Text2","Some Answer2", 1L);
         assertFalse(question1.equals(question2));
+        assertFalse(question1.equals(null));
+        assertFalse(question1.equals(""));
     }
 
     @Test

@@ -54,6 +54,7 @@ public class AnswerReferenceMediaTest {
         AnswerReferenceMedia answerReferenceMedia1 = new AnswerReferenceMedia(1L, 1L, 1, "SomeMediaData".getBytes());
         AnswerReferenceMedia answerReferenceMedia2 = new AnswerReferenceMedia(1L, 1L, 1, "SomeMediaData".getBytes());
         assertTrue(answerReferenceMedia1.equals(answerReferenceMedia2));
+        assertTrue(answerReferenceMedia1.equals(answerReferenceMedia1));
         answerReferenceMedia1 = new AnswerReferenceMedia(1L, 1L, 1, "SomeMediaData1".getBytes());
         answerReferenceMedia2 = new AnswerReferenceMedia(1L, 2L, 2, "SomeMediaData2".getBytes());
         assertFalse(answerReferenceMedia1.equals(answerReferenceMedia2));
@@ -63,6 +64,8 @@ public class AnswerReferenceMediaTest {
         answerReferenceMedia1 = new AnswerReferenceMedia(1L, 1, "SomeMediaData1".getBytes());
         answerReferenceMedia2 = new AnswerReferenceMedia(2L, 2, "SomeMediaData2".getBytes());
         assertFalse(answerReferenceMedia1.equals(answerReferenceMedia2));
+        assertFalse(answerReferenceMedia1.equals(null));
+        assertFalse(answerReferenceMedia1.equals(""));
     }
 
     @Test

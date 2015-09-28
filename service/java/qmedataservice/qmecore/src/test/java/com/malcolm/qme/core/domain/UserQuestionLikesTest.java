@@ -33,9 +33,12 @@ public class UserQuestionLikesTest {
         UserQuestionLikes userQuestionLikes1 = new UserQuestionLikes(1L, 1L);
         UserQuestionLikes userQuestionLikes2 = new UserQuestionLikes(1L, 1L);
         assertTrue(userQuestionLikes1.equals(userQuestionLikes2));
+        assertTrue(userQuestionLikes1.equals(userQuestionLikes1));
         userQuestionLikes1 = new UserQuestionLikes(1L, 1L);
         userQuestionLikes2 = new UserQuestionLikes(1L, 2L);
         assertFalse(userQuestionLikes1.equals(userQuestionLikes2));
+        assertFalse(userQuestionLikes1.equals(null));
+        assertFalse(userQuestionLikes1.equals(""));
     }
 
     @Test

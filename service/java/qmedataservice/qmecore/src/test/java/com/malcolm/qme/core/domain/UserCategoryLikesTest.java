@@ -33,9 +33,12 @@ public class UserCategoryLikesTest {
         UserCategoryLikes userCategoryLikes1 = new UserCategoryLikes(1L, 1L);
         UserCategoryLikes userCategoryLikes2 = new UserCategoryLikes(1L, 1L);
         assertTrue(userCategoryLikes1.equals(userCategoryLikes2));
+        assertTrue(userCategoryLikes1.equals(userCategoryLikes1));
         userCategoryLikes1 = new UserCategoryLikes(1L, 1L);
         userCategoryLikes2 = new UserCategoryLikes(1L, 2L);
         assertFalse(userCategoryLikes1.equals(userCategoryLikes2));
+        assertFalse(userCategoryLikes1.equals(null));
+        assertFalse(userCategoryLikes1.equals(""));
     }
 
     @Test

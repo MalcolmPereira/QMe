@@ -73,6 +73,7 @@ public class UserQuizGameTest {
         UserQuizGame userQuizGame1 = new UserQuizGame(1L, 1L, 1L, 1, LocalDateTime.now(), LocalDateTime.now());
         UserQuizGame userQuizGame2 = new UserQuizGame(1L, 1L, 1L, 1, LocalDateTime.now(), LocalDateTime.now());
         assertTrue(userQuizGame1.equals(userQuizGame2));
+        assertTrue(userQuizGame1.equals(userQuizGame1));
         userQuizGame1 = new UserQuizGame(1L, 1L, 1L, 1, LocalDateTime.now(), LocalDateTime.now());
         userQuizGame2 = new UserQuizGame(2L, 1L, 1L, 2, LocalDateTime.now(), LocalDateTime.now());
         assertFalse(userQuizGame1.equals(userQuizGame2));
@@ -82,6 +83,8 @@ public class UserQuizGameTest {
         userQuizGame1 = new UserQuizGame(1L, 1L, 1L);
         userQuizGame2 = new UserQuizGame(2L, 2L, 1L);
         assertFalse(userQuizGame1.equals(userQuizGame2));
+        assertFalse(userQuizGame1.equals(null));
+        assertFalse(userQuizGame1.equals(""));
     }
 
     @Test

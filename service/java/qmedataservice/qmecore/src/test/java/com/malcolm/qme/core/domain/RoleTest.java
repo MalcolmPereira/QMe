@@ -45,6 +45,7 @@ public class RoleTest {
         Role role1 = new Role(1, "Some Role", "Description");
         Role role2 = new Role(1, "Some Role", "Description");
         assertTrue(role1.equals(role2));
+        assertTrue(role1.equals(role1));
         role1 = new Role(1, "Some Role1", "Description");
         role2 = new Role(2, "Some Role2", "Description");
         assertFalse(role1.equals(role2));
@@ -54,6 +55,8 @@ public class RoleTest {
         role1 = new  Role("Some Role1", "Description");
         role2 = new  Role("Some Role2", "Description");
         assertFalse(role1.equals(role2));
+        assertFalse(role1.equals(null));
+        assertFalse(role1.equals(""));
     }
 
     @Test

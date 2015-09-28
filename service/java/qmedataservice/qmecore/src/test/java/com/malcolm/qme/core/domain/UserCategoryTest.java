@@ -45,6 +45,7 @@ public class UserCategoryTest {
         UserCategory userCategory1 = new UserCategory(1L, 1L, 1L);
         UserCategory userCategory2 = new UserCategory(1L, 1L, 1L);
         assertTrue(userCategory1.equals(userCategory2));
+        assertTrue(userCategory1.equals(userCategory1));
         userCategory1 = new UserCategory(1L, 1L, 1L);
         userCategory2 = new UserCategory(1L, 2L, 1L);
         assertFalse(userCategory1.equals(userCategory2));
@@ -54,6 +55,8 @@ public class UserCategoryTest {
         userCategory1 = new UserCategory(1L, 1L);
         userCategory2 = new UserCategory(1L, 2L);
         assertFalse(userCategory1.equals(userCategory2));
+        assertFalse(userCategory1.equals(null));
+        assertFalse(userCategory1.equals(""));
     }
 
     @Test

@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.core.repository;
 
+import junit.framework.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -39,4 +40,12 @@ public class QMeExceptionTest{
         assertNotNull(qmeErr.getError());
         assertThat(qmeErr.getErrorMessage(), equalTo("Some Error Message"));
     }
+
+    @Test
+    public void testGetErrorMessageNullError(){
+        QMeException qmeErr = new QMeException((Throwable)null);
+        assertNull(qmeErr.getErrorMessage());
+        assertNull(qmeErr.getCause());
+    }
+
 }

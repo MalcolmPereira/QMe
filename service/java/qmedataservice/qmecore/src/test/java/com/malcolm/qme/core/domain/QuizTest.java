@@ -113,6 +113,7 @@ public class QuizTest {
         Quiz quiz1 = new Quiz(1L, "Some Quiz Name", "Description", 1L, 1L, 1L, 3, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L);
         Quiz quiz2 = new Quiz(1L, "Some Quiz Name", "Description", 1L, 1L, 1L, 3, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L);
         assertTrue(quiz1.equals(quiz2));
+        assertTrue(quiz1.equals(quiz1));
         quiz1 = new Quiz(1L, "Some Quiz Name1", "Description", 1L, 1L, 1L, 3, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L);
         quiz2 = new Quiz(1L, "Some Quiz Name2", "Description", 1L, 1L, 1L, 3, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L);
         assertFalse(quiz1.equals(quiz2));
@@ -122,6 +123,8 @@ public class QuizTest {
         quiz1 = new Quiz("Some Quiz Name1", "Description", 1L, 3, 1L);
         quiz2 = new Quiz("Some Quiz Name2", "Description", 1L, 3, 1L);
         assertFalse(quiz1.equals(quiz2));
+        assertFalse(quiz1.equals(null));
+        assertFalse(quiz1.equals(""));
     }
 
     @Test

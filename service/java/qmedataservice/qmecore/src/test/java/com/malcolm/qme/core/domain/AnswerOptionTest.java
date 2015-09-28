@@ -58,6 +58,7 @@ public class AnswerOptionTest  {
         AnswerOption answerOption1 = new AnswerOption(1L, 1L, "SomeOptionText", Boolean.TRUE);
         AnswerOption answerOption2 = new AnswerOption(1L, 1L, "SomeOptionText", Boolean.TRUE);
         assertTrue(answerOption1.equals(answerOption2));
+        assertTrue(answerOption1.equals(answerOption1));
         answerOption1 = new AnswerOption(1L, 1L, "SomeOptionText1", Boolean.TRUE);
         answerOption2 = new AnswerOption(1L, 2L, "SomeOptionText2", Boolean.TRUE);
         assertFalse(answerOption1.equals(answerOption2));
@@ -67,6 +68,8 @@ public class AnswerOptionTest  {
         answerOption1 = new AnswerOption(1L, "SomeOptionText1", Boolean.TRUE);
         answerOption2 = new AnswerOption(2L, "SomeOptionText2", Boolean.TRUE);
         assertFalse(answerOption1.equals(answerOption2));
+        assertFalse(answerOption1.equals(null));
+        assertFalse(answerOption1.equals(""));
     }
 
     @Test

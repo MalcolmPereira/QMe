@@ -138,6 +138,7 @@ public class UserTest {
         User user1 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         User user2 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         assertTrue(user1.equals(user2));
+        assertTrue(user1.equals(user1));
         user1 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email1", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         user2 = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email2", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
         assertFalse(user1.equals(user2));
@@ -153,6 +154,8 @@ public class UserTest {
         user1 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email1", LocalDateTime.now());
         user2 = new User("Some User Name", "Some Password", "First Name", "Last Name", "Email2", LocalDateTime.now());
         assertFalse(user1.equals(user2));
+        assertFalse(user1.equals(null));
+        assertFalse(user1.equals(""));
     }
 
     @Test

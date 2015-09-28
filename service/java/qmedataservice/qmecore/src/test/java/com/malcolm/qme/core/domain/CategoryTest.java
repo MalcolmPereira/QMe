@@ -96,6 +96,7 @@ public class CategoryTest {
         Category category1 = new Category(1L, 0L, "Some Category Name",1L, LocalDateTime.now(), 1L);
         Category category2 = new Category(1L, 0L, "Some Category Name",1L, LocalDateTime.now(), 1L);
         assertTrue(category1.equals(category2));
+        assertTrue(category1.equals(category1));
         category1 = new Category(1L, 0L, "Some Category Name1",1L, LocalDateTime.now(), 1L);
         category2 = new Category(2L, 0L, "Some Category Name2",2L, LocalDateTime.now(), 1L);
         assertFalse(category1.equals(category2));
@@ -117,6 +118,8 @@ public class CategoryTest {
         category1 = new Category("Some Category Name1", 1L);
         category2 = new Category("Some Category Name2", 1L);
         assertFalse(category1.equals(category2));
+        assertFalse(category1.equals(null));
+        assertFalse(category1.equals(""));
 
     }
 

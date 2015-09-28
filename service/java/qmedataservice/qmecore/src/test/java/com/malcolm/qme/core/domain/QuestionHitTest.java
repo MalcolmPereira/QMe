@@ -51,9 +51,12 @@ public class QuestionHitTest {
         QuestionHit questionHit1 = new QuestionHit(1L, 2L, 3L, 4L, 5L);
         QuestionHit questionHit2 = new QuestionHit(1L, 2L, 3L, 4L, 5L);
         assertTrue(questionHit1.equals(questionHit2));
+        assertTrue(questionHit1.equals(questionHit1));
         questionHit1 = new QuestionHit(1L, 2L, 3L, 4L, 5L);
         questionHit2 = new QuestionHit(2L, 3L, 4L, 5L, 6L);
         assertFalse(questionHit1.equals(questionHit2));
+        assertFalse(questionHit1.equals(null));
+        assertFalse(questionHit1.equals(""));
     }
 
     @Test

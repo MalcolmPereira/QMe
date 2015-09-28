@@ -61,6 +61,7 @@ public class UserRoleTest {
         UserRole userRole1 = new UserRole(1L, 1, "Some Role Name", 1L);
         UserRole userRole2 = new UserRole(1L, 1, "Some Role Name", 1L);
         assertTrue(userRole1.equals(userRole2));
+        assertTrue(userRole1.equals(userRole1));
         userRole1 = new UserRole(1L, 1, "Some Role Name1", 1L);
         userRole2 = new UserRole(1L, 1, "Some Role Name2", 1L);
         assertFalse(userRole1.equals(userRole2));
@@ -76,6 +77,8 @@ public class UserRoleTest {
         userRole1 = new UserRole(1, 1L);
         userRole2 = new UserRole(1, 2L);
         assertFalse(userRole1.equals(userRole2));
+        assertFalse(userRole1.equals(null));
+        assertFalse(userRole1.equals(""));
     }
 
     @Test

@@ -37,6 +37,7 @@ public class MediaTypeTest {
         MediaType mediaType1 = new MediaType(1, "some media type");
         MediaType mediaType2 = new MediaType(1, "some media type");
         assertTrue(mediaType1.equals(mediaType2));
+        assertTrue(mediaType1.equals(mediaType1));
         mediaType1 = new MediaType(1, "some media type1");
         mediaType2 = new MediaType(2, "some media type2");
         assertFalse(mediaType1.equals(mediaType2));
@@ -46,6 +47,8 @@ public class MediaTypeTest {
         mediaType1 = new MediaType("some media type1");
         mediaType2 = new MediaType("some media type2");
         assertFalse(mediaType1.equals(mediaType2));
+        assertFalse(mediaType1.equals(null));
+        assertFalse(mediaType1.equals(""));
     }
 
     @Test

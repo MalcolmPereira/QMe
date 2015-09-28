@@ -55,6 +55,9 @@ public class AnswerOptionMediaTest {
         AnswerOptionMedia answerOptionMedia1 = new AnswerOptionMedia(1L, 1L, 1, "SomeMediaData".getBytes());
         AnswerOptionMedia answerOptionMedia2 = new AnswerOptionMedia(1L, 1L, 1, "SomeMediaData".getBytes());
         assertTrue(answerOptionMedia1.equals(answerOptionMedia2));
+        assertTrue(answerOptionMedia1.equals(answerOptionMedia1));
+
+
         answerOptionMedia1 = new AnswerOptionMedia(1L, 1L, 1, "SomeMediaData1".getBytes());
         answerOptionMedia2 = new AnswerOptionMedia(1L, 1L, 2, "SomeMediaData2".getBytes());
         assertFalse(answerOptionMedia1.equals(answerOptionMedia2));
@@ -64,6 +67,8 @@ public class AnswerOptionMediaTest {
         answerOptionMedia1 = new AnswerOptionMedia(1L, 1, "SomeMediaData1".getBytes());
         answerOptionMedia2 = new AnswerOptionMedia(1L, 2, "SomeMediaData2".getBytes());
         assertFalse(answerOptionMedia1.equals(answerOptionMedia2));
+        assertFalse(answerOptionMedia1.equals(null));
+        assertFalse(answerOptionMedia1.equals(""));
     }
 
     @Test
