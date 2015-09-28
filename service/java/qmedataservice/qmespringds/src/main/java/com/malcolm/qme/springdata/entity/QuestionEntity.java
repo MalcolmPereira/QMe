@@ -114,6 +114,8 @@ public class QuestionEntity implements java.io.Serializable {
 		this.questionUpdateUser = questionUpdateUser;
 	}
 
+
+
 	/**
 	 * @return the questionId
 	 */

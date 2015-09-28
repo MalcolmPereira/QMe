@@ -70,15 +70,31 @@ public class CategoryEntity implements java.io.Serializable {
 	 * @param catCreateDate Category Create Date
 	 * @param catCreateUser Category Create User
 	 */
-	public CategoryEntity(String catName, Long catParentId, LocalDateTime catCreateDate,
-			Long catCreateUser) {
+	public CategoryEntity(String catName, Long catParentId, LocalDateTime catCreateDate, Long catCreateUser) {
 		this.catName = catName;
 		this.catParentId = catParentId;
 		this.catCreateDate = catCreateDate;
 		this.catCreateUser = catCreateUser;
 	}
 
-	/**
+    /**
+     * Public Constructor
+     *
+     * @param catName
+     * @param catParentId
+     * @param catCreateDate
+     * @param catCreateUser
+     * @param catLikes
+     */
+    public CategoryEntity(String catName, Long catParentId, LocalDateTime catCreateDate, Long catCreateUser, Long catLikes) {
+        this.catName = catName;
+        this.catParentId = catParentId;
+        this.catCreateDate = catCreateDate;
+        this.catCreateUser = catCreateUser;
+        this.catLikes = catLikes;
+    }
+
+    /**
 	 * @return the catId
 	 */
 	public Long getCatId() {
