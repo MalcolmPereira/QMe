@@ -8,6 +8,7 @@ package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,14 +46,9 @@ public interface UserAPI extends QMeAPI {
     String REGISTER_PATH = ROOT_PATH + "/register";
 
     /**
-     * Registration Confirm URL Param
-     */
-    String REG_CONFIRM_URL_PARAM 	= "confirm_url";
-
-    /**
      * QMeUser API Stage User Path
      */
-    String STAGING_PATH = ROOT_PATH + "/stage/{" + REG_CONFIRM_URL_PARAM + ":.+}";
+    String STAGING_PATH = ROOT_PATH + "/stage";
 
     /**
      * QMeUser API User Registration Confirm User Path
@@ -122,12 +118,11 @@ public interface UserAPI extends QMeAPI {
     /**
      * Stage User
      *
-     * @param appUrl - application url to complete registration
-     * @param user - User
+     * @param user - Staging User
      * @return Boolean - Staging successful
      * @throws QMeResourceException
      */
-    Boolean stageUser(@PathVariable(REG_CONFIRM_URL_PARAM) String appUrl, @RequestBody QMeUser user) throws QMeResourceException;
+    Boolean stageUser(@RequestBody QMeStageUser user) throws QMeResourceException;
 
     /**
      * Confirm User Registration

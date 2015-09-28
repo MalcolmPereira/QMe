@@ -15,6 +15,7 @@ import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
@@ -341,13 +342,14 @@ public class UserServiceImplTest {
         when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) null));
         doNothing().when(javaMailSender).send(Matchers.<MimeMessage>anyObject());
 
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        Boolean staged = userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        Boolean staged = userService.stageUser(qmeUser);
 
         assertThat(staged, equalTo(Boolean.TRUE));
 
@@ -372,13 +374,14 @@ public class UserServiceImplTest {
         when(userRepo.stageUserRegistration(Matchers.<User>anyObject())).thenReturn(null);
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
 
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        Boolean staged = userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        Boolean staged = userService.stageUser(qmeUser);
 
         assertThat(staged, equalTo(Boolean.FALSE));
 
@@ -391,58 +394,75 @@ public class UserServiceImplTest {
 
     @Test(expected = QMeInvalidResourceDataException.class)
     public void testStageUserInvalidUserName() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName(null);
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
     }
 
     @Test(expected = QMeInvalidResourceDataException.class)
     public void testStageUserInvalidUserPassword() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword(null);
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
     }
 
     @Test(expected = QMeInvalidResourceDataException.class)
     public void testStageUserInvalidUserEmail() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail(null);
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
     }
 
     @Test(expected = QMeInvalidResourceDataException.class)
     public void testStageUserInvalidFirstName() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName(null);
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
     }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testStageUserInvalidConfirmURL() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
+        QMeStageUser qmeUser = new QMeStageUser();
+        qmeUser.setUserName("suser6");
+        qmeUser.setUserPassword("spassword6");
+        qmeUser.setUserFirstName(null);
+        qmeUser.setUserLastName("Simple User 6");
+        qmeUser.setUserEmail("SimpleUser6@User.com");
+        userService.stageUser(qmeUser);
+    }
+
 
     @Test(expected = QMeResourceConflictException.class)
     public void testStageUserConflictUserName() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(UserFixtures.simpleUser());
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
         verify(userRepo).findByUserName("suser6");
     }
 
@@ -450,13 +470,14 @@ public class UserServiceImplTest {
     public void testStageUserConflictUserNameStage() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(null);
         when(userRepo.findStagedUserByUserName("suser6")).thenReturn(UserFixtures.simpleUser());
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
     }
@@ -464,26 +485,28 @@ public class UserServiceImplTest {
     @Test(expected = QMeServerException.class)
     public void testStageGetUserQMeException() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenThrow(QMeException.class);
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
         verify(userRepo).findByUserEmail("SimpleUser6@User.com");
     }
 
     @Test(expected = QMeResourceConflictException.class)
     public void testStageUserConflictUserEmail() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(UserFixtures.simpleUser());
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
         verify(userRepo).findByUserEmail("SimpleUser6@User.com");
     }
 
@@ -491,13 +514,14 @@ public class UserServiceImplTest {
     public void testStageUserConflictUserEmailStage() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserEmail("SimpleUser6@User.com")).thenReturn(null);
         when(userRepo.findStagedUserByUserEmail("SimpleUser6@User.com")).thenReturn(UserFixtures.simpleUser());
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        userService.stageUser(qmeUser);
         verify(userRepo).findByUserEmail("SimpleUser6@User.com");
         verify(userRepo).findStagedUserByUserEmail("SimpleUser6@User.com");
     }
@@ -511,13 +535,14 @@ public class UserServiceImplTest {
         when(userRepo.stageUserRegistration(Matchers.<User>anyObject())).thenThrow(QMeException.class);
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
 
-        QMeUser qmeUser = new QMeUser();
+        QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
         qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
-        Boolean staged = userService.stageUser(qmeUser, "some url");
+        qmeUser.setConfirmURL("some url");
+        Boolean staged = userService.stageUser(qmeUser);
 
         assertThat(staged, equalTo(Boolean.TRUE));
 

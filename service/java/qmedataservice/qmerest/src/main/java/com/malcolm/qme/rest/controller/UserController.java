@@ -11,6 +11,7 @@ import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
@@ -87,15 +88,15 @@ public class UserController implements UserAPI {
     @RequestMapping(value=STAGING_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Boolean stageUser(@PathVariable(REG_CONFIRM_URL_PARAM) String appUrl, @RequestBody QMeUser user) throws QMeResourceException{
-       return userService.stageUser(user,appUrl);
+    public @ResponseBody Boolean stageUser(@RequestBody QMeStageUser user) throws QMeResourceException{
+       return userService.stageUser(user);
     }
 
     @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody Boolean confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException{
-        return Boolean.FALSE;
+        return userService.confirmUserRegistration(registrationToken);
     }
 
 

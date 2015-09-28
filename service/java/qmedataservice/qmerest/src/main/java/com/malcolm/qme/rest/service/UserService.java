@@ -8,6 +8,7 @@ package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 
@@ -54,11 +55,10 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * Stage User in Staging Table for User Registration.
      *
      * @param qMeUser QMeUser model
-     * @param url Redirect URL for confirming staged user
      * @return Boolean - Staging successful/unsuccessful
      * @throws QMeServerException
      */
-    Boolean stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
+    Boolean stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
 
     /**
      * Confirm User Registration

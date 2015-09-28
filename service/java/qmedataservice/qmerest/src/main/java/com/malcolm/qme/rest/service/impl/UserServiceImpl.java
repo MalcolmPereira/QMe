@@ -15,6 +15,7 @@ import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeResetPassword;
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
@@ -139,12 +140,12 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean stageUser(QMeUser qMeUser, String url) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
+    public Boolean stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
         try {
              User user           = getStagingUser(qMeUser);
              String stagingToken = userRepo.stageUserRegistration(user);
              if(stagingToken != null && stagingToken.length() > 0){
-                 sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, url);
+                 sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, qMeUser.getConfirmURL());
                  return Boolean.TRUE;
              }
              return Boolean.FALSE;
@@ -331,7 +332,7 @@ public final class UserServiceImpl implements UserService {
      * @throws QMeResourceConflictException
      * @throws QMeServerException
      */
-    private User getStagingUser(QMeUser qMeuser) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
+    private User getStagingUser(QMeStageUser qMeuser) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         try{
             if(qMeuser.getUserName() == null || qMeuser.getUserName().trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Valid User Name is required");
@@ -344,6 +345,9 @@ public final class UserServiceImpl implements UserService {
             }
             if(qMeuser.getUserFirstName() == null || qMeuser.getUserFirstName().trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Valid User First Name is required");
+            }
+            if(qMeuser.getConfirmURL() == null || qMeuser.getConfirmURL().trim().length() == 0){
+                throw new QMeInvalidResourceDataException("Valid Application confirm URL is required");
             }
             User user = userRepo.findByUserName(qMeuser.getUserName());
             if(user != null){

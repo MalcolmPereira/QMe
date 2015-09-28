@@ -6,8 +6,12 @@
  **/
 package com.malcolm.qme.rest.controller;
 
-import com.malcolm.qme.rest.exception.*;
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeResetPassword;
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.fixtures.QMeResetPasswordFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeUserDetailFixtures;
@@ -30,8 +34,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * @author Malcolm
@@ -268,6 +271,103 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userFirstName", is("Simple 1")))
                 .andExpect(jsonPath("$.userLastName", is("Simple User 1")))
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
+        ;
+    }
+
+    @Test
+    public void testStageUser() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.stageUser(anyObject())).thenReturn(Boolean.TRUE);
+
+        QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
+
+        mockMvc.perform(
+                post("/qme/user/stage")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"))
+        ;
+    }
+
+    @Test
+    public void testStageUserUnSuccessful() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.stageUser(anyObject())).thenReturn(Boolean.FALSE);
+
+        QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
+
+        mockMvc.perform(
+                post("/qme/user/stage")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("false"))
+        ;
+    }
+
+    @Test
+    public void testStageUserQMeInvalidResourceDataException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.stageUser(anyObject())).thenThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service"));
+
+        QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
+
+        mockMvc.perform(
+                post("/qme/user/stage")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+        ;
+    }
+
+    @Test
+    public void testStageUserQMeResourceConflictException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.stageUser(anyObject())).thenThrow(new QMeResourceConflictException("Some conflicting data error in the Service"));
+
+        QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
+
+        mockMvc.perform(
+                post("/qme/user/stage")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isConflict())
+        ;
+    }
+
+    @Test
+    public void testStageUserQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.stageUser(anyObject())).thenThrow(new QMeServerException("Some Error in the Service"));
+
+        QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
+
+        mockMvc.perform(
+                post("/qme/user/stage")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isInternalServerError())
         ;
     }
 

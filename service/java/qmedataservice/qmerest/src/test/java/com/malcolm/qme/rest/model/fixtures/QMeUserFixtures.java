@@ -6,6 +6,7 @@
  **/
 package com.malcolm.qme.rest.model.fixtures;
 
+import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 
 /**
@@ -25,6 +26,22 @@ public class QMeUserFixtures extends QMeResourceFixture<QMeUser>{
         qmeUser.setUserFirstName("Simple 1");
         qmeUser.setUserLastName("Simple User 1");
         qmeUser.setUserEmail("SimpleUser1@User.com");
+        return qmeUser;
+    }
+
+    /**
+     * Simple QMe Staged User
+     *
+     * @return  QMeUser
+     */
+    public static QMeStageUser simpleQMeStagedUser(){
+        QMeStageUser qmeUser = new QMeStageUser();
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword("spassword1");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+        qmeUser.setConfirmURL("some url");
         return qmeUser;
     }
 }
