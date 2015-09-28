@@ -38,7 +38,6 @@ public class AnswerOptionEntityTest {
         answerOptionEntity1.setOptionId(2L);
         assertFalse(answerOptionEntity1.equals(answerOptionEntity2));
 
-        answerOptionEntity1 = new AnswerOptionEntity(1L,"some text1", (byte)1);
         assertFalse(answerOptionEntity1.equals(null));
         assertFalse(answerOptionEntity1.equals(""));
     }
@@ -48,6 +47,7 @@ public class AnswerOptionEntityTest {
         AnswerOptionEntity answerOptionEntity1 = new AnswerOptionEntity(1L,"some text", (byte)1);
         AnswerOptionEntity answerOptionEntity2 = new AnswerOptionEntity(1L,"some text", (byte)1);
         assertThat(answerOptionEntity1.hashCode(), equalTo(answerOptionEntity2.hashCode()));
+        assertThat(answerOptionEntity1.hashCode(), equalTo(answerOptionEntity1.hashCode()));
 
         answerOptionEntity1 = new AnswerOptionEntity(1L,"some text", (byte)1);
         answerOptionEntity1.setOptionId(1L);
