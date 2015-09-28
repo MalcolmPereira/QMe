@@ -134,6 +134,11 @@ public class UserRoleRepositoryImplTest {
         assertNotNull(userRole);
         assertThat(userRole.getUserRoleID(), equalTo(userRoleID));
 
+        UserRole userRoleUpdate = new UserRole(userRoleID, roleID, userID);
+        userRoleUpdate = userRoleRepository.update(userRoleUpdate, userID);
+        assertNotNull(userRoleUpdate);
+        assertThat(userRoleUpdate.getUserRoleID(), greaterThan(0L));
+
         userRoleRepository.delete(userRoleID);
         userRole = userRoleRepository.findById(userRoleID);
         assertNull(userRole);
