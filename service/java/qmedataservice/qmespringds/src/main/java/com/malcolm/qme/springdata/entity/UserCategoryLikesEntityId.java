@@ -37,7 +37,7 @@ public class UserCategoryLikesEntityId implements java.io.Serializable {
 	}
 
     /**
-     * Public Contructor
+     * Public Constructor
      * @param userId User Id
      * @param catId Category Id
      */

@@ -46,8 +46,8 @@ public class RoleEntity implements java.io.Serializable {
     /***
      * Public Constructor
      *
-     * @param roleName
-     * @param roleDesc
+     * @param roleName Role Name
+     * @param roleDesc Role Description
      */
     public RoleEntity(String roleName, String roleDesc) {
         this.roleName = roleName;

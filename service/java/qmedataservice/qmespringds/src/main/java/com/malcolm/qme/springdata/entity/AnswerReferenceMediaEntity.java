@@ -52,9 +52,9 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
     /**
      * Public Constructor
      *
-     * @param questionId
-     * @param mediaTypeId
-     * @param refMedia
+     * @param questionId Question Id
+     * @param mediaTypeId Media Type Id
+     * @param refMedia Media Reference
      */
     public AnswerReferenceMediaEntity(Long questionId, Integer mediaTypeId, byte[] refMedia) {
         this.questionId = questionId;
