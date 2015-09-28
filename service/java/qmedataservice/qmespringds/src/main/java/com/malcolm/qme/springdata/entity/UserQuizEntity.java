@@ -97,9 +97,7 @@ public class UserQuizEntity implements java.io.Serializable {
 	 * @param quizMaxScore Quiz Max Score
 	 * @param quizComplete Quiz Complete 1 - Complete/ 0 - Incomplete
 	 */
-	public UserQuizEntity(Long userId, Long quizId, Long catId,
-			LocalDateTime quizStartDate, Integer quizUserScore, Integer quizMaxScore,
-			byte quizComplete) {
+	public UserQuizEntity(Long userId, Long quizId, Long catId,LocalDateTime quizStartDate, Integer quizUserScore, Integer quizMaxScore,byte quizComplete) {
 		this.userId = userId;
 		this.quizId = quizId;
 		this.catId = catId;
@@ -109,7 +107,30 @@ public class UserQuizEntity implements java.io.Serializable {
 		this.quizComplete = quizComplete;
 	}
 
-
+	/**
+	 * Public Constructor
+	 *
+	 * @param userId User ID
+	 * @param quizId Quiz ID
+	 * @param catId Category ID
+	 * @param quizStartDate Quiz Start Date
+	 * @param quizEndDate Quiz End Date
+	 * @param quizUserScore Quiz User Score
+	 * @param quizMaxScore  Quiz Max Score
+	 * @param quizToken  Quiz Token
+	 * @param quizComplete  Quiz Complete 1 - Complete/ 0 - Incomplete
+	 */
+	public UserQuizEntity(Long userId, Long quizId, Long catId, LocalDateTime quizStartDate, LocalDateTime quizEndDate, Integer quizUserScore, Integer quizMaxScore, String quizToken, byte quizComplete) {
+		this.userId = userId;
+		this.quizId = quizId;
+		this.catId = catId;
+		this.quizStartDate = quizStartDate;
+		this.quizEndDate = quizEndDate;
+		this.quizUserScore = quizUserScore;
+		this.quizMaxScore = quizMaxScore;
+		this.quizToken = quizToken;
+		this.quizComplete = quizComplete;
+	}
 
 	/**
 	 * @return the userQuizId

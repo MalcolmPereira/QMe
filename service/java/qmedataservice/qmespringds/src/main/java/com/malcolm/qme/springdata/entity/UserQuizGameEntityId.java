@@ -42,6 +42,19 @@ public class UserQuizGameEntityId implements java.io.Serializable {
 	public UserQuizGameEntityId() {
 	}
 
+    /**
+     * Public Constructor
+     *
+     * @param userId User Id
+     * @param catId Category Id
+     * @param quizGameToken Quiz Game Token
+     */
+	public UserQuizGameEntityId(Long userId, Long catId, Long quizGameToken) {
+		this.userId = userId;
+		this.catId = catId;
+		this.quizGameToken = quizGameToken;
+	}
+
 	/**
 	 * @return the userId
 	 */

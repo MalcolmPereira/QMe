@@ -33,6 +33,15 @@ public class UserQuestionLikesEntity implements java.io.Serializable {
 	public UserQuestionLikesEntity() {
 	}
 
+    /**
+     * Public Constructor
+     *
+     * @param id UserQuestionLikesEntityId
+     */
+	public UserQuestionLikesEntity(UserQuestionLikesEntityId id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the id
 	 */

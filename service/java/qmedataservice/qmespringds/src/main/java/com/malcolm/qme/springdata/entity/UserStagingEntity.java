@@ -212,6 +212,7 @@ public class UserStagingEntity implements java.io.Serializable {
         this.stagingToken = stagingToken;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -219,22 +220,25 @@ public class UserStagingEntity implements java.io.Serializable {
 
         UserStagingEntity that = (UserStagingEntity) o;
 
-        if (!userId.equals(that.userId)) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (!userName.equals(that.userName)) return false;
-        return userFirstName.equals(that.userFirstName) && userLastName.equals(that.userLastName) && userEmail.equals(that.userEmail) && userPasscode.equals(that.userPasscode) && userStagingDate.equals(that.userStagingDate) && stagingToken.equals(that.stagingToken);
+        if (!userFirstName.equals(that.userFirstName)) return false;
+        if (!userLastName.equals(that.userLastName)) return false;
+        if (!userEmail.equals(that.userEmail)) return false;
+        if (!userPasscode.equals(that.userPasscode)) return false;
+        return !(stagingToken != null ? !stagingToken.equals(that.stagingToken) : that.stagingToken != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = userId.hashCode();
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + userName.hashCode();
         result = 31 * result + userFirstName.hashCode();
         result = 31 * result + userLastName.hashCode();
         result = 31 * result + userEmail.hashCode();
         result = 31 * result + userPasscode.hashCode();
-        result = 31 * result + userStagingDate.hashCode();
-        result = 31 * result + stagingToken.hashCode();
+        result = 31 * result + (stagingToken != null ? stagingToken.hashCode() : 0);
         return result;
     }
 

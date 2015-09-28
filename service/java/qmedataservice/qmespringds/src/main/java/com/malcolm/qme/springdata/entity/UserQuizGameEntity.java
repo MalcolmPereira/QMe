@@ -52,6 +52,21 @@ public class UserQuizGameEntity implements java.io.Serializable {
 	public UserQuizGameEntity() {
 	}
 
+    /**
+     * Public Constructor
+     *
+     * @param id Id
+     * @param startDate Start Date
+     * @param endDate End Date
+     * @param userScore User Score
+     */
+	public UserQuizGameEntity(UserQuizGameEntityId id, LocalDateTime startDate, LocalDateTime endDate, Integer userScore) {
+		this.id = id;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.userScore = userScore;
+	}
+
 	/**
 	 * @return the id
 	 */

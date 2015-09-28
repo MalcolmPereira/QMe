@@ -50,6 +50,19 @@ public class UserRolesEntity implements java.io.Serializable {
 	public UserRolesEntity() {
 	}
 
+    /**
+     * Public Constructor
+     *
+     * @param userId User Id
+     * @param roleId Role Id
+     * @param roleEntity Role Entity
+     */
+	public UserRolesEntity(Long userId, Integer roleId, RoleEntity roleEntity) {
+		this.userId = userId;
+		this.roleId = roleId;
+		this.roleEntity = roleEntity;
+	}
+
 	/**
 	 * @return the userRoleId
 	 */

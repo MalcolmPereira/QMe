@@ -36,7 +36,18 @@ public class UserQuizLikesEntityId implements java.io.Serializable {
 	public UserQuizLikesEntityId() {
 	}
 
-	/**
+    /**
+     * Public Constructor
+     *
+     * @param userId User Id
+     * @param quizId Quiz Id
+     */
+    public UserQuizLikesEntityId(Long userId, Long quizId) {
+        this.userId = userId;
+        this.quizId = quizId;
+    }
+
+    /**
 	 * @return the userId
 	 */
 	public Long getUserId() {
