@@ -153,6 +153,14 @@ public class RoleRepositoryImplTest {
         verify(roleSpringDataRepositoryMOCK).findAll();
     }
 
+    @Test
+    public void testFindByRoleNameNullRole() throws QMeException {
+        when(roleSpringDataRepositoryMOCK.findByRoleNameIgnoreCase("test")).thenReturn(null);
+        Role role = roleRepositoryWithMock.findByRoleName("test");
+        verify(roleSpringDataRepositoryMOCK).findByRoleNameIgnoreCase("test");
+        assertNull(role);
+    }
+
     @Test(expected = QMeException.class)
     public void testFindByRoleNameQMeException() throws QMeException {
         when(roleSpringDataRepositoryMOCK.findByRoleNameIgnoreCase("test")).thenThrow(new RuntimeException("some error"));

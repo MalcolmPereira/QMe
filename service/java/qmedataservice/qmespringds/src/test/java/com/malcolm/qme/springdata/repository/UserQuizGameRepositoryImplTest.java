@@ -113,7 +113,7 @@ public class UserQuizGameRepositoryImplTest {
         assertThat(userQuizGame.getUserGameToken(), equalTo(21234L));
 
         UserQuizGame userQuizGameUpdate = new UserQuizGame(userQuizGame.getUserGameToken(), userQuizGame.getUserID(), userQuizGame.getCategoryID(), 10, userQuizGame.getQuizStartDate(), LocalDateTime.now());
-        userQuizGameUpdate = userQuizGameRepo.save(userQuizGameUpdate);
+        userQuizGameUpdate = userQuizGameRepo.update(userQuizGameUpdate, userID);
         assertNotNull(userQuizGameUpdate);
         assertThat(userQuizGameUpdate.getUserID(), equalTo(userID));
         assertThat(userQuizGameUpdate.getCategoryID(), equalTo(1L));

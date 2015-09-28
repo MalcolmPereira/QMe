@@ -62,13 +62,10 @@ public class UserRepositoryImpl implements UserRepository {
      */
     private static final String DATE_PATTERN = "yyyy-MM-dd HH:MM:ss";
 
-
-
 	@Override
 	public User findByUserName(String userName) throws QMeException {
 		try{
-			UserEntity userEntity = userSpringDataRepo
-					.findByUserNameIgnoreCase(userName);
+			UserEntity userEntity = userSpringDataRepo.findByUserNameIgnoreCase(userName);
 			if (userEntity != null) {
 				return getUser(userEntity);
 			}
@@ -295,6 +292,7 @@ public class UserRepositoryImpl implements UserRepository {
 			UserPasswordResetEntity userPasswordResetEntity = userPasswordResetDataRepo.findOne(id);
 
 			if (userPasswordResetEntity != null) {
+
 				UserEntity userEntity = userSpringDataRepo.findOne(userId);
 
 				if (userEntity != null) {

@@ -142,8 +142,8 @@ public class QuizQuestionRepositoryImpl implements QuizQuestionRepository {
     private QuizQuestion getQuizQuestion(QuizQuestionEntity quizQuestionEntity){
     	return new QuizQuestion(
     			quizQuestionEntity.getQuizQuestionId(),
-    			quizQuestionEntity.getQuestionId(),
-    			quizQuestionEntity.getQuizId());
+				quizQuestionEntity.getQuizId(),
+    			quizQuestionEntity.getQuestionId());
     }
 
 

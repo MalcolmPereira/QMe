@@ -124,7 +124,7 @@ public class QuestionHitRepositoryImplTest {
         assertThat(questionHit.getCategoryID(), equalTo(catID));
 
         QuestionHit questionHitUpdate = new QuestionHit(questionHit.getQuestionID(), questionHit.getCategoryID(), 1L, 1L, 0L);
-        questionHit = questionHitRepository.save(questionHitUpdate);
+        questionHit = questionHitRepository.update(questionHitUpdate,1L);
         assertNotNull(questionHit);
         assertThat(questionHit.getQuestionID(), equalTo(questionID));
         assertThat(questionHit.getCategoryID(), equalTo(catID));

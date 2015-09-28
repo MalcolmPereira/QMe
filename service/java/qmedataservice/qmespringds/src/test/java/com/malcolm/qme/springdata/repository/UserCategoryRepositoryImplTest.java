@@ -116,6 +116,9 @@ public class UserCategoryRepositoryImplTest {
         userCategory = userCategoryRepo.save(userCategory);
         Long userCatID = userCategory.getUserCategoryID();
 
+        userCategory = userCategoryRepo.update(userCategory, userID);
+        assertNotNull(userCategory);
+
         userCategory = userCategoryRepo.findById(userCatID);
         assertNotNull(userCategory);
         assertThat(userCategory.getUserCategoryID(), equalTo(userCatID));

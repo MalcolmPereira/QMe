@@ -108,7 +108,11 @@ public class QuestionRepositoryImplTest {
                 question.getQuestionUpdateDate(),
                 question.getUpdateUserID());
 
-        questionRepository.save(questionUpdates);
+        question = questionRepository.save(questionUpdates);
+        assertNotNull(question);
+
+        question = questionRepository.update(questionUpdates,1L);
+        assertNotNull(question);
 
         question = questionRepository.findById(questionID);
         assertNotNull(question);

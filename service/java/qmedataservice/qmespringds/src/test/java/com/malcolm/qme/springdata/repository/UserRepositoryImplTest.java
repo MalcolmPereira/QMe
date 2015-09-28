@@ -431,6 +431,14 @@ public class UserRepositoryImplTest {
         verify(userSpringDataRepoMOCK).findByUserNameIgnoreCase("test");
     }
 
+    @Test
+    public void testFindByUserNameReturnNull() throws QMeException {
+        when(userSpringDataRepoMOCK.findByUserNameIgnoreCase("test")).thenReturn(null);
+        User user = userRepositoryWithMock.findByUserName("test");
+        verify(userSpringDataRepoMOCK).findByUserNameIgnoreCase("test");
+        assertNull(user);
+    }
+
     @Test(expected = QMeException.class)
     public void testFindStagedByUserNameQMeException() throws QMeException {
         when(userStagingSpringDataRepositoryMOCK.findByUserNameIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
@@ -443,6 +451,14 @@ public class UserRepositoryImplTest {
         when(userSpringDataRepoMOCK.findByUserEmailIgnoreCase("test")).thenThrow(new RuntimeException("some error"));
         userRepositoryWithMock.findByUserEmail("test");
         verify(userSpringDataRepoMOCK).findByUserEmailIgnoreCase("test");
+    }
+
+    @Test
+    public void testFindByUserEmailReturnNull() throws QMeException {
+        when(userSpringDataRepoMOCK.findByUserEmailIgnoreCase("test")).thenReturn(null);
+        User user = userRepositoryWithMock.findByUserEmail("test");
+        verify(userSpringDataRepoMOCK).findByUserEmailIgnoreCase("test");
+        assertNull(user);
     }
 
     @Test(expected = QMeException.class)
@@ -476,6 +492,13 @@ public class UserRepositoryImplTest {
     @Test(expected = QMeException.class)
     public void testConfirmUserRegistrationNoTokenQMeException() throws QMeException {
         when(userStagingSpringDataRepositoryMOCK.findByStagingTokenIgnoreCase("sometoken")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.confirmUserRegistration("sometoken");
+        verify(userStagingSpringDataRepositoryMOCK).findByStagingTokenIgnoreCase("sometoken");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testConfirmUserRegistrationNullTokenQMeException() throws QMeException {
+        when(userStagingSpringDataRepositoryMOCK.findByStagingTokenIgnoreCase("sometoken")).thenReturn(null);
         userRepositoryWithMock.confirmUserRegistration("sometoken");
         verify(userStagingSpringDataRepositoryMOCK).findByStagingTokenIgnoreCase("sometoken");
     }
@@ -568,6 +591,14 @@ public class UserRepositoryImplTest {
         verify(userSpringDataRepoMOCK).findOne(1L);
     }
 
+    @Test
+    public void testUpdateLoginDateReturnNull() throws QMeException, InterruptedException {
+        when(userSpringDataRepoMOCK.findOne(1L)).thenReturn(null);
+        User user = userRepositoryWithMock.updateLoginDate(1L);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+        assertNull(user);
+    }
+
     @Test(expected = QMeException.class)
     public void testUpdateLoginDateQMeException() throws QMeException, InterruptedException {
         UserEntity userEntity = new UserEntity();
@@ -587,6 +618,15 @@ public class UserRepositoryImplTest {
     }
 
     @Test(expected = QMeException.class)
+    public void testResetPasswordFindNullUser() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(null);
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+    }
+
+
+    @Test(expected = QMeException.class)
     public void testResetPasswordFindNullReturnQMeException() throws QMeException, InterruptedException {
         UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
         when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(null);
@@ -600,6 +640,17 @@ public class UserRepositoryImplTest {
         UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity(resetToken,LocalDateTime.now());
         when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(userPasswordResetEntity);
         when(userSpringDataRepoMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
+        verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
+        verify(userSpringDataRepoMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testResetPasswordFindUserNullUser() throws QMeException, InterruptedException {
+        UserPasswordResetEntityId resetToken = new UserPasswordResetEntityId(1L, "sometoken");
+        UserPasswordResetEntity userPasswordResetEntity = new UserPasswordResetEntity(resetToken,LocalDateTime.now());
+        when(userPasswordResetDataRepoMOCK.findOne(resetToken)).thenReturn(userPasswordResetEntity);
+        when(userSpringDataRepoMOCK.findOne(1L)).thenReturn(null);
         userRepositoryWithMock.resetUserPassword("sometoken", 1L, "somepassword");
         verify(userPasswordResetDataRepoMOCK).findOne(resetToken);
         verify(userSpringDataRepoMOCK).findOne(1L);

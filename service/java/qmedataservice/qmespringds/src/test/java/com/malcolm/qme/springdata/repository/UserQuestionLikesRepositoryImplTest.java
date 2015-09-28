@@ -121,6 +121,11 @@ public class UserQuestionLikesRepositoryImplTest {
         assertThat(userQuestionLikes.getUserID(), equalTo(userID));
         assertThat(userQuestionLikes.getQuestionID(), equalTo(questionID));
 
+        userQuestionLikes = userQuestionLikesRepo.update(userQuestionLikes, userID);
+        assertNotNull(userQuestionLikes);
+        assertThat(userQuestionLikes.getUserID(), equalTo(userID));
+        assertThat(userQuestionLikes.getQuestionID(), equalTo(questionID));
+
         userQuestionLikes = userQuestionLikesRepo.findById(userQuestionLikes);
         assertNotNull(userQuestionLikes);
         assertThat(userQuestionLikes.getUserID(), equalTo(userID));

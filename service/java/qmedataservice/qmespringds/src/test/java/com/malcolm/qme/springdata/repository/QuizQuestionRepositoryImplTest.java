@@ -129,13 +129,17 @@ public class QuizQuestionRepositoryImplTest {
         assertThat(question.getQuestionID(), greaterThan(0L));
         final Long question3ID = question.getQuestionID();
 
-        Quiz quiz = new Quiz(
-                "QuizQuestionRepositoryImplTest Quiz", "QuizQuestionRepositoryImplTest Quiz Desc", catID, 0, 1L);
+        question = new Question(catID, "QuizQuestionRepositoryImplTest Question4", "QuizQuestionRepositoryImplTest Answer", 1L);
+        question = questionRepository.save(question);
+        assertNotNull(question);
+        assertThat(question.getQuestionID(), greaterThan(0L));
+        final Long question4ID = question.getQuestionID();
+
+        Quiz quiz = new Quiz("QuizQuestionRepositoryImplTest Quiz", "QuizQuestionRepositoryImplTest Quiz Desc", catID, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
         final Long quizID = quiz.getQuizID();
-
 
         QuizQuestion quizQuestion = new QuizQuestion(quizID, question1ID);
         quizQuestion = quizQuestionRepository.save(quizQuestion);
@@ -145,6 +149,12 @@ public class QuizQuestionRepositoryImplTest {
         quizQuestion = quizQuestionRepository.findById(quizQuestionID1);
         assertNotNull(quizQuestion);
         assertThat(quizQuestion.getQuizQuestionID(), equalTo(quizQuestionID1));
+
+        QuizQuestion quizQuestionUpdate = new QuizQuestion(quizQuestion.getQuizQuestionID(),quizQuestion.getQuizID(), question4ID);
+        quizQuestion = quizQuestionRepository.update(quizQuestionUpdate, 1L);
+        assertNotNull(quizQuestion);
+        assertThat(quizQuestion.getQuizQuestionID(), equalTo(quizQuestionID1));
+        assertThat(quizQuestion.getQuestionID(), equalTo(question4ID));
 
         quizQuestion = new QuizQuestion(quizID, question2ID);
         quizQuestion = quizQuestionRepository.save(quizQuestion);
@@ -163,7 +173,6 @@ public class QuizQuestionRepositoryImplTest {
         quizQuestion = quizQuestionRepository.findById(quizQuestionID3);
         assertNotNull(quizQuestion);
         assertThat(quizQuestion.getQuizQuestionID(), equalTo(quizQuestionID3));
-
 
         quizQuestionRepository.delete(quizQuestionID1);
         quizQuestion = quizQuestionRepository.findById(quizQuestionID1);
@@ -191,6 +200,10 @@ public class QuizQuestionRepositoryImplTest {
 
         questionRepository.delete(question3ID);
         question = questionRepository.findById(question3ID);
+        assertNull(question);
+
+        questionRepository.delete(question4ID);
+        question = questionRepository.findById(question4ID);
         assertNull(question);
 
         categoryRepo.delete(catID);

@@ -117,6 +117,14 @@ public class UserCategoryLikesRepositoryImplTest {
 
         UserCategoryLikes userCategoryLikes = new UserCategoryLikes(userID, catID);
         userCategoryLikes = userCategoryLikesRepo.save(userCategoryLikes);
+        assertNotNull(userCategoryLikes);
+        assertThat(userCategoryLikes.getUserID(), equalTo(userID));
+        assertThat(userCategoryLikes.getCategoryID(), equalTo(catID));
+
+        userCategoryLikes = userCategoryLikesRepo.update(userCategoryLikes, userID);
+        assertNotNull(userCategoryLikes);
+        assertThat(userCategoryLikes.getUserID(), equalTo(userID));
+        assertThat(userCategoryLikes.getCategoryID(), equalTo(catID));
 
         userCategoryLikes = userCategoryLikesRepo.findById(userCategoryLikes);
         assertNotNull(userCategoryLikes);
