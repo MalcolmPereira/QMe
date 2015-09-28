@@ -107,8 +107,8 @@ public class AnswerOptionRepositoryImplTest {
         assertNotNull(answerOption);
         assertThat(answerOption.getAnswerOptionID(), equalTo(answerOptionID));
 
-        AnswerOption answerOptionUpdate = new AnswerOption(answerOption.getAnswerOptionID(), answerOption.getQuestionID(), "Option 1 Updated", answerOption.isCorrect());
-        answerOptionUpdate = answerOptionRepository.save(answerOptionUpdate);
+        AnswerOption answerOptionUpdate = new AnswerOption(answerOption.getAnswerOptionID(), answerOption.getQuestionID(), "Option 1 Updated", true);
+        answerOptionUpdate = answerOptionRepository.update(answerOptionUpdate,1L);
         assertNotNull(answerOptionUpdate);
         assertThat(answerOptionUpdate.getAnswerOptionID(), equalTo(answerOptionID));
         assertThat(answerOptionUpdate.getOptionText(), equalTo("Option 1 Updated"));

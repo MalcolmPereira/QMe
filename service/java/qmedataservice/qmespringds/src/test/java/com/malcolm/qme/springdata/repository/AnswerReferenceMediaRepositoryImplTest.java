@@ -116,6 +116,10 @@ public class AnswerReferenceMediaRepositoryImplTest {
         assertThat(answerReferenceMediaUpdate.getAnswerRefMediaID(), equalTo(answerReferenceMediaID));
         assertThat(new String(answerReferenceMediaUpdate.getMedia()), equalTo("TestingNEW"));
 
+        answerReferenceMediaUpdate = answerReferenceMediaRepository.update(answerReferenceMediaUpdate,1L);
+        assertNotNull(answerReferenceMediaUpdate);
+        assertThat(answerReferenceMediaUpdate.getAnswerRefMediaID(), equalTo(answerReferenceMediaID));
+        assertThat(new String(answerReferenceMediaUpdate.getMedia()), equalTo("TestingNEW"));
 
         answerReferenceMediaRepository.delete(answerReferenceMediaID);
         answerReferenceMedia = answerReferenceMediaRepository.findById(answerReferenceMediaID);

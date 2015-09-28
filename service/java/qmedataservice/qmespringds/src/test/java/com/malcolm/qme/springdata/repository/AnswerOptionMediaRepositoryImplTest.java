@@ -118,6 +118,10 @@ public class AnswerOptionMediaRepositoryImplTest {
         assertThat(answerOptionMedia.getAnswerOptionMediaID(), greaterThan(0L));
         final Long answerOptionMediaID = answerOptionMedia.getAnswerOptionMediaID();
 
+        answerOptionMedia = answerOptionMediaRepository.update(answerOptionMedia,1L);
+        assertNotNull(answerOptionMedia);
+        assertThat(answerOptionMedia.getAnswerOptionMediaID(), equalTo(answerOptionMediaID));
+
         answerOptionMedia = answerOptionMediaRepository.findById(answerOptionMediaID);
         assertNotNull(answerOptionMedia);
         assertThat(answerOptionMedia.getAnswerOptionMediaID(), equalTo(answerOptionMediaID));

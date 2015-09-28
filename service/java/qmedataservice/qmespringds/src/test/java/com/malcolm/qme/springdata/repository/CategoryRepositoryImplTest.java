@@ -99,9 +99,19 @@ public class CategoryRepositoryImplTest {
         assertThat(categoryUpdated.getCategoryID(), equalTo(catID));
         assertThat(categoryUpdated.getCategoryName(), equalTo("CategoryRepositoryImplTest UPDATED"));
 
+        Category categoryChild = new Category(category.getCategoryID(), "CategoryRepositoryImplTestChild",1L);
+        category = categoryRepo.save(categoryChild);
+        assertNotNull(category);
+        assertThat(category.getCategoryID(), greaterThan(0L));
+        assertThat(category.getCategoryParentID(), equalTo(catID));
+        Long catIDChild = category.getCategoryID();
 
         categoryRepo.delete(catID);
         category = categoryRepo.findById(catID);
+        assertNull(category);
+
+        categoryRepo.delete(catIDChild);
+        category = categoryRepo.findById(catIDChild);
         assertNull(category);
     }
 

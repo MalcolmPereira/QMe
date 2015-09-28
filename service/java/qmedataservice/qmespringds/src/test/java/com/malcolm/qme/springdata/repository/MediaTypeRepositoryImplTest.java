@@ -76,10 +76,15 @@ public class MediaTypeRepositoryImplTest {
     public void testCRUD() throws QMeException {
         assertNotNull(mediaTypeRepository);
         MediaType mediaType = new MediaType("MediaTypeRepositoryImplTest");
+
         mediaType = mediaTypeRepository.save(mediaType);
         assertNotNull(mediaType);
         assertThat(mediaType.getMediaTypeID(), greaterThan(1));
         final Integer mediaTypeID = mediaType.getMediaTypeID();
+
+        mediaType = mediaTypeRepository.update(mediaType,1L);
+        assertNotNull(mediaType);
+        assertThat(mediaType.getMediaTypeID(), equalTo(mediaTypeID));
 
         mediaType = mediaTypeRepository.findById(mediaTypeID);
         assertNotNull(mediaType);
