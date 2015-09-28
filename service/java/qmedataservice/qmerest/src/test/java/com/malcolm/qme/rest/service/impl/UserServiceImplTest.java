@@ -557,7 +557,7 @@ public class UserServiceImplTest {
         QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
         qmeUser.setUserPassword("spassword6");
-        qmeUser.setUserFirstName(null);
+        qmeUser.setUserFirstName("Simple 6");
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL(null);
