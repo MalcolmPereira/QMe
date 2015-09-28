@@ -124,7 +124,32 @@ public class UserEntity implements java.io.Serializable {
         this.userLoginDate = LocalDateTime.now();
 	}
 
-
+	/**
+	 * Public Constructor
+	 *
+	 * @param userName User Name
+	 * @param userFirstName User First Name
+	 * @param userLastName User Last Name
+	 * @param userEmail User Email
+	 * @param userPasscode User Passcode
+	 * @param userRegisteredDate User Registered Date
+	 * @param userUpdatedDate User Updated Date
+	 * @param userLastLoginDate User Last Login Date
+	 * @param userLoginDate User Login Date
+	 * @param updateUser Update User
+	 */
+	public UserEntity(String userName, String userFirstName, String userLastName, String userEmail, String userPasscode, LocalDateTime userRegisteredDate, LocalDateTime userUpdatedDate, LocalDateTime userLastLoginDate, LocalDateTime userLoginDate, Long updateUser) {
+		this.userName = userName;
+		this.userFirstName = userFirstName;
+		this.userLastName = userLastName;
+		this.userEmail = userEmail;
+		this.userPasscode = userPasscode;
+		this.userRegisteredDate = userRegisteredDate;
+		this.userUpdatedDate = userUpdatedDate;
+		this.userLastLoginDate = userLastLoginDate;
+		this.userLoginDate = userLoginDate;
+		this.updateUser = updateUser;
+	}
 
 	/**
 	 * @return the userId
@@ -284,33 +309,28 @@ public class UserEntity implements java.io.Serializable {
 
     @Override
     public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		UserEntity that = (UserEntity) o;
+        UserEntity that = (UserEntity) o;
 
-		if (!userId.equals(that.userId)) return false;
-		if (!userName.equals(that.userName)) return false;
-		if (!userFirstName.equals(that.userFirstName)) return false;
-		if (!userLastName.equals(that.userLastName)) return false;
-		if (!userEmail.equals(that.userEmail)) return false;
-		return userPasscode.equals(that.userPasscode) && userRegisteredDate.equals(that.userRegisteredDate) && userUpdatedDate.equals(that.userUpdatedDate) && !(userLastLoginDate != null ? !userLastLoginDate.equals(that.userLastLoginDate) : that.userLastLoginDate != null) && !(userLoginDate != null ? !userLoginDate.equals(that.userLoginDate) : that.userLoginDate != null) && !(updateUser != null ? !updateUser.equals(that.updateUser) : that.updateUser != null);
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (!userName.equals(that.userName)) return false;
+        if (!userFirstName.equals(that.userFirstName)) return false;
+        if (!userLastName.equals(that.userLastName)) return false;
+        if (!userEmail.equals(that.userEmail)) return false;
+        return userPasscode.equals(that.userPasscode);
 
-	}
+    }
 
     @Override
     public int hashCode() {
-        int result = userId.hashCode();
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + userName.hashCode();
         result = 31 * result + userFirstName.hashCode();
         result = 31 * result + userLastName.hashCode();
         result = 31 * result + userEmail.hashCode();
         result = 31 * result + userPasscode.hashCode();
-        result = 31 * result + userRegisteredDate.hashCode();
-        result = 31 * result + userUpdatedDate.hashCode();
-        result = 31 * result + (userLastLoginDate != null ? userLastLoginDate.hashCode() : 0);
-        result = 31 * result + (userLoginDate != null ? userLoginDate.hashCode() : 0);
-        result = 31 * result + (updateUser != null ? updateUser.hashCode() : 0);
         return result;
     }
 

@@ -36,7 +36,17 @@ public class UserCategoryLikesEntityId implements java.io.Serializable {
 	public UserCategoryLikesEntityId() {
 	}
 
-	/**
+    /**
+     * Public Contructor
+     * @param userId User Id
+     * @param catId Category Id
+     */
+    public UserCategoryLikesEntityId(Long userId, Long catId) {
+        this.userId = userId;
+        this.catId = catId;
+    }
+
+    /**
 	 * @return the userId
 	 */
 	public Long getUserId() {
