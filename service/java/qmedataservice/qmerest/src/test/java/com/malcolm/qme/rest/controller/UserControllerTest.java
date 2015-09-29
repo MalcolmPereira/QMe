@@ -372,6 +372,41 @@ public class UserControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testConfirmRegistration() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.confirmUserRegistration("sometoken")).thenReturn(Boolean.TRUE);
+
+        mockMvc.perform(
+                post("/qme/user/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("sometoken")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"))
+        ;
+    }
+
+    @Test
+    public void testConfirmRegistrationQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.confirmUserRegistration("sometoken")).thenThrow(new QMeServerException("Some Error in the Service"));
+
+        mockMvc.perform(
+                post("/qme/user/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("sometoken")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isInternalServerError())
+        ;
+    }
+
+    @Test
     public void testCreateQMeInvalidResourceDataException() throws Exception {
 
         assertThat(mockMvc, notNullValue());

@@ -92,7 +92,7 @@ public class UserController implements UserAPI {
        return userService.stageUser(user);
     }
 
-    @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.PUT)
+    @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody Boolean confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException{
