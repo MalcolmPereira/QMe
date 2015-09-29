@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module(qmeApp)
+    ngQMe
         .factory('qmeUserSession', function () {
 
         var qmeUserSession = {};

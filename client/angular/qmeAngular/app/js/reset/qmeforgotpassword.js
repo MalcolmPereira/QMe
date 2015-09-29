@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module(qmeApp)
+    ngQMe
         .controller('qmeResetPasswordCtrl', QMeResetPasswordController);
 
     QMeResetPasswordController.$inject = ['$state','$stateParams','qmeFlashService','qmeAuthService','qmeUserService'];

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module(qmeApp)
+    ngQMe
         .controller('qmeHomeCtrl', QMeHomeController);
 
     function QMeHomeController() {

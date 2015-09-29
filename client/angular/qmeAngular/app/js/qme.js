@@ -1,13 +1,11 @@
 var qmeApp = "qmeApp";
+var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
 
 (function () {
 
     'use strict';
 
-    angular
-
-        .module(qmeApp, ['ui.router','ngResource','base64'])
-
+    ngQMe
         .constant(
                 'QME_CONSTANTS', {
                       success: 'success',
