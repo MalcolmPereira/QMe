@@ -32,7 +32,7 @@ import java.util.Properties;
  * @author malcolm
  */
 @Configuration
-@PropertySource({"classpath:mail.properties"})
+@PropertySource({"classpath:mail.properties","classpath:endpoint.properties"})
 @Import(QMeSecurityConfig.class)
 @ComponentScan({"com.malcolm.qme.rest"})
 public class RestConfig {
@@ -46,6 +46,11 @@ public class RestConfig {
      * Token Key Length
      */
     private static final int TOKEN_KEY_LENGTH = 32;
+
+    /**
+     * EndPoint URL
+     */
+    private static final String ENDPOINT = "endpoint";
 
     @Autowired
     private Environment environment;
@@ -63,6 +68,11 @@ public class RestConfig {
     @Bean
     public AtomicTokenGenerator atomicTokenGenerator() {
         return () -> new String(Hex.encode(KeyGenerators.secureRandom(TOKEN_KEY_LENGTH).generateKey()));
+    }
+
+    @Bean
+    public String endpointURL(){
+        return environment.getProperty(ENDPOINT);
     }
 
     @Bean

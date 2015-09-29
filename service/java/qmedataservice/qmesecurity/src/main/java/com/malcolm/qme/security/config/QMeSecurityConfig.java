@@ -43,6 +43,11 @@ import java.io.IOException;
 @ComponentScan({"com.malcolm.qme.security"})
 public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
+     * QME API
+     */
+    private static final String QME_API = "/qme/api";
+
+    /**
      * QMe Options for Pre-Flight Requests
      */
     private static final String QME_OPTIONS = "/qme/**";
@@ -122,11 +127,11 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
          .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
-                .antMatchers(REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
+                .antMatchers(QME_API, REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
                 .authenticated()
          .and()
                 .csrf()
-                .ignoringAntMatchers(REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH,QME_LOGOUT)
+                .ignoringAntMatchers(QME_API,REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH,QME_LOGOUT)
                 .csrfTokenRepository(qmeCSRFTokenRepository())
          .and()
                 .addFilterAfter(qmeCSRFilter(), CsrfFilter.class)
