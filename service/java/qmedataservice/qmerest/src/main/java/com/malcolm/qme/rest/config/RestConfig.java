@@ -135,6 +135,7 @@ public class RestConfig {
                 setProperty(QMeMailSender.MAIL_SMTP_HOST,environment.getProperty(QMeMailSender.MAIL_SMTP_HOST));
                 setProperty(QMeMailSender.MAIL_SMTP_PORT,environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS));
                 setProperty(QMeMailSender.MAIL_SMTP_START_TLS,environment.getProperty(QMeMailSender.MAIL_SMTP_START_TLS));
+                setProperty(QMeMailSender.MAIL_SMTP_TIMEOUT,environment.getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT));
             }
         };
     }
@@ -153,6 +154,7 @@ public class RestConfig {
                 setProperty(QMeMailSender.MAIL_SMTP_PORT,environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL));
                 setProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS,environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS));
                 setProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT,environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT));
+                setProperty(QMeMailSender.MAIL_SMTP_TIMEOUT,environment.getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT));
             }
         };
     }

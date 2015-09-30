@@ -114,6 +114,12 @@ public final class QMeMailSender extends JavaMailSenderImpl{
     public static final String MAIL_SMTP_SSL_SOCKET_CLASS      = "mail.smtp.socketFactory.class";
 
     /**
+     * SMTP Timeout
+     */
+    public static final String MAIL_SMTP_TIMEOUT              = "mail.smtp.connectiontimeout";
+
+
+    /**
      * Public Constructor
      *
      * @param userName User Name
