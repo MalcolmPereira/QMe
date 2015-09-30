@@ -33,19 +33,19 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 })
                 .state('register', {
                     url: "/register",
-                    templateUrl: 'js/register/qmeregister.tmpl.html',
+                    templateUrl: 'js/user/register/qmeregister.tmpl.html',
                     controller: 'qmeRegisterCtrl',
                     controllerAs: 'qmeRegister'
                 })
                 .state('reset', {
                     url: "/reset",
-                    templateUrl: 'js/reset/qmeforgotpassword.tmpl.html',
+                    templateUrl: 'js/user/reset/qmeforgotpassword.tmpl.html',
                     controller: 'qmeResetPasswordCtrl',
                     controllerAs: 'qmeReset'
                 })
                 .state('resetpassword', {
                     url: "/resetpassword/:token/:username",
-                    templateUrl: 'js/reset/qmeresetpassword.tmpl.html',
+                    templateUrl: 'js/user/reset/qmeresetpassword.tmpl.html',
                     controller: 'qmeResetPasswordCtrl',
                     controllerAs: 'qmeReset'
                 })
