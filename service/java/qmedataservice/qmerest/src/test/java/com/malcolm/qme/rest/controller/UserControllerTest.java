@@ -376,7 +376,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.confirmUserRegistration("sometoken")).thenReturn(Boolean.TRUE);
+        doNothing().when(userService).confirmUserRegistration("sometoken");
 
         mockMvc.perform(
                 post("/qme/user/confirm")
@@ -385,7 +385,6 @@ public class UserControllerTest extends QMeControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"))
         ;
     }
 
@@ -394,7 +393,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.confirmUserRegistration("sometoken")).thenThrow(new QMeServerException("Some Error in the Service"));
+        doThrow(new QMeServerException("Some Error in the Service")).when(userService).confirmUserRegistration("sometoken");
 
         mockMvc.perform(
                 post("/qme/user/confirm")
@@ -626,7 +625,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.forgotPassword("SimpleUser1@User.com", "someurl")).thenReturn(true);
+        doNothing().when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")

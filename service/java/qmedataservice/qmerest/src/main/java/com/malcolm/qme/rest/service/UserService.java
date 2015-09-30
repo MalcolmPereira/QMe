@@ -69,7 +69,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    Boolean confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
+    void confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Forgot Password
@@ -80,7 +80,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    Boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
+    void forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
 
     /**
      * Reset User Password

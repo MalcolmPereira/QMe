@@ -153,12 +153,7 @@ public final class UserServiceImpl implements UserService {
                  }catch(QMeServerException err){
                      userRepo.deleteStagingToken(stagingToken);
                      throw err;
-
-                 }catch(Exception err){
-                     userRepo.deleteStagingToken(stagingToken);
-                     throw new QMeServerException("System  Error, Error Sending Email Message ",err);
                  }
-
              }
 
         }catch(QMeException err){
@@ -167,12 +162,11 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
+    public void confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
         try {
             User user = userRepo.confirmUserRegistration(stagingToken);
             UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
             userRoleRepo.save(userRole);
-            return Boolean.TRUE;
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }
@@ -182,7 +176,7 @@ public final class UserServiceImpl implements UserService {
     @Override
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
         try {
-            User user = getUser(qMeUser,id,userId);
+            User user = getUser(qMeUser, id, userId);
             user = userRepo.update(user, userId);
             return getQMeUserDetail(user);
         }catch(QMeException err){
@@ -206,7 +200,7 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
+    public void forgotPassword(String userEmail, String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
         try{
             if(url == null || url.trim().length() == 0){
                 throw new QMeInvalidResourceDataException("Invalid application url redirect parameter ");
@@ -222,13 +216,16 @@ public final class UserServiceImpl implements UserService {
             if(user == null){
                 throw new QMeResourceNotFoundException("User with User email "+userEmail+" not found");
             }
-
             String resetToken = atomicTokenGenerator.generateUniqueResetToken();
             userRepo.addResetToken(resetToken,user.getUserID());
 
-            sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url);
+            try {
+                sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url);
 
-            return Boolean.TRUE;
+            }catch(QMeServerException err){
+                userRepo.deleteResetToken(resetToken, user.getUserID());
+                throw err;
+            }
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
@@ -545,7 +542,9 @@ public final class UserServiceImpl implements UserService {
             javaMailSender.send(message);
 
         }catch (MessagingException messagingErr){
-            throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
+            throw new QMeServerException("System  Error, Error Sending Staging Confirmation Email Message",messagingErr);
+        }catch (Exception err){
+            throw new QMeServerException("System  Error, Error Sending Staging Confirmation Email Message",err);
         }
     }
 
@@ -614,6 +613,9 @@ public final class UserServiceImpl implements UserService {
 
         }catch (MessagingException messagingErr){
             throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
+
+        }catch (Exception err){
+            throw new QMeServerException("System  Error, Error Sending Email Message",err);
         }
     }
 }

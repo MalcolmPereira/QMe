@@ -95,8 +95,8 @@ public class UserController implements UserAPI {
     @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Boolean confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException{
-        return userService.confirmUserRegistration(registrationToken);
+    public void confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException{
+        userService.confirmUserRegistration(registrationToken);
     }
 
 
@@ -111,9 +111,8 @@ public class UserController implements UserAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Boolean delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
+    public void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
         userService.delete(userId);
-        return Boolean.TRUE;
     }
 
     @RequestMapping(value=FORGOT_USERNAME_PATH,method=RequestMethod.GET)
@@ -127,9 +126,8 @@ public class UserController implements UserAPI {
     @RequestMapping(value=FORGOT_PASSWORD_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Boolean forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
+    public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
         userService.forgotPassword(userEmail,url);
-        return Boolean.TRUE;
     }
 
     @RequestMapping(value=RESET_PASSWORD_PATH,method=RequestMethod.PUT)

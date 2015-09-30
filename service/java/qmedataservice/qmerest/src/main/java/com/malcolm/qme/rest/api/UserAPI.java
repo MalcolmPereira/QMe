@@ -131,7 +131,7 @@ public interface UserAPI extends QMeAPI {
      * @return Boolean - User Registration Completed
      * @throws QMeResourceException
      */
-    Boolean confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException;
+    void confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException;
 
     /**
      * Update QMe User
@@ -146,7 +146,7 @@ public interface UserAPI extends QMeAPI {
      *
      * @param userId User Is
      */
-    Boolean delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+    void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
 
 
     /**
@@ -164,7 +164,7 @@ public interface UserAPI extends QMeAPI {
      * @param url Reset URL that will be sent to user email
      * @throws QMeResourceException
      */
-    Boolean forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException;
+    void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException;
 
    /**
      * Reset Password
