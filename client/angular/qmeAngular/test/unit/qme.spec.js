@@ -33,7 +33,7 @@
             expect(registerState).not.toBeNull();
             expect(registerState.name).toBe('register');
             expect(registerState.url).toBe('/register');
-            expect(registerState.templateUrl).toBe('js/user/register/qmeregister.tmpl.html');
+            expect(registerState.templateUrl).toBe('js/user/qmeregister.tmpl.html');
             expect(registerState.controller).toBe('qmeUserCtrl');
             expect(registerState.controllerAs).toBe('qmeUserCtrl');
 
@@ -42,7 +42,7 @@
             expect(resetState).not.toBeNull();
             expect(resetState.name).toBe('forgotpassword');
             expect(resetState.url).toBe('/forgotpassword');
-            expect(resetState.templateUrl).toBe('js/user/reset/qmeforgotpassword.tmpl.html');
+            expect(resetState.templateUrl).toBe('js/user/qmeforgotpassword.tmpl.html');
             expect(resetState.controller).toBe('qmeUserCtrl');
             expect(resetState.controllerAs).toBe('qmeUserCtrl');
 

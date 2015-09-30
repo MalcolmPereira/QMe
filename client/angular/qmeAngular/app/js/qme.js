@@ -34,19 +34,19 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 })
                 .state('register', {
                     url: "/register",
-                    templateUrl: 'js/user/register/qmeregister.tmpl.html',
+                    templateUrl: 'js/user/qmeregister.tmpl.html',
                     controller: 'qmeUserCtrl',
                     controllerAs: 'qmeUserCtrl'
                 })
                 .state('forgotpassword', {
                     url: "/forgotpassword",
-                    templateUrl: 'js/user/reset/qmeforgotpassword.tmpl.html',
+                    templateUrl: 'js/user/qmeforgotpassword.tmpl.html',
                     controller: 'qmeUserCtrl',
                     controllerAs: 'qmeUserCtrl'
                 })
                 .state('resetpassword', {
                     url: "/resetpassword/:token/:username",
-                    templateUrl: 'js/user/reset/qmeresetpassword.tmpl.html',
+                    templateUrl: 'js/user/qmeresetpassword.tmpl.html',
                     controller: 'qmeUserCtrl',
                     controllerAs: 'qmeUserCtrl'
                 })
@@ -80,5 +80,4 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 return $resource(userLogoutEndpoint);
             }
         })
-
 })();
