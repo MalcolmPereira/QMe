@@ -97,6 +97,14 @@ public interface UserRepository extends QMeRepository<User, Long> {
     String stageUserRegistration(User user)throws QMeException;
 
     /**
+     * Delete User Staging Token
+     *
+     * @param  stagingToken staging token to be deleted
+     * @throws QMeException
+     */
+    void deleteStagingToken(String stagingToken)throws QMeException;
+
+    /**
      * Confirm User Registration
      *
      * @param userRegistrationToken User Registration Token

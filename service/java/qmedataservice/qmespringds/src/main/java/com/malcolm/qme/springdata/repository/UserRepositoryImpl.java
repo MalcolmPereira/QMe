@@ -167,6 +167,17 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+	@Override
+	public void deleteStagingToken(String stagingToken) throws QMeException{
+		try{
+            UserStagingEntity userStagingEntity = userStagingSpringDataRepository.findByStagingTokenIgnoreCase(stagingToken);
+            long stagingUserID = userStagingEntity.getUserId();
+            userStagingSpringDataRepository.delete(stagingUserID);
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
+	}
+
     @Override
     @Transactional
     public User confirmUserRegistration(String userRegistrationToken) throws QMeException {

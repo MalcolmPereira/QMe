@@ -411,7 +411,7 @@ public class UserServiceImplTest {
         verify(javaMailSender).send(Matchers.<MimeMessage>anyObject());
     }
 
-    @Test(expected = QMeServerException.class)
+    @Test
     public void testStageUserEmailInvalidCredentialsError() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(null);
         when(userRepo.findStagedUserByUserName("suser6")).thenReturn(null);
@@ -420,6 +420,7 @@ public class UserServiceImplTest {
         when(userRepo.stageUserRegistration(Matchers.<User>anyObject())).thenReturn("sometoken");
         when(passwordEncoder.encode(Matchers.<String>anyObject())).thenReturn("someencodedvalue");
         when(javaMailSender.getUsername()).thenReturn(null);
+        doNothing().when(userRepo).deleteStagingToken("sometoken");
 
         QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
@@ -430,7 +431,7 @@ public class UserServiceImplTest {
         qmeUser.setConfirmURL("some url");
         Boolean staged = userService.stageUser(qmeUser);
 
-        assertThat(staged, equalTo(Boolean.TRUE));
+        assertThat(staged, equalTo(Boolean.FALSE));
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -439,9 +440,10 @@ public class UserServiceImplTest {
         verify(userRepo).stageUserRegistration(Matchers.<User>anyObject());
         verify(passwordEncoder).encode(Matchers.<String>anyObject());
         verify(javaMailSender,atLeastOnce()).getUsername();
+        verify(userRepo).deleteStagingToken("sometoken");
     }
 
-    @Test(expected = QMeServerException.class)
+    @Test
     public void testStageUserEmailError() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(null);
         when(userRepo.findStagedUserByUserName("suser6")).thenReturn(null);
@@ -453,6 +455,7 @@ public class UserServiceImplTest {
         when(javaMailSender.getPassword()).thenReturn("somepassword");
         when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) null));
         doThrow(MessagingException.class).when(javaMailSender).send(Matchers.<MimeMessage>anyObject());
+        doNothing().when(userRepo).deleteStagingToken("sometoken");
 
         QMeStageUser qmeUser = new QMeStageUser();
         qmeUser.setUserName("suser6");
@@ -463,7 +466,7 @@ public class UserServiceImplTest {
         qmeUser.setConfirmURL("some url");
         Boolean staged = userService.stageUser(qmeUser);
 
-        assertThat(staged, equalTo(Boolean.TRUE));
+        assertThat(staged, equalTo(Boolean.FALSE));
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -475,6 +478,7 @@ public class UserServiceImplTest {
         verify(javaMailSender,atLeastOnce()).getPassword();
         verify(javaMailSender).createMimeMessage();
         verify(javaMailSender).send(Matchers.<MimeMessage>anyObject());
+        verify(userRepo).deleteStagingToken("sometoken");
     }
 
     @Test

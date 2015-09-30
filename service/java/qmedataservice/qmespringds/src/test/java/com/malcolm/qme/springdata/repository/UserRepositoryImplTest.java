@@ -173,6 +173,50 @@ public class UserRepositoryImplTest {
     }
 
     @Test
+    public void testUserStagingDelete() throws QMeException {
+        UserStagingEntity userEntity = new UserStagingEntity();
+        userEntity.setUserId(1L);
+        userEntity.setStagingToken("sometoken");
+        when(userStagingSpringDataRepositoryMOCK.save(Matchers.<UserStagingEntity>anyObject())).thenReturn(userEntity);
+        String userName = "UserRepositoryImplStagingTest" + System.currentTimeMillis();
+        User user = new User(userName, "Test", "Test", "Test", userName+"@test.com");
+        String stagingToken = userRepositoryWithMock.stageUserRegistration(user);
+        assertNotNull(stagingToken);
+        assertThat(stagingToken.length(), greaterThan(0));
+        assertThat(stagingToken, equalTo("sometoken"));
+        verify(userStagingSpringDataRepositoryMOCK).save(Matchers.<UserStagingEntity>anyObject());
+
+        when(userStagingSpringDataRepositoryMOCK.findByStagingTokenIgnoreCase("sometoken")).thenReturn(userEntity);
+        doNothing().when(userStagingSpringDataRepositoryMOCK).delete(1L);
+        userRepositoryWithMock.deleteStagingToken("sometoken");
+        verify(userStagingSpringDataRepositoryMOCK).findByStagingTokenIgnoreCase("sometoken");
+        verify(userStagingSpringDataRepositoryMOCK).delete(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUserStagingDeleteFindQMeException() throws QMeException {
+        when(userStagingSpringDataRepositoryMOCK.findByStagingTokenIgnoreCase("sometoken")).thenThrow(new RuntimeException("some error"));
+        userRepositoryWithMock.deleteStagingToken("sometoken");
+        verify(userStagingSpringDataRepositoryMOCK).findByStagingTokenIgnoreCase("sometoken");
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUserStagingDeleteConfirmStagingQMeException() throws QMeException {
+        assertNotNull(userRepo);
+
+        String userName = "UserRepositoryImplDeleteStagingTest" + System.currentTimeMillis();
+
+        User user = new User(userName, "Test", "Test", "Test", userName+"@test.com");
+        String stagingToken = userRepo.stageUserRegistration(user);
+        assertNotNull(stagingToken);
+        assertThat(stagingToken.length(), greaterThan(0));
+
+        userRepo.deleteStagingToken(stagingToken);
+
+        userRepo.confirmUserRegistration(stagingToken);
+    }
+
+    @Test
     public void testUserStagingFindByUserName() throws QMeException {
         assertNotNull(userRepo);
 

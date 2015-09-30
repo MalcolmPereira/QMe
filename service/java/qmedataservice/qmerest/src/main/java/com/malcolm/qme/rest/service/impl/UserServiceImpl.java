@@ -145,10 +145,20 @@ public final class UserServiceImpl implements UserService {
              User user           = getStagingUser(qMeUser);
              String stagingToken = userRepo.stageUserRegistration(user);
              if(stagingToken != null && stagingToken.length() > 0){
-                 sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, qMeUser.getConfirmURL());
-                 return Boolean.TRUE;
+
+                 try {
+                     sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, qMeUser.getConfirmURL());
+                     return Boolean.TRUE;
+
+                 }catch(Exception err){
+                     userRepo.deleteStagingToken(stagingToken);
+                     return Boolean.FALSE;
+                 }
+
              }
+
              return Boolean.FALSE;
+
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }
