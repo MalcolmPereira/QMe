@@ -20,7 +20,7 @@
         });
 
         it('Should have a User Auth Resource Defined', function() {
-            expect(qmeUserResource.userAuthResource()).toBeDefined();
+            expect(qmeUserResource.userAuthResource("sometoken","email")).toBeDefined();
         });
 
         it('Should have a User Staging Resource Defined', function() {
@@ -32,15 +32,15 @@
         });
 
         it('Should have a User Register Resource Defined', function() {
-            expect(qmeUserResource.userRegisterResource()).toBeDefined();
+            expect(qmeUserResource.userRegisterResource("some token")).toBeDefined();
         });
 
         it('Should have a User Forgot Password Resource Defined', function() {
-            expect(qmeUserResource.userForgotPasswordResource()).toBeDefined();
+            expect(qmeUserResource.userForgotPasswordResource("someemail")).toBeDefined();
         });
 
         it('Should have a User Submit Reset Password Resource Defined', function() {
-            expect(qmeUserResource.userResetPasswordResource()).toBeDefined();
+            expect(qmeUserResource.userResetPasswordResource("someemail")).toBeDefined();
         });
 
         it('Should have a User Logout Resource Defined', function() {

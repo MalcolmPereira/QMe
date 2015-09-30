@@ -78,6 +78,10 @@
             return qmeUserSession;
         };
 
+        qmeAuthService.authToken = function(){
+            return qmeUserSession.authtoken();
+        };
+
         qmeAuthService.username = function(){
             return qmeUserSession.username();
         };

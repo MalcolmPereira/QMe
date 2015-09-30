@@ -39,7 +39,7 @@
 
            var registeredUserPromise = $q.defer();
 
-           qmeUserResource.userRegisterResource()
+           qmeUserResource.userRegisterResource(qmeAuthService.authToken())
 
                 .save(user
                 ,

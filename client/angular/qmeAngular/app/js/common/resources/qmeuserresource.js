@@ -24,8 +24,8 @@
                 $http.defaults.headers.common.Authorization = undefined;
                 return $resource(userConfirmEndpoint);
             };
-            this.userRegisterResource = function(){
-                $http.defaults.headers.common.Authorization = undefined;
+            this.userRegisterResource = function(authToken){
+                $http.defaults.headers.common.Authorization = authToken;
                 return $resource(userRegisterEndpoint);
             };
             this.userForgotPasswordResource = function(userEmail){
