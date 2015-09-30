@@ -2,11 +2,11 @@
     'use strict';
 
     ngQMe
-        .controller('qmeHeaderCtrl', QMeHeaderController);
+        .controller('qmeLoginCtrl', QMeLoginController);
 
-    QMeHeaderController.$inject = ['$state','qmeFlashService','qmeAuthService','qmeUserService'];
+    QMeLoginController.$inject = ['$state','qmeFlashService','qmeAuthService','qmeUserService'];
 
-    function QMeHeaderController($state,qmeFlashService, qmeAuthService) {
+    function QMeLoginController($state,qmeFlashService, qmeAuthService) {
 
         var qmeHeader = this;
 

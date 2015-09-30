@@ -142,6 +142,7 @@
             expect(scope.flash.message).toBe('Oops.....Error registering new user, please retry in some time.');
         });
 
+
         it('Should handle valid user registration ', function() {
             ctrl.userEmail = "someemail";
             ctrl.userName = "someusername";
@@ -182,6 +183,7 @@
             expect(state.current.controller).toBe('qmeHomeCtrl');
             expect(state.current.controllerAs).toBe('qmeHome');
         });
+
 
     });
 })();

@@ -52,13 +52,13 @@
         qmeUserService.submitResetPassword = function(usertoken,username, useremail, userpassword){
             var resetPasswordUserPromise = $q.defer();
 
-            $http.defaults.headers.common.Authorization = undefined;
 
             var resetrequest = {
                     token:usertoken,
                     userName:username,
                     userPassword:userpassword
             };
+
             qmeUserResource.userResetPasswordResource(useremail)
                 .resetpassword({}, resetrequest
                 ,function(res){

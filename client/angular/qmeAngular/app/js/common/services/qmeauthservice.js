@@ -6,10 +6,10 @@
         .service('qmeAuthService', QMeAuthService);
 
 
-    QMeAuthService.$inject = ['$q','$http','qmeUserResource','$base64','qmeUserSession','QME_CONSTANTS'];
+    QMeAuthService.$inject = ['$q','qmeUserResource','$base64','qmeUserSession','QME_CONSTANTS'];
 
 
-    function QMeAuthService($q,$http,qmeUserResource,$base64,qmeUserSession,QME_CONSTANTS) {
+    function QMeAuthService($q,qmeUserResource,$base64,qmeUserSession,QME_CONSTANTS) {
 
         var qmeAuthService = this;
 
@@ -24,13 +24,9 @@
             //TODO: Fix Basic Authentication and Session ID
             //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
             var authToken = 'Basic ' + $base64.encode(credentials.username + ':' + credentials.password);
-            //$http.defaults.headers.common['Authorization'] = authToken;
-            $http.defaults.headers.common.Authorization = authToken;
-
             //SessionId is hard coded and is not used need to be fixed.
 
-            qmeUserResource.userSearchByEmailResource(credentials.username)
-            //$resource(QME_CONSTANTS.authendpoint+credentials.username)
+            qmeUserResource.userAuthResource(authToken,credentials.username)
 
                 .get(
                 function(res){
@@ -64,8 +60,6 @@
             //TODO: Fix Basic Authentication and Session ID
             //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
             var authToken = 'Basic ' + $base64.encode(registeredUser.userEmail + ':' + registeredUser.userPassword);
-            //$http.defaults.headers.common['Authorization'] = authToken;
-            $http.defaults.headers.common.Authorization = authToken;
 
             //SessionId is hard coded and is not used need to be fixed.
             qmeUserSession.create(

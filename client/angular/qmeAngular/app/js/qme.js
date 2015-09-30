@@ -51,15 +51,16 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 })
         })
         .service('qmeUserResource',function($http,$resource,QME_CONSTANTS){
-            var userAPI = QME_CONSTANTS.qmeservice+"/user";
-            var userSearchByEmail =  userAPI+"/searchemail/";
-            var userRegisterEndpoint = userAPI+"/register";
-            var userForgotPaswordEndpoint = userAPI+"/reset/forgotpassword/";
-            var userResetPaswordEndpoint = userAPI+"/reset/resetpassword/";
-            var userLogoutEndpoint =  QME_CONSTANTS.qmeservice+"/logout";
+            var userAPI                     = QME_CONSTANTS.qmeservice+"/user";
+            var userAuthEndPoint            = userAPI+"/searchemail/";
+            var userRegisterEndpoint        = userAPI+"/register";
+            var userForgotPaswordEndpoint   = userAPI+"/reset/forgotpassword/";
+            var userResetPaswordEndpoint    = userAPI+"/reset/resetpassword/";
+            var userLogoutEndpoint          = QME_CONSTANTS.qmeservice+"/logout";
 
-            this.userSearchByEmailResource = function(userEmail){
-                return $resource(userSearchByEmail+userEmail);
+            this.userAuthResource = function(authToken,userEmail){
+                $http.defaults.headers.common.Authorization = authToken;
+                return $resource(userAuthEndPoint+userEmail);
             };
             this.userRegisterResource = function(){
                 $http.defaults.headers.common.Authorization = undefined;

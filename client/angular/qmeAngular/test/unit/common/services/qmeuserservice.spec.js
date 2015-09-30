@@ -105,7 +105,6 @@
         });
 
 
-
         it('Should register user for valid data ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -143,6 +142,7 @@
             );
             httpBackend.flush();
         });
+
 
 
 

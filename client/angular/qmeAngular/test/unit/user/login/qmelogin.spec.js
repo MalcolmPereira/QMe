@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    describe('Controller: QMe Header Controller', function() {
+    describe('Controller: QMe Login Controller', function() {
 
         var scope, httpBackend, ctrl,qmeContants,userAuthEndPoint;
 
@@ -16,7 +16,7 @@
 
             userAuthEndPoint =  qmeContants.qmeservice+"/user/"+"searchemail/";
 
-            ctrl  = $controller('qmeHeaderCtrl', {
+            ctrl  = $controller('qmeLoginCtrl', {
                 $scope: scope,
             });
         }));
