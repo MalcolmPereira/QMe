@@ -10,11 +10,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 'QME_CONSTANTS', {
                       success: 'success',
                       error: 'error',
+                      qmeservice: 'http://localhost:8080/qme',
                       reseturl: 'http://localhost:8000/app/#/resetpassword/',
-                      serviceurl: 'http://localhost:8080/qme/',
-                      userapi: 'user/',
-                      authendpoint: 'http://localhost:8080/qme/user/searchemail/',
-                      logoutendpoint: 'http://localhost:8080/qme/logout',
                       adminrole: 'ADMIN'
                 }
         )
@@ -53,4 +50,33 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controllerAs: 'qmeReset'
                 })
         })
+        .service('qmeUserResource',function($http,$resource,QME_CONSTANTS){
+            var userAPI = QME_CONSTANTS.qmeservice+"/user";
+            var userSearchByEmail =  userAPI+"/searchemail/";
+            var userRegisterEndpoint = userAPI+"/register";
+            var userForgotPaswordEndpoint = userAPI+"/reset/forgotpassword/";
+            var userResetPaswordEndpoint = userAPI+"/reset/resetpassword/";
+            var userLogoutEndpoint =  QME_CONSTANTS.qmeservice+"/logout";
+
+            this.userSearchByEmailResource = function(userEmail){
+                return $resource(userSearchByEmail+userEmail);
+            };
+            this.userRegisterResource = function(){
+                $http.defaults.headers.common.Authorization = undefined;
+                return $resource(userRegisterEndpoint);
+            };
+            this.userForgotPasswordResource = function(userEmail){
+                $http.defaults.headers.common.Authorization = undefined;
+                return $resource(userForgotPaswordEndpoint+userEmail,null,{'reset':{method:'PUT'}});
+            };
+            this.userResetPasswordResource = function(userEmail){
+                $http.defaults.headers.common.Authorization = undefined;
+                return $resource(userResetPaswordEndpoint+userEmail,{},{'resetpassword':{method:'PUT'}});
+            };
+            this.logoutResource = function(){
+                $http.defaults.headers.common.Authorization = undefined;
+                return $resource(userLogoutEndpoint);
+            }
+        })
+
 })();

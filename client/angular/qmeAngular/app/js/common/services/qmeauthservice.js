@@ -6,10 +6,10 @@
         .service('qmeAuthService', QMeAuthService);
 
 
-    QMeAuthService.$inject = ['$q','$http','$resource','$base64','qmeUserSession','QME_CONSTANTS'];
+    QMeAuthService.$inject = ['$q','$http','qmeUserResource','$base64','qmeUserSession','QME_CONSTANTS'];
 
 
-    function QMeAuthService($q,$http,$resource,$base64,qmeUserSession,QME_CONSTANTS) {
+    function QMeAuthService($q,$http,qmeUserResource,$base64,qmeUserSession,QME_CONSTANTS) {
 
         var qmeAuthService = this;
 
@@ -29,7 +29,8 @@
 
             //SessionId is hard coded and is not used need to be fixed.
 
-            $resource(QME_CONSTANTS.authendpoint+credentials.username)
+            qmeUserResource.userSearchByEmailResource(credentials.username)
+            //$resource(QME_CONSTANTS.authendpoint+credentials.username)
 
                 .get(
                 function(res){
@@ -96,8 +97,7 @@
         };
 
         qmeAuthService.logout = function (){
-            $http.defaults.headers.common.Authorization = undefined;
-            $resource(QME_CONSTANTS.logoutendpoint).save();
+            qmeUserResource.logoutResource().save();
             qmeUserSession.destroy();
         };
 

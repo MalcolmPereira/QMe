@@ -3,14 +3,19 @@
 
     describe('Controller: QMe Header Controller', function() {
 
-        var scope, httpBackend, ctrl,qmeContants;
+        var scope, httpBackend, ctrl,qmeContants,userAuthEndPoint;
 
         beforeEach(module('qmeApp'));
 
         beforeEach(inject(function($rootScope, $controller,$httpBackend,_QME_CONSTANTS_) {
             scope = $rootScope.$new();
+
             httpBackend = $httpBackend;
+
             qmeContants = _QME_CONSTANTS_;
+
+            userAuthEndPoint =  qmeContants.qmeservice+"/user/"+"searchemail/";
+
             ctrl  = $controller('qmeHeaderCtrl', {
                 $scope: scope,
             });
@@ -19,6 +24,7 @@
         it('Should have a qmeHeader controller', function() {
             expect(ctrl).toBeDefined();
         });
+
 
         it('Ensure user is not signed - signedIn is false', function() {
             expect(ctrl.isSignedIn() ).toBe(false);
@@ -37,6 +43,7 @@
         });
 
 
+
        it('Ensure user sign-on is valid ', function() {
            ctrl.userEmail = "testuser@test.com";
            ctrl.userPassword = "testpassword";
@@ -53,7 +60,7 @@
                "updateUserName": "",
                "userRoles": ['USER']
            };
-           httpBackend.expectGET(qmeContants.authendpoint+ctrl.userEmail).respond(200,user);
+           httpBackend.expectGET(userAuthEndPoint+ctrl.userEmail).respond(200,user);
            httpBackend.whenGET(/js\//).respond(200,{});
            ctrl.performSignIn();
            httpBackend.flush();
@@ -64,6 +71,7 @@
            expect(ctrl.isSignedIn() ).toBe(true);
            expect(ctrl.isAdmin() ).toBe(false);
        });
+
 
        it('Ensure user sign-on is valid ', function() {
             ctrl.userEmail = "testuser@test.com";
@@ -81,7 +89,7 @@
                "updateUserName": "",
                "userRoles": ['ADMIN','USER']
             };
-           httpBackend.expectGET(qmeContants.authendpoint+ctrl.userEmail).respond(200,user);
+           httpBackend.expectGET(userAuthEndPoint+ctrl.userEmail).respond(200,user);
            httpBackend.whenGET(/js\//).respond(200,{});
            ctrl.performSignIn();
            httpBackend.flush();
@@ -92,5 +100,6 @@
            expect(ctrl.isSignedIn() ).toBe(true);
            expect(ctrl.isAdmin() ).toBe(true);
        });
+
     });
 })();

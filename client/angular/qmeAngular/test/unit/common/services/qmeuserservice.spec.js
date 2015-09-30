@@ -4,7 +4,7 @@
 
     describe('Service: QMe User Service', function() {
 
-        var scope, state, qmeUserService, qmeUserSession,httpBackend,qmeContants;
+        var scope, state, qmeUserService, qmeUserSession,httpBackend,qmeContants,userRegisterEndpoint,logoutUserEndPoint,userForgotPaswordEndpoint,userResetPaswordEndpoint;
 
         beforeEach(module('qmeApp'));
 
@@ -15,6 +15,10 @@
             qmeUserSession = _qmeUserSession_;
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
+            userRegisterEndpoint = qmeContants.qmeservice+"/user/"+"register";
+            userForgotPaswordEndpoint = qmeContants.qmeservice+"/user/reset/forgotpassword/";
+            userResetPaswordEndpoint = qmeContants.qmeservice+"/user/reset/resetpassword/";
+            logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
         }));
 
         it('Should have a QMe Auth Service', function() {
@@ -34,7 +38,7 @@
                 "userLastName": 'last name',
                 "userEmail": 'email'
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(400,{});
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(400,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .register(user)
@@ -49,6 +53,7 @@
         });
 
 
+
         it('Should throw conflict error for duplicate data ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -59,7 +64,7 @@
                 "userLastName": 'last name',
                 "userEmail": 'email'
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(409,{});
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(409,{});
             httpBackend.whenGET(/js\//).respond(200,{});
 
             qmeUserService
@@ -85,7 +90,7 @@
                 "userLastName": 'last name',
                 "userEmail": 'email'
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(500,{});
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .register(user)
@@ -124,8 +129,8 @@
                 "updateUserName": "",
                 "userRoles": []
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(200,registereduser);
-            httpBackend.expectPOST(qmeContants.logoutendpoint).respond(200,user);
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(200,registereduser);
+            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .register(user)
@@ -139,11 +144,13 @@
             httpBackend.flush();
         });
 
+
+
         it('Should submit reset request with url for password reset ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             var useremail = "some-email"
-            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+useremail,qmeContants.reseturl).respond(200,{});
+            httpBackend.expectPUT(userForgotPaswordEndpoint+useremail,qmeContants.reseturl).respond(200,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .resetPassword(useremail)
@@ -157,11 +164,13 @@
             httpBackend.flush();
         });
 
+
+
         it('Should return user not found error 404 on password reset ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             var useremail = "some-email"
-            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+useremail,qmeContants.reseturl).respond(404,{});
+            httpBackend.expectPUT(userForgotPaswordEndpoint+useremail,qmeContants.reseturl).respond(404,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .resetPassword(useremail)
@@ -176,11 +185,12 @@
             httpBackend.flush();
         });
 
+
         it('Should return internal server error 500  on password reset ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             var useremail = "some-email"
-            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+useremail,qmeContants.reseturl).respond(500,{});
+            httpBackend.expectPUT(userForgotPaswordEndpoint+useremail,qmeContants.reseturl).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .resetPassword(useremail)
@@ -194,5 +204,6 @@
             );
             httpBackend.flush();
         });
+
     });
 })();

@@ -4,7 +4,7 @@
 
     describe('Controller: QMe Register Controller', function() {
 
-        var scope, state, httpBackend, ctrl, qmeContants;
+        var scope, state, httpBackend, ctrl, qmeContants,userRegisterEndpoint,logoutUserEndPoint;
 
         beforeEach(module('qmeApp'));
 
@@ -13,6 +13,8 @@
             state = $state;
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
+            userRegisterEndpoint = qmeContants.qmeservice+"/user/register";
+            logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
             ctrl  = $controller('qmeRegisterCtrl', {
                 $state: state,
                 $scope: scope,
@@ -24,6 +26,7 @@
                 userLastName:""
             });
         }));
+
 
         it('Should have a qmeRegister controller', function() {
             expect(ctrl).toBeDefined();
@@ -44,6 +47,7 @@
             expect(ctrl.userLastName).toBe("");
         });
 
+
         it('Should check for non matching passwords ', function() {
             ctrl.userPassword = 'password1';
             ctrl.userPasswordConfirm = 'password2';
@@ -60,6 +64,7 @@
             expect(scope.flash).not.toBeDefined();
         });
 
+
         it('Should handle 400 Error for invalid data ', function() {
             ctrl.userEmail = "someemail";
             ctrl.userName = "someusername";
@@ -74,7 +79,7 @@
                 "userLastName": ctrl.userLastName,
                 "userEmail": ctrl.userEmail
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(400,{});
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(400,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
             httpBackend.flush();
@@ -101,7 +106,7 @@
                 "userLastName": ctrl.userLastName,
                 "userEmail": ctrl.userEmail
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(409,{});
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(409,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
             httpBackend.flush();
@@ -126,7 +131,7 @@
                 "userLastName": ctrl.userLastName,
                 "userEmail": ctrl.userEmail
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(500,{});
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
             httpBackend.flush();
@@ -164,8 +169,8 @@
                 "updateUserName": "",
                 "userRoles": ['ADMIN','USER']
             };
-            httpBackend.expectPOST(qmeContants.serviceurl+qmeContants.userapi+"register",user).respond(200,registerdUser);
-            httpBackend.expectPOST(qmeContants.logoutendpoint).respond(200,user);
+            httpBackend.expectPOST(userRegisterEndpoint,user).respond(200,registerdUser);
+            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
             httpBackend.flush();

@@ -4,7 +4,7 @@
 
     describe('Controller: QMe Reset Controller', function() {
 
-        var scope, state, httpBackend, ctrl, qmeContants;
+        var scope, state, httpBackend, ctrl, qmeContants,userForgotPaswordEndpoint;
 
         beforeEach(module('qmeApp'));
 
@@ -13,6 +13,7 @@
             state = $state;
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
+            userForgotPaswordEndpoint =  qmeContants.qmeservice+"/user/"+"reset/forgotpassword/";
             ctrl  = $controller('qmeResetPasswordCtrl', {
                 $state: state,
                 $scope: scope,
@@ -26,6 +27,7 @@
             expect(ctrl).toBeDefined();
         });
 
+
         it('Should have default fields ', function() {
             expect(ctrl.userEmail).toBeDefined();
             expect(ctrl.userEmail).toBe("");
@@ -34,6 +36,7 @@
             expect(ctrl.userPasswordConfirm).toBeDefined();
             expect(ctrl.userPasswordConfirm).toBe("");
         });
+
 
         it('Should check for non matching passwords ', function() {
             ctrl.userPassword = 'password1';
@@ -51,9 +54,10 @@
             expect(scope.flash).not.toBeDefined();
         });
 
+
         it('Should handle 404 Error for user not found error ', function() {
             ctrl.userEmail = "someemail";
-            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+ctrl.userEmail,qmeContants.reseturl).respond(404,{});
+            httpBackend.expectPUT(userForgotPaswordEndpoint+ctrl.userEmail,qmeContants.reseturl).respond(404,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.submitReset();
             httpBackend.flush();
@@ -64,9 +68,10 @@
             expect(scope.flash.message).toBe('Entered user email not found. Please ener valid existing user email.');
         });
 
+
         it('Should handle 500 Error for user not found error ', function() {
             ctrl.userEmail = "someemail";
-            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+ctrl.userEmail,qmeContants.reseturl).respond(500,{});
+            httpBackend.expectPUT(userForgotPaswordEndpoint+ctrl.userEmail,qmeContants.reseturl).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.submitReset();
             httpBackend.flush();
@@ -77,9 +82,10 @@
             expect(scope.flash.message).toBe('Oops.....Error connecting to service for reset password, please retry in some time.');
         });
 
+
         it('Should handle valid user password reset submit request', function() {
             ctrl.userEmail = "someemail";
-            httpBackend.expectPUT(qmeContants.serviceurl+qmeContants.userapi+"reset/forgotpassword/"+ctrl.userEmail,qmeContants.reseturl).respond(200,{});
+            httpBackend.expectPUT(userForgotPaswordEndpoint+ctrl.userEmail,qmeContants.reseturl).respond(200,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.submitReset();
             httpBackend.flush();
@@ -89,7 +95,6 @@
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('User password reset request submitted successfully, please validate your email address to complete reset.');
         });
-
     });
 })();
 

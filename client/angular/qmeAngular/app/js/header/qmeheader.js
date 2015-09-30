@@ -40,9 +40,10 @@
 
         qmeHeader.performSignIn = function (){
 
+            var credentials;
             qmeFlashService.Clear();
 
-            var credentials = {
+            credentials = {
                 "username": qmeHeader.userEmail,
                 "password": qmeHeader.userPassword
             };
@@ -71,7 +72,7 @@
         qmeHeader.logout = function (){
             qmeAuthService.logout();
             qmeAuthService.endRegistering();
-            qmeAuthService.endResetting()
+            qmeAuthService.endResetting();
             qmeHeader.userEmail = "";
             qmeHeader.userPassword = "";
             qmeHeader.signInForm.$setPristine()
@@ -89,7 +90,7 @@
 
         qmeHeader.cancelResetRegistration = function (){
             qmeAuthService.endRegistering();
-            qmeAuthService.endResetting()
+            qmeAuthService.endResetting();
             qmeHeader.signInForm.$setPristine()
             $state.go('home', {});
         };

@@ -4,7 +4,7 @@
 
     describe('Service: QMe Authentication Service', function() {
 
-        var scope, qmeAuthService, httpBackend,qmeContants;
+        var scope, qmeAuthService, httpBackend,qmeContants,userAuthEndPoint,logoutUserEndPoint ;
 
         beforeEach(module('qmeApp'));
 
@@ -13,12 +13,16 @@
             qmeAuthService = _qmeAuthService_;
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
+            userAuthEndPoint =  qmeContants.qmeservice+"/user/"+"searchemail/";
+            logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
         }));
+
 
         it('Should have a QMe Auth Service', function() {
             expect(qmeAuthService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
         });
+
 
 
         it('Should have QMe User for valid user login ', function() {
@@ -41,7 +45,7 @@
                 "userRoles": ['USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
-            httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
+            httpBackend.expectGET(userAuthEndPoint+credentials.username).respond(200,user);
             qmeAuthService
             .login(credentials)
                 .then(
@@ -82,7 +86,7 @@
                 "userRoles": ['ADMIN','USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
-            httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
+            httpBackend.expectGET(userAuthEndPoint+credentials.username).respond(200,user);
             qmeAuthService
             .login(credentials)
                 .then(
@@ -119,8 +123,8 @@
                 "userRoles": ['ADMIN','USER']
             };
             expect(qmeAuthService.isSignedIn()).toBe(false);
-            httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(200,user);
-            httpBackend.expectPOST(qmeContants.logoutendpoint).respond(200,user);
+            httpBackend.expectGET(userAuthEndPoint+credentials.username).respond(200,user);
+            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             qmeAuthService
             .login(credentials)
                 .then(
@@ -148,7 +152,7 @@
                 "username": "testuser",
                 "password": "testpassword"
             };
-            httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(500,{});
+            httpBackend.expectGET(userAuthEndPoint+credentials.username).respond(500,{});
             qmeAuthService
             .login(credentials)
                 .then(
@@ -171,7 +175,7 @@
                 "username": "testuser",
                 "password": "testpassword"
             };
-            httpBackend.expectGET(qmeContants.authendpoint+credentials.username).respond(404,{});
+            httpBackend.expectGET(userAuthEndPoint+credentials.username).respond(404,{});
             qmeAuthService
                 .login(credentials)
                 .then(
@@ -187,5 +191,6 @@
             );
             httpBackend.flush();
         });
+
     });
 })();
