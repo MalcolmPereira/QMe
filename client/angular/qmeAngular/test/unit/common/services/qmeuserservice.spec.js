@@ -21,7 +21,7 @@
             logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
         }));
 
-        it('Should have a QMe Auth Service', function() {
+        it('Should have a QMe User Service', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
         });

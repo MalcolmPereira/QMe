@@ -12,6 +12,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                       error: 'error',
                       qmeservice: 'http://localhost:8080/qme',
                       reseturl: 'http://localhost:8000/app/#/resetpassword/',
+                      stageconfirmurl: 'http://localhost:8000/app/#/confirmuser/',
                       adminrole: 'ADMIN',
                       userrole: 'USER'
                 }
@@ -28,6 +29,18 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
 
                 .state('home', {
                     url: "/home",
+                    templateUrl: 'js/home/qmehome.tmpl.html',
+                    controller: 'qmeHomeCtrl',
+                    controllerAs: 'qmeHomeCtrl'
+                })
+                .state('stage', {
+                    url: "/stage",
+                    templateUrl: 'js/user/qmestageuser.tmpl.html',
+                    controller: 'qmeUserCtrl',
+                    controllerAs: 'qmeUserCtrl'
+                })
+                .state('confirmuser', {
+                    url: "/confirmuser/:token/:stagetoken",
                     templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
                     controllerAs: 'qmeHomeCtrl'
@@ -51,33 +64,5 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controllerAs: 'qmeUserCtrl'
                 })
         })
-        .service('qmeUserResource',function($http,$resource,QME_CONSTANTS){
-            var userAPI                     = QME_CONSTANTS.qmeservice+"/user";
-            var userAuthEndPoint            = userAPI+"/searchemail/";
-            var userRegisterEndpoint        = userAPI+"/register";
-            var userForgotPaswordEndpoint   = userAPI+"/reset/forgotpassword/";
-            var userResetPaswordEndpoint    = userAPI+"/reset/resetpassword/";
-            var userLogoutEndpoint          = QME_CONSTANTS.qmeservice+"/logout";
 
-            this.userAuthResource = function(authToken,userEmail){
-                $http.defaults.headers.common.Authorization = authToken;
-                return $resource(userAuthEndPoint+userEmail);
-            };
-            this.userRegisterResource = function(){
-                $http.defaults.headers.common.Authorization = undefined;
-                return $resource(userRegisterEndpoint);
-            };
-            this.userForgotPasswordResource = function(userEmail){
-                $http.defaults.headers.common.Authorization = undefined;
-                return $resource(userForgotPaswordEndpoint+userEmail,null,{'reset':{method:'PUT'}});
-            };
-            this.userResetPasswordResource = function(userEmail){
-                $http.defaults.headers.common.Authorization = undefined;
-                return $resource(userResetPaswordEndpoint+userEmail,{},{'resetpassword':{method:'PUT'}});
-            };
-            this.logoutResource = function(){
-                $http.defaults.headers.common.Authorization = undefined;
-                return $resource(userLogoutEndpoint);
-            }
-        })
 })();
