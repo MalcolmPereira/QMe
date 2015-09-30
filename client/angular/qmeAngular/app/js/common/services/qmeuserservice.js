@@ -13,6 +13,28 @@
 
         var qmeUserService = this;
 
+
+        qmeUserService.stageUser = function(user){
+
+            var stageUserPromise = $q.defer();
+
+            qmeUserResource.userStageResource()
+
+                .save(user
+                ,
+                function(res){
+                    res.userPassword = user.userPassword;
+                    qmeAuthService.registeredUser(res);
+                    stageUserPromise.resolve(res);
+                }
+                ,
+                function(error){
+                    stageUserPromise.reject(error);
+                });
+            return stageUserPromise.promise;
+        };
+
+
         qmeUserService.register = function(user){
 
            var registeredUserPromise = $q.defer();

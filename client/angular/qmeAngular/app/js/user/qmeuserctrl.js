@@ -118,6 +118,39 @@
             }
         };
 
+        qmeUser.stageUser = function (){
+
+            qmeFlashService.Clear();
+
+            var user = {
+                "userName": qmeUser.userName,
+                "userPassword": qmeUser.userPassword ,
+                "userFirstName": qmeUser.userFirstName,
+                "userLastName": qmeUser.userLastName,
+                "userEmail": qmeUser.userEmail
+            }
+
+            qmeUserService
+                .stageUser(user)
+                .then(
+                function(res){
+                    $state.go('home', {});
+                },
+                function(error){
+                    if(error && error.status && error.status == 400){
+                        qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
+
+                    }else if(error && error.status && error.status == 409){
+                        qmeFlashService.Error("Oops...User with same email address already exists please enter valid unique email address.");
+
+                    }else{
+                        qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                    }
+                }
+            );
+        };
+
+
         qmeUser.registerUser = function (){
 
             qmeFlashService.Clear();
