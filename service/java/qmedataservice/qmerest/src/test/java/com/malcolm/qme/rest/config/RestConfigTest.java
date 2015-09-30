@@ -71,6 +71,7 @@ public class RestConfigTest{
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_HOST)).thenReturn("some host");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS)).thenReturn("some port");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_START_TLS)).thenReturn("true");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT)).thenReturn("20000");
         JavaMailSenderImpl mailSender = restConfig.javaMailSender();
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PASSWORD);
@@ -79,6 +80,7 @@ public class RestConfigTest{
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_HOST);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_START_TLS);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT);
         assertNotNull(mailSender);
     }
 
@@ -93,6 +95,7 @@ public class RestConfigTest{
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_HOST)).thenReturn("some host");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS)).thenReturn("some port");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_START_TLS)).thenReturn("true");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT)).thenReturn("20000");
         JavaMailSenderImpl mailSender = restConfig.javaMailSender();
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME_SYS);
@@ -103,6 +106,7 @@ public class RestConfigTest{
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_HOST);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PORT_TLS);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_START_TLS);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT);
         assertNotNull(mailSender);
     }
 
@@ -117,6 +121,7 @@ public class RestConfigTest{
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL)).thenReturn("some port");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS)).thenReturn("some class");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT)).thenReturn("some port");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT)).thenReturn("20000");
         JavaMailSenderImpl mailSender = restConfig.javaMailSender();
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PASSWORD);
@@ -126,6 +131,7 @@ public class RestConfigTest{
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT);
         assertNotNull(mailSender);
     }
 
@@ -141,6 +147,7 @@ public class RestConfigTest{
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL)).thenReturn("some port");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS)).thenReturn("some class");
         when(environment.getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT)).thenReturn("some port");
+        when(environment.getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT)).thenReturn("20000");
         JavaMailSenderImpl mailSender = restConfig.javaMailSender();
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_USERNAME);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PASSWORD);
@@ -150,6 +157,7 @@ public class RestConfigTest{
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_PORT_SSL);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_CLASS);
         verify(environment).getProperty(QMeMailSender.MAIL_SMTP_SSL_SOCKET_PORT);
+        verify(environment).getProperty(QMeMailSender.MAIL_SMTP_TIMEOUT);
         assertNotNull(mailSender);
     }
 }
