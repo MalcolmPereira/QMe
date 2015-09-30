@@ -84,11 +84,6 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String QME_CRF_TOKEN_NAME = "XSRF-TOKEN";
 
     /**
-     * QMe CRF Token Header Name
-     */
-    private static final String QME_CRF_TOKEN_HEADER_NAME = "X-XSRF-TOKEN";
-
-    /**
      * QMe CSRF Token Path
      */
     private static final String QME_TOKEN_PATH = "/qme/";
@@ -149,17 +144,20 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
                 CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-                if (csrf != null) {
-                    Cookie cookie = WebUtils.getCookie(request, QME_CRF_TOKEN_NAME);
-                    String token = csrf.getToken();
-                    if (cookie == null || token != null && !token.equals(cookie.getValue())) {
-                        cookie = new Cookie(QME_CRF_TOKEN_NAME, token);
-                        cookie.setSecure(true);
-                        cookie.setPath(QME_TOKEN_PATH);
-                        response.addCookie(cookie);
+                    if (csrf != null) {
+                        Cookie cookie = WebUtils.getCookie(request, QME_CRF_TOKEN_NAME);
+                        String token  = csrf.getToken();
+                        if (cookie == null || token != null && !token.equals(cookie.getValue())) {
+                            cookie = new Cookie(QME_CRF_TOKEN_NAME, token);
+                            cookie.setPath(QME_TOKEN_PATH);
+                            response.addCookie(cookie);
+                            cookie.setSecure(true);
+                        }
                     }
-                }
-                filterChain.doFilter(request, response);
+                    filterChain.doFilter(request, response);
+
+
+
             }
         };
     }
@@ -170,7 +168,7 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private CsrfTokenRepository qmeCSRFTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName(QME_CRF_TOKEN_HEADER_NAME);
+        repository.setHeaderName(QME_CRF_TOKEN_NAME);
         return repository;
     }
 

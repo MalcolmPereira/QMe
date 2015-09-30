@@ -79,7 +79,7 @@ public class QMeCORSFilter implements Filter {
     /**
      * Control Header Names
      */
-    private static final String ACCESS_CONTROL_HEADERS_NAME = "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,x-csrftoken,X-XSRF-TOKEN";
+    private static final String ACCESS_CONTROL_HEADERS_NAME = "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,XSRF-TOKEN";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
