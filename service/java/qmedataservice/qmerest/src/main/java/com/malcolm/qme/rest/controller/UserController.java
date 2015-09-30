@@ -88,8 +88,8 @@ public class UserController implements UserAPI {
     @RequestMapping(value=STAGING_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Boolean stageUser(@RequestBody QMeStageUser user) throws QMeResourceException{
-       return userService.stageUser(user);
+    public void stageUser(@RequestBody QMeStageUser user) throws QMeResourceException{
+       userService.stageUser(user);
     }
 
     @RequestMapping(value=REGISTER_CONFIRM_PATH,method=RequestMethod.POST)

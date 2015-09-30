@@ -359,9 +359,8 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL("some url");
-        Boolean staged = userService.stageUser(qmeUser);
+        userService.stageUser(qmeUser);
 
-        assertThat(staged, equalTo(Boolean.TRUE));
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -395,9 +394,7 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL("some.url/");
-        Boolean staged = userService.stageUser(qmeUser);
-
-        assertThat(staged, equalTo(Boolean.TRUE));
+        userService.stageUser(qmeUser);
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -411,7 +408,7 @@ public class UserServiceImplTest {
         verify(javaMailSender).send(Matchers.<MimeMessage>anyObject());
     }
 
-    @Test
+    @Test(expected = QMeServerException.class)
     public void testStageUserEmailInvalidCredentialsError() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(null);
         when(userRepo.findStagedUserByUserName("suser6")).thenReturn(null);
@@ -429,9 +426,7 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL("some url");
-        Boolean staged = userService.stageUser(qmeUser);
-
-        assertThat(staged, equalTo(Boolean.FALSE));
+        userService.stageUser(qmeUser);
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -443,7 +438,7 @@ public class UserServiceImplTest {
         verify(userRepo).deleteStagingToken("sometoken");
     }
 
-    @Test
+    @Test(expected = QMeServerException.class)
     public void testStageUserEmailError() throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         when(userRepo.findByUserName("suser6")).thenReturn(null);
         when(userRepo.findStagedUserByUserName("suser6")).thenReturn(null);
@@ -464,9 +459,8 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL("some url");
-        Boolean staged = userService.stageUser(qmeUser);
 
-        assertThat(staged, equalTo(Boolean.FALSE));
+        userService.stageUser(qmeUser);
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -497,9 +491,7 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL("some url");
-        Boolean staged = userService.stageUser(qmeUser);
-
-        assertThat(staged, equalTo(Boolean.FALSE));
+        userService.stageUser(qmeUser);
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");
@@ -659,9 +651,7 @@ public class UserServiceImplTest {
         qmeUser.setUserLastName("Simple User 6");
         qmeUser.setUserEmail("SimpleUser6@User.com");
         qmeUser.setConfirmURL("some url");
-        Boolean staged = userService.stageUser(qmeUser);
-
-        assertThat(staged, equalTo(Boolean.TRUE));
+        userService.stageUser(qmeUser);
 
         verify(userRepo).findByUserName("suser6");
         verify(userRepo).findStagedUserByUserName("suser6");

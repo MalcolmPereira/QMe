@@ -279,7 +279,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.stageUser(anyObject())).thenReturn(Boolean.TRUE);
+        doNothing().when(userService).stageUser(anyObject());
 
         QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
 
@@ -290,7 +290,6 @@ public class UserControllerTest extends QMeControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"))
         ;
     }
 
@@ -299,7 +298,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.stageUser(anyObject())).thenReturn(Boolean.FALSE);
+        doThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service")).when(userService).stageUser(anyObject());
 
         QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
 
@@ -309,8 +308,7 @@ public class UserControllerTest extends QMeControllerTest {
                         .content(QMeUserFixtures.toJson(qmeUser))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string("false"))
+                .andExpect(status().isBadRequest())
         ;
     }
 
@@ -319,7 +317,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.stageUser(anyObject())).thenThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service"));
+        doThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service")).when(userService).stageUser(anyObject());
 
         QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
 
@@ -338,7 +336,8 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.stageUser(anyObject())).thenThrow(new QMeResourceConflictException("Some conflicting data error in the Service"));
+
+        doThrow(new QMeResourceConflictException("Some conflicting data error in the Service")).when(userService).stageUser(anyObject());
 
         QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
 
@@ -357,7 +356,8 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        when(userService.stageUser(anyObject())).thenThrow(new QMeServerException("Some Error in the Service"));
+
+        doThrow(new QMeServerException("Some Error in the Service")).when(userService).stageUser(anyObject());
 
         QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
 

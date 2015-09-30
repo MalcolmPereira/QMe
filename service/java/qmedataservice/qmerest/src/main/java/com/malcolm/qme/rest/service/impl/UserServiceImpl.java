@@ -140,7 +140,7 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
+    public void stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException{
         try {
              User user           = getStagingUser(qMeUser);
              String stagingToken = userRepo.stageUserRegistration(user);
@@ -148,16 +148,18 @@ public final class UserServiceImpl implements UserService {
 
                  try {
                      sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, qMeUser.getConfirmURL());
-                     return Boolean.TRUE;
+
+
+                 }catch(QMeServerException err){
+                     userRepo.deleteStagingToken(stagingToken);
+                     throw err;
 
                  }catch(Exception err){
                      userRepo.deleteStagingToken(stagingToken);
-                     return Boolean.FALSE;
+                     throw new QMeServerException("System  Error, Error Sending Email Message ",err);
                  }
 
              }
-
-             return Boolean.FALSE;
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);

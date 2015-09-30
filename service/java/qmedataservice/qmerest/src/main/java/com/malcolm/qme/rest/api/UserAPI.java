@@ -122,7 +122,7 @@ public interface UserAPI extends QMeAPI {
      * @return Boolean - Staging successful
      * @throws QMeResourceException
      */
-    Boolean stageUser(@RequestBody QMeStageUser user) throws QMeResourceException;
+    void stageUser(@RequestBody QMeStageUser user) throws QMeResourceException;
 
     /**
      * Confirm User Registration

@@ -58,7 +58,7 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * @return Boolean - Staging successful/unsuccessful
      * @throws QMeServerException
      */
-    Boolean stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
+    void stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
 
     /**
      * Confirm User Registration
