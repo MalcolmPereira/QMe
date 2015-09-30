@@ -2,7 +2,7 @@
 
     ngQMe
 
-        .service('qmeUserResource',function($http,$resource,QME_CONSTANTS){
+        .service('qmeUserResource',function($http,$resource,$cookies,QME_CONSTANTS){
             var userAPI                     = QME_CONSTANTS.qmeservice+"/user";
             var userAuthEndPoint            = userAPI+"/searchemail/";
             var userStageEndpoint           = userAPI+"/stage";
@@ -26,6 +26,10 @@
             };
             this.userRegisterResource = function(authToken){
                 $http.defaults.headers.common.Authorization = authToken;
+                $http.defaults.headers.common['XSRF-TOKEN'] = $cookies.get("XSRF-TOKEN");
+                console.log('$cookies.get("XSRF-TOKEN")',$cookies.get("XSRF-TOKEN"));
+
+                $http.defaults.headers.common['Malcolm'] = "test";
                 return $resource(userRegisterEndpoint);
             };
             this.userForgotPasswordResource = function(userEmail){

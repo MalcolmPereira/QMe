@@ -1,5 +1,5 @@
 var qmeApp = "qmeApp";
-var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
+var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngCookies','base64']);
 
 (function () {
 
@@ -18,8 +18,9 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 }
         )
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
-
-            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.interceptors.push('qmeCookiesInterceptor');
+            $httpProvider.defaults.withCredentials = true;
+            $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN';
             $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
             $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
@@ -63,6 +64,14 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controller: 'qmeUserCtrl',
                     controllerAs: 'qmeUserCtrl'
                 })
+        })
+        .factory('qmeCookiesInterceptor',function($browser, $cookies){
+            return {
+                response: function(response) {
+                    console.log("$browser.cookies",$browser);
+                    return angular.extend($cookies, angular.copy($browser.cookies)),response;
+                }
+            };
         })
 
 })();
