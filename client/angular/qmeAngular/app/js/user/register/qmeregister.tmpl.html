@@ -8,29 +8,29 @@
                 <form name="registerForm" class="form-horizontal">
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userName">User Name:</label>
-                        <input ng-model="qmeRegister.userName" id="userName" maxlength="128" min="5" type="text" placeholder="username" class="form-control" ng-required="true">
+                        <input ng-model="qmeUserCtrl.userName" id="userName" maxlength="128" min="5" type="text" placeholder="username" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userEmail">User Email:</label>
-                        <input ng-model="qmeRegister.userEmail" name="userEmail" id="userEmail" maxlength="128" min="5" type="email" placeholder="email@example.com" class="form-control" ng-required="true">
+                        <input ng-model="qmeUserCtrl.userEmail" name="userEmail" id="userEmail" maxlength="128" min="5" type="email" placeholder="email@example.com" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPassword">User Password:</label>
-                        <input ng-model="qmeRegister.userPassword"  id="userPassword" maxlength="128" min="5" type="password" placeholder="password" class="form-control" ng-required="true">
+                        <input ng-model="qmeUserCtrl.userPassword"  id="userPassword" maxlength="128" min="5" type="password" placeholder="password" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPasswordConfirm">Confirm User Password:</label>
-                        <input ng-model="qmeRegister.userPasswordConfirm" id="userPasswordConfirm" maxlength="128" min="5" type="password" placeholder="confirm password" class="form-control" ng-required="true" ng-model-options="{ updateOn: 'blur' }" ng-change="qmeRegister.validatePasswordFields()">
+                        <input ng-model="qmeUserCtrl.userPasswordConfirm" id="userPasswordConfirm" maxlength="128" min="5" type="password" placeholder="confirm password" class="form-control" ng-required="true" ng-model-options="{ updateOn: 'blur' }" ng-change="qmeUserCtrl.validatePasswordFields()">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userFirstName">User First Name:</label>
-                        <input ng-model="qmeRegister.userFirstName" id="userFirstName" maxlength="128" min="5" type="text" placeholder="first name" class="form-control" ng-required="true">
+                        <input ng-model="qmeUserCtrl.userFirstName" id="userFirstName" maxlength="128" min="5" type="text" placeholder="first name" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userLastName">User Last Name:</label>
-                        <input ng-model="qmeRegister.userLastName" id="userLastName" maxlength="128" min="5" type="text" placeholder="last name" class="form-control">
+                        <input ng-model="qmeUserCtrl.userLastName" id="userLastName" maxlength="128" min="5" type="text" placeholder="last name" class="form-control">
                     </div>
-                    <button id="submitRegisterButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeRegister.registerUser()" ng-disabled="registerForm.$invalid">Submit</button>
+                    <button id="submitRegisterButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeUserCtrl.registerUser()" ng-disabled="registerForm.$invalid">Submit</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="resetButton" type="reset" class="btn btn-info btn-sm">Reset</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;

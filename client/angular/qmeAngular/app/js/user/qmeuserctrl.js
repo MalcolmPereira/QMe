@@ -26,7 +26,7 @@
             return qmeAuthService.isAdmin();
         };
 
-        qmeUser.userName = function (){
+        qmeUser.userNameDisplay = function (){
             if(qmeUser.isSignedIn()){
                 if(qmeAuthService.user() && qmeAuthService.user().userfirstname() && qmeAuthService.user().userfirstname().length > 0
                     && qmeAuthService.user().userlastname() && qmeAuthService.user().userlastname().length > 0
@@ -91,7 +91,7 @@
 
         qmeUser.routeResetPassword = function (){
             qmeAuthService.startResetting();
-            $state.go('reset', {});
+            $state.go('forgotpassword', {});
         };
 
         qmeUser.cancelResetRegistration = function (){

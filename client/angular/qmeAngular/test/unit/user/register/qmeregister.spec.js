@@ -181,7 +181,7 @@
             expect(state.current.url).toBe('/home');
             expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');
             expect(state.current.controller).toBe('qmeHomeCtrl');
-            expect(state.current.controllerAs).toBe('qmeHome');
+            expect(state.current.controllerAs).toBe('qmeHomeCtrl');
         });
 
 

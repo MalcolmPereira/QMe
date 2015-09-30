@@ -126,7 +126,9 @@
             expect(ctrl.userEmail).toBeDefined();
             expect(ctrl.userEmail).toBe("");
             expect(ctrl.userName).toBeDefined();
-            expect(ctrl.userName()).toBe("");
+            expect(ctrl.userName).toBe("");
+            expect(ctrl.userNameDisplay).toBeDefined();
+            expect(ctrl.userNameDisplay()).toBe("");
             expect(ctrl.userPassword).toBeDefined();
             expect(ctrl.userPassword).toBe("");
             expect(ctrl.userPasswordConfirm).toBeDefined();
@@ -267,7 +269,7 @@
             expect(state.current.url).toBe('/home');
             expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');
             expect(state.current.controller).toBe('qmeHomeCtrl');
-            expect(state.current.controllerAs).toBe('qmeHome');
+            expect(state.current.controllerAs).toBe('qmeHomeCtrl');
         });
 
         it('Should have default fields on Forgot Password', function() {

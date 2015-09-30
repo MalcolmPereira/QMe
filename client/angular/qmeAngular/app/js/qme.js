@@ -12,7 +12,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                       error: 'error',
                       qmeservice: 'http://localhost:8080/qme',
                       reseturl: 'http://localhost:8000/app/#/resetpassword/',
-                      adminrole: 'ADMIN'
+                      adminrole: 'ADMIN',
+                      userrole: 'USER'
                 }
         )
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
@@ -29,25 +30,25 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     url: "/home",
                     templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
-                    controllerAs: 'qmeHome'
+                    controllerAs: 'qmeHomeCtrl'
                 })
                 .state('register', {
                     url: "/register",
                     templateUrl: 'js/user/register/qmeregister.tmpl.html',
-                    controller: 'qmeRegisterCtrl',
-                    controllerAs: 'qmeRegister'
+                    controller: 'qmeUserCtrl',
+                    controllerAs: 'qmeUserCtrl'
                 })
-                .state('reset', {
-                    url: "/reset",
+                .state('forgotpassword', {
+                    url: "/forgotpassword",
                     templateUrl: 'js/user/reset/qmeforgotpassword.tmpl.html',
-                    controller: 'qmeResetPasswordCtrl',
-                    controllerAs: 'qmeReset'
+                    controller: 'qmeUserCtrl',
+                    controllerAs: 'qmeUserCtrl'
                 })
                 .state('resetpassword', {
                     url: "/resetpassword/:token/:username",
                     templateUrl: 'js/user/reset/qmeresetpassword.tmpl.html',
-                    controller: 'qmeResetPasswordCtrl',
-                    controllerAs: 'qmeReset'
+                    controller: 'qmeUserCtrl',
+                    controllerAs: 'qmeUserCtrl'
                 })
         })
         .service('qmeUserResource',function($http,$resource,QME_CONSTANTS){

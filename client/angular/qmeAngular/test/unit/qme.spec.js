@@ -26,7 +26,7 @@
             expect(homeState.url).toBe('/home');
             expect(homeState.templateUrl).toBe('js/home/qmehome.tmpl.html');
             expect(homeState.controller).toBe('qmeHomeCtrl');
-            expect(homeState.controllerAs).toBe('qmeHome');
+            expect(homeState.controllerAs).toBe('qmeHomeCtrl');
 
 
             var registerState = qmeStates.get('register');
@@ -34,17 +34,17 @@
             expect(registerState.name).toBe('register');
             expect(registerState.url).toBe('/register');
             expect(registerState.templateUrl).toBe('js/user/register/qmeregister.tmpl.html');
-            expect(registerState.controller).toBe('qmeRegisterCtrl');
-            expect(registerState.controllerAs).toBe('qmeRegister');
+            expect(registerState.controller).toBe('qmeUserCtrl');
+            expect(registerState.controllerAs).toBe('qmeUserCtrl');
 
 
-            var resetState = qmeStates.get('reset');
+            var resetState = qmeStates.get('forgotpassword');
             expect(resetState).not.toBeNull();
-            expect(resetState.name).toBe('reset');
-            expect(resetState.url).toBe('/reset');
+            expect(resetState.name).toBe('forgotpassword');
+            expect(resetState.url).toBe('/forgotpassword');
             expect(resetState.templateUrl).toBe('js/user/reset/qmeforgotpassword.tmpl.html');
-            expect(resetState.controller).toBe('qmeResetPasswordCtrl');
-            expect(resetState.controllerAs).toBe('qmeReset');
+            expect(resetState.controller).toBe('qmeUserCtrl');
+            expect(resetState.controllerAs).toBe('qmeUserCtrl');
 
         });
     });
