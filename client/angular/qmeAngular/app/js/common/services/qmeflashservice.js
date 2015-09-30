@@ -11,19 +11,15 @@
 
         var qmeFlashService = this;
 
-        qmeFlashService.Success = Success;
-        qmeFlashService.Error   = Error;
-        qmeFlashService.Clear   = clearFlashMessage;
-
         initQMeFlashService();
 
         function initQMeFlashService() {
             $rootScope.$on('$locationChangeStart', function () {
-                clearFlashMessage();
+                qmeFlashService.Clear();
             });
         }
 
-        function clearFlashMessage() {
+        qmeFlashService.Clear   = function() {
             var flash = $rootScope.flash;
             if (flash) {
                 if (!flash.keepAfterLocationChange) {
@@ -34,7 +30,7 @@
             }
         }
 
-        function Success(message, keepAfterLocationChange) {
+        qmeFlashService.Success = function(message, keepAfterLocationChange) {
             $rootScope.flash = {
                 message: message,
                 type: 'success',
@@ -42,7 +38,7 @@
             };
         }
 
-        function Error(message, keepAfterLocationChange) {
+        qmeFlashService.Error   = function(message, keepAfterLocationChange) {
             $rootScope.flash = {
                 message: message,
                 type: 'error',

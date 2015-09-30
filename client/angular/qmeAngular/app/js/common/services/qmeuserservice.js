@@ -16,6 +16,8 @@
 
         qmeUserService.stageUser = function(user){
 
+            user[ "confirmURL" ] = QME_CONSTANTS.stageconfirmurl;
+
             var stageUserPromise = $q.defer();
 
             qmeUserResource.userStageResource()
@@ -23,8 +25,6 @@
                 .save(user
                 ,
                 function(res){
-                    res.userPassword = user.userPassword;
-                    qmeAuthService.registeredUser(res);
                     stageUserPromise.resolve(res);
                 }
                 ,
@@ -44,8 +44,6 @@
                 .save(user
                 ,
                 function(res){
-                    res.userPassword = user.userPassword;
-                    qmeAuthService.registeredUser(res);
                     registeredUserPromise.resolve(res);
                 }
                 ,

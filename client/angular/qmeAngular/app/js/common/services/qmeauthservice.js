@@ -53,27 +53,6 @@
             return loginPromise.promise;
         };
 
-        qmeAuthService.registeredUser = function (registeredUser) {
-
-            qmeAuthService.logout();
-
-            //TODO: Fix Basic Authentication and Session ID
-            //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
-            var authToken = 'Basic ' + $base64.encode(registeredUser.userEmail + ':' + registeredUser.userPassword);
-
-            //SessionId is hard coded and is not used need to be fixed.
-            qmeUserSession.create(
-                    'sessionId123',
-                    authToken,
-                    registeredUser.userId,
-                    registeredUser.userName,
-                    registeredUser.userFirstName,
-                    registeredUser.userLastName,
-                    registeredUser.userEmail,
-                    registeredUser.userRoles
-            );
-        };
-
         qmeAuthService.isSignedIn = function(){
             if (qmeUserSession.userid() && qmeUserSession.userid() !== null){
                 return true;

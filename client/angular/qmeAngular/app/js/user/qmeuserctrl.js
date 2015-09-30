@@ -85,8 +85,14 @@
         };
 
         qmeUser.routeRegistration = function (){
-            qmeAuthService.startRegistering();
+            qmeAuthService.endRegistering();
+            qmeAuthService.endResetting();
             $state.go('register', {});
+        };
+
+        qmeUser.routeStaging = function (){
+            qmeAuthService.startRegistering();
+            $state.go('stage', {});
         };
 
         qmeUser.routeResetPassword = function (){
@@ -134,6 +140,7 @@
                 .stageUser(user)
                 .then(
                 function(res){
+                    qmeFlashService.Success("User registration submitted, please check your email and complete steps to confirm registration, Thank you.",true);
                     $state.go('home', {});
                 },
                 function(error){
@@ -167,6 +174,7 @@
                 .register(user)
                 .then(
                 function(res){
+                    qmeFlashService.Success("User registration successful.",true);
                     $state.go('home', {});
                 },
                 function(error){

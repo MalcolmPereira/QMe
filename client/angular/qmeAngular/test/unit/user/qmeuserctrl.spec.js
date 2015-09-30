@@ -168,7 +168,8 @@
                 "userPassword": ctrl.userPassword ,
                 "userFirstName": ctrl.userFirstName,
                 "userLastName": ctrl.userLastName,
-                "userEmail": ctrl.userEmail
+                "userEmail": ctrl.userEmail,
+                "confirmURL": qmeContants.stageconfirmurl
             };
             httpBackend.expectPOST(userStagingEndpoint,user).respond(400,{});
             httpBackend.whenGET(/js\//).respond(200,{});
@@ -193,7 +194,8 @@
                 "userPassword": ctrl.userPassword ,
                 "userFirstName": ctrl.userFirstName,
                 "userLastName": ctrl.userLastName,
-                "userEmail": ctrl.userEmail
+                "userEmail": ctrl.userEmail,
+                "confirmURL": qmeContants.stageconfirmurl
             };
             httpBackend.expectPOST(userStagingEndpoint,user).respond(409,{});
             httpBackend.whenGET(/js\//).respond(200,{});
@@ -218,7 +220,8 @@
                 "userPassword": ctrl.userPassword ,
                 "userFirstName": ctrl.userFirstName,
                 "userLastName": ctrl.userLastName,
-                "userEmail": ctrl.userEmail
+                "userEmail": ctrl.userEmail,
+                "confirmURL": qmeContants.stageconfirmurl
             };
             httpBackend.expectPOST(userStagingEndpoint,user).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
@@ -231,7 +234,7 @@
             expect(scope.flash.message).toBe('Oops.....Error registering new user, please retry in some time.');
         });
 
-        it('Should handle valid User Registration ', function() {
+        it('Should handle valid User Staging ', function() {
             ctrl.userEmail = "someemail";
             ctrl.userName = "someusername";
             ctrl.userPassword = "somepassword";
@@ -243,20 +246,25 @@
                 "userPassword": ctrl.userPassword ,
                 "userFirstName": ctrl.userFirstName,
                 "userLastName": ctrl.userLastName,
-                "userEmail": ctrl.userEmail
+                "userEmail": ctrl.userEmail,
+                "confirmURL": qmeContants.stageconfirmurl
             };
             httpBackend.expectPOST(userStagingEndpoint,user).respond(200,"sometoken");
-            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.stageUser();
             httpBackend.flush();
-            expect(scope.flash).not.toBeDefined();
-            expect(state).not.toBeNull();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('User registration submitted, please check your email and complete steps to confirm registration, Thank you.');
+            expect(state).toBeDefined();
             expect(state.current.name).toBe('home');
             expect(state.current.url).toBe('/home');
             expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');
             expect(state.current.controller).toBe('qmeHomeCtrl');
             expect(state.current.controllerAs).toBe('qmeHomeCtrl');
+
         });
 
         it('Should have default fields available for User Registration', function() {
@@ -304,7 +312,7 @@
                 "userPassword": ctrl.userPassword ,
                 "userFirstName": ctrl.userFirstName,
                 "userLastName": ctrl.userLastName,
-                "userEmail": ctrl.userEmail
+                "userEmail": ctrl.userEmail,
             };
             httpBackend.expectPOST(userRegisterEndpoint,user).respond(400,{});
             httpBackend.whenGET(/js\//).respond(200,{});
@@ -396,12 +404,15 @@
                 "userRoles": ['ADMIN','USER']
             };
             httpBackend.expectPOST(userRegisterEndpoint,user).respond(200,registerdUser);
-            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.registerUser();
             httpBackend.flush();
-            expect(scope.flash).not.toBeDefined();
-            expect(state).not.toBeNull();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('User registration successful.');
+            expect(state).toBeDefined();
             expect(state.current.name).toBe('home');
             expect(state.current.url).toBe('/home');
             expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');

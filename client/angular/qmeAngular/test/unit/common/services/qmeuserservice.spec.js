@@ -113,7 +113,6 @@
                 "userEmail": 'test.user@gmail.com'
             };
             httpBackend.expectPOST(userStagingEndpoint,user).respond(200,"sometoken");
-            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .stageUser(user)
@@ -227,7 +226,6 @@
                 "userRoles": []
             };
             httpBackend.expectPOST(userRegisterEndpoint,user).respond(200,registereduser);
-            httpBackend.expectPOST(logoutUserEndPoint).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .register(user)

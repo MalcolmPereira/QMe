@@ -25,7 +25,7 @@
                 </div>
                 <button id="signInButton" type="submit" class="btn btn-success btn-sm"  ng-click="qmeUserCtrl.performSignIn()" ng-disabled="qmeUserCtrl.signInForm.$invalid">Sign in</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <button id="registerButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeRegistration()">Register</button>
+                <button id="registerButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeStaging()">Register</button>
                 &nbsp;
                 <button id="forgotButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeResetPassword()">Forgot Password</button>
             </form>
@@ -36,7 +36,7 @@
                         <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName"> {{qmeUserCtrl.userNameDisplay()}} </span> &nbsp; <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li ng-show="qmeUserCtrl.isAdmin()" ><a href="#" ng-click="qmeUserCtrl.alert('some admin route')">Admin</a></li>
+                        <li ng-show="qmeUserCtrl.isAdmin()" ><a href="#" ng-click="qmeUserCtrl.routeRegistration()">Register</a></li>
                         <li><a href="#" ng-click="qmeUserCtrl.alert('some user route')">User</a></li>
                         <li><a href="#" ng-click="qmeUserCtrl.logout()">Sign-out</a></li>
                     </ul>

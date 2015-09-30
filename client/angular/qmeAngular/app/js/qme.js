@@ -10,7 +10,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                 'QME_CONSTANTS', {
                       success: 'success',
                       error: 'error',
-                      qmeservice: 'http://localhost:8080/qme',
+                      qmeservice: 'http://localhost:8002/qme',
                       reseturl: 'http://localhost:8000/app/#/resetpassword/',
                       stageconfirmurl: 'http://localhost:8000/app/#/confirmuser/',
                       adminrole: 'ADMIN',
