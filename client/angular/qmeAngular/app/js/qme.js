@@ -18,7 +18,6 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngCookies','base6
                 }
         )
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
-            $httpProvider.interceptors.push('qmeCookiesInterceptor');
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN';
             $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
@@ -64,14 +63,6 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngCookies','base6
                     controller: 'qmeUserCtrl',
                     controllerAs: 'qmeUserCtrl'
                 })
-        })
-        .factory('qmeCookiesInterceptor',function($browser, $cookies){
-            return {
-                response: function(response) {
-                    console.log("$browser.cookies",$browser);
-                    return angular.extend($cookies, angular.copy($browser.cookies)),response;
-                }
-            };
         })
 
 })();

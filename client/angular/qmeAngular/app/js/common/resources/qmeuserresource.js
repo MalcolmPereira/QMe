@@ -13,6 +13,7 @@
             var userLogoutEndpoint          = QME_CONSTANTS.qmeservice+"/logout";
 
             this.userAuthResource = function(authToken,userEmail){
+                console.log("$cookies.getAll()",$cookies.getAll());
                 $http.defaults.headers.common.Authorization = authToken;
                 return $resource(userAuthEndPoint+userEmail);
             };
@@ -25,11 +26,8 @@
                 return $resource(userConfirmEndpoint);
             };
             this.userRegisterResource = function(authToken){
+                console.log("$cookies.getAll()",$cookies.getAll());
                 $http.defaults.headers.common.Authorization = authToken;
-                $http.defaults.headers.common['XSRF-TOKEN'] = $cookies.get("XSRF-TOKEN");
-                console.log('$cookies.get("XSRF-TOKEN")',$cookies.get("XSRF-TOKEN"));
-
-                $http.defaults.headers.common['Malcolm'] = "test";
                 return $resource(userRegisterEndpoint);
             };
             this.userForgotPasswordResource = function(userEmail){
