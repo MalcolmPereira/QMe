@@ -12,6 +12,7 @@ import com.malcolm.qme.security.service.QMeUserDetails;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +52,9 @@ public class QMeTokenFilterTest {
     @Test
     public void testDoFilter() throws Exception {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        String testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTb21lIFVzZXIgTmFtZSJ9.KhgOH16J61ETHLrB1ZE5N2ai-l_VydIG77pmsVHrfqHf7Zx7AU6cwVrkGD9TPuKbdOvxwGopr99Mqdb5RyPpkQ";
+        doNothing().when(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
+        String testToken = qmeTokenAuthenticationService.addAuthToken(res,qMeUserDetails);
+        verify(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
         when(req.getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME)).thenReturn(testToken);
         when(userDetailsService.loadUserByUsername("Some User Name")).thenReturn(qMeUserDetails);
         QMeTokenFilter qMeTokenFilter = new QMeTokenFilter(qmeTokenAuthenticationService);
@@ -64,7 +69,7 @@ public class QMeTokenFilterTest {
         String testInvalidToken = "invalidtoken";
         when(req.getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME)).thenReturn(testInvalidToken);
         QMeTokenFilter qMeTokenFilter = new QMeTokenFilter(qmeTokenAuthenticationService);
-        qMeTokenFilter.doFilter(req, res,chain);
+        qMeTokenFilter.doFilter(req, res, chain);
         verify(req).getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME);
     }
 }

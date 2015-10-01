@@ -24,7 +24,7 @@ public interface QMETokenAuthenticationService {
      * @param response Response
      * @param authentication QMe Authentication USer
      */
-    void addAuthToken(HttpServletResponse response, QMeUserDetails authentication);
+    String addAuthToken(HttpServletResponse response, QMeUserDetails authentication);
 
     /**
      * Get Authenticated Used from Authentication Token String

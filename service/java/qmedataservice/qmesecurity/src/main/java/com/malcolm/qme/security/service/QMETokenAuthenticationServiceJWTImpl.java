@@ -43,11 +43,12 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
     private UserDetailsService userDetailsService;
 
     @Override
-    public void addAuthToken(HttpServletResponse response, QMeUserDetails qmeUser) {
+    public String addAuthToken(HttpServletResponse response, QMeUserDetails qmeUser) {
         String jwtAuthToken = createJSONAuthToken(qmeUser);
         if(jwtAuthToken != null && jwtAuthToken.trim().length() != 0){
             response.addHeader(QME_AUTH_HEADER_NAME, jwtAuthToken);
         }
+        return jwtAuthToken;
     }
 
     @Override
