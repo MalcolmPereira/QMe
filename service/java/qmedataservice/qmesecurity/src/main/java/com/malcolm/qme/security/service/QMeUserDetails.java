@@ -10,6 +10,7 @@ package com.malcolm.qme.security.service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ import java.util.Collections;
 /**
  * @author Malcolm
  */
-class QMeUserDetails implements UserDetails,Authentication {
+public class QMeUserDetails implements UserDetails {
     /**
      * User Id
      */
@@ -32,6 +33,14 @@ class QMeUserDetails implements UserDetails,Authentication {
      * User Password
      */
     private final String userPassword;
+    /**
+     * Granted Authority or User Roles
+     */
+    private final Collection<GrantedAuthority> authorities;
+    /**
+     * QMeAuthenticatedUser
+     */
+    private final Authentication qMeAuthenticatedUser;
     /**
      * User First Name
      */
@@ -60,13 +69,6 @@ class QMeUserDetails implements UserDetails,Authentication {
      * Update User Id
      */
     private Long updateUserID;
-    /**
-     * Granted Authority or User Roles
-     */
-    private final Collection<GrantedAuthority> authorities;
-
-    private boolean authenticated = true;
-
 
     /**
      * Created New QMeUserDetails
@@ -131,6 +133,7 @@ class QMeUserDetails implements UserDetails,Authentication {
         userName = username;
         userPassword = password;
         authorities = AuthorityUtils.createAuthorityList(authoritiesArr);
+        qMeAuthenticatedUser = new QMeAuthenticatedUser(userName,userPassword,authorities);
     }
 
     /**
@@ -147,47 +150,23 @@ class QMeUserDetails implements UserDetails,Authentication {
         userName = username;
         userPassword = password;
         authorities = authoritiesList;
+        qMeAuthenticatedUser = new QMeAuthenticatedUser(userName,userPassword,authorities);
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return this.authorities;
     }
 
     @Override
     public String getPassword() {
-        return userPassword;
+        return this.userPassword;
     }
 
     @Override
     public String getUsername() {
-        return userName;
-    }
-
-    @Override
-    public String getName() {
-        return userName;
-    }
-
-    @Override
-    public Object getCredentials() {
-       return userPassword;
-    }
-
-    @Override
-    public QMeUserDetails getDetails() {
-        return this;
-    }
-
-    @Override
-    public boolean isAuthenticated() {
-        return true;
-    }
-
-    @Override
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
+        return this.userName;
     }
 
     @Override
@@ -210,16 +189,20 @@ class QMeUserDetails implements UserDetails,Authentication {
         return true;
     }
 
-    @Override
-    public Object getPrincipal() {
-        return userName;
+    /**
+     * Get QMe Authenticated User for Security Context
+     * @return
+     */
+    public Authentication getQMeAuthenticatedUser(){
+        return this.qMeAuthenticatedUser;
     }
+
     /**
      * Get User ID
      * @return User ID
      */
     public Long getUserID() {
-        return userID;
+        return this.userID;
     }
 
     /**
@@ -227,7 +210,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return User First Name
      */
     public String getUserFirstName() {
-        return userFirstName;
+        return this.userFirstName;
     }
 
     /**
@@ -245,7 +228,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return User Last Name
      */
     public String getUserLastName() {
-        return userLastName;
+        return this.userLastName;
     }
 
     /**
@@ -263,7 +246,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return User Email
      */
     public String getUserEmail() {
-        return userEmail;
+        return this.userEmail;
     }
 
     /**
@@ -281,7 +264,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return User Registered Date
      */
     public LocalDateTime getUserRegisteredDate() {
-        return userRegisteredDate;
+        return this.userRegisteredDate;
     }
 
     /**
@@ -299,7 +282,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return User Update Date
      */
     public LocalDateTime getUserUpdateDate() {
-        return userUpdateDate;
+        return this.userUpdateDate;
     }
 
     /**
@@ -317,7 +300,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return User Last Login Date
      */
     public LocalDateTime getUserLastLoginDate() {
-        return userLastLoginDate;
+        return this.userLastLoginDate;
     }
 
     /**
@@ -334,7 +317,7 @@ class QMeUserDetails implements UserDetails,Authentication {
      * @return Update User ID
      */
     public Long getUpdateUserID() {
-        return updateUserID;
+        return this.updateUserID;
     }
 
     /**
@@ -344,5 +327,82 @@ class QMeUserDetails implements UserDetails,Authentication {
      */
     public void setUpdateUserID(Long updateUserID) {
         this.updateUserID = updateUserID;
+    }
+
+    /**
+     * QMe Authenticated User Stored in Security Context
+     *
+     *  @author Malcolm
+     */
+    private final class QMeAuthenticatedUser implements Authentication {
+        /**
+         * User Name
+         */
+        private final String userName;
+        /**
+         * User Password
+         */
+        private final String userPassword;
+        /**
+         * Granted Authority or User Roles
+         */
+        private final Collection<GrantedAuthority> authorities;
+        /**
+         * Use
+         */
+        private final User user;
+        /**
+         * User Authenticated
+         */
+        private boolean isAuthenticated;
+        /**
+         * Public Constructor
+         *
+         * @param userName User Name
+         * @param userPassword User Password
+         * @param authorities User Roles
+         */
+        public QMeAuthenticatedUser(String userName, String userPassword, Collection<GrantedAuthority> authorities) {
+            this.userName = userName;
+            this.userPassword = userPassword;
+            this.authorities = authorities;
+            this.isAuthenticated = true;
+            this.user = new User(this.userName, this.userPassword,this.authorities);
+        }
+
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return this.authorities;
+        }
+
+        @Override
+        public Object getCredentials() {
+            return this.userPassword;
+        }
+
+        @Override
+        public User getDetails() {
+            return this.user;
+        }
+
+        @Override
+        public Object getPrincipal() {
+            return this.userName;
+        }
+
+        @Override
+        public boolean isAuthenticated() {
+            return this.isAuthenticated;
+        }
+
+        @Override
+        public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+            this.isAuthenticated = isAuthenticated;
+        }
+
+        @Override
+        public String getName() {
+            return this.userName;
+        }
     }
 }
