@@ -7,6 +7,7 @@
 
 package com.malcolm.qme.security.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ import java.util.Collections;
 /**
  * @author Malcolm
  */
-class QMeUserDetails implements UserDetails {
+class QMeUserDetails implements UserDetails,Authentication {
     /**
      * User Id
      */
@@ -63,6 +64,9 @@ class QMeUserDetails implements UserDetails {
      * Granted Authority or User Roles
      */
     private final Collection<GrantedAuthority> authorities;
+
+    private boolean authenticated = true;
+
 
     /**
      * Created New QMeUserDetails
@@ -162,6 +166,31 @@ class QMeUserDetails implements UserDetails {
     }
 
     @Override
+    public String getName() {
+        return userName;
+    }
+
+    @Override
+    public Object getCredentials() {
+       return userPassword;
+    }
+
+    @Override
+    public QMeUserDetails getDetails() {
+        return this;
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
+
+    @Override
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -181,6 +210,10 @@ class QMeUserDetails implements UserDetails {
         return true;
     }
 
+    @Override
+    public Object getPrincipal() {
+        return userName;
+    }
     /**
      * Get User ID
      * @return User ID

@@ -31,5 +31,6 @@ dependencies {
     }
     compile("org.springframework:spring-web:${springVersion}")
 	compile("org.springframework:spring-test:${springVersion}")
+    compile("io.jsonwebtoken:jjwt:${jjwtVersion}")
 
 }
