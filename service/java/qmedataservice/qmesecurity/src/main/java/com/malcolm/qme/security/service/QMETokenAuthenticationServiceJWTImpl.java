@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * Created by Malcolm on 10/1/2015.
@@ -31,6 +32,12 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
      * Secret salt for encryption
      */
     private final static String secret = "QMeApplicationMarch2015MP";
+
+    /**
+     * Max Token Expiration
+     * 3 Hours
+     */
+    private final static long MAX_TOKEN_EXPIRTATION = 3600000 * 3;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -83,6 +90,7 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
         try {
             return Jwts.builder()
                     .setSubject(qmeUser.getUsername())
+                    .setExpiration(new Date(System.currentTimeMillis() + MAX_TOKEN_EXPIRTATION))
                     .signWith(SignatureAlgorithm.HS512, secret)
                     .compact();
 
