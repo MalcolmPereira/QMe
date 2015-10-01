@@ -48,6 +48,12 @@ public class QMETokenAuthenticationServiceJWTImplTest {
     }
 
     @Test
+    public void testAddAuthTokenNullUser() throws Exception {
+        qmeTokenAuthenticationService.addAuthToken(res, null);
+        verify(res, never()).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
+    }
+
+    @Test
     public void testGetAuthenticatedUser() throws Exception {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
         String testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTb21lIFVzZXIgTmFtZSJ9.KhgOH16J61ETHLrB1ZE5N2ai-l_VydIG77pmsVHrfqHf7Zx7AU6cwVrkGD9TPuKbdOvxwGopr99Mqdb5RyPpkQ";
@@ -62,6 +68,15 @@ public class QMETokenAuthenticationServiceJWTImplTest {
     @Test
     public void testGetAuthenticatedUserNullReturn() throws Exception {
         when(req.getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME)).thenReturn(null);
+        QMeUserDetails user = qmeTokenAuthenticationService.getAuthenticatedUser(req);
+        verify(req).getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME);
+        assertNull(user);
+    }
+
+    @Test
+    public void testGetAuthenticatedUserNullToken() throws Exception {
+        String testTokenInvalid = "invalidtoken";
+        when(req.getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME)).thenReturn(testTokenInvalid);
         QMeUserDetails user = qmeTokenAuthenticationService.getAuthenticatedUser(req);
         verify(req).getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME);
         assertNull(user);

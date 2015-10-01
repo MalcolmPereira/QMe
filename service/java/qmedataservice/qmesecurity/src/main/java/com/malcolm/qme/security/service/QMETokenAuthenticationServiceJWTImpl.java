@@ -8,6 +8,8 @@ package com.malcolm.qme.security.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Service
 public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticationService {
+    /**
+     * Logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(QMETokenAuthenticationServiceJWTImpl.class);
 
     /**
      * Secret salt for encryption
@@ -31,7 +37,10 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
 
     @Override
     public void addAuthToken(HttpServletResponse response, QMeUserDetails qmeUser) {
-        response.addHeader(QME_AUTH_HEADER_NAME, createJSONAuthToken(qmeUser));
+        String jwtAuthToken = createJSONAuthToken(qmeUser);
+        if(jwtAuthToken != null && jwtAuthToken.trim().length() != 0){
+            response.addHeader(QME_AUTH_HEADER_NAME, jwtAuthToken);
+        }
     }
 
     @Override
@@ -52,12 +61,17 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
      * @return
      */
     private QMeUserDetails getQMeUserFromToken(String token) {
-        String username = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-        return (QMeUserDetails)userDetailsService.loadUserByUsername(username);
+        try {
+            String username = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+            return (QMeUserDetails) userDetailsService.loadUserByUsername(username);
+        }catch(Exception err){
+            LOG.error("Error parsing JWT Token for Authenticated User ",err);
+            return null;
+        }
     }
 
     /**
@@ -66,9 +80,15 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
      * @return JSON Token
      */
     private String createJSONAuthToken(QMeUserDetails qmeUser) {
-        return Jwts.builder()
-                .setSubject(qmeUser.getUsername())
+        try {
+            return Jwts.builder()
+                    .setSubject(qmeUser.getUsername())
                     .signWith(SignatureAlgorithm.HS512, secret)
-                        .compact();
+                    .compact();
+
+        }catch(Exception err){
+            LOG.error("Error creating JWT Token for Authenticated User ",err);
+            return null;
+        }
     }
 }

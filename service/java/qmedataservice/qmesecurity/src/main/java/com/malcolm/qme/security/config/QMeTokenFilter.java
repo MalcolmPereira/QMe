@@ -42,6 +42,8 @@ public class QMeTokenFilter extends GenericFilterBean {
         QMeUserDetails qMeUserDetails = qmeTokenAuthenticationService.getAuthenticatedUser((HttpServletRequest) request);
         if(qMeUserDetails != null && qMeUserDetails.getQMeAuthenticatedUser() != null){
             SecurityContextHolder.getContext().setAuthentication(qMeUserDetails.getQMeAuthenticatedUser());
+        }else{
+            SecurityContextHolder.getContext().setAuthentication(null);
         }
         chain.doFilter(request, response);
     }
