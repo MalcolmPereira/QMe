@@ -7,11 +7,13 @@
 
 package com.malcolm.qme.security.config;
 
+import com.malcolm.qme.security.service.QMETokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +21,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -46,6 +49,11 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
      * QME API
      */
     private static final String QME_API = "/qme/api";
+
+    /**
+     * QME App Login
+     */
+    private static final String QME_LOGIN = "/qme/login";
 
     /**
      * QMe Options for Pre-Flight Requests
@@ -78,16 +86,6 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private static final String QME_LOGOUT = "/qme/logout";
 
-    /**
-     * QMe CRF Token
-     */
-    private static final String QME_CRF_TOKEN_NAME = "XSRF-TOKEN";
-
-    /**
-     * QMe CSRF Token Path
-     */
-    private static final String QME_TOKEN_PATH = "/qme/";
-
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -95,83 +93,37 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passcodeEncoder;
 
     @Autowired
+    private QMETokenAuthenticationService qmeTokenAuthenticationService;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passcodeEncoder);
-    }
-
-    /**
-     * Get CSRFilter
-     * @return csrfFilter
-     */
-    public Filter getCSRFilter(){
-        return qmeCSRFilter();
     }
 
     //TODO: Fix Basic Authentication (Need to have OAuth here)
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
+        System.out.println("userDetailsService "+userDetailsService);
+        System.out.println("qmeTokenAuthenticationService "+qmeTokenAuthenticationService);
+        System.out.println("authenticationManager "+authenticationManager());
+
         http
-            .httpBasic()
-        .and()
-             .headers()
+            .headers()
+
         .and()
             .logout()
                 .logoutUrl(QME_LOGOUT)
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
                 .invalidateHttpSession(true)
-                .deleteCookies(QME_CRF_TOKEN_NAME)
-         .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
-                .antMatchers(QME_API, REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
-                .authenticated()
-                .and()
-                .csrf()
-                .ignoringAntMatchers(QME_API, REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH,QME_LOGOUT)
-                .csrfTokenRepository(qmeCSRFTokenRepository())
-         .and()
-                .addFilterAfter(qmeCSRFilter(), CsrfFilter.class)
-
-         ;
-    }
-
-    /**
-     * QMe CSRF Filter
-     * @return Filter
-     */
-    private Filter qmeCSRFilter() {
-
-        return new OncePerRequestFilter() {
-            @Override
-            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-                CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-                    if (csrf != null) {
-                        Cookie cookie = WebUtils.getCookie(request, QME_CRF_TOKEN_NAME);
-                        String token  = csrf.getToken();
-                        if (cookie == null || token != null && !token.equals(cookie.getValue())) {
-                            cookie = new Cookie(QME_CRF_TOKEN_NAME, token);
-                            cookie.setPath(QME_TOKEN_PATH);
-                            response.addCookie(cookie);
-                            cookie.setSecure(true);
-                        }
-                    }
-                    filterChain.doFilter(request, response);
-
-
-
-            }
-        };
-    }
-
-    /**
-     * QME CSRF Token Repository
-     * @return CsrfTokenRepository
-     */
-    private CsrfTokenRepository qmeCSRFTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName(QME_CRF_TOKEN_NAME);
-        return repository;
+        .and()
+             .authorizeRequests()
+             .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
+             .antMatchers(QME_API, QME_LOGIN, REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
+             .authenticated()
+        .and()
+            .addFilterBefore(new QMeLoginFilter(QME_LOGIN, userDetailsService, qmeTokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+        ;
     }
 
     @Bean

@@ -50,14 +50,19 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
         super(defaultFilterProcessesUrl);
         this.userDetailsService = userDetailsService;
         this.qmeTokenAuthenticationService = qmeTokenAuthenticationService;
-        setAuthenticationManager(authManager);
+        if(authManager!= null) {
+            setAuthenticationManager(authManager);
+        }
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        final User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+        final QMeLoginUser user = new ObjectMapper().readValue(request.getInputStream(), QMeLoginUser.class);
         final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-        return getAuthenticationManager().authenticate(loginToken);
+        if (getAuthenticationManager() != null){
+            return getAuthenticationManager().authenticate(loginToken);
+        }
+        return null;
     }
 
     @Override
