@@ -116,7 +116,8 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
              .antMatchers(QME_API, QME_LOGIN, REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
              .authenticated()
         .and()
-            .addFilterBefore(new QMeLoginFilter(QME_LOGIN, userDetailsService, qmeTokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new QMeLoginFilter(QME_LOGIN, userDetailsService, qmeTokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new QMeTokenFilter(qmeTokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
         ;
     }
 
