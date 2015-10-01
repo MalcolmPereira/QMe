@@ -31,7 +31,6 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
 
     @Override
     public void addAuthToken(HttpServletResponse response, QMeUserDetails qmeUser) {
-        System.out.println(createJSONAuthToken(qmeUser));
         response.addHeader(QME_AUTH_HEADER_NAME, createJSONAuthToken(qmeUser));
     }
 
