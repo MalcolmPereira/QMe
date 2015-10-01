@@ -56,6 +56,7 @@ subprojects {
 
         springVersion 		    = "4.2.1.RELEASE"
         springSecurityVersion   = "4.0.2.RELEASE"
+        jjwtVersion             = "0.5.1"
 
         springDataVersion 	    = "1.8.1.RELEASE"
         hibernateVersion	    = "4.3.10.Final"
