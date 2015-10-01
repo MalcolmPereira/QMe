@@ -103,20 +103,15 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     //TODO: Fix Basic Authentication (Need to have OAuth here)
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-
-        System.out.println("userDetailsService "+userDetailsService);
-        System.out.println("qmeTokenAuthenticationService "+qmeTokenAuthenticationService);
-        System.out.println("authenticationManager "+authenticationManager());
-
         http
             .headers()
-
         .and()
             .logout()
                 .logoutUrl(QME_LOGOUT)
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
                 .invalidateHttpSession(true)
         .and()
+             .csrf().disable()
              .authorizeRequests()
              .antMatchers(HttpMethod.OPTIONS, QME_OPTIONS).permitAll()
              .antMatchers(QME_API, QME_LOGIN, REGISTER_PATH, REGISTER_CONFIRM_PATH, RESET_FORGOT_PASSWORD_PATH, RESET_RESET_PASSWORD_PATH, QME_LOGOUT).permitAll().anyRequest()
