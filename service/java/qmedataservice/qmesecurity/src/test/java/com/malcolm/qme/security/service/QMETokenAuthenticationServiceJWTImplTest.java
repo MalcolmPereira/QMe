@@ -50,7 +50,7 @@ public class QMETokenAuthenticationServiceJWTImplTest {
     @Test
     public void testGetAuthenticatedUser() throws Exception {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        String testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTb21lIFVzZXIgTmFtZSJ9.UiDZaAbWoEJetA3wmxvNFSL_iABoTFgRCM8CGLybk7w7b7c0JAFavVGu7noEK4kQJC5gCy_Vg79fgIR-pF7-rA";
+        String testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTb21lIFVzZXIgTmFtZSJ9.KhgOH16J61ETHLrB1ZE5N2ai-l_VydIG77pmsVHrfqHf7Zx7AU6cwVrkGD9TPuKbdOvxwGopr99Mqdb5RyPpkQ";
         when(req.getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME)).thenReturn(testToken);
         when(qMeUserDetailsService.loadUserByUsername("Some User Name")).thenReturn(qMeUserDetails);
         QMeUserDetails user = qmeTokenAuthenticationService.getAuthenticatedUser(req);

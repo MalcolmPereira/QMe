@@ -21,14 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticationService {
 
-    //TODO Revisit this
-    private final static String secret = "QMeApp";
+    /**
+     * Secret salt for encryption
+     */
+    private final static String secret = "QMeApplicationMarch2015MP";
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
     public void addAuthToken(HttpServletResponse response, QMeUserDetails qmeUser) {
+        System.out.println(createJSONAuthToken(qmeUser));
         response.addHeader(QME_AUTH_HEADER_NAME, createJSONAuthToken(qmeUser));
     }
 

@@ -70,7 +70,6 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private static final String REGISTER_CONFIRM_PATH = "/qme/user/confirm";
 
-
     /**
      * Forgot Password Path
      */

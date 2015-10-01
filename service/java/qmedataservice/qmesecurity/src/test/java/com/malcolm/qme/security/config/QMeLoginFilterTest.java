@@ -79,6 +79,7 @@ public class QMeLoginFilterTest {
             QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
             String userCredentials = "{\"username\": \"SomeUserName\",\"password\": \"SomePassword\"}";
             stream = new MockServletInputStream(new ByteArrayInputStream(userCredentials.getBytes(StandardCharsets.UTF_8)));
+
             when(req.getInputStream()).thenReturn(stream);
             when(authManager.authenticate(Matchers.<UsernamePasswordAuthenticationToken>anyObject())).thenReturn(qMeUserDetails.getQMeAuthenticatedUser());
             Authentication authentication = qMeLoginFilter.attemptAuthentication(req,res);
@@ -121,12 +122,7 @@ public class QMeLoginFilterTest {
         verify(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
     }
 
-    /**
-     * Mock Servlet InputStream
-     * @author Malcolm
-     */
     private final class MockServletInputStream extends ServletInputStream {
-
         /**
          * InputStream
          */
@@ -160,4 +156,5 @@ public class QMeLoginFilterTest {
             return this.sourceStream.read();
         }
     }
+
 }
