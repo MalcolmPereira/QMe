@@ -13,8 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,6 +50,9 @@ public class QMeSecurityConfigTest {
     private AuthenticationManagerBuilder authenticationBuilder;
 
     @Mock
+    private AuthenticationManager authenticationManager;
+
+    @Mock
     private Map<Class<Object>, Object> sharedObjects;
 
     @Mock
@@ -58,17 +64,22 @@ public class QMeSecurityConfigTest {
     @Mock
     private QMETokenAuthenticationService qmeTokenAuthenticationService;
 
+    @Mock
+    private AuthenticationConfiguration authenticationConfiguration;
+
     @InjectMocks
     private QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
 
     @Test
     public void testConfigureGlobal() throws Exception {
         when(authenticationBuilder.userDetailsService(Matchers.<UserDetailsService>anyObject())).thenReturn(daoAuthenticationConfigurer);
-        when(daoAuthenticationConfigurer.passwordEncoder(Matchers.<PasswordEncoder>anyObject())).thenReturn(null);
+        when(daoAuthenticationConfigurer.passwordEncoder(Matchers.<PasswordEncoder>anyObject())).thenReturn(daoAuthenticationConfigurer);
         boolean isConfigured;
         try {
             qMeSecurityConfig.configureGlobal(authenticationBuilder);
             isConfigured = true;
+            verify(authenticationBuilder).userDetailsService(Matchers.<UserDetailsService>anyObject());
+            verify(daoAuthenticationConfigurer).passwordEncoder(Matchers.<PasswordEncoder>anyObject());
         }catch(Exception err){
             err.printStackTrace();
             isConfigured = false;
@@ -78,10 +89,15 @@ public class QMeSecurityConfigTest {
 
     @Test
     public void testConfigure() throws Exception {
+        when(authenticationBuilder.userDetailsService(Matchers.<UserDetailsService>anyObject())).thenReturn(daoAuthenticationConfigurer);
+        when(daoAuthenticationConfigurer.passwordEncoder(Matchers.<PasswordEncoder>anyObject())).thenReturn(daoAuthenticationConfigurer);
+        when(authenticationConfiguration.getAuthenticationManager()).thenReturn(authenticationManager);
         HttpSecurity httpSecurity = new HttpSecurity(objectPostProcessor,authenticationBuilder,sharedObjects);
         QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
         boolean isConfigured;
         try {
+            qMeSecurityConfig.setAuthenticationConfiguration(authenticationConfiguration);
+            qMeSecurityConfig.configureGlobal(authenticationBuilder);
             qMeSecurityConfig.configure(httpSecurity);
             isConfigured = true;
         }catch(Exception err){

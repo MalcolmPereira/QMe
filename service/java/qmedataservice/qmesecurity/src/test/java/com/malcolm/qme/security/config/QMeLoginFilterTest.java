@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -54,14 +55,21 @@ public class QMeLoginFilterTest {
 
     @Mock
     private FilterChain chain;
+
     /**
      * QMeLoginFilter instance
      */
     private QMeLoginFilter qMeLoginFilter;
 
+    /**
+     * QMeLoginFilter instance
+     */
+    private QMeLoginFilter qMeLoginFilterNullAuth;
+
     @Before
     public void setUp(){
         qMeLoginFilter = new QMeLoginFilter("some login URL", userDetailsService, new QMETokenAuthenticationServiceJWTImpl(),authManager);
+        qMeLoginFilterNullAuth = new QMeLoginFilter("some login URL", userDetailsService, new QMETokenAuthenticationServiceJWTImpl(),null);
     }
 
     @Test
@@ -78,6 +86,24 @@ public class QMeLoginFilterTest {
             verify(req).getInputStream();
             verify(authManager).authenticate(Matchers.<UsernamePasswordAuthenticationToken>anyObject());
 
+        }finally {
+            if(stream != null){
+                stream.close();
+            }
+        }
+    }
+
+    @Test
+    public void testAttemptAuthenticationNullReturn() throws Exception {
+        MockServletInputStream stream = null;
+        try {
+            QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+            String userCredentials = "{\"username\": \"SomeUserName\",\"password\": \"SomePassword\"}";
+            stream = new MockServletInputStream(new ByteArrayInputStream(userCredentials.getBytes(StandardCharsets.UTF_8)));
+            when(req.getInputStream()).thenReturn(stream);
+            Authentication authentication = qMeLoginFilterNullAuth.attemptAuthentication(req,res);
+            assertNull(authentication);
+            verify(req).getInputStream();
         }finally {
             if(stream != null){
                 stream.close();
