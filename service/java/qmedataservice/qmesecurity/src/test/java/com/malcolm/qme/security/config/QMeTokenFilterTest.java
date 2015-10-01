@@ -57,4 +57,14 @@ public class QMeTokenFilterTest {
         verify(req).getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME);
         verify(userDetailsService).loadUserByUsername("Some User Name");
     }
+
+@Test
+    public void testDoFilterNullUser() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        String testInvalidToken = "invalidtoken";
+        when(req.getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME)).thenReturn(testInvalidToken);
+        QMeTokenFilter qMeTokenFilter = new QMeTokenFilter(qmeTokenAuthenticationService);
+        qMeTokenFilter.doFilter(req, res,chain);
+        verify(req).getHeader(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME);
+    }
 }
