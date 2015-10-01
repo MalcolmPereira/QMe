@@ -25,6 +25,11 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class QMeCORSFilterTest  {
 
+    /**
+     * QME Authentication Header
+     */
+    private static final String QME_AUTH_HEADER_NAME = "QME-AUTH-TOKEN";
+
     @Mock
     private ServletRequest req;
 
@@ -42,16 +47,16 @@ public class QMeCORSFilterTest  {
         doNothing().when(res).setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
         doNothing().when(res).setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,POST,DELETE,PUT");
         doNothing().when(res).setHeader("Access-Control-Allow-Credentials", "true");
-        doNothing().when(res).setHeader("Access-Control-Request-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,x-csrftoken,X-XSRF-TOKEN");
-        doNothing().when(res).setHeader("Access-Control-Allow-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,x-csrftoken,X-XSRF-TOKEN");
+        doNothing().when(res).setHeader("Access-Control-Request-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,"+QME_AUTH_HEADER_NAME);
+        doNothing().when(res).setHeader("Access-Control-Allow-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,"+QME_AUTH_HEADER_NAME);
         doNothing().when(res).setHeader("Access-Control-Max-Age", "3600");
         QMeCORSFilter filter = new QMeCORSFilter();
         filter.doFilter(req, res, chain);
         verify(res).setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
         verify(res).setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,POST,DELETE,PUT");
         verify(res).setHeader("Access-Control-Allow-Credentials", "true");
-        verify(res).setHeader("Access-Control-Request-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,x-csrftoken,X-XSRF-TOKEN");
-        verify(res).setHeader("Access-Control-Allow-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,x-csrftoken,X-XSRF-TOKEN");
+        verify(res).setHeader("Access-Control-Request-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization," + QME_AUTH_HEADER_NAME);
+        verify(res).setHeader("Access-Control-Allow-Headers", "content-type,x-requested-with,accept,origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,"+QME_AUTH_HEADER_NAME);
         verify(res).setHeader("Access-Control-Max-Age", "3600");
     }
 

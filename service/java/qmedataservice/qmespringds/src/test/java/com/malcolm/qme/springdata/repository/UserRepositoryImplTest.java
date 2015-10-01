@@ -402,7 +402,7 @@ public class UserRepositoryImplTest {
     public void testUpdateLoginDate() throws QMeException, InterruptedException {
         assertNotNull(userRepo);
 
-        User user = new User("URepoImplTestUserNamePassReset1", "Test", "Test", "Test", "URepoImplTestUserNamePassReset1@test.com");
+        User user = new User("URepoImplTestUserNamePassReset2", "Test", "Test", "Test", "URepoImplTestUserNamePassReset2@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertNotNull(user.getUserLastLoginDate());
@@ -427,7 +427,7 @@ public class UserRepositoryImplTest {
     public void testResetUserPassword() throws QMeException, InterruptedException {
         assertNotNull(userRepo);
 
-        User user = new User("URepoImplTestUserNamePassReset2", "Test", "Test", "Test", "URepoImplTestUserNamePassReset2@test.com");
+        User user = new User("URepoImplTestUserNamePassReset3", "Test", "Test", "Test", "URepoImplTestUserNamePassReset3@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
