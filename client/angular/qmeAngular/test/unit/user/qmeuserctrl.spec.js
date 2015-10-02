@@ -1,4 +1,3 @@
-
 (function () {
 
     'use strict';
@@ -73,20 +72,18 @@
             ctrl.userEmail = "testuser@test.com";
             ctrl.userPassword = "testpassword";
             var credentials = {
-                "username": "testuser@test.com",
-                "password": "testpassword"
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
             };
             var user = {
+                "authToken": "someauthtoken",
+                "userId": 1,
                 "userName": "testuser",
                 "userPassword": null,
                 "userFirstName": "Test",
                 "userLastName": "User",
                 "userEmail": "test.user@gmail.com",
-                "userId": 1,
-                "userRegisteredDate": "2015-28-05 13:35:29",
-                "userUpdateDate": "2015-28-05 13:35:29",
-                "updateUserID": 0,
-                "updateUserName": "",
+                "userLastLoginDate": "2015-28-05 13:35:29",
                 "userRoles": ['USER']
             };
             httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
@@ -106,20 +103,18 @@
             ctrl.userEmail = "testuser@test.com";
             ctrl.userPassword = "testpassword";
             var credentials = {
-                "username": "testuser@test.com",
-                "password": "testpassword"
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
             };
             var user = {
-                "userName": "testadmin",
+                "authToken": "someauthtoken",
+                "userId": 1,
+                "userName": "testuser",
                 "userPassword": null,
                 "userFirstName": "Test",
-                "userLastName": "Admin",
-                "userEmail": "test.admin@gmail.com",
-                "userId": 1,
-                "userRegisteredDate": "2015-28-05 13:35:29",
-                "userUpdateDate": "2015-28-05 13:35:29",
-                "updateUserID": 0,
-                "updateUserName": "",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
                 "userRoles": ['ADMIN','USER']
             };
             httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);

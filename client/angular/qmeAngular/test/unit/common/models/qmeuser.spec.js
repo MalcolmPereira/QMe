@@ -18,47 +18,80 @@
 
         it('Should have create new qmeUser model', function() {
             qmeUser.create(
-                    'session1234',
                     'someauthtoken',
                     '1234' ,
                     'someuser',
-                    'some',
-                    'user',
+                    'firstname',
+                    'lastname',
                     'someuser@some.com',
-                    'admin');
+                    '2015-10-02T14:27:10',
+                    ['admin']);
             expect(qmeUser).toBeDefined();
-            expect(qmeUser.sessionid()).toBe('session1234');
             expect(qmeUser.authtoken()).toBe('someauthtoken');
             expect(qmeUser.userid()).toBe('1234');
             expect(qmeUser.username()).toBe('someuser');
-            expect(qmeUser.userrole()).toBe('admin');
+            expect(qmeUser.userfirstname()).toBe('firstname');
+            expect(qmeUser.userlastname()).toBe('lastname');
+            expect(qmeUser.useremail()).toBe('someuser@some.com');
+            expect(qmeUser.userlastlogin()).toBe('2015-10-02T14:27:10');
+            expect(qmeUser.userrole()).toContain('admin');
         });
+
+        it('Should have create new qmeUser model for user with multiple roles ', function() {
+            qmeUser.create(
+                'someauthtoken',
+                '1234' ,
+                'someuser',
+                'firstname',
+                'lastname',
+                'someuser@some.com',
+                '2015-10-02T14:27:10',
+                ['admin','user','reviewer']);
+            expect(qmeUser).toBeDefined();
+            expect(qmeUser.authtoken()).toBe('someauthtoken');
+            expect(qmeUser.userid()).toBe('1234');
+            expect(qmeUser.username()).toBe('someuser');
+            expect(qmeUser.userfirstname()).toBe('firstname');
+            expect(qmeUser.userlastname()).toBe('lastname');
+            expect(qmeUser.useremail()).toBe('someuser@some.com');
+            expect(qmeUser.userlastlogin()).toBe('2015-10-02T14:27:10');
+            expect(qmeUser.userrole()).toContain('admin');
+            expect(qmeUser.userrole()).toContain('user');
+            expect(qmeUser.userrole()).toContain('reviewer');
+        });
+
 
         it('Should have destroyed qmeUser model', function() {
             qmeUser.create(
-                    'session1234',
-                    'someauthtoken',
-                    '1234' ,
-                    'someuser',
-                    'some',
-                    'user',
-                    'someuser@some.com',
-                    'admin');
-            expect(qmeUser).toBeDefined();
-            expect(qmeUser.sessionid()).toBe('session1234');
+                'someauthtoken',
+                '1234' ,
+                'someuser',
+                'firstname',
+                'lastname',
+                'someuser@some.com',
+                '2015-10-02T14:27:10',
+                ['admin']);
             expect(qmeUser.authtoken()).toBe('someauthtoken');
             expect(qmeUser.userid()).toBe('1234');
             expect(qmeUser.username()).toBe('someuser');
-            expect(qmeUser.userrole()).toBe('admin');
+            expect(qmeUser.userfirstname()).toBe('firstname');
+            expect(qmeUser.userlastname()).toBe('lastname');
+            expect(qmeUser.useremail()).toBe('someuser@some.com');
+            expect(qmeUser.userlastlogin()).toBe('2015-10-02T14:27:10');
+            expect(qmeUser.userrole()).toContain('admin');
 
             qmeUser.destroy();
             expect(qmeUser).toBeDefined();
-            expect(qmeUser.sessionid()).toBe(null);
             expect(qmeUser.authtoken()).toBe(null);
             expect(qmeUser.userid()).toBe(null);
             expect(qmeUser.username()).toBe(null);
+            expect(qmeUser.userfirstname()).toBe(null);
+            expect(qmeUser.userlastname()).toBe(null);
+            expect(qmeUser.useremail()).toBe(null);
+            expect(qmeUser.userlastlogin()).toBe(null);
             expect(qmeUser.userrole()).toBe(null);
         });
+
 
     });
 

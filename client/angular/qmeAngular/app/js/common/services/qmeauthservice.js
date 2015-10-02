@@ -28,13 +28,13 @@
                 function(res){
 
                     qmeUserSession.create(
-                       'sessionId123',
-                       'fixme',
+                       res.authToken,
                        res.userId,
                        res.userName,
                        res.userFirstName,
                        res.userLastName,
                        res.userEmail,
+                       res.userLastLoginDate,
                        res.userRoles
                     );
 
@@ -50,7 +50,7 @@
         };
 
         qmeAuthService.isSignedIn = function(){
-            if (qmeUserSession.userid() && qmeUserSession.userid() !== null){
+            if (qmeUserSession.userid() && qmeUserSession.userid() !== null && qmeUserSession.authtoken() && qmeUserSession.authtoken() !== null){
                 return true;
             }else{
                 return false;
@@ -105,6 +105,5 @@
         qmeAuthService.isResetting = function(){
             return qmeAuthService.resetting;
         };
-
     }
 })();

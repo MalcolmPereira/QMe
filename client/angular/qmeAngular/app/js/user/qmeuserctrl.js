@@ -50,8 +50,8 @@
             qmeFlashService.Clear();
 
             credentials = {
-                "username": qmeUser.userEmail,
-                "password": qmeUser.userPassword
+                "userName": qmeUser.userEmail,
+                "userPassword": qmeUser.userPassword
             };
 
             qmeAuthService.login(credentials)
