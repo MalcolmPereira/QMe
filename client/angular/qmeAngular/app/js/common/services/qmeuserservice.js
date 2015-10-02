@@ -20,15 +20,19 @@
 
             var stageUserPromise = $q.defer();
 
+            pleaseWait.showPleaseWait();
+
             qmeUserResource.userStageResource()
 
                 .save(user
                 ,
                 function(res){
+                    pleaseWait.hidePleaseWait();
                     stageUserPromise.resolve(res);
                 }
                 ,
                 function(error){
+                    pleaseWait.hidePleaseWait();
                     stageUserPromise.reject(error);
                 });
             return stageUserPromise.promise;
