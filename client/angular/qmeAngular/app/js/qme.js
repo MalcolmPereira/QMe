@@ -1,5 +1,5 @@
 var qmeApp = "qmeApp";
-var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngCookies','base64']);
+var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
 
 (function () {
 

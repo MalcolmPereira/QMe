@@ -6,10 +6,10 @@
         .service('qmeAuthService', QMeAuthService);
 
 
-    QMeAuthService.$inject = ['$q','qmeUserResource','$base64','qmeUserSession','QME_CONSTANTS'];
+    QMeAuthService.$inject = ['$q','qmeUserResource','qmeUserSession','QME_CONSTANTS'];
 
 
-    function QMeAuthService($q,qmeUserResource,$base64,qmeUserSession,QME_CONSTANTS) {
+    function QMeAuthService($q,qmeUserResource,qmeUserSession,QME_CONSTANTS) {
 
         var qmeAuthService = this;
 
@@ -21,19 +21,15 @@
 
             var loginPromise = $q.defer();
 
-            //TODO: Fix Basic Authentication and Session ID
-            //Basic Authentication For Now (Need to fix with OAuth and Cache OAuth Token)
-            var authToken = 'Basic ' + $base64.encode(credentials.username + ':' + credentials.password);
-            //SessionId is hard coded and is not used need to be fixed.
+            qmeUserResource.userAuthResource()
 
-            qmeUserResource.userAuthResource(authToken,credentials.username)
+                .save(credentials,
 
-                .get(
                 function(res){
 
                     qmeUserSession.create(
                        'sessionId123',
-                       authToken,
+                       'fixme',
                        res.userId,
                        res.userName,
                        res.userFirstName,

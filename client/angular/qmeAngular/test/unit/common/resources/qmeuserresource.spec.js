@@ -14,13 +14,18 @@
             qmeUserResource = _qmeUserResource_;
         }));
 
+
         it('Should have a QMe User Resource', function() {
             expect(qmeUserResource).toBeDefined();
             expect(scope.flash).not.toBeDefined();
         });
 
         it('Should have a User Auth Resource Defined', function() {
-            expect(qmeUserResource.userAuthResource("sometoken","email")).toBeDefined();
+            expect(qmeUserResource.userAuthResource()).toBeDefined();
+        });
+
+        it('Should have a Search User Resource Defined', function() {
+            expect(qmeUserResource.userGetUserResource("someemail")).toBeDefined();
         });
 
         it('Should have a User Staging Resource Defined', function() {
@@ -32,7 +37,7 @@
         });
 
         it('Should have a User Register Resource Defined', function() {
-            expect(qmeUserResource.userRegisterResource("some token")).toBeDefined();
+            expect(qmeUserResource.userRegisterResource()).toBeDefined();
         });
 
         it('Should have a User Forgot Password Resource Defined', function() {
@@ -46,7 +51,6 @@
         it('Should have a User Logout Resource Defined', function() {
             expect(qmeUserResource.logoutResource()).toBeDefined();
         });
-
     });
 
 })();

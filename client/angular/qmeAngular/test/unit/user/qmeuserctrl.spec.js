@@ -1,3 +1,4 @@
+
 (function () {
 
     'use strict';
@@ -20,7 +21,7 @@
 
             qmeContants = _QME_CONSTANTS_;
 
-            userAuthEndPoint =  qmeContants.qmeservice+"/user/searchemail/";
+            userAuthEndPoint =  qmeContants.qmeservice+"/login";
 
             userStagingEndpoint = qmeContants.qmeservice+"/user/stage";
 
@@ -46,6 +47,7 @@
             expect(ctrl).toBeDefined();
         });
 
+
         it('Ensure User is not signed - signedIn is false', function() {
             expect(ctrl.isSignedIn() ).toBe(false);
         });
@@ -66,9 +68,14 @@
             expect(ctrl.userPassword ).toBe("");
         });
 
+
         it('Ensure user able to sign-on with valid credentials for USER Role', function() {
             ctrl.userEmail = "testuser@test.com";
             ctrl.userPassword = "testpassword";
+            var credentials = {
+                "username": "testuser@test.com",
+                "password": "testpassword"
+            };
             var user = {
                 "userName": "testuser",
                 "userPassword": null,
@@ -82,7 +89,7 @@
                 "updateUserName": "",
                 "userRoles": ['USER']
             };
-            httpBackend.expectGET(userAuthEndPoint+ctrl.userEmail).respond(200,user);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.performSignIn();
             httpBackend.flush();
@@ -94,9 +101,14 @@
             expect(ctrl.isAdmin() ).toBe(false);
         });
 
+
         it('Ensure user able to sign-on with valid credentials for ADMIN Role', function() {
             ctrl.userEmail = "testuser@test.com";
             ctrl.userPassword = "testpassword";
+            var credentials = {
+                "username": "testuser@test.com",
+                "password": "testpassword"
+            };
             var user = {
                 "userName": "testadmin",
                 "userPassword": null,
@@ -110,7 +122,7 @@
                 "updateUserName": "",
                 "userRoles": ['ADMIN','USER']
             };
-            httpBackend.expectGET(userAuthEndPoint+ctrl.userEmail).respond(200,user);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.performSignIn();
             httpBackend.flush();
@@ -122,6 +134,7 @@
             expect(ctrl.isAdmin() ).toBe(true);
         });
         //TODO: Write Test Cases for 404 and 401 Errors
+
 
         it('Should have default fields available for User Staging', function() {
             expect(ctrl.userEmail).toBeDefined();

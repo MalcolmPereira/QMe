@@ -23,7 +23,6 @@ module.exports = function(config){
             'app/lib/angular-resource/angular-resource.min.js',
             'app/lib/angular-base64/angular-base64.min.js',
             'app/lib/angular-mocks/angular-mocks.js',
-            'app/lib/angular-cookies/angular-cookies.min.js',
             'app/js/qme.js',
             'app/js/**/*.js',
             'app/js/**/*.html',

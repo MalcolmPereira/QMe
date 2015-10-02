@@ -1,3 +1,4 @@
+
 (function () {
 
     'use strict';
@@ -27,6 +28,7 @@
             expect(scope.flash).not.toBeDefined();
         });
 
+
         it('Should throw invalid error for wrong data on User Staging ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -50,6 +52,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should throw conflict error for duplicate data on User Staging ', function() {
             expect(qmeUserService).toBeDefined();
