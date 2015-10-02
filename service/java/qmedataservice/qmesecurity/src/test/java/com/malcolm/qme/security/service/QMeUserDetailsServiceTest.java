@@ -66,11 +66,9 @@ public class QMeUserDetailsServiceTest {
         userRoles.add(userRole);
         when(userRepo.findByUserName("Some User Name")).thenReturn(user);
         when(userRoleRepository.findByUserId(1L)).thenReturn(userRoles);
-        when(userRepo.updateLoginDate(1L)).thenReturn(user);
         UserDetails userDetails = qMeUserDetailsService.loadUserByUsername("Some User Name");
         verify(userRepo).findByUserName("Some User Name");
         verify(userRoleRepository).findByUserId(1L);
-        verify(userRepo).updateLoginDate(1L);
         assertNotNull(userDetails);
         assertThat(userDetails.getUsername(), equalTo("Some User Name"));
         assertNotNull(userDetails.getAuthorities());
@@ -110,14 +108,11 @@ public class QMeUserDetailsServiceTest {
         List<UserRole> userRoles   = new ArrayList<>();
         UserRole userRole = new UserRole(1L, 1, "Some Role", 1L);
         userRoles.add(userRole);
-
         when(userRepo.findByUserEmail("Email@Email")).thenReturn(user);
         when(userRoleRepository.findByUserId(1L)).thenReturn(userRoles);
-        when(userRepo.updateLoginDate(1L)).thenReturn(user);
         UserDetails userDetails = qMeUserDetailsService.loadUserByUsername("Email@Email");
         verify(userRepo).findByUserEmail("Email@Email");
         verify(userRoleRepository).findByUserId(1L);
-        verify(userRepo).updateLoginDate(1L);
         assertNotNull(userDetails);
         assertThat(userDetails.getUsername(), equalTo("Some User Name"));
         assertNotNull(userDetails.getAuthorities());
@@ -136,5 +131,23 @@ public class QMeUserDetailsServiceTest {
         when(userRepo.findByUserEmail("Email@Email")).thenThrow(QMeException.class);
         qMeUserDetailsService.loadUserByUsername("Email@Email");
         verify(userRepo).findByUserEmail("Email@Email");
+    }
+
+    @Test
+    public void testUpdateUserLastLoginDate() throws QMeException {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
+        when(userRepo.updateLoginDate(1L)).thenReturn(user);
+        qMeUserDetailsService.updateUserLastLoginDate(qMeUserDetails);
+        verify(userRepo).updateLoginDate(1L);
+    }
+
+    @Test
+    public void testUpdateUserLastLoginDateException() throws QMeException {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        User user = new User(1L, "Some User Name", "Some Password", "First Name", "Last Name", "Email", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), LocalDateTime.now(), 1L);
+        when(userRepo.updateLoginDate(1L)).thenThrow(QMeException.class);
+        qMeUserDetailsService.updateUserLastLoginDate(qMeUserDetails);
+        verify(userRepo).updateLoginDate(1L);
     }
 }

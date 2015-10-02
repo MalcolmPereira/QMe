@@ -9,9 +9,11 @@ package com.malcolm.qme.security.config;
 import com.malcolm.qme.security.service.QMETokenAuthenticationService;
 import com.malcolm.qme.security.service.QMETokenAuthenticationServiceJWTImpl;
 import com.malcolm.qme.security.service.QMeUserDetails;
+import com.malcolm.qme.security.service.QMeUserDetailsService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -50,7 +52,7 @@ public class QMeLoginFilterTest {
     private HttpServletResponse res;
 
     @Mock
-    private UserDetailsService userDetailsService;
+    private QMeUserDetailsService userDetailsService;
 
     @Mock
     private AuthenticationManager authManager;
@@ -60,6 +62,9 @@ public class QMeLoginFilterTest {
 
     @Mock
     private PrintWriter printeWriter;
+
+    @InjectMocks
+    private QMETokenAuthenticationService qmeTokenAuthenticationService = new QMETokenAuthenticationServiceJWTImpl();
 
     /**
      * QMeLoginFilter instance
@@ -73,8 +78,8 @@ public class QMeLoginFilterTest {
 
     @Before
     public void setUp(){
-        qMeLoginFilter = new QMeLoginFilter("some login URL", userDetailsService, new QMETokenAuthenticationServiceJWTImpl(),authManager);
-        qMeLoginFilterNullAuth = new QMeLoginFilter("some login URL", userDetailsService, new QMETokenAuthenticationServiceJWTImpl(),null);
+        qMeLoginFilter = new QMeLoginFilter("some login URL", userDetailsService, qmeTokenAuthenticationService,authManager);
+        qMeLoginFilterNullAuth = new QMeLoginFilter("some login URL", userDetailsService, qmeTokenAuthenticationService,null);
     }
 
     @Test
@@ -143,6 +148,7 @@ public class QMeLoginFilterTest {
         qMeUserDetails.setUserLastLoginDate(LocalDateTime.now());
         qMeUserDetails.setUserRegisteredDate(LocalDateTime.now());
         when(userDetailsService.loadUserByUsername("Some User Name")).thenReturn(qMeUserDetails);
+        doNothing().when(userDetailsService).updateUserLastLoginDate(qMeUserDetails);
         doNothing().when(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
         doNothing().when(res).setContentType(eq("application/json"));
         doNothing().when(res).setCharacterEncoding(eq("utf-8"));
@@ -151,6 +157,7 @@ public class QMeLoginFilterTest {
         doNothing().when(printeWriter).flush();
         qMeLoginFilter.successfulAuthentication(req, res, chain, qMeUserDetails.getQMeAuthenticatedUser());
         verify(userDetailsService).loadUserByUsername("Some User Name");
+        verify(userDetailsService).updateUserLastLoginDate(qMeUserDetails);
         verify(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
     }
 

@@ -12,6 +12,8 @@ import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +28,10 @@ import java.util.List;
  */
 @Service
 public class QMeUserDetailsService implements UserDetailsService {
+    /**
+     * Logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(QMETokenAuthenticationServiceJWTImpl.class);
 
     /**
      * Spring Data UserEntity Repository
@@ -77,8 +83,6 @@ public class QMeUserDetailsService implements UserDetailsService {
                 throw new UsernameNotFoundException("User " + username + " has no associated roles");
             }
 
-            user = userRepo.updateLoginDate(user.getUserID());
-
             QMeUserDetails userDetails = (QMeUserDetails) QMeUserDetails.create(user.getUserID(), user.getUserName(), user.getUserPassword(), userRoleArr);
             userDetails.setUserFirstName(user.getUserFirstName());
             userDetails.setUserLastName(user.getUserLastName());
@@ -91,6 +95,20 @@ public class QMeUserDetailsService implements UserDetailsService {
 
         }catch(QMeException err){
             throw new UsernameNotFoundException("Error Validating User " + username + " please retry request ",err);
+        }
+    }
+
+    /**
+     * Update User Last Login Date
+     *
+     * @param userDetails
+     */
+    public void updateUserLastLoginDate(QMeUserDetails userDetails)  {
+        try{
+            User user = userRepo.updateLoginDate(userDetails.getUserID());
+            userDetails.setUserLastLoginDate(user.getUserLastLoginDate());
+        }catch(QMeException err){
+            LOG.error("Error Updating user last login date. User Last Login Date not updated.", err);
         }
     }
 }

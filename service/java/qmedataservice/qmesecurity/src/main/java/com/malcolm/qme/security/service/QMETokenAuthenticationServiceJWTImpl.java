@@ -47,6 +47,7 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
         String jwtAuthToken = createJSONAuthToken(qmeUser);
         if(jwtAuthToken != null && jwtAuthToken.trim().length() != 0){
             response.addHeader(QME_AUTH_HEADER_NAME, jwtAuthToken);
+            ((QMeUserDetailsService)userDetailsService).updateUserLastLoginDate(qmeUser);
         }
         return jwtAuthToken;
     }

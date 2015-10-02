@@ -118,7 +118,6 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
             .addFilterBefore(new QMeLoginFilter(QME_LOGIN, userDetailsService, qmeTokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new QMeTokenFilter(qmeTokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
-
         ;
     }
 

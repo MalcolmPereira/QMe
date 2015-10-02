@@ -9,6 +9,7 @@ package com.malcolm.qme.security.config;
 import com.malcolm.qme.security.service.QMETokenAuthenticationService;
 import com.malcolm.qme.security.service.QMETokenAuthenticationServiceJWTImpl;
 import com.malcolm.qme.security.service.QMeUserDetails;
+import com.malcolm.qme.security.service.QMeUserDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -44,7 +45,7 @@ public class QMeTokenFilterTest {
     private FilterChain chain;
 
     @Mock
-    private UserDetailsService userDetailsService;
+    private QMeUserDetailsService userDetailsService;
 
     @InjectMocks
     private QMETokenAuthenticationService qmeTokenAuthenticationService = new QMETokenAuthenticationServiceJWTImpl();
