@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import static junit.framework.TestCase.assertNull;
@@ -56,6 +57,9 @@ public class QMeLoginFilterTest {
     @Mock
     private FilterChain chain;
 
+    @Mock
+    private PrintWriter printeWriter;
+
     /**
      * QMeLoginFilter instance
      */
@@ -77,7 +81,7 @@ public class QMeLoginFilterTest {
         MockServletInputStream stream = null;
         try {
             QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-            String userCredentials = "{\"username\": \"SomeUserName\",\"password\": \"SomePassword\"}";
+            String userCredentials = "{\"userName\": \"SomeUserName\",\"userPassword\": \"SomePassword\"}";
             stream = new MockServletInputStream(new ByteArrayInputStream(userCredentials.getBytes(StandardCharsets.UTF_8)));
 
             when(req.getInputStream()).thenReturn(stream);
@@ -99,7 +103,7 @@ public class QMeLoginFilterTest {
         MockServletInputStream stream = null;
         try {
             QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-            String userCredentials = "{\"username\": \"SomeUserName\",\"password\": \"SomePassword\"}";
+            String userCredentials = "{\"userName\": \"SomeUserName\",\"userPassword\": \"SomePassword\"}";
             stream = new MockServletInputStream(new ByteArrayInputStream(userCredentials.getBytes(StandardCharsets.UTF_8)));
             when(req.getInputStream()).thenReturn(stream);
             Authentication authentication = qMeLoginFilterNullAuth.attemptAuthentication(req,res);
@@ -117,6 +121,11 @@ public class QMeLoginFilterTest {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
         when(userDetailsService.loadUserByUsername("Some User Name")).thenReturn(qMeUserDetails);
         doNothing().when(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
+        doNothing().when(res).setContentType(eq("application/json"));
+        doNothing().when(res).setCharacterEncoding(eq("utf-8"));
+        when(res.getWriter()).thenReturn(printeWriter);
+        doNothing().when(printeWriter).close();
+        doNothing().when(printeWriter).flush();
         qMeLoginFilter.successfulAuthentication(req, res, chain, qMeUserDetails.getQMeAuthenticatedUser());
         verify(userDetailsService).loadUserByUsername("Some User Name");
         verify(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());

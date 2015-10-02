@@ -34,6 +34,16 @@ import java.util.Map;
  */
 public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
     /**
+     * JSON Content Tpye
+     */
+    private static final String JSON_CONTENT_TYPE = "application/json";
+
+    /**
+     * UTF-8 Encoding
+     */
+    private static final String UTF_8_ENCODING = "utf-8";
+
+    /**
      * User Details Service
      */
     private final UserDetailsService userDetailsService;
@@ -64,12 +74,14 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         try{
             final QMeLoginUser user = new ObjectMapper().readValue(request.getInputStream(), QMeLoginUser.class);
-            final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+            final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getUserPassword());
             if (getAuthenticationManager() != null){
                 return getAuthenticationManager().authenticate(loginToken);
             }
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }catch(Exception err){
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }
     }
@@ -77,28 +89,30 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         final QMeUserDetails qMeUserDetails = (QMeUserDetails) userDetailsService.loadUserByUsername(authentication.getName());
-        qmeTokenAuthenticationService.addAuthToken(response,qMeUserDetails);
-        writeUser(response, qMeUserDetails);
+        String authToken = qmeTokenAuthenticationService.addAuthToken(response,qMeUserDetails);
         SecurityContextHolder.getContext().setAuthentication(qMeUserDetails.getQMeAuthenticatedUser());
+        writeQMeUser(response, authToken, qMeUserDetails);
     }
 
-    private void writeUser(HttpServletResponse response,QMeUserDetails qMeUserDetails ) throws IOException {
+    private void writeQMeUser(HttpServletResponse response, String authToken, QMeUserDetails qMeUserDetails ) throws IOException {
+
         if(qMeUserDetails != null) {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            PrintWriter out = response.getWriter();
-            Map<String, Object> user = new HashMap<>();
-            user.put("userId", qMeUserDetails.getUserID());
-            user.put("userName", qMeUserDetails.getUsername());
-            user.put("userFirstName", qMeUserDetails.getUserFirstName());
-            user.put("userLastName", qMeUserDetails.getUserLastName());
-            user.put("userEmail", qMeUserDetails.getUserEmail());
+            QMeLoginUser loginUser = new QMeLoginUser();
+            loginUser.setAuthToken(authToken);
+            loginUser.setUserName(qMeUserDetails.getUsername());
+            loginUser.setUserEmail(qMeUserDetails.getUserEmail());
+            loginUser.setUserFirstName(qMeUserDetails.getUserFirstName());
+            loginUser.setUserLastName(qMeUserDetails.getUserLastName());
+            loginUser.setUserLastLoginDate(qMeUserDetails.getUserLastLoginDate());
             List<String> roles = new ArrayList<>();
             for(GrantedAuthority role : qMeUserDetails.getAuthorities()){
                 roles.add(role.getAuthority());
             }
-            user.put("userRoles", roles);
-            new ObjectMapper().writeValue(out, user);
+            loginUser.setRoles(roles);
+            response.setContentType(JSON_CONTENT_TYPE);
+            response.setCharacterEncoding(UTF_8_ENCODING);
+            PrintWriter out = response.getWriter();
+            new ObjectMapper().writeValue(out, loginUser);
             out.close();
             out.flush();
         }
