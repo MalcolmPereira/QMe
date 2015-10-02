@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,8 +106,8 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
             loginUser.setUserEmail(qMeUserDetails.getUserEmail());
             loginUser.setUserFirstName(qMeUserDetails.getUserFirstName());
             loginUser.setUserLastName(qMeUserDetails.getUserLastName());
-            loginUser.setUserLastLoginDate(qMeUserDetails.getUserLastLoginDate());
-            loginUser.setUserRegisteredDate(qMeUserDetails.getUserRegisteredDate());
+            loginUser.setUserLastLoginDate(qMeUserDetails.getUserLastLoginDate().format(DateTimeFormatter.ISO_DATE_TIME));
+            loginUser.setUserRegisteredDate(qMeUserDetails.getUserRegisteredDate().format(DateTimeFormatter.ISO_DATE_TIME));
 
             List<String> roles = new ArrayList<>();
             for(GrantedAuthority role : qMeUserDetails.getAuthorities()){

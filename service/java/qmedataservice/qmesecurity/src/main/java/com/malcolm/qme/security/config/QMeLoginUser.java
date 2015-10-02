@@ -6,7 +6,6 @@
  */
 package com.malcolm.qme.security.config;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,11 +43,11 @@ public class QMeLoginUser {
     /**
      * User Registered Date
      */
-    private LocalDateTime userRegisteredDate;
+    private String userRegisteredDate;
     /**
      * User Last Login Date
      */
-    private LocalDateTime userLastLoginDate;
+    private String userLastLoginDate;
     /**
      * Authentication Token
      */
@@ -155,28 +154,28 @@ public class QMeLoginUser {
      * Get User Registration Date
      * @return User Registration Date
      */
-    public LocalDateTime getUserRegisteredDate() {
+    public String getUserRegisteredDate() {
         return userRegisteredDate;
     }
     /**
      * Set User Registration Date
      * @param userRegisteredDate User Registered Date
      */
-    public void setUserRegisteredDate(LocalDateTime userRegisteredDate) {
+    public void setUserRegisteredDate(String userRegisteredDate) {
         this.userRegisteredDate = userRegisteredDate;
     }
     /**
      * Get User Last Login Date
      * @return
      */
-    public LocalDateTime getUserLastLoginDate() {
+    public String getUserLastLoginDate() {
         return userLastLoginDate;
     }
     /**
      * Set User Last Login Date
      * @param userLastLoginDate
      */
-    public void setUserLastLoginDate(LocalDateTime userLastLoginDate) {
+    public void setUserLastLoginDate(String userLastLoginDate) {
         this.userLastLoginDate = userLastLoginDate;
     }
     /**

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertNotNull;
@@ -139,6 +140,8 @@ public class QMeLoginFilterTest {
     @Test
     public void testSuccessfulAuthentication() throws Exception {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        qMeUserDetails.setUserLastLoginDate(LocalDateTime.now());
+        qMeUserDetails.setUserRegisteredDate(LocalDateTime.now());
         when(userDetailsService.loadUserByUsername("Some User Name")).thenReturn(qMeUserDetails);
         doNothing().when(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());
         doNothing().when(res).setContentType(eq("application/json"));
