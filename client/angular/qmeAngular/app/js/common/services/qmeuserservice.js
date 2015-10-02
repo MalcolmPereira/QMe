@@ -69,6 +69,7 @@
             );
             return resetPasswordUserPromise.promise;
         };
+
         qmeUserService.submitResetPassword = function(usertoken,username, useremail, userpassword){
             var resetPasswordUserPromise = $q.defer();
 
