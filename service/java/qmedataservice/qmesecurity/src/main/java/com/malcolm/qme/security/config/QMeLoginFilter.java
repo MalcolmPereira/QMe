@@ -25,16 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Malcolm
  */
 public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
     /**
-     * JSON Content Tpye
+     * JSON Content Type
      */
     private static final String JSON_CONTENT_TYPE = "application/json";
 
@@ -74,10 +72,13 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         try{
             final QMeLoginUser user = new ObjectMapper().readValue(request.getInputStream(), QMeLoginUser.class);
+
             final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getUserPassword());
+
             if (getAuthenticationManager() != null){
                 return getAuthenticationManager().authenticate(loginToken);
             }
+
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }catch(Exception err){
@@ -99,11 +100,14 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
         if(qMeUserDetails != null) {
             QMeLoginUser loginUser = new QMeLoginUser();
             loginUser.setAuthToken(authToken);
+            loginUser.setUserID(qMeUserDetails.getUserID());
             loginUser.setUserName(qMeUserDetails.getUsername());
             loginUser.setUserEmail(qMeUserDetails.getUserEmail());
             loginUser.setUserFirstName(qMeUserDetails.getUserFirstName());
             loginUser.setUserLastName(qMeUserDetails.getUserLastName());
             loginUser.setUserLastLoginDate(qMeUserDetails.getUserLastLoginDate());
+            loginUser.setUserRegisteredDate(qMeUserDetails.getUserRegisteredDate());
+
             List<String> roles = new ArrayList<>();
             for(GrantedAuthority role : qMeUserDetails.getAuthorities()){
                 roles.add(role.getAuthority());

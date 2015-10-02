@@ -99,6 +99,26 @@ public class QMeLoginFilterTest {
     }
 
     @Test
+    public void testAttemptAuthenticationJSONException() throws Exception {
+        MockServletInputStream stream = null;
+        try {
+            QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+            String userCredentials = "{\"invalid\": \"invalid\",\"invalid\": \"invalid\"}";
+            stream = new MockServletInputStream(new ByteArrayInputStream(userCredentials.getBytes(StandardCharsets.UTF_8)));
+            when(req.getInputStream()).thenReturn(stream);
+            doNothing().when(res).setStatus(HttpServletResponse.SC_FORBIDDEN);
+            Authentication authentication = qMeLoginFilter.attemptAuthentication(req,res);
+            assertNull(authentication);
+            verify(req).getInputStream();
+            verify(res).setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }finally {
+            if(stream != null){
+                stream.close();
+            }
+        }
+    }
+
+    @Test
     public void testAttemptAuthenticationNullReturn() throws Exception {
         MockServletInputStream stream = null;
         try {

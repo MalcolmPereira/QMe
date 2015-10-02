@@ -46,10 +46,6 @@ public class QMeLoginUser {
      */
     private LocalDateTime userRegisteredDate;
     /**
-     * User Update Date
-     */
-    private LocalDateTime userUpdateDate;
-    /**
      * User Last Login Date
      */
     private LocalDateTime userLastLoginDate;
@@ -168,20 +164,6 @@ public class QMeLoginUser {
      */
     public void setUserRegisteredDate(LocalDateTime userRegisteredDate) {
         this.userRegisteredDate = userRegisteredDate;
-    }
-    /**
-     * Get User Update Date
-     * @return userUpdateDate User Update Date
-     */
-    public LocalDateTime getUserUpdateDate() {
-        return userUpdateDate;
-    }
-    /**
-     * Set User Update Date
-     * @param userUpdateDate User Update Date to Set
-     */
-    public void setUserUpdateDate(LocalDateTime userUpdateDate) {
-        this.userUpdateDate = userUpdateDate;
     }
     /**
      * Get User Last Login Date
