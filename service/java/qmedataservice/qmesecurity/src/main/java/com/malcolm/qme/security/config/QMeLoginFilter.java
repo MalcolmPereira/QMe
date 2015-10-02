@@ -9,6 +9,7 @@ package com.malcolm.qme.security.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malcolm.qme.security.service.QMETokenAuthenticationService;
 import com.malcolm.qme.security.service.QMeUserDetails;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -62,6 +64,7 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
      */
     public QMeLoginFilter(String defaultFilterProcessesUrl, UserDetailsService userDetailsService, QMETokenAuthenticationService qmeTokenAuthenticationService,AuthenticationManager authManager) {
         super(defaultFilterProcessesUrl);
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(defaultFilterProcessesUrl, HttpMethod.POST.toString()));
         this.userDetailsService = userDetailsService;
         this.qmeTokenAuthenticationService = qmeTokenAuthenticationService;
         if(authManager!= null) {
@@ -113,7 +116,7 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
             for(GrantedAuthority role : qMeUserDetails.getAuthorities()){
                 roles.add(role.getAuthority());
             }
-            loginUser.setRoles(roles);
+            loginUser.setUserRoles(roles);
             response.setContentType(JSON_CONTENT_TYPE);
             response.setCharacterEncoding(UTF_8_ENCODING);
             PrintWriter out = response.getWriter();

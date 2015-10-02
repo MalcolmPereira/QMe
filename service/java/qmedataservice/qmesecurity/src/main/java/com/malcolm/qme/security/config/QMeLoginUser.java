@@ -27,7 +27,7 @@ public class QMeLoginUser {
     /**
      * User Roles
      */
-    private List<String> roles;
+    private List<String> userRoles;
     /**
      * User First Name
      */
@@ -98,15 +98,15 @@ public class QMeLoginUser {
      * Set User Roles
      * @return User Roles
      */
-    public List<String> getRoles() {
-        return roles;
+    public List<String> getUserRoles() {
+        return userRoles;
     }
     /**
      * Set User Roles
      * @param roles User Roles to Set
      */
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setUserRoles(List<String> roles) {
+        this.userRoles = roles;
     }
     /**
      * Get User First Name
