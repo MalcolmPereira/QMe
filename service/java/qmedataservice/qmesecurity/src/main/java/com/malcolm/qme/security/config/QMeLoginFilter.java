@@ -13,8 +13,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
@@ -23,6 +23,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Malcolm
@@ -57,18 +62,45 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        final QMeLoginUser user = new ObjectMapper().readValue(request.getInputStream(), QMeLoginUser.class);
-        final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-        if (getAuthenticationManager() != null){
-            return getAuthenticationManager().authenticate(loginToken);
+        try{
+            final QMeLoginUser user = new ObjectMapper().readValue(request.getInputStream(), QMeLoginUser.class);
+            final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+            if (getAuthenticationManager() != null){
+                return getAuthenticationManager().authenticate(loginToken);
+            }
+            return null;
+        }catch(Exception err){
+            return null;
         }
-        return null;
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         final QMeUserDetails qMeUserDetails = (QMeUserDetails) userDetailsService.loadUserByUsername(authentication.getName());
         qmeTokenAuthenticationService.addAuthToken(response,qMeUserDetails);
+        writeUser(response, qMeUserDetails);
         SecurityContextHolder.getContext().setAuthentication(qMeUserDetails.getQMeAuthenticatedUser());
+    }
+
+    private void writeUser(HttpServletResponse response,QMeUserDetails qMeUserDetails ) throws IOException {
+        if(qMeUserDetails != null) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            PrintWriter out = response.getWriter();
+            Map<String, Object> user = new HashMap<>();
+            user.put("userId", qMeUserDetails.getUserID());
+            user.put("userName", qMeUserDetails.getUsername());
+            user.put("userFirstName", qMeUserDetails.getUserFirstName());
+            user.put("userLastName", qMeUserDetails.getUserLastName());
+            user.put("userEmail", qMeUserDetails.getUserEmail());
+            List<String> roles = new ArrayList<>();
+            for(GrantedAuthority role : qMeUserDetails.getAuthorities()){
+                roles.add(role.getAuthority());
+            }
+            user.put("userRoles", roles);
+            new ObjectMapper().writeValue(out, user);
+            out.close();
+            out.flush();
+        }
     }
 }
