@@ -29,7 +29,7 @@
 
                     qmeUserSession.create(
                        res.authToken,
-                       res.userId,
+                       res.userID,
                        res.userName,
                        res.userFirstName,
                        res.userLastName,
@@ -66,7 +66,7 @@
         };
 
         qmeAuthService.logout = function (){
-            qmeUserResource.logoutResource().save();
+            qmeUserResource.logoutResource(qmeUserSession.authtoken()).save();
             qmeUserSession.destroy();
         };
 

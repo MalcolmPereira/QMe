@@ -32,7 +32,7 @@
                 };
                 var user = {
                     "authToken": "someauthtoken",
-                    "userId": 1,
+                    "userID": 1,
                     "userName": "testuser",
                     "userPassword": null,
                     "userFirstName": "Test",
@@ -68,7 +68,7 @@
                 };
                 var user = {
                     "authToken": "someauthtoken",
-                    "userId": 1,
+                    "userID": 1,
                     "userName": "testadmin",
                     "userPassword": null,
                     "userFirstName": "Test",
@@ -104,7 +104,7 @@
                 };
                 var user = {
                     "authToken": "someauthtoken",
-                    "userId": 1,
+                    "userID": 1,
                     "userName": "testadmin",
                     "userPassword": null,
                     "userFirstName": "Test",

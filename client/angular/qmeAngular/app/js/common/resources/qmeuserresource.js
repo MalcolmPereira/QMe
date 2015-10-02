@@ -2,7 +2,7 @@
 
     ngQMe
 
-        .service('qmeUserResource',function($resource,QME_CONSTANTS){
+        .service('qmeUserResource',function($resource,$http,QME_CONSTANTS){
             var userAPI                     = QME_CONSTANTS.qmeservice+"/user";
             var userAuthEndPoint            = QME_CONSTANTS.qmeservice+"/login/";
             var userSearchEndPoint          = userAPI+"/searchemail/";
@@ -14,6 +14,7 @@
             var userLogoutEndpoint          = QME_CONSTANTS.qmeservice+"/logout";
 
             this.userAuthResource = function(){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = undefined;
                 return $resource(userAuthEndPoint);
             };
             this.userGetUserResource = function(userEmail){
@@ -25,7 +26,8 @@
             this.userConfirmResource = function(){
                 return $resource(userConfirmEndpoint);
             };
-            this.userRegisterResource = function(){
+            this.userRegisterResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(userRegisterEndpoint);
             };
             this.userForgotPasswordResource = function(userEmail){
@@ -34,7 +36,8 @@
             this.userResetPasswordResource = function(userEmail){
                 return $resource(userResetPaswordEndpoint+userEmail,{},{'resetpassword':{method:'PUT'}});
             };
-            this.logoutResource = function(){
+            this.logoutResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(userLogoutEndpoint);
             }
         })

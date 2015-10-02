@@ -15,7 +15,9 @@
         it('Unit: Check Valid QMe Constants', function () {
             expect(qmeContants.success).toBe('success');
             expect(qmeContants.error).toBe('error');
+            expect(qmeContants.qme_auth_header).toBe('QME-AUTH-TOKEN');
             expect(qmeContants.adminrole).toBe('ADMIN');
+            expect(qmeContants.userrole).toBe('USER');
         });
 
         it('Unit: Check Valid QMe States', function () {
