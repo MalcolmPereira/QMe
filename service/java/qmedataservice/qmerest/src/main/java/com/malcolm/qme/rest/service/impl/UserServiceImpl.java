@@ -19,6 +19,8 @@ import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -39,6 +41,11 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class UserServiceImpl implements UserService {
+    /**
+     * Logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Autowired
     @Qualifier(value = "UserRepository")
@@ -144,13 +151,16 @@ public final class UserServiceImpl implements UserService {
         try {
              User user           = getStagingUser(qMeUser);
              String stagingToken = userRepo.stageUserRegistration(user);
+             LOG.debug("User Staging completed for User "+qMeUser+ " Got token "+stagingToken);
              if(stagingToken != null && stagingToken.length() > 0){
 
                  try {
+                     LOG.debug("User Staging completed sending email to user "+user.getUserEmail());
                      sendConfirmRegistrationEmail(user.getUserEmail(), stagingToken, qMeUser.getConfirmURL());
-
+                     LOG.debug("User Staging completed, done with sending email to user " + user.getUserEmail());
 
                  }catch(QMeServerException err){
+                     LOG.debug("Got error when sending email will delete stagin token "+stagingToken);
                      userRepo.deleteStagingToken(stagingToken);
                      throw err;
                  }
