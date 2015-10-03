@@ -3,15 +3,17 @@
 
     describe('Unit: QMe App Configuration', function () {
 
-        var qmeContants, qmeStates,rootScope,httpBackend;
+        var qmeContants, qmeStates,rootScope,httpBackend,location,userConfirmEndpoint;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend) {
+        beforeEach(inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend,$location) {
             qmeContants = _QME_CONSTANTS_;
+            userConfirmEndpoint =  qmeContants.qmeservice+"/user/confirm";
             qmeStates = $state;
             rootScope = $rootScope.$new();
             httpBackend = $httpBackend;
+            location = $location;
         }));
 
         it('Unit: Check Valid QMe Constants', function () {
@@ -47,10 +49,6 @@
             expect(confirmState.templateUrl).toBe('js/home/qmehome.tmpl.html');
             expect(confirmState.controller).toBe('qmeHomeCtrl');
             expect(confirmState.controllerAs).toBe('qmeHomeCtrl');
-            httpBackend.whenGET("js/home/qmehome.tmpl.html").respond(200,{});
-            qmeStates.go('confirmuser');
-            rootScope.$digest();
-            httpBackend.flush();
 
 
             var registerState = qmeStates.get('register');
@@ -60,7 +58,6 @@
             expect(registerState.templateUrl).toBe('js/user/qmeregister.tmpl.html');
             expect(registerState.controller).toBe('qmeUserCtrl');
             expect(registerState.controllerAs).toBe('qmeUserCtrl');
-
 
             var forgotPasswordState = qmeStates.get('forgotpassword');
             expect(forgotPasswordState).not.toBeNull();
@@ -78,7 +75,34 @@
             expect(resetState.controller).toBe('qmeUserCtrl');
             expect(resetState.controllerAs).toBe('qmeUserCtrl');
 
+        });
 
+        it('Unit: Check Valid Confirm User Success', function () {
+            httpBackend.whenGET("js/home/qmehome.tmpl.html").respond(200,{});
+            httpBackend.expectPOST(userConfirmEndpoint,"sometoken").respond(200,{});
+            location.url("/confirmuser/sometoken");
+            qmeStates.go('confirmuser');
+            rootScope.$digest();
+            httpBackend.flush();
+            expect(rootScope.flash).toBeDefined();
+            expect(rootScope.flash.type).toBeDefined();
+            expect(rootScope.flash.type).toBe('success');
+            expect(rootScope.flash.message).toBeDefined();
+            expect(rootScope.flash.message).toBe('User registration completed successfully, please login using your credentials, Thank you.');
+        });
+
+        it('Unit: Check Error Message Confirm User Confirmation Error', function () {
+            httpBackend.whenGET("js/home/qmehome.tmpl.html").respond(200,{});
+            httpBackend.expectPOST(userConfirmEndpoint,"sometoken").respond(500,{});
+            location.url("/confirmuser/sometoken");
+            qmeStates.go('confirmuser');
+            rootScope.$digest();
+            httpBackend.flush();
+            expect(rootScope.flash).toBeDefined();
+            expect(rootScope.flash.type).toBeDefined();
+            expect(rootScope.flash.type).toBe('error');
+            expect(rootScope.flash.message).toBeDefined();
+            expect(rootScope.flash.message).toBe('Oops.....Error confirming user registration, registration token invalid/expired, please re-try request or register.');
         });
     });
 

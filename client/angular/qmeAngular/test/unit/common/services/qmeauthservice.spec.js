@@ -23,6 +23,23 @@
                 expect(scope.flash).not.toBeDefined();
             });
 
+            it('Should have valid Registration States ', function() {
+                 expect(qmeAuthService).toBeDefined();
+                 expect(qmeAuthService.isRegistering()).toBe(false);
+                 qmeAuthService.startRegistering();
+                 expect(qmeAuthService.isRegistering()).toBe(true);
+                 qmeAuthService.endRegistering();
+                 expect(qmeAuthService.isRegistering()).toBe(false);
+            });
+
+            it('Should have valid Resetting States ', function() {
+                expect(qmeAuthService).toBeDefined();
+                expect(qmeAuthService.isResetting()).toBe(false);
+                qmeAuthService.startResetting();
+                expect(qmeAuthService.isResetting()).toBe(true);
+                qmeAuthService.endResetting();
+                expect(qmeAuthService.isResetting()).toBe(false);
+            });
 
             it('Should have QMe User for valid user login ', function() {
                 expect(qmeAuthService).toBeDefined();
@@ -46,7 +63,7 @@
                 qmeAuthService
                 .login(credentials)
                     .then(
-                        function(res){
+                        function(){
                             expect(qmeAuthService.isSignedIn()).toBe(true);
                             expect(qmeAuthService.isAdmin()).toBe(false);
                             expect(qmeAuthService.username()).toBe('testuser');
@@ -82,7 +99,7 @@
                 qmeAuthService
                 .login(credentials)
                     .then(
-                        function(res){
+                        function(){
                             expect(qmeAuthService.isSignedIn()).toBe(true);
                             expect(qmeAuthService.isAdmin()).toBe(true);
                             expect(qmeAuthService.username()).toBe('testadmin');
@@ -119,7 +136,7 @@
                 qmeAuthService
                 .login(credentials)
                     .then(
-                        function(res){
+                        function(){
                             expect(qmeAuthService.isSignedIn()).toBe(true);
                             expect(qmeAuthService.isAdmin()).toBe(true);
                             expect(qmeAuthService.username()).toBe('testadmin');
@@ -207,4 +224,3 @@
         });
     });
 })();
-

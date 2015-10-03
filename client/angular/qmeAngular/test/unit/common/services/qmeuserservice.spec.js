@@ -4,7 +4,7 @@
 
     describe('Service: QMe User Service', function() {
 
-        var scope, state, qmeUserService, qmeUserSession,httpBackend,qmeContants,userStagingEndpoint,userRegisterEndpoint,logoutUserEndPoint,userForgotPaswordEndpoint,userResetPaswordEndpoint;
+        var scope, state, qmeUserService, qmeUserSession,httpBackend,qmeContants,userStagingEndpoint,userConfirmEndpoint,userRegisterEndpoint,logoutUserEndPoint,userForgotPaswordEndpoint,userResetPaswordEndpoint;
 
         beforeEach(module('qmeApp'));
 
@@ -16,6 +16,7 @@
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
             userStagingEndpoint = qmeContants.qmeservice+"/user/stage";
+            userConfirmEndpoint = qmeContants.qmeservice+"/user/confirm";
             userRegisterEndpoint = qmeContants.qmeservice+"/user/register";
             userForgotPaswordEndpoint = qmeContants.qmeservice+"/user/reset/forgotpassword/";
             userResetPaswordEndpoint = qmeContants.qmeservice+"/user/reset/resetpassword/";
@@ -128,6 +129,42 @@
             httpBackend.flush();
         });
 
+        it('Should Confirm User for valid User Staging Confirmation', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectPOST(userConfirmEndpoint,"sometoken").respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .confirmUser("sometoken")
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should Handle Error on Staging Confirmation Exception ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectPOST(userConfirmEndpoint,"sometoken").respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .confirmUser("sometoken")
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                    expect(error.status).toBeDefined();
+                    expect(error.status).toBe(500);
+                }
+            );
+            httpBackend.flush();
+        });
 
         it('Should throw invalid error for wrong data on User Registration ', function() {
             expect(qmeUserService).toBeDefined();
@@ -296,6 +333,40 @@
                 },
                 function(error){
                     expect(error.status).toBe(500);
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should submit password reset request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            var resetrequest = {
+                token:"sometoken",
+                userName:"someusername",
+                userPassword:"somepassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testadmin",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['ADMIN','USER']
+            };
+            var useremail = "some-email"
+            httpBackend.expectPUT(userResetPaswordEndpoint+useremail,resetrequest).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .submitResetPassword("sometoken","someusername", useremail, "somepassword")
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
                 }
             );
             httpBackend.flush();

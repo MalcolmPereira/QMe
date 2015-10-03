@@ -49,6 +49,20 @@
             return loginPromise.promise;
         };
 
+        qmeAuthService.registeredUser = function (user) {
+
+            qmeUserSession.create(
+                user.authToken,
+                user.userID,
+                user.userName,
+                user.userFirstName,
+                user.userLastName,
+                user.userEmail,
+                user.userLastLoginDate,
+                user.userRoles
+            );
+        };
+
         qmeAuthService.isSignedIn = function(){
             if (qmeUserSession.userid() && qmeUserSession.userid() !== null && qmeUserSession.authtoken() && qmeUserSession.authtoken() !== null){
                 return true;

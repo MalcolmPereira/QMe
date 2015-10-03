@@ -45,6 +45,15 @@
             expect(scope.flash.message).toBe('Some Test Message');
             expect(scope.flash.keepAfterLocationChange).toBeDefined();
             expect(scope.flash.keepAfterLocationChange).toBe(false);
+
+            qmeFlashService.Success("Some Test Message",true);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Some Test Message');
+            expect(scope.flash.keepAfterLocationChange).toBeDefined();
+            expect(scope.flash.keepAfterLocationChange).toBe(true);
         });
 
         it('Should have a Error Messages', function() {
@@ -67,6 +76,15 @@
             expect(scope.flash.message).toBe('Some Error Message');
             expect(scope.flash.keepAfterLocationChange).toBeDefined();
             expect(scope.flash.keepAfterLocationChange).toBe(false);
+
+            qmeFlashService.Error("Some Error Message",true);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Some Error Message');
+            expect(scope.flash.keepAfterLocationChange).toBeDefined();
+            expect(scope.flash.keepAfterLocationChange).toBe(true);
         });
     });
 })();
