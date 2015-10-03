@@ -3,13 +3,15 @@
 
     describe('Unit: QMe App Configuration', function () {
 
-        var qmeContants, qmeStates;
+        var qmeContants, qmeStates,rootScope,httpBackend;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function(_QME_CONSTANTS_,$state) {
+        beforeEach(inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend) {
             qmeContants = _QME_CONSTANTS_;
             qmeStates = $state;
+            rootScope = $rootScope.$new();
+            httpBackend = $httpBackend;
         }));
 
         it('Unit: Check Valid QMe Constants', function () {
@@ -37,6 +39,18 @@
             expect(stageState.templateUrl).toBe('js/user/qmestageuser.tmpl.html');
             expect(stageState.controller).toBe('qmeUserCtrl');
             expect(stageState.controllerAs).toBe('qmeUserCtrl');
+
+            var confirmState = qmeStates.get('confirmuser');
+            expect(confirmState).not.toBeNull();
+            expect(confirmState.name).toBe('confirmuser');
+            expect(confirmState.url).toBe('/confirmuser/:stagetoken');
+            expect(confirmState.templateUrl).toBe('js/home/qmehome.tmpl.html');
+            expect(confirmState.controller).toBe('qmeHomeCtrl');
+            expect(confirmState.controllerAs).toBe('qmeHomeCtrl');
+            httpBackend.whenGET("js/home/qmehome.tmpl.html").respond(200,{});
+            qmeStates.go('confirmuser');
+            rootScope.$digest();
+            httpBackend.flush();
 
 
             var registerState = qmeStates.get('register');
