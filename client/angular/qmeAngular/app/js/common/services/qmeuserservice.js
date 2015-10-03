@@ -6,12 +6,40 @@
         .service('qmeUserService',QMeUserService);
 
 
-    QMeUserService.$inject = ['$q','qmeUserResource','qmeUserSession','qmeAuthService','QME_CONSTANTS'];
+    QMeUserService.$inject = ['$q','qmeUserResource','qmeUserSession','QME_CONSTANTS'];
 
 
-    function QMeUserService($q,qmeUserResource,qmeUserSession,qmeAuthService,QME_CONSTANTS) {
+    function QMeUserService($q,qmeUserResource,qmeUserSession,QME_CONSTANTS) {
 
         var qmeUserService = this;
+
+        qmeUserService.registering = false;
+
+        qmeUserService.resetting   = false;
+
+        qmeUserService.startRegistering = function(){
+            qmeUserService.registering = true;
+        };
+
+        qmeUserService.endRegistering = function(){
+            qmeUserService.registering = false;
+        };
+
+        qmeUserService.isRegistering = function(){
+            return qmeUserService.registering;
+        };
+
+        qmeUserService.startResetting = function(){
+            qmeUserService.resetting  = true;
+        };
+
+        qmeUserService.endResetting = function(){
+            qmeUserService.resetting   = false;
+        };
+
+        qmeUserService.isResetting = function(){
+            return qmeUserService.resetting;
+        };
 
         qmeUserService.currentUser = function(){
             if(qmeUserSession && qmeUserSession.isSignedIn()){
@@ -102,7 +130,7 @@
 
            var registeredUserPromise = $q.defer();
 
-           qmeUserResource.userRegisterResource(qmeAuthService.authToken())
+           qmeUserResource.userRegisterResource()
 
                 .save(user
                 ,
@@ -146,8 +174,17 @@
             qmeUserResource.userResetPasswordResource(useremail)
                 .resetpassword({}, resetrequest
                 ,function(res){
-                    res.userPassword = userpassword;
-                    qmeAuthService.registeredUser(res);
+                    qmeUserSession.create(
+                        res.authToken,
+                        res.userID,
+                        res.userName,
+                        res.userFirstName,
+                        res.userLastName,
+                        res.userEmail,
+                        res.userLastLoginDate,
+                        res.userRoles
+                    );
+
                     resetPasswordUserPromise.resolve(res);
                 },
                 function(error){

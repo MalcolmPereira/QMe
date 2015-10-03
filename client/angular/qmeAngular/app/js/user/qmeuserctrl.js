@@ -5,9 +5,9 @@
     ngQMe
         .controller('qmeUserCtrl', QMeUserController);
 
-    QMeUserController.$inject = ['$state','$stateParams','qmeFlashService','qmeAuthService','qmeUserService'];
+    QMeUserController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService'];
 
-    function QMeUserController($state,$stateParams,qmeFlashService,qmeAuthService,qmeUserService) {
+    function QMeUserController($state,$stateParams,qmeFlashService,qmeUserService) {
 
         var qmeUser = this;
 
@@ -19,25 +19,31 @@
         qmeUser.userLastName = "";
 
         qmeUser.isSignedIn = function(){
-            return qmeAuthService.isSignedIn();
+            if(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn()){
+                return true;
+            }
+            return false;
         };
 
         qmeUser.isAdmin = function(){
-            return qmeAuthService.isAdmin();
+            if(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn() && qmeUserService.currentUser().isAdmin()){
+                return true;
+            }
+            return false;
         };
 
         qmeUser.userNameDisplay = function (){
             if(qmeUser.isSignedIn()){
-                if(qmeAuthService.user() && qmeAuthService.user().userfirstname() && qmeAuthService.user().userfirstname().length > 0
-                    && qmeAuthService.user().userlastname() && qmeAuthService.user().userlastname().length > 0
+                if(qmeUserService.currentUser().userfirstname() && qmeUserService.currentUser().userfirstname().length > 0
+                    && qmeUserService.currentUser().userlastname() && qmeUserService.currentUser().userlastname().length > 0
                 ){
-                    return   qmeAuthService.user().userfirstname() + " "+ qmeAuthService.user().userlastname();
+                    return qmeUserService.currentUser().userfirstname() + " "+ qmeUserService.currentUser().userlastname();
 
-                }else if(qmeAuthService.user() && qmeAuthService.user().userfirstname() && qmeAuthService.user().userfirstname().length > 0){
-                    return   qmeAuthService.user().userfirstname();
+                }else if(qmeUserService.currentUser().userfirstname() && qmeUserService.currentUser().userfirstname().length > 0){
+                    return qmeUserService.currentUser().userfirstname();
 
                 }else{
-                    return qmeAuthService.username();
+                    return qmeUserService.currentUser().username();
                 }
             }
             return "";
@@ -54,7 +60,7 @@
                 "userPassword": qmeUser.userPassword
             };
 
-            qmeAuthService.login(credentials)
+            qmeUserService.login(credentials)
 
                 .then(
 
@@ -76,43 +82,44 @@
         };
 
         qmeUser.logout = function (){
-            qmeAuthService.logout();
-            qmeAuthService.endRegistering();
-            qmeAuthService.endResetting();
+            qmeUserService.logout();
+            qmeUserService.endRegistering();
+            qmeUserService.endResetting();
             qmeUser.userEmail = "";
             qmeUser.userPassword = "";
             qmeUser.signInForm.$setPristine()
+            $state.go('home', {});
         };
 
         qmeUser.routeRegistration = function (){
-            qmeAuthService.endRegistering();
-            qmeAuthService.endResetting();
+            qmeUserService.endRegistering();
+            qmeUserService.endResetting();
             $state.go('register', {});
         };
 
         qmeUser.routeStaging = function (){
-            qmeAuthService.startRegistering();
+            qmeUserService.startRegistering();
             $state.go('stage', {});
         };
 
         qmeUser.routeResetPassword = function (){
-            qmeAuthService.startResetting();
+            qmeUserService.startResetting();
             $state.go('forgotpassword', {});
         };
 
         qmeUser.cancelResetRegistration = function (){
-            qmeAuthService.endRegistering();
-            qmeAuthService.endResetting();
+            qmeUserService.endRegistering();
+            qmeUserService.endResetting();
             qmeUser.signInForm.$setPristine()
             $state.go('home', {});
         };
 
         qmeUser.isRegistering = function(){
-            return  qmeAuthService.isRegistering();
+            return  qmeUserService.isRegistering();
         }
 
         qmeUser.isResetingPassword = function(){
-            return  qmeAuthService.isResetting();
+            return  qmeUserService.isResetting();
         }
 
         qmeUser.validatePasswordFields = function (){

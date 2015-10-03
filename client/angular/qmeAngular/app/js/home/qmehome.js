@@ -4,9 +4,9 @@
     ngQMe
         .controller('qmeHomeCtrl', QMeHomeController);
 
-    QMeHomeController.$inject = ['$state','$stateParams','qmeFlashService','qmeAuthService','qmeUserService'];
+    QMeHomeController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService'];
 
-    function QMeHomeController($state,$stateParams,qmeFlashService,qmeAuthService,qmeUserService) {
+    function QMeHomeController($state,$stateParams,qmeFlashService,qmeUserService) {
 
     }
 

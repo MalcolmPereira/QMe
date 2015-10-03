@@ -590,5 +590,23 @@
             );
             httpBackend.flush();
         });
+
+        it('Should have valid Registration States ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(qmeUserService.isRegistering()).toBe(false);
+            qmeUserService.startRegistering();
+            expect(qmeUserService.isRegistering()).toBe(true);
+            qmeUserService.endRegistering();
+            expect(qmeUserService.isRegistering()).toBe(false);
+        });
+
+        it('Should have valid Resetting States ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(qmeUserService.isResetting()).toBe(false);
+            qmeUserService.startResetting();
+            expect(qmeUserService.isResetting()).toBe(true);
+            qmeUserService.endResetting();
+            expect(qmeUserService.isResetting()).toBe(false);
+        });
     });
 })();
