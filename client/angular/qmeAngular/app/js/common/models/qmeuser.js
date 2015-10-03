@@ -3,18 +3,19 @@
     'use strict';
 
     ngQMe
-        .factory('qmeUserSession', function () {
+        .service('qmeUserSession', function (QME_CONSTANTS) {
 
-        var qmeUserSession = {};
+        var qmeUserSession = this;
 
-        var _authtoken = null;
-        var _userid    = null;
-        var _username  = null;
-        var _userfirstname = null;
-        var _userlastname = null;
-        var _useremail = null;
-        var _userrole  = null;
+        var _authtoken      = null;
+        var _userid         = null;
+        var _username       = null;
+        var _userfirstname  = null;
+        var _userlastname   = null;
+        var _useremail      = null;
+        var _userrole       = null;
         var _userlastlogin  = null;
+
 
         qmeUserSession.create = function (
                 authtoken,
@@ -79,6 +80,23 @@
            return _userlastlogin
         };
 
-        return qmeUserSession;
+        qmeUserSession.isSignedIn = function(){
+            return(
+                qmeUserSession.userid() &&
+                qmeUserSession.userid() !== null &&
+                qmeUserSession.authtoken() &&
+                qmeUserSession.authtoken() !== null
+            );
+        };
+
+        qmeUserSession.isAdmin = function(){
+            return (
+                qmeUserSession.isSignedIn() &&
+                qmeUserSession.userrole() &&
+                qmeUserSession.userrole().length > 0 &&
+                qmeUserSession.userrole().indexOf(QME_CONSTANTS.adminrole) > -1
+            );
+        };
+
     })
 })();

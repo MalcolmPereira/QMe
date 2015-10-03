@@ -6,13 +6,54 @@
         .service('qmeUserService',QMeUserService);
 
 
-    QMeUserService.$inject = ['$q','qmeUserResource','qmeAuthService','QME_CONSTANTS'];
+    QMeUserService.$inject = ['$q','qmeUserResource','qmeUserSession','qmeAuthService','QME_CONSTANTS'];
 
 
-    function QMeUserService($q,qmeUserResource,qmeAuthService,QME_CONSTANTS) {
+    function QMeUserService($q,qmeUserResource,qmeUserSession,qmeAuthService,QME_CONSTANTS) {
 
         var qmeUserService = this;
 
+        qmeUserService.currentUser = function(){
+            if(qmeUserSession && qmeUserSession.isSignedIn()){
+                return qmeUserSession;
+            }
+            return null;
+        };
+
+        qmeUserService.login = function (credentials) {
+
+            var loginPromise = $q.defer();
+
+            qmeUserResource.userAuthResource()
+
+                .save(credentials,
+
+                function(res){
+
+                    qmeUserSession.create(
+                        res.authToken,
+                        res.userID,
+                        res.userName,
+                        res.userFirstName,
+                        res.userLastName,
+                        res.userEmail,
+                        res.userLastLoginDate,
+                        res.userRoles
+                    );
+
+                    loginPromise.resolve(res);
+                },
+                function(error){
+                    loginPromise.reject(error);
+                });
+
+            return loginPromise.promise;
+        };
+
+        qmeUserService.logout = function (){
+            qmeUserResource.logoutResource(qmeUserSession.authtoken()).save();
+            qmeUserSession.destroy();
+        };
 
         qmeUserService.stageUser = function(user){
 
