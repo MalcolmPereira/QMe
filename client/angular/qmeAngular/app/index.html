@@ -10,7 +10,7 @@
 <body>
 
 <!-- NAVIGATION -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="qmeUserCtrl as qmeUserCtrl">
+<nav class="navbar navbar-default navbar-static-top" role="navigation"  ng-controller="qmeUserCtrl as qmeUserCtrl">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><span>QMe Application</span></a>
@@ -29,11 +29,11 @@
                 &nbsp;
                 <button id="forgotButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeResetPassword()">Forgot Password</button>
             </form>
-            <button ng-show="(qmeUserCtrl.isRegistering() || qmeUserCtrl.isResetingPassword()) && !qmeUserCtrl.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeUserCtrl.cancelResetRegistration()">Home</button>
-            <ul class="nav navbar-nav navbar-right" ng-cloak ng-show="qmeUserCtrl.isSignedIn()">
+            <button ng-cloak ng-show="(qmeUserCtrl.isRegistering() || qmeUserCtrl.isResetingPassword()) && !qmeUserCtrl.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeUserCtrl.cancelResetRegistration()">Home</button>
+            <ul class="nav navbar-nav navbar-right" ng-show="qmeUserCtrl.isSignedIn()">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName"> {{qmeUserCtrl.userNameDisplay()}} </span> &nbsp; <span class="caret"></span>
+                    <a ng-cloak ng-show="qmeUserCtrl.isSignedIn()" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName" ng-cloak> {{qmeUserCtrl.userNameDisplay()}} </span> &nbsp; <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li ng-show="qmeUserCtrl.isAdmin()" ><a href="#" ng-click="qmeUserCtrl.routeRegistration()">Register</a></li>
@@ -51,10 +51,9 @@
 </div>
 
 <div ui-view></div>
-
 <script src="lib/jquery/dist/jquery.min.js"></script>
 <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular.min.js"></script>
 <script src="lib/angular-resource/angular-resource.min.js"></script>
 <script src="lib/angular-base64/angular-base64.min.js"></script>
 <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
