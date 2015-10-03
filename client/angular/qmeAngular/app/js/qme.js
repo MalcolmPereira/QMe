@@ -92,7 +92,7 @@ var pleaseWait = (function () {
         +
             '<div class="modal-dialog modal-m">'
         +
-                    '<div style="text-align:center;color:#32d39b">'
+                    '<div style="text-align:center;color:#1bc2d3">'
         +
                             '<i class="glyphicon glyphicon-hourglass"></i>Processing..'
         +

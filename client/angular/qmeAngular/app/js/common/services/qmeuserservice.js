@@ -42,7 +42,7 @@
 
             var confirmUserPromise = $q.defer();
 
-            qmeUserResource.userStageResource()
+            qmeUserResource.userConfirmResource()
 
                 .save(stagingtoken
                 ,
