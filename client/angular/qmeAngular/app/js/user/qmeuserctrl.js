@@ -64,10 +64,10 @@
                 function(error){
                     if(error && error.status && error.status == 401){
                         qmeFlashService.Error("Oops.....User not authorized, please register or click on forgot password.");
-
+                    }else if(error && error.status && error.status == 403) {
+                        qmeFlashService.Error("Oops.....User not authorized, please register or click on forgot password.");
                     }else if(error && error.status && error.status == 404){
                         qmeFlashService.Error("Error Connecting to service, entered user credential not found.");
-
                     }else{
                         qmeFlashService.Error("Oops.....Error Connecting to service, please retry in some time.");
                     }
@@ -225,12 +225,10 @@
                         qmeFlashService.Error("Reset token invalid, Please ener valid reset token.");
 
                     }else{
-                        qmeFlashService.Error("Oops.....Error connecting to service for reset password, please retry in some time.");
+                        qmeFlashService.Error("Oops.....Error from service for reset password, please retry in some time.");
                     }
                 }
             );
-            console.log("$stateParams.token",$stateParams.token);
-            console.log("$stateParams.username",$stateParams.username);
         };
     }
 })();

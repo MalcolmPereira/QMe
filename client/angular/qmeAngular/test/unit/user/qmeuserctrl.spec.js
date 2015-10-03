@@ -5,16 +5,18 @@
     describe('Controller: QMe User Controller', function() {
 
 
-        var scope, state, httpBackend, ctrl, qmeContants, userAuthEndPoint,userStagingEndpoint,userRegisterEndpoint,logoutUserEndPoint,userForgotPaswordEndpoint;
+        var scope, state, stateParams, httpBackend, ctrl, qmeContants, userAuthEndPoint,userStagingEndpoint,userRegisterEndpoint,logoutUserEndPoint,userForgotPaswordEndpoint,userSubmitResetPaswordEndpoint;
 
         beforeEach(module('qmeApp'));
 
 
-        beforeEach(inject(function($rootScope,$state, $controller,$httpBackend,_QME_CONSTANTS_) {
+        beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_) {
 
             scope = $rootScope.$new();
 
             state = $state;
+
+            stateParams = $stateParams;
 
             httpBackend = $httpBackend;
 
@@ -28,11 +30,18 @@
 
             userForgotPaswordEndpoint =  qmeContants.qmeservice+"/user/reset/forgotpassword/";
 
+            userSubmitResetPaswordEndpoint = qmeContants.qmeservice+"/user/reset/resetpassword/";
+
             logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
+
+            stateParams.token  = "sometoken";
+
+            stateParams.username  = "someusername";
 
             ctrl  = $controller('qmeUserCtrl', {
                 $scope: scope,
                 $state: state,
+                $stateParams:stateParams,
                 userEmail:"",
                 userName:"",
                 userPassword:"",
@@ -40,6 +49,9 @@
                 userFirstName:"",
                 userLastName:""
             });
+            ctrl.signInForm = {
+                $setPristine: function() {}
+            };
         }));
 
         it('Should have a QMe User controller', function() {
@@ -67,6 +79,209 @@
             expect(ctrl.userPassword ).toBe("");
         });
 
+        it('Ensure User Name is Displayed  ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(ctrl.userNameDisplay() ).toBe("Test User");
+
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(ctrl.userNameDisplay() ).toBe("Test");
+
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "",
+                "userLastName": "",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(ctrl.userNameDisplay() ).toBe("testuser");
+        });
+
+        it('Ensure login errors are displayed ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(403,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized, please register or click on forgot password.');
+
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(401,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized, please register or click on forgot password.');
+
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(404,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Error Connecting to service, entered user credential not found.');
+
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error Connecting to service, please retry in some time.');
+        });
+
+        it('Ensure user can logout', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(false);
+
+            httpBackend.expectPOST(logoutUserEndPoint).respond(200,{});
+            ctrl.logout();
+            httpBackend.flush();
+
+            expect(ctrl.userEmail).toBeDefined();
+            expect(ctrl.userEmail).toBe("");
+            expect(ctrl.userName).toBeDefined();
+            expect(ctrl.userName).toBe("");
+            expect(ctrl.userNameDisplay).toBeDefined();
+            expect(ctrl.userNameDisplay()).toBe("");
+            expect(ctrl.userPassword).toBeDefined();
+            expect(ctrl.userPassword).toBe("");
+        });
+
+        it('Ensure user can route to registration', function() {
+            ctrl.routeRegistration()
+        });
+
+        it('Ensure user can route to staging', function() {
+            ctrl.routeStaging()
+        });
+
+        it('Ensure user can route to reset password', function() {
+            ctrl.routeResetPassword()
+        });
+
+        it('Ensure user can cancel registration ', function() {
+            ctrl.cancelResetRegistration()
+        });
 
         it('Ensure user able to sign-on with valid credentials for USER Role', function() {
             ctrl.userEmail = "testuser@test.com";
@@ -491,6 +706,80 @@
             expect(scope.flash.type).toBe('success');
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('User password reset request submitted successfully, please validate your email address to complete reset.');
+        });
+
+        it('Should handle valid user password Submit Reset Password Request', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userPassword = "somepassword";
+            var resetrequest = {
+                token:"sometoken",
+                userName:"someusername",
+                userPassword:"somepassword"
+            };
+            httpBackend.expectPUT(userSubmitResetPaswordEndpoint+ctrl.userEmail,resetrequest).respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitResetPassword();
+            httpBackend.flush();
+        });
+
+        it('Should handle valid user password Submit Reset Password Request Error Conditions 404 Error', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userPassword = "somepassword";
+            var resetrequest = {
+                token:"sometoken",
+                userName:"someusername",
+                userPassword:"somepassword"
+            };
+            httpBackend.expectPUT(userSubmitResetPaswordEndpoint+ctrl.userEmail,resetrequest).respond(404,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitResetPassword();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Entered user email not found. Please ener valid existing user email.');
+
+        });
+
+        it('Should handle valid user password Submit Reset Password Request Error Conditions 400 Error', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userPassword = "somepassword";
+            var resetrequest = {
+                token:"sometoken",
+                userName:"someusername",
+                userPassword:"somepassword"
+            };
+            httpBackend.expectPUT(userSubmitResetPaswordEndpoint+ctrl.userEmail,resetrequest).respond(400,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitResetPassword();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Reset token invalid, Please ener valid reset token.');
+
+        });
+
+        it('Should handle valid user password Submit Reset Password Request Error Conditions 500 Error', function() {
+            ctrl.userEmail = "someemail";
+            ctrl.userPassword = "somepassword";
+            var resetrequest = {
+                token:"sometoken",
+                userName:"someusername",
+                userPassword:"somepassword"
+            };
+            httpBackend.expectPUT(userSubmitResetPaswordEndpoint+ctrl.userEmail,resetrequest).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitResetPassword();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error from service for reset password, please retry in some time.');
+
         });
 
     });
