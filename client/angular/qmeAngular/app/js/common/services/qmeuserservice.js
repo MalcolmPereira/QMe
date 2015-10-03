@@ -38,6 +38,24 @@
             return stageUserPromise.promise;
         };
 
+        qmeUserService.confirmUser = function(stagingtoken){
+
+            var confirmUserPromise = $q.defer();
+
+            qmeUserResource.userStageResource()
+
+                .save(stagingtoken
+                ,
+                function(res){
+                    confirmUserPromise.resolve(res);
+                }
+                ,
+                function(error){
+                    confirmUserPromise.reject(error);
+                });
+            return confirmUserPromise.promise;
+        };
+
 
         qmeUserService.register = function(user){
 

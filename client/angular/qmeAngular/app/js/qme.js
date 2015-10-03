@@ -46,11 +46,18 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controller: 'qmeHomeCtrl',
                     controllerAs: 'qmeHomeCtrl',
                     onEnter: function($stateParams,qmeFlashService,qmeUserService){
-                        console.log("can we do someting",qmeUserService);
-                        console.log("can we do someting", $stateParams.stagetoken);
-                        qmeFlashService.Success(" I think we can so someting with token "+$stateParams.stagetoken,true);
+                        if($stateParams.stagetoken && $stateParams.stagetoken.length > 0){
 
-
+                            qmeUserService
+                                .confirmUser($stateParams.stagetoken)
+                                .then(
+                                function(res){
+                                    qmeFlashService.Success("User registration completed successfully, please login using your credentials, Thank you.",true);
+                                },
+                                function(error){
+                                    qmeFlashService.Error("Oops.....Error confirming user registration, registration token invalid/expired, please re-try request or register.");
+                                });
+                        }
                     }
                 })
                 .state('register', {
