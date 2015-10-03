@@ -157,6 +157,9 @@
             );
         };
 
+        qmeUser.confirmUser = function(){
+            console.log("stagingToken",$stateParams.stagetoken);
+        }
 
         qmeUser.registerUser = function (){
 

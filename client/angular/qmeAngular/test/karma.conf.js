@@ -18,6 +18,8 @@ module.exports = function(config){
         ],
 
         files : [
+            'app/lib/jquery/dist/jquery.min.js',
+            'app/lib/bootstrap/dist/js/bootstrap.min.js',
             'app/lib/angular/angular.min.js',
             'app/lib/angular-ui-router/release/angular-ui-router.min.js',
             'app/lib/angular-resource/angular-resource.min.js',
