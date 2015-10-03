@@ -56,6 +56,24 @@
             expect(scope.flash.keepAfterLocationChange).toBe(true);
         });
 
+        it('Should have a Success Messages and Then Clear', function() {
+            expect(qmeFlashService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            qmeFlashService.Clear();
+
+            expect(scope.flash).not.toBeDefined();
+
+            qmeFlashService.Success("Some Test Message",true);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Some Test Message');
+            expect(scope.flash.keepAfterLocationChange).toBe(true);
+            qmeFlashService.Clear();
+            expect(scope.flash.keepAfterLocationChange).toBe(false);
+        });
+
         it('Should have a Error Messages', function() {
             expect(qmeFlashService).toBeDefined();
             expect(scope.flash).not.toBeDefined();

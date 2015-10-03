@@ -372,5 +372,29 @@
             httpBackend.flush();
         });
 
+        it('Should handle submit password request error ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            var resetrequest = {
+                token:"sometoken",
+                userName:"someusername",
+                userPassword:"somepassword"
+            };
+            var useremail = "some-email"
+            httpBackend.expectPUT(userResetPaswordEndpoint+useremail,resetrequest).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .submitResetPassword("sometoken","someusername", useremail, "somepassword")
+                .then(
+                function(res){
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                }
+            );
+            httpBackend.flush();
+        });
+
+
     });
 })();
