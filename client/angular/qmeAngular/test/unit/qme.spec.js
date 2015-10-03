@@ -30,6 +30,14 @@
             expect(homeState.controller).toBe('qmeHomeCtrl');
             expect(homeState.controllerAs).toBe('qmeHomeCtrl');
 
+            var stageState = qmeStates.get('stage');
+            expect(stageState).not.toBeNull();
+            expect(stageState.name).toBe('stage');
+            expect(stageState.url).toBe('/stage');
+            expect(stageState.templateUrl).toBe('js/user/qmestageuser.tmpl.html');
+            expect(stageState.controller).toBe('qmeUserCtrl');
+            expect(stageState.controllerAs).toBe('qmeUserCtrl');
+
 
             var registerState = qmeStates.get('register');
             expect(registerState).not.toBeNull();
@@ -40,13 +48,22 @@
             expect(registerState.controllerAs).toBe('qmeUserCtrl');
 
 
-            var resetState = qmeStates.get('forgotpassword');
+            var forgotPasswordState = qmeStates.get('forgotpassword');
+            expect(forgotPasswordState).not.toBeNull();
+            expect(forgotPasswordState.name).toBe('forgotpassword');
+            expect(forgotPasswordState.url).toBe('/forgotpassword');
+            expect(forgotPasswordState.templateUrl).toBe('js/user/qmeforgotpassword.tmpl.html');
+            expect(forgotPasswordState.controller).toBe('qmeUserCtrl');
+            expect(forgotPasswordState.controllerAs).toBe('qmeUserCtrl');
+
+            var resetState = qmeStates.get('resetpassword');
             expect(resetState).not.toBeNull();
-            expect(resetState.name).toBe('forgotpassword');
-            expect(resetState.url).toBe('/forgotpassword');
-            expect(resetState.templateUrl).toBe('js/user/qmeforgotpassword.tmpl.html');
+            expect(resetState.name).toBe('resetpassword');
+            expect(resetState.url).toBe('/resetpassword/:token/:username');
+            expect(resetState.templateUrl).toBe('js/user/qmeresetpassword.tmpl.html');
             expect(resetState.controller).toBe('qmeUserCtrl');
             expect(resetState.controllerAs).toBe('qmeUserCtrl');
+
 
         });
     });
