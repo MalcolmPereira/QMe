@@ -30,7 +30,7 @@
                 <button id="forgotButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeResetPassword()">Forgot Password</button>
             </form>
             <button ng-show="(qmeUserCtrl.isRegistering() || qmeUserCtrl.isResetingPassword()) && !qmeUserCtrl.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeUserCtrl.cancelResetRegistration()">Home</button>
-            <ul class="nav navbar-nav navbar-right" ng-show="qmeUserCtrl.isSignedIn()">
+            <ul class="nav navbar-nav navbar-right" ng-cloak ng-show="qmeUserCtrl.isSignedIn()">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName"> {{qmeUserCtrl.userNameDisplay()}} </span> &nbsp; <span class="caret"></span>
