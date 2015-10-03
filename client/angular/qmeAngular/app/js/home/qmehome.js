@@ -4,9 +4,16 @@
     ngQMe
         .controller('qmeHomeCtrl', QMeHomeController);
 
-    QMeHomeController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService'];
+    QMeHomeController.$inject = ['$state','qmeFlashService','qmeUserSession'];
 
-    function QMeHomeController($state,$stateParams,qmeFlashService,qmeUserService) {
+    function QMeHomeController($state,qmeFlashService,qmeUserSession) {
+
+        var qmeHome = this;
+
+        qmeHome.userdetails = function(){
+            return qmeUserSession.username();
+        }
+
 
     }
 
