@@ -41,10 +41,17 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controllerAs: 'qmeUserCtrl'
                 })
                 .state('confirmuser', {
-                    url: "/confirmuser/:token/:stagetoken",
+                    url: "/confirmuser/:stagetoken",
                     templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
-                    controllerAs: 'qmeHomeCtrl'
+                    controllerAs: 'qmeHomeCtrl',
+                    onEnter: function($stateParams,qmeFlashService,qmeUserService){
+                        console.log("can we do someting",qmeUserService);
+                        console.log("can we do someting", $stateParams.stagetoken);
+                        qmeFlashService.Success(" I think we can so someting with token "+$stateParams.stagetoken,true);
+
+
+                    }
                 })
                 .state('register', {
                     url: "/register",
