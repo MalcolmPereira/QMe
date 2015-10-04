@@ -8,14 +8,9 @@
     <link rel="stylesheet" href="css/qme.css">
 </head>
 <body>
-
-<qme-header></qme-header>
-
-<div class="container-fluid">
-    <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
-</div>
-
-<div ui-view></div>
+    <qme-header></qme-header>
+    <qme-flash></qme-flash>
+    <div ui-view></div>
 <script src="lib/jquery/dist/jquery.min.js"></script>
 <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="lib/angular/angular.min.js"></script>
@@ -25,11 +20,11 @@
 <script src="js/qme.js"></script>
 <script src="js/common/models/qmeuser.js"></script>
 <script src="js/common/directives/qmeheader.js"></script>
+<script src="js/common/directives/qmeflash.js"></script>
 <script src="js/common/services/qmeflashservice.js"></script>
 <script src="js/common/services/qmeuserservice.js"></script>
 <script src="js/common/resources/qmeresources.js"></script>
 <script src="js/user/qmeuserctrl.js"></script>
 <script src="js/home/qmehome.js"></script>
-
 </body>
 </html>
