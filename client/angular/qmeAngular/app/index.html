@@ -9,42 +9,7 @@
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation"  ng-controller="qmeUserCtrl as qmeUserCtrl">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><span>QMe Application</span></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-           <form name="qmeUserCtrl.signInForm" class="navbar-form navbar-right" ng-show="!qmeUserCtrl.isRegistering() && !qmeUserCtrl.isResetingPassword() && !qmeUserCtrl.isSignedIn()" >
-                <div class="form-group">
-                    <input type="email" maxlength="125" id="emailField" ng-model="qmeUserCtrl.userEmail" placeholder="email@example.com" class="form-control" ng-required="true">
-                </div>
-                <div class="form-group">
-                    <input type="password" maxlength="128" id="passwordField" ng-model="qmeUserCtrl.userPassword" placeholder="Password" class="form-control" ng-required="true">
-                </div>
-                <button id="signInButton" type="submit" class="btn btn-success btn-sm"  ng-click="qmeUserCtrl.performSignIn()" ng-disabled="qmeUserCtrl.signInForm.$invalid">Sign in</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button id="registerButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeStaging()">Register</button>
-                &nbsp;
-                <button id="forgotButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.routeResetPassword()">Forgot Password</button>
-            </form>
-            <button ng-cloak ng-show="(qmeUserCtrl.isRegistering() || qmeUserCtrl.isResetingPassword()) && !qmeUserCtrl.signedIn" type="button" class="btn btn-info btn-xs navbar-btn navbar-right" ng-click="qmeUserCtrl.cancelResetRegistration()">Home</button>
-            <ul class="nav navbar-nav navbar-right" ng-show="qmeUserCtrl.isSignedIn()">
-                <li class="dropdown">
-                    <a ng-cloak ng-show="qmeUserCtrl.isSignedIn()" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName" ng-cloak> {{qmeUserCtrl.userNameDisplay()}} </span> &nbsp; <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li ng-show="qmeUserCtrl.isAdmin()" ><a href="#" ng-click="qmeUserCtrl.routeRegistration()">Register</a></li>
-                        <li><a href="#" ng-click="qmeUserCtrl.alert('some user route')">User</a></li>
-                        <li><a href="#" ng-click="qmeUserCtrl.logout()">Sign-out</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<qme-header></qme-header>
 
 <div class="container-fluid">
     <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
@@ -59,6 +24,7 @@
 <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="js/qme.js"></script>
 <script src="js/common/models/qmeuser.js"></script>
+<script src="js/common/directives/qmeheader.js"></script>
 <script src="js/common/services/qmeflashservice.js"></script>
 <script src="js/common/services/qmeuserservice.js"></script>
 <script src="js/common/resources/qmeresources.js"></script>

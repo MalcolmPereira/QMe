@@ -13,8 +13,7 @@ module.exports = function(config){
             'karma-chrome-launcher',
             'karma-jasmine',
             'karma-coverage',
-            'karma-ng-html2js-preprocessor',
-            'ng-html2js'
+            'karma-ng-html2js-preprocessor'
         ],
 
         files : [
@@ -37,11 +36,15 @@ module.exports = function(config){
         reporters: ['progress', 'coverage'],
 
         ngHtml2JsPreprocessor: {
-            moduleName: 'qmeApp'
+            stripPrefix: 'app/',
+            moduleName: 'qmeApp.templates'
         },
+
         preprocessors: {
             'app/js/**/*.js': ['coverage'],
+            'app/js/**/*.html': ['ng-html2js']
         },
+
         coverageReporter: {
             type : 'html',
             dir : 'coverage/',
