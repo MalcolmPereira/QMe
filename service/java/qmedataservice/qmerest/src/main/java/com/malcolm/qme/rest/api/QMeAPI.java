@@ -6,6 +6,9 @@
  */
 package com.malcolm.qme.rest.api;
 
+import com.malcolm.qme.security.service.QMeUserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 /**
  * @author Malcolm
  */
@@ -26,4 +29,12 @@ public interface QMeAPI {
 	 * Email Parameter
 	 */
 	String EMAIL_PARAM_STRING 	= "email";
+
+    /**
+     * Get Current Logged in User
+     * @return QMeUserDetails
+     */
+    static QMeUserDetails getCurrentUser() {
+        return (QMeUserDetails) SecurityContextHolder.getContext().getAuthentication();
+    }
 }
