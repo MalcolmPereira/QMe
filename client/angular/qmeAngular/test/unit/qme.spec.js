@@ -50,6 +50,13 @@
             expect(confirmState.controller).toBe('qmeHomeCtrl');
             expect(confirmState.controllerAs).toBe('qmeHomeCtrl');
 
+            var userProfileState = qmeStates.get('userprofile');
+            expect(userProfileState).not.toBeNull();
+            expect(userProfileState.name).toBe('userprofile');
+            expect(userProfileState.url).toBe('/userprofile');
+            expect(userProfileState.templateUrl).toBe('js/user/qmeuserprofile.tmpl.html');
+            expect(userProfileState.controller).toBe('qmeUserCtrl');
+            expect(userProfileState.controllerAs).toBe('qmeUserCtrl');
 
             var registerState = qmeStates.get('register');
             expect(registerState).not.toBeNull();

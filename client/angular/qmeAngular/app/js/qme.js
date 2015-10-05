@@ -34,6 +34,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controller: 'qmeHomeCtrl',
                     controllerAs: 'qmeHomeCtrl'
                 })
+
+                //User Routing
                 .state('stage', {
                     url: "/stage",
                     templateUrl: 'js/user/qmestageuser.tmpl.html',
@@ -60,7 +62,13 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                         }
                     }
                 })
-                .state('register', {
+                .state('userprofile', {
+                    url: "/userprofile",
+                    templateUrl: 'js/user/qmeuserprofile.tmpl.html',
+                    controller: 'qmeUserCtrl',
+                    controllerAs: 'qmeUserCtrl'
+                })
+               .state('register', {
                     url: "/register",
                     templateUrl: 'js/user/qmeregister.tmpl.html',
                     controller: 'qmeUserCtrl',
@@ -78,6 +86,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','base64']);
                     controller: 'qmeUserCtrl',
                     controllerAs: 'qmeUserCtrl'
                 })
+
+
         })
 
 })();

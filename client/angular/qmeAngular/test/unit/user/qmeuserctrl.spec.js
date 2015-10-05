@@ -9,6 +9,7 @@
 
         beforeEach(module('qmeApp'));
 
+        beforeEach(module('qmeApp.templates'));
 
         beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_) {
 
@@ -86,7 +87,7 @@
                 "userName": "testuser@test.com",
                 "userPassword": "testpassword"
             };
-            var user = {
+            user = {
                 "authToken": "someauthtoken",
                 "userID": 1,
                 "userName": "testuser",
@@ -132,7 +133,7 @@
             expect(ctrl.isAdmin() ).toBe(false);
             expect(ctrl.userNameDisplay() ).toBe("Test");
 
-            var user = {
+            user = {
                 "authToken": "someauthtoken",
                 "userID": 1,
                 "userName": "testuser",
@@ -267,20 +268,75 @@
             expect(ctrl.userPassword).toBe("");
         });
 
+        it('Ensure user can route to user profile', function() {
+            ctrl.routeUserProfile()
+            scope.$digest();
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('userprofile');
+            expect(state.current.url).toBe('/userprofile');
+            expect(state.current.templateUrl).toBe('js/user/qmeuserprofile.tmpl.html');
+            expect(state.current.controller).toBe('qmeUserCtrl');
+            expect(state.current.controllerAs).toBe('qmeUserCtrl');
+        });
+
+        it('Ensure user profile is updated ', function() {
+            ctrl.updateUser();
+            expect(scope.flash).not.toBeDefined();
+        });
+
         it('Ensure user can route to registration', function() {
             ctrl.routeRegistration()
+            scope.$digest();
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('register');
+            expect(state.current.url).toBe('/register');
+            expect(state.current.templateUrl).toBe('js/user/qmeregister.tmpl.html');
+            expect(state.current.controller).toBe('qmeUserCtrl');
+            expect(state.current.controllerAs).toBe('qmeUserCtrl');
         });
 
         it('Ensure user can route to staging', function() {
             ctrl.routeStaging()
+            scope.$digest();
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('stage');
+            expect(state.current.url).toBe('/stage');
+            expect(state.current.templateUrl).toBe('js/user/qmestageuser.tmpl.html');
+            expect(state.current.controller).toBe('qmeUserCtrl');
+            expect(state.current.controllerAs).toBe('qmeUserCtrl');
+
         });
 
         it('Ensure user can route to reset password', function() {
             ctrl.routeResetPassword()
+            scope.$digest();
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('forgotpassword');
+            expect(state.current.url).toBe('/forgotpassword');
+            expect(state.current.templateUrl).toBe('js/user/qmeforgotpassword.tmpl.html');
+            expect(state.current.controller).toBe('qmeUserCtrl');
+            expect(state.current.controllerAs).toBe('qmeUserCtrl');
         });
 
         it('Ensure user can cancel registration ', function() {
             ctrl.cancelResetRegistration()
+            scope.$digest();
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('home');
+            expect(state.current.url).toBe('/home');
+            expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');
+            expect(state.current.controller).toBe('qmeHomeCtrl');
+            expect(state.current.controllerAs).toBe('qmeHomeCtrl');
         });
 
         it('Ensure user able to sign-on with valid credentials for USER Role', function() {

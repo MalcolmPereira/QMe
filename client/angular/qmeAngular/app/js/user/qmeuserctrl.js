@@ -91,6 +91,10 @@
             $state.go('home', {});
         };
 
+        qmeUser.routeUserProfile = function (){
+            $state.go('userprofile', {});
+        };
+
         qmeUser.routeRegistration = function (){
             qmeUserService.endRegistering();
             qmeUserService.endResetting();
@@ -162,6 +166,13 @@
                     }
                 }
             );
+        };
+
+        qmeUser.updateUser = function(){
+
+            qmeFlashService.Clear();
+
+
         };
 
         qmeUser.registerUser = function (){

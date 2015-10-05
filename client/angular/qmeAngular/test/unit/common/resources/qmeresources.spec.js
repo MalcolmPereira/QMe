@@ -19,7 +19,9 @@
             expect(qmeUserResource).toBeDefined();
             expect(scope.flash).not.toBeDefined();
         });
-
+        it('Should have a User Resource Defined', function() {
+            expect(qmeUserResource.userResource("sometoken")).toBeDefined();
+        });
         it('Should have a User Auth Resource Defined', function() {
             expect(qmeUserResource.userAuthResource()).toBeDefined();
         });

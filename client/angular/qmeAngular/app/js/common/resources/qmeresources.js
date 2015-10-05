@@ -13,12 +13,16 @@
             var userResetPaswordEndpoint    = userAPI+"/reset/resetpassword/";
             var userLogoutEndpoint          = QME_CONSTANTS.qmeservice+"/logout";
 
+            this.userResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(userAPI);
+            };
             this.userAuthResource = function(){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = undefined;
                 return $resource(userAuthEndPoint);
             };
             this.userGetUserResource = function(userEmail){
-                return $resource(userSearchEndPoint);
+                return $resource(userSearchEndPoint+userEmail);
             };
             this.userStageResource = function(){
                 return $resource(userStageEndpoint);
