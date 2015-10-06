@@ -15,12 +15,11 @@ import com.malcolm.qme.rest.model.QMeStageUser;
 import com.malcolm.qme.rest.model.QMeUser;
 import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.service.UserService;
+import com.malcolm.qme.security.service.QMeUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,8 +52,7 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody List<QMeUserDetail> list() throws QMeServerException {
         LOG.debug("User List called ");
-        SecurityContext sec = SecurityContextHolder.getContext();
-        sec.getAuthentication();
+        QMeUserDetails user = getCurrentUser();
 
         return userService.list();
     }

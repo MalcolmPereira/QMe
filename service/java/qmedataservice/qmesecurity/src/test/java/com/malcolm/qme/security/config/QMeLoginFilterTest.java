@@ -20,7 +20,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ReadListener;
@@ -91,7 +90,7 @@ public class QMeLoginFilterTest {
             stream = new MockServletInputStream(new ByteArrayInputStream(userCredentials.getBytes(StandardCharsets.UTF_8)));
 
             when(req.getInputStream()).thenReturn(stream);
-            when(authManager.authenticate(Matchers.<UsernamePasswordAuthenticationToken>anyObject())).thenReturn(qMeUserDetails.getQMeAuthenticatedUser());
+            when(authManager.authenticate(Matchers.<UsernamePasswordAuthenticationToken>anyObject())).thenReturn(qMeUserDetails);
             Authentication authentication = qMeLoginFilter.attemptAuthentication(req,res);
             assertNotNull(authentication);
             verify(req).getInputStream();
@@ -155,7 +154,7 @@ public class QMeLoginFilterTest {
         when(res.getWriter()).thenReturn(printeWriter);
         doNothing().when(printeWriter).close();
         doNothing().when(printeWriter).flush();
-        qMeLoginFilter.successfulAuthentication(req, res, chain, qMeUserDetails.getQMeAuthenticatedUser());
+        qMeLoginFilter.successfulAuthentication(req, res, chain, qMeUserDetails);
         verify(userDetailsService).loadUserByUsername("Some User Name");
         verify(userDetailsService).updateUserLastLoginDate(qMeUserDetails);
         verify(res).addHeader(eq(QMETokenAuthenticationService.QME_AUTH_HEADER_NAME), Matchers.<String>anyObject());

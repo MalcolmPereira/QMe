@@ -32,9 +32,9 @@ public interface QMeAPI {
 
     /**
      * Get Current Logged in User
-     * @return QMeUserDetails
+     * @return QMeUserDetails Current Logged in User
      */
-    static QMeUserDetails getCurrentUser() {
+    default QMeUserDetails getCurrentUser() {
         return (QMeUserDetails) SecurityContextHolder.getContext().getAuthentication();
     }
 }

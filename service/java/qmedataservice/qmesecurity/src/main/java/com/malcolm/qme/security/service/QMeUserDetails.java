@@ -20,7 +20,7 @@ import java.util.Collections;
 /**
  * @author Malcolm
  */
-public class QMeUserDetails implements UserDetails {
+public class QMeUserDetails implements UserDetails,Authentication {
     /**
      * User Id
      */
@@ -37,10 +37,6 @@ public class QMeUserDetails implements UserDetails {
      * Granted Authority or User Roles
      */
     private final Collection<GrantedAuthority> authorities;
-    /**
-     * QMeAuthenticatedUser
-     */
-    private final Authentication qMeAuthenticatedUser;
     /**
      * User First Name
      */
@@ -69,6 +65,10 @@ public class QMeUserDetails implements UserDetails {
      * Update User Id
      */
     private Long updateUserID;
+    /**
+     * User Authenticated
+     */
+    private boolean authenticated;
 
     /**
      * Created New QMeUserDetails
@@ -133,7 +133,7 @@ public class QMeUserDetails implements UserDetails {
         userName = username;
         userPassword = password;
         authorities = AuthorityUtils.createAuthorityList(authoritiesArr);
-        qMeAuthenticatedUser = new QMeAuthenticatedUser(userName,userPassword,authorities);
+        authenticated = true;
     }
 
     /**
@@ -150,7 +150,7 @@ public class QMeUserDetails implements UserDetails {
         userName = username;
         userPassword = password;
         authorities = authoritiesList;
-        qMeAuthenticatedUser = new QMeAuthenticatedUser(userName,userPassword,authorities);
+        authenticated = true;
     }
 
 
@@ -171,33 +171,25 @@ public class QMeUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.authenticated;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.authenticated;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.authenticated;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.authenticated;
     }
 
-    /**
-     * Get QMe Authenticated User for Security Context
-     * @return
-     */
-    public Authentication getQMeAuthenticatedUser(){
-        return this.qMeAuthenticatedUser;
-    }
-
-    /**
+   /**
      * Get User ID
      * @return User ID
      */
@@ -329,80 +321,33 @@ public class QMeUserDetails implements UserDetails {
         this.updateUserID = updateUserID;
     }
 
-    /**
-     * QMe Authenticated User Stored in Security Context
-     *
-     *  @author Malcolm
-     */
-    private final class QMeAuthenticatedUser implements Authentication {
-        /**
-         * User Name
-         */
-        private final String userName;
-        /**
-         * User Password
-         */
-        private final String userPassword;
-        /**
-         * Granted Authority or User Roles
-         */
-        private final Collection<GrantedAuthority> authorities;
-        /**
-         * Use
-         */
-        private final User user;
-        /**
-         * User Authenticated
-         */
-        private boolean isAuthenticated;
-        /**
-         * Public Constructor
-         *
-         * @param userName User Name
-         * @param userPassword User Password
-         * @param authorities User Roles
-         */
-        public QMeAuthenticatedUser(String userName, String userPassword, Collection<GrantedAuthority> authorities) {
-            this.userName = userName;
-            this.userPassword = userPassword;
-            this.authorities = authorities;
-            this.isAuthenticated = true;
-            this.user = new User(this.userName, this.userPassword,this.authorities);
-        }
+    @Override
+    public String getCredentials() {
+        return this.userPassword;
+    }
 
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return this.authorities;
-        }
+    @Override
+    public String getPrincipal() {
+        return this.userName;
+    }
 
-        @Override
-        public Object getCredentials() {
-            return this.userPassword;
-        }
+    @Override
+    public boolean isAuthenticated() {
+        return this.authenticated;
+    }
 
-        @Override
-        public User getDetails() {
-            return this.user;
-        }
+    @Override
+    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+        this.authenticated = isAuthenticated;
+    }
 
-        @Override
-        public Object getPrincipal() {
-            return this.userName;
-        }
+    @Override
+    public String getName() {
+        return this.userName;
+    }
 
-        @Override
-        public boolean isAuthenticated() {
-            return this.isAuthenticated;
-        }
-
-        @Override
-        public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-            this.isAuthenticated = isAuthenticated;
-        }
-
-        @Override
-        public String getName() {
-            return this.userName;
-        }
+    @Override
+    public User getDetails() {
+        return new  User(this.userName, this.userPassword,this.authorities);
     }
 }

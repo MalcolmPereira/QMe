@@ -40,8 +40,8 @@ public class QMeTokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         QMeUserDetails qMeUserDetails = qmeTokenAuthenticationService.getAuthenticatedUser((HttpServletRequest) request);
-        if(qMeUserDetails != null && qMeUserDetails.getQMeAuthenticatedUser() != null){
-            SecurityContextHolder.getContext().setAuthentication(qMeUserDetails.getQMeAuthenticatedUser());
+        if(qMeUserDetails != null && qMeUserDetails != null){
+            SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
         }else{
             SecurityContextHolder.getContext().setAuthentication(null);
         }

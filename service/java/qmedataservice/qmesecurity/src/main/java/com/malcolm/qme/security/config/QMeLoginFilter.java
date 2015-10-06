@@ -95,7 +95,7 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         final QMeUserDetails qMeUserDetails = (QMeUserDetails) userDetailsService.loadUserByUsername(authentication.getName());
         String authToken = qmeTokenAuthenticationService.addAuthToken(response,qMeUserDetails);
-        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails.getQMeAuthenticatedUser());
+        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
         writeQMeUser(response, authToken, qMeUserDetails);
     }
 

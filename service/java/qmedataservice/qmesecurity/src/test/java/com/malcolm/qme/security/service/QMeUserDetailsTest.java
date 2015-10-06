@@ -11,9 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -240,31 +238,75 @@ public class QMeUserDetailsTest  {
     }
 
     @Test
+    public void testGetCredentials() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getCredentials());
+        assertThat(qMeUserDetails.getCredentials(), equalTo("Some Password"));
+    }
+
+    @Test
+    public void testGetPrincipal() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getPrincipal());
+        assertThat(qMeUserDetails.getPrincipal(), equalTo("Some User Name"));
+    }
+
+    @Test
+    public void testIsAuthenticated() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        assertNotNull(qMeUserDetails);
+        assertThat(qMeUserDetails.isAuthenticated(), equalTo(true));
+        qMeUserDetails.setAuthenticated(false);
+        assertThat(qMeUserDetails.isAuthenticated(), equalTo(false));
+    }
+
+    @Test
+    public void testGetName() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getName());
+        assertThat(qMeUserDetails.getName(), equalTo("Some User Name"));
+    }
+
+    @Test
+    public void testGetDetails() throws Exception {
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getDetails());
+        assertThat(qMeUserDetails.getDetails().getUsername(), equalTo("Some User Name"));
+        assertThat(qMeUserDetails.getDetails().getPassword(), equalTo("Some Password"));
+        assertNotNull(qMeUserDetails.getDetails().getAuthorities());
+        assertThat(qMeUserDetails.getDetails().getAuthorities().size(), equalTo(3));
+    }
+
+    @Test
     public void testGetQMeAuthenticatedUser() {
         QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
         assertNotNull(qMeUserDetails);
-        assertNotNull(qMeUserDetails.getQMeAuthenticatedUser());
-        assertNotNull(((Authentication)qMeUserDetails.getQMeAuthenticatedUser()).getCredentials());
-        assertThat(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getCredentials(), equalTo("Some Password"));
-        assertNotNull(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails());
-        assertNotNull(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).getUsername());
-        assertThat(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).getUsername(), equalTo("Some User Name"));
-        assertNotNull(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).getPassword());
-        assertThat(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).getPassword(), equalTo("Some Password"));
-        assertNotNull(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).getAuthorities());
-        assertThat(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).getAuthorities().size(), equalTo(3));
-        assertThat(((User) ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).isAccountNonExpired(), equalTo(true));
-        assertThat( ((User)((Authentication)qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).isAccountNonLocked(), equalTo(true));
-        assertThat( ((User)((Authentication)qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).isCredentialsNonExpired(), equalTo(true));
-        assertThat( ((User)((Authentication)qMeUserDetails.getQMeAuthenticatedUser()).getDetails()).isEnabled(), equalTo(true));
-        assertNotNull(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getPrincipal());
-        assertThat(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getPrincipal(), equalTo("Some User Name"));
-        assertThat(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).isAuthenticated(), equalTo(true));
-        assertNotNull(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getName());
-        assertThat(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getName(), equalTo("Some User Name"));
-        ((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).setAuthenticated(false);
-        assertThat(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).isAuthenticated(), equalTo(false));
-        assertNotNull(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getAuthorities());
-        assertThat(((Authentication) qMeUserDetails.getQMeAuthenticatedUser()).getAuthorities().size(), equalTo(3));
+        assertNotNull(qMeUserDetails);
+        assertNotNull(qMeUserDetails.getCredentials());
+        assertThat(qMeUserDetails.getCredentials(), equalTo("Some Password"));
+        assertNotNull(qMeUserDetails.getDetails());
+        assertNotNull((qMeUserDetails.getDetails()).getUsername());
+        assertThat((qMeUserDetails.getDetails()).getUsername(), equalTo("Some User Name"));
+        assertNotNull((qMeUserDetails.getDetails()).getPassword());
+        assertThat((qMeUserDetails.getDetails()).getPassword(), equalTo("Some Password"));
+        assertNotNull((qMeUserDetails.getDetails()).getAuthorities());
+        assertThat((qMeUserDetails.getDetails()).getAuthorities().size(), equalTo(3));
+        assertThat((qMeUserDetails.getDetails()).isAccountNonExpired(), equalTo(true));
+        assertThat((qMeUserDetails.getDetails()).isAccountNonLocked(), equalTo(true));
+        assertThat((qMeUserDetails.getDetails()).isCredentialsNonExpired(), equalTo(true));
+        assertThat((qMeUserDetails.getDetails()).isEnabled(), equalTo(true));
+        assertNotNull(qMeUserDetails.getPrincipal());
+        assertThat(qMeUserDetails.getPrincipal(), equalTo("Some User Name"));
+        assertThat(qMeUserDetails.isAuthenticated(), equalTo(true));
+        assertNotNull(qMeUserDetails.getName());
+        assertThat(qMeUserDetails.getName(), equalTo("Some User Name"));
+        qMeUserDetails.setAuthenticated(false);
+        assertThat(qMeUserDetails.isAuthenticated(), equalTo(false));
+        assertNotNull(qMeUserDetails.getAuthorities());
+        assertThat(qMeUserDetails.getAuthorities().size(), equalTo(3));
     }
 }
