@@ -796,7 +796,7 @@
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Entered user email not found. Please ener valid existing user email.');
+            expect(scope.flash.message).toBe('Entered user email not found. Please enter valid existing user email.');
         });
 
 
@@ -856,7 +856,7 @@
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Entered user email not found. Please ener valid existing user email.');
+            expect(scope.flash.message).toBe('Entered user email not found. Please enter valid existing user email.');
 
         });
 
@@ -876,7 +876,7 @@
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Reset token invalid, Please ener valid reset token.');
+            expect(scope.flash.message).toBe('Reset token invalid, Please enter valid reset token.');
 
         });
 

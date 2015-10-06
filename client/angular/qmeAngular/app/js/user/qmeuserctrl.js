@@ -11,12 +11,12 @@
 
         var qmeUser = this;
 
-        qmeUser.userEmail;
-        qmeUser.userName;
-        qmeUser.userPassword;
-        qmeUser.userPasswordConfirm;
-        qmeUser.userFirstName;
-        qmeUser.userLastName;
+        qmeUser.userEmail = "";
+        qmeUser.userName = "";
+        qmeUser.userPassword = "";
+        qmeUser.userPasswordConfirm = "";
+        qmeUser.userFirstName = "";
+        qmeUser.userLastName = "";
 
         if(qmeUserSession && qmeUserSession.isSignedIn() && $state != null && $state.current != null && $state.current.name != null){
             qmeUser.userEmail = qmeUserSession.useremail();
@@ -25,28 +25,16 @@
             qmeUser.userPasswordConfirm = "";
             qmeUser.userFirstName = qmeUserSession.userfirstname();
             qmeUser.userLastName = qmeUserSession.userlastname();
-
-        }else{
-            qmeUser.userEmail = "";
-            qmeUser.userName = "";
-            qmeUser.userPassword = "";
-            qmeUser.userPasswordConfirm = "";
-            qmeUser.userFirstName = "";
-            qmeUser.userLastName = "";
         }
 
         qmeUser.isSignedIn = function(){
-            if(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn()){
-                return true;
-            }
-            return false;
+            return !!(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn());
+
         };
 
         qmeUser.isAdmin = function(){
-            if(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn() && qmeUserService.currentUser().isAdmin()){
-                return true;
-            }
-            return false;
+            return !!(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn() && qmeUserService.currentUser().isAdmin());
+
         };
 
         qmeUser.userNameDisplay = function (){
@@ -104,7 +92,7 @@
             qmeUserService.endResetting();
             qmeUser.userEmail = "";
             qmeUser.userPassword = "";
-            qmeUser.signInForm.$setPristine()
+            qmeUser.signInForm.$setPristine();
             $state.go('home', {});
         };
 
@@ -136,17 +124,17 @@
         qmeUser.cancelResetRegistration = function (){
             qmeUserService.endRegistering();
             qmeUserService.endResetting();
-            qmeUser.signInForm.$setPristine()
+            qmeUser.signInForm.$setPristine();
             $state.go('home', {});
         };
 
         qmeUser.isRegistering = function(){
             return  qmeUserService.isRegistering();
-        }
+        };
 
         qmeUser.isResetingPassword = function(){
             return  qmeUserService.isResetting();
-        }
+        };
 
         qmeUser.validatePasswordFields = function (){
             if(qmeUser.userPassword != qmeUser.userPasswordConfirm){
@@ -167,7 +155,7 @@
                 "userFirstName": qmeUser.userFirstName,
                 "userLastName": qmeUser.userLastName,
                 "userEmail": qmeUser.userEmail
-            }
+            };
 
             qmeUserService
                 .stageUser(user)
@@ -207,7 +195,7 @@
                 "userFirstName": qmeUser.userFirstName,
                 "userLastName": qmeUser.userLastName,
                 "userEmail": qmeUser.userEmail
-            }
+            };
 
             qmeUserService
                 .register(user)
@@ -241,7 +229,7 @@
                 },
                 function (error){
                     if(error && error.status && error.status == 404){
-                        qmeFlashService.Error("Entered user email not found. Please ener valid existing user email.");
+                        qmeFlashService.Error("Entered user email not found. Please enter valid existing user email.");
 
                     }else{
                         qmeFlashService.Error("Oops.....Error connecting to service for reset password, please retry in some time.");
@@ -259,10 +247,10 @@
                 },
                 function (error){
                     if(error && error.status && error.status == 404) {
-                        qmeFlashService.Error("Entered user email not found. Please ener valid existing user email.");
+                        qmeFlashService.Error("Entered user email not found. Please enter valid existing user email.");
 
                     }else if(error && error.status && error.status == 400){
-                        qmeFlashService.Error("Reset token invalid, Please ener valid reset token.");
+                        qmeFlashService.Error("Reset token invalid, Please enter valid reset token.");
 
                     }else{
                         qmeFlashService.Error("Oops.....Error from service for reset password, please retry in some time.");

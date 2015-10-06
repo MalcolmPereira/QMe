@@ -28,7 +28,7 @@
                     flash.keepAfterLocationChange = false;
                 }
             }
-        }
+        };
 
         qmeFlashService.Success = function(message, keepAfterLocationChange) {
             $rootScope.flash = {
@@ -36,7 +36,7 @@
                 type: 'success',
                 keepAfterLocationChange: keepAfterLocationChange
             };
-        }
+        };
 
         qmeFlashService.Error   = function(message, keepAfterLocationChange) {
             $rootScope.flash = {
