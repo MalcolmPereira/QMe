@@ -5,18 +5,35 @@
     ngQMe
         .controller('qmeUserCtrl', QMeUserController);
 
-    QMeUserController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService'];
+    QMeUserController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService','qmeUserSession'];
 
-    function QMeUserController($state,$stateParams,qmeFlashService,qmeUserService) {
+    function QMeUserController($state,$stateParams,qmeFlashService,qmeUserService,qmeUserSession) {
 
         var qmeUser = this;
 
-        qmeUser.userEmail = "";
-        qmeUser.userName = "";
-        qmeUser.userPassword = "";
-        qmeUser.userPasswordConfirm = "";
-        qmeUser.userFirstName = "";
-        qmeUser.userLastName = "";
+        qmeUser.userEmail;
+        qmeUser.userName;
+        qmeUser.userPassword;
+        qmeUser.userPasswordConfirm;
+        qmeUser.userFirstName;
+        qmeUser.userLastName;
+
+        if(qmeUserSession && qmeUserSession.isSignedIn() && $state != null && $state.current != null && $state.current.name != null){
+            qmeUser.userEmail = qmeUserSession.useremail();
+            qmeUser.userName = qmeUserSession.username();
+            qmeUser.userPassword = "**********";
+            qmeUser.userPasswordConfirm = "";
+            qmeUser.userFirstName = qmeUserSession.userfirstname();
+            qmeUser.userLastName = qmeUserSession.userlastname();
+
+        }else{
+            qmeUser.userEmail = "";
+            qmeUser.userName = "";
+            qmeUser.userPassword = "";
+            qmeUser.userPasswordConfirm = "";
+            qmeUser.userFirstName = "";
+            qmeUser.userLastName = "";
+        }
 
         qmeUser.isSignedIn = function(){
             if(qmeUserService.currentUser() && qmeUserService.currentUser().isSignedIn()){
@@ -93,17 +110,9 @@
 
         qmeUser.routeUserProfile = function (){
            $state.go('userprofile');
-           console.log(qmeUserService.currentUser().useremail()) ;
-           qmeUser.userEmail = qmeUserService.currentUser().useremail();
         };
 
         qmeUser.cancelUserUpdate = function (){
-            qmeUser.userEmail = "" ;
-            qmeUser.userName = "" ;
-            qmeUser.userPassword = "" ;
-            qmeUser.userPasswordConfirm = "" ;
-            qmeUser.userFirstName = "" ;
-            qmeUser.userLastName = "" ;
             $state.go('home', {});
         };
 

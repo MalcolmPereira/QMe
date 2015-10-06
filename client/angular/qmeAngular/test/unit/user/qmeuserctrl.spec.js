@@ -5,7 +5,18 @@
     describe('Controller: QMe User Controller', function() {
 
 
-        var scope, state, stateParams, httpBackend, ctrl, qmeContants, userAuthEndPoint,userStagingEndpoint,userRegisterEndpoint,logoutUserEndPoint,userForgotPaswordEndpoint,userSubmitResetPaswordEndpoint;
+        var scope,
+            state,
+            stateParams,
+            httpBackend,
+            ctrl,
+            qmeContants,
+            userAuthEndPoint,
+            userStagingEndpoint,
+            userRegisterEndpoint,
+            logoutUserEndPoint,
+            userForgotPaswordEndpoint,
+            userSubmitResetPaswordEndpoint;
 
         beforeEach(module('qmeApp'));
 
@@ -87,7 +98,7 @@
                 "userName": "testuser@test.com",
                 "userPassword": "testpassword"
             };
-            user = {
+            var user = {
                 "authToken": "someauthtoken",
                 "userID": 1,
                 "userName": "testuser",
@@ -269,8 +280,38 @@
         });
 
         it('Ensure user can route to user profile', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(ctrl.userNameDisplay() ).toBe("Test User");
+
             ctrl.routeUserProfile()
             scope.$digest();
+
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
             expect(state.current).not.toBeNull();
@@ -279,11 +320,32 @@
             expect(state.current.templateUrl).toBe('js/user/qmeuserprofile.tmpl.html');
             expect(state.current.controller).toBe('qmeUserCtrl');
             expect(state.current.controllerAs).toBe('qmeUserCtrl');
-        });
+
+            expect(ctrl.userEmail).toBeDefined();
+            expect(ctrl.userEmail).toBe("testuser@test.com");
+            expect(ctrl.userName).toBeDefined();
+            expect(ctrl.userPassword).toBeDefined();
+            expect(ctrl.userPasswordConfirm).toBeDefined();
+            expect(ctrl.userFirstName).toBeDefined();
+            expect(ctrl.userLastName).toBeDefined();
+         });
 
         it('Ensure user profile is updated ', function() {
             ctrl.updateUser();
             expect(scope.flash).not.toBeDefined();
+        });
+
+        it('Ensure user can route back to home from update profile', function() {
+            ctrl.cancelUserUpdate()
+            scope.$digest();
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('home');
+            expect(state.current.url).toBe('/home');
+            expect(state.current.templateUrl).toBe('js/home/qmehome.tmpl.html');
+            expect(state.current.controller).toBe('qmeHomeCtrl');
+            expect(state.current.controllerAs).toBe('qmeHomeCtrl');
         });
 
         it('Ensure user can route to registration', function() {
@@ -835,6 +897,49 @@
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('Oops.....Error from service for reset password, please retry in some time.');
+
+        });
+
+
+        describe('Controller: QMe User Controller Already Initialized With Logged In User', function() {
+            var qmeUserSession;
+            beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeUserSession_) {
+                scope = $rootScope.$new();
+                state = $state;
+                stateParams = $stateParams;
+                httpBackend = $httpBackend;
+                qmeContants = _QME_CONSTANTS_;
+                qmeUserSession = _qmeUserSession_;
+                qmeUserSession.create(
+                    "someauthtoken",
+                    1,
+                    "testuser",
+                    "Test",
+                    "User",
+                    "test.user@gmail.com",
+                    "2015-28-05 13:35:29",
+                    ['USER']
+                )
+                ctrl  = $controller('qmeUserCtrl', {
+                    $scope: scope,
+                    $state: state,
+                    $stateParams:stateParams,
+                    qmeUserSession:qmeUserSession
+                });
+            }));
+            it('Ensure user fields default for signed in user ', function() {
+                expect(ctrl.userEmail).toBeDefined();
+                expect(ctrl.userEmail).toBe("test.user@gmail.com");
+                expect(ctrl.userName).toBeDefined();
+                expect(ctrl.userName).toBe("testuser");
+                expect(ctrl.userPassword).toBeDefined();
+                expect(ctrl.userPasswordConfirm).toBeDefined();
+                expect(ctrl.userFirstName).toBeDefined();
+                expect(ctrl.userFirstName).toBe("Test");
+                expect(ctrl.userLastName).toBeDefined();
+                expect(ctrl.userLastName).toBe("User");
+            });
+
 
         });
 
