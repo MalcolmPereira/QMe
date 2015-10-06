@@ -92,8 +92,21 @@
         };
 
         qmeUser.routeUserProfile = function (){
-            $state.go('userprofile', {});
+           $state.go('userprofile');
+           console.log(qmeUserService.currentUser().useremail()) ;
+           qmeUser.userEmail = qmeUserService.currentUser().useremail();
         };
+
+        qmeUser.cancelUserUpdate = function (){
+            qmeUser.userEmail = "" ;
+            qmeUser.userName = "" ;
+            qmeUser.userPassword = "" ;
+            qmeUser.userPasswordConfirm = "" ;
+            qmeUser.userFirstName = "" ;
+            qmeUser.userLastName = "" ;
+            $state.go('home', {});
+        };
+
 
         qmeUser.routeRegistration = function (){
             qmeUserService.endRegistering();
@@ -248,5 +261,6 @@
                 }
             );
         };
+
     }
 })();

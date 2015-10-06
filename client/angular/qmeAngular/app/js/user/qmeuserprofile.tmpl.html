@@ -8,15 +8,15 @@
                 <form name="userProfileForm" class="form-horizontal">
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userEmail">User Email:</label>
-                        <input  ng-disabled="qmeUserCtrl.userEmail" ng-model="qmeUserCtrl.userEmail" name="userEmail" id="userEmail" maxlength="128" min="5" type="email" class="form-control">
+                        <input ng-model="qmeUserCtrl.userEmail" name="userEmail" id="userEmail" maxlength="128" min="5" type="email" class="form-control">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userName">User Name:</label>
-                        <input  ng-disabled="qmeUserCtrl.userName" ng-model="qmeUserCtrl.userName" id="userName" maxlength="128" min="5" type="text" placeholder="username" class="form-control">
+                        <input  ng-model="qmeUserCtrl.userName" id="userName" maxlength="128" min="5" type="text"  class="form-control">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPassword">User Password:</label>
-                        <input ng-disabled="qmeUserCtrl.userPassword" ng-model="qmeUserCtrl.userPassword"  id="userPassword" maxlength="128" min="5" type="password" placeholder="password" class="form-control">
+                        <input  ng-model="qmeUserCtrl.userPassword"  id="userPassword" maxlength="128" min="5" type="password"  class="form-control">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userFirstName">User First Name:</label>
@@ -29,6 +29,8 @@
                     <button id="submitUpdateProfileButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeUserCtrl.updateUser()" ng-disabled="userProfileForm.$invalid">Update User</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="resetButton" type="reset" class="btn btn-info btn-sm">Reset</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeUserCtrl.cancelUserUpdate()">Cancel</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                 </form>
             </div>
