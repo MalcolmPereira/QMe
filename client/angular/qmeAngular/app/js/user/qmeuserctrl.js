@@ -5,9 +5,9 @@
     ngQMe
         .controller('qmeUserCtrl', QMeUserController);
 
-    QMeUserController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService','qmeUserSession'];
+    QMeUserController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService','qmeUserSession','qmeModelSession'];
 
-    function QMeUserController($state,$stateParams,qmeFlashService,qmeUserService,qmeUserSession) {
+    function QMeUserController($state,$stateParams,qmeFlashService,qmeUserService,qmeUserSession,qmeModelSession) {
 
         var qmeUser = this;
 
@@ -99,6 +99,20 @@
         qmeUser.routeUserProfile = function (){
            $state.go('userprofile');
         };
+
+        qmeUser.changePassword = function (){
+            $('#changePasswordModal').modal('show');
+            var promise = qmeModelSession.modalShown();
+            promise.then(
+                function(data){
+                    console.log("got data from promise!!!!",data);
+                },
+                function(){
+                    console.log("nothing to process window was closed!!!");
+                }
+            )
+        };
+
 
         qmeUser.cancelUserUpdate = function (){
             $state.go('home', {});

@@ -8,23 +8,24 @@
                 <form name="userProfileForm" class="form-horizontal">
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userEmail">User Email:</label>
-                        <input ng-disabled="true" ng-model="qmeUserCtrl.userEmail" name="userEmail" id="userEmail" maxlength="128" min="5" type="email" class="form-control">
+                        <input ng-disabled="true" ng-model="qmeUserCtrl.userEmail" name="userEmail" id="userEmail" style="width:500px;" maxlength="128" min="5" type="email" class="form-control">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userName">User Name:</label>
-                        <input ng-disabled="true" ng-model="qmeUserCtrl.userName" id="userName" maxlength="128" min="5" type="text"  class="form-control">
+                        <input ng-disabled="true" ng-model="qmeUserCtrl.userName" id="userName" style="width:500px;" maxlength="128" min="5" type="text"  class="form-control">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userPassword">User Password:</label>
-                        <input  ng-disabled="true" ng-model="qmeUserCtrl.userPassword"  id="userPassword" maxlength="128" min="5" type="password"  class="form-control">
+                        <input  ng-disabled="true" ng-model="qmeUserCtrl.userPassword"  id="userPassword" style="width:500px;" maxlength="128" min="5" type="password"  class="form-control">
+                        <button id="changeButton" type="button" class="btn btn-info btn-xs" ng-click="qmeUserCtrl.changePassword()">Change Password</button>
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userFirstName">User First Name:</label>
-                        <input ng-model="qmeUserCtrl.userFirstName" id="userFirstName" maxlength="128" min="5" type="text" class="form-control" ng-required="true">
+                        <input ng-model="qmeUserCtrl.userFirstName" id="userFirstName" style="width:500px;" maxlength="128" min="5" type="text" class="form-control" ng-required="true">
                     </div>
                     <div style="margin-bottom: 25px" class="form-group">
                         <label for="userLastName">User Last Name:</label>
-                        <input ng-model="qmeUserCtrl.userLastName" id="userLastName" maxlength="128" min="5" type="text" class="form-control">
+                        <input ng-model="qmeUserCtrl.userLastName" id="userLastName" style="width:500px;" maxlength="128" min="5" type="text" class="form-control">
                     </div>
                     <button id="submitUpdateProfileButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeUserCtrl.updateUser()" ng-disabled="userProfileForm.$invalid">Update User</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -35,7 +36,39 @@
                 </form>
             </div>
         </div>
-        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog">
+    </div>
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" ng-controller="qmePasswordModalCtrl as qmePasswordModalCtrl">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="qmePasswordModalCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="passwordModalLabel">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <qme-flash></qme-flash>
+                    <form name="qmePasswordModalCtrl.passwordForm">
+                        <div class="form-group">
+                            <label for="currentPassword" class="control-label">Current Password</label>
+                            <input type="password" maxlength="128" id="currentPassword" ng-model="qmePasswordModalCtrl.currentPassword" placeholder="Current Password" class="form-control" ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword" class="control-label">New Password</label>
+                            <input type="password" maxlength="128" id="newPassword" ng-model="qmePasswordModalCtrl.password" placeholder="Password" class="form-control" ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword" class="control-label">Confirm Password</label>
+                            <input type="password" maxlength="128" id="confirmPassword" ng-model="qmePasswordModalCtrl.passwordConfirm" placeholder="Password" class="form-control" ng-required="true" ng-model-options="{ updateOn: 'blur' }" ng-change="qmePasswordModalCtrl.validatePasswordFields()">
+                        </div>
+                        <div ng-show="qmeUpdatePassword.error">error</div>
+                        <div ng-show="(qmeUpdatePassword.error && qmeUpdatePassword.error === true)">This is a test!!!</div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"  ng-click="qmePasswordModalCtrl.cancel()">Cancel</button>
+                    <button type="button" class="btn btn-info"     ng-click="qmePasswordModalCtrl.save()" ng-disabled="qmePasswordModalCtrl.passwordForm.$invalid">Save</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
