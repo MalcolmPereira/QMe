@@ -14,6 +14,7 @@
         qmeUpdatePassword.currentPassword = "";
         qmeUpdatePassword.password = "";
         qmeUpdatePassword.passwordConfirm = "";
+        qmeUpdatePassword.isPasswordError = false;
 
         qmeUpdatePassword.save = function(){
             $('#changePasswordModal').modal('hide');
@@ -26,15 +27,27 @@
         };
 
         qmeUpdatePassword.cancel = function(){
+            qmeUpdatePassword.passwordForm.$setPristine();
+            qmeUpdatePassword.currentPassword = "";
+            qmeUpdatePassword.password = "";
+            qmeUpdatePassword.passwordConfirm = "";
+            qmeUpdatePassword.isPasswordError = false;
             $('#changePasswordModal').modal('hide');
             qmeModelSession.destroy();
         };
 
         qmeUpdatePassword.validatePasswordFields = function (){
             if(qmeUpdatePassword.password != qmeUpdatePassword.passwordConfirm){
+              qmeUpdatePassword.isPasswordError = true;
               qmeUpdatePassword.passwordForm.$setValidity("invalidPassword",false,{});
               qmeUpdatePassword.passwordConfirm ="";
+            }else{
+               qmeUpdatePassword.passwordForm.$setValidity();
             }
+        };
+
+        qmeUpdatePassword.showPasswordError = function(){
+            return qmeUpdatePassword.isPasswordError;
         };
     }
 

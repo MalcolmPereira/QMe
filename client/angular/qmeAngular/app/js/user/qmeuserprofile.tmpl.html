@@ -58,7 +58,7 @@
                             <label for="confirmPassword" class="control-label">Confirm Password</label>
                             <input type="password" maxlength="128" id="confirmPassword" ng-model="qmePasswordModalCtrl.passwordConfirm" placeholder="Confirm Password" class="form-control" ng-required="true" ng-model-options="{ updateOn: 'blur' }" ng-change="qmePasswordModalCtrl.validatePasswordFields()">
                         </div>
-                        <div ng-messages="qmePasswordModalCtrl.passwordForm.$error" role="alert">
+                        <div ng-show="qmePasswordModalCtrl.showPasswordError()" ng-messages="qmePasswordModalCtrl.passwordForm.$error" role="alert">
                             <div ng-message="invalidPassword">Entered Passwords do not match, please confirm passwords.</div>
                         </div>
 
