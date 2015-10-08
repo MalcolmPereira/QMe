@@ -41,13 +41,26 @@
               qmeUpdatePassword.isPasswordError = true;
               qmeUpdatePassword.passwordForm.$setValidity("invalidPassword",false,{});
               qmeUpdatePassword.passwordConfirm ="";
+              return false;
             }else{
-               qmeUpdatePassword.passwordForm.$setValidity();
+              qmeUpdatePassword.passwordForm.$setValidity();
+              return true;
             }
         };
 
         qmeUpdatePassword.showPasswordError = function(){
             return qmeUpdatePassword.isPasswordError;
+        };
+
+        qmeUpdatePassword.isValidForm = function(){
+            return !(qmeUpdatePassword.currentPassword &&
+                    qmeUpdatePassword.currentPassword.length > 0 &&
+                qmeUpdatePassword.password &&
+                qmeUpdatePassword.password.length > 0 &&
+                qmeUpdatePassword.passwordConfirm &&
+                qmeUpdatePassword.passwordConfirm.length > 0 &&
+                qmeUpdatePassword.validatePasswordFields()
+            )
         };
     }
 
