@@ -54,7 +54,10 @@ public class UserControllerTest extends QMeControllerTest {
 
     @Override
     public MockMvc getMockMVCInstance(ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver) {
-        return MockMvcBuilders.standaloneSetup(userController).setHandlerExceptionResolvers(exceptionHandlerExceptionResolver).build();
+        MockMvc mockMVC =  MockMvcBuilders.standaloneSetup(userController).setHandlerExceptionResolvers(exceptionHandlerExceptionResolver).build();
+        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
+        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
+        return mockMVC;
     }
 
     @Test
@@ -258,9 +261,6 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
-
         when(userService.save(anyObject(), eq((Long) 1L))).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetail());
 
         QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
@@ -417,9 +417,6 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
-
         when(userService.save(anyObject(), eq((Long) 1L))).thenThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service"));
 
         QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
@@ -440,9 +437,6 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
-
         when(userService.save(anyObject(), eq((Long) 1L))).thenThrow(new QMeResourceConflictException("Some conflicting data error in the Service"));
 
         QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
@@ -462,9 +456,6 @@ public class UserControllerTest extends QMeControllerTest {
 
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
-
-        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
 
         when(userService.save(anyObject(), eq((Long) 1L))).thenThrow(new QMeServerException("Some Error in the Service"));
 
@@ -530,9 +521,6 @@ public class UserControllerTest extends QMeControllerTest {
 
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
-
-        QMeUserDetails qMeUserDetails = (QMeUserDetails) QMeUserDetails.create(1L, "Some User Name", "Some Password", "Role 1", "Role 2", "Role 3");
-        SecurityContextHolder.getContext().setAuthentication(qMeUserDetails);
 
         when(userService.update(anyObject(), eq(1L), eq(1L))).thenThrow(new QMeServerException("Some Error in the Service"));
 
