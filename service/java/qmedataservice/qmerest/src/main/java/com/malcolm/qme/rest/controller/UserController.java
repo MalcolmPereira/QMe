@@ -10,10 +10,7 @@ package com.malcolm.qme.rest.controller;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.*;
-import com.malcolm.qme.rest.model.QMeResetPassword;
-import com.malcolm.qme.rest.model.QMeStageUser;
-import com.malcolm.qme.rest.model.QMeUser;
-import com.malcolm.qme.rest.model.QMeUserDetail;
+import com.malcolm.qme.rest.model.*;
 import com.malcolm.qme.rest.service.UserService;
 import com.malcolm.qme.security.service.QMeUserDetails;
 import org.slf4j.Logger;
@@ -107,7 +104,7 @@ public class UserController implements UserAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
+    public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUpdateUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         log(getCurrentUser(), " update  ");
         return userService.update(user, userId, getCurrentUser().getUserID());
     }

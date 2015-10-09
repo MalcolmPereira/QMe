@@ -14,10 +14,7 @@ import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.*;
-import com.malcolm.qme.rest.model.QMeResetPassword;
-import com.malcolm.qme.rest.model.QMeStageUser;
-import com.malcolm.qme.rest.model.QMeUser;
-import com.malcolm.qme.rest.model.QMeUserDetail;
+import com.malcolm.qme.rest.model.*;
 import com.malcolm.qme.rest.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -719,7 +716,7 @@ public class UserServiceImplTest {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
 
-        QMeUser qmeUser = new QMeUser();
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
         qmeUser.setUserName("suser1");
         qmeUser.setUserPassword("spassword1");
         qmeUser.setUserFirstName("Simple 1");
@@ -740,7 +737,7 @@ public class UserServiceImplTest {
     @Test(expected = QMeResourceNotFoundException.class)
     public void testUpdateNullUserQMeException() throws QMeResourceException, QMeException {
         when(userRepo.findById(1L)).thenReturn(null);
-        QMeUser qmeUser = new QMeUser();
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
         qmeUser.setUserName("suser1");
         qmeUser.setUserPassword("spassword1");
         qmeUser.setUserFirstName("Simple 1");
@@ -753,7 +750,7 @@ public class UserServiceImplTest {
     @Test(expected = QMeServerException.class)
     public void testUpdateFindUserQMeException() throws QMeResourceException, QMeException {
         when(userRepo.findById(1L)).thenThrow(new QMeException("some error"));
-        QMeUser qmeUser = new QMeUser();
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
         qmeUser.setUserName("suser1");
         qmeUser.setUserPassword("spassword1");
         qmeUser.setUserFirstName("Simple 1");
@@ -768,7 +765,7 @@ public class UserServiceImplTest {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenThrow(QMeException.class);
 
-        QMeUser qmeUser = new QMeUser();
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
         qmeUser.setUserName("suser1");
         qmeUser.setUserPassword("spassword1");
         qmeUser.setUserFirstName("Simple 1");

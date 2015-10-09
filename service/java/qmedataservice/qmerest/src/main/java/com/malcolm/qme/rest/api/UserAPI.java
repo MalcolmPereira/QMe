@@ -6,11 +6,8 @@
  **/
 package com.malcolm.qme.rest.api;
 
-import com.malcolm.qme.rest.exception.*;
-import com.malcolm.qme.rest.model.QMeResetPassword;
-import com.malcolm.qme.rest.model.QMeStageUser;
-import com.malcolm.qme.rest.model.QMeUser;
-import com.malcolm.qme.rest.model.QMeUserDetail;
+import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -137,9 +134,9 @@ public interface UserAPI extends QMeAPI {
      * Update QMe User
      *
      * @param user QMe User
-     * @return QMe User
+     * @return QMe User Updated User
      */
-    QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUser user) throws QMeResourceException;
+    QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUpdateUser user) throws QMeResourceException;
 
     /**
      * Delete QMe User

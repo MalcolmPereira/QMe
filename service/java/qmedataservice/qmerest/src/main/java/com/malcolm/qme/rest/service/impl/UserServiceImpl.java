@@ -14,10 +14,7 @@ import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.*;
-import com.malcolm.qme.rest.model.QMeResetPassword;
-import com.malcolm.qme.rest.model.QMeStageUser;
-import com.malcolm.qme.rest.model.QMeUser;
-import com.malcolm.qme.rest.model.QMeUserDetail;
+import com.malcolm.qme.rest.model.*;
 import com.malcolm.qme.rest.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,7 +183,9 @@ public final class UserServiceImpl implements UserService {
     @Override
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
         try {
+            QMeUpdateUser updatedUser = (QMeUpdateUser)qMeUser;
             User user = getUser(qMeUser, id, userId);
+
             user = userRepo.update(user, userId);
             return getQMeUserDetail(user);
         }catch(QMeException err){

@@ -9,7 +9,7 @@ package com.malcolm.qme.rest.model;
 /**
  * @author Malcolm
  */
-public class QMeUpdateUser extends QMeUser{
+public class QMeUpdateUser extends QMeUserDetail {
     /**
      * Updated User Password
      */
