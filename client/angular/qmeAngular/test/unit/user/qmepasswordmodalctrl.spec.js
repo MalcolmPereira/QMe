@@ -76,7 +76,6 @@
             expect(ctrl.isPasswordError ).toBe(false);
             var p = qmeModelSession.modalShown();
             p.then(function (data) {
-                console.log("data",data);
             },function(error){
                 expect(ctrl.passwordForm ).toBeDefined();
                 expect(ctrl.currentPassword ).toBe('');
