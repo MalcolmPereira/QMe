@@ -148,7 +148,7 @@ public final class UserServiceImpl implements UserService {
         try {
              User user           = getStagingUser(qMeUser);
              String stagingToken = userRepo.stageUserRegistration(user);
-             LOG.debug("User Staging completed for User "+qMeUser+ " Got token "+stagingToken);
+             LOG.debug("User Staging completed for User " + qMeUser + " Got token " + stagingToken);
              if(stagingToken != null && stagingToken.length() > 0){
 
                  try {
@@ -184,7 +184,7 @@ public final class UserServiceImpl implements UserService {
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
         try {
             QMeUpdateUser updatedUser = (QMeUpdateUser)qMeUser;
-            User user = getUser(qMeUser, id, userId);
+            User user = getUser(updatedUser, id, userId);
 
             user = userRepo.update(user, userId);
             return getQMeUserDetail(user);
@@ -226,7 +226,7 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeResourceNotFoundException("User with User email "+userEmail+" not found");
             }
             String resetToken = atomicTokenGenerator.generateUniqueResetToken();
-            userRepo.addResetToken(resetToken,user.getUserID());
+            userRepo.addResetToken(resetToken, user.getUserID());
 
             try {
                 sendEmail(user.getUserName(), user.getUserEmail(), resetToken, url);
@@ -416,11 +416,21 @@ public final class UserServiceImpl implements UserService {
      * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceNotFoundException,QMeServerException {
+    private User getUser(QMeUser qMeuser, Long userId, Long updateUserId) throws QMeResourceNotFoundException, QMeServerException, QMeInvalidResourceDataException {
         try{
             User currentUser = userRepo.findById(userId);
             if(currentUser == null){
                 throw new QMeResourceNotFoundException("User with User  ID "+userId+" not found");
+            }
+            String currentUserPassword = currentUser.getUserPassword();
+            if(qMeuser instanceof  QMeUpdateUser && ((QMeUpdateUser)qMeuser).getUpdatedUserPassword() != null){
+                if(qMeuser.getUserPassword() == null || qMeuser.getUserPassword().trim().length() == 0){
+                    throw new QMeInvalidResourceDataException("Valid Current User Password is required to update user password");
+                }
+                if(!passcodeEncoder.matches(currentUser.getUserPassword(), passcodeEncoder.encode(qMeuser.getUserPassword()))){
+                    throw new QMeInvalidResourceDataException("Current User Password does not match, please enter valid current password.");
+                }
+                currentUserPassword = ((QMeUpdateUser)qMeuser).getUpdatedUserPassword();
             }
             String firstName = currentUser.getUserFirstName();
             if(qMeuser.getUserFirstName() != null && qMeuser.getUserFirstName().trim().length() > 0){
@@ -433,7 +443,7 @@ public final class UserServiceImpl implements UserService {
             return new User(
                     currentUser.getUserID(),
                     currentUser.getUserName(),
-                    currentUser.getUserPassword(),
+                    currentUserPassword,
                     firstName,
                     lastName,
                     currentUser.getUserEmail(),
