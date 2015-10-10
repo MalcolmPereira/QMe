@@ -22,6 +22,7 @@ module.exports = function(config){
             'app/lib/angular/angular.min.js',
             'app/lib/angular-ui-router/release/angular-ui-router.min.js',
             'app/lib/angular-resource/angular-resource.min.js',
+            'app/lib/angular-messages/angular-messages.min.js',
             'app/lib/angular-base64/angular-base64.min.js',
             'app/lib/angular-mocks/angular-mocks.js',
             'app/js/qme.js',
