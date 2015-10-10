@@ -734,6 +734,73 @@ public class UserServiceImplTest {
         assertThat(userDetail.getUserName(), equalTo("suser1"));
     }
 
+    @Test
+    public void testUpdateUpdatePassword() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUserWithTestPassword());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        when(passwordEncoder.matches(eq("testtestpassword"), Matchers.<String>anyObject())).thenReturn(true);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword("testtestpassword");
+        qmeUser.setUpdatedUserPassword("newpassword");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+
+        QMeUserDetail userDetail = userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+        verify(userRepo).update(Matchers.<User>anyObject(), eq(1L));
+        verify(passwordEncoder).matches(eq("testtestpassword"), Matchers.<String>anyObject());
+
+        assertNotNull(userDetail);
+
+        assertThat(userDetail.getUserId(), equalTo(1L));
+        assertThat(userDetail.getUserName(), equalTo("suser1"));
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateUpdatePasswordInvalidCurrentPassword() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUserWithTestPassword());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        when(passwordEncoder.matches(eq("testtestpassword"),Matchers.<String>anyObject())).thenReturn(true);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword(null);
+        qmeUser.setUpdatedUserPassword("newpassword");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+
+        userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateUpdatePasswordWrongCurrentPassword() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUserWithTestPassword());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        when(passwordEncoder.matches(eq("testtestpassword"),Matchers.<String>anyObject())).thenReturn(false);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword(null);
+        qmeUser.setUpdatedUserPassword("newpassword");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+
+        userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+        verify(passwordEncoder).matches(eq("testtestpassword"), Matchers.<String>anyObject());
+
+    }
+
+
     @Test(expected = QMeResourceNotFoundException.class)
     public void testUpdateNullUserQMeException() throws QMeResourceException, QMeException {
         when(userRepo.findById(1L)).thenReturn(null);

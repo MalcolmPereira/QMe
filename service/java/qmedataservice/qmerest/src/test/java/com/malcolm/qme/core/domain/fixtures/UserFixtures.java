@@ -28,6 +28,15 @@ public class UserFixtures {
     }
 
     /**
+     * Return Simple User
+     *
+     * @return User
+     */
+    public static User simpleUserWithTestPassword() {
+        return new User(1L, "suser1", "testtestpassword", "Simple 1", "Simple User 1", "SimpleUser1@User.com", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(), 1L);
+    }
+
+    /**
      * Return Simple User List
      *
      * @return User List

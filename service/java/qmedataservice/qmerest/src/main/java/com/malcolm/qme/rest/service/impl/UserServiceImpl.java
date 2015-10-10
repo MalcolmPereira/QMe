@@ -427,7 +427,7 @@ public final class UserServiceImpl implements UserService {
                 if(qMeuser.getUserPassword() == null || qMeuser.getUserPassword().trim().length() == 0){
                     throw new QMeInvalidResourceDataException("Valid Current User Password is required to update user password");
                 }
-                if(!passcodeEncoder.matches(currentUser.getUserPassword(), passcodeEncoder.encode(qMeuser.getUserPassword()))){
+                if(!passcodeEncoder.matches(qMeuser.getUserPassword(),currentUser.getUserPassword())){
                     throw new QMeInvalidResourceDataException("Current User Password does not match, please enter valid current password.");
                 }
                 currentUserPassword = ((QMeUpdateUser)qMeuser).getUpdatedUserPassword();
