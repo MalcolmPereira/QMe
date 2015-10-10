@@ -11,38 +11,22 @@
 
         var qmeModelSession = this;
 
-        var deferred = $q.defer();
-
-        initPromise();
-
-        function initPromise() {
-            deferred = $q.defer();
-        }
-
-        qmeModelSession.init = function() {
-            deferred = $q.defer();
-        };
-
-        qmeModelSession.init = function() {
-            deferred = $q.defer();
-        };
+        var modalPromise;
 
         qmeModelSession.modalShown = function(){
-            initPromise();
-            console.log("got deferred",deferred);
-            console.log("got deferred promise",deferred.promise);
-            return deferred.promise;
+            modalPromise = $q.defer();
+            return modalPromise.promise;
         };
 
         qmeModelSession.create = function(modaldata) {
-            if (deferred) {
-                deferred.resolve(modaldata);
+            if (modalPromise) {
+                modalPromise.resolve(modaldata);
             }
         };
 
         qmeModelSession.destroy = function(){
-            if (deferred) {
-                deferred.reject();
+            if (modalPromise) {
+                modalPromise.reject();
             }
         };
     }

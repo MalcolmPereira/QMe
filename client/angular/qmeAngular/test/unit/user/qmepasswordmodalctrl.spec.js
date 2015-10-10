@@ -5,11 +5,13 @@
 
     describe('Controller: QMe Password Modal Controller', function() {
 
-        var ctrl,qmeModelSession;
+        var rootScope,ctrl,qmeModelSession;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function($controller,_qmeModelSession_) {
+        beforeEach(inject(function($rootScope,$controller,_qmeModelSession_) {
+
+            rootScope = $rootScope;
 
             qmeModelSession =  _qmeModelSession_;
 
@@ -47,16 +49,16 @@
             expect(ctrl.passwordConfirm ).toBe('newtest');
             expect(ctrl.isPasswordError ).toBe(false);
             var p = qmeModelSession.modalShown();
-            p.then(function () {
-                console.log("hello");
+            p.then(function (data) {
+                expect(data.currentPassword ).toBe('test');
+                expect(data.password ).toBe('newtest');
+                expect(data.passwordConfirm ).toBe('newtest');
+                expect(ctrl.isPasswordError ).toBe(false);
             });
-            console.log('got promise',p);
             ctrl.save();
-            console.log('got promise',p);
-            ctrl.save();
-            ctrl.save();
-
+            rootScope.$digest();
         });
+
 
     });
 

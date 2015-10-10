@@ -11,6 +11,7 @@
 
         var qmeUpdatePassword = this;
 
+        qmeUpdatePassword.passwordForm;
         qmeUpdatePassword.currentPassword = "";
         qmeUpdatePassword.password = "";
         qmeUpdatePassword.passwordConfirm = "";
