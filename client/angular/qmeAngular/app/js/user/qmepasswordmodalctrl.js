@@ -53,7 +53,7 @@
             return qmeUpdatePassword.isPasswordError;
         };
 
-        qmeUpdatePassword.isValidForm = function(){
+        qmeUpdatePassword.isInValidForm = function(){
             return !(qmeUpdatePassword.currentPassword &&
                     qmeUpdatePassword.currentPassword.length > 0 &&
                 qmeUpdatePassword.password &&
