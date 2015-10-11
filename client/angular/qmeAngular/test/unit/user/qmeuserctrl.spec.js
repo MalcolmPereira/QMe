@@ -926,13 +926,14 @@
 
 
         describe('Controller: QMe User Controller Already Initialized With Logged In User', function() {
-            var qmeUserSession;
+            var qmeUserSession,userAPIEndpoint;
             beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeUserSession_) {
                 scope = $rootScope.$new();
                 state = $state;
                 stateParams = $stateParams;
                 httpBackend = $httpBackend;
                 qmeContants = _QME_CONSTANTS_;
+                userAPIEndpoint  = qmeContants.qmeservice+"/user/";
                 qmeUserSession = _qmeUserSession_;
                 qmeUserSession.create(
                     "someauthtoken",
@@ -963,8 +964,112 @@
                 expect(ctrl.userLastName).toBeDefined();
                 expect(ctrl.userLastName).toBe("User");
             });
-
-
+            it('Should handle 404 Error for invalid data When Update User User Not Found', function() {
+                ctrl.userPassword = "";
+                ctrl.userUpdatedPassword="";
+                ctrl.userFirstName="Test Updated";
+                ctrl.userLastName="User Updated";
+                var updateUser = {
+                    "userPassword": "" ,
+                    "updatedUserPassword":"",
+                    "userFirstName": "Test Updated",
+                    "userLastName": "User Updated",
+                    "userId":1,
+                    "userName":"testuser",
+                    "userEmail":"test.user@gmail.com",
+                };
+                httpBackend.expectPUT(userAPIEndpoint+"1",updateUser).respond(404,{});
+                httpBackend.whenGET(/js\//).respond(200,{});
+                ctrl.updateUser();
+                httpBackend.flush();
+                expect(scope.flash).toBeDefined();
+                expect(scope.flash.type).toBeDefined();
+                expect(scope.flash.type).toBe('error');
+                expect(scope.flash.message).toBeDefined();
+                expect(scope.flash.message).toBe('Oops.....Invalid request for user update, user not found.');
+            });
+            it('Should handle 400 Error for invalid data on Update User ', function() {
+                ctrl.userPassword = "";
+                ctrl.userUpdatedPassword="";
+                ctrl.userFirstName="Test Updated";
+                ctrl.userLastName="User Updated";
+                var updateUser = {
+                    "userPassword": "" ,
+                    "updatedUserPassword":"",
+                    "userFirstName": "Test Updated",
+                    "userLastName": "User Updated",
+                    "userId":1,
+                    "userName":"testuser",
+                    "userEmail":"test.user@gmail.com",
+                };
+                httpBackend.expectPUT(userAPIEndpoint+"1",updateUser).respond(400,{});
+                httpBackend.whenGET(/js\//).respond(200,{});
+                ctrl.updateUser();
+                httpBackend.flush();
+                expect(scope.flash).toBeDefined();
+                expect(scope.flash.type).toBeDefined();
+                expect(scope.flash.type).toBe('error');
+                expect(scope.flash.message).toBeDefined();
+                expect(scope.flash.message).toBe('Oops.....Invalid request for user update, please make current password is entered and is valid for change password request.');
+            });
+            it('Should handle 500 Error for Server Error on  Update User ', function() {
+                ctrl.userPassword = "";
+                ctrl.userUpdatedPassword="";
+                ctrl.userFirstName="Test Updated";
+                ctrl.userLastName="User Updated";
+                var updateUser = {
+                    "userPassword": "" ,
+                    "updatedUserPassword":"",
+                    "userFirstName": "Test Updated",
+                    "userLastName": "User Updated",
+                    "userId":1,
+                    "userName":"testuser",
+                    "userEmail":"test.user@gmail.com",
+                };
+                httpBackend.expectPUT(userAPIEndpoint+"1",updateUser).respond(500,{});
+                httpBackend.whenGET(/js\//).respond(200,{});
+                ctrl.updateUser();
+                httpBackend.flush();
+                expect(scope.flash).toBeDefined();
+                expect(scope.flash.type).toBeDefined();
+                expect(scope.flash.type).toBe('error');
+                expect(scope.flash.message).toBeDefined();
+                expect(scope.flash.message).toBe('Oops.....Error registering new user, please retry in some time.');
+            });
+            it('Should handle Valid User Update Request ', function() {
+                ctrl.userPassword = "";
+                ctrl.userUpdatedPassword="";
+                ctrl.userFirstName="Test Updated";
+                ctrl.userLastName="User Updated";
+                var updateUser = {
+                    "userPassword": "" ,
+                    "updatedUserPassword":"",
+                    "userFirstName": "Test Updated",
+                    "userLastName": "User Updated",
+                    "userId":1,
+                    "userName":"testuser",
+                    "userEmail":"test.user@gmail.com",
+                };
+                var user = {
+                    "userID": 1,
+                    "userName": "testuser",
+                    "userPassword": null,
+                    "userFirstName": "Test",
+                    "userLastName": "User",
+                    "userEmail": "test.user@gmail.com",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                };
+                httpBackend.expectPUT(userAPIEndpoint+"1",updateUser).respond(200,user);
+                httpBackend.whenGET(/js\//).respond(200,{});
+                ctrl.updateUser();
+                httpBackend.flush();
+                expect(scope.flash).toBeDefined();
+                expect(scope.flash.type).toBeDefined();
+                expect(scope.flash.type).toBe('success');
+                expect(scope.flash.message).toBeDefined();
+                expect(scope.flash.message).toBe('User profile update successful.');
+            });
         });
 
     });

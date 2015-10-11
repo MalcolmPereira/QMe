@@ -144,6 +144,26 @@
             return registeredUserPromise.promise;
         };
 
+        qmeUserService.updateUser = function(updatedUser){
+
+            updatedUser[ "userId" ] = qmeUserSession.userid();
+            updatedUser[ "userName" ] = qmeUserSession.username();
+            updatedUser[ "userEmail" ] = qmeUserSession.useremail();
+
+            var updateUserPromise = $q.defer();
+
+            qmeUserResource.userUpdateResource(qmeUserSession.authtoken(),qmeUserSession.userid())
+                .updateUser({}, updatedUser
+                ,function(res){
+                    updateUserPromise.resolve(res);
+                },
+                function(error){
+                    updateUserPromise.reject(error);
+                }
+            );
+            return updateUserPromise.promise;
+        };
+
         qmeUserService.resetPassword = function(useremail){
            var resetPasswordUserPromise = $q.defer();
 

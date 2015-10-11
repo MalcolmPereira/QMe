@@ -200,7 +200,31 @@
 
             qmeFlashService.Clear();
 
+            var updateUser = {
+                "userPassword": qmeUser.userPassword ,
+                "updatedUserPassword":qmeUser.userUpdatedPassword,
+                "userFirstName": qmeUser.userFirstName,
+                "userLastName": qmeUser.userLastName
+            };
 
+            qmeUserService
+                .updateUser(updateUser)
+                .then(
+                function(res){
+                    qmeFlashService.Success("User profile update successful.",false);
+                },
+                function(error){
+                    if(error && error.status && error.status == 404){
+                        qmeFlashService.Error("Oops.....Invalid request for user update, user not found.");
+
+                    }else if(error && error.status && error.status == 400){
+                        qmeFlashService.Error("Oops.....Invalid request for user update, please make current password is entered and is valid for change password request.");
+
+                    }else{
+                        qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                    }
+                }
+            );
         };
 
         qmeUser.registerUser = function (){

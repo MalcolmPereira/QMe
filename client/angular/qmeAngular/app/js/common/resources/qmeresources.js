@@ -13,10 +13,6 @@
             var userResetPaswordEndpoint    = userAPI+"/reset/resetpassword/";
             var userLogoutEndpoint          = QME_CONSTANTS.qmeservice+"/logout";
 
-            this.userResource = function(authToken){
-                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
-                return $resource(userAPI);
-            };
             this.userAuthResource = function(){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = undefined;
                 return $resource(userAuthEndPoint);
@@ -39,6 +35,10 @@
             };
             this.userResetPasswordResource = function(userEmail){
                 return $resource(userResetPaswordEndpoint+userEmail,{},{'resetpassword':{method:'PUT'}});
+            };
+            this.userUpdateResource = function(authToken, userId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(userAPI+"/"+userId,{},{'updateUser':{method:'PUT'}});
             };
             this.logoutResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
