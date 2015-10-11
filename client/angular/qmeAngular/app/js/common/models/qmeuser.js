@@ -68,6 +68,18 @@
            return _userlastname
         };
 
+        qmeUserSession.setUserFirstname= function (userfirstname) {
+            _userfirstname = userfirstname;
+        };
+
+        qmeUserSession.userlastname= function () {
+                return _userlastname;
+        };
+
+        qmeUserSession.setUserLastname= function (userlastname) {
+             _userlastname = userlastname;
+        };
+
         qmeUserSession.useremail= function () {
            return _useremail
         };
@@ -97,6 +109,8 @@
                 qmeUserSession.userrole().indexOf(QME_CONSTANTS.adminrole) > -1
             );
         };
+
+
 
     })
 })();

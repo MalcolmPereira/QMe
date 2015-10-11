@@ -158,6 +158,8 @@
             qmeUserResource.userUpdateResource(qmeUserSession.authtoken(),qmeUserSession.userid())
                 .updateUser({}, updatedUser
                 ,function(res){
+                    qmeUserSession.setUserFirstname(res.userFirstName);
+                    qmeUserSession.setUserLastname(res.userLastName);
                     updateUserPromise.resolve(res);
                 },
                 function(error){
