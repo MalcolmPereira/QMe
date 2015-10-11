@@ -423,7 +423,8 @@ public final class UserServiceImpl implements UserService {
                 throw new QMeResourceNotFoundException("User with User  ID "+userId+" not found");
             }
             String currentUserPassword = currentUser.getUserPassword();
-            if(qMeuser instanceof  QMeUpdateUser && ((QMeUpdateUser)qMeuser).getUpdatedUserPassword() != null){
+            if(qMeuser instanceof  QMeUpdateUser && ((QMeUpdateUser)qMeuser).getUpdatedUserPassword() != null
+                    && ((QMeUpdateUser)qMeuser).getUpdatedUserPassword().trim().length() > 0 ){
                 if(qMeuser.getUserPassword() == null || qMeuser.getUserPassword().trim().length() == 0){
                     throw new QMeInvalidResourceDataException("Valid Current User Password is required to update user password");
                 }
