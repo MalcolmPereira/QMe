@@ -106,16 +106,13 @@
             var promise = qmeModelSession.modalShown();
             promise.then(
                 function(data){
-                    qmeUser.userPassword = "";
-                    qmeUser.userPasswordConfirm = "";
-                    qmeUser.userUpdatedPassword = "";
-
-                    console.log("got data from promise!!!!",data);
-                    qmeFlashService.Success("User profile updated successfully.");
-
+                    qmeUser.userPassword = data.currentPassword;
+                    qmeUser.userUpdatedPassword = data.password;
                 },
                 function(){
-                    console.log("nothing to process window was closed!!!");
+                    qmeUser.userPasswordConfirm = "";
+                    qmeUser.userPassword = "";
+                    qmeUser.userUpdatedPassword = "";
                 }
             )
         };

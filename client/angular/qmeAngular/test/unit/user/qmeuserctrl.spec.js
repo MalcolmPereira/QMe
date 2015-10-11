@@ -339,11 +339,19 @@
         it('Ensure user can change password on user profile screen ', function() {
             expect(qmeModelSession).toBeDefined();
             ctrl.changePassword();
-            qmeModelSession.create({});
+            qmeModelSession.create({"currentPassword":"test","password":"newtest"});
             rootScope.$digest();
+            expect(ctrl.userPassword).toBeDefined();
+            expect(ctrl.userUpdatedPassword).toBeDefined();
+            expect(ctrl.userPassword).toBe("test");
+            expect(ctrl.userUpdatedPassword).toBe("newtest");
             ctrl.changePassword();
             qmeModelSession.destroy({});
             rootScope.$digest();
+            expect(ctrl.userPassword).toBeDefined();
+            expect(ctrl.userUpdatedPassword).toBeDefined();
+            expect(ctrl.userPassword).toBe("");
+            expect(ctrl.userUpdatedPassword).toBe("");
         });
 
         it('Ensure user profile is updated ', function() {
