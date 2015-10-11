@@ -15,6 +15,7 @@
         qmeUser.userName = "";
         qmeUser.userPassword = "";
         qmeUser.userPasswordConfirm = "";
+        qmeUser.userUpdatedPassword = "";
         qmeUser.userFirstName = "";
         qmeUser.userLastName = "";
 
@@ -105,6 +106,10 @@
             var promise = qmeModelSession.modalShown();
             promise.then(
                 function(data){
+                    qmeUser.userPassword = "";
+                    qmeUser.userPasswordConfirm = "";
+                    qmeUser.userUpdatedPassword = "";
+
                     console.log("got data from promise!!!!",data);
                     qmeFlashService.Success("User profile updated successfully.");
 
