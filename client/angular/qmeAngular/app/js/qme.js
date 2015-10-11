@@ -12,6 +12,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                       reseturl: 'http://localhost:8000/app/#/resetpassword/',
                       stageconfirmurl: 'http://localhost:8000/app/#/confirmuser/',
                       qme_auth_header:'QME-AUTH-TOKEN',
+                      password_mask:'**********',
                       success: 'success',
                       error: 'error',
                       adminrole: 'ADMIN',

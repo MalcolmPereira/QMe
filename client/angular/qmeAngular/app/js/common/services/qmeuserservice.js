@@ -145,7 +145,10 @@
         };
 
         qmeUserService.updateUser = function(updatedUser){
-
+            if(updatedUser.userPassword === QME_CONSTANTS.password_mask ){
+                updatedUser[ "userPassword" ] = "";
+                updatedUser[ "updatedUserPassword" ] = "";
+            }
             updatedUser[ "userId" ] = qmeUserSession.userid();
             updatedUser[ "userName" ] = qmeUserSession.username();
             updatedUser[ "userEmail" ] = qmeUserSession.useremail();
