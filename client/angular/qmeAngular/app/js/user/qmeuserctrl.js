@@ -106,6 +106,8 @@
             promise.then(
                 function(data){
                     console.log("got data from promise!!!!",data);
+                    qmeFlashService.Success("User profile updated successfully.");
+
                 },
                 function(){
                     console.log("nothing to process window was closed!!!");

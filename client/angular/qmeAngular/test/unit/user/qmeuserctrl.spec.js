@@ -5,12 +5,14 @@
     describe('Controller: QMe User Controller', function() {
 
 
-        var scope,
+        var rootScope,
+            scope,
             state,
             stateParams,
             httpBackend,
             ctrl,
             qmeContants,
+            qmeModelSession,
             userAuthEndPoint,
             userStagingEndpoint,
             userRegisterEndpoint,
@@ -22,7 +24,9 @@
 
         beforeEach(module('qmeApp.templates'));
 
-        beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_) {
+        beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeModelSession_) {
+
+            rootScope = $rootScope;
 
             scope = $rootScope.$new();
 
@@ -33,6 +37,8 @@
             httpBackend = $httpBackend;
 
             qmeContants = _QME_CONSTANTS_;
+
+            qmeModelSession = _qmeModelSession_;
 
             userAuthEndPoint =  qmeContants.qmeservice+"/login";
 
@@ -329,6 +335,16 @@
             expect(ctrl.userFirstName).toBeDefined();
             expect(ctrl.userLastName).toBeDefined();
          });
+
+        it('Ensure user can change password on user profile screen ', function() {
+            expect(qmeModelSession).toBeDefined();
+            ctrl.changePassword();
+            qmeModelSession.create({});
+            rootScope.$digest();
+            ctrl.changePassword();
+            qmeModelSession.destroy({});
+            rootScope.$digest();
+        });
 
         it('Ensure user profile is updated ', function() {
             ctrl.updateUser();
