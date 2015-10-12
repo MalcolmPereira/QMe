@@ -99,7 +99,10 @@
         };
 
         qmeUser.routeUserProfile = function (){
-           $state.go('userprofile');
+            if(qmeUser.isSignedIn()){
+                qmeUserService.currentUser().setUpdating();
+                $state.go('userprofile');
+            }
         };
 
         qmeUser.changePassword = function (){
@@ -120,6 +123,9 @@
 
 
         qmeUser.cancelUserUpdate = function (){
+            if(qmeUser.isSignedIn()){
+                qmeUserService.currentUser().doneUpdating();
+            }
             $state.go('home', {});
         };
 

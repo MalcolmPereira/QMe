@@ -34,7 +34,7 @@
     </div>
 </div>
 <div id="qmeSecondaryNav" class="navbar navbar-default navbar-static-top" ng-controller="qmeNavCtrl as qmeNav">
-    <div class="container-fluid">
+    <div ng-show="qmeNav.isSignedIn()" class="container-fluid">
         <div class="navbar-collapse collapse">
             <ul class="nav nav-pills">
                 <li role="presentation" class="active"><a href="#" ng-click="qmeNav.routeHome()">Home</a></li>

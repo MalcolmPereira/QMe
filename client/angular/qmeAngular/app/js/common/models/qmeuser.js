@@ -15,6 +15,7 @@
         var _useremail      = null;
         var _userrole       = null;
         var _userlastlogin  = null;
+        var _updating       = false;
 
 
         qmeUserSession.create = function (
@@ -92,6 +93,14 @@
            return _userlastlogin
         };
 
+        qmeUserSession.setUpdating= function () {
+            _updating = true;
+        };
+
+        qmeUserSession.doneUpdating= function () {
+                _updating = false;
+        };
+
         qmeUserSession.isSignedIn = function(){
             return(
                 qmeUserSession.userid() &&
@@ -110,7 +119,8 @@
             );
         };
 
-
-
+        qmeUserSession.isUpdating = function(){
+            return _updating;
+        };
     })
 })();

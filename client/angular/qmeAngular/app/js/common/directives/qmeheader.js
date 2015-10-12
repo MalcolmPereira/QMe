@@ -22,8 +22,7 @@
             var qmeNav = this;
 
             qmeNav.isSignedIn = function(){
-                return !!(qmeUserSession && qmeUserSession.isSignedIn());
-
+                return (qmeUserSession && qmeUserSession.isSignedIn() && !qmeUserSession.isUpdating());
             };
 
             qmeNav.isAdmin = function(){
