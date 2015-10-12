@@ -11,6 +11,7 @@
 
         var qmeUser = this;
 
+        qmeUser.signInForm;
         qmeUser.userEmail = "";
         qmeUser.userName = "";
         qmeUser.userPassword = "";
