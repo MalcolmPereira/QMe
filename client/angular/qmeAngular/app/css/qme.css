@@ -7,6 +7,7 @@ input.ng-valid.ng-dirty {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
-#qmeNavDIV{
-    z-index: -1;
+.navbar.navbar-static-top + .navbar.navbar-static-top {
+    margin-top: -20px;
+    z-index: auto;
 }
