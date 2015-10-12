@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<div id="qmePrimaryNav" class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><span>QMe Application</span></a>
@@ -32,4 +32,18 @@
             </ul>
         </div>
     </div>
-</nav>
+</div>
+<div id="qmeSecondaryNav" class="navbar navbar-default navbar-static-top" ng-controller="qmeNavCtrl as qmeNav">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse">
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="#" ng-click="qmeNav.routeHome()">Home</a></li>
+                <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Users</a></li>
+                <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Categories</a></li>
+                <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Questions</a></li>
+                <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Quizzes</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
