@@ -88,7 +88,6 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public void stageUser(@RequestBody QMeStageUser user) throws QMeResourceException{
-       log(getCurrentUser(), " stageUser  ");
        userService.stageUser(user);
     }
 
@@ -96,7 +95,6 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public void confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException{
-        log(getCurrentUser(), " confirmRegistration  ");
         userService.confirmUserRegistration(registrationToken);
     }
 
@@ -130,7 +128,6 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
-        log(getCurrentUser(), " forgotPassword  ");
         userService.forgotPassword(userEmail,url);
     }
 
@@ -138,7 +135,6 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
-        log(getCurrentUser(), " resetPassword  ");
         return userService.resetPassword(userEmail, userpassword);
     }
 
