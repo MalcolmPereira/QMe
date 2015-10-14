@@ -1010,7 +1010,7 @@
                 expect(scope.flash.type).toBeDefined();
                 expect(scope.flash.type).toBe('error');
                 expect(scope.flash.message).toBeDefined();
-                expect(scope.flash.message).toBe('Oops.....Invalid request for user update, please make current password is entered and is valid for change password request.');
+                expect(scope.flash.message).toBe('Oops.....Invalid request for user update, please make sure valid current password is entered for change password request.');
             });
             it('Should handle 500 Error for Server Error on  Update User ', function() {
                 ctrl.userPassword = "";
