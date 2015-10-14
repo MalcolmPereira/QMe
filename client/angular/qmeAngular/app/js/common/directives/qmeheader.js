@@ -35,12 +35,19 @@
             };
 
             qmeNav.routeUsers = function(){
-                var userList = {
-                    "user":"1",
-                    "name":"test",
-                    "age":"some age"
-                }
-                $state.go('listusers', userList);
+                $state.go('listusers', {});
+            };
+
+            qmeNav.routeCategories = function(){
+                $state.go('listcategories', {});
+            };
+
+            qmeNav.routeQuestions = function(){
+                $state.go('listquestions', {});
+            };
+
+            qmeNav.routeQuizzes = function(){
+                $state.go('listquizzes', {});
             };
 
             qmeNav.isActive = function(currentState){

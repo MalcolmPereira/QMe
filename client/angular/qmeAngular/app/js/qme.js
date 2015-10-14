@@ -94,6 +94,29 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     controllerAs: 'qmeUserManagementCtrl'
                 })
 
+                //Category Routing
+                .state('listcategories', {
+                    url: "/listcategories",
+                    templateUrl: 'js/admin/category/qmecategorylist.tmpl.html',
+                    controller: 'qmeCategoryManagementCtrl',
+                    controllerAs: 'qmeCategoryManagementCtrl'
+                })
+
+                //Question Routing
+                .state('listquestions', {
+                    url: "/listquestions",
+                    templateUrl: 'js/admin/question/qmequestionlist.tmpl.html',
+                    controller: 'qmeQuestionManagementCtrl',
+                    controllerAs: 'qmeQuestionManagementCtrl'
+                })
+
+                //Quiz Routing Quizzes
+                .state('listquizzes', {
+                    url: "/listquizzes",
+                    templateUrl: 'js/admin/quiz/qmequizlist.tmpl.html',
+                    controller: 'qmeQuizManagementCtrl',
+                    controllerAs: 'qmeQuizManagementCtrl'
+                })
 
         })
 
