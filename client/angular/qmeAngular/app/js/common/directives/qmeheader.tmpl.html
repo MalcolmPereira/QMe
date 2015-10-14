@@ -37,8 +37,8 @@
     <div ng-show="qmeNav.isSignedIn()" class="container-fluid">
         <div class="navbar-collapse collapse">
             <ul class="nav nav-pills">
-                <li role="presentation" class="active"><a href="#" ng-click="qmeNav.routeHome()">Home</a></li>
-                <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Users</a></li>
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('home') }"><a href="#" ng-click="qmeNav.routeHome()">Home</a></li>
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('listusers') }" ng-show="qmeNav.isAdmin()" ><a href="#" ng-click="qmeNav.routeUsers()">Users</a></li>
                 <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Categories</a></li>
                 <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Questions</a></li>
                 <li role="presentation" ng-show="qmeNav.isAdmin()" ><a href="#">Quizzes</a></li>

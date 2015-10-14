@@ -33,6 +33,19 @@
             qmeNav.routeHome = function(){
                 $state.go('home', {});
             };
+
+            qmeNav.routeUsers = function(){
+                var userList = {
+                    "user":"1",
+                    "name":"test",
+                    "age":"some age"
+                }
+                $state.go('listusers', userList);
+            };
+
+            qmeNav.isActive = function(currentState){
+               return (currentState === $state.current.name);
+            };
         }
 
 })();
