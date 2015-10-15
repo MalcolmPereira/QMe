@@ -218,5 +218,19 @@
             );
             return resetPasswordUserPromise.promise;
         };
+
+        qmeUserService.listUsers = function(){
+           var listUserPromise = $q.defer();
+           qmeUserResource.userResource(qmeUserSession.authtoken())
+                .query(
+                function(res){
+                    listUserPromise.resolve(res);
+                },
+                function(error){
+                    listUserPromise.reject(error);
+                }
+            );
+            return listUserPromise.promise;
+        };
     }
 })();

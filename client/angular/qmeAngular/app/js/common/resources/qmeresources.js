@@ -17,6 +17,10 @@
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = undefined;
                 return $resource(userAuthEndPoint);
             };
+            this.userResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(userAPI);
+            };
             this.userGetUserResource = function(userEmail){
                 return $resource(userSearchEndPoint+userEmail);
             };

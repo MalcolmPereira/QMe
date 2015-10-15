@@ -91,7 +91,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/listusers",
                     templateUrl: 'js/admin/user/qmeuserlist.tmpl.html',
                     controller: 'qmeUserManagementCtrl',
-                    controllerAs: 'qmeUserManagementCtrl'
+                    controllerAs: 'qmeUserManagementCtrl',
                 })
 
                 //Category Routing
