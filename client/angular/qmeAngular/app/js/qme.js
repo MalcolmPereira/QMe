@@ -5,7 +5,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
 
     'use strict';
 
-     ngQMe
+    ngQMe
         .constant(
                 'QME_CONSTANTS', {
                       qmeservice: 'http://localhost:8002/qme',
@@ -19,6 +19,12 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                       userrole: 'USER'
                 }
         )
+        .run(function($window,$state,qmeUserSession){
+            $window.onbeforeunload = function () {
+                $state.go('home', {});
+                qmeUserSession.destroy();
+            };
+        })
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN';
