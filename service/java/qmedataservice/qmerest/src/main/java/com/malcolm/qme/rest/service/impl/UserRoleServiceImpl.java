@@ -79,6 +79,11 @@ public final class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
+    public List<QMeUserRole> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        return null;
+    }
+
+    @Override
     public QMeUserRole searchById(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try{
             UserRole userRole = userRoleRepo.findById(id);

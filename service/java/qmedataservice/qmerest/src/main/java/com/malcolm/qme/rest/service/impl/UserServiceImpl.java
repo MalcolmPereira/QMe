@@ -114,6 +114,11 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<QMeUserDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        return null;
+    }
+
+    @Override
     public QMeUserDetail searchById(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try {
             User user = userRepo.findById(id);

@@ -57,6 +57,11 @@ public final class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<QMeCategoryDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        return null;
+    }
+
+    @Override
     public QMeCategoryDetail searchById(Long id) throws QMeResourceNotFoundException,QMeServerException {
         try{
             Category category     =  categoryRepo.findById(id);

@@ -54,6 +54,11 @@ public final class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public List<QMeRole> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        return null;
+    }
+
+    @Override
     public QMeRole searchById(Integer id) throws QMeResourceNotFoundException,QMeServerException {
         try{
             Role role = roleRepo.findById(id);

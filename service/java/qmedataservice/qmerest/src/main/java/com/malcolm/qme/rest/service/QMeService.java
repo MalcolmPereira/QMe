@@ -26,6 +26,14 @@ public interface QMeService<D,T,I> {
     List<D> list() throws QMeServerException;
 
     /**
+     * List all with Pagination and Sorting
+     *
+     * @return List of Resources
+     * @throws QMeServerException
+     */
+    List<D> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException;
+
+    /**
      * Search By Id
      *
      * @param id id Id of Resource
