@@ -40,7 +40,7 @@ public class UserRolesEntity implements java.io.Serializable {
 	@Column(name = "ROLE_ID", nullable = false)
 	private Integer roleId;
 
-    @ManyToOne
+	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID", insertable = false, updatable = false)
 	private RoleEntity roleEntity;
 
@@ -176,12 +176,13 @@ public class UserRolesEntity implements java.io.Serializable {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "UserRolesEntity [userRoleId=" + userRoleId + ", userId="
-				+ userId + ", roleId=" + roleId + "]";
+		return "UserRolesEntity{" +
+				"userRoleId=" + userRoleId +
+				", userId=" + userId +
+				", roleId=" + roleId +
+				", roleEntity=" + roleEntity +
+				'}';
 	}
 }

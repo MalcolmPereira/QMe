@@ -75,6 +75,9 @@ public class UserRepositoryImplTest {
         List<User> users = userRepo.findAll();
         assertNotNull(users);
         assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
     }
 
     @Test
@@ -83,6 +86,7 @@ public class UserRepositoryImplTest {
         User user = userRepo.findById(1L);
         assertNotNull(user);
         assertThat(user.getUserID(), equalTo(1L));
+        assertNotNull(user.getUserRoles());
     }
 
 

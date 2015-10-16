@@ -7,12 +7,10 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
-import com.malcolm.qme.springdata.entity.UserEntity;
-import com.malcolm.qme.springdata.entity.UserPasswordResetEntity;
-import com.malcolm.qme.springdata.entity.UserPasswordResetEntityId;
-import com.malcolm.qme.springdata.entity.UserStagingEntity;
+import com.malcolm.qme.springdata.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -425,7 +423,7 @@ public class UserRepositoryImpl implements UserRepository {
 	 * @return User
 	 */
 	private User getUser(UserEntity userEntity) {
-		return new User(
+		User user = new User(
                 userEntity.getUserId(), userEntity.getUserName(),
 				userEntity.getUserPasscode(), userEntity.getUserFirstName(),
 				userEntity.getUserLastName(), userEntity.getUserEmail(),
@@ -434,6 +432,16 @@ public class UserRepositoryImpl implements UserRepository {
                 userEntity.getUserLastLoginDate(),
 				userEntity.getUserLoginDate(),
                 userEntity.getUpdateUser());
+
+        if(userEntity.getUserRoles() != null) {
+            List<UserRolesEntity> userRoles = userEntity.getUserRoles();
+            List<UserRole> userRoleList = new ArrayList<>();
+            for (UserRolesEntity userRolesEntity : userRoles) {
+                userRoleList.add(new UserRole(userRolesEntity.getUserRoleId(), userRolesEntity.getRoleId(), userRolesEntity.getRoleEntity().getRoleName(), userRolesEntity.getUserId()));
+            }
+            user.setUserRoles(userRoleList);
+        }
+        return user;
 	}
 
     /**

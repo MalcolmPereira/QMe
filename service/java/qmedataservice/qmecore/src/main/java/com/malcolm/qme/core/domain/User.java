@@ -7,6 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Malcolm
@@ -56,6 +57,11 @@ public final class User {
      * Update User Id
      */
     private final Long  updateUserID;
+
+    /**
+     * User Roles
+     */
+    private List<UserRole> userRoles;
 
     /**
      * Public Constructor
@@ -220,6 +226,22 @@ public final class User {
      */
     public Long getUpdateUserID() {
         return updateUserID;
+    }
+
+    /**
+     * Get User Roles
+     * @return User Roles
+     */
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    /**
+     * Set User Roles
+     * @param userRoles User Roles
+     */
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
 

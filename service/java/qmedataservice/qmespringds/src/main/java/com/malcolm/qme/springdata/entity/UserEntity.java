@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Malcolm
@@ -86,12 +87,15 @@ public class UserEntity implements java.io.Serializable {
 	@Column(name = "USER_LOGIN_DATE", nullable = false, length = 19)
 	private LocalDateTime userLoginDate;
 
-
-	/**
+/**
 	 * Update User
 	 */
 	@Column(name = "UPDATE_USER")
 	private Long updateUser;
+
+    @OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="USER_ID", referencedColumnName="USER_ID", insertable = false, updatable = false)
+	private List<UserRolesEntity> userRoles;
 
 	/**
 	 * Public Constructor
@@ -306,6 +310,21 @@ public class UserEntity implements java.io.Serializable {
 		this.updateUser = updateUser;
 	}
 
+    /**
+     * Get User Roles
+     * @return User Roles
+     */
+    public List<UserRolesEntity> getUserRoles() {
+        return userRoles;
+    }
+
+    /**
+     * Set User Roles
+     * @param userRoles User Roles
+     */
+    public void setUserRoles(List<UserRolesEntity> userRoles) {
+        this.userRoles = userRoles;
+    }
 
     @Override
     public boolean equals(Object o) {
