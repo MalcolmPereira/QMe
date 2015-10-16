@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuestionLikes;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuestionLikesRepository;
 import com.malcolm.qme.springdata.entity.UserQuestionLikesEntity;
@@ -38,8 +39,13 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 			throw new QMeException(err);
 		}
 	}
-    
-    @Override
+
+	@Override
+	public List<UserQuestionLikes> findAll(PageSort pageSort) throws QMeException {
+		return null;
+	}
+
+	@Override
 	public List<UserQuestionLikes> findByUserId(Long userID) throws QMeException {
 		try{
     		return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findByUserId(userID)));

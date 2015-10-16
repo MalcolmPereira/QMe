@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.AnswerOption;
 import com.malcolm.qme.core.repository.AnswerOptionRepository;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.AnswerOptionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,11 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
         }catch(Exception err){
             throw new QMeException(err);
         }
+	}
+
+	@Override
+	public List<AnswerOption> findAll(PageSort pageSort) throws QMeException {
+		return null;
 	}
 
 	@Override

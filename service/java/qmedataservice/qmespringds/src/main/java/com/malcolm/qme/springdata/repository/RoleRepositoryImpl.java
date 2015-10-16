@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 
 import com.malcolm.qme.core.domain.Role;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.RoleRepository;
 import com.malcolm.qme.springdata.entity.RoleEntity;
@@ -37,6 +38,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 		}catch(Exception err){
 			throw new QMeException(err);
 		}
+	}
+
+	@Override
+	public List<Role> findAll(PageSort pageSort) throws QMeException {
+		return null;
 	}
 
 	@Override

@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.QuizQuestion;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizQuestionRepository;
 import com.malcolm.qme.springdata.entity.QuizQuestionEntity;
@@ -37,7 +38,12 @@ public class QuizQuestionRepositoryImpl implements QuizQuestionRepository {
 			throw new QMeException(err);
 		}
 	}
-	
+
+	@Override
+	public List<QuizQuestion> findAll(PageSort pageSort) throws QMeException {
+		return null;
+	}
+
 	@Override
 	public List<QuizQuestion> findByQuizId(Long quizID) throws QMeException {
 		try{

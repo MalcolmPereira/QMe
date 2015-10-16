@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.entity.*;
@@ -122,7 +123,12 @@ public class UserRepositoryImpl implements UserRepository {
 		}
 	}
 
-	@Override
+    @Override
+    public List<User> findAll(PageSort pageSort) throws QMeException {
+        return null;
+    }
+
+    @Override
 	public User findById(Long id) throws QMeException {
 		try{
 			UserEntity userEntity = userSpringDataRepo.findOne(id);

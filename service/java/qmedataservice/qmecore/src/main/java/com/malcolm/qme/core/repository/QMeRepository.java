@@ -19,6 +19,12 @@ interface QMeRepository<T,I> {
      */
      List<T> findAll() throws QMeException;
 
+     /**
+     * Find all with Pagination and Sorting
+     * @return List of T
+     */
+     List<T> findAll(PageSort pageSort) throws QMeException;
+
     /**
      * Find By Id
      * @param id ID of Entity

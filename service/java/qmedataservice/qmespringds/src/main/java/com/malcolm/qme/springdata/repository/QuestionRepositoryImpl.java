@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Question;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.entity.QuestionEntity;
@@ -55,6 +56,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }catch(Exception err){
             throw new QMeException(err);
         }
+	}
+
+	@Override
+	public List<Question> findAll(PageSort pageSort) throws QMeException {
+		return null;
 	}
 
 	@Override

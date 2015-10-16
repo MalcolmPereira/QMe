@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserCategory;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserCategoryRepository;
 import com.malcolm.qme.springdata.entity.UserCategoryEntity;
@@ -37,7 +38,12 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 			throw new QMeException(err);
 		}
 	}
-	
+
+	@Override
+	public List<UserCategory> findAll(PageSort pageSort) throws QMeException {
+		return null;
+	}
+
 	@Override
 	public List<UserCategory> findByUserID(Long userID) throws QMeException {
 		try{

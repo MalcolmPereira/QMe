@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.UserQuiz;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
@@ -38,6 +39,11 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 		}catch(Exception err){
 			throw new QMeException(err);
 		}
+	}
+
+	@Override
+	public List<UserQuiz> findAll(PageSort pageSort) throws QMeException {
+		return null;
 	}
 
 	@Override

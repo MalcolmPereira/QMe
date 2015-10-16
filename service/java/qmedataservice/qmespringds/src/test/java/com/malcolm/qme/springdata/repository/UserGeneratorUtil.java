@@ -12,6 +12,7 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,12 @@ public class UserGeneratorUtil {
 
     /**
      * Method to generate test users in the system.
-     * Please uncomment @Test to run test and comment back
+     * Please comment @Ignore to run test and uncomment back
      * after user generation is completed
      * @throws QMeException
      */
-    //@Test
+    @Ignore("Please comment this line if new users need to be generated")
+    @Test
     public void generateUsers() throws QMeException {
         int MAX_USERS_TO_GENERATE = 250;
 

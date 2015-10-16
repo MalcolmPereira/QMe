@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.AnswerOptionMedia;
 import com.malcolm.qme.core.repository.AnswerOptionMediaRepository;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.AnswerOptionMediaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
         }catch(Exception err){
             throw new QMeException(err);
         }
+	}
+
+	@Override
+	public List<AnswerOptionMedia> findAll(PageSort pageSort) throws QMeException {
+		return null;
 	}
 
 	@Override

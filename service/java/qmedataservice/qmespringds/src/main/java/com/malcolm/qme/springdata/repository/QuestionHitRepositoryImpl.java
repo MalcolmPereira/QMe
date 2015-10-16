@@ -8,6 +8,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.QuestionHit;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionHitRepository;
 import com.malcolm.qme.springdata.entity.QuestionHitEntity;
@@ -37,6 +38,11 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
         }catch(Exception err){
             throw new QMeException(err);
         }
+    }
+
+    @Override
+    public List<QuestionHit> findAll(PageSort pageSort) throws QMeException {
+        return null;
     }
 
     @Override

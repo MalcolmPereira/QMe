@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.repository.CategoryRepository;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.springdata.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             throw new QMeException(err);
         }
 	}
+
+    @Override
+    public List<Category> findAll(PageSort pageSort) throws QMeException {
+        return null;
+    }
 
     @Override
     public List<Category> findCategoryNameLike(String categoryName) throws QMeException {
