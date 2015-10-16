@@ -32,6 +32,7 @@ public class UserController implements UserAPI {
      */
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
+
     /**
      * Category Service
      */
@@ -50,6 +51,47 @@ public class UserController implements UserAPI {
     public @ResponseBody List<QMeUserDetail> list() throws QMeServerException {
         log(getCurrentUser(), "list");
         return userService.list();
+    }
+
+    @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public @ResponseBody List<QMeUserDetail> list(
+        @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+        @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+        @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+        @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+
+        log(getCurrentUser(), "list");
+
+        //Check if Pagination is required
+        Integer     pageNumber      = null;
+        Integer     pageSizeNumber  = null;
+        String[]    sortOrderFields = null;
+        boolean     sortAsc         = true;
+        if(page != null && page.trim().length() > 0 && pageSize != null && page.trim().length() > 0){
+            try{
+                pageNumber = Integer.valueOf(page);
+            }catch(NumberFormatException numErr){
+                pageNumber      = null;
+            }
+            try{
+                pageSizeNumber = Integer.valueOf(pageSize);
+            }catch(NumberFormatException numErr){
+                pageSizeNumber      = null;
+            }
+            if(sortType != null && sortType.trim().length() > 0){
+                sortAsc = Boolean.valueOf(sortType);
+            }
+            if(sortFields != null && sortFields.trim().length() > 0){
+                sortOrderFields = sortFields.split(SORT_FIELDS_SEPARATOR);
+            }
+        }
+        if(pageNumber != null && pageSizeNumber != null){
+            return userService.list();
+        }else{
+            return userService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
@@ -149,7 +191,5 @@ public class UserController implements UserAPI {
         }else{
             LOG.debug("User "+methodName+" called with no security context ");
         }
-
-
     }
 }

@@ -80,6 +80,17 @@ public interface UserAPI extends QMeAPI {
     List<QMeUserDetail> list() throws QMeResourceException;
 
     /**
+     * Get All Users with Pagination and Sorting
+     * @param page Page
+     * @param pageSize Page Size
+     * @param sortType Sort Type
+     * @param sortFields Sort Fields
+     * @return List of Users
+     * @throws QMeResourceException
+     */
+    List<QMeUserDetail> list(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+
+    /**
      * Search by ID
      *
      * @param userId User ID

@@ -29,7 +29,26 @@ public interface QMeAPI {
 	 * Email Parameter
 	 */
 	String EMAIL_PARAM_STRING 	= "email";
-
+	/**
+	 * Page Parameter
+	 */
+	String PAGE_PARAM_STRING 	= "page";
+    /**
+     * Page Size Parameter
+     */
+    String PAGE_SIZE_PARAM_STRING 	= "pagesize";
+    /**
+     * Sort Type
+     */
+    String SORT_PARAM_STRING 	= "sorttype";
+    /**
+     * Sort Fields
+     */
+    String SORT_FIELDS 	= "sortfields";
+    /**
+     * Sort Field Separtor
+     */
+    String SORT_FIELDS_SEPARATOR = ",";
     /**
      * Get Current Logged in User
      * @return QMeUserDetails Current Logged in User
