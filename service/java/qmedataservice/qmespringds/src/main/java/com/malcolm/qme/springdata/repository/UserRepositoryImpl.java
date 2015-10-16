@@ -434,12 +434,18 @@ public class UserRepositoryImpl implements UserRepository {
                 userEntity.getUpdateUser());
 
         if(userEntity.getUserRoles() != null) {
-            List<UserRolesEntity> userRoles = userEntity.getUserRoles();
-            List<UserRole> userRoleList = new ArrayList<>();
-            for (UserRolesEntity userRolesEntity : userRoles) {
-                userRoleList.add(new UserRole(userRolesEntity.getUserRoleId(), userRolesEntity.getRoleId(), userRolesEntity.getRoleEntity().getRoleName(), userRolesEntity.getUserId()));
-            }
-            user.setUserRoles(userRoleList);
+            user.setUserRoles(
+                    userEntity.getUserRoles().stream().map(
+
+                            userRolesEntity -> new UserRole(
+                                    userRolesEntity.getUserRoleId(),
+                                    userRolesEntity.getRoleId(),
+                                    userRolesEntity.getRoleEntity().getRoleName(),
+                                    userRolesEntity.getUserId()
+                            )
+
+                    ).collect(Collectors.toList())
+            );
         }
         return user;
 	}

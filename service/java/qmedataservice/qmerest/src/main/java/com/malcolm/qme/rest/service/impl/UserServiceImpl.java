@@ -494,6 +494,11 @@ public final class UserServiceImpl implements UserService {
         qmeUserDetail.setUserUpdateDate(user.getUserUpdateDate());
         qmeUserDetail.setUserLastLoginDate(user.getUserLastLoginDate());
         qmeUserDetail.setUpdateUserID(user.getUpdateUserID());
+        if(user.getUserRoles() != null){
+            List<String>  userRoles = new ArrayList<>();
+            userRoles.addAll(user.getUserRoles().stream().map(UserRole::getRoleName).collect(Collectors.toList()));
+            qmeUserDetail.setUserRoles(userRoles);
+        }
         //Fixme: Need to add updated  user name
         qmeUserDetail.setUpdateUserName("");
 
