@@ -11,8 +11,15 @@ import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
-import com.malcolm.qme.springdata.entity.*;
+import com.malcolm.qme.springdata.entity.UserEntity;
+import com.malcolm.qme.springdata.entity.UserPasswordResetEntity;
+import com.malcolm.qme.springdata.entity.UserPasswordResetEntityId;
+import com.malcolm.qme.springdata.entity.UserStagingEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Repository;
@@ -125,7 +132,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll(PageSort pageSort) throws QMeException {
-        return null;
+		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+        Page<UserEntity> userList =
+                ((PagingAndSortingRepository)userSpringDataRepo).findAll(
+				new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,pageSort.getSortFields().toArray(new String[pageSort.getSortFields().size()])));
+        return (getUsers(userList.getContent()));
     }
 
     @Override

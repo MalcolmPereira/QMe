@@ -12,20 +12,7 @@ import java.util.List;
  * Created by Malcolm on 10/16/2015.
  */
 public class PageSort {
-    /**
-     * Enum for Sort Direction
-     */
-    public enum SORT{
-        ASC,
-        DSC
-        ;
-    }
-    /**
-     * Sort Type
-     */
-    private final SORT sort;
-
-    /**
+   /**
      * Start at Index
      */
     private final Integer pageIndex;
@@ -34,6 +21,10 @@ public class PageSort {
      * Max number of Records Per Page
      */
     private final Integer maxRows;
+    /**
+     * Sort Ascending
+     */
+    private final Boolean sortAsc;
 
     /**
      * Sort Fields
@@ -45,13 +36,13 @@ public class PageSort {
      *
      * @param pageIndex Page index
      * @param maxRows Max Rows per page
-     * @param sort Sort Type
+     * @param sortAsc Sort Ascending
      * @param sortFields Sort Field
      */
-    public PageSort(Integer pageIndex, Integer maxRows, SORT sort, List<String> sortFields) {
+    public PageSort(Integer pageIndex, Integer maxRows, Boolean sortAsc, List<String> sortFields) {
         this.pageIndex = pageIndex;
         this.maxRows = maxRows;
-        this.sort = sort;
+        this.sortAsc = sortAsc;
         this.sortFields = sortFields;
     }
 
@@ -73,10 +64,10 @@ public class PageSort {
 
     /**
      * Get Sort
-     * @return Sort Type
+     * @return Sort Ascending
      */
-    public SORT getSort() {
-        return sort;
+    public Boolean getSort() {
+        return sortAsc;
     }
 
     /**

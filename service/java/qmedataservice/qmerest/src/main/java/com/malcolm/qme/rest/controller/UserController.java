@@ -53,10 +53,10 @@ public class UserController implements UserAPI {
         return userService.list();
     }
 
-    @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
+    @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody List<QMeUserDetail> list(
+    public @ResponseBody List<QMeUserDetail> listPaged(
         @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
         @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
         @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,

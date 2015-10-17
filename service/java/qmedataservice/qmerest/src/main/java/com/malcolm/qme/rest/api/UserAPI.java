@@ -23,6 +23,11 @@ public interface UserAPI extends QMeAPI {
     String ROOT_PATH = APP_STRING + "/user";
 
     /**
+     * QMeUser API Paged Path
+     */
+    String PAGED_PATH = APP_STRING + "/user/paged";
+
+    /**
      * QMeUser API Get By ID Path
      */
     String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
@@ -88,7 +93,7 @@ public interface UserAPI extends QMeAPI {
      * @return List of Users
      * @throws QMeResourceException
      */
-    List<QMeUserDetail> list(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+    List<QMeUserDetail> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
     /**
      * Search by ID
