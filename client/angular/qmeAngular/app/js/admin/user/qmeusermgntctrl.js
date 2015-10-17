@@ -41,6 +41,18 @@
                 );
             };
 
+            qmeUserManagement.pageUsers = function(pageNumber){
+                qmeUserService.listUsersPaged(pageNumber)
+                    .then(
+                    function(res){
+                        qmeUserManagement.users = res;
+                    },
+                    function(error){
+                        qmeFlashService.Error("Oops.....Error from service getting user lists, please retry in some time.");
+                    }
+                );
+            }
+
         }
 
 })();
