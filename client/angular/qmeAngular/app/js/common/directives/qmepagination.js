@@ -4,17 +4,23 @@
 
     ngQMe
 
-        .directive('qmePage', function(QME_CONSTANTS) {
+        .directive('qmePage', function() {
             return {
-                restrict: 'AE',
-                scope: {
-                    count :  '=',
-                    resource: '='
+                restrict: 'E',
+                templateUrl: 'js/common/directives/qmepagination.tmpl.html',
+                scope: false,
+                controller: function(){
+                    var qmePaging = this;
+
+                    qmePaging.test = function(){
+                        console.log("from controller",scope.qmeTotalCount);
+                        console.log("from controller",scope.qmePageResource);
+                    }
                 },
-                templateUrl: 'js/common/directives/qmepagination.tmpl.html'
+                controllerAs: 'qmePageCtrl',
+                //controller: 'qmePageCtrl'
             };
         })
-        //.controller('qmePageCtrl', QMePaginationController);
-        //QMePaginationController.$inject = ['$state','qmeUserSession'];
+
 
 })();
