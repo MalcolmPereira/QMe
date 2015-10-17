@@ -42,6 +42,7 @@
             };
 
             qmeUserManagement.pageUsers = function(pageNumber){
+                qmeUserManagement.currentpage = pageNumber;
                 qmeUserService.listUsersPaged(pageNumber)
                     .then(
                     function(res){
@@ -52,6 +53,10 @@
                     }
                 );
             }
+
+            qmeUserManagement.isCurrentUserPage = function(pageNumber){
+                return (pageNumber === qmeUserManagement.currentpage );
+            };
 
         }
 

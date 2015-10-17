@@ -33,11 +33,11 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a href="#" ng-click="qmeUserManagement.pageUsers(0)">1</a></li>
-                    <li><a href="#" ng-click="qmeUserManagement.pageUsers(1)">2</a></li>
-                    <li><a href="#" ng-click="qmeUserManagement.pageUsers(2)">3</a></li>
-                    <li><a href="#" ng-click="qmeUserManagement.pageUsers(3)">4</a></li>
-                    <li><a href="#" ng-click="qmeUserManagement.pageUsers(4)">5</a></li>
+                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(0)}"><a href="#" ng-click="qmeUserManagement.pageUsers(0)">1</a></li>
+                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(1)}"><a href="#" ng-click="qmeUserManagement.pageUsers(1)">2</a></li>
+                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(2)}"><a href="#" ng-click="qmeUserManagement.pageUsers(2)">3</a></li>
+                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(3)}"><a href="#" ng-click="qmeUserManagement.pageUsers(3)">4</a></li>
+                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(4)}"><a href="#" ng-click="qmeUserManagement.pageUsers(4)">5</a></li>
                     <li>
                         <a href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
