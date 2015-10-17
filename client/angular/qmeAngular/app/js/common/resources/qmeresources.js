@@ -3,8 +3,10 @@
     ngQMe
 
         .service('qmeUserResource',function($resource,$http,QME_CONSTANTS){
-            var userAPI                     = QME_CONSTANTS.qmeservice+"/user";
             var userAuthEndPoint            = QME_CONSTANTS.qmeservice+"/login/";
+            var userAPI                     = QME_CONSTANTS.qmeservice+"/user";
+            var userCountEndPoint           = userAPI+"/count";
+            var userPagedEndPoint           = userAPI+"/paged";
             var userSearchEndPoint          = userAPI+"/searchemail/";
             var userStageEndpoint           = userAPI+"/stage";
             var userConfirmEndpoint         = userAPI+"/confirm";
@@ -20,6 +22,14 @@
             this.userResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(userAPI);
+            };
+            this.userCountResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $http.get(userCountEndPoint)
+            };
+            this.userPagedResource = function(authToken,pageIndex,maxRows){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(userPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows);
             };
             this.userGetUserResource = function(userEmail){
                 return $resource(userSearchEndPoint+userEmail);

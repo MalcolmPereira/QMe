@@ -13,6 +13,7 @@
                         <th>Last Name</th>
                         <th>Registered Date</th>
                         <th>Last Login Date</th>
+                        <th>User Roles</th>
                     </tr>
                 </thead>
                 <tr ng-repeat="user in qmeUserManagement.users">
@@ -22,6 +23,7 @@
                     <td>{{user.userLastName}}</td>
                     <td>{{user.userRegisteredDate}}</td>
                     <td>{{user.userLastLoginDate}}</td>
+                    <td>{{user.userRoles}}</td>
                 </tr>
             </table>
         </div>

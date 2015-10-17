@@ -219,6 +219,27 @@
             return resetPasswordUserPromise.promise;
         };
 
+        qmeUserService.countUsers = function(){
+            /*
+            $http.get(QME_CONSTANTS.qmeservice+"/user.count").success(function(data){
+                console.log("http data",data);
+            })
+
+            var countUserPromise = $q.defer();
+            qmeUserResource.userCountResource(qmeUserSession.authtoken())
+                .get(
+                function(res){
+                    countUserPromise.resolve(res);
+                },
+                function(error){
+                    countUserPromise.reject(error);
+                }
+            );
+            return countUserPromise.promise;
+            */
+            return qmeUserResource.userCountResource(qmeUserSession.authtoken());
+        };
+
         qmeUserService.listUsers = function(){
            var listUserPromise = $q.defer();
            qmeUserResource.userResource(qmeUserSession.authtoken())
@@ -231,6 +252,20 @@
                 }
             );
             return listUserPromise.promise;
+        };
+
+        qmeUserService.listUsersPaged = function(currentPage){
+            var listUserPagedPromise = $q.defer();
+            qmeUserResource.userPagedResource(qmeUserSession.authtoken(),currentPage,QME_CONSTANTS.rowsperpage)
+                .query(
+                function(res){
+                    listUserPagedPromise.resolve(res);
+                },
+                function(error){
+                    listUserPagedPromise.reject(error);
+                }
+            );
+            return listUserPagedPromise.promise;
         };
     }
 })();
