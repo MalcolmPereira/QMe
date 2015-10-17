@@ -133,9 +133,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAll(PageSort pageSort) throws QMeException {
 		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-        Page<UserEntity> userList =
-                ((PagingAndSortingRepository)userSpringDataRepo).findAll(
-				new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,pageSort.getSortFields().toArray(new String[pageSort.getSortFields().size()])));
+        PageRequest pageRequest  = null;
+        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,pageSort.getSortFields());
+        }else{
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        }
+        Page<UserEntity> userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
         return (getUsers(userList.getContent()));
     }
 

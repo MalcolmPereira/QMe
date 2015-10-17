@@ -62,7 +62,7 @@ public class UserController implements UserAPI {
         @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
         @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
 
-        log(getCurrentUser(), "list");
+        log(getCurrentUser(), "listPaged");
 
         //Check if Pagination is required
         Integer     pageNumber      = null;
@@ -88,9 +88,10 @@ public class UserController implements UserAPI {
             }
         }
         if(pageNumber != null && pageSizeNumber != null){
-            return userService.list();
-        }else{
             return userService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }else{
+            return userService.list();
+
         }
     }
 

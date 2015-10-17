@@ -6,8 +6,6 @@
  */
 package com.malcolm.qme.core.repository;
 
-import java.util.List;
-
 /**
  * Created by Malcolm on 10/16/2015.
  */
@@ -29,7 +27,7 @@ public class PageSort {
     /**
      * Sort Fields
      */
-    private final List<String> sortFields;
+    private final String[] sortFields;
 
     /**
      * Public Constructor
@@ -39,7 +37,7 @@ public class PageSort {
      * @param sortAsc Sort Ascending
      * @param sortFields Sort Field
      */
-    public PageSort(Integer pageIndex, Integer maxRows, Boolean sortAsc, List<String> sortFields) {
+    public PageSort(Integer pageIndex, Integer maxRows, Boolean sortAsc, String... sortFields) {
         this.pageIndex = pageIndex;
         this.maxRows = maxRows;
         this.sortAsc = sortAsc;
@@ -74,7 +72,7 @@ public class PageSort {
      * Get Sort Fields
      * @return Sort Fields
      */
-    public List<String> getSortFields() {
+    public String[] getSortFields() {
         return sortFields;
     }
 }

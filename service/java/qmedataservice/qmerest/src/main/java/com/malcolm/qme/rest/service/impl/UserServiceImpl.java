@@ -9,6 +9,7 @@ package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
@@ -115,7 +116,12 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public List<QMeUserDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        try{
+            return  getQMeUserDetail(userRepo.findAll(new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override
