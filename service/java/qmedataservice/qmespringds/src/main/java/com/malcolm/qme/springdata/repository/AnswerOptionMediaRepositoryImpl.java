@@ -31,6 +31,11 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 	private AnswerOptionMediaSpringDataRepository answerOptionMediaSpringDataRepository;
 
 	@Override
+	public Long count() throws QMeException {
+		return answerOptionMediaSpringDataRepository.count();
+	}
+
+	@Override
 	public List<AnswerOptionMedia> findByAnswerOptionId(Long answerOptionID) throws QMeException {
 		try {
 			return (getAnswerOptionMedia(answerOptionMediaSpringDataRepository.findByOptionId(answerOptionID)));

@@ -30,6 +30,10 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 	@Autowired
 	private AnswerReferenceMediaSpringDataRepository answerReferenceMediaSpringDataRepository;
 
+	@Override
+	public Long count() throws QMeException {
+		return answerReferenceMediaSpringDataRepository.count();
+	}
 
 	@Override
 	public List<AnswerReferenceMedia> findByQuestionId(Long questionID) throws QMeException {

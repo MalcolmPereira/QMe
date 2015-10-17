@@ -70,6 +70,15 @@ public final class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
+    public Long count() throws QMeServerException {
+        try{
+            return userRoleRepo.count();
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public List<QMeUserRole> list() throws QMeServerException {
         try{
             return getQMeUserRoleDetail(userRoleRepo.findAll());

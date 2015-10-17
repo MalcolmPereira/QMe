@@ -30,8 +30,13 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
      */
     @Autowired
     private UserQuestionLikesSpringDataRepository userQuestionLikesSpringDataRepository;
-	
-    @Override
+
+	@Override
+	public Long count() throws QMeException {
+		return userQuestionLikesSpringDataRepository.count();
+	}
+
+	@Override
 	public List<UserQuestionLikes> findAll() throws QMeException {
 		try{
     		return(getUserQuestionLikes(userQuestionLikesSpringDataRepository.findAll()));

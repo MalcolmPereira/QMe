@@ -30,7 +30,12 @@ public class QuestionRepositoryImpl implements QuestionRepository {
      */
     @Autowired
     private QuestionSpringDataRepository questionSpringDataRepository;
-	
+
+	@Override
+	public Long count() throws QMeException {
+		return questionSpringDataRepository.count();
+	}
+
     @Override
 	public List<Question> findByCategoryId(Long categoryID) throws QMeException {
 		try{
@@ -48,7 +53,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             throw new QMeException(err);
         }
 	}
-    
+
 	@Override
 	public List<Question> findAll() throws QMeException {
         try{

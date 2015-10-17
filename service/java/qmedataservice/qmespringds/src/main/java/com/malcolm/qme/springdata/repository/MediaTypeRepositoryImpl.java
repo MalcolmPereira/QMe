@@ -32,6 +32,11 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	private MediaTypeSpringDataRepository mediaTypeSpringDataRepository;
 
 	@Override
+	public Long count() throws QMeException {
+		return mediaTypeSpringDataRepository.count();
+	}
+
+	@Override
 	public List<MediaType> findAll() throws QMeException {
 		try{
 			return(getMediaType(mediaTypeSpringDataRepository.findAll()));

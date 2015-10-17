@@ -31,7 +31,12 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	@Autowired
 	private UserQuizSpringDataRepository userQuizSpringDataRepository;
 
-	
+
+	@Override
+	public Long count() throws QMeException {
+		return userQuizSpringDataRepository.count();
+	}
+
 	@Override
 	public List<UserQuiz> findAll() throws QMeException {
 		try{

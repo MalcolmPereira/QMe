@@ -33,6 +33,11 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 	private UserQuizLikesSpringDataRepository userQuizLikesSpringDataRepository;
 
 	@Override
+	public Long count() throws QMeException {
+		return userQuizLikesSpringDataRepository.count();
+	}
+
+	@Override
 	public List<UserQuizLikes> findByUserId(Long userID) throws QMeException {
 		try{
 			return (getUserQuizLikes(userQuizLikesSpringDataRepository.findByUserId(userID)));

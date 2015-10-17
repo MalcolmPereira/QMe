@@ -31,6 +31,11 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 	private UserRoleSpringDataRepository userRoleSpringDataRepository;
 
 	@Override
+	public Long count() throws QMeException {
+		return userRoleSpringDataRepository.count();
+	}
+
+	@Override
 	public List<UserRole> findAll() throws QMeException {
 		try{
 			return (getUserRole(userRoleSpringDataRepository.findAll()));

@@ -41,6 +41,11 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	private static final String CORRECT = "1";
 
 	@Override
+	public Long count() throws QMeException {
+		return answerOptionSpringDataRepository.count();
+	}
+
+	@Override
 	public List<AnswerOption> findByQuestionId(Long questionID) throws QMeException {
 		try{
 			return(getAnswerOption(answerOptionSpringDataRepository.findByQuestionId(questionID)));

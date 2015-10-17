@@ -23,6 +23,11 @@ public interface UserAPI extends QMeAPI {
     String ROOT_PATH = APP_STRING + "/user";
 
     /**
+     * QMeUser API Resource Count
+     */
+    String COUNT_PATH = APP_STRING + "/user/count";
+
+    /**
      * QMeUser API Paged Path
      */
     String PAGED_PATH = APP_STRING + "/user/paged";
@@ -76,6 +81,14 @@ public interface UserAPI extends QMeAPI {
      * QMeUser API Validate Token Path
      */
     String RESET_PASSWORD_PATH = RESET_PATH + "/resetpassword/{" + EMAIL_PARAM_STRING + ":.+}";
+
+    /**
+     * Get Count
+     *
+     * @return List of Users
+     */
+    Long count() throws QMeResourceException;
+
 
     /**
      * Get All Users

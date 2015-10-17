@@ -105,6 +105,16 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long count() throws QMeServerException {
+        try{
+            return  userRepo.count();
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public List<QMeUserDetail> list() throws QMeServerException {
         try{
             return  getQMeUserDetail(userRepo.findAll());

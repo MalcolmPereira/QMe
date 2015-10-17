@@ -47,6 +47,16 @@ public final class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Long count() throws QMeServerException {
+        try{
+            return categoryRepo.count();
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public List<QMeCategoryDetail> list() throws QMeServerException {
         try{
             return getQMeCategoryDetail(categoryRepo.findAll());

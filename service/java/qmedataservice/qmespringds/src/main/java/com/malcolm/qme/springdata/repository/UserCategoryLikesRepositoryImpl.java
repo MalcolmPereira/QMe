@@ -30,7 +30,12 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
      */
     @Autowired
     private UserCategoryLikesSpringDataRepository userCategoryLikesSpringDataRepository;
-	
+
+	@Override
+	public Long count() throws QMeException {
+		return userCategoryLikesSpringDataRepository.count();
+	}
+
 	@Override
 	public List<UserCategoryLikes> findAll() throws QMeException {
 		try{

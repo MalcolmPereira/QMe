@@ -18,6 +18,14 @@ import java.util.List;
  */
 public interface QMeService<D,T,I> {
     /**
+     * Count Resources
+     *
+     * @return Count of Resources
+     * @throws QMeServerException
+     */
+    Long count() throws QMeServerException;
+
+    /**
      * List All
      *
      * @return List of Resources

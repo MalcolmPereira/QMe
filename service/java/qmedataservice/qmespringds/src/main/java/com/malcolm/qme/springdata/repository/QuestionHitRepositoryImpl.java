@@ -32,6 +32,11 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
     private QuestionHitSpringDataRepository questionHitSpringDataRepository;
 
     @Override
+    public Long count() throws QMeException {
+        return questionHitSpringDataRepository.count();
+    }
+
+    @Override
     public List<QuestionHit> findAll() throws QMeException {
         try{
             return(getQuestionHit(questionHitSpringDataRepository.findAll()));

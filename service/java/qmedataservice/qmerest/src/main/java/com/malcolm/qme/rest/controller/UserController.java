@@ -45,6 +45,14 @@ public class UserController implements UserAPI {
     @Autowired
     private AtomicTokenGenerator atomicTokenGenerator;
 
+    @RequestMapping(value=COUNT_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public  @ResponseBody Long count() throws QMeResourceException {
+        log(getCurrentUser(), "count");
+        return userService.count();
+    }
+
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override

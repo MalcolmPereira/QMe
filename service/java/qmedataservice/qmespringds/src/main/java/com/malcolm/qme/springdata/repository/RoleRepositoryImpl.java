@@ -30,7 +30,12 @@ public class RoleRepositoryImpl implements RoleRepository {
      */
     @Autowired
     private RoleSpringDataRepository roleSpringDataRepository;
-	
+
+	@Override
+	public Long count() throws QMeException {
+		return roleSpringDataRepository.count();
+	}
+
 	@Override
 	public List<Role> findAll() throws QMeException {
 		try{

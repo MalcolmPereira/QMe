@@ -29,7 +29,12 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
      */
     @Autowired
     private UserCategorySpringDataRepository userCategorySpringDataRepository;
-	
+
+	@Override
+	public Long count() throws QMeException {
+		return userCategorySpringDataRepository.count();
+	}
+
 	@Override
 	public List<UserCategory> findAll() throws QMeException {
 		try{

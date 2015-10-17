@@ -45,6 +45,15 @@ public final class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Long count() throws QMeServerException {
+        try{
+            return roleRepo.count();
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public List<QMeRole> list() throws QMeServerException {
         try{
             return getQMeRoleDetail(roleRepo.findAll());

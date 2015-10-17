@@ -29,7 +29,12 @@ public class QuizQuestionRepositoryImpl implements QuizQuestionRepository {
      */
     @Autowired
     private QuizQuestionSpringDataRepository quizQuestionSpringDataRepository;
-	
+
+	@Override
+	public Long count() throws QMeException {
+		return quizQuestionSpringDataRepository.count();
+	}
+
 	@Override
 	public List<QuizQuestion> findAll() throws QMeException {
 		try{

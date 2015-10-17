@@ -63,10 +63,10 @@ public class UserRepositoryImpl implements UserRepository {
      */
     private static final int MAX_STAGING_DAYS = 5;
 
-    /**
-     * Date Pattern
-     */
-    private static final String DATE_PATTERN = "yyyy-MM-dd HH:MM:ss";
+    @Override
+    public Long count() throws QMeException {
+        return userSpringDataRepo.count();
+    }
 
 	@Override
 	public User findByUserName(String userName) throws QMeException {
@@ -121,7 +121,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-	@Override
+    @Override
 	public List<User> findAll() throws QMeException {
 		try{
 			return (getUsers(userSpringDataRepo.findAll()));
@@ -133,13 +133,14 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAll(PageSort pageSort) throws QMeException {
 		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-        PageRequest pageRequest  = null;
+        PageRequest pageRequest;
         if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0){
             pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,pageSort.getSortFields());
         }else{
             pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
         }
-        Page<UserEntity> userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        Page<UserEntity> userList;
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
         return (getUsers(userList.getContent()));
     }
 

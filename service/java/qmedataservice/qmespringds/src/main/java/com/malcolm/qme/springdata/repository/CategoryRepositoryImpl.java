@@ -30,8 +30,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
      */
     @Autowired
     private CategorySpringDataRepository categorySpringDataRepository;
-	
-	@Override
+
+    @Override
+    public Long count() throws QMeException {
+        return categorySpringDataRepository.count();
+    }
+
+    @Override
 	public List<Category> findAll() throws QMeException {
         try{
             return(getCategory(categorySpringDataRepository.findAll()));

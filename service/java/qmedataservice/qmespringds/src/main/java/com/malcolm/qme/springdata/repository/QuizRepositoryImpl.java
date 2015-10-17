@@ -32,6 +32,11 @@ public class QuizRepositoryImpl implements QuizRepository {
 	private QuizSpringDataRepository quizSpringDataRepository;
 
 	@Override
+	public Long count() throws QMeException {
+		return quizSpringDataRepository.count();
+	}
+
+	@Override
 	public List<Quiz> findAll() throws QMeException {
 		try{
 			return(getQuiz(quizSpringDataRepository.findAll()));

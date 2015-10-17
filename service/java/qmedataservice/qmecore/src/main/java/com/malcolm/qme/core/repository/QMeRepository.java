@@ -13,6 +13,13 @@ import java.util.List;
  * @author Malcolm
  */
 interface QMeRepository<T,I> {
+
+    /**
+     * Get Count
+     * @return Long Count of Entities
+     */
+    Long count() throws QMeException;
+
     /**
      * Find all
      * @return List of T
