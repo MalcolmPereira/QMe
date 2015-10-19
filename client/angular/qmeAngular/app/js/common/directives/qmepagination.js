@@ -27,6 +27,7 @@
             qmePage.currentPage   = 0;
             qmePage.lastPage      = Math.round(qmePage.totalRecCount / qmePage.recPerPage);
 
+            /*
             console.log('ctrl.scope totalcount', $scope.qmeTotalcount);
             console.log('ctrl.scope functioncall', $scope.qmePagingfunction);
             console.log('qmePage.totalRecCount', qmePage.totalRecCount);
@@ -34,6 +35,7 @@
             console.log(' qmePage.functionCall',  qmePage.functionCall);
             console.log(' qmePage.currentPage',  qmePage.currentPage);
             console.log(' qmePage.lastPage',  qmePage.lastPage);
+            */
 
 
             qmePage.pageList = function(){
@@ -46,7 +48,9 @@
 
             qmePage.goPage = function(pageNumber){
                 qmePage.currentPage = pageNumber;
-                console.log("qmePage.functionCall",$scope.qmePagingfunction);
+                console.log("qmePage.functionCall",$scope.qmePagingfunction());
+                //var a = $scope.qmePagingfunction.isAdmin();
+                //console.log("a ",a);
             }
 
             qmePage.isCurrentPage = function(pageNumber){
