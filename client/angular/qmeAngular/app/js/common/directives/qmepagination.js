@@ -27,20 +27,9 @@
             qmePage.currentPage   = 0;
             qmePage.lastPage      = Math.round(qmePage.totalRecCount / qmePage.recPerPage);
 
-            /*
-            console.log('ctrl.scope totalcount', $scope.qmeTotalcount);
-            console.log('ctrl.scope functioncall', $scope.qmePagingfunction);
-            console.log('qmePage.totalRecCount', qmePage.totalRecCount);
-            console.log(' qmePage.recPerPage',  qmePage.recPerPage);
-            console.log(' qmePage.functionCall',  qmePage.functionCall);
-            console.log(' qmePage.currentPage',  qmePage.currentPage);
-            console.log(' qmePage.lastPage',  qmePage.lastPage);
-            */
-
-
             qmePage.pageList = function(){
                 var pages = [];
-                for (var i = 1; i <  qmePage.lastPage +1; i++) {
+                for (var i = 1; i <  qmePage.lastPage + 1; i++) {
                     pages.push(i);
                 }
                 return pages;
@@ -48,9 +37,7 @@
 
             qmePage.goPage = function(pageNumber){
                 qmePage.currentPage = pageNumber;
-                console.log("qmePage.functionCall",$scope.qmePagingfunction());
-                //var a = $scope.qmePagingfunction.isAdmin();
-                //console.log("a ",a);
+                $scope.qmePagingfunction()(pageNumber);
             }
 
             qmePage.isCurrentPage = function(pageNumber){
@@ -65,6 +52,7 @@
                 if(!qmePage.isFirstPage()){
                     --qmePage.currentPage;
                 }
+                $scope.qmePagingfunction()(qmePage.currentPage);
             }
 
             qmePage.isLastPage = function(){
@@ -75,6 +63,7 @@
                 if(!qmePage.isLastPage()){
                     ++qmePage.currentPage;
                 }
+                $scope.qmePagingfunction()(qmePage.currentPage);
             }
         }
 })();

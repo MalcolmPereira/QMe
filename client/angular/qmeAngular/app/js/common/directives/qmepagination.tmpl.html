@@ -1,7 +1,7 @@
 <nav ng-controller="qmePageCtrl as qmePageCtrl">
     <ul class="pagination">
         <li ng-class="{ disabled: qmePageCtrl.isFirstPage()}"><a href="#" aria-label="Previous" ng-click="qmePageCtrl.goPrevious()"><span aria-hidden="true">&laquo;</span></a></li>
-        <li ng-repeat="page in qmePageCtrl.pageList()" ng-class="{ active: qmePageCtrl.isCurrentPage(page)}"><a href="#" ng-click="qmePageCtrl.goPage(page)">{{page}}</a></li>
+        <li ng-repeat="page in qmePageCtrl.pageList()" ng-class="{ active: qmePageCtrl.isCurrentPage(page - 1)}"><a href="#" ng-click="qmePageCtrl.goPage(page-1)">{{page}}</a></li>
         <li ng-class="{ disabled: qmePageCtrl.isLastPage()}"><a href="#" aria-label="Next" ng-click="qmePageCtrl.goNext()"><span aria-hidden="true">&raquo;</span></a></li>
     </ul>
 </nav>
