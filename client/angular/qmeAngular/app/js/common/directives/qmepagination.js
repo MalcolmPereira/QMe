@@ -94,6 +94,11 @@
                 return ( _currentPage === _lastPage - 1);
             }
 
+            qmePageSession.isExceedPagesPerPage = function(){
+                return (_lastPage > QME_CONSTANTS.pagesperpage)
+            }
+
+
         })
 
         .controller('qmePageCtrl',QMePageController);
@@ -152,6 +157,10 @@
                 if(!qmePage.isLastPage()){
                     $scope.qmePagingfunction()(qmePageSession.getLast());
                 }
+            }
+
+            qmePage.isExceedPagesPerPage = function(){
+                return qmePageSession.isExceedPagesPerPage();
             }
         }
 })();

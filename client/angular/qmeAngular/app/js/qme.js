@@ -14,6 +14,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                       qme_auth_header:'QME-AUTH-TOKEN',
                       password_mask:'**********',
                       rowsperpage:10,
+                      pagesperpage:10,
                       success: 'success',
                       error: 'error',
                       adminrole: 'ADMIN',
