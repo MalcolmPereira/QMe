@@ -26,7 +26,12 @@
                             qmeUserManagement.usercount = res.data;
                         },
                         function(error){
-                            qmeFlashService.Error("Oops.....Error from service for getting user count, please retry in some time.");
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error from service for getting user count, please retry in some time.");
+                            }
                             qmeUserManagement.usercount = -1;
                         }
                     );
