@@ -63,10 +63,6 @@
                 );
             }
 
-            qmeUserManagement.isCurrentUserPage = function(pageNumber){
-                return (pageNumber === qmeUserManagement.currentpage );
-            };
-
         }
 
 })();
