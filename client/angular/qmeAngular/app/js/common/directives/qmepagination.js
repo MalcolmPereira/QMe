@@ -23,14 +23,23 @@
 
             var _totalRecCount  = null;
             var _recPerPage     = null;
+            var _pagesPerPage   = null;
             var _currentPage    = null;
             var _lastPage       = null;
+            var _pages         = [];
 
             qmePageSession.create = function (totalRecCount){
                 _totalRecCount  = totalRecCount ;
                 _recPerPage     = QME_CONSTANTS.rowsperpage;
+                _pagesPerPage   = QME_CONSTANTS.pagesperpage;
                 _currentPage    = 0;
                 _lastPage       = Math.ceil(_totalRecCount / _recPerPage);
+                _pages          = [];
+
+                for (var i = 1; i <  _lastPage + 1; i++) {
+                    _pages.push(i);
+                }
+                return qmePageSession;
             };
 
             qmePageSession.destroy = function () {
@@ -38,14 +47,12 @@
                 _recPerPage     = null;
                 _currentPage    = null;
                 _lastPage       = null;
+                _pages          = [];
+                return undefined;
             }
 
-            qmePageSession.pageList = function(){
-                var pages = [];
-                for (var i = 1; i <  _lastPage + 1; i++) {
-                    pages.push(i);
-                }
-                return pages;
+            qmePageSession.pages = function(){
+                return _pages;
             }
 
             qmePageSession.getFirst = function(){
@@ -97,8 +104,6 @@
             qmePageSession.isExceedPagesPerPage = function(){
                 return (_lastPage > QME_CONSTANTS.pagesperpage)
             }
-
-
         })
 
         .controller('qmePageCtrl',QMePageController);
@@ -108,59 +113,63 @@
 
             qmePage.functionCall  = $scope.qmePagingfunction;
 
-            qmePageSession.destroy();
+            qmePage.qmePageSession = qmePageSession.destroy();
 
-            qmePageSession.create($scope.qmeTotalcount);
-
-            qmePage.pageList = function(){
-                return qmePageSession.pageList();
-            }
+            qmePage.qmePageSession = qmePageSession.create($scope.qmeTotalcount);
 
             qmePage.goPage = function(pageNumber){
-                qmePageSession.setPage(pageNumber);
+                qmePage.qmePageSession.setPage(pageNumber);
                 $scope.qmePagingfunction()(pageNumber);
             }
 
             qmePage.isCurrentPage = function(pageNumber){
-                return qmePageSession.isCurrentPage(pageNumber);
+                return qmePage.qmePageSession.isCurrentPage(pageNumber);
             };
 
             qmePage.isFirstPage = function(){
-                return qmePageSession.isFirstPage();
+                return qmePage.qmePageSession.isFirstPage();
             }
 
             qmePage.isLastPage = function(){
-                return  qmePageSession.isLastPage();
+                return  qmePage.qmePageSession.isLastPage();
             }
 
             qmePage.goPrevious = function(){
                 if(!qmePage.isFirstPage()){
-                    qmePageSession.setPrevious();
-                    $scope.qmePagingfunction()(qmePageSession.getPage());
+                    qmePage.qmePageSession.setPrevious();
+                    $scope.qmePagingfunction()(qmePage.qmePageSession.getPage());
                 }
             }
 
             qmePage.goFirst = function(){
                 if(!qmePage.isFirstPage()){
-                    $scope.qmePagingfunction()(qmePageSession.getFirst());
+                    $scope.qmePagingfunction()(qmePage.qmePageSession.getFirst());
                 }
             }
 
             qmePage.goNext = function(){
                 if(!qmePage.isLastPage()){
-                    qmePageSession.setNext();
-                    $scope.qmePagingfunction()(qmePageSession.getPage());
+                    qmePage.qmePageSession.setNext();
+                    $scope.qmePagingfunction()(qmePage.qmePageSession.getPage());
                 }
             }
 
             qmePage.goLast = function(){
                 if(!qmePage.isLastPage()){
-                    $scope.qmePagingfunction()(qmePageSession.getLast());
+                    $scope.qmePagingfunction()(qmePage.qmePageSession.getLast());
                 }
             }
 
             qmePage.isExceedPagesPerPage = function(){
-                return qmePageSession.isExceedPagesPerPage();
+                return qmePage.qmePageSession.isExceedPagesPerPage();
+            }
+
+            qmePage.showPreviousGroup = function(){
+                return false;
+            }
+
+            qmePage.showNextGroup = function(){
+                return false;
             }
         }
 })();
