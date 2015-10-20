@@ -27,25 +27,7 @@
                     <td>{{user.userRoles}}</td>
                 </tr>
             </table>
-            <nav>
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(0)}"><a href="#" ng-click="qmeUserManagement.pageUsers(0)">1</a></li>
-                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(1)}"><a href="#" ng-click="qmeUserManagement.pageUsers(1)">2</a></li>
-                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(2)}"><a href="#" ng-click="qmeUserManagement.pageUsers(2)">3</a></li>
-                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(3)}"><a href="#" ng-click="qmeUserManagement.pageUsers(3)">4</a></li>
-                    <li ng-class="{ active: qmeUserManagement.isCurrentUserPage(4)}"><a href="#" ng-click="qmeUserManagement.pageUsers(4)">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <qme-page ng-if="qmeUserManagement.recordsLoaded()" qme-totalcount="qmeUserManagement.totalRecords()" qme-pagingfunction="qmeUserManagement.pageUsers"></qme-page>
         </div>
     </div>
 </div>

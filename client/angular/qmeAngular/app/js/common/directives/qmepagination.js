@@ -17,6 +17,7 @@
             };
         })
 
+
         .controller('qmePageCtrl',QMePageController);
         QMePageController.$inject = ['$scope', '$element', '$attrs'];
         function QMePageController($scope) {
@@ -25,7 +26,7 @@
             qmePage.totalRecCount = $scope.qmeTotalcount;
             qmePage.recPerPage    = 10;
             qmePage.currentPage   = 0;
-            qmePage.lastPage      = Math.round(qmePage.totalRecCount / qmePage.recPerPage);
+            qmePage.lastPage      = Math.ceil(qmePage.totalRecCount / qmePage.recPerPage);
 
             qmePage.pageList = function(){
                 var pages = [];
@@ -56,7 +57,7 @@
             }
 
             qmePage.isLastPage = function(){
-                return ( qmePage.currentPage === qmePage.lastPage);
+                return ( qmePage.currentPage === qmePage.lastPage - 1);
             }
 
             qmePage.goNext = function(){
