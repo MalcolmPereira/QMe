@@ -119,15 +119,14 @@
             };
 
             qmePageSession.getPreviousGroup = function(){
-                if(_currentGroup  = _lastPage - 1){
-
+                if(_currentGroup  === _lastPage - 1){
+                    _currentGroup = _currentGroup + (_pagesPerPage - _pages.length);
                 }
-
                 _currentGroup        = _currentGroup  - _pagesPerPage;
-                if(_currentGroup <= 0 ){
+                if(_currentGroup < 0 ){
                     _currentGroup = _pagesPerPage;
                 }
-                var previousPage     = _currentGroup  - _pagesPerPage;
+                var previousPage     = _currentGroup  - _pagesPerPage + 1;
                 if(previousPage  <= 0 ){
                     previousPage = 1;
                 }
