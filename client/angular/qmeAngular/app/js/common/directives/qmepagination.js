@@ -65,7 +65,12 @@
 
             qmePageSession.getFirst = function(){
                 if(! qmePageSession.isFirstPage() ){
-                    _currentPage = 0;
+                    _currentPage  = 0;
+                    _currentGroup = _pagesPerPage;
+                    _pages = [];
+                    for (var i = 1; i < _pagesPerPage + 1; i++) {
+                        _pages.push(i);
+                    }
                 }
                 return _currentPage;
             };
