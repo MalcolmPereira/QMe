@@ -73,10 +73,10 @@
             qmePageSession.getLast = function(){
                 if(! qmePageSession.isLastPage() ){
                     _currentPage  = _lastPage - 1;
-                    _currentGroup = _lastPage - 1;
-                    var lastPage  = (_currentGroup - Math.ceil(_currentGroup  % _pagesPerPage)) + 1;
+                    _currentGroup = _lastPage;
+                    var startPage =  (_currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup  % _pagesPerPage)))) - 10 ;
                     _pages = [];
-                    for (var i = lastPage; i < _currentGroup + 1; i++) {
+                    for (var i = startPage; i < _currentGroup + 1; i++) {
                         _pages.push(i);
                     }
                 }
