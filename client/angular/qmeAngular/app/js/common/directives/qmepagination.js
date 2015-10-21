@@ -36,7 +36,6 @@
                 _currentPage    = 0;
                 _lastPage       = Math.ceil(_totalRecCount / _recPerPage);
                 _pages          = [];
-
                 if (_lastPage <= _pagesPerPage) {
                     for (var i = 1; i < _lastPage + 1; i++) {
                         _pages.push(i);
@@ -81,8 +80,6 @@
                         _pages.push(i);
                     }
                 }
-                console.log("_pages",_pages);
-                console.log("_currentPage",_currentPage);
                 return _currentPage;
             };
 
@@ -127,22 +124,22 @@
             };
 
             qmePageSession.getPreviousGroup = function(){
-                if(_currentGroup  === _lastPage - 1){
-                    _currentGroup = _currentGroup + (_pagesPerPage - _pages.length);
+                if(_currentGroup  >= _lastPage ){
+                    _currentGroup = _currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup  % _pagesPerPage)));
                 }
-                _currentGroup        = _currentGroup  - _pagesPerPage;
-                if(_currentGroup < 0 ){
+                _currentGroup = _currentGroup  - _pagesPerPage;
+                if(_currentGroup <= 0 ){
                     _currentGroup = _pagesPerPage;
                 }
-                var previousPage     = _currentGroup  - _pagesPerPage + 1;
-                if(previousPage  <= 0 ){
-                    previousPage = 1;
+                var startPage     = (_currentGroup  - _pagesPerPage) + 1;
+                if(startPage  <= 0 ){
+                    startPage = 1;
                 }
                 _pages = [];
-                for (var i = previousPage; i < _currentGroup + 1; i++) {
+                for (var i = startPage; i < _currentGroup + 1; i++) {
                     _pages.push(i);
                 }
-                _currentPage = _pages[0] - 1;
+                _currentPage = startPage - 1;
                 return _currentPage;
             };
 
@@ -151,16 +148,16 @@
             };
 
             qmePageSession.getNextGroup = function(){
-                var lastPage    = _currentGroup  + 1;
-                _currentGroup   = _currentGroup  + _pagesPerPage ;
+                var startPage    = _currentGroup  + 1;
+                _currentGroup    = _currentGroup  + _pagesPerPage ;
                 if(_currentGroup > _lastPage - 1){
-                    _currentGroup = _lastPage - 1;
+                    _currentGroup = _lastPage;
                 }
                 _pages = [];
-                for (var i = lastPage; i < _currentGroup + 1; i++) {
+                for (var i = startPage; i <= _currentGroup; i++) {
                     _pages.push(i);
                 }
-                _currentPage = _pages[0] - 1;
+                _currentPage = startPage - 1;
                 return _currentPage;
             };
         })
