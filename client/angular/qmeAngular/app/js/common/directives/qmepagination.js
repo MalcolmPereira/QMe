@@ -79,7 +79,8 @@
                 if(! qmePageSession.isLastPage() ){
                     _currentPage  = _lastPage - 1;
                     _currentGroup = _lastPage;
-                    var startPage =  (_currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup  % _pagesPerPage)))) - 10 ;
+                    var startPage =  (_currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup  % _pagesPerPage)))) - _pagesPerPage ;
+                    startPage    =   startPage + 1;
                     _pages = [];
                     for (var i = startPage; i < _currentGroup + 1; i++) {
                         _pages.push(i);
@@ -91,12 +92,19 @@
             qmePageSession.setPrevious = function(){
                 if(! qmePageSession.isFirstPage() ){
                     --_currentPage;
+                    if(_pages.indexOf(_currentPage + 1) === -1){
+                        qmePageSession.getPreviousGroup();
+                    }
                 }
             };
 
             qmePageSession.setNext = function(){
                 if(! qmePageSession.isLastPage() ){
                     ++_currentPage;
+                    //if(_currentPage >= _currentGroup){
+                    if(_pages.indexOf(_currentPage + 1) === -1){
+                        qmePageSession.getNextGroup();
+                    }
                 }
             };
 
@@ -120,10 +128,6 @@
                 return ( _currentPage === _lastPage - 1);
             };
 
-            qmePageSession.isExceedPagesPerPage = function(){
-                return (_lastPage > QME_CONSTANTS.pagesperpage)
-            };
-
             qmePageSession.showPreviousGroup = function(){
                 return ((!qmePageSession.isFirstPage()) && (_currentGroup) && (_currentGroup > _pagesPerPage))
             };
@@ -144,7 +148,7 @@
                 for (var i = startPage; i < _currentGroup + 1; i++) {
                     _pages.push(i);
                 }
-                _currentPage = startPage - 1;
+                _currentPage = _currentGroup - 1;
                 return _currentPage;
             };
 
@@ -219,10 +223,6 @@
                 if(!qmePage.isLastPage()){
                     $scope.qmePagingfunction()(qmePage.qmePageSession.getLast());
                 }
-            };
-
-            qmePage.isExceedPagesPerPage = function(){
-                return qmePage.qmePageSession.isExceedPagesPerPage();
             };
 
             qmePage.showPreviousGroup = function(){
