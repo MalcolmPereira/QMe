@@ -16,7 +16,7 @@
             qmeUserManagement.usercount = 0;
             qmeUserManagement.currentpage = 0;
             qmeUserManagement.sortasc = true;
-            qmeUserManagement.sortfields = "userName";
+            qmeUserManagement.sortfields = "USERNAME";
 
             listUsers();
 
