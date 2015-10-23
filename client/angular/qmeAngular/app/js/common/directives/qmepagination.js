@@ -176,6 +176,8 @@
         function QMePageController($scope,qmePageSession) {
             var qmePage = this;
 
+            qmePage.qmeTotalcount = $scope.qmeTotalcount;
+
             qmePage.functionCall  = $scope.qmePagingfunction;
 
             qmePage.qmePageSession = qmePageSession.destroy();
