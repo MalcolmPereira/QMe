@@ -87,7 +87,7 @@
                 return qmeUserManagement.usercount;
             }
 
-            qmeUserManagement.pageUsers = function(pageNumber){
+           qmeUserManagement.pageUsers = function(pageNumber){
                 qmeUserManagement.currentpage = pageNumber;
                 qmeUserService.listUsersPaged(pageNumber, qmeUserManagement.sortasc, qmeUserManagement.sortfields)
                     .then(
