@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.User;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
@@ -78,6 +79,100 @@ public class UserRepositoryImplTest {
         for (User user : users){
             assertNotNull(user.getUserRoles());
         }
+    }
+
+    @Test
+    public void testFindAllPaged() throws QMeException {
+        assertNotNull(userRepo);
+        PageSort pageSort = new PageSort(0,10,Boolean.TRUE);
+        List<User> users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.TRUE,"USERNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.TRUE,"EMAIL");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.TRUE,"FIRSTNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.TRUE,"LASTNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.FALSE,"USERNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.FALSE,"EMAIL");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.FALSE,"FIRSTNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.FALSE,"LASTNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+
+        pageSort = new PageSort(0,10,Boolean.TRUE,"USERNAME","EMAIL","FIRSTNAME","LASTNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
+        pageSort = new PageSort(0,10,Boolean.FALSE,"USERNAME","EMAIL","FIRSTNAME","LASTNAME");
+        users = userRepo.findAll(pageSort);
+        assertNotNull(users);
+        assertThat(users.size(), greaterThan(0));
+        for (User user : users){
+            assertNotNull(user.getUserRoles());
+        }
+
     }
 
     @Test

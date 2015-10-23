@@ -63,6 +63,38 @@ public class UserRepositoryImpl implements UserRepository {
      */
     private static final int MAX_STAGING_DAYS = 5;
 
+    /**
+     * Sort Fields Enum
+     */
+	enum USERSORTFIELDS {
+        USERNAME("userName"),
+        EMAIL("userEmail"),
+        FIRSTNAME("userFirstName"),
+        LASTNAME("userLastName")
+        ;
+
+        /**
+         * Enum Constructor
+         * @param fieldName Field Name
+         */
+        USERSORTFIELDS(String fieldName) {
+            this.userSortField = fieldName;
+        }
+
+        /**
+         * Sort Field Name
+         */
+        private String userSortField;
+
+        /**
+         * Get User Sort Field Name
+         * @return User Sort Field Name
+         */
+        public String getUserSortField() {
+            return userSortField;
+        }
+    }
+
     @Override
     public Long count() throws QMeException {
         return userSpringDataRepo.count();
@@ -134,8 +166,20 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> findAll(PageSort pageSort) throws QMeException {
 		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
         PageRequest pageRequest;
-        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0){
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,pageSort.getSortFields());
+        List<String> sortFieldList = new ArrayList<>();
+        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0) {
+            String[] sortFields = pageSort.getSortFields();
+            for (String sortField : sortFields) {
+                try {
+                    System.out.println(USERSORTFIELDS.valueOf(sortField.toUpperCase()).getUserSortField());
+                    sortFieldList.add(USERSORTFIELDS.valueOf(sortField.toUpperCase()).getUserSortField());
+
+                } catch (IllegalArgumentException err) {
+                }
+            }
+        }
+        if(!sortFieldList.isEmpty()){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
         }else{
             pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
         }

@@ -12,6 +12,10 @@ import com.malcolm.qme.springdata.entity.UserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -38,6 +42,77 @@ public class UserSpringDataRepositoryTest {
     public void testFindAll() {
         assertNotNull(userSpringDataRepo);
         List<UserEntity> userEntities = userSpringDataRepo.findAll();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+    }
+
+    @Test
+    public void testFindAllPaged() {
+        assertNotNull(userSpringDataRepo);
+        PageRequest pageRequest = new PageRequest(0, 10);
+        //Sort.Direction.ASC,sortFieldList.toArray(new String[sortFieldList.size()])
+        Page<UserEntity> userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        List<UserEntity> userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.ASC, "userName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.ASC, "userFirstName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.ASC, "userLastName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.ASC, "userEmail");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.DESC, "userName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.DESC, "userFirstName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.DESC, "userLastName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.DESC, "userEmail");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.ASC, "userEmail", "userName", "userFirstName", "userLastName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
+        assertNotNull(userEntities);
+        assertThat(userEntities.size(), greaterThan(0));
+
+        pageRequest = new PageRequest(0, 10, Sort.Direction.DESC,  "userEmail", "userName", "userFirstName", "userLastName");
+        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        userEntities =userList.getContent();
         assertNotNull(userEntities);
         assertThat(userEntities.size(), greaterThan(0));
     }
