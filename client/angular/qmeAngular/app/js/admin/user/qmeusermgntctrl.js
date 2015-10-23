@@ -15,6 +15,8 @@
             qmeUserManagement.users;
             qmeUserManagement.usercount = 0;
             qmeUserManagement.currentpage = 0;
+            qmeUserManagement.sortasc = true;
+            qmeUserManagement.sortfields = "userName";
 
             listUsers();
 
@@ -36,7 +38,7 @@
                         }
                     );
                 }
-                qmeUserService.listUsersPaged(0)
+                qmeUserService.listUsersPaged(0,qmeUserManagement.sortasc,qmeUserManagement.sortfields)
                     .then(
                     function(res){
                        qmeUserManagement.users = res;
@@ -57,7 +59,7 @@
 
             qmeUserManagement.pageUsers = function(pageNumber){
                 qmeUserManagement.currentpage = pageNumber;
-                qmeUserService.listUsersPaged(pageNumber)
+                qmeUserService.listUsersPaged(pageNumber, qmeUserManagement.sortasc, qmeUserManagement.sortfields)
                     .then(
                     function(res){
                         qmeUserManagement.users = res;

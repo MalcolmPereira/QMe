@@ -220,24 +220,7 @@
         };
 
         qmeUserService.countUsers = function(){
-            /*
-            $http.get(QME_CONSTANTS.qmeservice+"/user.count").success(function(data){
-                console.log("http data",data);
-            })
-
-            var countUserPromise = $q.defer();
-            qmeUserResource.userCountResource(qmeUserSession.authtoken())
-                .get(
-                function(res){
-                    countUserPromise.resolve(res);
-                },
-                function(error){
-                    countUserPromise.reject(error);
-                }
-            );
-            return countUserPromise.promise;
-            */
-            return qmeUserResource.userCountResource(qmeUserSession.authtoken());
+           return qmeUserResource.userCountResource(qmeUserSession.authtoken());
         };
 
         qmeUserService.listUsers = function(){
@@ -254,9 +237,9 @@
             return listUserPromise.promise;
         };
 
-        qmeUserService.listUsersPaged = function(currentPage){
+        qmeUserService.listUsersPaged = function(currentPage,sorttype,sortfields){
             var listUserPagedPromise = $q.defer();
-            qmeUserResource.userPagedResource(qmeUserSession.authtoken(),currentPage,QME_CONSTANTS.rowsperpage)
+            qmeUserResource.userPagedResource(qmeUserSession.authtoken(),currentPage,QME_CONSTANTS.rowsperpage,sorttype,sortfields)
                 .query(
                 function(res){
                     listUserPagedPromise.resolve(res);

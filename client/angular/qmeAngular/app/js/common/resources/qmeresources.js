@@ -27,9 +27,13 @@
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $http.get(userCountEndPoint)
             };
-            this.userPagedResource = function(authToken,pageIndex,maxRows){
+            this.userPagedResource = function(authToken,pageIndex,maxRows,sorttype,sortfields){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
-                return $resource(userPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows);
+                if(sortfields){
+                    return $resource(userPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows+"&sorttype="+sorttype+"&sortfields="+sortfields);
+                }else{
+                    return $resource(userPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows);
+                }
             };
             this.userGetUserResource = function(userEmail){
                 return $resource(userSearchEndPoint+userEmail);
