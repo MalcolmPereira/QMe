@@ -63,38 +63,6 @@ public class UserRepositoryImpl implements UserRepository {
      */
     private static final int MAX_STAGING_DAYS = 5;
 
-    /**
-     * Sort Fields Enum
-     */
-	enum USERSORTFIELDS {
-        USERNAME("userName"),
-        EMAIL("userEmail"),
-        FIRSTNAME("userFirstName"),
-        LASTNAME("userLastName")
-        ;
-
-        /**
-         * Enum Constructor
-         * @param fieldName Field Name
-         */
-        USERSORTFIELDS(String fieldName) {
-            this.userSortField = fieldName;
-        }
-
-        /**
-         * Sort Field Name
-         */
-        private String userSortField;
-
-        /**
-         * Get User Sort Field Name
-         * @return User Sort Field Name
-         */
-        public String getUserSortField() {
-            return userSortField;
-        }
-    }
-
     @Override
     public Long count() throws QMeException {
         return userSpringDataRepo.count();

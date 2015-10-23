@@ -16,6 +16,38 @@ import java.time.LocalDateTime;
  */
 public interface UserRepository extends QMeRepository<User, Long> {
     /**
+     * Sort Fields Enum
+     */
+    enum USERSORTFIELDS {
+        USERNAME("userName"),
+        EMAIL("userEmail"),
+        FIRSTNAME("userFirstName"),
+        LASTNAME("userLastName")
+        ;
+        /**
+         * Enum Constructor
+         * @param fieldName Field Name
+         */
+        USERSORTFIELDS(String fieldName) {
+            this.userSortField = fieldName;
+        }
+
+        /**
+         * Sort Field Name
+         */
+        private String userSortField;
+
+        /**
+         * Get User Sort Field Name
+         * @return User Sort Field Name
+         */
+        public String getUserSortField() {
+            return userSortField;
+        }
+    }
+
+
+    /**
      * Find User By User Name
      *
      * @param userName User Name
