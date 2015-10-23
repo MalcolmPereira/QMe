@@ -22,7 +22,10 @@ public interface UserRepository extends QMeRepository<User, Long> {
         USERNAME("userName"),
         EMAIL("userEmail"),
         FIRSTNAME("userFirstName"),
-        LASTNAME("userLastName")
+        LASTNAME("userLastName"),
+        REGISTERDATE("userRegisteredDate"),
+        LOGINDATE("userLastLoginDate"),
+
         ;
         /**
          * Enum Constructor
