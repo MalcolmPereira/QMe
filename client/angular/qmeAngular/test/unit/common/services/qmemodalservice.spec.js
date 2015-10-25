@@ -4,12 +4,13 @@
 
     describe('Service: QMe Modal Service', function() {
 
-        var rootScope,qmeModelSession;
+        var rootScope,httpBackend,qmeModelSession;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function($rootScope,_qmeModelSession_) {
+        beforeEach(inject(function($rootScope,$httpBackend,_qmeModelSession_) {
             rootScope = $rootScope;
+            httpBackend = $httpBackend;
             qmeModelSession = _qmeModelSession_;
         }));
 
@@ -18,6 +19,7 @@
         });
 
         it('Should allow to return and maintain modal window state', function() {
+            httpBackend.whenGET(/js\//).respond(200,{});
             expect(qmeModelSession).toBeDefined();
             var modalPromise = qmeModelSession.modalShown();
             expect(modalPromise).toBeDefined();
@@ -33,6 +35,7 @@
                 expect(error).not.toBeDefined();
             });
         });
+
     });
 
 })();

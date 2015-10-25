@@ -5,13 +5,15 @@
 
     describe('Controller: QMe Password Modal Controller', function() {
 
-        var rootScope,scope, ctrl,qmeModelSession;
+        var rootScope,httpBackend,ctrl,qmeModelSession;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function($rootScope,$controller,_qmeModelSession_) {
+        beforeEach(inject(function($rootScope,$controller,$httpBackend,_qmeModelSession_) {
 
             rootScope = $rootScope;
+
+            httpBackend = $httpBackend;
 
             qmeModelSession =  _qmeModelSession_;
 
@@ -46,6 +48,7 @@
         });
 
         it('Should have Save Change Password Request', function() {
+            httpBackend.whenGET(/js\//).respond(200,{});
             expect(ctrl).toBeDefined();
             ctrl.currentPassword = "test";
             ctrl.password = "newtest";
@@ -65,7 +68,9 @@
             rootScope.$digest();
         });
 
+
         it('Should have Cancel Save Password Request', function() {
+            httpBackend.whenGET(/js\//).respond(200,{});
             expect(ctrl).toBeDefined();
             ctrl.currentPassword = "test";
             ctrl.password = "newtest";
@@ -87,6 +92,7 @@
             rootScope.$digest();
         });
 
+
         it('Should have Validate Password Fields on valid password', function() {
             expect(ctrl).toBeDefined();
             ctrl.currentPassword = "test";
@@ -106,6 +112,7 @@
         });
 
         it('Should have Validate Password Fields on non matching password', function() {
+            httpBackend.whenGET(/js\//).respond(200,{});
             expect(ctrl).toBeDefined();
             ctrl.currentPassword = "test";
             ctrl.password = "newtest1";
@@ -123,6 +130,7 @@
             expect(ctrl.showPasswordError()).toBe(true);
             rootScope.$digest();
         });
+
 
         it('Should have Check for Valid Password Form', function() {
             expect(ctrl).toBeDefined();

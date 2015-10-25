@@ -218,6 +218,7 @@
                 if(!qmePage.isLastPage()){
                     qmePage.qmePageSession.setNext();
                     $scope.qmePagingfunction()(qmePage.qmePageSession.getPage());
+                    console.log("qmePage.qmePageSession._currentGroup",qmePage.qmePageSession._currentGroup);
                 }
             };
 
