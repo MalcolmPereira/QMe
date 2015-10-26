@@ -3,18 +3,31 @@
 
     describe('Unit: QMe App Configuration', function () {
 
-        var qmeContants, qmeStates,rootScope,httpBackend,location,userConfirmEndpoint;
+        var qmeContants, qmeStates,rootScope,httpBackend,location,userConfirmEndpoint, window;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend,$location) {
+        beforeEach(inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend,$location, $window) {
             qmeContants = _QME_CONSTANTS_;
             userConfirmEndpoint =  qmeContants.qmeservice+"/user/confirm";
             qmeStates = $state;
             rootScope = $rootScope.$new();
             httpBackend = $httpBackend;
             location = $location;
+            window = $window;
         }));
+
+        it('Unit: Check Valid QMe Constants', function () {
+            spyOn(window , 'onbeforeunload');
+            var event = jasmine.createSpyObj('clickEvent', ['preventDefault']);
+            event.type = 'reload';
+            window.onbeforeunload(event);
+            rootScope.$digest();
+            expect(window.onbeforeunload).toHaveBeenCalled();
+            console.log('event',event);
+            console.log('event',event.preventDefault);
+
+        });
 
         it('Unit: Check Valid QMe Constants', function () {
             expect(qmeContants.success).toBe('success');
