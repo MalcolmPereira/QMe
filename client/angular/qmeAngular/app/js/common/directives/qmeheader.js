@@ -22,6 +22,9 @@
             var qmeNav = this;
 
             qmeNav.isSignedIn = function(){
+                if(qmeUserSession.isSignedIn() == null){
+                    return false;
+                }
                 return (qmeUserSession && qmeUserSession.isSignedIn() && !qmeUserSession.isUpdating());
             };
 

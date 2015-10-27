@@ -100,9 +100,9 @@
         qmeUserSession.isSignedIn = function(){
             return(
                 qmeUserSession.userid() &&
-                qmeUserSession.userid() !== null &&
+                qmeUserSession.userid() != null &&
                 qmeUserSession.authtoken() &&
-                qmeUserSession.authtoken() !== null
+                qmeUserSession.authtoken() != null
             );
         };
 
