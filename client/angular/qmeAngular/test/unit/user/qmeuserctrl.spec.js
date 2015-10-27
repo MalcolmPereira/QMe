@@ -13,6 +13,7 @@
             ctrl,
             qmeContants,
             qmeModelSession,
+            qmeUserSession,
             userAuthEndPoint,
             userStagingEndpoint,
             userRegisterEndpoint,
@@ -24,7 +25,7 @@
 
         beforeEach(module('qmeApp.templates'));
 
-        beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeModelSession_) {
+        beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeModelSession_, _qmeUserSession_) {
 
             rootScope = $rootScope;
 
@@ -39,6 +40,8 @@
             qmeContants = _QME_CONSTANTS_;
 
             qmeModelSession = _qmeModelSession_;
+
+            qmeUserSession = _qmeUserSession_;
 
             userAuthEndPoint =  qmeContants.qmeservice+"/login";
 
@@ -75,7 +78,6 @@
         it('Should have a QMe User controller', function() {
             expect(ctrl).toBeDefined();
         });
-
 
         it('Ensure User is not signed - signedIn is false', function() {
             expect(ctrl.isSignedIn() ).toBe(false);
@@ -360,8 +362,58 @@
         });
 
         it('Ensure user can route back to home from update profile', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(ctrl.userNameDisplay() ).toBe("Test User");
+
+            ctrl.routeUserProfile()
+            scope.$digest();
+
+            expect(state).toBeDefined();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+            expect(state.current.name).toBe('userprofile');
+            expect(state.current.url).toBe('/userprofile');
+            expect(state.current.templateUrl).toBe('js/user/qmeuserprofile.tmpl.html');
+            expect(state.current.controller).toBe('qmeUserCtrl');
+            expect(state.current.controllerAs).toBe('qmeUserCtrl');
+
+            expect(ctrl.userEmail).toBeDefined();
+            expect(ctrl.userEmail).toBe("testuser@test.com");
+            expect(ctrl.userName).toBeDefined();
+            expect(ctrl.userPassword).toBeDefined();
+            expect(ctrl.userPasswordConfirm).toBeDefined();
+            expect(ctrl.userFirstName).toBeDefined();
+            expect(ctrl.userLastName).toBeDefined();
+
             ctrl.cancelUserUpdate()
             scope.$digest();
+            expect(qmeUserSession.isUpdating).toBe(false);
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
             expect(state.current).not.toBeNull();
@@ -924,7 +976,6 @@
 
         });
 
-
         describe('Controller: QMe User Controller Already Initialized With Logged In User', function() {
             var qmeUserSession,userAPIEndpoint;
             beforeEach(inject(function($rootScope,$state, $stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeUserSession_) {
@@ -1071,7 +1122,6 @@
                 expect(scope.flash.message).toBe('User profile update successful.');
             });
         });
-
     });
 
 })();
