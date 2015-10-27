@@ -10,6 +10,8 @@
             qmeUserSession,
             httpBackend,
             qmeContants,
+            userEndPoint,
+            userPagedEndPoint,
             userCountEndPoint,
             userAuthEndPoint,
             userStagingEndpoint,
@@ -29,6 +31,8 @@
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
             userAuthEndPoint =  qmeContants.qmeservice+"/login";
+            userEndPoint     = qmeContants.qmeservice+"/user";
+            userPagedEndPoint = qmeContants.qmeservice+"/user/paged";
             userCountEndPoint  = qmeContants.qmeservice+"/user/count";
             userStagingEndpoint = qmeContants.qmeservice+"/user/stage";
             userConfirmEndpoint = qmeContants.qmeservice+"/user/confirm";
@@ -611,13 +615,333 @@
             expect(qmeUserService.isResetting()).toBe(false);
         });
 
+        it('Should handle valid 500 Server Error for count user request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectGET(userCountEndPoint).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .countUsers()
+                .then(
+                function(res){
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                }
+            );
+            httpBackend.flush();
+        });
+
         it('Should handle valid count user  request ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             httpBackend.expectGET(userCountEndPoint).respond(200,264);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
-                .countUsers("sometoken")
+                .countUsers()
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+        });
+
+
+        it('Should handle valid 500 Server Error for list user request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectGET(userEndPoint).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .listUsers()
+                .then(
+                function(res){
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid list user request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var userList = [
+                {
+                    "userID": 1,
+                    "userName": "testuser1",
+                    "userPassword": null,
+                    "userFirstName": "Test1",
+                    "userLastName": "User1",
+                    "userEmail": "test1.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 2,
+                    "userName": "testuser2",
+                    "userPassword": null,
+                    "userFirstName": "Test2",
+                    "userLastName": "User2",
+                    "userEmail": "test2.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 3,
+                    "userName": "testuser3",
+                    "userPassword": null,
+                    "userFirstName": "Test3",
+                    "userLastName": "User3",
+                    "userEmail": "test3.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                }
+            ];
+            httpBackend.expectGET(userEndPoint).respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .listUsers()
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid 500 Server Error for list user paged request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .listUsersPaged(0)
+                .then(
+                function(res){
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid list user paged request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var userList = [
+                {
+                    "userID": 1,
+                    "userName": "testuser1",
+                    "userPassword": null,
+                    "userFirstName": "Test1",
+                    "userLastName": "User1",
+                    "userEmail": "test1.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 2,
+                    "userName": "testuser2",
+                    "userPassword": null,
+                    "userFirstName": "Test2",
+                    "userLastName": "User2",
+                    "userEmail": "test2.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 3,
+                    "userName": "testuser3",
+                    "userPassword": null,
+                    "userFirstName": "Test3",
+                    "userLastName": "User3",
+                    "userEmail": "test3.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                }
+            ];
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage).respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .listUsersPaged(0)
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid 500 Server Error for list user paged request with sort fields ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .listUsersPaged(0,true,"USERNAME")
+                .then(
+                function(res){
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid list user paged request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var userList = [
+                {
+                    "userID": 1,
+                    "userName": "testuser1",
+                    "userPassword": null,
+                    "userFirstName": "Test1",
+                    "userLastName": "User1",
+                    "userEmail": "test1.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 2,
+                    "userName": "testuser2",
+                    "userPassword": null,
+                    "userFirstName": "Test2",
+                    "userLastName": "User2",
+                    "userEmail": "test2.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 3,
+                    "userName": "testuser3",
+                    "userPassword": null,
+                    "userFirstName": "Test3",
+                    "userLastName": "User3",
+                    "userEmail": "test3.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                }
+            ];
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .listUsersPaged(0,true,"USERNAME")
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid QMe User Update Request for 500 Server Error', function() {
+            expect(qmeUserService).toBeDefined();
+            var credentials = {
+                "userName": "testuser",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": qmeContants.password_mask,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            expect(qmeUserService.currentUser()).toBe(null);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .login(credentials)
+                .then(
+                function(){
+                    expect(qmeUserService.currentUser()).toBeDefined();
+                    expect(qmeUserService.currentUser().isSignedIn()).toBe(true);
+                    expect(qmeUserService.currentUser().isAdmin()).toBe(false);
+                    expect(qmeUserService.currentUser().username()).toBe('testuser');
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+            httpBackend.expectPUT(userEndPoint+"/1").respond(500,user);
+            qmeUserService
+                .updateUser(user)
+                .then(
+                function(res){
+                },
+                function(error){
+                    expect(error).toBeDefined();
+                }
+            );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid QMe User Update Request', function() {
+            expect(qmeUserService).toBeDefined();
+            var credentials = {
+                "userName": "testuser",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": qmeContants.password_mask,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            expect(qmeUserService.currentUser()).toBe(null);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .login(credentials)
+                .then(
+                function(){
+                    expect(qmeUserService.currentUser()).toBeDefined();
+                    expect(qmeUserService.currentUser().isSignedIn()).toBe(true);
+                    expect(qmeUserService.currentUser().isAdmin()).toBe(false);
+                    expect(qmeUserService.currentUser().username()).toBe('testuser');
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
+            httpBackend.expectPUT(userEndPoint+"/1").respond(200,user);
+            qmeUserService
+                .updateUser(user)
                 .then(
                 function(res){
                     expect(res).toBeDefined();

@@ -50,23 +50,19 @@
         };
 
         qmeUserSession.authtoken = function () {
-           return _authtoken
+           return _authtoken;
         };
 
         qmeUserSession.userid = function () {
-           return _userid
+           return _userid;
         };
 
         qmeUserSession.username = function () {
-           return _username
+           return _username;
         };
 
         qmeUserSession.userfirstname= function () {
-           return _userfirstname
-        };
-
-        qmeUserSession.userlastname= function () {
-           return _userlastname
+           return _userfirstname;
         };
 
         qmeUserSession.setUserFirstname= function (userfirstname) {
@@ -82,15 +78,15 @@
         };
 
         qmeUserSession.useremail= function () {
-           return _useremail
+           return _useremail;
         };
 
         qmeUserSession.userrole = function () {
-           return _userrole
+           return _userrole;
         };
 
         qmeUserSession.userlastlogin = function () {
-           return _userlastlogin
+           return _userlastlogin;
         };
 
         qmeUserSession.setUpdating= function () {
