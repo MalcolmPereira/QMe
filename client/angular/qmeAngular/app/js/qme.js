@@ -26,9 +26,11 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                 if (typeof event === 'undefined') {
                     event = window.event;
                 }
-                event.preventDefault = true;
-                event.cancelBubble = true;
-                event.returnValue = 'You are exiting out from the qme application.';
+                if(qmeUserSession.isSignedIn()){
+                    event.preventDefault = true;
+                    event.cancelBubble = true;
+                    event.returnValue = 'You are exiting out from the qme application.';
+                }
             };
             $window.onload = function (event) {
                 $state.go('home', {});
