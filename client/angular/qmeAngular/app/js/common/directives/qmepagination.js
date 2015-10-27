@@ -64,7 +64,7 @@
             };
 
             qmePageSession.getFirst = function(){
-                if(! qmePageSession.isFirstPage() ){
+                if(! qmePageSession.isFirstPage() && qmePageSession.requiresPagination()){
                     _currentPage  = 0;
                     _currentGroup = _pagesPerPage;
                     _pages = [];
@@ -76,7 +76,7 @@
             };
 
             qmePageSession.getLast = function(){
-                if(! qmePageSession.isLastPage() ){
+                if(! qmePageSession.isLastPage() && qmePageSession.requiresPagination()){
                     _currentPage  = _lastPage - 1;
                     _currentGroup = _lastPage;
                     var startPage =  (_currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup  % _pagesPerPage)))) - _pagesPerPage ;
@@ -86,11 +86,14 @@
                         _pages.push(i);
                     }
                 }
+                if( _currentPage < 0 ){
+                    _currentPage = 0;
+                }
                 return _currentPage;
             };
 
             qmePageSession.setPrevious = function(){
-                if(! qmePageSession.isFirstPage() ){
+                if(! qmePageSession.isFirstPage() && qmePageSession.requiresPagination()){
                     --_currentPage;
                     if(_pages.indexOf(_currentPage + 1) === -1){
                         qmePageSession.getPreviousGroup();
@@ -99,9 +102,8 @@
             };
 
             qmePageSession.setNext = function(){
-                if(! qmePageSession.isLastPage() ){
+                if(! qmePageSession.isLastPage() && qmePageSession.requiresPagination()){
                     ++_currentPage;
-                    //if(_currentPage >= _currentGroup){
                     if(_pages.indexOf(_currentPage + 1) === -1){
                         qmePageSession.getNextGroup();
                     }
@@ -109,6 +111,9 @@
             };
 
             qmePageSession.getPage = function(){
+                if( _currentPage < 0 ){
+                    _currentPage = 0;
+                }
                 return _currentPage;
             };
 
@@ -133,42 +138,56 @@
             };
 
             qmePageSession.getPreviousGroup = function(){
-                if(_currentGroup  >= _lastPage ){
-                    _currentGroup = _currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup  % _pagesPerPage)));
+                if(! qmePageSession.isFirstPage() && qmePageSession.requiresPagination()) {
+                    if (_currentGroup >= _lastPage) {
+                        _currentGroup = _currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup % _pagesPerPage)));
+                    }
+                    _currentGroup = _currentGroup - _pagesPerPage;
+                    if (_currentGroup <= 0) {
+                        _currentGroup = _pagesPerPage;
+                    }
+                    var startPage = (_currentGroup - _pagesPerPage) + 1;
+                    if (startPage <= 0) {
+                        startPage = 1;
+                    }
+                    _pages = [];
+                    for (var i = startPage; i < _currentGroup + 1; i++) {
+                        _pages.push(i);
+                    }
+                    _currentPage = _currentGroup - 1;
                 }
-                _currentGroup = _currentGroup  - _pagesPerPage;
-                if(_currentGroup <= 0 ){
-                    _currentGroup = _pagesPerPage;
-                }
-                var startPage     = (_currentGroup  - _pagesPerPage) + 1;
-                if(startPage  <= 0 ){
-                    startPage = 1;
-                }
-                _pages = [];
-                for (var i = startPage; i < _currentGroup + 1; i++) {
-                    _pages.push(i);
-                }
-                _currentPage = _currentGroup - 1;
                 return _currentPage;
             };
 
             qmePageSession.showNextGroup = function(){
+                if(qmePageSession.isLastPage()){
+                    return false;
+                }
+                if(!_currentGroup){
+                    return false;
+                }
                 return ((!qmePageSession.isLastPage()) && (_currentGroup) && (_currentGroup > 0 && _currentGroup < _lastPage -1))
             };
 
             qmePageSession.getNextGroup = function(){
-                var startPage    = _currentGroup  + 1;
-                _currentGroup    = _currentGroup  + _pagesPerPage ;
-                if(_currentGroup > _lastPage - 1){
-                    _currentGroup = _lastPage;
+                if(! qmePageSession.isLastPage() && qmePageSession.requiresPagination()) {
+                    var startPage = _currentGroup + 1;
+                    _currentGroup = _currentGroup + _pagesPerPage;
+                    if (_currentGroup > _lastPage - 1) {
+                        _currentGroup = _lastPage;
+                    }
+                    _pages = [];
+                    for (var i = startPage; i <= _currentGroup; i++) {
+                        _pages.push(i);
+                    }
+                    _currentPage = startPage - 1;
                 }
-                _pages = [];
-                for (var i = startPage; i <= _currentGroup; i++) {
-                    _pages.push(i);
-                }
-                _currentPage = startPage - 1;
                 return _currentPage;
             };
+
+            qmePageSession.requiresPagination = function(){
+                return (_totalRecCount > _recPerPage);
+            }
         })
 
         .controller('qmePageCtrl',QMePageController);
@@ -247,5 +266,9 @@
                     $scope.qmePagingfunction()(qmePage.qmePageSession.getNextGroup());
                 }
             };
+
+            qmePage.requiresPagination = function(){
+                return qmePage.qmePageSession.requiresPagination();
+            }
         }
 })();

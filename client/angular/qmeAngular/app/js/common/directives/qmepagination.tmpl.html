@@ -1,6 +1,6 @@
-<div class="container-fluid" ng-controller="qmePageCtrl as qmePageCtrl">
+<div class="container-fluid"  ng-controller="qmePageCtrl as qmePageCtrl">
     &nbsp;Total Records:&nbsp;{{qmePageCtrl.qmeTotalcount}}
-    <nav>
+    <nav ng-show="qmePageCtrl.requiresPagination()">
         <ul class="pagination">
             <li ng-class="{ disabled: qmePageCtrl.isFirstPage()}"><a href="#" aria-label="First" ng-click="qmePageCtrl.goFirst()"><span aria-hidden="true">&laquo;&laquo;</span></a></li>
             <li ng-class="{ disabled: qmePageCtrl.isFirstPage()}"><a href="#" aria-label="Previous" ng-click="qmePageCtrl.goPrevious()"><span aria-hidden="true">&laquo;</span></a></li>
