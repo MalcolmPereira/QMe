@@ -3,30 +3,34 @@
 
     describe('Unit: QMe App Configuration', function () {
 
-        var qmeContants, qmeStates,rootScope,httpBackend,location,userConfirmEndpoint, window;
+        var qmeContants, qmeStates,rootScope,httpBackend,location,userConfirmEndpoint, window, windowMock;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend,$location, $window) {
-            qmeContants = _QME_CONSTANTS_;
-            userConfirmEndpoint =  qmeContants.qmeservice+"/user/confirm";
-            qmeStates = $state;
-            rootScope = $rootScope.$new();
-            httpBackend = $httpBackend;
-            location = $location;
-            window = $window;
-        }));
+        beforeEach(function() {
+            windowMock = {
+                location: {replace:jasmine.createSpy()},
+                onbeforeunload: {replace:jasmine.createSpy()}
+            };
 
-        it('Unit: Check Valid QMe Constants', function () {
-            spyOn(window , 'onbeforeunload');
-            var event = jasmine.createSpyObj('clickEvent', ['preventDefault']);
-            event.type = 'reload';
-            window.onbeforeunload(event);
-            rootScope.$digest();
-            expect(window.onbeforeunload).toHaveBeenCalled();
-            console.log('event',event);
-            console.log('event',event.preventDefault);
+            module(function($provide) {
+                $provide.value('$window', windowMock);
+            });
 
+            inject(function(_QME_CONSTANTS_,$state,$rootScope,$httpBackend,$location, $window) {
+                qmeContants = _QME_CONSTANTS_;
+                userConfirmEndpoint =  qmeContants.qmeservice+"/user/confirm";
+                qmeStates = $state;
+                rootScope = $rootScope.$new();
+                httpBackend = $httpBackend;
+                location = $location;
+                window = $window;
+            });
+        });
+
+        it('Unit: Check Load/Reload', function () {
+            window.onbeforeunload();
+            expect(windowMock.onbeforeunload).toHaveBeenCalled();
         });
 
         it('Unit: Check Valid QMe Constants', function () {
@@ -36,6 +40,7 @@
             expect(qmeContants.adminrole).toBe('ADMIN');
             expect(qmeContants.userrole).toBe('USER');
         });
+
 
         it('Unit: Check Valid QMe States', function () {
 
@@ -111,6 +116,7 @@
             expect(rootScope.flash.message).toBe('User registration completed successfully, please login using your credentials, Thank you.');
         });
 
+
         it('Unit: Check Error Message Confirm User Confirmation Error', function () {
             httpBackend.whenGET("js/home/qmehome.tmpl.html").respond(200,{});
             httpBackend.expectPOST(userConfirmEndpoint,"sometoken").respond(500,{});
@@ -124,6 +130,7 @@
             expect(rootScope.flash.message).toBeDefined();
             expect(rootScope.flash.message).toBe('Oops.....Error confirming user registration, registration token invalid/expired, please re-try request or register.');
         });
+
     });
 
 })();
