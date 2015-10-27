@@ -413,7 +413,7 @@
 
             ctrl.cancelUserUpdate()
             scope.$digest();
-            expect(qmeUserSession.isUpdating).toBe(false);
+            expect(qmeUserSession.isUpdating()).toBe(false);
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
             expect(state.current).not.toBeNull();
@@ -477,6 +477,103 @@
             expect(state.current.controllerAs).toBe('qmeHomeCtrl');
         });
 
+        it('Ensure Valid 404 error is handled for invalid credentials ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(404,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Error Connecting to service, entered user credential not found.');
+        });
+
+        it('Ensure Valid 403 error is handled for invalid credentials ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(403,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized, please register or click on forgot password.');
+        });
+
+        it('Ensure Valid 401 error is handled for invalid credentials ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(401,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized, please register or click on forgot password.');
+        });
+
+        it('Ensure Valid 500 error is handled for invalid credentials ', function() {
+            ctrl.userEmail = "testuser@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testuser@test.com",
+                "userPassword": "testpassword"
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testuser@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(false);
+            expect(ctrl.isAdmin() ).toBe(false);
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error Connecting to service, please retry in some time.');
+        });
+
+
         it('Ensure user able to sign-on with valid credentials for USER Role', function() {
             ctrl.userEmail = "testuser@test.com";
             ctrl.userPassword = "testpassword";
@@ -507,7 +604,6 @@
             expect(ctrl.isAdmin() ).toBe(false);
         });
 
-
         it('Ensure user able to sign-on with valid credentials for ADMIN Role', function() {
             ctrl.userEmail = "testuser@test.com";
             ctrl.userPassword = "testpassword";
@@ -537,7 +633,7 @@
             expect(ctrl.isSignedIn() ).toBe(true);
             expect(ctrl.isAdmin() ).toBe(true);
         });
-        //TODO: Write Test Cases for 404 and 401 Errors
+
 
 
         it('Should have default fields available for User Staging', function() {

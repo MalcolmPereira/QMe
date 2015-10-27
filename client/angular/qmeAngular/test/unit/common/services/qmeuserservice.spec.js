@@ -10,6 +10,7 @@
             qmeUserSession,
             httpBackend,
             qmeContants,
+            userCountEndPoint,
             userAuthEndPoint,
             userStagingEndpoint,
             userConfirmEndpoint,
@@ -28,6 +29,7 @@
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
             userAuthEndPoint =  qmeContants.qmeservice+"/login";
+            userCountEndPoint  = qmeContants.qmeservice+"/user/count";
             userStagingEndpoint = qmeContants.qmeservice+"/user/stage";
             userConfirmEndpoint = qmeContants.qmeservice+"/user/confirm";
             userRegisterEndpoint = qmeContants.qmeservice+"/user/register";
@@ -607,6 +609,23 @@
             expect(qmeUserService.isResetting()).toBe(true);
             qmeUserService.endResetting();
             expect(qmeUserService.isResetting()).toBe(false);
+        });
+
+        it('Should handle valid count user  request ', function() {
+            expect(qmeUserService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+            httpBackend.expectGET(userCountEndPoint).respond(200,264);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .countUsers("sometoken")
+                .then(
+                function(res){
+                    expect(res).toBeDefined();
+                },
+                function(error){
+                }
+            );
+            httpBackend.flush();
         });
     });
 })();
