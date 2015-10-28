@@ -3,7 +3,7 @@
 
     describe('Unit: QMe App Configuration', function () {
 
-        var qmeContants, qmeStates,rootScope,httpBackend,location,userConfirmEndpoint, window, windowMock;
+        var qmeContants, qmeStates,rootScope,scope, httpBackend,location,userConfirmEndpoint, window, windowMock;
 
         beforeEach(module('qmeApp'));
 
@@ -21,7 +21,8 @@
                 qmeContants = _QME_CONSTANTS_;
                 userConfirmEndpoint =  qmeContants.qmeservice+"/user/confirm";
                 qmeStates = $state;
-                rootScope = $rootScope.$new();
+                rootScope = $rootScope;
+                scope = $rootScope.$new();
                 httpBackend = $httpBackend;
                 location = $location;
                 window = $window;
@@ -29,9 +30,9 @@
         });
 
         it('Unit: Check Load/Reload', function () {
-            //TODO: Need to write test cases for unlaod and load events!!!!
-            //window.onbeforeunload();
-            //expect(windowMock.onbeforeunload).toHaveBeenCalled();
+            var event = scope.$broadcast("someEvent");
+            window.onbeforeunload(event);
+            expect(event.defaultPrevented).toBe(false);
         });
 
         it('Unit: Check Valid QMe Constants', function () {
