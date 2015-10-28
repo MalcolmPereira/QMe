@@ -456,6 +456,7 @@
         it('Should have a QMe Page Controller and return valid page and page group states when total records is 0', function() {
             expect(qmePageCtrl).toBeDefined();
             qmePageSession.create(0);
+            //TODO: Not able to call function on scope from test cases. Need to fix this
         });
 
 
