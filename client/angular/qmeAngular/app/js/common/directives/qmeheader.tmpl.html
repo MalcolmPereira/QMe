@@ -24,8 +24,8 @@
                         <span class="glyphicon glyphicon-user"></span> &nbsp; <span id="loginName" ng-cloak> {{qmeUserCtrl.userNameDisplay()}} </span> &nbsp; <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#" ng-click="qmeUserCtrl.routeUserProfile()">Profile</a></li>
-                        <li><a href="#" ng-click="qmeUserCtrl.logout()">Sign-out</a></li>
+                        <li><a id="profileLinkId" href="#" ng-click="qmeUserCtrl.routeUserProfile()">Profile</a></li>
+                        <li><a id="logoutLinkId"  href="#" ng-click="qmeUserCtrl.logout()">Sign-out</a></li>
                     </ul>
                 </li>
             </ul>
