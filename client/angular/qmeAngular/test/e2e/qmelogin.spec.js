@@ -102,9 +102,12 @@
             expect(element(by.id('forgotButton')).isDisplayed()).toEqual(false);
             expect(element(by.id('qmeAppHeader')).getText()).toEqual('QMe Application');
             expect(element(by.id('loginName')).getText()).toEqual('Test Admin');
-            expect(element(by.id('profileLinkId')).isDisplayed()).toEqual(true);
-            expect(element(by.id('logoutLinkId')).isDisplayed()).toEqual(true);
-            expect(element(by.id('Malcolm'))).toBeDefined();
+            expect(element(by.id('profileLinkId')).isEnabled()).toBe(true);
+            expect(element(by.id('logoutLinkId')).isEnabled()).toBe(true);
+            element(by.id('userNameMenuId')).click();
+            element(by.id('profileLinkId')).click();
+
+
         });
 
     });
