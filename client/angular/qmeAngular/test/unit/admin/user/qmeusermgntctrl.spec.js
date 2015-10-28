@@ -258,6 +258,71 @@
             expect(ctrl.users).toBeDefined();
             expect(ctrl.users.length).toBe(3);
         });
+
+        it('Should return valid user lists on page users with Sorting Fields  ', function() {
+            expect(ctrl).toBeDefined();
+            var userList = [
+                {
+                    "userID": 1,
+                    "userName": "testuser1",
+                    "userPassword": null,
+                    "userFirstName": "Test1",
+                    "userLastName": "User1",
+                    "userEmail": "test1.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 2,
+                    "userName": "testuser2",
+                    "userPassword": null,
+                    "userFirstName": "Test2",
+                    "userLastName": "User2",
+                    "userEmail": "test2.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 3,
+                    "userName": "testuser3",
+                    "userPassword": null,
+                    "userFirstName": "Test3",
+                    "userLastName": "User3",
+                    "userEmail": "test3.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                }
+            ];
+            expect(ctrl.sortasc).toBe(true);
+            expect(ctrl.sortfields).toBe("USERNAME");
+            expect(ctrl.isSortAsc("USERNAME")).toBe(true);
+            expect(ctrl.isSortDesc("USERNAME")).toBe(false);
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.setSortField("USERNAME");
+            httpBackend.flush();
+            expect(ctrl.users).toBeDefined();
+            expect(ctrl.users.length).toBe(3);
+
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=false&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.sortDesc("USERNAME");
+            httpBackend.flush();
+            expect(ctrl.users).toBeDefined();
+            expect(ctrl.users.length).toBe(3);
+
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.sortAsc("USERNAME");
+            httpBackend.flush();
+            expect(ctrl.users).toBeDefined();
+            expect(ctrl.users.length).toBe(3);
+
+        });
+
     });
 
 })();
