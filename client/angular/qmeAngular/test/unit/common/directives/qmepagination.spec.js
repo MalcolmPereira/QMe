@@ -113,6 +113,8 @@
             expect(qmePageSession.getFirst()).toBe(0);
             expect(qmePageSession.getLast()).toBe(2);
             expect(qmePageSession.getPage()).toBe(2);
+            expect(qmePageSession.showPreviousGroup()).toBe(false);
+            expect(qmePageSession.showNextGroup()).toBe(false);
 
             qmePageSession.getFirst();
             qmePageSession.setNext();

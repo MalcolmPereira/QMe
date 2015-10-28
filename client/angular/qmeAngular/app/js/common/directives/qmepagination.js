@@ -138,7 +138,7 @@
             };
 
             qmePageSession.getPreviousGroup = function(){
-                if(! qmePageSession.isFirstPage() && qmePageSession.requiresPagination()) {
+                if(! qmePageSession.isFirstPage() && qmePageSession.requiresPagination() && qmePageSession.requiresPageGroupings()) {
                     if (_currentGroup >= _lastPage) {
                         _currentGroup = _currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup % _pagesPerPage)));
                     }
@@ -170,7 +170,7 @@
             };
 
             qmePageSession.getNextGroup = function(){
-                if(! qmePageSession.isLastPage() && qmePageSession.requiresPagination()) {
+                if(! qmePageSession.isLastPage() && qmePageSession.requiresPagination() && qmePageSession.requiresPageGroupings()) {
                     var startPage = _currentGroup + 1;
                     _currentGroup = _currentGroup + _pagesPerPage;
                     if (_currentGroup > _lastPage - 1) {
@@ -187,6 +187,10 @@
 
             qmePageSession.requiresPagination = function(){
                 return (_totalRecCount > _recPerPage);
+            }
+
+            qmePageSession.requiresPageGroupings = function(){
+                return (_lastPage > _pagesPerPage);
             }
         })
 
