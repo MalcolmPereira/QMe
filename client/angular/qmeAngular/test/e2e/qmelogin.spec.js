@@ -4,6 +4,8 @@
 
     describe('End to End : QMe Login Tests ', function () {
 
+        var EC = protractor.ExpectedConditions;
+
         it('Should have default elements on home page', function() {
             browser.get('');
             expect(browser.getTitle()).toEqual('QMe Application');
@@ -104,9 +106,61 @@
             expect(element(by.id('loginName')).getText()).toEqual('Test Admin');
             expect(element(by.id('profileLinkId')).isEnabled()).toBe(true);
             expect(element(by.id('logoutLinkId')).isEnabled()).toBe(true);
+
             element(by.id('userNameMenuId')).click();
             element(by.id('profileLinkId')).click();
+            expect(element(by.css('.panel-title')).getText()).toEqual('User Profile');
+            expect(element(by.id('userEmail')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userEmail')).isEnabled()).toEqual(false);
+            expect(element(by.id('userName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userName')).isEnabled()).toEqual(false);
+            expect(element(by.id('userPassword')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userFirstName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userLastName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('submitUpdateProfileButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('submitUpdateProfileButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('changeButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('changeButton')).isEnabled()).toEqual(true);
 
+            element(by.id('changeButton')).click();
+            browser.wait(EC.visibilityOf($('#passwordModalLabel')), 5000);
+            expect($('.modal-dialog').element(by.id('passwordModalLabel')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('passwordModalLabel')).getText()).toEqual('Change Password');
+            var userCurrentPassword = $('.modal-dialog').element(by.id('currentPassword'));
+            var userNewPassword     = $('.modal-dialog').element(by.id('currentPassword'));
+            var userConfirmPassword     = $('.modal-dialog').element(by.id('confirmPassword'));
+            expect(userCurrentPassword.isDisplayed()).toEqual(true);
+            expect(userCurrentPassword.isEnabled()).toEqual(true);
+            expect(userNewPassword.isDisplayed()).toEqual(true);
+            expect(userNewPassword.isEnabled()).toEqual(true);
+            expect(userConfirmPassword.isDisplayed()).toEqual(true);
+            expect(userConfirmPassword.isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(false);
+            expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(false);
+            userCurrentPassword.sendKeys('somepassword');
+            userNewPassword.sendKeys('test1');
+            userConfirmPassword.sendKeys('test2');
+            userCurrentPassword.click();
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(false);
+            expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(true);
+            userCurrentPassword.sendKeys('somepassword');
+            userNewPassword.sendKeys('test1');
+            userConfirmPassword.sendKeys('test1');
+            userCurrentPassword.click();
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(false);
+            $('.modal-dialog').element(by.id('saveButtonId')).click();
 
         });
 
