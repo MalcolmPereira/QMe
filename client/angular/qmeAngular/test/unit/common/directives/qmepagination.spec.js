@@ -4,7 +4,7 @@
 
     describe('Unit: QMe Pagination Directive', function () {
 
-        var qmePagination,compile,rootScope,qmePageCtrl,qmePageSession, mockPageFunc;
+        var qmePagination,compile,rootScope,qmePageCtrl,qmePageSession, mockPageFunc, mockScope;
 
         beforeEach(module('qmeApp'));
 
@@ -12,13 +12,12 @@
 
         beforeEach(inject(function($compile, $rootScope, $controller,_qmePageSession_) {
             compile = $compile;
-            rootScope = $rootScope;
+            rootScope = $rootScope.$new();
             qmePageSession = _qmePageSession_;
             qmePageCtrl  = $controller('qmePageCtrl', {
                 $scope: rootScope,
                 qmePageSession:qmePageSession
             });
-            mockPageFunc - function(){};
         }));
 
         it('Should have a QMe Pagination Directive', function() {
@@ -434,7 +433,32 @@
             expect(qmePageSession.pages().length).toBe(10);
             expect(qmePageSession.showPreviousGroup()).toBe(false);
             expect(qmePageSession.showNextGroup()).toBe(true);
+
+            qmePageSession.getLast();
+            expect(qmePageSession.getPage()).toBe(16);
+            expect(qmePageSession.showPreviousGroup()).toBe(true);
+            expect(qmePageSession.showNextGroup()).toBe(false);
+            expect(qmePageSession.isCurrentPage(16)).toBe(true);
+            expect(qmePageSession.isFirstPage()).toBe(false);
+            expect(qmePageSession.isLastPage()).toBe(true);
+            expect(qmePageSession.pages()).toBeDefined();
+            expect(qmePageSession.pages().length).toBe(7);
+            expect(qmePageSession.showPreviousGroup()).toBe(true);
+            expect(qmePageSession.showNextGroup()).toBe(false);
+
+            qmePageSession.getPreviousGroup();
+            expect(qmePageSession.pages()).toBeDefined();
+            expect(qmePageSession.pages().length).toBe(10);
+            expect(qmePageSession.showPreviousGroup()).toBe(false);
+            expect(qmePageSession.showNextGroup()).toBe(true);
         });
+
+        it('Should have a QMe Page Controller and return valid page and page group states when total records is 0', function() {
+            expect(qmePageCtrl).toBeDefined();
+            qmePageSession.create(0);
+        });
+
+
     });
 
 })();

@@ -86,9 +86,6 @@
                         _pages.push(i);
                     }
                 }
-                if( _currentPage < 0 ){
-                    _currentPage = 0;
-                }
                 return _currentPage;
             };
 
@@ -111,9 +108,6 @@
             };
 
             qmePageSession.getPage = function(){
-                if( _currentPage < 0 ){
-                    _currentPage = 0;
-                }
                 return _currentPage;
             };
 
@@ -143,13 +137,22 @@
                         _currentGroup = _currentGroup + (_pagesPerPage - (Math.ceil(_currentGroup % _pagesPerPage)));
                     }
                     _currentGroup = _currentGroup - _pagesPerPage;
+                    //TODO:Validate cases under which this may occur
+                    //FIXME: Delete this after tests
+                    /*
                     if (_currentGroup <= 0) {
                         _currentGroup = _pagesPerPage;
                     }
+                    */
                     var startPage = (_currentGroup - _pagesPerPage) + 1;
+                    //TODO:Validate cases under which this may occur
+                    //FIXME: Delete this after tests
+                    /*
                     if (startPage <= 0) {
                         startPage = 1;
                     }
+                    */
+
                     _pages = [];
                     for (var i = startPage; i < _currentGroup + 1; i++) {
                         _pages.push(i);
