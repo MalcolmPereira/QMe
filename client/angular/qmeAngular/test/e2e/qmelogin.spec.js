@@ -151,6 +151,7 @@
             expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
             expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(false);
             expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(true);
+
             userCurrentPassword.sendKeys('somepassword');
             userNewPassword.sendKeys('test1');
             userConfirmPassword.sendKeys('test1');
@@ -158,9 +159,10 @@
             expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
             expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
             expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
-            expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(true);
-            expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(false);
-            $('.modal-dialog').element(by.id('saveButtonId')).click();
+            //expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(true);
+            //expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(false);
+            //$('.modal-dialog').element(by.id('saveButtonId')).click();
+
 
         });
 

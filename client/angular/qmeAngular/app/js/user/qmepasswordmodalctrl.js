@@ -44,6 +44,7 @@
               qmeUpdatePassword.passwordConfirm ="";
               return false;
             }else{
+              qmeUpdatePassword.isPasswordError = false;
               qmeUpdatePassword.passwordForm.$setValidity();
               return true;
             }
