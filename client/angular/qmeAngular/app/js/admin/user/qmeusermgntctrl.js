@@ -18,9 +18,7 @@
             qmeUserManagement.sortasc = true;
             qmeUserManagement.sortfields = "USERNAME";
 
-            listUsers();
-
-            function listUsers(){
+            qmeUserManagement.listUsers = function(){
                 if(qmeUserManagement.usercount === 0){
                     qmeUserService.countUsers()
                         .then(
