@@ -80,7 +80,7 @@
             expect(element(by.css('.panel-title')).getText()).toEqual('Home Page');
         });
 
-        it('Perform Login With Valid User Credentials, Route to User Profile and Then Log Out', function() {
+        it('Perform Login With Valid Admin Credentials, Route to User Profile and Then Log Out', function() {
             browser.get('');
             expect(browser.getTitle()).toEqual('QMe Application');
             expect(element(by.id('qmeAppHeader')).getText()).toEqual('QMe Application');
@@ -160,11 +160,13 @@
 
                     userConfirmPassword.clear().then(function() {
                         userConfirmPassword.sendKeys('test1');
+
                         expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
                         expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
                         expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
                         $('.modal-dialog').element(by.id('cancelButtonId')).click();
                         browser.wait(EC.invisibilityOf($('#passwordModalLabel')), 5000);
+
                         expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
                         expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
                         element(by.id('cancelButton')).click();
@@ -174,5 +176,103 @@
                 });
             });
         });
+
+        it('Perform Login With Valid User Credentials, Route to User Profile and Then Log Out', function() {
+            browser.get('');
+            expect(browser.getTitle()).toEqual('QMe Application');
+            expect(element(by.id('qmeAppHeader')).getText()).toEqual('QMe Application');
+            var userEmail = element(by.model('qmeUserCtrl.userEmail'));
+            var userPassword = element(by.model('qmeUserCtrl.userPassword'));
+            expect(userEmail.getText()).toEqual('');
+            expect(userPassword.getText()).toEqual('');
+            expect(element(by.id('emailField')).isDisplayed()).toEqual(true)
+            expect(element(by.id('passwordField')).isDisplayed()).toEqual(true)
+            expect(element(by.id('signInButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('signInButton')).isEnabled()).toEqual(false);
+            expect(element(by.css('.panel-title')).getText()).toEqual('Home Page');
+
+            userEmail.sendKeys('test.user@gmail.com');
+            userPassword.sendKeys('testtest');
+            expect(element(by.id('signInButton')).isEnabled()).toEqual(true);
+            element(by.id('signInButton')).click();
+            expect(element(by.id('emailField')).isDisplayed()).toEqual(false)
+            expect(element(by.id('passwordField')).isDisplayed()).toEqual(false)
+            expect(element(by.id('registerButton')).isDisplayed()).toEqual(false);
+            expect(element(by.id('forgotButton')).isDisplayed()).toEqual(false);
+            expect(element(by.id('qmeAppHeader')).getText()).toEqual('QMe Application');
+            expect(element(by.id('loginName')).getText()).toEqual('Test User');
+            expect(element(by.id('profileLinkId')).isEnabled()).toBe(true);
+            expect(element(by.id('logoutLinkId')).isEnabled()).toBe(true);
+
+            element(by.id('userNameMenuId')).click();
+            element(by.id('profileLinkId')).click();
+            expect(element(by.css('.panel-title')).getText()).toEqual('User Profile');
+            expect(element(by.id('userEmail')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userEmail')).isEnabled()).toEqual(false);
+            expect(element(by.id('userName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userName')).isEnabled()).toEqual(false);
+            expect(element(by.id('userPassword')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userFirstName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userLastName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('submitUpdateProfileButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('submitUpdateProfileButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('changeButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('changeButton')).isEnabled()).toEqual(true);
+
+            element(by.id('changeButton')).click();
+            browser.wait(EC.visibilityOf($('#passwordModalLabel')), 5000);
+            expect($('.modal-dialog').element(by.id('passwordModalLabel')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('passwordModalLabel')).getText()).toEqual('Change Password');
+            var userCurrentPassword = $('.modal-dialog').element(by.id('currentPassword'));
+            var userNewPassword     = $('.modal-dialog').element(by.id('currentPassword'));
+            var userConfirmPassword     = $('.modal-dialog').element(by.id('confirmPassword'));
+            expect(userCurrentPassword.isDisplayed()).toEqual(true);
+            expect(userCurrentPassword.isEnabled()).toEqual(true);
+            expect(userNewPassword.isDisplayed()).toEqual(true);
+            expect(userNewPassword.isEnabled()).toEqual(true);
+            expect(userConfirmPassword.isDisplayed()).toEqual(true);
+            expect(userConfirmPassword.isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(false);
+            expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(false);
+            userCurrentPassword.sendKeys('somepassword');
+            userNewPassword.sendKeys('test1');
+            userConfirmPassword.sendKeys('test2');
+            userCurrentPassword.click();
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(false);
+            expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(true);
+
+            userCurrentPassword.clear().then(function() {
+                userCurrentPassword.sendKeys('somepassword');
+
+                userNewPassword.clear().then(function() {
+                    userNewPassword.sendKeys('test1');
+
+                    userConfirmPassword.clear().then(function() {
+                        userConfirmPassword.sendKeys('test1');
+
+                        expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+                        expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+                        expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+                        $('.modal-dialog').element(by.id('cancelButtonId')).click();
+                        browser.wait(EC.invisibilityOf($('#passwordModalLabel')), 5000);
+
+                        expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+                        expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+                        element(by.id('cancelButton')).click();
+                        element(by.id('userNameMenuId')).click();
+                        element(by.id('logoutLinkId')).click();
+                    });
+                });
+            });
+        });
+
     });
 })();
