@@ -37,7 +37,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                 qmeUserSession.destroy();
             };
             $rootScope.$on('$stateChangeStart',
-                function(event, toState, toParams, fromState, fromParams){
+                function(event, toState){
                     if(toState.authenticate && !qmeUserSession.isSignedIn()){
                         event.preventDefault();
                     }
