@@ -152,20 +152,27 @@
             expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(false);
             expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(true);
 
-            userCurrentPassword.sendKeys('somepassword');
-            userNewPassword.sendKeys('test1');
-            userConfirmPassword.sendKeys('test1');
-            userCurrentPassword.click();
-            expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
-            expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
-            expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
-            //expect($('.modal-dialog').element(by.id('saveButtonId')).isEnabled()).toEqual(true);
-            //expect($('.modal-dialog').element(by.id('passwordMisMatchId')).isDisplayed()).toEqual(false);
-            //$('.modal-dialog').element(by.id('saveButtonId')).click();
+            userCurrentPassword.clear().then(function() {
+                userCurrentPassword.sendKeys('somepassword');
 
+                userNewPassword.clear().then(function() {
+                    userNewPassword.sendKeys('test1');
 
+                    userConfirmPassword.clear().then(function() {
+                        userConfirmPassword.sendKeys('test1');
+                        expect($('.modal-dialog').element(by.id('saveButtonId')).isDisplayed()).toEqual(true);
+                        expect($('.modal-dialog').element(by.id('cancelButtonId')).isDisplayed()).toEqual(true);
+                        expect($('.modal-dialog').element(by.id('cancelButtonId')).isEnabled()).toEqual(true);
+                        $('.modal-dialog').element(by.id('cancelButtonId')).click();
+                        browser.wait(EC.invisibilityOf($('#passwordModalLabel')), 5000);
+                        expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+                        expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+                        element(by.id('cancelButton')).click();
+                        element(by.id('userNameMenuId')).click();
+                        element(by.id('logoutLinkId')).click();
+                    });
+                });
+            });
         });
-
     });
-
 })();
