@@ -425,6 +425,35 @@
         });
 
         it('Ensure user can route to registration', function() {
+            ctrl.userEmail = "testadmin@test.com";
+            ctrl.userPassword = "testpassword";
+            var credentials = {
+                "userName": "testadmin@test.com",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testadmin",
+                "userPassword": null,
+                "userFirstName": "Test",
+                "userLastName": "Admin",
+                "userEmail": "testadmin@test.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER','ADMIN']
+            };
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.performSignIn();
+            httpBackend.flush();
+            expect(ctrl.userEmail ).not.toBe('');
+            expect(ctrl.userEmail ).toBe('testadmin@test.com');
+            expect(ctrl.userPassword ).not.toBe('');
+            expect(ctrl.userPassword ).toBe('testpassword');
+            expect(ctrl.isSignedIn() ).toBe(true);
+            expect(ctrl.isAdmin() ).toBe(true);
+
+
             ctrl.routeRegistration()
             scope.$digest();
             expect(state).toBeDefined();
@@ -435,6 +464,7 @@
             expect(state.current.templateUrl).toBe('js/user/qmeregister.tmpl.html');
             expect(state.current.controller).toBe('qmeUserCtrl');
             expect(state.current.controllerAs).toBe('qmeUserCtrl');
+
         });
 
         it('Ensure user can route to staging', function() {

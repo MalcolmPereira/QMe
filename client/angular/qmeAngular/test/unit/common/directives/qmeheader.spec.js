@@ -26,7 +26,7 @@
             expect(rootScope).toBeDefined();
             qmeHeader = compile("<qme-header></qme-header>")(rootScope)
             rootScope.$digest();
-            expect(qmeHeader.html()).toContain("<span>QMe Application</span>");
+            expect(qmeHeader.html()).toContain('<span id="qmeAppHeader">QMe Application</span>');
         });
 
         it('Should routes to valid QMe Header Navigation States from QMe Header for not logged in User', function() {
@@ -65,7 +65,17 @@
             expect(headerNavctrl.isAdmin()).toBe(true);
         });
 
-        it('Should routes to valid QMe Stated from QMe Header ', function() {
+        it('Should routes to valid QMe States from QMe Header for admin user', function() {
+            qmeUserSession.create(
+                'someauthtoken',
+                '1234' ,
+                'someuser',
+                'firstname',
+                'lastname',
+                'someuser@some.com',
+                '2015-10-02T14:27:10',
+                ['ADMIN']);
+
             expect(headerNavctrl).toBeDefined();
             headerNavctrl.routeHome();
             rootScope.$digest();
