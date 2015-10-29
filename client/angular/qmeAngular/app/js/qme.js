@@ -36,9 +36,13 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                 $state.go('home', {});
                 qmeUserSession.destroy();
             };
-            $rootScope.$on("$stateChangeStart", function(event, toState){
-
-            });
+            $rootScope.$on('$stateChangeStart',
+                function(event, toState, toParams, fromState, fromParams){
+                    if(toState.authenticate && !qmeUserSession.isSignedIn()){
+                        event.preventDefault();
+                    }
+                }
+            );
         })
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
             $httpProvider.defaults.withCredentials = true;
