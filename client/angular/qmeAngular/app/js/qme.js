@@ -21,7 +21,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                       userrole: 'USER'
                 }
         )
-        .run(function($window,$state,qmeUserSession){
+        .run(function($rootScope,$window,$state,qmeUserSession){
             $window.onbeforeunload = function (event) {
                 if (typeof event === 'undefined') {
                     event = window.event;
@@ -36,6 +36,9 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                 $state.go('home', {});
                 qmeUserSession.destroy();
             };
+            $rootScope.$on("$stateChangeStart", function(event, toState){
+
+            });
         })
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
             $httpProvider.defaults.withCredentials = true;
@@ -51,7 +54,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/home",
                     templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
-                    controllerAs: 'qmeHomeCtrl'
+                    controllerAs: 'qmeHomeCtrl',
+                    authenticate: false
                 })
 
                 //User Routing
@@ -59,13 +63,15 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/stage",
                     templateUrl: 'js/user/qmestageuser.tmpl.html',
                     controller: 'qmeUserCtrl',
-                    controllerAs: 'qmeUserCtrl'
+                    controllerAs: 'qmeUserCtrl',
+                    authenticate: false
                 })
                 .state('confirmuser', {
                     url: "/confirmuser/:stagetoken",
                     templateUrl: 'js/home/qmehome.tmpl.html',
                     controller: 'qmeHomeCtrl',
                     controllerAs: 'qmeHomeCtrl',
+                    authenticate: false,
                     onEnter: function($stateParams,qmeFlashService,qmeUserService){
                         if($stateParams.stagetoken && $stateParams.stagetoken.length > 0){
 
@@ -85,31 +91,36 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/userprofile",
                     templateUrl: 'js/user/qmeuserprofile.tmpl.html',
                     controller: 'qmeUserCtrl',
-                    controllerAs: 'qmeUserCtrl'
+                    controllerAs: 'qmeUserCtrl',
+                    authenticate: true
                 })
                .state('register', {
                     url: "/register",
                     templateUrl: 'js/user/qmeregister.tmpl.html',
                     controller: 'qmeUserCtrl',
-                    controllerAs: 'qmeUserCtrl'
+                    controllerAs: 'qmeUserCtrl',
+                    authenticate: true
                 })
                 .state('forgotpassword', {
                     url: "/forgotpassword",
                     templateUrl: 'js/user/qmeforgotpassword.tmpl.html',
                     controller: 'qmeUserCtrl',
-                    controllerAs: 'qmeUserCtrl'
+                    controllerAs: 'qmeUserCtrl',
+                    authenticate: false
                 })
                 .state('resetpassword', {
                     url: "/resetpassword/:token/:username",
                     templateUrl: 'js/user/qmeresetpassword.tmpl.html',
                     controller: 'qmeUserCtrl',
-                    controllerAs: 'qmeUserCtrl'
+                    controllerAs: 'qmeUserCtrl',
+                    authenticate: false
                 })
                 .state('listusers', {
                     url: "/listusers",
                     templateUrl: 'js/admin/user/qmeuserlist.tmpl.html',
                     controller: 'qmeUserManagementCtrl',
                     controllerAs: 'qmeUserManagementCtrl',
+                    authenticate: true
                 })
 
                 //Category Routing
@@ -117,7 +128,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/listcategories",
                     templateUrl: 'js/admin/category/qmecategorylist.tmpl.html',
                     controller: 'qmeCategoryManagementCtrl',
-                    controllerAs: 'qmeCategoryManagementCtrl'
+                    controllerAs: 'qmeCategoryManagementCtrl',
+                    authenticate: true
                 })
 
                 //Question Routing
@@ -125,7 +137,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/listquestions",
                     templateUrl: 'js/admin/question/qmequestionlist.tmpl.html',
                     controller: 'qmeQuestionManagementCtrl',
-                    controllerAs: 'qmeQuestionManagementCtrl'
+                    controllerAs: 'qmeQuestionManagementCtrl',
+                    authenticate: true
                 })
 
                 //Quiz Routing Quizzes
@@ -133,7 +146,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     url: "/listquizzes",
                     templateUrl: 'js/admin/quiz/qmequizlist.tmpl.html',
                     controller: 'qmeQuizManagementCtrl',
-                    controllerAs: 'qmeQuizManagementCtrl'
+                    controllerAs: 'qmeQuizManagementCtrl',
+                    authenticate: true
                 })
 
         })
