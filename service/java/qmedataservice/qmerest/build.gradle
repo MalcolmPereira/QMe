@@ -2,7 +2,6 @@ buildscript {
 	ext {
 		springBootVersion       = '1.2.6.RELEASE'
         springHateosVersion     = "0.19.0.RELEASE"
-        springPluginCoreVersion = "1.2.0.RELEASE"
         javaMailVersion		    = "1.5.4"
         jsonpathVersion         = "2.0.0"
         aspectJWeaverVersion    = "1.8.7"
@@ -52,6 +51,7 @@ dependencies {
         exclude module: "spring-context-support"
         exclude module: "spring-web"
         exclude module: "spring-webmvc"
+        exclude module: "spring-hateoas"
     }
 
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"){
@@ -69,15 +69,7 @@ dependencies {
         exclude module: "spring-webmvc"
     }
 
-    compile("org.springframework.plugin:spring-plugin-core:${springPluginCoreVersion}"){
-        exclude module: "spring-beans"
-        exclude module: "spring-context"
-        exclude module: "spring-aop"
-    }
-
 	compile("com.sun.mail:javax.mail:${javaMailVersion}")
-
-
     testCompile("com.jayway.jsonpath:json-path:${jsonpathVersion}")
 }
 
