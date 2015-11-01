@@ -15,11 +15,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +32,7 @@ public class QMeAppAPIController implements QMeAppAPI {
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public ResponseEntity<Resources> api() throws QMeResourceException {
+    public @ResponseBody Resources api() throws QMeResourceException {
 
         List<Resource> qmeResources = new ArrayList<>();
 
@@ -60,11 +56,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeResources.add(qmeCategoryResource);
 
 
-        Resources qmeResourceList = new Resources(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
-
-
-        return new ResponseEntity<>(qmeResourceList,HttpStatus.OK);
-
+        return new Resources(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
     }
 
 }
