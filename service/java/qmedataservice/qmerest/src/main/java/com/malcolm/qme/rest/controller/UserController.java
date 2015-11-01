@@ -8,6 +8,7 @@
 package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
+import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.*;
@@ -16,6 +17,8 @@ import com.malcolm.qme.security.service.QMeUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,8 @@ public class UserController implements UserAPI {
      */
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
+    @Autowired
+    private String endpointURL;
 
     /**
      * Category Service
@@ -48,9 +53,11 @@ public class UserController implements UserAPI {
     @RequestMapping(value=COUNT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public  @ResponseBody Long count() throws QMeResourceException {
+    public  @ResponseBody Resource<Long> count() throws QMeResourceException {
         log(getCurrentUser(), "count");
-        return userService.count();
+        Resource<Long> userCount = new Resource<>(userService.count(),new Link(endpointURL+ UserAPI.COUNT_PATH.replaceAll(":.+","}")));
+        userCount.add(new Link(endpointURL+ UserAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",QMeAppAPI.USER_PAGED));
+        return userCount;
     }
 
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)

@@ -37,7 +37,7 @@ public interface QMeAppAPI extends QMeAPI {
     /**
      * User Paged
      */
-    String USER_PAGED = "Get_Paged_User_list";
+    String USER_PAGED = "Get_Paged_User_list - (sortfields:USERNAME,EMAIL,FIRSTNAME,LASTNAME,REGISTERDATE,LOGINDATE)";
     /**
      * User by ID
      */

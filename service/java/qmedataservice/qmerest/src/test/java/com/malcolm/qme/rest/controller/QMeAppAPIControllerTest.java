@@ -53,7 +53,7 @@ public class QMeAppAPIControllerTest extends QMeControllerTest{
                 .andExpect(jsonPath("content[0].links[0].href", is("null/qme/user")))
                 .andExpect(jsonPath("content[0].links[1].rel", is("Get_User_Count")))
                 .andExpect(jsonPath("content[0].links[1].href", is("null/qme/user/count")))
-                .andExpect(jsonPath("content[0].links[2].rel", is("Get_Paged_User_list")))
+                .andExpect(jsonPath("content[0].links[2].rel", is("Get_Paged_User_list - (sortfields:USERNAME,EMAIL,FIRSTNAME,LASTNAME,REGISTERDATE,LOGINDATE)")))
                 .andExpect(jsonPath("content[0].links[2].href", is("null/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME")))
                 .andExpect(jsonPath("content[0].links[3].rel", is("Get_User_by_id")))
                 .andExpect(jsonPath("content[0].links[3].href", is("null/qme/user/{id}")))

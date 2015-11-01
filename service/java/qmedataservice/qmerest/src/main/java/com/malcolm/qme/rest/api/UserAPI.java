@@ -8,6 +8,7 @@ package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.*;
+import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -87,7 +88,7 @@ public interface UserAPI extends QMeAPI {
      *
      * @return List of Users
      */
-    Long count() throws QMeResourceException;
+    Resource<Long> count() throws QMeResourceException;
 
 
     /**
