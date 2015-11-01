@@ -29,7 +29,15 @@ public interface QMeAppAPI extends QMeAPI {
     /**
      * User
      */
-    String USER = "Get_User_list";
+    String USER = "Get_All_User_list";
+    /**
+     * User Count
+     */
+    String USER_COUNT = "Get_User_Count";
+    /**
+     * User Paged
+     */
+    String USER_PAGED = "Get_Paged_User_list";
     /**
      * User by ID
      */

@@ -38,6 +38,8 @@ public class QMeAppAPIController implements QMeAppAPI {
 
         //QMe User API
         Resource<String> qmeUserResource = new Resource(QME_USER_API,new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"),USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.COUNT_PATH.replaceAll(":.+","}"),USER_COUNT));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",USER_PAGED));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),USER_BY_ID));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.NAME_PATH.replaceAll(":.+","}"),USER_BY_NAME));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.EMAIL_PATH.replaceAll(":.+","}"),USER_BY_EMAIL));
