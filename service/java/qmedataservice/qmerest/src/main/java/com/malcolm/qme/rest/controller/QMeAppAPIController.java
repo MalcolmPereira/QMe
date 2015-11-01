@@ -36,7 +36,7 @@ public class QMeAppAPIController implements QMeAppAPI {
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public ResponseEntity api() throws QMeResourceException {
+    public ResponseEntity<Resources> api() throws QMeResourceException {
 
         List<Resource> qmeResources = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         Resources qmeResourceList = new Resources(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
 
 
-        return new ResponseEntity(qmeResourceList,HttpStatus.OK);
+        return new ResponseEntity<>(qmeResourceList,HttpStatus.OK);
 
     }
 

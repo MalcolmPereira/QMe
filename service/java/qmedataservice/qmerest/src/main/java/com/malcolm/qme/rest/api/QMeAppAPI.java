@@ -7,6 +7,7 @@
 package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -90,5 +91,5 @@ public interface QMeAppAPI extends QMeAPI {
      *
      * @return Map of QMe App Endpoints
      */
-    ResponseEntity api() throws QMeResourceException;
+    ResponseEntity<Resources> api() throws QMeResourceException;
 }
