@@ -7,8 +7,7 @@
 package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
-
-import java.util.Map;
+import org.springframework.http.ResponseEntity;
 
 /**
  * @author Malcolm
@@ -19,7 +18,14 @@ public interface QMeAppAPI extends QMeAPI {
      * QMe API Root Path
      */
     String ROOT_PATH = APP_STRING + "/api";
-
+    /**
+     * QMe API
+     */
+    String QME_API = "Qme API";
+    /**
+     * QMe User API
+     */
+    String QME_USER_API = "Qme User API";
     /**
      * User
      */
@@ -71,9 +77,18 @@ public interface QMeAppAPI extends QMeAPI {
 
 
     /**
+     * QMe Categoryu API
+     */
+    String QME_CATEGORY_API = "Qme Category API";
+    /**
+     * Category
+     */
+    String CATEGORY = "Get_Category_list";
+
+    /**
      * List QMe App API
      *
      * @return Map of QMe App Endpoints
      */
-    Map<String,String> api() throws QMeResourceException;
+    ResponseEntity api() throws QMeResourceException;
 }

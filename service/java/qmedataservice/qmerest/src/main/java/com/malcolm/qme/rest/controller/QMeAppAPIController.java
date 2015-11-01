@@ -6,15 +6,23 @@
  */
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.api.CategoryAPI;
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author malcolm
@@ -28,27 +36,35 @@ public class QMeAppAPIController implements QMeAppAPI {
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Map<String, String> api() throws QMeResourceException {
-        Map<String,String> apiMap = new LinkedHashMap<>();
+    public ResponseEntity api() throws QMeResourceException {
 
-        //User API
-        apiMap.put(USER, endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"));
-        apiMap.put(USER_BY_ID, endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"));
-        apiMap.put(USER_BY_NAME, endpointURL+ UserAPI.NAME_PATH.replaceAll(":.+","}"));
-        apiMap.put(USER_BY_EMAIL, endpointURL+ UserAPI.EMAIL_PATH.replaceAll(":.+","}"));
-        apiMap.put(REGISTER_USER, endpointURL+ UserAPI.REGISTER_PATH.replaceAll(":.+","}"));
-        apiMap.put(STAGE_USER, endpointURL+ UserAPI.STAGING_PATH.replaceAll(":.+","}"));
-        apiMap.put(CONFIRM_STAGE_USER, endpointURL+ UserAPI.REGISTER_CONFIRM_PATH.replaceAll(":.+","}"));
-        apiMap.put(UPDATE_USER, endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"));
-        apiMap.put(DELETE_USER, endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"));
-        apiMap.put(FORGOT_USER_NAME, endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll(":.+","}"));
-        apiMap.put(FORGOT_USER_PASSWORD, endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll(":.+","}"));
-        apiMap.put(RESET_USER_PASSWORD, endpointURL+ UserAPI.RESET_PASSWORD_PATH.replaceAll(":.+","}"));
+        List<Resource> qmeResources = new ArrayList<>();
 
-        return apiMap;
+        //QMe User API
+        Resource<String> qmeUserResource = new Resource(QME_USER_API,new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"),USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),USER_BY_ID));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.NAME_PATH.replaceAll(":.+","}"),USER_BY_NAME));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.EMAIL_PATH.replaceAll(":.+","}"),USER_BY_EMAIL));
+        qmeUserResource.add(new Link( endpointURL+ UserAPI.REGISTER_PATH.replaceAll(":.+","}"),REGISTER_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.STAGING_PATH.replaceAll(":.+","}"),STAGE_USER));
+        qmeUserResource.add(new Link( endpointURL+ UserAPI.REGISTER_CONFIRM_PATH.replaceAll(":.+","}"),CONFIRM_STAGE_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"),UPDATE_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),DELETE_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll(":.+","}"),FORGOT_USER_NAME));
+        qmeUserResource.add(new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll(":.+","}"),FORGOT_USER_PASSWORD));
+        qmeUserResource.add(new Link( endpointURL+ UserAPI.RESET_PASSWORD_PATH.replaceAll(":.+","}"),RESET_USER_PASSWORD));
+        qmeResources.add(qmeUserResource);
+
+        //QMe Category API
+        Resource<String> qmeCategoryResource = new Resource(QME_CATEGORY_API,new Link(endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CATEGORY));
+        qmeResources.add(qmeCategoryResource);
+
+
+        Resources qmeResourceList = new Resources(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
+
+
+        return new ResponseEntity(qmeResourceList,HttpStatus.OK);
+
     }
-
-
-
 
 }
