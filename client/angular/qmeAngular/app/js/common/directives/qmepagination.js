@@ -66,10 +66,17 @@
             qmePageSession.getFirst = function(){
                 if(! qmePageSession.isFirstPage() && qmePageSession.requiresPagination()){
                     _currentPage  = 0;
-                    _currentGroup = _pagesPerPage;
                     _pages = [];
-                    for (var i = 1; i < _pagesPerPage + 1; i++) {
-                        _pages.push(i);
+                    if (_lastPage <= _pagesPerPage) {
+                        for (var i = 1; i < _lastPage + 1; i++) {
+                            _pages.push(i);
+                        }
+                        _currentGroup = undefined;
+                    } else {
+                        for (var j = 1; j < _pagesPerPage + 1; j++) {
+                            _pages.push(j);
+                        }
+                        _currentGroup = _pagesPerPage;
                     }
                 }
                 return _currentPage;

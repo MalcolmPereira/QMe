@@ -635,7 +635,20 @@
         it('Should handle valid count user  request ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
-            httpBackend.expectGET(userCountEndPoint).respond(200,264);
+            var countresponse =  {
+                                    "content":"264",
+                                    "links":[
+                                        {
+                                         "rel":"self",
+                                         "href":"http://localhost:8002/qme/user/count"
+                                         },
+                                         {
+                                            "rel": "Get_Paged_User_list - (sortfields:USERNAME,EMAIL,FIRSTNAME,LASTNAME,REGISTERDATE,LOGINDATE)",
+                                            "href": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME"
+                                         }
+                                    ]
+            }
+            httpBackend.expectGET(userCountEndPoint).respond(200,countresponse);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
                 .countUsers()

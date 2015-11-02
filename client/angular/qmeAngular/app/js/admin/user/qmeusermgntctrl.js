@@ -23,7 +23,7 @@
                     qmeUserService.countUsers()
                         .then(
                         function(res){
-                            qmeUserManagement.usercount = res.data;
+                            qmeUserManagement.usercount = res.data.content;
                         },
                         function(error){
                             if(error && error.status && error.status == 403) {
