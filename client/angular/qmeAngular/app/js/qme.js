@@ -136,7 +136,10 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     controller: 'qmeUserManagementCtrl',
                     controllerAs: 'qmeUserManagementCtrl',
                     authenticate: true,
-                    admin: true
+                    admin: true,
+                    params: {
+                        currentpage: null
+                    }
                 })
                 .state('updateuser', {
                     url: "/updateuser",
@@ -146,7 +149,8 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     authenticate: true,
                     admin: true,
                     params: {
-                        currentuser: null
+                        currentuser: null,
+                        currentpage: null
                     }
                 })
 

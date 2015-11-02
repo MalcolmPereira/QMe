@@ -48,7 +48,13 @@
                 qmeUserService.listUsersPaged(0,qmeUserManagement.sortasc,qmeUserManagement.sortfields)
                     .then(
                     function(res){
+
                        qmeUserManagement.users = res;
+
+                       if($stateParams.currentpage &&  $stateParams.currentpage != null){
+                          qmeUserManagement.pageUsers($stateParams.currentpage);
+                          qmePageSession.setPage($stateParams.currentpage);
+                       }
                     },
                     function(error){
                         if(error && error.status && error.status == 403) {
@@ -118,8 +124,16 @@
            };
 
            qmeUserManagement.updateUser = function(qmeuser){
-                $state.go('updateuser', {currentuser:qmeuser});
+                $state.go('updateuser',{
+                        currentuser:qmeuser,
+                        currentpage:qmeUserManagement.currentpage
+                        }
+                );
            };
+
+            qmeUserManagement.cancelUserUpdate = function(qmeuser){
+                $state.go('listusers', {currentpage:qmeUserManagement.currentpage});
+            }
 
            qmeUserManagement.selectedUser = function(){
                qmeUserManagement.userId = $stateParams.currentuser.userId;
@@ -129,6 +143,7 @@
                qmeUserManagement.userFirstName = $stateParams.currentuser.userFirstName;
                qmeUserManagement.userLastName = $stateParams.currentuser.userLastName;
                qmeUserManagement.userRoles = $stateParams.currentuser.userRoles;
+               qmeUserManagement.currentpage= $stateParams.currentpage;
            }
         }
 
