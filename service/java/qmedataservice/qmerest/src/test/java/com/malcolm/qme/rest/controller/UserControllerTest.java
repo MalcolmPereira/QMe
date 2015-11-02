@@ -591,7 +591,7 @@ public class UserControllerTest extends QMeControllerTest {
                 get("/qme/user/reset/forgotusername/SimpleUser1@User.com")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("suser1")))
+                .andExpect(jsonPath("content", is("suser1")))
                 .andDo(print())
         ;
     }

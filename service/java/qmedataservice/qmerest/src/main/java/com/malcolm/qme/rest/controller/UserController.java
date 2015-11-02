@@ -191,10 +191,11 @@ public class UserController implements UserAPI {
     @RequestMapping(value=FORGOT_USERNAME_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException,QMeServerException {
+    public @ResponseBody Resource<String> forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), " forgotUserName  ");
         QMeUserDetail qMeUserDetail  = userService.searchByEmail(userEmail);
-        return qMeUserDetail.getUserName();
+        Resource<String> userNameResource = new Resource<String>(qMeUserDetail.getUserName(),new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qMeUserDetail .getUserEmail()),QMeAppAPI.FORGOT_USER_PASSWORD));
+        return userNameResource;
     }
 
     @RequestMapping(value=FORGOT_PASSWORD_PATH,method=RequestMethod.PUT)

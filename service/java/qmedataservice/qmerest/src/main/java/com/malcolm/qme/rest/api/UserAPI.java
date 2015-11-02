@@ -182,7 +182,7 @@ public interface UserAPI extends QMeAPI {
      * @param userEmail User Email
      * @return QMeUser User Details
      */
-    String forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+    Resource<String> forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
 
     /**
      * Forgot Password
