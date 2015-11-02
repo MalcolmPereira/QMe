@@ -138,6 +138,17 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     authenticate: true,
                     admin: true
                 })
+                .state('updateuser', {
+                    url: "/updateuser",
+                    templateUrl: 'js/admin/user/qmeupdateuser.tmpl.html',
+                    controller: 'qmeUserManagementCtrl',
+                    controllerAs: 'qmeUserManagementCtrl',
+                    authenticate: true,
+                    admin: true,
+                    params: {
+                        currentuser: null
+                    }
+                })
 
                 //Category Routing
                 .state('listcategories', {
