@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -56,7 +57,7 @@ public class UserController implements UserAPI {
     public  @ResponseBody Resource<Long> count() throws QMeResourceException {
         log(getCurrentUser(), "count");
         Resource<Long> userCount = new Resource<>(userService.count(),new Link(endpointURL+ UserAPI.COUNT_PATH.replaceAll(":.+","}")));
-        userCount.add(new Link(endpointURL+ UserAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",QMeAppAPI.USER_PAGED));
+        userCount.add(new Link(endpointURL + UserAPI.PAGED_PATH.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=USERNAME", QMeAppAPI.USER_PAGED));
         return userCount;
     }
 
@@ -65,7 +66,9 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody List<QMeUserDetail> list() throws QMeServerException {
         log(getCurrentUser(), "list");
-        return userService.list();
+        List<QMeUserDetail> qMeUserDetailList = userService.list();
+        setUserLinks(qMeUserDetailList);
+        return qMeUserDetailList;
     }
 
     @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
@@ -102,12 +105,14 @@ public class UserController implements UserAPI {
                 sortOrderFields = sortFields.split(SORT_FIELDS_SEPARATOR);
             }
         }
+        List<QMeUserDetail> qMeUserDetailList;
         if(pageNumber != null && pageSizeNumber != null){
-            return userService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+            qMeUserDetailList = userService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
         }else{
-            return userService.list();
-
+            qMeUserDetailList= userService.list();
         }
+        setUserLinks(qMeUserDetailList);
+        return qMeUserDetailList;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
@@ -115,7 +120,9 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody QMeUserDetail searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Search By ID for  "+userId);
-        return userService.searchById(userId);
+        QMeUserDetail qMeUserDetail = userService.searchById(userId);
+        setUserLinks(qMeUserDetail);
+        return qMeUserDetail;
     }
 
     @RequestMapping(value=NAME_PATH,method=RequestMethod.GET)
@@ -123,7 +130,9 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody QMeUserDetail searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Search By User Name for  "+userName);
-        return userService.searchByUser(userName);
+        QMeUserDetail qMeUserDetail = userService.searchByUser(userName);
+        setUserLinks(qMeUserDetail);
+        return qMeUserDetail;
     }
 
     @RequestMapping(value=EMAIL_PATH,method=RequestMethod.GET)
@@ -131,7 +140,9 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Search By User Email for  " + userEmail);
-        return userService.searchByEmail(userEmail);
+        QMeUserDetail qMeUserDetail = userService.searchByEmail(userEmail);
+        setUserLinks(qMeUserDetail);
+        return qMeUserDetail;
     }
 
     @RequestMapping(value=REGISTER_PATH,method=RequestMethod.POST)
@@ -139,7 +150,9 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         log(getCurrentUser(), " Create  ");
-        return userService.save(user, getCurrentUser().getUserID());
+        QMeUserDetail qMeUserDetail =  userService.save(user, getCurrentUser().getUserID());
+        setUserLinks(qMeUserDetail);
+        return qMeUserDetail;
     }
 
     @RequestMapping(value=STAGING_PATH,method=RequestMethod.POST)
@@ -162,7 +175,9 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUpdateUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         log(getCurrentUser(), " update  ");
-        return userService.update(user, userId, getCurrentUser().getUserID());
+        QMeUserDetail qMeUserDetail =  userService.update(user, userId, getCurrentUser().getUserID());
+        setUserLinks(qMeUserDetail);
+        return qMeUserDetail;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
@@ -186,14 +201,38 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
-        userService.forgotPassword(userEmail,url);
+        userService.forgotPassword(userEmail, url);
     }
 
     @RequestMapping(value=RESET_PASSWORD_PATH,method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException {
-        return userService.resetPassword(userEmail, userpassword);
+        QMeUserDetail qMeUserDetail =   userService.resetPassword(userEmail, userpassword);
+        setUserLinks(qMeUserDetail);
+        return qMeUserDetail;
+    }
+
+    /**
+     * Set User Links
+     * @param qmeUserList QMe User List
+     */
+    private final void setUserLinks(List<QMeUserDetail> qmeUserList){
+        qmeUserList.stream().forEach((qMeUserDetail) -> setUserLinks(qMeUserDetail));
+    }
+
+    /**
+     * Set User Links
+     * @param qmeUser QMeUSer
+     */
+    private final void setUserLinks(QMeUserDetail qmeUser){
+        qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.USER_BY_ID));
+        qmeUser.add(new Link(endpointURL+ UserAPI.NAME_PATH.replaceAll("\\{"+NAME_PARAM_STRING+":.+\\}",qmeUser.getUserName()),QMeAppAPI.USER_BY_NAME));
+        qmeUser.add(new Link(endpointURL+ UserAPI.EMAIL_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.USER_BY_EMAIL));
+        qmeUser.add(new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}")+"/"+qmeUser.getUserId(),QMeAppAPI.UPDATE_USER));
+        qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.DELETE_USER));
+        qmeUser.add(new Link(endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.FORGOT_USER_NAME));
+        qmeUser.add(new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.FORGOT_USER_PASSWORD));
     }
 
     /**
