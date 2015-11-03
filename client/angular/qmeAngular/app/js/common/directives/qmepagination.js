@@ -119,7 +119,16 @@
             };
 
             qmePageSession.setPage = function(pageNumber){
-                return _currentPage = pageNumber;
+                _currentPage = pageNumber;
+            };
+
+            qmePageSession.setPageState = function(pageNumber){
+               if(_pages.indexOf(pageNumber + 1 ) === -1){
+                    while(_pages.indexOf(pageNumber + 1) === -1){
+                       qmePageSession.getNextGroup();
+                   }
+               }
+               _currentPage = pageNumber;
             };
 
             qmePageSession.isCurrentPage = function(pageNumber){
@@ -251,7 +260,6 @@
                 if(!qmePage.isLastPage()){
                     qmePage.qmePageSession.setNext();
                     $scope.qmePagingfunction()(qmePage.qmePageSession.getPage());
-                    console.log("qmePage.qmePageSession._currentGroup",qmePage.qmePageSession._currentGroup);
                 }
             };
 

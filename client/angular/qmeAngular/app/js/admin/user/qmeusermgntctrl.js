@@ -15,19 +15,20 @@
             qmeUserManagement.users;
             qmeUserManagement.usercount = 0;
             qmeUserManagement.currentpage = 0;
-            qmeUserManagement.sortasc = true;
-            qmeUserManagement.sortfields = "USERNAME";
+            qmeUserManagement.sortasc = undefined;
+            qmeUserManagement.sortfields = undefined;
 
-            qmeUserManagement.updateUserForm;
-            qmeUserManagement.userId;
-            qmeUserManagement.userEmail;
-            qmeUserManagement.userName;
-            qmeUserManagement.userPassword;
-            qmeUserManagement.userFirstName;
-            qmeUserManagement.userLastName;
-            qmeUserManagement.userRoles;
+            qmeUserManagement.updateUserForm = undefined;
+            qmeUserManagement.userId = undefined;
+            qmeUserManagement.userEmail = undefined;
+            qmeUserManagement.userName = undefined;
+            qmeUserManagement.userPassword = undefined;
+            qmeUserManagement.userFirstName = undefined;
+            qmeUserManagement.userLastName = undefined;
+            qmeUserManagement.userRoles  = undefined;
 
             qmeUserManagement.listUsers = function(){
+
                 if(qmeUserManagement.usercount === 0){
                     qmeUserService.countUsers()
                         .then(
@@ -45,15 +46,25 @@
                         }
                     );
                 }
+                if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
+                    qmeUserManagement.sortasc = true;
+                }else{
+                    qmeUserManagement.sortasc = $stateParams.sortasc;
+                }
+
+                if($stateParams.sortfields &&  $stateParams.sortfields != null) {
+                    qmeUserManagement.sortfields = $stateParams.sortfields;
+                }else{
+                    qmeUserManagement.sortfields = "USERNAME";
+                }
+
                 qmeUserService.listUsersPaged(0,qmeUserManagement.sortasc,qmeUserManagement.sortfields)
                     .then(
                     function(res){
-
                        qmeUserManagement.users = res;
-
                        if($stateParams.currentpage &&  $stateParams.currentpage != null){
                           qmeUserManagement.pageUsers($stateParams.currentpage);
-                          qmePageSession.setPage($stateParams.currentpage);
+                          qmePageSession.setPageState($stateParams.currentpage);
                        }
                     },
                     function(error){
@@ -126,13 +137,20 @@
            qmeUserManagement.updateUser = function(qmeuser){
                 $state.go('updateuser',{
                         currentuser:qmeuser,
-                        currentpage:qmeUserManagement.currentpage
+                        currentpage:qmeUserManagement.currentpage,
+                        sortasc:qmeUserManagement.sortasc,
+                        sortfields:qmeUserManagement.sortfields
                         }
                 );
            };
 
-            qmeUserManagement.cancelUserUpdate = function(qmeuser){
-                $state.go('listusers', {currentpage:qmeUserManagement.currentpage});
+            qmeUserManagement.cancelUserUpdate = function(){
+                $state.go('listusers', {
+                    currentpage:qmeUserManagement.currentpage,
+                    sortasc:qmeUserManagement.sortasc,
+                    sortfields:qmeUserManagement.sortfields
+                    }
+                );
             }
 
            qmeUserManagement.selectedUser = function(){
@@ -144,6 +162,14 @@
                qmeUserManagement.userLastName = $stateParams.currentuser.userLastName;
                qmeUserManagement.userRoles = $stateParams.currentuser.userRoles;
                qmeUserManagement.currentpage= $stateParams.currentpage;
+               if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
+                   qmeUserManagement.sortasc = true;
+               }else{
+                   qmeUserManagement.sortasc = $stateParams.sortasc;
+               }
+               if($stateParams.sortfields &&  $stateParams.sortfields != null) {
+                   qmeUserManagement.sortfields = $stateParams.sortfields;
+               }
            }
         }
 
