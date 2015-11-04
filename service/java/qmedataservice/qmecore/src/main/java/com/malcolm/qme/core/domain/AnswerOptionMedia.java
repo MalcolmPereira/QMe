@@ -93,66 +93,30 @@ public final class AnswerOptionMedia {
 		return mediaTypeID;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		AnswerOptionMedia that = (AnswerOptionMedia) o;
+
+		if (!answerOptionMediaID.equals(that.answerOptionMediaID)) return false;
+		if (!answerOptionID.equals(that.answerOptionID)) return false;
+		return mediaTypeID.equals(that.mediaTypeID);
+
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((answerOptionID == null) ? 0 : answerOptionID.hashCode());
-		result = (prime
-				* result)
-				+ ((answerOptionMediaID == null) ? 0 : answerOptionMediaID
-						.hashCode());
-		result = (prime * result)
-				+ ((mediaTypeID == null) ? 0 : mediaTypeID.hashCode());
+		int result = answerOptionMediaID.hashCode();
+		result = 31 * result + answerOptionID.hashCode();
+		result = 31 * result + mediaTypeID.hashCode();
 		return result;
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final AnswerOptionMedia other = (AnswerOptionMedia) obj;
-		if (answerOptionID == null) {
-			if (other.answerOptionID != null) {
-				return false;
-			}
-		} else if (!answerOptionID.equals(other.answerOptionID)) {
-			return false;
-		}
-		if (answerOptionMediaID == null) {
-			if (other.answerOptionMediaID != null) {
-				return false;
-			}
-		} else if (!answerOptionMediaID.equals(other.answerOptionMediaID)) {
-			return false;
-		}
-		if (mediaTypeID == null) {
-			if (other.mediaTypeID != null) {
-				return false;
-			}
-		} else if (!mediaTypeID.equals(other.mediaTypeID)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "AnswerOptionMedia [answerOptionMediaID=" + answerOptionMediaID

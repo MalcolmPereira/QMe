@@ -111,7 +111,7 @@ public final class UserRole {
 
         if (!userRoleID.equals(userRole.userRoleID)) return false;
         if (!roleID.equals(userRole.roleID)) return false;
-        if (!roleName.equals(userRole.roleName)) return false;
+        if (roleName != null ? !roleName.equals(userRole.roleName) : userRole.roleName != null) return false;
         return userID.equals(userRole.userID);
 
     }
@@ -120,7 +120,7 @@ public final class UserRole {
     public int hashCode() {
         int result = userRoleID.hashCode();
         result = 31 * result + roleID.hashCode();
-        result = 31 * result + roleName.hashCode();
+        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
         result = 31 * result + userID.hashCode();
         return result;
     }

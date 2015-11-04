@@ -206,32 +206,34 @@ public final class Question {
 	}
 
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		Question question = (Question) o;
+        Question question = (Question) o;
 
-		if (!questionID.equals(question.questionID)) return false;
-		if (!categoryID.equals(question.categoryID)) return false;
-		if (!questionText.equals(question.questionText)) return false;
-		return answer.equals(question.answer);
+        if (!questionID.equals(question.questionID)) return false;
+        if (!categoryID.equals(question.categoryID)) return false;
+        if (!questionText.equals(question.questionText)) return false;
+        if (!questionPoint.equals(question.questionPoint)) return false;
+        if (!createUserID.equals(question.createUserID)) return false;
+        return updateUserID.equals(question.updateUserID);
 
-	}
+    }
 
-	@Override
-	public int hashCode() {
-		int result = questionID.hashCode();
-		result = 31 * result + categoryID.hashCode();
-		result = 31 * result + questionText.hashCode();
-		result = 31 * result + answer.hashCode();
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = questionID.hashCode();
+        result = 31 * result + categoryID.hashCode();
+        result = 31 * result + questionText.hashCode();
+        result = 31 * result + createUserID.hashCode();
+        return result;
+    }
 
-	/* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
+    /* (non-Javadoc)
+                 * @see java.lang.Object#toString()
+                 */
 	@Override
 	public String toString() {
 		return "Question [questionID=" + questionID + ", categoryID="

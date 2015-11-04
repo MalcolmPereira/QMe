@@ -2,12 +2,12 @@
  * Name      : com.malcolm.qme.core.repository.QMeRepository.java
  * Date      : 10/16/15
  * Developer : Malcolm
- * Purpose   : QMe Paging and Sorting Info Deatails
+ * Purpose   : QMe Paging and Sorting Info Details
  */
 package com.malcolm.qme.core.repository;
 
 /**
- * Created by Malcolm on 10/16/2015.
+ * @author malcolm
  */
 public class PageSort {
    /**

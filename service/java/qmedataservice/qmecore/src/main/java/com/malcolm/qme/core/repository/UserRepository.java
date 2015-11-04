@@ -38,7 +38,7 @@ public interface UserRepository extends QMeRepository<User, Long> {
         /**
          * Sort Field Name
          */
-        private String userSortField;
+        private final String userSortField;
 
         /**
          * Get User Sort Field Name
