@@ -101,7 +101,7 @@ public class QMeUserDetailsService implements UserDetailsService {
     /**
      * Update User Last Login Date
      *
-     * @param userDetails
+     * @param userDetails QMe User Details
      */
     public void updateUserLastLoginDate(QMeUserDetails userDetails)  {
         try{

@@ -29,6 +29,7 @@ import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -112,10 +113,8 @@ public class QMeLoginFilter extends AbstractAuthenticationProcessingFilter {
             loginUser.setUserLastLoginDate(qMeUserDetails.getUserLastLoginDate().format(DateTimeFormatter.ISO_DATE_TIME));
             loginUser.setUserRegisteredDate(qMeUserDetails.getUserRegisteredDate().format(DateTimeFormatter.ISO_DATE_TIME));
 
-            List<String> roles = new ArrayList<>();
-            for(GrantedAuthority role : qMeUserDetails.getAuthorities()){
-                roles.add(role.getAuthority());
-            }
+            List<String> roles = qMeUserDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+
             loginUser.setUserRoles(roles);
             response.setContentType(JSON_CONTENT_TYPE);
             response.setCharacterEncoding(UTF_8_ENCODING);

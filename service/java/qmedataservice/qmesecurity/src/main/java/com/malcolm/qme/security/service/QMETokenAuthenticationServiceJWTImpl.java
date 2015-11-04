@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
- * Created by Malcolm on 10/1/2015.
+ * @author Malcolm
  */
 @Service
 public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticationService {
@@ -37,7 +37,7 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
      * Max Token Expiration
      * 3 Hours
      */
-    private final static long MAX_TOKEN_EXPIRTATION = 3600000 * 3;
+    private final static long MAX_TOKEN_EXPIRATION = 3600000 * 3;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -67,7 +67,7 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
     /**
      * Get QMe User from Authentication Token
      * @param token JSON Authentication Token
-     * @return
+     * @return QMe User Details
      */
     private QMeUserDetails getQMeUserFromToken(String token) {
         try {
@@ -92,7 +92,7 @@ public class QMETokenAuthenticationServiceJWTImpl implements QMETokenAuthenticat
         try {
             return Jwts.builder()
                     .setSubject(qmeUser.getUsername())
-                    .setExpiration(new Date(System.currentTimeMillis() + MAX_TOKEN_EXPIRTATION))
+                    .setExpiration(new Date(System.currentTimeMillis() + MAX_TOKEN_EXPIRATION))
                     .signWith(SignatureAlgorithm.HS512, secret)
                     .compact();
 

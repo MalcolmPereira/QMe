@@ -28,8 +28,8 @@ public interface QMETokenAuthenticationService {
 
     /**
      * Get Authenticated Used from Authentication Token String
-     * @param request
-     * @return
+     * @param request HttpServletRequest
+     * @return QMe User Details
      */
     QMeUserDetails getAuthenticatedUser(HttpServletRequest request);
 }

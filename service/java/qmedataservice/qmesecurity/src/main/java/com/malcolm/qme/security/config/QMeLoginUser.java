@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
-public class QMeLoginUser {
+class QMeLoginUser {
     /**
      * User Name
      */
@@ -166,28 +166,28 @@ public class QMeLoginUser {
     }
     /**
      * Get User Last Login Date
-     * @return
+     * @return User Last Login Date
      */
     public String getUserLastLoginDate() {
         return userLastLoginDate;
     }
     /**
      * Set User Last Login Date
-     * @param userLastLoginDate
+     * @param userLastLoginDate User Last Login Date
      */
     public void setUserLastLoginDate(String userLastLoginDate) {
         this.userLastLoginDate = userLastLoginDate;
     }
     /**
      * Get Authentication Token
-     * @return
+     * @return Authentication Token
      */
     public String getAuthToken() {
         return authToken;
     }
     /**
      * Set Authentication Token
-     * @param authToken
+     * @param authToken Authentication Token
      */
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
