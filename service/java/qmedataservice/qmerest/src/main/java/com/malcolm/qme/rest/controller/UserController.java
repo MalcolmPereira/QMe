@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=COUNT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public  @ResponseBody Resource<Long> count() throws QMeResourceException {
         log(getCurrentUser(), "count");

@@ -29,7 +29,7 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = false)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 @ComponentScan({"com.malcolm.qme.security"})
 public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
@@ -86,7 +86,6 @@ public class QMeSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passcodeEncoder);
     }
 
-    //TODO: Fix Basic Authentication (Need to have OAuth here)
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
