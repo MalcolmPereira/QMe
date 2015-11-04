@@ -23,7 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Malcolm
@@ -218,7 +217,7 @@ public class UserController implements UserAPI {
      * Set User Links
      * @param qmeUserList QMe User List
      */
-    private final void setUserLinks(List<QMeUserDetail> qmeUserList){
+    private void setUserLinks(List<QMeUserDetail> qmeUserList){
         qmeUserList.stream().forEach((qMeUserDetail) -> setUserLinks(qMeUserDetail));
     }
 
@@ -226,7 +225,7 @@ public class UserController implements UserAPI {
      * Set User Links
      * @param qmeUser QMeUSer
      */
-    private final void setUserLinks(QMeUserDetail qmeUser){
+    private void setUserLinks(QMeUserDetail qmeUser){
         qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.USER_BY_ID));
         qmeUser.add(new Link(endpointURL+ UserAPI.NAME_PATH.replaceAll("\\{"+NAME_PARAM_STRING+":.+\\}",qmeUser.getUserName()),QMeAppAPI.USER_BY_NAME));
         qmeUser.add(new Link(endpointURL+ UserAPI.EMAIL_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.USER_BY_EMAIL));
@@ -241,9 +240,9 @@ public class UserController implements UserAPI {
      * @param user Current Logged in User
      * @param methodName Method Name
      */
-    private final void log(QMeUserDetails user, String methodName){
+    private void log(QMeUserDetails user, String methodName){
         if(user != null){
-            LOG.debug("User "+methodName+" called by User ID: "+user.getUserID()+" User Name: "+user.getUsername());
+            LOG.debug("User "+methodName+" called by User ID: "+user.getUserID()+" User Name: "+user.getUsername()+" User Roles"+user.getAuthorities());
         }else{
             LOG.debug("User "+methodName+" called with no security context ");
         }

@@ -9,8 +9,6 @@ package com.malcolm.qme.rest.api;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.*;
 import org.springframework.hateoas.Resource;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -115,7 +113,7 @@ public interface UserAPI extends QMeAPI {
      * @param userId User ID
      * @return QMe User
      */
-    QMeUserDetail searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+    QMeUserDetail searchById(Long userId) throws QMeResourceException;
 
     /**
      * Search by User Name
@@ -123,7 +121,7 @@ public interface UserAPI extends QMeAPI {
      * @param userName User Name
      * @return QMe User
      */
-    QMeUserDetail searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceException;
+    QMeUserDetail searchByUserName(String userName) throws QMeResourceException;
 
     /**
      * Search by User Email
@@ -131,7 +129,7 @@ public interface UserAPI extends QMeAPI {
      * @param userEmail User Email
      * @return QMe User
      */
-    QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+    QMeUserDetail searchByUserEmail(String userEmail) throws QMeResourceException;
 
     /**
      * Register New User
@@ -140,7 +138,7 @@ public interface UserAPI extends QMeAPI {
      * @return QMe User
      * @throws QMeResourceException
      */
-    QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceException;
+    QMeUserDetail create(QMeUser user) throws QMeResourceException;
 
     /**
      * Stage User
@@ -149,7 +147,7 @@ public interface UserAPI extends QMeAPI {
      * @return Boolean - Staging successful
      * @throws QMeResourceException
      */
-    void stageUser(@RequestBody QMeStageUser user) throws QMeResourceException;
+    void stageUser(QMeStageUser user) throws QMeResourceException;
 
     /**
      * Confirm User Registration
@@ -158,7 +156,7 @@ public interface UserAPI extends QMeAPI {
      * @return Boolean - User Registration Completed
      * @throws QMeResourceException
      */
-    void confirmRegistration(@RequestBody String registrationToken) throws QMeResourceException;
+    void confirmRegistration(String registrationToken) throws QMeResourceException;
 
     /**
      * Update QMe User
@@ -166,14 +164,14 @@ public interface UserAPI extends QMeAPI {
      * @param user QMe User
      * @return QMe User Updated User
      */
-    QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUpdateUser user) throws QMeResourceException;
+    QMeUserDetail update(Long userId, QMeUpdateUser user) throws QMeResourceException;
 
     /**
      * Delete QMe User
      *
      * @param userId User Is
      */
-    void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceException;
+    void delete(Long userId) throws QMeResourceException;
 
 
     /**
@@ -182,7 +180,7 @@ public interface UserAPI extends QMeAPI {
      * @param userEmail User Email
      * @return QMeUser User Details
      */
-    Resource<String> forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceException;
+    Resource<String> forgotUserName(String userEmail) throws QMeResourceException;
 
     /**
      * Forgot Password
@@ -191,7 +189,7 @@ public interface UserAPI extends QMeAPI {
      * @param url Reset URL that will be sent to user email
      * @throws QMeResourceException
      */
-    void forgotPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody String url) throws QMeResourceException;
+    void forgotPassword(String userEmail, String url) throws QMeResourceException;
 
    /**
      * Reset Password
@@ -200,6 +198,6 @@ public interface UserAPI extends QMeAPI {
      * @param userpassword User Password reset token
      * @throws QMeResourceException
      */
-    QMeUserDetail resetPassword(@PathVariable(EMAIL_PARAM_STRING) String userEmail, @RequestBody QMeResetPassword userpassword) throws QMeResourceException;
+    QMeUserDetail resetPassword(String userEmail, QMeResetPassword userpassword) throws QMeResourceException;
 
 }
