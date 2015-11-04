@@ -17,7 +17,7 @@ public class QMeUpdateUser extends QMeUserDetail {
 
     /**
      * Get Updated User Password
-     * @return
+     * @return Updated User Password
      */
     public String getUpdatedUserPassword() {
         return updatedUserPassword;
@@ -25,7 +25,7 @@ public class QMeUpdateUser extends QMeUserDetail {
 
     /**
      * Set Updated User Password
-     * @param updatedUserPassword
+     * @param updatedUserPassword Updated User Password
      */
     public void setUpdatedUserPassword(String updatedUserPassword) {
         this.updatedUserPassword = updatedUserPassword;

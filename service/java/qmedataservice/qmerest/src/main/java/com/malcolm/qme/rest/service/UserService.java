@@ -55,7 +55,6 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * Stage User in Staging Table for User Registration.
      *
      * @param qMeUser QMeUser model
-     * @return Boolean - Staging successful/unsuccessful
      * @throws QMeServerException
      */
     void stageUser(QMeStageUser qMeUser) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException;
@@ -64,12 +63,9 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
      * Confirm User Registration
      *
      * @param stagingToken User Staging Token
-     * @return  Boolean - Staging successful/unsuccessful
-     * @throws QMeInvalidResourceDataException
-     * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-    void confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException,QMeResourceNotFoundException,QMeServerException;
+    void confirmUserRegistration(String stagingToken) throws QMeServerException;
 
     /**
      * Forgot Password

@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
+@SuppressWarnings("ALL")
 public interface CategoryAPI extends QMeAPI {
     /**
      * QMeCategory API Root Path
@@ -45,7 +46,7 @@ public interface CategoryAPI extends QMeAPI {
      * @param categoryName Category Name
      * @return List of QMe Categories
      */
-    List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeResourceException;
+    List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceException;
 
     /**
      * Search by ID
@@ -53,7 +54,7 @@ public interface CategoryAPI extends QMeAPI {
      * @param categoryId Category ID
      * @return QMe Category
      */
-    QMeCategoryDetail searchById(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
+    QMeCategoryDetail searchById(Long categoryId) throws QMeResourceException;
 
     /**
      * Create QMeCategory
@@ -69,13 +70,13 @@ public interface CategoryAPI extends QMeAPI {
      * @param category Category
      * @return Category
      */
-    QMeCategoryDetail update(@PathVariable(ID_PARAM_STRING) Long categoryId, QMeCategory category) throws QMeResourceException;
+    QMeCategoryDetail update(Long categoryId, QMeCategory category) throws QMeResourceException;
 
     /**
      * Delete QMeCategory
      *
      * @param categoryId Category ID
      */
-    Boolean delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException;
+    void delete(Long categoryId) throws QMeResourceException;
 
 }

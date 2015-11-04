@@ -37,7 +37,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         List<Resource> qmeResources = new ArrayList<>();
 
         //QMe User API
-        Resource<String> qmeUserResource = new Resource(QME_USER_API,new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"),USER));
+        Resource<String> qmeUserResource = new Resource<>(QME_USER_API,new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"),USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.COUNT_PATH.replaceAll(":.+","}"),USER_COUNT));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",USER_PAGED));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),USER_BY_ID));
@@ -54,11 +54,11 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeResources.add(qmeUserResource);
 
         //QMe Category API
-        Resource<String> qmeCategoryResource = new Resource(QME_CATEGORY_API,new Link(endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CATEGORY));
+        Resource<String> qmeCategoryResource = new Resource<>(QME_CATEGORY_API,new Link(endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CATEGORY));
         qmeResources.add(qmeCategoryResource);
 
 
-        return new Resources(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
+        return new Resources<>(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
     }
 
 }

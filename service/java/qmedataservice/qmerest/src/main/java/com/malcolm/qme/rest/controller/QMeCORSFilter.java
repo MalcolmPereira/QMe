@@ -24,13 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class QMeCORSFilter implements Filter {
     /*
-   * Allow Origin
-   */
+    * Allow Origin
+    */
     private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
-    /*
-     * Allow All Origin
-     */
-    private static final String ALLOW_ORIGIN_ALL = "*";
     /*
     * Allow Origin Domain
     */

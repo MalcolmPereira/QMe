@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * @author Malcolm
  */
+@SuppressWarnings("ALL")
 public interface UserAPI extends QMeAPI {
     /**
      * QMeUser API Root Path
@@ -144,7 +145,6 @@ public interface UserAPI extends QMeAPI {
      * Stage User
      *
      * @param user - Staging User
-     * @return Boolean - Staging successful
      * @throws QMeResourceException
      */
     void stageUser(QMeStageUser user) throws QMeResourceException;
@@ -153,7 +153,6 @@ public interface UserAPI extends QMeAPI {
      * Confirm User Registration
      *
      * @param registrationToken Registration Token
-     * @return Boolean - User Registration Completed
      * @throws QMeResourceException
      */
     void confirmRegistration(String registrationToken) throws QMeResourceException;

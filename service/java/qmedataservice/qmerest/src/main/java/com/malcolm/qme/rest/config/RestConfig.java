@@ -117,7 +117,7 @@ public class RestConfig {
         @Override
         public void serialize(LocalDateTime dateTime,
                               JsonGenerator jsonGenerator,
-                              SerializerProvider provider) throws IOException, JsonGenerationException {
+                              SerializerProvider provider) throws IOException {
             jsonGenerator.writeString( dateTime.format(DateTimeFormatter.ofPattern("YYYY-dd-MM HH:mm:ss")));
         }
     }

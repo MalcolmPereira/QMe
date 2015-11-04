@@ -125,7 +125,7 @@ public class QMeStageUser extends QMeResource {
 
     /**
      * Set Confirm URL
-     * @param confirmURL
+     * @param confirmURL Confirm URL That will be used by applications to handle confirmation
      */
     public void setConfirmURL(String confirmURL) {
         this.confirmURL = confirmURL;

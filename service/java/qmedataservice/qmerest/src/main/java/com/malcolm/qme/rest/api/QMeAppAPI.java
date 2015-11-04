@@ -12,6 +12,7 @@ import org.springframework.hateoas.Resources;
 /**
  * @author Malcolm
  */
+@SuppressWarnings("ALL")
 public interface QMeAppAPI extends QMeAPI {
 
     /**
@@ -85,7 +86,7 @@ public interface QMeAppAPI extends QMeAPI {
 
 
     /**
-     * QMe Categoryu API
+     * QMe Category API
      */
     String QME_CATEGORY_API = "Qme Category API";
     /**

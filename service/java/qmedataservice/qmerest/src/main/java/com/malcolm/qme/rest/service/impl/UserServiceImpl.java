@@ -178,7 +178,7 @@ public final class UserServiceImpl implements UserService {
                      LOG.debug("User Staging completed, done with sending email to user " + user.getUserEmail());
 
                  }catch(QMeServerException err){
-                     LOG.debug("Got error when sending email will delete stagin token "+stagingToken);
+                     LOG.debug("Got error when sending email will delete staging token "+stagingToken);
                      userRepo.deleteStagingToken(stagingToken);
                      throw err;
                  }
@@ -190,7 +190,7 @@ public final class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void confirmUserRegistration(String stagingToken) throws QMeInvalidResourceDataException, QMeResourceNotFoundException, QMeServerException {
+    public void confirmUserRegistration(String stagingToken) throws QMeServerException {
         try {
             User user = userRepo.confirmUserRegistration(stagingToken);
             UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
@@ -587,8 +587,6 @@ public final class UserServiceImpl implements UserService {
 
             javaMailSender.send(message);
 
-        }catch (MessagingException messagingErr){
-            throw new QMeServerException("System  Error, Error Sending Staging Confirmation Email Message",messagingErr);
         }catch (Exception err){
             throw new QMeServerException("System  Error, Error Sending Staging Confirmation Email Message",err);
         }
@@ -657,10 +655,7 @@ public final class UserServiceImpl implements UserService {
 
             javaMailSender.send(message);
 
-        }catch (MessagingException messagingErr){
-            throw new QMeServerException("System  Error, Error Sending Email Message",messagingErr);
-
-        }catch (Exception err){
+        } catch (Exception err){
             throw new QMeServerException("System  Error, Error Sending Email Message",err);
         }
     }

@@ -37,7 +37,7 @@ public final class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceNotFoundException,QMeServerException {
+    public List<QMeCategoryDetail> searchByName(String categoryName) throws QMeServerException {
         try{
             return getQMeCategoryDetail(categoryRepo.findCategoryNameLike(categoryName));
 

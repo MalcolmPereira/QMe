@@ -111,9 +111,8 @@ public class CategoryController implements CategoryAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public Boolean delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceNotFoundException,QMeServerException {
+    public void delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceNotFoundException,QMeServerException {
         LOG.debug("Delete Category called for categoryId  "+categoryId);
         categoryService.delete(categoryId);
-        return Boolean.TRUE;
     }
 }

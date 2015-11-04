@@ -23,8 +23,7 @@ public interface CategoryService extends QMeService<QMeCategoryDetail,QMeCategor
      *
      * @param categoryName Category Name
      * @return QMeCategoryDetail List
-     * @throws QMeResourceNotFoundException
      * @throws QMeServerException
      */
-     List<QMeCategoryDetail> searchByName(String categoryName) throws QMeResourceNotFoundException,QMeServerException;
+     List<QMeCategoryDetail> searchByName(String categoryName) throws QMeServerException;
 }

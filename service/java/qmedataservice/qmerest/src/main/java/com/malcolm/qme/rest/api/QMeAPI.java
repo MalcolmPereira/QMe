@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * @author Malcolm
  */
+@SuppressWarnings("ALL")
 public interface QMeAPI {
 	/**
 	 * App String
@@ -46,7 +47,7 @@ public interface QMeAPI {
      */
     String SORT_FIELDS 	= "sortfields";
     /**
-     * Sort Field Separtor
+     * Sort Field Separator
      */
     String SORT_FIELDS_SEPARATOR = ",";
     /**
