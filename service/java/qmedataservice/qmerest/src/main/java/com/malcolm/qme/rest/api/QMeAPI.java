@@ -50,6 +50,10 @@ public interface QMeAPI {
      */
     String SORT_FIELDS_SEPARATOR = ",";
     /**
+     * Admin Role
+     */
+    String ADMIN_ROLE = "ADMIN";
+    /**
      * Get Current Logged in User
      * @return QMeUserDetails Current Logged in User
      */

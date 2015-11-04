@@ -11,6 +11,7 @@ import com.malcolm.qme.rest.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -24,6 +25,17 @@ import javax.servlet.http.HttpServletRequest;
 public class QMeExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(QMeExceptionHandler.class);
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Access denied to requested resource.")
+    @ExceptionHandler(AccessDeniedException.class)
+    public void handleAccessDeniedException(HttpServletRequest request, AccessDeniedException ex){
+        if(ex.getCause() != null){
+            ex.getCause().printStackTrace();
+        }else{
+            ex.printStackTrace();
+        }
+        logger.info("ex Occurred:: URL="+request.getRequestURL());
+    }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Requested resource not found. please make sure resource id is valid and available for query or update.")
     @ExceptionHandler(QMeResourceNotFoundException.class)

@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +66,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public @ResponseBody List<QMeUserDetail> list() throws QMeServerException {
         log(getCurrentUser(), "list");
@@ -74,6 +77,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public @ResponseBody List<QMeUserDetail> listPaged(
         @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
@@ -118,6 +122,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public @ResponseBody QMeUserDetail searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Search By ID for  "+userId);
@@ -128,6 +133,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=NAME_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public @ResponseBody QMeUserDetail searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Search By User Name for  "+userName);
@@ -138,6 +144,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=EMAIL_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public @ResponseBody QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Search By User Email for  " + userEmail);
@@ -148,6 +155,7 @@ public class UserController implements UserAPI {
 
     @RequestMapping(value=REGISTER_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public @ResponseBody QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         log(getCurrentUser(), " Create  ");
@@ -175,14 +183,40 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUpdateUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
-        log(getCurrentUser(), " update  ");
-        QMeUserDetail qMeUserDetail =  userService.update(user, userId, getCurrentUser().getUserID());
+        QMeUserDetails currentUser = getCurrentUser();
+        log(currentUser, " update  ");
+
+        boolean updateAllowed = false;
+        if(currentUser == null){
+            throw new AccessDeniedException("Access denied - no authenticated user in context");
+        }
+
+        if(currentUser.getAuthorities() != null){
+            for(GrantedAuthority authority : currentUser.getAuthorities()) {
+                if (authority.getAuthority().equalsIgnoreCase(ADMIN_ROLE)) {
+                    updateAllowed = true;
+                    break;
+                }
+            }
+        }
+        if(!updateAllowed){
+            if(currentUser.getUserID().equals(userId)){
+                updateAllowed = true;
+            }
+        }
+
+        if(!updateAllowed){
+            throw new AccessDeniedException("Access denied - user in context does not have required roles");
+        }
+
+        QMeUserDetail qMeUserDetail = userService.update(user, userId, getCurrentUser().getUserID());
         setUserLinks(qMeUserDetail);
         return qMeUserDetail;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), " delete  ");
@@ -192,7 +226,7 @@ public class UserController implements UserAPI {
     @RequestMapping(value=FORGOT_USERNAME_PATH,method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public @ResponseBody Resource<String> forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException,QMeServerException {
+    public @ResponseBody Resource<String> forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException, QMeServerException {
         log(getCurrentUser(), " forgotUserName  ");
         QMeUserDetail qMeUserDetail  = userService.searchByEmail(userEmail);
         Resource<String> userNameResource = new Resource<String>(qMeUserDetail.getUserName(),new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qMeUserDetail .getUserEmail()),QMeAppAPI.FORGOT_USER_PASSWORD));
