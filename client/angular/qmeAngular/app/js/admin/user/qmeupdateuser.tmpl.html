@@ -26,6 +26,13 @@
                         <label for="userLastName">User Last Name:</label>
                         <input ng-model="qmeUserManagement.userLastName" id="userLastName" style="width:500px;" maxlength="128" min="5" type="text" class="form-control" ng-required="true">
                     </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label class ="checkbox-inline"><input type ="checkbox" id="userRoleCheckBoxId"  value="USER">User</label>
+                        <label class ="checkbox-inline"><input type ="checkbox" id="reviewerRoleCheckBoxId"  value="REVIEWER">Reviewer</label>
+                        <label class ="checkbox-inline"><input type ="checkbox" id="moderatorRoleCheckBoxId"  value="MODERATOR">Moderator</label>
+                        <label class ="checkbox-inline"><input type ="checkbox" id="adminRoleCheckBoxId" value="ADMIN">Admin</label>
+                    </div>
+
                     <button id="submitUpdateUserButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeUserManagement.updateUser()" ng-disabled="updateUserForm.$invalid">Update User</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeUserManagement.cancelUserUpdate()">Cancel</button>
