@@ -8,10 +8,12 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.springdata.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Malcolm
  */
+@Repository
 interface UserSpringDataRepository extends JpaRepository<UserEntity, Long> {
 
     /**

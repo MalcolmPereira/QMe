@@ -8,12 +8,14 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author Malcolm
  */
+@Repository
 public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEntity, Long> {
 	/**
      * Find By User ID

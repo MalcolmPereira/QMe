@@ -10,12 +10,14 @@ import com.malcolm.qme.springdata.entity.UserQuizLikesEntity;
 import com.malcolm.qme.springdata.entity.UserQuizLikesEntityId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author Malcolm
  */
+@Repository
 public interface UserQuizLikesSpringDataRepository extends JpaRepository<UserQuizLikesEntity, UserQuizLikesEntityId> {
 	/**
 	 * Find By User ID
