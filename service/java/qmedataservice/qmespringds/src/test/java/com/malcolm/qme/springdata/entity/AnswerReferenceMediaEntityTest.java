@@ -34,7 +34,7 @@ public class AnswerReferenceMediaEntityTest {
         assertFalse(answerReferenceMediaEntity1.equals(answerReferenceMediaEntity2));
         answerReferenceMediaEntity1 = new AnswerReferenceMediaEntity(1L, 1,"testing1".getBytes());
         answerReferenceMediaEntity1.setAnswerRefMediaId(1L);
-        answerReferenceMediaEntity2 = new AnswerReferenceMediaEntity(1L, 1,"testing2".getBytes());
+        answerReferenceMediaEntity2 = new AnswerReferenceMediaEntity(1L, 2,"testing2".getBytes());
         answerReferenceMediaEntity2.setAnswerRefMediaId(2L);
         assertFalse(answerReferenceMediaEntity1.equals(answerReferenceMediaEntity2));
 
@@ -61,7 +61,7 @@ public class AnswerReferenceMediaEntityTest {
         assertNotEquals(answerReferenceMediaEntity1.hashCode(), answerReferenceMediaEntity2.hashCode());
         answerReferenceMediaEntity1 = new AnswerReferenceMediaEntity(1L, 1,"testing1".getBytes());
         answerReferenceMediaEntity1.setAnswerRefMediaId(1L);
-        answerReferenceMediaEntity2 = new AnswerReferenceMediaEntity(1L, 1,"testing2".getBytes());
+        answerReferenceMediaEntity2 = new AnswerReferenceMediaEntity(1L, 2,"testing2".getBytes());
         answerReferenceMediaEntity2.setAnswerRefMediaId(2L);
         assertNotEquals(answerReferenceMediaEntity1.hashCode(), answerReferenceMediaEntity2.hashCode());
     }

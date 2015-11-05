@@ -118,65 +118,28 @@ public class AnswerReferenceMediaEntity implements java.io.Serializable {
 		this.refMedia = refMedia;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime
-				* result)
-				+ ((answerRefMediaId == null) ? 0 : answerRefMediaId.hashCode());
-		result = (prime * result)
-				+ ((mediaTypeId == null) ? 0 : mediaTypeId.hashCode());
-		result = (prime * result)
-				+ ((questionId == null) ? 0 : questionId.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final AnswerReferenceMediaEntity other = (AnswerReferenceMediaEntity) obj;
-		if (answerRefMediaId == null) {
-			if (other.answerRefMediaId != null) {
-				return false;
-			}
-		} else if (!answerRefMediaId.equals(other.answerRefMediaId)) {
-			return false;
-		}
-		if (mediaTypeId == null) {
-			if (other.mediaTypeId != null) {
-				return false;
-			}
-		} else if (!mediaTypeId.equals(other.mediaTypeId)) {
-			return false;
-		}
-		if (questionId == null) {
-			if (other.questionId != null) {
-				return false;
-			}
-		} else if (!questionId.equals(other.questionId)) {
-			return false;
-		}
-		return true;
-	}
+        AnswerReferenceMediaEntity that = (AnswerReferenceMediaEntity) o;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+        if (!questionId.equals(that.questionId)) return false;
+        return mediaTypeId.equals(that.mediaTypeId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = questionId.hashCode();
+        result = 31 * result + mediaTypeId.hashCode();
+        return result;
+    }
+
+    /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "AnswerReferenceMediaEntity [answerRefMediaId="

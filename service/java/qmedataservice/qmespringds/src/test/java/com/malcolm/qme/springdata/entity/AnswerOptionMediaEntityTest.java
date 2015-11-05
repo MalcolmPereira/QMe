@@ -34,7 +34,7 @@ public class AnswerOptionMediaEntityTest {
         assertFalse(answerOptionMediaEntity1.equals(answerOptionMediaEntity2));
         answerOptionMediaEntity1 = new AnswerOptionMediaEntity(1L, 1,"testing1".getBytes());
         answerOptionMediaEntity1.setOptionMediaId(1L);
-        answerOptionMediaEntity2 = new AnswerOptionMediaEntity(1L, 1,"testing2".getBytes());
+        answerOptionMediaEntity2 = new AnswerOptionMediaEntity(1L, 2,"testing2".getBytes());
         answerOptionMediaEntity2.setOptionMediaId(2L);
         assertFalse(answerOptionMediaEntity1.equals(answerOptionMediaEntity2));
 
@@ -61,7 +61,7 @@ public class AnswerOptionMediaEntityTest {
         assertNotEquals(answerOptionMediaEntity1.hashCode(), answerOptionMediaEntity2.hashCode());
         answerOptionMediaEntity1 = new AnswerOptionMediaEntity(1L, 1,"testing1".getBytes());
         answerOptionMediaEntity1.setOptionMediaId(1L);
-        answerOptionMediaEntity2 = new AnswerOptionMediaEntity(1L, 1,"testing2".getBytes());
+        answerOptionMediaEntity2 = new AnswerOptionMediaEntity(1L, 2,"testing2".getBytes());
         answerOptionMediaEntity2.setOptionMediaId(2L);
         assertNotEquals(answerOptionMediaEntity1.hashCode(), answerOptionMediaEntity2.hashCode());
     }

@@ -119,64 +119,28 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
 		this.optionMedia = optionMedia;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((mediaTypeId == null) ? 0 : mediaTypeId.hashCode());
-		result = (prime * result)
-				+ ((optionId == null) ? 0 : optionId.hashCode());
-		result = (prime * result)
-				+ ((optionMediaId == null) ? 0 : optionMediaId.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final AnswerOptionMediaEntity other = (AnswerOptionMediaEntity) obj;
-		if (mediaTypeId == null) {
-			if (other.mediaTypeId != null) {
-				return false;
-			}
-		} else if (!mediaTypeId.equals(other.mediaTypeId)) {
-			return false;
-		}
-		if (optionId == null) {
-			if (other.optionId != null) {
-				return false;
-			}
-		} else if (!optionId.equals(other.optionId)) {
-			return false;
-		}
-		if (optionMediaId == null) {
-			if (other.optionMediaId != null) {
-				return false;
-			}
-		} else if (!optionMediaId.equals(other.optionMediaId)) {
-			return false;
-		}
-		return true;
-	}
+        AnswerOptionMediaEntity that = (AnswerOptionMediaEntity) o;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+        if (!optionId.equals(that.optionId)) return false;
+        return mediaTypeId.equals(that.mediaTypeId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = optionId.hashCode();
+        result = 31 * result + mediaTypeId.hashCode();
+        return result;
+    }
+
+    /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "AnswerOptionMediaEntity [optionMediaId=" + optionMediaId

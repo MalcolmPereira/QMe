@@ -122,79 +122,33 @@ public final class AnswerOptionEntity implements java.io.Serializable {
 		this.iscorrect = iscorrect;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((iscorrect == null) ? 0 : iscorrect.hashCode());
-		result = (prime * result)
-				+ ((optionId == null) ? 0 : optionId.hashCode());
-		result = (prime * result)
-				+ ((optionText == null) ? 0 : optionText.hashCode());
-		result = (prime * result)
-				+ ((questionId == null) ? 0 : questionId.hashCode());
-		return result;
-	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final AnswerOptionEntity other = (AnswerOptionEntity) obj;
-		if (iscorrect == null) {
-			if (other.iscorrect != null) {
-				return false;
-			}
-		} else if (!iscorrect.equals(other.iscorrect)) {
-			return false;
-		}
-		if (optionId == null) {
-			if (other.optionId != null) {
-				return false;
-			}
-		} else if (!optionId.equals(other.optionId)) {
-			return false;
-		}
-		if (optionText == null) {
-			if (other.optionText != null) {
-				return false;
-			}
-		} else if (!optionText.equals(other.optionText)) {
-			return false;
-		}
-		if (questionId == null) {
-			if (other.questionId != null) {
-				return false;
-			}
-		} else if (!questionId.equals(other.questionId)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
+        AnswerOptionEntity that = (AnswerOptionEntity) o;
+
+        if (!questionId.equals(that.questionId)) return false;
+        if (!optionText.equals(that.optionText)) return false;
+        return iscorrect.equals(that.iscorrect);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = questionId.hashCode();
+        result = 31 * result + optionText.hashCode();
+        result = 31 * result + iscorrect.hashCode();
+        return result;
+    }
+
+    /*
+         * (non-Javadoc)
+         *
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "AnswerOptionEntity [optionId=" + optionId + ", questionId="
