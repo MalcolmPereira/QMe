@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -276,134 +277,24 @@ public class QuizEntity implements java.io.Serializable {
 		this.quizUpdateUser = quizUpdateUser;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((catId == null) ? 0 : catId.hashCode());
-		result = (prime * result)
-				+ ((maxAttempts == null) ? 0 : maxAttempts.hashCode());
-		result = (prime * result)
-				+ ((quizCreateDate == null) ? 0 : quizCreateDate.hashCode());
-		result = (prime * result)
-				+ ((quizCreateUser == null) ? 0 : quizCreateUser.hashCode());
-		result = (prime * result)
-				+ ((quizDesc == null) ? 0 : quizDesc.hashCode());
-		result = (prime * result)
-				+ ((quizHits == null) ? 0 : quizHits.hashCode());
-		result = (prime * result) + ((quizId == null) ? 0 : quizId.hashCode());
-		result = (prime * result)
-				+ ((quizLikes == null) ? 0 : quizLikes.hashCode());
-		result = (prime * result)
-				+ ((quizName == null) ? 0 : quizName.hashCode());
-		result = (prime * result)
-				+ ((quizUpdateDate == null) ? 0 : quizUpdateDate.hashCode());
-		result = (prime * result)
-				+ ((quizUpdateUser == null) ? 0 : quizUpdateUser.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuizEntity that = (QuizEntity) o;
+        return Objects.equals(quizId, that.quizId) &&
+                Objects.equals(quizName, that.quizName) &&
+                Objects.equals(catId, that.catId);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final QuizEntity other = (QuizEntity) obj;
-		if (catId == null) {
-			if (other.catId != null) {
-				return false;
-			}
-		} else if (!catId.equals(other.catId)) {
-			return false;
-		}
-		if (maxAttempts == null) {
-			if (other.maxAttempts != null) {
-				return false;
-			}
-		} else if (!maxAttempts.equals(other.maxAttempts)) {
-			return false;
-		}
-		if (quizCreateDate == null) {
-			if (other.quizCreateDate != null) {
-				return false;
-			}
-		} else if (!quizCreateDate.equals(other.quizCreateDate)) {
-			return false;
-		}
-		if (quizCreateUser == null) {
-			if (other.quizCreateUser != null) {
-				return false;
-			}
-		} else if (!quizCreateUser.equals(other.quizCreateUser)) {
-			return false;
-		}
-		if (quizDesc == null) {
-			if (other.quizDesc != null) {
-				return false;
-			}
-		} else if (!quizDesc.equals(other.quizDesc)) {
-			return false;
-		}
-		if (quizHits == null) {
-			if (other.quizHits != null) {
-				return false;
-			}
-		} else if (!quizHits.equals(other.quizHits)) {
-			return false;
-		}
-		if (quizId == null) {
-			if (other.quizId != null) {
-				return false;
-			}
-		} else if (!quizId.equals(other.quizId)) {
-			return false;
-		}
-		if (quizLikes == null) {
-			if (other.quizLikes != null) {
-				return false;
-			}
-		} else if (!quizLikes.equals(other.quizLikes)) {
-			return false;
-		}
-		if (quizName == null) {
-			if (other.quizName != null) {
-				return false;
-			}
-		} else if (!quizName.equals(other.quizName)) {
-			return false;
-		}
-		if (quizUpdateDate == null) {
-			if (other.quizUpdateDate != null) {
-				return false;
-			}
-		} else if (!quizUpdateDate.equals(other.quizUpdateDate)) {
-			return false;
-		}
-		if (quizUpdateUser == null) {
-			if (other.quizUpdateUser != null) {
-				return false;
-			}
-		} else if (!quizUpdateUser.equals(other.quizUpdateUser)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(quizId, quizName, catId);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+    /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "QuizEntity [quizId=" + quizId + ", quizName=" + quizName

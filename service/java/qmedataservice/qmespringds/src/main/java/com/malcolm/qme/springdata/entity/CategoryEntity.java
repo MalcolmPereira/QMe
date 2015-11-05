@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -178,89 +179,24 @@ public class CategoryEntity implements java.io.Serializable {
 		this.catLikes = catLikes;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((catCreateDate == null) ? 0 : catCreateDate.hashCode());
-		result = (prime * result)
-				+ ((catCreateUser == null) ? 0 : catCreateUser.hashCode());
-		result = (prime * result) + ((catId == null) ? 0 : catId.hashCode());
-		result = (prime * result)
-				+ ((catLikes == null) ? 0 : catLikes.hashCode());
-		result = (prime * result) + ((catName == null) ? 0 : catName.hashCode());
-		result = (prime * result)
-				+ ((catParentId == null) ? 0 : catParentId.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryEntity that = (CategoryEntity) o;
+        return Objects.equals(catId, that.catId) &&
+                Objects.equals(catName, that.catName) &&
+                Objects.equals(catParentId, that.catParentId);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final CategoryEntity other = (CategoryEntity) obj;
-		if (catCreateDate == null) {
-			if (other.catCreateDate != null) {
-				return false;
-			}
-		} else if (!catCreateDate.equals(other.catCreateDate)) {
-			return false;
-		}
-		if (catCreateUser == null) {
-			if (other.catCreateUser != null) {
-				return false;
-			}
-		} else if (!catCreateUser.equals(other.catCreateUser)) {
-			return false;
-		}
-		if (catId == null) {
-			if (other.catId != null) {
-				return false;
-			}
-		} else if (!catId.equals(other.catId)) {
-			return false;
-		}
-		if (catLikes == null) {
-			if (other.catLikes != null) {
-				return false;
-			}
-		} else if (!catLikes.equals(other.catLikes)) {
-			return false;
-		}
-		if (catName == null) {
-			if (other.catName != null) {
-				return false;
-			}
-		} else if (!catName.equals(other.catName)) {
-			return false;
-		}
-		if (catParentId == null) {
-			if (other.catParentId != null) {
-				return false;
-			}
-		} else if (!catParentId.equals(other.catParentId)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(catId, catName, catParentId);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+    /* (non-Javadoc)
+             * @see java.lang.Object#toString()
+             */
 	@Override
 	public String toString() {
 		return "CategoryEntity [catId=" + catId + ", catName=" + catName

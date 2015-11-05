@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -82,4 +83,16 @@ public class UserPasswordResetEntity implements java.io.Serializable {
 		this.createdTimestamp = createdTimestamp;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserPasswordResetEntity that = (UserPasswordResetEntity) o;
+		return Objects.equals(id, that.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }

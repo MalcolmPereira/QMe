@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.core.domain;
 
+import java.util.Objects;
+
 /**
  * @author Malcolm
  */
@@ -97,21 +99,17 @@ public final class QuestionHit {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         QuestionHit that = (QuestionHit) o;
-
-        return getQuestionID().equals(that.getQuestionID()) && getCategoryID().equals(that.getCategoryID()) && !(getQuestionHit() != null ? !getQuestionHit().equals(that.getQuestionHit()) : that.getQuestionHit() != null) && !(getRightCount() != null ? !getRightCount().equals(that.getRightCount()) : that.getRightCount() != null) && !(getWrongCount() != null ? !getWrongCount().equals(that.getWrongCount()) : that.getWrongCount() != null);
-
+        return Objects.equals(questionID, that.questionID) &&
+                Objects.equals(categoryID, that.categoryID) &&
+                Objects.equals(questionHit, that.questionHit) &&
+                Objects.equals(rightCount, that.rightCount) &&
+                Objects.equals(wrongCount, that.wrongCount);
     }
 
     @Override
     public int hashCode() {
-        int result = getQuestionID().hashCode();
-        result = 31 * result + getCategoryID().hashCode();
-        result = 31 * result + (getQuestionHit() != null ? getQuestionHit().hashCode() : 0);
-        result = 31 * result + (getRightCount() != null ? getRightCount().hashCode() : 0);
-        result = 31 * result + (getWrongCount() != null ? getWrongCount().hashCode() : 0);
-        return result;
+        return Objects.hash(questionID, categoryID, questionHit, rightCount, wrongCount);
     }
 
     @Override

@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.core.domain;
 
+import java.util.Objects;
+
 /**
  * @author Malcolm
  */
@@ -74,19 +76,14 @@ public final class Role {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Role role = (Role) o;
-
-        return getRoleID().equals(role.getRoleID()) && getRoleName().equals(role.getRoleName()) && !(getRoleDesc() != null ? !getRoleDesc().equals(role.getRoleDesc()) : role.getRoleDesc() != null);
-
+        return Objects.equals(roleID, role.roleID) &&
+                Objects.equals(roleName, role.roleName);
     }
 
     @Override
     public int hashCode() {
-        int result = getRoleID().hashCode();
-        result = 31 * result + getRoleName().hashCode();
-        result = 31 * result + (getRoleDesc() != null ? getRoleDesc().hashCode() : 0);
-        return result;
+        return Objects.hash(roleID, roleName);
     }
 
     @Override

@@ -7,6 +7,7 @@
 package com.malcolm.qme.core.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -205,36 +206,22 @@ public final class Question {
 		return updateUserID;
 	}
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Question question = (Question) o;
-
-        if (!questionID.equals(question.questionID)) return false;
-        if (!categoryID.equals(question.categoryID)) return false;
-        if (!questionText.equals(question.questionText)) return false;
-        if (!questionPoint.equals(question.questionPoint)) return false;
-        if (!createUserID.equals(question.createUserID)) return false;
-        return updateUserID.equals(question.updateUserID);
-
+        return Objects.equals(questionID, question.questionID) &&
+                Objects.equals(categoryID, question.categoryID) &&
+                Objects.equals(questionText, question.questionText);
     }
 
     @Override
     public int hashCode() {
-        int result = questionID.hashCode();
-        result = 31 * result + categoryID.hashCode();
-        result = 31 * result + questionText.hashCode();
-        result = 31 * result + createUserID.hashCode();
-        return result;
+        return Objects.hash(questionID, categoryID, questionText);
     }
 
-    /* (non-Javadoc)
-                 * @see java.lang.Object#toString()
-                 */
-	@Override
+    @Override
 	public String toString() {
 		return "Question [questionID=" + questionID + ", categoryID="
 				+ categoryID + ", questionText=" + questionText + ", answer="

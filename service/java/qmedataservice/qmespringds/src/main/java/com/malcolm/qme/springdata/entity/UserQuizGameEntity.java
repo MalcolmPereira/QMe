@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -123,71 +124,22 @@ public class UserQuizGameEntity implements java.io.Serializable {
 		this.userScore = userScore;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserQuizGameEntity that = (UserQuizGameEntity) o;
+		return Objects.equals(id, that.id);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((endDate == null) ? 0 : endDate.hashCode());
-		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
-		result = (prime * result)
-				+ ((startDate == null) ? 0 : startDate.hashCode());
-		result = (prime * result)
-				+ ((userScore == null) ? 0 : userScore.hashCode());
-		return result;
+		return Objects.hash(id);
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserQuizGameEntity other = (UserQuizGameEntity) obj;
-		if (endDate == null) {
-			if (other.endDate != null) {
-				return false;
-			}
-		} else if (!endDate.equals(other.endDate)) {
-			return false;
-		}
-		if (id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!id.equals(other.id)) {
-			return false;
-		}
-		if (startDate == null) {
-			if (other.startDate != null) {
-				return false;
-			}
-		} else if (!startDate.equals(other.startDate)) {
-			return false;
-		}
-		if (userScore == null) {
-			if (other.userScore != null) {
-				return false;
-			}
-		} else if (!userScore.equals(other.userScore)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "UserQuizGameEntity [id=" + id + ", startDate=" + startDate

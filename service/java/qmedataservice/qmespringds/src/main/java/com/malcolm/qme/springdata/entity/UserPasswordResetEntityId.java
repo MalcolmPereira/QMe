@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -82,17 +83,13 @@ public class UserPasswordResetEntityId implements java.io.Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserPasswordResetEntityId that = (UserPasswordResetEntityId) o;
-
-        return userId.equals(that.userId) && resetToken.equals(that.resetToken);
-
+        return Objects.equals(userId, that.userId) &&
+                Objects.equals(resetToken, that.resetToken);
     }
 
     @Override
     public int hashCode() {
-        int result = userId.hashCode();
-        result = 31 * result + resetToken.hashCode();
-        return result;
+        return Objects.hash(userId, resetToken);
     }
 }

@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.core.domain;
 
+import java.util.Objects;
+
 /**
  * @author Malcolm
  */
@@ -56,28 +58,21 @@ public final class MediaType {
 		return mediaType;
 	}
 
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		MediaType mediaType1 = (MediaType) o;
-
-		if (!mediaTypeID.equals(mediaType1.mediaTypeID)) return false;
-		return mediaType.equals(mediaType1.mediaType);
-
+		return Objects.equals(mediaTypeID, mediaType1.mediaTypeID) &&
+				Objects.equals(mediaType, mediaType1.mediaType);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = mediaTypeID.hashCode();
-		result = 31 * result + mediaType.hashCode();
-		return result;
+		return Objects.hash(mediaTypeID, mediaType);
 	}
 
-	/* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
 	@Override
 	public String toString() {
 		return "MediaType [mediaTypeID=" + mediaTypeID + ", mediaType="

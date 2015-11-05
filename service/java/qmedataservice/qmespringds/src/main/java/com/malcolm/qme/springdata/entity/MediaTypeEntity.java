@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -75,55 +76,24 @@ public class MediaTypeEntity implements java.io.Serializable {
 		this.mediaMimeType = mediaMimeType;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((mediaMimeType == null) ? 0 : mediaMimeType.hashCode());
-		result = (prime * result)
-				+ ((mediaTypeId == null) ? 0 : mediaTypeId.hashCode());
-		return result;
-	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final MediaTypeEntity other = (MediaTypeEntity) obj;
-		if (mediaMimeType == null) {
-			if (other.mediaMimeType != null) {
-				return false;
-			}
-		} else if (!mediaMimeType.equals(other.mediaMimeType)) {
-			return false;
-		}
-		if (mediaTypeId == null) {
-			if (other.mediaTypeId != null) {
-				return false;
-			}
-		} else if (!mediaTypeId.equals(other.mediaTypeId)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MediaTypeEntity that = (MediaTypeEntity) o;
+        return Objects.equals(mediaTypeId, that.mediaTypeId) &&
+                Objects.equals(mediaMimeType, that.mediaMimeType);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+    @Override
+    public int hashCode() {
+        return Objects.hash(mediaTypeId, mediaMimeType);
+    }
+
+    /* (non-Javadoc)
+             * @see java.lang.Object#toString()
+             */
 	@Override
 	public String toString() {
 		return "MediaTypeEntity [mediaTypeId=" + mediaTypeId

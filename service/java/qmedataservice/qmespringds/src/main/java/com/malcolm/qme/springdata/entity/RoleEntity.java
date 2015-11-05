@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -96,63 +97,23 @@ public class RoleEntity implements java.io.Serializable {
 		this.roleDesc = roleDesc;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		RoleEntity that = (RoleEntity) o;
+		return Objects.equals(roleId, that.roleId) &&
+				Objects.equals(roleName, that.roleName);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result)
-				+ ((roleDesc == null) ? 0 : roleDesc.hashCode());
-		result = (prime * result) + ((roleId == null) ? 0 : roleId.hashCode());
-		result = (prime * result)
-				+ ((roleName == null) ? 0 : roleName.hashCode());
-		return result;
+		return Objects.hash(roleId, roleName);
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final RoleEntity other = (RoleEntity) obj;
-		if (roleDesc == null) {
-			if (other.roleDesc != null) {
-				return false;
-			}
-		} else if (!roleDesc.equals(other.roleDesc)) {
-			return false;
-		}
-		if (roleId == null) {
-			if (other.roleId != null) {
-				return false;
-			}
-		} else if (!roleId.equals(other.roleId)) {
-			return false;
-		}
-		if (roleName == null) {
-			if (other.roleName != null) {
-				return false;
-			}
-		} else if (!roleName.equals(other.roleName)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "RoleEntity [roleId=" + roleId + ", roleName=" + roleName

@@ -8,6 +8,8 @@
 package com.malcolm.qme.core.domain;
 
 
+import java.util.Objects;
+
 /**
  * @author malcolm
  */
@@ -97,26 +99,17 @@ public final class AnswerOptionMedia {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		AnswerOptionMedia that = (AnswerOptionMedia) o;
-
-		if (!answerOptionMediaID.equals(that.answerOptionMediaID)) return false;
-		if (!answerOptionID.equals(that.answerOptionID)) return false;
-		return mediaTypeID.equals(that.mediaTypeID);
-
+		return Objects.equals(answerOptionMediaID, that.answerOptionMediaID) &&
+				Objects.equals(answerOptionID, that.answerOptionID) &&
+				Objects.equals(mediaTypeID, that.mediaTypeID);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = answerOptionMediaID.hashCode();
-		result = 31 * result + answerOptionID.hashCode();
-		result = 31 * result + mediaTypeID.hashCode();
-		return result;
+		return Objects.hash(answerOptionMediaID, answerOptionID, mediaTypeID);
 	}
 
-	/* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
 	@Override
 	public String toString() {
 		return "AnswerOptionMedia [answerOptionMediaID=" + answerOptionMediaID

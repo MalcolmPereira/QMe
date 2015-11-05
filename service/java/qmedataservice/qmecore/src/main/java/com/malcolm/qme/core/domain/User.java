@@ -8,6 +8,7 @@ package com.malcolm.qme.core.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -249,27 +250,18 @@ public final class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (!userID.equals(user.userID)) return false;
-        if (!userName.equals(user.userName)) return false;
-        if (!userPassword.equals(user.userPassword)) return false;
-        if (!userFirstName.equals(user.userFirstName)) return false;
-        if (!userLastName.equals(user.userLastName)) return false;
-        return userEmail.equals(user.userEmail);
-
+        return Objects.equals(userID, user.userID) &&
+                Objects.equals(userName, user.userName) &&
+                Objects.equals(userPassword, user.userPassword) &&
+                Objects.equals(userFirstName, user.userFirstName) &&
+                Objects.equals(userLastName, user.userLastName) &&
+                Objects.equals(userEmail, user.userEmail);
     }
 
     @Override
     public int hashCode() {
-        int result = userID.hashCode();
-        result = 31 * result + userName.hashCode();
-        result = 31 * result + userPassword.hashCode();
-        result = 31 * result + userFirstName.hashCode();
-        result = 31 * result + userLastName.hashCode();
-        result = 31 * result + userEmail.hashCode();
-        return result;
+        return Objects.hash(userID, userName, userPassword, userFirstName, userLastName, userEmail);
     }
 
     @Override

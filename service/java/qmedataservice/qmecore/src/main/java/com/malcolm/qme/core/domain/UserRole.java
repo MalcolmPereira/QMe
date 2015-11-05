@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.core.domain;
 
+import java.util.Objects;
+
 /**
  * @author Malcolm
  */
@@ -106,23 +108,16 @@ public final class UserRole {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserRole userRole = (UserRole) o;
-
-        if (!userRoleID.equals(userRole.userRoleID)) return false;
-        if (!roleID.equals(userRole.roleID)) return false;
-        if (roleName != null ? !roleName.equals(userRole.roleName) : userRole.roleName != null) return false;
-        return userID.equals(userRole.userID);
-
+        return Objects.equals(userRoleID, userRole.userRoleID) &&
+                Objects.equals(roleID, userRole.roleID) &&
+                Objects.equals(roleName, userRole.roleName) &&
+                Objects.equals(userID, userRole.userID);
     }
 
     @Override
     public int hashCode() {
-        int result = userRoleID.hashCode();
-        result = 31 * result + roleID.hashCode();
-        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
-        result = 31 * result + userID.hashCode();
-        return result;
+        return Objects.hash(userRoleID, roleID, roleName, userID);
     }
 
     @Override

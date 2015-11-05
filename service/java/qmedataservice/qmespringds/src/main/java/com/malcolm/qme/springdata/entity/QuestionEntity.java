@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -256,134 +257,24 @@ public class QuestionEntity implements java.io.Serializable {
 		this.questionUpdateUser = questionUpdateUser;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		QuestionEntity that = (QuestionEntity) o;
+		return Objects.equals(questionId, that.questionId) &&
+				Objects.equals(catId, that.catId) &&
+				Objects.equals(questionText, that.questionText);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((catId == null) ? 0 : catId.hashCode());
-		result = (prime * result)
-				+ ((questionAnswer == null) ? 0 : questionAnswer.hashCode());
-		result = (prime
-				* result)
-				+ ((questionCreateDate == null) ? 0 : questionCreateDate
-						.hashCode());
-		result = (prime
-				* result)
-				+ ((questionCreateUser == null) ? 0 : questionCreateUser
-						.hashCode());
-		result = (prime * result)
-				+ ((questionId == null) ? 0 : questionId.hashCode());
-		result = (prime * result)
-				+ ((questionLikes == null) ? 0 : questionLikes.hashCode());
-		result = (prime * result)
-				+ ((questionPoint == null) ? 0 : questionPoint.hashCode());
-		result = (prime * result)
-				+ ((questionText == null) ? 0 : questionText.hashCode());
-		result = (prime
-				* result)
-				+ ((questionUpdateDate == null) ? 0 : questionUpdateDate
-						.hashCode());
-		result = (prime
-				* result)
-				+ ((questionUpdateUser == null) ? 0 : questionUpdateUser
-						.hashCode());
-		return result;
+		return Objects.hash(questionId, catId, questionText);
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final QuestionEntity other = (QuestionEntity) obj;
-		if (catId == null) {
-			if (other.catId != null) {
-				return false;
-			}
-		} else if (!catId.equals(other.catId)) {
-			return false;
-		}
-		if (questionAnswer == null) {
-			if (other.questionAnswer != null) {
-				return false;
-			}
-		} else if (!questionAnswer.equals(other.questionAnswer)) {
-			return false;
-		}
-		if (questionCreateDate == null) {
-			if (other.questionCreateDate != null) {
-				return false;
-			}
-		} else if (!questionCreateDate.equals(other.questionCreateDate)) {
-			return false;
-		}
-		if (questionCreateUser == null) {
-			if (other.questionCreateUser != null) {
-				return false;
-			}
-		} else if (!questionCreateUser.equals(other.questionCreateUser)) {
-			return false;
-		}
-		if (questionId == null) {
-			if (other.questionId != null) {
-				return false;
-			}
-		} else if (!questionId.equals(other.questionId)) {
-			return false;
-		}
-		if (questionLikes == null) {
-			if (other.questionLikes != null) {
-				return false;
-			}
-		} else if (!questionLikes.equals(other.questionLikes)) {
-			return false;
-		}
-		if (questionPoint == null) {
-			if (other.questionPoint != null) {
-				return false;
-			}
-		} else if (!questionPoint.equals(other.questionPoint)) {
-			return false;
-		}
-		if (questionText == null) {
-			if (other.questionText != null) {
-				return false;
-			}
-		} else if (!questionText.equals(other.questionText)) {
-			return false;
-		}
-		if (questionUpdateDate == null) {
-			if (other.questionUpdateDate != null) {
-				return false;
-			}
-		} else if (!questionUpdateDate.equals(other.questionUpdateDate)) {
-			return false;
-		}
-		if (questionUpdateUser == null) {
-			if (other.questionUpdateUser != null) {
-				return false;
-			}
-		} else if (!questionUpdateUser.equals(other.questionUpdateUser)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+             * @see java.lang.Object#toString()
+             */
 	@Override
 	public String toString() {
 		return "QuestionEntity [questionId=" + questionId + ", catId=" + catId

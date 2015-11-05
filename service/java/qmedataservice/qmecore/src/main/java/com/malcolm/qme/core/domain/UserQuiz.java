@@ -8,6 +8,7 @@
 package com.malcolm.qme.core.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -189,30 +190,21 @@ public final class UserQuiz {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		UserQuiz userQuiz = (UserQuiz) o;
-
-		if (!userQuizID.equals(userQuiz.userQuizID)) return false;
-		if (!userID.equals(userQuiz.userID)) return false;
-		if (!quizID.equals(userQuiz.quizID)) return false;
-		if (!categoryID.equals(userQuiz.categoryID)) return false;
-		return userQuizToken.equals(userQuiz.userQuizToken);
-
+		return Objects.equals(userQuizID, userQuiz.userQuizID) &&
+				Objects.equals(userID, userQuiz.userID) &&
+				Objects.equals(quizID, userQuiz.quizID) &&
+				Objects.equals(categoryID, userQuiz.categoryID);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = userQuizID.hashCode();
-		result = 31 * result + userID.hashCode();
-		result = 31 * result + quizID.hashCode();
-		result = 31 * result + categoryID.hashCode();
-		result = 31 * result + userQuizToken.hashCode();
-		return result;
+		return Objects.hash(userQuizID, userID, quizID, categoryID);
 	}
 
 	/* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
+             * @see java.lang.Object#toString()
+             */
 	@Override
 	public String toString() {
 		return "UserQuiz [userQuizID=" + userQuizID + ", userID=" + userID

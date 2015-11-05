@@ -107,13 +107,13 @@ public class UserQuizTest {
         assertTrue(userQuiz1.equals(userQuiz2));
         assertTrue(userQuiz1.equals(userQuiz1));
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken1",1, 1, Boolean.TRUE);
-        userQuiz2 = new UserQuiz(1L, 2L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1, Boolean.TRUE);
+        userQuiz2 = new UserQuiz(2L, 2L, 2L, 2L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1, Boolean.TRUE);
         assertFalse(userQuiz1.equals(userQuiz2));
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         userQuiz2 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertTrue(userQuiz1.equals(userQuiz2));
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1, "sometoken1");
-        userQuiz2 = new UserQuiz(1L, 1L, 1L, 1, "sometoken2");
+        userQuiz2 = new UserQuiz(2L, 2L, 2L, 1, "sometoken2");
         assertFalse(userQuiz1.equals(userQuiz2));
         assertFalse(userQuiz1.equals(null));
         assertFalse(userQuiz1.equals(""));
@@ -125,13 +125,13 @@ public class UserQuizTest {
         UserQuiz userQuiz2 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
         assertThat(userQuiz1.hashCode(), equalTo(userQuiz2.hashCode()));
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken1",1, 1, Boolean.TRUE);
-        userQuiz2 = new UserQuiz(1L, 2L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1, Boolean.TRUE);
+        userQuiz2 = new UserQuiz(2L, 2L, 2L, 2L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1, Boolean.TRUE);
         assertNotEquals(userQuiz1.hashCode(),userQuiz2.hashCode());
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         userQuiz2 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz1.hashCode(), equalTo(userQuiz2.hashCode()));
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1, "sometoken1");
-        userQuiz2 = new UserQuiz(1L, 1L, 1L, 1, "sometoken2");
+        userQuiz2 = new UserQuiz(2L, 2L, 2L, 1, "sometoken2");
         assertNotEquals(userQuiz1.hashCode(),userQuiz2.hashCode());
     }
 }

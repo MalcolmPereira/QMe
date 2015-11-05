@@ -7,6 +7,8 @@
 
 package com.malcolm.qme.core.domain;
 
+import java.util.Objects;
+
 /**
  * @author Malcolm
  */
@@ -95,26 +97,17 @@ public final class AnswerReferenceMedia {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		AnswerReferenceMedia that = (AnswerReferenceMedia) o;
-
-		if (!answerRefMediaID.equals(that.answerRefMediaID)) return false;
-		if (!questionID.equals(that.questionID)) return false;
-		return mediaTypeID.equals(that.mediaTypeID);
-
+		return Objects.equals(answerRefMediaID, that.answerRefMediaID) &&
+				Objects.equals(questionID, that.questionID) &&
+				Objects.equals(mediaTypeID, that.mediaTypeID);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = answerRefMediaID.hashCode();
-		result = 31 * result + questionID.hashCode();
-		result = 31 * result + mediaTypeID.hashCode();
-		return result;
+		return Objects.hash(answerRefMediaID, questionID, mediaTypeID);
 	}
 
-	/* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
 	@Override
 	public String toString() {
 		return "AnswerReferenceMedia [answerRefMediaID=" + answerRefMediaID

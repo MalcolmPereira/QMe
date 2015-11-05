@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -145,81 +146,24 @@ public class QuestionHitEntity implements java.io.Serializable {
 		this.wrongCount = wrongCount;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((catId == null) ? 0 : catId.hashCode());
-		result = (prime * result)
-				+ ((questionHit == null) ? 0 : questionHit.hashCode());
-		result = (prime * result)
-				+ ((questionId == null) ? 0 : questionId.hashCode());
-		result = (prime * result)
-				+ ((rightCount == null) ? 0 : rightCount.hashCode());
-		result = (prime * result)
-				+ ((wrongCount == null) ? 0 : wrongCount.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuestionHitEntity that = (QuestionHitEntity) o;
+        return Objects.equals(questionId, that.questionId) &&
+                Objects.equals(catId, that.catId) &&
+                Objects.equals(questionHit, that.questionHit);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final QuestionHitEntity other = (QuestionHitEntity) obj;
-		if (catId == null) {
-			if (other.catId != null) {
-				return false;
-			}
-		} else if (!catId.equals(other.catId)) {
-			return false;
-		}
-		if (questionHit == null) {
-			if (other.questionHit != null) {
-				return false;
-			}
-		} else if (!questionHit.equals(other.questionHit)) {
-			return false;
-		}
-		if (questionId == null) {
-			if (other.questionId != null) {
-				return false;
-			}
-		} else if (!questionId.equals(other.questionId)) {
-			return false;
-		}
-		if (rightCount == null) {
-			if (other.rightCount != null) {
-				return false;
-			}
-		} else if (!rightCount.equals(other.rightCount)) {
-			return false;
-		}
-		if (wrongCount == null) {
-			if (other.wrongCount != null) {
-				return false;
-			}
-		} else if (!wrongCount.equals(other.wrongCount)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(questionId, catId, questionHit);
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+    /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "QuestionHitEntity [questionId=" + questionId + ", catId="

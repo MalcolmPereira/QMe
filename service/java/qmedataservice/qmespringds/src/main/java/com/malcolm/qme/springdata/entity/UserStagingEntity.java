@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -217,29 +218,18 @@ public class UserStagingEntity implements java.io.Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserStagingEntity that = (UserStagingEntity) o;
-
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (!userName.equals(that.userName)) return false;
-        if (!userFirstName.equals(that.userFirstName)) return false;
-        if (!userLastName.equals(that.userLastName)) return false;
-        if (!userEmail.equals(that.userEmail)) return false;
-        if (!userPasscode.equals(that.userPasscode)) return false;
-        return !(stagingToken != null ? !stagingToken.equals(that.stagingToken) : that.stagingToken != null);
-
+        return Objects.equals(userId, that.userId) &&
+                Objects.equals(userName, that.userName) &&
+                Objects.equals(userFirstName, that.userFirstName) &&
+                Objects.equals(userLastName, that.userLastName) &&
+                Objects.equals(userEmail, that.userEmail) &&
+                Objects.equals(stagingToken, that.stagingToken);
     }
 
     @Override
     public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + userName.hashCode();
-        result = 31 * result + userFirstName.hashCode();
-        result = 31 * result + userLastName.hashCode();
-        result = 31 * result + userEmail.hashCode();
-        result = 31 * result + userPasscode.hashCode();
-        result = 31 * result + (stagingToken != null ? stagingToken.hashCode() : 0);
-        return result;
+        return Objects.hash(userId, userName, userFirstName, userLastName, userEmail, stagingToken);
     }
 
     @Override

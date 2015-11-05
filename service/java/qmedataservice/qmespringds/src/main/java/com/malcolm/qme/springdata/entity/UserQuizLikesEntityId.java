@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -75,53 +76,23 @@ public class UserQuizLikesEntityId implements java.io.Serializable {
 		this.quizId = quizId;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserQuizLikesEntityId that = (UserQuizLikesEntityId) o;
+		return Objects.equals(userId, that.userId) &&
+				Objects.equals(quizId, that.quizId);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((quizId == null) ? 0 : quizId.hashCode());
-		result = (prime * result) + ((userId == null) ? 0 : userId.hashCode());
-		return result;
+		return Objects.hash(userId, quizId);
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserQuizLikesEntityId other = (UserQuizLikesEntityId) obj;
-		if (quizId == null) {
-			if (other.quizId != null) {
-				return false;
-			}
-		} else if (!quizId.equals(other.quizId)) {
-			return false;
-		}
-		if (userId == null) {
-			if (other.userId != null) {
-				return false;
-			}
-		} else if (!userId.equals(other.userId)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "UserQuizLikesEntityId [userId=" + userId + ", quizId=" + quizId

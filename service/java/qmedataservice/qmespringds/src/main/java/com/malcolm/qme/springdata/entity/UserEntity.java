@@ -10,6 +10,7 @@ package com.malcolm.qme.springdata.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -326,34 +327,24 @@ public class UserEntity implements java.io.Serializable {
         this.userRoles = userRoles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserEntity that = (UserEntity) o;
+		return Objects.equals(userId, that.userId) &&
+				Objects.equals(userName, that.userName) &&
+				Objects.equals(userFirstName, that.userFirstName) &&
+				Objects.equals(userLastName, that.userLastName) &&
+				Objects.equals(userEmail, that.userEmail);
+	}
 
-        UserEntity that = (UserEntity) o;
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId, userName, userFirstName, userLastName, userEmail);
+	}
 
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (!userName.equals(that.userName)) return false;
-        if (!userFirstName.equals(that.userFirstName)) return false;
-        if (!userLastName.equals(that.userLastName)) return false;
-        if (!userEmail.equals(that.userEmail)) return false;
-        return userPasscode.equals(that.userPasscode);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + userName.hashCode();
-        result = 31 * result + userFirstName.hashCode();
-        result = 31 * result + userLastName.hashCode();
-        result = 31 * result + userEmail.hashCode();
-        result = 31 * result + userPasscode.hashCode();
-        return result;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return "UserEntity{" +
                 "userId=" + userId +

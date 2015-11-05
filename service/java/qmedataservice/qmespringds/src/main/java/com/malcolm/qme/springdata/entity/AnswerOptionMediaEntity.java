@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -123,24 +124,20 @@ public class AnswerOptionMediaEntity implements java.io.Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AnswerOptionMediaEntity that = (AnswerOptionMediaEntity) o;
-
-        if (!optionId.equals(that.optionId)) return false;
-        return mediaTypeId.equals(that.mediaTypeId);
-
+        return Objects.equals(optionMediaId, that.optionMediaId) &&
+                Objects.equals(optionId, that.optionId) &&
+                Objects.equals(mediaTypeId, that.mediaTypeId);
     }
 
     @Override
     public int hashCode() {
-        int result = optionId.hashCode();
-        result = 31 * result + mediaTypeId.hashCode();
-        return result;
+        return Objects.hash(optionMediaId, optionId, mediaTypeId);
     }
 
     /* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
+             * @see java.lang.Object#toString()
+             */
 	@Override
 	public String toString() {
 		return "AnswerOptionMediaEntity [optionMediaId=" + optionMediaId

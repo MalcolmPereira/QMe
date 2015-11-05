@@ -8,6 +8,7 @@
 package com.malcolm.qme.core.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -212,20 +213,15 @@ public final class Quiz {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Quiz quiz = (Quiz) o;
-
-        return getQuizID().equals(quiz.getQuizID()) && getQuizName().equals(quiz.getQuizName()) && getCategoryID().equals(quiz.getCategoryID()) && getCreateUserID().equals(quiz.getCreateUserID());
-
+        return Objects.equals(quizID, quiz.quizID) &&
+                Objects.equals(quizName, quiz.quizName) &&
+                Objects.equals(categoryID, quiz.categoryID);
     }
 
     @Override
     public int hashCode() {
-        int result = getQuizID().hashCode();
-        result = 31 * result + getQuizName().hashCode();
-        result = 31 * result + getCategoryID().hashCode();
-        result = 31 * result + getCreateUserID().hashCode();
-        return result;
+        return Objects.hash(quizID, quizName, categoryID);
     }
 
     @Override

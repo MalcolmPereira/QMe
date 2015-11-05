@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -74,53 +75,23 @@ public class UserCategoryLikesEntityId implements java.io.Serializable {
 		this.catId = catId;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserCategoryLikesEntityId that = (UserCategoryLikesEntityId) o;
+		return Objects.equals(userId, that.userId) &&
+				Objects.equals(catId, that.catId);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((catId == null) ? 0 : catId.hashCode());
-		result = (prime * result) + ((userId == null) ? 0 : userId.hashCode());
-		return result;
+		return Objects.hash(userId, catId);
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserCategoryLikesEntityId other = (UserCategoryLikesEntityId) obj;
-		if (catId == null) {
-			if (other.catId != null) {
-				return false;
-			}
-		} else if (!catId.equals(other.catId)) {
-			return false;
-		}
-		if (userId == null) {
-			if (other.userId != null) {
-				return false;
-			}
-		} else if (!userId.equals(other.userId)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "UserCategoryLikesEntityId [userId=" + userId + ", catId="

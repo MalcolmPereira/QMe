@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -122,33 +123,27 @@ public final class AnswerOptionEntity implements java.io.Serializable {
 		this.iscorrect = iscorrect;
 	}
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AnswerOptionEntity that = (AnswerOptionEntity) o;
-
-        if (!questionId.equals(that.questionId)) return false;
-        if (!optionText.equals(that.optionText)) return false;
-        return iscorrect.equals(that.iscorrect);
-
+        return Objects.equals(optionId, that.optionId) &&
+                Objects.equals(questionId, that.questionId) &&
+                Objects.equals(optionText, that.optionText) &&
+                Objects.equals(iscorrect, that.iscorrect);
     }
 
     @Override
     public int hashCode() {
-        int result = questionId.hashCode();
-        result = 31 * result + optionText.hashCode();
-        result = 31 * result + iscorrect.hashCode();
-        return result;
+        return Objects.hash(optionId, questionId, optionText, iscorrect);
     }
 
     /*
-         * (non-Javadoc)
-         *
-         * @see java.lang.Object#toString()
-         */
+             * (non-Javadoc)
+             *
+             * @see java.lang.Object#toString()
+             */
 	@Override
 	public String toString() {
 		return "AnswerOptionEntity [optionId=" + optionId + ", questionId="

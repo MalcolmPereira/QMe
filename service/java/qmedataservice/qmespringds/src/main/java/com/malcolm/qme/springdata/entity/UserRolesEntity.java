@@ -9,6 +9,7 @@ package com.malcolm.qme.springdata.entity;
 // Generated May 14, 2015 7:02:12 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -127,19 +128,15 @@ public class UserRolesEntity implements java.io.Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserRolesEntity that = (UserRolesEntity) o;
-
-        if (!userId.equals(that.userId)) return false;
-        return roleId.equals(that.roleId);
-
+        return Objects.equals(userRoleId, that.userRoleId) &&
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(roleId, that.roleId);
     }
 
     @Override
     public int hashCode() {
-        int result = userId.hashCode();
-        result = 31 * result + roleId.hashCode();
-        return result;
+        return Objects.hash(userRoleId, userId, roleId);
     }
 
     @Override

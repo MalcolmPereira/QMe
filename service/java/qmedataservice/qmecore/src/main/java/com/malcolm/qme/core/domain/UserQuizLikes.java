@@ -7,6 +7,8 @@
 
 package com.malcolm.qme.core.domain;
 
+import java.util.Objects;
+
 /**
  * @author Malcolm
  */
@@ -53,18 +55,14 @@ public final class UserQuizLikes {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserQuizLikes that = (UserQuizLikes) o;
-
-        return getUserID().equals(that.getUserID()) && getQuizID().equals(that.getQuizID());
-
+        return Objects.equals(userID, that.userID) &&
+                Objects.equals(quizID, that.quizID);
     }
 
     @Override
     public int hashCode() {
-        int result = getUserID().hashCode();
-        result = 31 * result + getQuizID().hashCode();
-        return result;
+        return Objects.hash(userID, quizID);
     }
 
     @Override

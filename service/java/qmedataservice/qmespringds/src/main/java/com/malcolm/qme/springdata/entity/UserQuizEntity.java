@@ -8,6 +8,7 @@ package com.malcolm.qme.springdata.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Malcolm
@@ -272,119 +273,25 @@ public class UserQuizEntity implements java.io.Serializable {
 		this.quizComplete = quizComplete;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserQuizEntity that = (UserQuizEntity) o;
+		return Objects.equals(userQuizId, that.userQuizId) &&
+				Objects.equals(userId, that.userId) &&
+				Objects.equals(quizId, that.quizId) &&
+				Objects.equals(catId, that.catId);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((catId == null) ? 0 : catId.hashCode());
-		result = (prime * result) + quizComplete;
-		result = (prime * result)
-				+ ((quizEndDate == null) ? 0 : quizEndDate.hashCode());
-		result = (prime * result) + ((quizId == null) ? 0 : quizId.hashCode());
-		result = (prime * result)
-				+ ((quizMaxScore == null) ? 0 : quizMaxScore.hashCode());
-		result = (prime * result)
-				+ ((quizStartDate == null) ? 0 : quizStartDate.hashCode());
-		result = (prime * result)
-				+ ((quizToken == null) ? 0 : quizToken.hashCode());
-		result = (prime * result)
-				+ ((quizUserScore == null) ? 0 : quizUserScore.hashCode());
-		result = (prime * result) + ((userId == null) ? 0 : userId.hashCode());
-		result = (prime * result)
-				+ ((userQuizId == null) ? 0 : userQuizId.hashCode());
-		return result;
+		return Objects.hash(userQuizId, userId, quizId, catId);
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserQuizEntity other = (UserQuizEntity) obj;
-		if (catId == null) {
-			if (other.catId != null) {
-				return false;
-			}
-		} else if (!catId.equals(other.catId)) {
-			return false;
-		}
-		if (quizComplete != other.quizComplete) {
-			return false;
-		}
-		if (quizEndDate == null) {
-			if (other.quizEndDate != null) {
-				return false;
-			}
-		} else if (!quizEndDate.equals(other.quizEndDate)) {
-			return false;
-		}
-		if (quizId == null) {
-			if (other.quizId != null) {
-				return false;
-			}
-		} else if (!quizId.equals(other.quizId)) {
-			return false;
-		}
-		if (quizMaxScore == null) {
-			if (other.quizMaxScore != null) {
-				return false;
-			}
-		} else if (!quizMaxScore.equals(other.quizMaxScore)) {
-			return false;
-		}
-		if (quizStartDate == null) {
-			if (other.quizStartDate != null) {
-				return false;
-			}
-		} else if (!quizStartDate.equals(other.quizStartDate)) {
-			return false;
-		}
-		if (quizToken == null) {
-			if (other.quizToken != null) {
-				return false;
-			}
-		} else if (!quizToken.equals(other.quizToken)) {
-			return false;
-		}
-		if (quizUserScore == null) {
-			if (other.quizUserScore != null) {
-				return false;
-			}
-		} else if (!quizUserScore.equals(other.quizUserScore)) {
-			return false;
-		}
-		if (userId == null) {
-			if (other.userId != null) {
-				return false;
-			}
-		} else if (!userId.equals(other.userId)) {
-			return false;
-		}
-		if (userQuizId == null) {
-			if (other.userQuizId != null) {
-				return false;
-			}
-		} else if (!userQuizId.equals(other.userQuizId)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "UserQuizEntity [userQuizId=" + userQuizId + ", userId="
