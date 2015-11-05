@@ -123,60 +123,26 @@ public class UserRolesEntity implements java.io.Serializable {
         this.roleEntity = roleEntity;
     }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((roleId == null) ? 0 : roleId.hashCode());
-		result = (prime * result) + ((userId == null) ? 0 : userId.hashCode());
-		result = (prime * result)
-				+ ((userRoleId == null) ? 0 : userRoleId.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UserRolesEntity other = (UserRolesEntity) obj;
-		if (roleId == null) {
-			if (other.roleId != null) {
-				return false;
-			}
-		} else if (!roleId.equals(other.roleId)) {
-			return false;
-		}
-		if (userId == null) {
-			if (other.userId != null) {
-				return false;
-			}
-		} else if (!userId.equals(other.userId)) {
-			return false;
-		}
-		if (userRoleId == null) {
-			if (other.userRoleId != null) {
-				return false;
-			}
-		} else if (!userRoleId.equals(other.userRoleId)) {
-			return false;
-		}
-		return true;
-	}
+        UserRolesEntity that = (UserRolesEntity) o;
 
-	@Override
+        if (!userId.equals(that.userId)) return false;
+        return roleId.equals(that.roleId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId.hashCode();
+        result = 31 * result + roleId.hashCode();
+        return result;
+    }
+
+    @Override
 	public String toString() {
 		return "UserRolesEntity{" +
 				"userRoleId=" + userRoleId +
