@@ -74,18 +74,12 @@ public class UserCategoryLikesRepositoryImpl implements UserCategoryLikesReposit
 	}
 
 	@Override
-	public UserCategoryLikes save(UserCategoryLikes userCategoryLikes) throws QMeException {
-		try{
-			UserCategoryLikesEntity userCategoryLikesEntity = getUserCategoryLikesEntity(userCategoryLikes);
-			userCategoryLikesEntity = userCategoryLikesSpringDataRepository.save(userCategoryLikesEntity);
-			return getUserCategoryLikes(userCategoryLikesEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
+	public UserCategoryLikes update(UserCategoryLikes userCategoryLikes, Long updateUserId) throws QMeException {
+		return save(userCategoryLikes);
 	}
 
 	@Override
-	public UserCategoryLikes update(UserCategoryLikes userCategoryLikes, Long updateUserId) throws QMeException {
+	public UserCategoryLikes save(UserCategoryLikes userCategoryLikes) throws QMeException {
 		try{
 			UserCategoryLikesEntity userCategoryLikesEntity = getUserCategoryLikesEntity(userCategoryLikes);
 			userCategoryLikesEntity = userCategoryLikesSpringDataRepository.save(userCategoryLikesEntity);

@@ -72,18 +72,12 @@ public class AnswerOptionMediaRepositoryImpl implements AnswerOptionMediaReposit
 	}
 
 	@Override
-	public AnswerOptionMedia save(AnswerOptionMedia answerOptionMedia) throws QMeException {
-        try{
-		    AnswerOptionMediaEntity answerOptionMediaEntity = getAnswerOptionMediaEntity(answerOptionMedia);
-		    answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);
-		    return getAnswerOptionMedia(answerOptionMediaEntity);
-        }catch(Exception err){
-            throw new QMeException(err);
-        }
+	public AnswerOptionMedia update(AnswerOptionMedia answerOptionMedia, Long updateUserId) throws QMeException {
+		return save(answerOptionMedia);
 	}
 
 	@Override
-	public AnswerOptionMedia update(AnswerOptionMedia answerOptionMedia, Long updateUserId) throws QMeException {
+	public AnswerOptionMedia save(AnswerOptionMedia answerOptionMedia) throws QMeException {
         try{
 		    AnswerOptionMediaEntity answerOptionMediaEntity = getAnswerOptionMediaEntity(answerOptionMedia);
 		    answerOptionMediaEntity = answerOptionMediaSpringDataRepository.save(answerOptionMediaEntity);

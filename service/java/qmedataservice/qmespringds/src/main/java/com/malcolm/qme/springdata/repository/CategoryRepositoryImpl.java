@@ -74,19 +74,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     }
 
-	@Override
-	public Category save(Category category) throws QMeException {
-        try{
-            CategoryEntity categoryEntity = getCategoryEntity(category);
-            categoryEntity = categorySpringDataRepository.save(categoryEntity);
-            return getCategory(categoryEntity);
-        }catch(Exception err){
-            throw new QMeException(err);
-        }
-	}
+    @Override
+    public Category update(Category category, Long updateUserId) throws QMeException {
+        return  save(category);
+    }
 
 	@Override
-	public Category update(Category category, Long updateUserId) throws QMeException {
+	public Category save(Category category) throws QMeException {
         try{
             CategoryEntity categoryEntity = getCategoryEntity(category);
             categoryEntity = categorySpringDataRepository.save(categoryEntity);

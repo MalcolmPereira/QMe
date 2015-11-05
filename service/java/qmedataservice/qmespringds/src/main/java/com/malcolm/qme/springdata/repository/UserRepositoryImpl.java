@@ -15,6 +15,8 @@ import com.malcolm.qme.springdata.entity.UserEntity;
 import com.malcolm.qme.springdata.entity.UserPasswordResetEntity;
 import com.malcolm.qme.springdata.entity.UserPasswordResetEntityId;
 import com.malcolm.qme.springdata.entity.UserStagingEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +37,12 @@ import java.util.stream.Collectors;
  */
 @Repository(value = "UserRepository")
 public class UserRepositoryImpl implements UserRepository {
-	/**
+    /**
+     * Logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryImpl.class);
+
+    /**
 	 * Spring Data UserEntity Repository
 	 */
 	@Autowired
@@ -139,10 +146,10 @@ public class UserRepositoryImpl implements UserRepository {
             String[] sortFields = pageSort.getSortFields();
             for (String sortField : sortFields) {
                 try {
-                    System.out.println(USERSORTFIELDS.valueOf(sortField.toUpperCase()).getUserSortField());
                     sortFieldList.add(USERSORTFIELDS.valueOf(sortField.toUpperCase()).getUserSortField());
 
                 } catch (IllegalArgumentException err) {
+                    LOG.debug("Invalid Sort Field "+sortField.toUpperCase()+" Will be ignored");
                 }
             }
         }
@@ -151,8 +158,7 @@ public class UserRepositoryImpl implements UserRepository {
         }else{
             pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
         }
-        Page<UserEntity> userList;
-        userList = ((PagingAndSortingRepository)userSpringDataRepo).findAll(pageRequest);
+        Page<UserEntity> userList = userSpringDataRepo.findAll(pageRequest);
         return (getUsers(userList.getContent()));
     }
 

@@ -72,18 +72,12 @@ public class UserCategoryRepositoryImpl implements UserCategoryRepository {
 	}
 
 	@Override
-	public UserCategory save(UserCategory userCategory) throws QMeException {
-		try{
-			UserCategoryEntity userCategoryEntity = getUserCategoryEntity(userCategory);
-			userCategoryEntity = userCategorySpringDataRepository.save(userCategoryEntity);
-			return getUserCategory(userCategoryEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
-	}
+	public UserCategory update(UserCategory userCategory, Long updateUserId) throws QMeException {
+		return save(userCategory);
+    }
 
 	@Override
-	public UserCategory update(UserCategory userCategory, Long updateUserId) throws QMeException {
+	public UserCategory save(UserCategory userCategory) throws QMeException {
 		try{
 			UserCategoryEntity userCategoryEntity = getUserCategoryEntity(userCategory);
 			userCategoryEntity = userCategorySpringDataRepository.save(userCategoryEntity);

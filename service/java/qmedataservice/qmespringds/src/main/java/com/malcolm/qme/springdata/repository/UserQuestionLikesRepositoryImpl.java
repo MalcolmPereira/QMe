@@ -83,18 +83,11 @@ public class UserQuestionLikesRepositoryImpl implements UserQuestionLikesReposit
 	}
 
 	@Override
-	public UserQuestionLikes save(UserQuestionLikes userQuestionLikes) throws QMeException {
-		try{
-			UserQuestionLikesEntity userQuestionLikesEntity = getUserQuestionLikesEntity(userQuestionLikes);
-			userQuestionLikesEntity =  userQuestionLikesSpringDataRepository.save(userQuestionLikesEntity);
-			return getUserQuestionLikes(userQuestionLikesEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
-	}
-
-	@Override
 	public UserQuestionLikes update(UserQuestionLikes userQuestionLikes, Long updateUserId) throws QMeException {
+		return save(userQuestionLikes);
+	}
+	@Override
+	public UserQuestionLikes save(UserQuestionLikes userQuestionLikes) throws QMeException {
 		try{
 			UserQuestionLikesEntity userQuestionLikesEntity = getUserQuestionLikesEntity(userQuestionLikes);
 			userQuestionLikesEntity =  userQuestionLikesSpringDataRepository.save(userQuestionLikesEntity);

@@ -84,6 +84,11 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 	}
 
 	@Override
+	public UserQuizLikes update(UserQuizLikes userQuizLikes, Long updateUserId) throws QMeException {
+		return save(userQuizLikes);
+	}
+
+	@Override
 	public UserQuizLikes save(UserQuizLikes userQuizLikes) throws QMeException {
 		try{
 			UserQuizLikesEntity userQuizLikesEntity = getUserQuizLikesEntity(userQuizLikes);
@@ -94,18 +99,7 @@ public class UserQuizLikesRepositoryImpl implements UserQuizLikesRepository {
 		}
 	}
 
-	@Override
-	public UserQuizLikes update(UserQuizLikes userQuizLikes, Long updateUserId) throws QMeException {
-		try{
-			UserQuizLikesEntity userQuizLikesEntity = getUserQuizLikesEntity(userQuizLikes);
-			userQuizLikesEntity = userQuizLikesSpringDataRepository.save(userQuizLikesEntity);
-			return getUserQuizLikes(userQuizLikesEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
-	}
-
-	@Override
+@Override
 	public void delete(UserQuizLikes userQuizLikes) throws QMeException {
 		try{
 			final UserQuizLikesEntityId userQuizLikesEntityId = getUserQuizLikesEntityId(userQuizLikes);

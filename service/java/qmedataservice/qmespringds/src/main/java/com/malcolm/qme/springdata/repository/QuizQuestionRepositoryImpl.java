@@ -81,19 +81,12 @@ public class QuizQuestionRepositoryImpl implements QuizQuestionRepository {
 	}
 
 	@Override
-	public QuizQuestion save(QuizQuestion quizQuestion) throws QMeException {
-		try{
-			QuizQuestionEntity quizQuestionEntity = getQuizQuestionEntity(quizQuestion);
-			quizQuestionEntity = quizQuestionSpringDataRepository.save(quizQuestionEntity);
-			return getQuizQuestion(quizQuestionEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
+	public QuizQuestion update(QuizQuestion quizQuestion, Long updateUserId) throws QMeException {
+		return save(quizQuestion);
 	}
 
-
 	@Override
-	public QuizQuestion update(QuizQuestion quizQuestion, Long updateUserId) throws QMeException {
+	public QuizQuestion save(QuizQuestion quizQuestion) throws QMeException {
 		try{
 			QuizQuestionEntity quizQuestionEntity = getQuizQuestionEntity(quizQuestion);
 			quizQuestionEntity = quizQuestionSpringDataRepository.save(quizQuestionEntity);

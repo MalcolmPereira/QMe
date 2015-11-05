@@ -82,18 +82,12 @@ public class AnswerOptionRepositoryImpl implements AnswerOptionRepository {
 	}
 
 	@Override
-	public AnswerOption save(AnswerOption answerOption) throws QMeException {
-        try{
-		    AnswerOptionEntity answerOptionEntity = getAnswerOptionEntity(answerOption);
-		    answerOptionEntity = answerOptionSpringDataRepository.save(answerOptionEntity);
-		    return getAnswerOption(answerOptionEntity);
-        }catch(Exception err){
-            throw new QMeException(err);
-        }
+	public AnswerOption update(AnswerOption answerOption, Long updateUserId) throws QMeException {
+		return save(answerOption);
 	}
 
 	@Override
-	public AnswerOption update(AnswerOption answerOption, Long updateUserId) throws QMeException {
+	public AnswerOption save(AnswerOption answerOption) throws QMeException {
         try{
 		    AnswerOptionEntity answerOptionEntity = getAnswerOptionEntity(answerOption);
 		    answerOptionEntity = answerOptionSpringDataRepository.save(answerOptionEntity);

@@ -74,18 +74,12 @@ public class AnswerReferenceMediaRepositoryImpl implements AnswerReferenceMediaR
 	}
 
 	@Override
-	public AnswerReferenceMedia save(AnswerReferenceMedia answerReferenceMedia) throws QMeException {
-		try{
-            AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
-		    answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);
-		    return getAnswerReferenceMedia(answerReferenceMediaEntity);
-        }catch(Exception err){
-            throw new QMeException(err);
-        }
+	public AnswerReferenceMedia update(AnswerReferenceMedia answerReferenceMedia, Long updateUserId) throws QMeException {
+		return save(answerReferenceMedia);
 	}
 
 	@Override
-	public AnswerReferenceMedia update(AnswerReferenceMedia answerReferenceMedia, Long updateUserId) throws QMeException {
+	public AnswerReferenceMedia save(AnswerReferenceMedia answerReferenceMedia) throws QMeException {
 		try{
             AnswerReferenceMediaEntity answerReferenceMediaEntity  = getAnswerReferenceMediaEntity(answerReferenceMedia);
 		    answerReferenceMediaEntity = answerReferenceMediaSpringDataRepository.save(answerReferenceMediaEntity);

@@ -64,18 +64,12 @@ public class MediaTypeRepositoryImpl implements MediaTypeRepository {
 	}
 
 	@Override
-	public MediaType save(MediaType mediaType) throws QMeException {
-		try{
-			MediaTypeEntity mediaTypeEntity = getMediaTypeEntity(mediaType);
-			mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);
-			return getMediaType(mediaTypeEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
-	}
+	public MediaType update(MediaType mediaType, Long updateUserId) throws QMeException {
+		return save(mediaType);
+    }
 
 	@Override
-	public MediaType update(MediaType mediaType, Long updateUserId) throws QMeException {
+	public MediaType save(MediaType mediaType) throws QMeException {
 		try{
 			MediaTypeEntity mediaTypeEntity = getMediaTypeEntity(mediaType);
 			mediaTypeEntity = mediaTypeSpringDataRepository.save(mediaTypeEntity);

@@ -64,19 +64,13 @@ public class QuestionHitRepositoryImpl implements QuestionHitRepository {
     }
 
     @Override
-    public QuestionHit save(QuestionHit questionHit) throws QMeException {
-        try {
-            QuestionHitEntity questionHitEntity =  getQuestionHitEntity(questionHit);
-            questionHitEntity = questionHitSpringDataRepository.save(questionHitEntity);
-            return getQuestionHit(questionHitEntity);
-        }catch(Exception err){
-            throw new QMeException(err);
-        }
+    public QuestionHit update(QuestionHit questionHit, Long updateUserId) throws QMeException {
+        return save(questionHit);
     }
 
     @Override
-    public QuestionHit update(QuestionHit questionHit, Long updateUserId) throws QMeException {
-        try{
+    public QuestionHit save(QuestionHit questionHit) throws QMeException {
+        try {
             QuestionHitEntity questionHitEntity =  getQuestionHitEntity(questionHit);
             questionHitEntity = questionHitSpringDataRepository.save(questionHitEntity);
             return getQuestionHit(questionHitEntity);

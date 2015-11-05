@@ -78,18 +78,12 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
-	public Role save(Role role) throws QMeException {
-		try{
-			RoleEntity roleEntity = getRoleEntity(role);
-			roleEntity = roleSpringDataRepository.save(roleEntity);
-			return getRole(roleEntity);
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
+	public Role update(Role role, Long updateUserId) throws QMeException {
+		return save(role);
 	}
 
 	@Override
-	public Role update(Role role, Long updateUserId) throws QMeException {
+	public Role save(Role role) throws QMeException {
 		try{
 			RoleEntity roleEntity = getRoleEntity(role);
 			roleEntity = roleSpringDataRepository.save(roleEntity);
