@@ -208,41 +208,31 @@ public final class UserServiceImpl implements UserService {
     public QMeUserDetail update(QMeUser qMeUser, Long id, Long userId) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException{
         try {
             QMeUpdateUser updatedUser = (QMeUpdateUser)qMeUser;
+
             User user = getUser(updatedUser, id, userId);
 
             user = userRepo.update(user, userId);
 
-            //Update User Roles if User Roles Updates
             if(qMeUser.getUserRoles() != null && !qMeUser.getUserRoles().isEmpty()){
 
+                List<String> newRoles = qMeUser.getUserRoles().stream().map(String::toUpperCase).collect(Collectors.toList());
                 List<UserRole> currentUserRoleList = userRoleRepo.findByUserId(id);
-                List<String> userRoleList = new ArrayList<>();
-
-                //Check for Reviewer and Moderator roles only
-                //Admin role cannot be added from UI!!!!!
-                //Check and add only Reviewer and Moderator roles only
-                //Admin role cannot be added from amy ui or rest service!!!!
-
-
                 if(currentUserRoleList != null && !currentUserRoleList.isEmpty()){
-                    //TODO: Need a way to remove roles!!!!!
-                    userRoleList = currentUserRoleList.stream().map(UserRole::getRoleName).collect(Collectors.toList());
-                }
-
-
-
-                for(String roleName : qMeUser.getUserRoles()){
-                    if(userRoleList.contains(roleName)){
-                        continue;
+                    for(UserRole userRole : currentUserRoleList){
+                        if(!newRoles.contains(userRole.getRoleName().toUpperCase()) && !userRole.getRoleName().toUpperCase().equalsIgnoreCase(ROLE_USER)){
+                            userRoleRepo.delete(userRole.getUserRoleID());
+                        }
+                        if(newRoles.contains(userRole.getRoleName().toUpperCase())){
+                            newRoles.remove(userRole.getRoleName().toUpperCase());
+                        }
                     }
-
+                }
+                for(String roleName : qMeUser.getUserRoles()){
                     Role role = roleRepo.findByRoleName(roleName);
-                    if(role != null){
+                    if(role != null && (roleName.equalsIgnoreCase(ROLE_REVIEWER) || roleName.equalsIgnoreCase(ROLE_MODERATOR))){
                         UserRole userRole = new UserRole(role.getRoleID(),id);
                         userRoleRepo.update(userRole,userId);
                     }
-
-
                 }
             }
 

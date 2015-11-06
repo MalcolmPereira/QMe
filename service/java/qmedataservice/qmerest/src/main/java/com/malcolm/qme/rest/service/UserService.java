@@ -33,6 +33,23 @@ public interface UserService extends QMeService<QMeUserDetail, QMeUser, Long>{
     String DATE_PATTERN = "MM-dd-YYYY HH:mm:ss";
 
     /**
+     * Role User
+     */
+    String ROLE_USER = "USER";
+
+    /**
+     * Role Reviewer
+     */
+    String ROLE_REVIEWER = "REVIEWER";
+
+    /**
+     * Role Moderator
+     */
+    String ROLE_MODERATOR = "MODERATOR";
+
+
+
+    /**
      * Search By User Name
      * @param userName User Name
      * @return QMe User Detail
