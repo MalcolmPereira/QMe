@@ -148,14 +148,59 @@
                 );
            };
 
-            qmeUserManagement.cancelUserUpdate = function(){
+           qmeUserManagement.submitUpdateUser = function(){
+               var updatedUserRoles =  [];
+               if(qmeUserManagement.userRole && qmeUserManagement.userRole !== ""){
+                   updatedUserRoles.push(QME_CONSTANTS.userrole);
+               }
+               if(qmeUserManagement.reviewerRole && qmeUserManagement.reviewerRole !== ""){
+                   updatedUserRoles.push(QME_CONSTANTS.reviewerrole);
+               }
+               if(qmeUserManagement.moderatorRole && qmeUserManagement.moderatorRole !== ""){
+                   updatedUserRoles.push(QME_CONSTANTS.moderatorrole);
+               }
+               if(qmeUserManagement.adminRole && qmeUserManagement.adminRole !== "") {
+                   updatedUserRoles.push(QME_CONSTANTS.adminrole);
+               }
+               var updateUser = {
+                   "userId": qmeUserManagement.userId,
+                   "userName": qmeUserManagement.userName,
+                   "userEmail": qmeUserManagement.userEmail,
+                   "userFirstName": qmeUserManagement.userFirstName,
+                   "userLastName": qmeUserManagement.userLastName,
+                   "userRoles": updatedUserRoles
+               };
+               qmeUserService
+                   .updateUser(updateUser,qmeUserManagement.userId)
+                   .then(
+                       function(res){
+                           qmeFlashService.Success("User profile update successful.",false);
+                       },
+                       function(error){
+                           if(error && error.status && error.status == 404){
+                               qmeFlashService.Error("Oops.....Invalid request for user update, user not found.");
+
+                           }else if(error && error.status && error.status == 403){
+                               qmeFlashService.Error("Oops.....User not authorized to update user update.");
+
+                           }else if(error && error.status && error.status == 400){
+                               qmeFlashService.Error("Oops.....Invalid request for user update.");
+
+                           }else{
+                               qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                           }
+                       }
+                   );
+           };
+
+           qmeUserManagement.cancelUserUpdate = function(){
                 $state.go('listusers', {
                     currentpage:qmeUserManagement.currentpage,
                     sortasc:qmeUserManagement.sortasc,
                     sortfields:qmeUserManagement.sortfields
                     }
                 );
-            }
+           }
 
            qmeUserManagement.selectedUser = function(){
                qmeUserManagement.userId = $stateParams.currentuser.userId;

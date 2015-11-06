@@ -144,7 +144,7 @@
             return registeredUserPromise.promise;
         };
 
-        qmeUserService.updateUser = function(updatedUser){
+        qmeUserService.updateUserProfile = function(updatedUser){
             if(updatedUser.userPassword === QME_CONSTANTS.password_mask ){
                 updatedUser[ "userPassword" ] = "";
                 updatedUser[ "updatedUserPassword" ] = "";
@@ -166,6 +166,20 @@
                     updateUserPromise.reject(error);
                 }
             );
+            return updateUserPromise.promise;
+        };
+
+        qmeUserService.updateUser = function(updatedUser, userId){
+            var updateUserPromise = $q.defer();
+            qmeUserResource.userUpdateResource(qmeUserSession.authtoken(),userId)
+                .updateUser({}, updatedUser
+                    ,function(res){
+                        updateUserPromise.resolve(res);
+                    },
+                    function(error){
+                        updateUserPromise.reject(error);
+                    }
+                );
             return updateUserPromise.promise;
         };
 

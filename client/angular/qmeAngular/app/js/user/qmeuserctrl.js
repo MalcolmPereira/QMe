@@ -215,7 +215,7 @@
             };
 
             qmeUserService
-                .updateUser(updateUser)
+                .updateUserProfile(updateUser)
                 .then(
                 function(res){
                     qmeFlashService.Success("User profile update successful.",false);
