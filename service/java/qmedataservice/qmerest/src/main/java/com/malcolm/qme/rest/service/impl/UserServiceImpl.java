@@ -215,20 +215,28 @@ public final class UserServiceImpl implements UserService {
             //Update User Roles if User Roles Updates
             if(qMeUser.getUserRoles() != null && !qMeUser.getUserRoles().isEmpty()){
 
-                List<UserRole> currentUserRoleList= userRoleRepo.findByUserId(id);
+                List<UserRole> currentUserRoleList = userRoleRepo.findByUserId(id);
                 List<String> userRoleList = new ArrayList<>();
+
                 if(currentUserRoleList != null && !currentUserRoleList.isEmpty()){
+                    //TODO: Need a way to remove roles!!!!!
                     userRoleList = currentUserRoleList.stream().map(UserRole::getRoleName).collect(Collectors.toList());
                 }
+
+
+
                 for(String roleName : qMeUser.getUserRoles()){
                     if(userRoleList.contains(roleName)){
                         continue;
                     }
+
                     Role role = roleRepo.findByRoleName(roleName);
                     if(role != null){
                         UserRole userRole = new UserRole(role.getRoleID(),id);
                         userRoleRepo.update(userRole,userId);
                     }
+
+
                 }
             }
 
