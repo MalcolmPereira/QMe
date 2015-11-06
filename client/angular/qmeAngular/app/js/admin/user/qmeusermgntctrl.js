@@ -6,9 +6,9 @@
 
         .controller('qmeUserManagementCtrl', QMeUserManagementController);
 
-        QMeUserManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService','qmePageSession'];
+        QMeUserManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeUserService','qmePageSession','QME_CONSTANTS'];
 
-        function QMeUserManagementController($state,$stateParams,qmeFlashService,qmeUserService,qmePageSession) {
+        function QMeUserManagementController($state,$stateParams,qmeFlashService,qmeUserService,qmePageSession,QME_CONSTANTS) {
 
             var qmeUserManagement = this;
 
@@ -26,6 +26,10 @@
             qmeUserManagement.userFirstName = undefined;
             qmeUserManagement.userLastName = undefined;
             qmeUserManagement.userRoles  = undefined;
+            qmeUserManagement.userRole = undefined;
+            qmeUserManagement.reviewerRole = undefined;
+            qmeUserManagement.moderatorRole = undefined;
+            qmeUserManagement.adminRole = undefined;
 
             qmeUserManagement.listUsers = function(){
 
@@ -161,6 +165,26 @@
                qmeUserManagement.userFirstName = $stateParams.currentuser.userFirstName;
                qmeUserManagement.userLastName = $stateParams.currentuser.userLastName;
                qmeUserManagement.userRoles = $stateParams.currentuser.userRoles;
+               if(qmeUserManagement.userRoles.indexOf(QME_CONSTANTS.userrole) > -1){
+                   qmeUserManagement.userRole = QME_CONSTANTS.userrole;
+               }else{
+                   qmeUserManagement.userRole = "";
+               }
+               if(qmeUserManagement.userRoles.indexOf(QME_CONSTANTS.reviewerrole) > -1){
+                   qmeUserManagement.reviewerRole = QME_CONSTANTS.reviewerrole;
+               }else{
+                   qmeUserManagement.reviewerRole = "";
+               }
+               if(qmeUserManagement.userRoles.indexOf(QME_CONSTANTS.moderatorrole) > -1){
+                   qmeUserManagement.moderatorRole = QME_CONSTANTS.moderatorrole;
+               }else{
+                   qmeUserManagement.moderatorRole = "";
+               }
+               if(qmeUserManagement.userRoles.indexOf(QME_CONSTANTS.adminrole) > -1){
+                   qmeUserManagement.adminRole = QME_CONSTANTS.adminrole;
+               }else{
+                   qmeUserManagement.adminRole = "";
+               }
                qmeUserManagement.currentpage= $stateParams.currentpage;
                if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
                    qmeUserManagement.sortasc = true;

@@ -17,8 +17,10 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                       pagesperpage:10,
                       success: 'success',
                       error: 'error',
+                      userrole: 'USER',
+                      reviewerrole: 'REVIEWER',
+                      moderatorrole: 'MODERATOR',
                       adminrole: 'ADMIN',
-                      userrole: 'USER'
                 }
         )
         .run(function($rootScope,$window,$state,qmeUserSession){
