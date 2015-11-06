@@ -7,14 +7,15 @@
 
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.Role;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
-import com.malcolm.qme.core.repository.PageSort;
-import com.malcolm.qme.core.repository.QMeException;
-import com.malcolm.qme.core.repository.UserRepository;
-import com.malcolm.qme.core.repository.UserRoleRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
-import com.malcolm.qme.rest.exception.*;
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.*;
 import com.malcolm.qme.rest.service.UserService;
 import org.slf4j.Logger;
@@ -26,7 +27,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,6 +52,10 @@ public final class UserServiceImpl implements UserService {
     @Autowired
     @Qualifier(value = "UserRoleRepository")
     private UserRoleRepository userRoleRepo;
+
+    @Autowired
+    @Qualifier(value = "RoleRepository")
+    private RoleRepository roleRepo;
 
     @Autowired
     private PasswordEncoder passcodeEncoder;
@@ -154,7 +158,6 @@ public final class UserServiceImpl implements UserService {
         try {
             User user = getUser(qMeUser);
             user = userRepo.save(user);
-            //Assign Default User Role to newly created user
             UserRole userRole = new UserRole(DEFAULT_USER_ROLE,user.getUserID());
             userRoleRepo.save(userRole);
             return getQMeUserDetail(user);
@@ -208,7 +211,29 @@ public final class UserServiceImpl implements UserService {
             User user = getUser(updatedUser, id, userId);
 
             user = userRepo.update(user, userId);
+
+            //Update User Roles if User Roles Updates
+            if(qMeUser.getUserRoles() != null && !qMeUser.getUserRoles().isEmpty()){
+
+                List<UserRole> currentUserRoleList= userRoleRepo.findByUserId(id);
+                List<String> userRoleList = new ArrayList<>();
+                if(currentUserRoleList != null && !currentUserRoleList.isEmpty()){
+                    userRoleList = currentUserRoleList.stream().map(UserRole::getRoleName).collect(Collectors.toList());
+                }
+                for(String roleName : qMeUser.getUserRoles()){
+                    if(userRoleList.contains(roleName)){
+                        continue;
+                    }
+                    Role role = roleRepo.findByRoleName(roleName);
+                    if(role != null){
+                        UserRole userRole = new UserRole(role.getRoleID(),id);
+                        userRoleRepo.update(userRole,userId);
+                    }
+                }
+            }
+
             return getQMeUserDetail(user);
+
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }
