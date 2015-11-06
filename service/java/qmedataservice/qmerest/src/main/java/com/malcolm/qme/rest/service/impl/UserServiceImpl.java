@@ -218,6 +218,12 @@ public final class UserServiceImpl implements UserService {
                 List<UserRole> currentUserRoleList = userRoleRepo.findByUserId(id);
                 List<String> userRoleList = new ArrayList<>();
 
+                //Check for Reviewer and Moderator roles only
+                //Admin role cannot be added from UI!!!!!
+                //Check and add only Reviewer and Moderator roles only
+                //Admin role cannot be added from amy ui or rest service!!!!
+
+
                 if(currentUserRoleList != null && !currentUserRoleList.isEmpty()){
                     //TODO: Need a way to remove roles!!!!!
                     userRoleList = currentUserRoleList.stream().map(UserRole::getRoleName).collect(Collectors.toList());
