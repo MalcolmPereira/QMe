@@ -32,9 +32,7 @@
                         <label class ="checkbox-inline"><input type ="checkbox" id="userRoleCheckBoxId"  ng-disabled="true" ng-model="qmeUserManagement.userRole" ng-true-value="'USER'" ng-false-value="''">User</label>
                         <label class ="checkbox-inline"><input type ="checkbox" id="reviewerRoleCheckBoxId"  ng-model="qmeUserManagement.reviewerRole"  ng-true-value="'REVIEWER'" ng-false-value="''">Reviewer</label>
                         <label class ="checkbox-inline"><input type ="checkbox" id="moderatorRoleCheckBoxId" ng-model="qmeUserManagement.moderatorRole" ng-true-value="'MODERATOR'" ng-false-value="''">Moderator</label>
-                        <label class ="checkbox-inline"><input type ="checkbox" id="adminRoleCheckBoxId"     ng-model="qmeUserManagement.adminRole" ng-true-value="'ADMIN'" ng-false-value="''">Admin</label>
                     </div>
-
                     <button id="submitUpdateUserButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeUserManagement.submitUpdateUser()" ng-disabled="updateUserForm.$invalid">Update User</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeUserManagement.cancelUserUpdate()">Cancel</button>

@@ -29,7 +29,6 @@
             qmeUserManagement.userRole = undefined;
             qmeUserManagement.reviewerRole = undefined;
             qmeUserManagement.moderatorRole = undefined;
-            qmeUserManagement.adminRole = undefined;
 
             qmeUserManagement.listUsers = function(){
 
@@ -159,9 +158,6 @@
                if(qmeUserManagement.moderatorRole && qmeUserManagement.moderatorRole !== ""){
                    updatedUserRoles.push(QME_CONSTANTS.moderatorrole);
                }
-               if(qmeUserManagement.adminRole && qmeUserManagement.adminRole !== "") {
-                   updatedUserRoles.push(QME_CONSTANTS.adminrole);
-               }
                var updateUser = {
                    "userId": qmeUserManagement.userId,
                    "userName": qmeUserManagement.userName,
@@ -224,11 +220,6 @@
                    qmeUserManagement.moderatorRole = QME_CONSTANTS.moderatorrole;
                }else{
                    qmeUserManagement.moderatorRole = "";
-               }
-               if(qmeUserManagement.userRoles.indexOf(QME_CONSTANTS.adminrole) > -1){
-                   qmeUserManagement.adminRole = QME_CONSTANTS.adminrole;
-               }else{
-                   qmeUserManagement.adminRole = "";
                }
                qmeUserManagement.currentpage= $stateParams.currentpage;
                if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
