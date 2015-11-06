@@ -29,8 +29,7 @@
             };
 
             qmeNav.isAdmin = function(){
-                return !!(qmeUserSession && qmeUserSession.isSignedIn() && qmeUserSession.isAdmin());
-
+                return (qmeUserSession && qmeUserSession.isSignedIn() && qmeUserSession.isAdmin());
             };
 
             qmeNav.routeHome = function(){

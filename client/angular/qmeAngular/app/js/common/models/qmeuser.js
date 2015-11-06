@@ -7,15 +7,15 @@
 
         var qmeUserSession = this;
 
-        var _authtoken      = null;
-        var _userid         = null;
-        var _username       = null;
-        var _userfirstname  = null;
-        var _userlastname   = null;
-        var _useremail      = null;
-        var _userrole       = null;
-        var _userlastlogin  = null;
-        var _updating       = false;
+        var _authtoken      = undefined;
+        var _userid         = undefined;
+        var _username       = undefined;
+        var _userfirstname  = undefined;
+        var _userlastname   = undefined;
+        var _useremail      = undefined;
+        var _userrole       = undefined;
+        var _userlastlogin  = undefined;
+        var _updating       = undefined;
 
 
         qmeUserSession.create = function (
@@ -39,14 +39,14 @@
         };
 
         qmeUserSession.destroy = function () {
-            _authtoken = null;
-            _userid    = null;
-            _username  = null;
-            _userfirstname = null;
-            _userlastname = null;
-            _useremail = null;
-            _userlastlogin = null;
-            _userrole  = null;
+            _authtoken = undefined;
+            _userid    = undefined;
+            _username  = undefined;
+            _userfirstname = undefined;
+            _userlastname = undefined;
+            _useremail = undefined;
+            _userlastlogin = undefined;
+            _userrole  = undefined;
         };
 
         qmeUserSession.authtoken = function () {
