@@ -13,8 +13,6 @@ import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.*;
 import com.malcolm.qme.rest.service.UserService;
 import com.malcolm.qme.security.service.QMeUserDetails;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
@@ -32,11 +30,6 @@ import java.util.List;
 @RestController
 public class UserController implements UserAPI {
 
-    /**
-     * Logger
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private String endpointURL;
 
@@ -51,7 +44,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public  @ResponseBody Resource<Long> count() throws QMeResourceException {
-        log(getCurrentUser(), "count");
+        log(getCurrentUser(), "User - count");
         Resource<Long> userCount = new Resource<>(userService.count(),new Link(endpointURL+ UserAPI.COUNT_PATH.replaceAll(":.+","}")));
         userCount.add(new Link(endpointURL + UserAPI.PAGED_PATH.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=USERNAME", QMeAppAPI.USER_PAGED));
         return userCount;
@@ -62,7 +55,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody List<QMeUserDetail> list() throws QMeServerException {
-        log(getCurrentUser(), "list");
+        log(getCurrentUser(), "User - list");
         List<QMeUserDetail> qMeUserDetailList = userService.list();
         setUserLinks(qMeUserDetailList);
         return qMeUserDetailList;
@@ -78,7 +71,7 @@ public class UserController implements UserAPI {
         @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
         @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
 
-        log(getCurrentUser(), "listPaged");
+        log(getCurrentUser(), "User - listPaged");
 
         //Check if Pagination is required
         Integer     pageNumber      = null;
@@ -118,7 +111,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody QMeUserDetail searchById(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
-        log(getCurrentUser(), "Search By ID for  "+userId);
+        log(getCurrentUser(), "User - Search By ID for  "+userId);
         QMeUserDetail qMeUserDetail = userService.searchById(userId);
         setUserLinks(qMeUserDetail);
         return qMeUserDetail;
@@ -129,7 +122,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody QMeUserDetail searchByUserName(@PathVariable(NAME_PARAM_STRING) String userName) throws QMeResourceNotFoundException,QMeServerException {
-        log(getCurrentUser(), "Search By User Name for  "+userName);
+        log(getCurrentUser(), "User - Search By User Name for  "+userName);
         QMeUserDetail qMeUserDetail = userService.searchByUser(userName);
         setUserLinks(qMeUserDetail);
         return qMeUserDetail;
@@ -140,7 +133,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody QMeUserDetail searchByUserEmail(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException,QMeServerException {
-        log(getCurrentUser(), "Search By User Email for  " + userEmail);
+        log(getCurrentUser(), "User - Search By User Email for  " + userEmail);
         QMeUserDetail qMeUserDetail = userService.searchByEmail(userEmail);
         setUserLinks(qMeUserDetail);
         return qMeUserDetail;
@@ -151,7 +144,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody QMeUserDetail create(@RequestBody QMeUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
-        log(getCurrentUser(), " Create  ");
+        log(getCurrentUser(), " User - Create  ");
         QMeUserDetail qMeUserDetail =  userService.save(user, getCurrentUser().getUserID());
         setUserLinks(qMeUserDetail);
         return qMeUserDetail;
@@ -177,7 +170,7 @@ public class UserController implements UserAPI {
     @Override
     public @ResponseBody QMeUserDetail update(@PathVariable(ID_PARAM_STRING) Long userId, @RequestBody QMeUpdateUser user) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         QMeUserDetails currentUser = getCurrentUser();
-        log(currentUser, " update  ");
+        log(currentUser, "User -  update  ");
 
         boolean updateAllowed = false;
         if(currentUser == null){
@@ -212,7 +205,7 @@ public class UserController implements UserAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public void delete(@PathVariable(ID_PARAM_STRING) Long userId) throws QMeResourceNotFoundException,QMeServerException {
-        log(getCurrentUser(), " delete  ");
+        log(getCurrentUser(), " User - delete  ");
         userService.delete(userId);
     }
 
@@ -220,7 +213,7 @@ public class UserController implements UserAPI {
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody Resource<String> forgotUserName(@PathVariable(EMAIL_PARAM_STRING) String userEmail) throws QMeResourceNotFoundException, QMeServerException {
-        log(getCurrentUser(), " forgotUserName  ");
+        log(getCurrentUser(), " User - forgotUserName  ");
         QMeUserDetail qMeUserDetail  = userService.searchByEmail(userEmail);
         return new Resource<>(qMeUserDetail.getUserName(),new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qMeUserDetail .getUserEmail()),QMeAppAPI.FORGOT_USER_PASSWORD));
     }
@@ -261,18 +254,5 @@ public class UserController implements UserAPI {
         qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.DELETE_USER));
         qmeUser.add(new Link(endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.FORGOT_USER_NAME));
         qmeUser.add(new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.FORGOT_USER_PASSWORD));
-    }
-
-    /**
-     * Log Rest Call
-     * @param user Current Logged in User
-     * @param methodName Method Name
-     */
-    private void log(QMeUserDetails user, String methodName){
-        if(user != null){
-            LOG.debug("User "+methodName+" called by User ID: "+user.getUserID()+" User Name: "+user.getUsername()+" User Roles"+user.getAuthorities());
-        }else{
-            LOG.debug("User "+methodName+" called with no security context ");
-        }
     }
 }

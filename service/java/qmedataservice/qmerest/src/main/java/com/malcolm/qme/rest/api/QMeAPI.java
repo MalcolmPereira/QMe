@@ -7,6 +7,8 @@
 package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.security.service.QMeUserDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -54,7 +56,13 @@ public interface QMeAPI {
      * Admin Role
      */
     String ADMIN_ROLE = "ADMIN";
-    /**
+
+	/**
+	 * Logger
+	 */
+	Logger LOG = LoggerFactory.getLogger(QMeAPI.class);
+
+	/**
      * Get Current Logged in User
      * @return QMeUserDetails Current Logged in User
      */
@@ -64,4 +72,17 @@ public interface QMeAPI {
 		}
         return null;
     }
+
+	/**
+	 * Log Rest Call
+	 * @param user Current Logged in User
+	 * @param methodName Method Name
+	 */
+	default void log(QMeUserDetails user, String methodName){
+		if(user != null){
+			LOG.debug("User "+methodName+" called by User ID: "+user.getUserID()+" User Name: "+user.getUsername()+" User Roles"+user.getAuthorities());
+		}else{
+			LOG.debug("User "+methodName+" called with no security context ");
+		}
+	}
 }
