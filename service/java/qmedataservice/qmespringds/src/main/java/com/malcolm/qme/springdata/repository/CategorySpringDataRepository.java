@@ -24,4 +24,11 @@ interface CategorySpringDataRepository extends JpaRepository<CategoryEntity, Lon
 	 * @return CategoryEntity List
 	 */
 	List<CategoryEntity> findByCatNameIgnoreCaseLike(String categoryName);
+
+	/**
+	 * Find by Category Name
+	 * @param catParentId Category Parent Id
+	 * @return CategoryEntity List
+	 */
+	List<CategoryEntity> findByCatParentId(Long catParentId);
 }

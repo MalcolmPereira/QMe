@@ -22,4 +22,12 @@ public interface CategoryRepository extends QMeRepository<Category,Long> {
      * @throws QMeException
      */
     List<Category> findCategoryNameLike(String categoryName) throws QMeException;
+
+    /**
+     * Find By Category By Parent Id
+     * @param categoryParentID Category Parent Id
+     * @return Category List for Category Parent
+     * @throws QMeException
+     */
+    List<Category> findCategoryByParentId(Long categoryParentID) throws QMeException;
 }

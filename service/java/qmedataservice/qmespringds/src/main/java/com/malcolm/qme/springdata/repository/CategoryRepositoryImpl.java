@@ -59,7 +59,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         }
     }
 
-	@Override
+    @Override
+    public List<Category> findCategoryByParentId(Long categoryParentID) throws QMeException {
+        try{
+            return(getCategory(categorySpringDataRepository.findByCatParentId(categoryParentID)));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
 	public Category findById(Long id) throws QMeException {
         try{
             CategoryEntity categoryEntity = categorySpringDataRepository.findOne(id);
