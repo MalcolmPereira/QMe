@@ -104,6 +104,10 @@ public interface QMeAppAPI extends QMeAPI {
     /**
      * Category by ID
      */
+    String CATEGORY_BY_PARENT_ID = "Get_Category_by_parent_id";
+    /**
+     * Category by ID
+     */
     String CATEGORY_BY_ID = "Get_Category_by_id";
     /**
      * Category by Name

@@ -47,6 +47,16 @@ public final class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<QMeCategoryDetail> searchByParentCategory(Long parentCategoryId) throws QMeServerException {
+        try{
+            return getQMeCategoryDetail(categoryRepo.findCategoryByParentId(parentCategoryId));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public Long count() throws QMeServerException {
         try{
             return categoryRepo.count();

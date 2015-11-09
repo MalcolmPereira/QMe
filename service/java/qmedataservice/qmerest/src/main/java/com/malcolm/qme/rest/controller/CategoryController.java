@@ -65,7 +65,6 @@ public class CategoryController implements CategoryAPI {
 
     @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody List<QMeCategoryDetail> listPaged(
             @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
@@ -85,6 +84,16 @@ public class CategoryController implements CategoryAPI {
         }else{
             categoryDetails = categoryService.list();
         }
+        setCategoryLinks(categoryDetails);
+        return categoryDetails;
+    }
+
+    @RequestMapping(value=PARENT_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public List<QMeCategoryDetail> listByParent(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException {
+        log(getCurrentUser(), "Category - listByParent");
+        List<QMeCategoryDetail> categoryDetails = categoryService.searchByParentCategory(categoryId);
         setCategoryLinks(categoryDetails);
         return categoryDetails;
     }

@@ -57,6 +57,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         Resource<String> qmeCategoryResource = new Resource<>(QME_CATEGORY_API,new Link(endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CATEGORY));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.COUNT_PATH.replaceAll(":.+","}"),CATEGORY_COUNT));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",CATEGORY_PAGED));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.PARENT_PATH.replaceAll(":.+","}"),CATEGORY_BY_PARENT_ID));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),CATEGORY_BY_ID));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.NAME_PATH.replaceAll(":.+","}"),CATEGORY_BY_NAME));
         qmeCategoryResource.add(new Link( endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_CATEGORY));

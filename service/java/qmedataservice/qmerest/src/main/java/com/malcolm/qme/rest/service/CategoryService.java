@@ -26,4 +26,13 @@ public interface CategoryService extends QMeService<QMeCategoryDetail,QMeCategor
      * @throws QMeServerException
      */
      List<QMeCategoryDetail> searchByName(String categoryName) throws QMeServerException;
+
+    /**
+     * Search By Parent Category
+     *
+     * @param parentCategoryId Parent Category Id
+     * @return QMeCategoryDetail List
+     * @throws QMeServerException
+     */
+    List<QMeCategoryDetail> searchByParentCategory(Long parentCategoryId) throws QMeServerException;
 }
