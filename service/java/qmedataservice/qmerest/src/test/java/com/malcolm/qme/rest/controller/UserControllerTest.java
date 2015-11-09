@@ -18,6 +18,7 @@ import com.malcolm.qme.rest.model.fixtures.QMeUserDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeUserFixtures;
 import com.malcolm.qme.rest.service.UserService;
 import com.malcolm.qme.security.service.QMeUserDetails;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -50,6 +51,11 @@ public class UserControllerTest extends QMeControllerTest {
 
     @InjectMocks
     private UserController userController;
+
+    @Before
+    public void setContext(){
+        SecurityContextHolder.getContext().setAuthentication((QMeUserDetails)QMeUserDetails.create(1L, "admin", "password", "USER","ADMIN"));
+    }
 
 
     @Override

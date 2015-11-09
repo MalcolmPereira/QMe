@@ -13,14 +13,15 @@ import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryDetailFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeCategoryFixtures;
 import com.malcolm.qme.rest.service.CategoryService;
+import com.malcolm.qme.security.service.QMeUserDetails;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
@@ -49,7 +50,15 @@ public class CategoryControllerTest extends QMeControllerTest{
 
     @Override
     public MockMvc getMockMVCInstance(final ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver) {
-        return MockMvcBuilders.standaloneSetup(categoryController).setHandlerExceptionResolvers(exceptionHandlerExceptionResolver).build();
+        return MockMvcBuilders
+                .standaloneSetup(categoryController)
+                .setHandlerExceptionResolvers(exceptionHandlerExceptionResolver)
+                .build();
+    }
+
+    @Before
+    public void setContext(){
+        SecurityContextHolder.getContext().setAuthentication((QMeUserDetails)QMeUserDetails.create(1L, "admin", "password", "USER","ADMIN"));
     }
 
     @Test
