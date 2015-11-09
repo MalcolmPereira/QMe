@@ -67,7 +67,7 @@ public interface QMeAPI {
      * @return QMeUserDetails Current Logged in User
      */
     default QMeUserDetails getCurrentUser() {
-		if(SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null && SecurityContextHolder.getContext().getAuthentication() instanceof QMeUserDetails){
+        if(SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null && SecurityContextHolder.getContext().getAuthentication() instanceof QMeUserDetails){
 			return (QMeUserDetails) SecurityContextHolder.getContext().getAuthentication();
 		}
         return null;

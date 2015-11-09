@@ -55,7 +55,7 @@ subprojects {
         hamcrestVersion	        = "1.3"
 
         springVersion 		    = "4.2.1.RELEASE"
-        springSecurityVersion   = "4.0.2.RELEASE"
+        springSecurityVersion   = "4.0.3.RELEASE"
         jjwtVersion             = "0.5.1"
 
         springDataVersion 	    = "1.8.1.RELEASE"

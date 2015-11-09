@@ -232,7 +232,7 @@ public class UserController implements UserAPI {
         qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.USER_BY_ID));
         qmeUser.add(new Link(endpointURL+ UserAPI.NAME_PATH.replaceAll("\\{"+NAME_PARAM_STRING+":.+\\}",qmeUser.getUserName()),QMeAppAPI.USER_BY_NAME));
         qmeUser.add(new Link(endpointURL+ UserAPI.EMAIL_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.USER_BY_EMAIL));
-        qmeUser.add(new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}")+"/"+qmeUser.getUserId(),QMeAppAPI.UPDATE_USER));
+        qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.UPDATE_USER));
         qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.DELETE_USER));
         qmeUser.add(new Link(endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.FORGOT_USER_NAME));
         qmeUser.add(new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll("\\{"+EMAIL_PARAM_STRING+":.+\\}",qmeUser.getUserEmail()),QMeAppAPI.FORGOT_USER_PASSWORD));

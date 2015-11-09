@@ -58,10 +58,7 @@ public class CategoryController implements CategoryAPI {
     public @ResponseBody List<QMeCategoryDetail> list() throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Category - list");
         List<QMeCategoryDetail> categoryDetails = categoryService.list();
-        for (QMeCategoryDetail qmeCategoryDetail : categoryDetails) {
-            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchByName(qmeCategoryDetail.getCategoryName())).withSelfRel());
-            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchById(qmeCategoryDetail.getCategoryId())).withSelfRel());
-        }
+        setCategoryLinks(categoryDetails);
         return categoryDetails;
     }
 
@@ -74,32 +71,30 @@ public class CategoryController implements CategoryAPI {
             @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
             @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
             @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+
         log(getCurrentUser(), "Category - listPaged");
 
         Integer     pageNumber      = getPageNumber(page);
         Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
         String[]    sortOrderFields = getSortOrderFields(sortFields);
         boolean     sortAsc         = getSortAsc(sortType);
-        List<QMeCategoryDetail> qMeUserDetailList;
+        List<QMeCategoryDetail> categoryDetails;
         if(pageNumber != null && pageSizeNumber != null){
-            qMeUserDetailList = categoryService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+            categoryDetails = categoryService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
         }else{
-            qMeUserDetailList= categoryService.list();
+            categoryDetails = categoryService.list();
         }
-        return qMeUserDetailList;
+        setCategoryLinks(categoryDetails);
+        return categoryDetails;
     }
 
-            @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
+    @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {
        log(getCurrentUser(), "Category - searchByName");
-
        List<QMeCategoryDetail> categoryDetails = categoryService.searchByName(categoryName);
-       for (QMeCategoryDetail qmeCategoryDetail : categoryDetails) {
-            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchByName(qmeCategoryDetail.getCategoryName())).withSelfRel());
-            qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchById(qmeCategoryDetail.getCategoryId())).withSelfRel());
-       }
+       setCategoryLinks(categoryDetails);
        return categoryDetails;
     }
 
@@ -108,13 +103,8 @@ public class CategoryController implements CategoryAPI {
     @Override
     public @ResponseBody QMeCategoryDetail searchById(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Category - searchById");
-
         QMeCategoryDetail qmeCategoryDetail = categoryService.searchById(categoryId);
-        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchByName(qmeCategoryDetail.getCategoryName())).withSelfRel());
-        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).searchById(qmeCategoryDetail.getCategoryId())).withSelfRel());
-        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).create(null)).withSelfRel());
-        qmeCategoryDetail.add(linkTo(methodOn(CategoryController.class).update(qmeCategoryDetail.getCategoryId(), null)).withSelfRel());
-
+        setCategoryLinks(qmeCategoryDetail);
         return qmeCategoryDetail;
     }
 
@@ -129,7 +119,9 @@ public class CategoryController implements CategoryAPI {
                 throw new QMeResourceNotFoundException("Category with Category ID "+category.getParentCategoryId()+" not found");
             }
         }
-        return categoryService.save(category,getCurrentUser().getUserID());
+        QMeCategoryDetail  qmeCategoryDetail = categoryService.save(category,getCurrentUser().getUserID());
+        setCategoryLinks(qmeCategoryDetail);
+        return qmeCategoryDetail;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
@@ -137,7 +129,9 @@ public class CategoryController implements CategoryAPI {
     @Override
     public @ResponseBody QMeCategoryDetail update(@PathVariable(ID_PARAM_STRING) Long categoryId,@RequestBody QMeCategory category) throws QMeResourceNotFoundException,QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
         log(getCurrentUser(), "Category - update");
-        return categoryService.update(category, categoryId,getCurrentUser().getUserID());
+        QMeCategoryDetail  qmeCategoryDetail =  categoryService.update(category, categoryId,getCurrentUser().getUserID());
+        setCategoryLinks(qmeCategoryDetail);
+        return qmeCategoryDetail;
     }
 
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
@@ -146,5 +140,24 @@ public class CategoryController implements CategoryAPI {
     public void delete(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceNotFoundException,QMeServerException {
         log(getCurrentUser(), "Category - delete");
         categoryService.delete(categoryId);
+    }
+
+    /**
+     * Set Category Links
+     * @param qmeCategoryList QMe Category List
+     */
+    private void setCategoryLinks(List<QMeCategoryDetail> qmeCategoryList){
+        qmeCategoryList.stream().forEach(this::setCategoryLinks);
+    }
+
+    /**
+     * Set Category Links
+     * @param qmeCategory QMeCategory
+     */
+    private void setCategoryLinks(QMeCategoryDetail qmeCategory){
+        qmeCategory.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeCategory.getCategoryId()+""),QMeAppAPI.CATEGORY_BY_ID));
+        qmeCategory.add(new Link(endpointURL+ CategoryAPI.NAME_PATH.replaceAll("\\{"+NAME_PARAM_STRING+":.+\\}",qmeCategory.getCategoryName()),QMeAppAPI.CATEGORY_BY_NAME));
+        qmeCategory.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeCategory.getCategoryId()+""),QMeAppAPI.UPDATE_CATEGORY));
+        qmeCategory.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeCategory.getCategoryId()+""),QMeAppAPI.DELETE_CATEGORY));
     }
 }

@@ -68,7 +68,7 @@ public class QMeAppAPIControllerTest extends QMeControllerTest{
                 .andExpect(jsonPath("content[0].links[8].rel", is("Post_Confirm_Stage_User")))
                 .andExpect(jsonPath("content[0].links[8].href", is("null/qme/user/confirm")))
                 .andExpect(jsonPath("content[0].links[9].rel", is("Put_Update_User")))
-                .andExpect(jsonPath("content[0].links[9].href", is("null/qme/user")))
+                .andExpect(jsonPath("content[0].links[9].href", is("null/qme/user/{id}")))
                 .andExpect(jsonPath("content[0].links[10].rel", is("Delete_User")))
                 .andExpect(jsonPath("content[0].links[10].href", is("null/qme/user/{id}")))
                 .andExpect(jsonPath("content[0].links[11].rel", is("Get_Forgot_User_Name")))
