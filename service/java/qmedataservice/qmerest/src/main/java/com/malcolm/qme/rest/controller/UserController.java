@@ -73,29 +73,10 @@ public class UserController implements UserAPI {
 
         log(getCurrentUser(), "User - listPaged");
 
-        //Check if Pagination is required
-        Integer     pageNumber      = null;
-        Integer     pageSizeNumber  = null;
-        String[]    sortOrderFields = null;
-        boolean     sortAsc         = true;
-        if(page != null && page.trim().length() > 0 && pageSize != null && page.trim().length() > 0){
-            try{
-                pageNumber = Integer.valueOf(page);
-            }catch(NumberFormatException numErr){
-                pageNumber      = null;
-            }
-            try{
-                pageSizeNumber = Integer.valueOf(pageSize);
-            }catch(NumberFormatException numErr){
-                pageSizeNumber      = null;
-            }
-            if(sortType != null && sortType.trim().length() > 0){
-                sortAsc = Boolean.valueOf(sortType);
-            }
-            if(sortFields != null && sortFields.trim().length() > 0){
-                sortOrderFields = sortFields.split(SORT_FIELDS_SEPARATOR);
-            }
-        }
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
         List<QMeUserDetail> qMeUserDetailList;
         if(pageNumber != null && pageSizeNumber != null){
             qMeUserDetailList = userService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);

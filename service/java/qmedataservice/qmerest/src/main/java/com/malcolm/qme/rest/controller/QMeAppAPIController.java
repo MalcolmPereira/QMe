@@ -46,7 +46,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeUserResource.add(new Link( endpointURL+ UserAPI.REGISTER_PATH.replaceAll(":.+","}"),REGISTER_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.STAGING_PATH.replaceAll(":.+","}"),STAGE_USER));
         qmeUserResource.add(new Link( endpointURL+ UserAPI.REGISTER_CONFIRM_PATH.replaceAll(":.+","}"),CONFIRM_STAGE_USER));
-        qmeUserResource.add(new Link(endpointURL+ UserAPI.ROOT_PATH.replaceAll(":.+","}"),UPDATE_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),DELETE_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll(":.+","}"),FORGOT_USER_NAME));
         qmeUserResource.add(new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll(":.+","}"),FORGOT_USER_PASSWORD));
@@ -55,6 +55,13 @@ public class QMeAppAPIController implements QMeAppAPI {
 
         //QMe Category API
         Resource<String> qmeCategoryResource = new Resource<>(QME_CATEGORY_API,new Link(endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CATEGORY));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.COUNT_PATH.replaceAll(":.+","}"),CATEGORY_COUNT));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",CATEGORY_PAGED));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),CATEGORY_BY_ID));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.NAME_PATH.replaceAll(":.+","}"),CATEGORY_BY_NAME));
+        qmeCategoryResource.add(new Link( endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_CATEGORY));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_CATEGORY));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),DELETE_CATEGORY));
         qmeResources.add(qmeCategoryResource);
 
 

@@ -90,13 +90,37 @@ public interface QMeAppAPI extends QMeAPI {
      */
     String QME_CATEGORY_API = "Qme Category API";
     /**
+     * Category
+     */
+    String CATEGORY = "Get_Category_list";
+    /**
+     * Category Count
+     */
+    String CATEGORY_COUNT = "Get_Category_Count";
+    /**
      * Category Paged
      */
     String CATEGORY_PAGED = "Get_Paged_Category_list - (sortfields:CATEGORYNAME)";
     /**
-     * Category
+     * Category by ID
      */
-    String CATEGORY = "Get_Category_list";
+    String CATEGORY_BY_ID = "Get_Category_by_id";
+    /**
+     * Category by Name
+     */
+    String CATEGORY_BY_NAME = "Get_Category_by_name";
+    /**
+     * Create Category
+     */
+    String CREATE_CATEGORY = "Post_New_Category";
+    /**
+     * Update Category
+     */
+    String UPDATE_CATEGORY = "Put_Update_Category";
+    /**
+     * Delete Category
+     */
+    String DELETE_CATEGORY = "Delete_Category";
 
     /**
      * List QMe App API
