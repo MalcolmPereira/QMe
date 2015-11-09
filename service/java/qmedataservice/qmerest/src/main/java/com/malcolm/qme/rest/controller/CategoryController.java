@@ -8,15 +8,16 @@
 package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.CategoryAPI;
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
-import com.malcolm.qme.rest.exception.QMeResourceConflictException;
-import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
-import com.malcolm.qme.rest.exception.QMeServerException;
+import com.malcolm.qme.rest.api.QMeAppAPI;
+import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import com.malcolm.qme.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,11 +31,26 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 public class CategoryController implements CategoryAPI {
 
+    @Autowired
+    private String endpointURL;
+
     /**
      * Category Service
      */
     @Autowired
     private CategoryService categoryService;
+
+    @RequestMapping(value=COUNT_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public  @ResponseBody
+    Resource<Long> count() throws QMeResourceException {
+        log(getCurrentUser(), "Category - count");
+        Resource<Long> userCount = new Resource<>(categoryService.count(),new Link(endpointURL+ CategoryAPI.COUNT_PATH.replaceAll(":.+","}")));
+        userCount.add(new Link(endpointURL + CategoryAPI.PAGED_PATH.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME", QMeAppAPI.CATEGORY_PAGED));
+        return userCount;
+    }
 
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -49,7 +65,50 @@ public class CategoryController implements CategoryAPI {
         return categoryDetails;
     }
 
-    @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
+    @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public @ResponseBody List<QMeCategoryDetail> listPaged(
+            @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+            @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+            @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+            @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "Category - listPaged");
+
+        //Check if Pagination is required
+        Integer     pageNumber      = null;
+        Integer     pageSizeNumber  = null;
+        String[]    sortOrderFields = null;
+        boolean     sortAsc         = true;
+        if(page != null && page.trim().length() > 0 && pageSize != null && page.trim().length() > 0){
+            try{
+                pageNumber = Integer.valueOf(page);
+            }catch(NumberFormatException numErr){
+                pageNumber      = null;
+            }
+            try{
+                pageSizeNumber = Integer.valueOf(pageSize);
+            }catch(NumberFormatException numErr){
+                pageSizeNumber      = null;
+            }
+            if(sortType != null && sortType.trim().length() > 0){
+                sortAsc = Boolean.valueOf(sortType);
+            }
+            if(sortFields != null && sortFields.trim().length() > 0){
+                sortOrderFields = sortFields.split(SORT_FIELDS_SEPARATOR);
+            }
+        }
+        List<QMeCategoryDetail> qMeUserDetailList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeUserDetailList = categoryService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }else{
+            qMeUserDetailList= categoryService.list();
+        }
+        return qMeUserDetailList;
+    }
+
+            @RequestMapping(value=NAME_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
     public @ResponseBody List<QMeCategoryDetail> searchByName(@PathVariable(NAME_PARAM_STRING) String categoryName) throws QMeInvalidResourceDataException,QMeResourceConflictException,QMeResourceNotFoundException,QMeServerException {

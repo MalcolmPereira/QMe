@@ -85,7 +85,7 @@ public interface UserAPI extends QMeAPI {
     /**
      * Get Count
      *
-     * @return List of Users
+     * @return Count of Users
      */
     Resource<Long> count() throws QMeResourceException;
 

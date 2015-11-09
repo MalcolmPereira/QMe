@@ -90,6 +90,10 @@ public interface QMeAppAPI extends QMeAPI {
      */
     String QME_CATEGORY_API = "Qme Category API";
     /**
+     * Category Paged
+     */
+    String CATEGORY_PAGED = "Get_Paged_Category_list - (sortfields:CATEGORYNAME)";
+    /**
      * Category
      */
     String CATEGORY = "Get_Category_list";
