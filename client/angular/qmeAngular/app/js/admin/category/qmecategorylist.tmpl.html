@@ -1,52 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="qmeCategoryManagementCtrl as qmeCategoryManagement" ng-init="qmeCategoryManagement.listCategories()">>
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Category List</h3>
         </div>
         <div class="panel-body">
-            <div id="container">
-                <ul>
-                    <li>
-                        Root node
-                        <ul>
-                            <li>Child node 1</li>
-                            <li>Child node 2</li>
-                        </ul>
-                    </li>
-                    <li>
-                        Node 2
-                        <ul>
-                            <li>Test 1</li>
-                        </ul>
-                    </li>
-                    <li>
-                        Node 3
-                    </li>
-                </ul>
-            </div>
-            <script>
-                $(function() {
-                    $('#container').jstree({
-                        "core" : {
-                            "animation": 0,
-                            "check_callback": true,
-                            "themes": {"stripes": true},
-                            "default": {
-                                "valid_children": ["default", "file"]
-                            },
-                            "file": {
-                                "icon": "glyphicon glyphicon-file",
-                                "valid_children": []
-                            },
-                        },
-                        "plugins" : [
-                                "contextmenu", "dnd", "search",
-                                "state", "types", "wholerow"
-                        ]
-
-                    });
-                });
-            </script>
+            <div id="categoryTreeContainer">
             </div>
         </div>
     </div>

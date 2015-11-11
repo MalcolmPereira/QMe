@@ -12,6 +12,10 @@
 
             var qmeCategoryManagement = this;
 
+            qmeCategoryManagement.categories;
+
+            qmeCategoryManagement.listCategories = function(){
+            }
         }
 
 })();
