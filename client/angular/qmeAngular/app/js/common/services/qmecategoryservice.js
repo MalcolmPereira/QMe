@@ -14,7 +14,7 @@
         qmeCategoryService.listCategoryByParent = function(parentId){
             var listCategoryPromise = $q.defer();
 
-            qmeCategoryResource.categoryByParentResource(qmeUserSession.authtoken())
+            qmeCategoryResource.categoryByParentResource(qmeUserSession.authtoken(),parentId)
                 .query(
                     function(res){
                         listCategoryPromise.resolve(res);

@@ -68,7 +68,7 @@
             var categoryAPI               = QME_CONSTANTS.qmeservice+"/category";
             var categoryCountEndPoint     = categoryAPI+"/count";
             var categoryByParentEndPoint  = categoryAPI+"/parent";
-            var categorySearchEndPoint    = userAPI+"/search/";
+            var categorySearchEndPoint    = categoryAPI+"/search/";
 
             this.categoryResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
@@ -80,11 +80,12 @@
             };
             this.categoryByParentResource = function(authToken, parentId){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
-                return $http.get(categoryByParentEndPoint+"/"+parentId);
+                return $resource(categoryByParentEndPoint+"/"+parentId);
+
             };
             this.categorySearchResource = function(authToken, searchStr){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
-                return $http.get(categorySearchEndPoint+"/"+searchStr);
+                return $resource(categorySearchEndPoint+"/"+searchStr);
             };
 
         })
