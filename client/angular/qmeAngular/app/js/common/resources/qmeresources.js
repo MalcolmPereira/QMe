@@ -64,6 +64,28 @@
             }
         })
 
+        .service('qmeCategoryResource',function($resource,$http,QME_CONSTANTS){
+            var categoryAPI               = QME_CONSTANTS.qmeservice+"/category";
+            var categoryCountEndPoint     = categoryAPI+"/count";
+            var categoryByParentEndPoint  = categoryAPI+"/parent";
+            var categorySearchEndPoint    = userAPI+"/search/";
 
+            this.categoryResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(categoryAPI);
+            };
+            this.categoryCountResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $http.get(categoryCountEndPoint);
+            };
+            this.categoryByParentResource = function(authToken, parentId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $http.get(categoryByParentEndPoint+"/"+parentId);
+            };
+            this.categorySearchResource = function(authToken, searchStr){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $http.get(categorySearchEndPoint+"/"+searchStr);
+            };
 
+        })
 })();
