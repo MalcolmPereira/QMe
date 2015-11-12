@@ -4,42 +4,29 @@
 
     ngQMe
 
-        .directive('qmeTree', function() {
-
+        .directive('qmeTree', function (){
             return {
-                restrict: 'EA',
-
+                restrict: 'E',
+                template: '<div id="qmeTreeId"></div>',
+                controller: 'qmeTreeCtrl',
+                controllerAs: 'qmeTreeCtrl',
                 scope: {
-                    treeData: '=',
-                },
-
-                link: function(scope, element, attributes) {
-                    $(function() {
-
-                        var config = {
-                            "core" : {
-                                "data" : [
-                                    'Simple root node',
-                                    {
-                                        'text' : 'Root node 2',
-                                        'state' : {
-                                            'opened' : true,
-                                            'selected' : true
-                                        },
-                                        'children' : [
-                                            { 'text' : 'Child 1' },
-                                            'Child 2'
-                                        ]
-                                    }
-                                ]
-                            },
-                            "plugins" : [ "wholerow"]
-                        };
-
-                        this.tree = $(element).jstree(config);
-                    });
-                },
+                    treeData: '='
+                }
             };
         })
+        .controller('qmeTreeCtrl',QMeTreeController);
+        QMeTreeController.$inject = ['$scope'];
+        function QMeTreeController($scope) {
+            var treeConfig = {
+                "core" : {
+                    "data" : []
+                },
+                "plugins" : [ "wholerow"]
+            };
+            treeConfig.core.data = $scope.treeData
+            console.log("treeData",$scope.treeData);
+            $("#qmeTreeId").jstree(treeConfig);
+        }
 
 })();
