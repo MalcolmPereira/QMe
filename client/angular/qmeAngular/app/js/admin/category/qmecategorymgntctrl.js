@@ -6,38 +6,17 @@
 
         .controller('qmeCategoryManagementCtrl', QMeCategoryManagementController);
 
-        QMeCategoryManagementController.$inject = ['$state','qmeFlashService','qmeCategoryService'];
+        QMeCategoryManagementController.$inject = ['$state','$scope','qmeFlashService','qmeCategoryService'];
 
-        function QMeCategoryManagementController($state,qmeFlashService,qmeCategoryService) {
+        function QMeCategoryManagementController($state,$scope,qmeFlashService,qmeCategoryService) {
 
             var qmeCategoryManagement = this;
 
-            qmeCategoryManagement.categories;
-
-            var test = {
-                "core" : {
-                    "animation": 0,
-                    "check_callback": true,
-                    "themes": {"stripes": true},
-                    "default": {
-                        "valid_children": ["default", "file"]
-                    },
-                    "file": {
-                        "icon": "glyphicon glyphicon-file",
-                        "valid_children": []
-                    },
-                },
-                "plugins" : [
-                    "contextmenu", "dnd", "search",
-                    "state", "types", "wholerow"
-                ]
-            };
+            qmeCategoryManagement.categorycount = 0;
 
             qmeCategoryManagement.listCategories = function(){
 
-                $('#categoryTreeContainer').jstree(test);
-
-                qmeCategoryService.listCategoryByParent(0)
+               qmeCategoryService.listCategoryByParent(0)
                     .then(
                         function(res){
                             qmeCategoryManagement.categories = res;
@@ -51,7 +30,11 @@
                             }
                         }
                     );
-            }
+            };
+
+            qmeCategoryManagement.recordsLoaded = function(){
+                return (qmeCategoryManagement.categorycount > 0 );
+            };
         }
 
 })();
