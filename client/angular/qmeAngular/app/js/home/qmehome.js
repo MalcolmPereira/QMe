@@ -38,23 +38,46 @@
                         "id": "1",
                         "parent" : "#",
                         "text": "Category 1",
-                        "children": true
+                        "children": []
+
                     },
                     {
                         "id": "2",
                         "parent" : "#",
                         "text": "Category 2",
-                        "children": true
+                        "children": []
                     },
                     {
                         "id": "3",
                         "parent" : "#",
                         "text": "Category 3",
-                        "children": true
+                        "children": []
                     }
                 ];
 
             }else{
+
+                return [
+                    {
+                        "id": "4",
+                        "parent" : "1",
+                        "text": "Category 4",
+                        "children": []
+                    },
+                    {
+                        "id": "5",
+                        "parent" : "1",
+                        "text": "Category 5",
+                        "children": []
+                    },
+                    {
+                        "id": "6",
+                        "parent" : "1",
+                        "text": "Category 6",
+                        "children": []
+                    }
+                ];
+
 
             }
 

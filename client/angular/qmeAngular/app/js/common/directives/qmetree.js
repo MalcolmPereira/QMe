@@ -22,16 +22,20 @@
             var tfunc = $scope.treeFunction;
             var treeConfig = {
                 "core" : {
-                    "data" : function (obj, cb) {
-
-                        cb.call(this, tfunc()(0));
-                    }
-                },
+                    "data" : tfunc()(0)
+                 },
                 "plugins" : [ "wholerow"]
             };
             //treeConfig.core.data = $scope.treeData
             //console.log("treeData",$scope.treeData);
-            $("#qmeTreeId").jstree(treeConfig);
+            $("#qmeTreeId").jstree(treeConfig).bind("select_node.jstree", function (event, data) {
+                //console.log("got data node id ",data.node.id);
+                var newNode = { state: "open", data: tfunc()(1) };
+                //console.log("got newNode ",newNode);
+                $('#qmeTreeId').jstree("create_node", data.node, data.node.id, newNode, false, false);
+                //data.node.open_node(this);
+                //$('#qmeTreeId').jstree("select_node", data.node, data.node.id, newNode, false, false);
+            });
         }
 
 })();
