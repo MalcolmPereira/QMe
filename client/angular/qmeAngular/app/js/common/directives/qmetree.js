@@ -11,21 +11,26 @@
                 controller: 'qmeTreeCtrl',
                 controllerAs: 'qmeTreeCtrl',
                 scope: {
-                    treeData: '='
+                    treeData: '=',
+                    treeFunction: '&'
                 }
             };
         })
         .controller('qmeTreeCtrl',QMeTreeController);
         QMeTreeController.$inject = ['$scope'];
         function QMeTreeController($scope) {
+            var tfunc = $scope.treeFunction;
             var treeConfig = {
                 "core" : {
-                    "data" : []
+                    "data" : function (obj, cb) {
+
+                        cb.call(this, tfunc()(0));
+                    }
                 },
                 "plugins" : [ "wholerow"]
             };
-            treeConfig.core.data = $scope.treeData
-            console.log("treeData",$scope.treeData);
+            //treeConfig.core.data = $scope.treeData
+            //console.log("treeData",$scope.treeData);
             $("#qmeTreeId").jstree(treeConfig);
         }
 
