@@ -4,7 +4,21 @@
             <h3 class="panel-title">Category List</h3>
         </div>
         <div class="panel-body">
-            <qme-tree tree-function="qmeCategoryManagement.listCategories"></qme-tree>
+           <div class="col-md-5">
+              <qme-tree tree-function="qmeCategoryManagement.listCategories"></qme-tree>
+           </div>
+           <div class="col-md-7">
+               <form name="updateCategoryForm" class="form-horizontal">
+                   <div style="margin-bottom: 25px" class="form-group">
+                       <label for="categoryName">Category Name:</label>
+                       <input ng-model="qmeCategoryManagement.categoryName" name="categoryName" id="categoryName" style="width:500px;" maxlength="150" min="4" class="form-control" ng-required="true">
+                   </div>
+                   <div style="margin-bottom: 25px" class="form-group">
+                       <label for="parentCategoryName">Parent Category Name:</label>
+                       <input ng-disabled="true" ng-model="qmeCategoryManagement.parentCategoryName" name="parentCategoryName" id="parentCategoryName" style="width:500px;" maxlength="150" min="4" class="form-control">
+                   </div>
+               </form>
+           </div>
         </div>
     </div>
 </div>
