@@ -12,15 +12,16 @@
 
             var qmeCategoryManagement = this;
 
-            qmeCategoryManagement.categoryName      = undefined;
-            qmeCategoryManagement.parentId          = undefined;
-            qmeCategoryManagement.categoryParents   = [
+            qmeCategoryManagement.categoryName         = undefined;
+            qmeCategoryManagement.parentId             = undefined;
+            qmeCategoryManagement.categoryParentsAll   = [
                 {
                     "categoryId" : 0,
                     "categoryName" : ""
 
                 }
             ];
+            qmeCategoryManagement.categoryParents      = [];
 
             qmeCategoryManagement.listCategories = function(treecallback, parentId){
 
@@ -44,7 +45,16 @@
             qmeCategoryManagement.selectNode = function(selectedNode){
                 if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
                     qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
-                    qmeCategoryManagement.parentId  =   ""+selectedNode.data.parentCategoryId+"";
+                    qmeCategoryManagement.categoryParents  = [];
+
+                    for(var a in qmeCategoryManagement.categoryParentsAll){
+                        var category = qmeCategoryManagement.categoryParentsAll[a];
+                        if(category.categoryId !== selectedNode.data.categoryId){
+                            qmeCategoryManagement.categoryParents.push(category);
+                        }
+                    }
+
+                    qmeCategoryManagement.parentId     = ""+selectedNode.data.parentCategoryId+"";
                     $scope.$digest();
                 }
             };
@@ -57,7 +67,7 @@
 
                     if (category.hasOwnProperty('categoryId')){
 
-                        qmeCategoryManagement.categoryParents.push(category);
+                        qmeCategoryManagement.categoryParentsAll.push(category);
 
                         if(parentId === 0){
                             parentId = "#";
