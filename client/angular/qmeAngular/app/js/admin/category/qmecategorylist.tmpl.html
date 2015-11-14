@@ -14,8 +14,10 @@
                        <input ng-model="qmeCategoryManagement.categoryName" name="categoryName" id="categoryName" style="width:500px;" maxlength="150" min="4" class="form-control" ng-required="true">
                    </div>
                    <div style="margin-bottom: 25px" class="form-group">
-                       <label for="parentCategoryName">Parent Category Name:</label>
-                       <input ng-disabled="true" ng-model="qmeCategoryManagement.parentCategoryName" name="parentCategoryName" id="parentCategoryName" style="width:500px;" maxlength="150" min="4" class="form-control">
+                       <label  for="parentCategoryId">Parent Category Name:</label>
+                       <select class="form-control" ng-model="qmeCategoryManagement.parentId"  name="parentCategoryId" id="parentCategoryId" style="width:500px;">
+                           <option ng-repeat="category in qmeCategoryManagement.categoryParents" title="{{category.categoryName}}" value="{{category.categoryId}}">{{category.categoryName}}</option>
+                       </select>
                    </div>
                </form>
            </div>

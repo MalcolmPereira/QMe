@@ -12,7 +12,15 @@
 
             var qmeCategoryManagement = this;
 
-            qmeCategoryManagement.categoryName = undefined;
+            qmeCategoryManagement.categoryName      = undefined;
+            qmeCategoryManagement.parentId          = undefined;
+            qmeCategoryManagement.categoryParents   = [
+                {
+                    "categoryId" : 0,
+                    "categoryName" : ""
+
+                }
+            ];
 
             qmeCategoryManagement.listCategories = function(treecallback, parentId){
 
@@ -36,17 +44,21 @@
             qmeCategoryManagement.selectNode = function(selectedNode){
                 if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
                     qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
+                    qmeCategoryManagement.parentId  =   ""+selectedNode.data.parentCategoryId+"";
                     $scope.$digest();
                 }
             };
 
             qmeCategoryManagement.processJsTreeData = function(categorylist,parentId){
                 var nodeData = [];
-                for (var key in categorylist) {
 
+                for (var key in categorylist) {
                     var category = categorylist[key];
 
                     if (category.hasOwnProperty('categoryId')){
+
+                        qmeCategoryManagement.categoryParents.push(category);
+
                         if(parentId === 0){
                             parentId = "#";
                         }else{
