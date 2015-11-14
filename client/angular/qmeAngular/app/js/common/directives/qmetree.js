@@ -18,9 +18,8 @@
         .controller('qmeTreeCtrl',QMeTreeController);
         QMeTreeController.$inject = ['$scope'];
         function QMeTreeController($scope) {
-            var qmeTreeCtrl = this;
 
-            var treeConfig = {
+           var treeConfig = {
                 "core" : {
                     'data' : function (node, cb) {
                         if(node.id === "#") {
