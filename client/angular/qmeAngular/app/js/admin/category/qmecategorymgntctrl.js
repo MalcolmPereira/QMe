@@ -12,6 +12,7 @@
 
             var qmeCategoryManagement = this;
 
+            qmeCategoryManagement.addNew               = undefined;
             qmeCategoryManagement.categoryName         = undefined;
             qmeCategoryManagement.parentId             = undefined;
             qmeCategoryManagement.categoryParentsAll   = [
@@ -24,7 +25,6 @@
             qmeCategoryManagement.categoryParents      = [];
 
             qmeCategoryManagement.listCategories = function(treecallback, parentId){
-
                 qmeCategoryService.listCategoryByParent(parentId)
                     .then(
                         function(res){
@@ -42,6 +42,25 @@
                     );
             };
 
+            qmeCategoryManagement.addNewCategory = function(){
+                qmeCategoryManagement.categoryParents  = [];
+                for(var a in qmeCategoryManagement.categoryParentsAll){
+                    var category = qmeCategoryManagement.categoryParentsAll[a];
+                    qmeCategoryManagement.categoryParents.push(category);
+                }
+                qmeCategoryManagement.categoryName = ""
+                qmeCategoryManagement.parentId     = "0";
+                qmeCategoryManagement.addNew       = true;
+            };
+
+            qmeCategoryManagement.submitUpdates = function(){
+                //console.log("qmeCategoryManagement.addNew ",qmeCategoryManagement.addNew);
+                //console.log("qmeCategoryManagement.categoryName ",qmeCategoryManagement.categoryName);
+                //console.log("qmeCategoryManagement.parentId ",qmeCategoryManagement.parentId);
+                $("#qmeTreeId").jstree(true).refresh();
+            };
+
+
             qmeCategoryManagement.selectNode = function(selectedNode){
                 if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
                     qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
@@ -53,8 +72,8 @@
                             qmeCategoryManagement.categoryParents.push(category);
                         }
                     }
-
                     qmeCategoryManagement.parentId     = ""+selectedNode.data.parentCategoryId+"";
+                    qmeCategoryManagement.addNew       = undefined;
                     $scope.$digest();
                 }
             };
