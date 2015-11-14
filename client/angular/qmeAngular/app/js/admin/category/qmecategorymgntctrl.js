@@ -6,20 +6,23 @@
 
         .controller('qmeCategoryManagementCtrl', QMeCategoryManagementController);
 
-        QMeCategoryManagementController.$inject = ['$state','$scope','qmeFlashService','qmeCategoryService'];
+        QMeCategoryManagementController.$inject = ['$state','qmeFlashService','qmeCategoryService'];
 
-        function QMeCategoryManagementController($state,$scope,qmeFlashService,qmeCategoryService) {
+        function QMeCategoryManagementController($state,qmeFlashService,qmeCategoryService) {
 
             var qmeCategoryManagement = this;
 
-            qmeCategoryManagement.categorycount = 0;
+            qmeCategoryManagement.listCategories = function(treecallback, parentId){
 
-            qmeCategoryManagement.listCategories = function(){
+                console.log("got treecallback",treecallback)
 
-               qmeCategoryService.listCategoryByParent(0)
+                console.log("got parentId",parentId)
+
+                qmeCategoryService.listCategoryByParent(parentId)
                     .then(
                         function(res){
-                            qmeCategoryManagement.categories = res;
+                            treecallback(qmeCategoryManagement.processJsTreeData(res));
+
                         },
                         function(error){
                             if(error && error.status && error.status == 403) {
@@ -28,13 +31,30 @@
                             }else {
                                 qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
                             }
+
                         }
                     );
             };
 
-            qmeCategoryManagement.recordsLoaded = function(){
-                return (qmeCategoryManagement.categorycount > 0 );
-            };
+            qmeCategoryManagement.processJsTreeData = function(categorylist){
+                var nodeData = [];
+                for (var key in categorylist) {
+                    var category = categorylist[key];
+                    if (category.hasOwnProperty('categoryId')){
+
+                        var categoryNode = {
+                            "id": ""+category.categoryId+"",
+                            "parent" : "#",
+                            "text": ""+category.categoryName+"",
+                            "children": true
+                        };
+
+                        nodeData.push(categoryNode);
+                    }
+                }
+                return nodeData;
+            }
+
         }
 
 })();
