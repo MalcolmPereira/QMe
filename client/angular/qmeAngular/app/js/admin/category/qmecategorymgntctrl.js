@@ -12,6 +12,8 @@
 
             var qmeCategoryManagement = this;
 
+            qmeCategoryManagement.categoryName = undefined;
+
             qmeCategoryManagement.listCategories = function(treecallback, parentId){
 
                 qmeCategoryService.listCategoryByParent(parentId)
@@ -32,10 +34,22 @@
                     );
             };
 
+            qmeCategoryManagement.selectNode = function(selectedNode){
+                console.log("node selected",selectedNode.data.categoryName);
+                qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
+                /*
+                if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
+
+                }
+                */
+            };
+
             qmeCategoryManagement.processJsTreeData = function(categorylist,parentId){
                 var nodeData = [];
                 for (var key in categorylist) {
+
                     var category = categorylist[key];
+
                     if (category.hasOwnProperty('categoryId')){
                         if(parentId === 0){
                             parentId = "#";
@@ -48,7 +62,7 @@
                             "text": ""+category.categoryName+"",
                             "icon": "glyphicon glyphicon-link",
                             "children": true,
-                            "category": category
+                            "data": category
                         };
 
                         nodeData.push(categoryNode);

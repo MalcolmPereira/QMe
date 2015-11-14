@@ -11,7 +11,8 @@
                 controller: 'qmeTreeCtrl',
                 controllerAs: 'qmeTreeCtrl',
                 scope: {
-                    treeFunction: '&'
+                    treeFunction: '&',
+                    selectFunction: '&'
                 }
             };
         })
@@ -35,6 +36,11 @@
                 "multiple": false
             };
             $("#qmeTreeId").jstree(treeConfig);
+
+            $("#qmeTreeId").on("select_node.jstree", function(evt, data){
+                   $scope.selectFunction()(data.node);
+                }
+            );
         }
 
 })();
