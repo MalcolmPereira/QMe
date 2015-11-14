@@ -6,9 +6,9 @@
 
         .controller('qmeCategoryManagementCtrl', QMeCategoryManagementController);
 
-        QMeCategoryManagementController.$inject = ['$state','qmeFlashService','qmeCategoryService'];
+        QMeCategoryManagementController.$inject = ['$state','$scope','qmeFlashService','qmeCategoryService'];
 
-        function QMeCategoryManagementController($state,qmeFlashService,qmeCategoryService) {
+        function QMeCategoryManagementController($state,$scope,qmeFlashService,qmeCategoryService) {
 
             var qmeCategoryManagement = this;
 
@@ -20,7 +20,6 @@
                     .then(
                         function(res){
                             treecallback(qmeCategoryManagement.processJsTreeData(res,parentId));
-
                         },
                         function(error){
                             if(error && error.status && error.status == 403) {
@@ -35,13 +34,10 @@
             };
 
             qmeCategoryManagement.selectNode = function(selectedNode){
-                console.log("node selected",selectedNode.data.categoryName);
-                qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
-                /*
                 if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
-
+                    qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
+                    $scope.$digest();
                 }
-                */
             };
 
             qmeCategoryManagement.processJsTreeData = function(categorylist,parentId){
