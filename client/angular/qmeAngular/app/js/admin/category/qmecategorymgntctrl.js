@@ -14,14 +14,10 @@
 
             qmeCategoryManagement.listCategories = function(treecallback, parentId){
 
-                console.log("got treecallback",treecallback)
-
-                console.log("got parentId",parentId)
-
                 qmeCategoryService.listCategoryByParent(parentId)
                     .then(
                         function(res){
-                            treecallback(qmeCategoryManagement.processJsTreeData(res));
+                            treecallback(qmeCategoryManagement.processJsTreeData(res,parentId));
 
                         },
                         function(error){
@@ -36,17 +32,22 @@
                     );
             };
 
-            qmeCategoryManagement.processJsTreeData = function(categorylist){
+            qmeCategoryManagement.processJsTreeData = function(categorylist,parentId){
                 var nodeData = [];
                 for (var key in categorylist) {
                     var category = categorylist[key];
                     if (category.hasOwnProperty('categoryId')){
-
+                        if(parentId === 0){
+                            parentId = "#";
+                        }else{
+                            parentId = ""+parentId+"";
+                        }
                         var categoryNode = {
                             "id": ""+category.categoryId+"",
-                            "parent" : "#",
+                            "parent" : parentId,
                             "text": ""+category.categoryName+"",
-                            "children": true
+                            "children": true,
+                            "category": category
                         };
 
                         nodeData.push(categoryNode);
