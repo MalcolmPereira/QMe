@@ -30,7 +30,9 @@
                         }
                     }
                  },
-                "plugins" : [ "wholerow"]
+                "plugins" : [ "wholerow"],
+                "themes": {"dots": false},
+                "multiple": false
             };
             $("#qmeTreeId").jstree(treeConfig);
         }

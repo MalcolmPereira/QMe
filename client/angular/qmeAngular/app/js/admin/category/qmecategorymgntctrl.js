@@ -46,6 +46,7 @@
                             "id": ""+category.categoryId+"",
                             "parent" : parentId,
                             "text": ""+category.categoryName+"",
+                            "icon": "glyphicon glyphicon-link",
                             "children": true,
                             "category": category
                         };
