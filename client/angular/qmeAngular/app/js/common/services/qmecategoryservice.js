@@ -25,6 +25,47 @@
                 );
             return listCategoryPromise.promise;
         };
+
+        qmeCategoryService.createCategory = function(category){
+
+            var createCategoryPromise = $q.defer();
+
+            pleaseWait.showPleaseWait();
+
+            qmeCategoryResource.categoryResource(qmeUserSession.authtoken())
+
+                .save(category
+                    ,
+                    function(res){
+                        pleaseWait.hidePleaseWait();
+                        createCategoryPromise.resolve(res);
+                    }
+                    ,
+                    function(error){
+                        pleaseWait.hidePleaseWait();
+                        createCategoryPromise.reject(error);
+                    });
+
+            return createCategoryPromise.promise;
+        };
+
+        qmeCategoryService.updateCategory = function(category){
+
+            var updateCategoryPromise = $q.defer();
+
+            qmeCategoryResource.categoryUpdateResource(qmeUserSession.authtoken(),category.categoryId)
+                .updateCategory({}, category
+                    ,function(res){
+                        pleaseWait.hidePleaseWait();
+                        updateCategoryPromise.resolve(res);
+                    },
+                    function(error){
+                        pleaseWait.hidePleaseWait();
+                        updateCategoryPromise.reject(error);
+                    }
+                );
+            return updateCategoryPromise.promise;
+        };
     }
 
 })();

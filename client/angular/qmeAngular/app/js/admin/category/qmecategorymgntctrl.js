@@ -12,8 +12,9 @@
 
             var qmeCategoryManagement = this;
 
-            qmeCategoryManagement.addNew               = undefined;
+            qmeCategoryManagement.addNew               = true;
             qmeCategoryManagement.categoryName         = undefined;
+            qmeCategoryManagement.categoryId           = undefined;
             qmeCategoryManagement.parentId             = undefined;
             qmeCategoryManagement.categoryParentsAll   = [
                 {
@@ -51,19 +52,85 @@
                 qmeCategoryManagement.categoryName = ""
                 qmeCategoryManagement.parentId     = "0";
                 qmeCategoryManagement.addNew       = true;
+                qmeCategoryManagement.categoryId   = undefined;
             };
 
             qmeCategoryManagement.submitUpdates = function(){
-                //console.log("qmeCategoryManagement.addNew ",qmeCategoryManagement.addNew);
-                //console.log("qmeCategoryManagement.categoryName ",qmeCategoryManagement.categoryName);
-                //console.log("qmeCategoryManagement.parentId ",qmeCategoryManagement.parentId);
-                $("#qmeTreeId").jstree(true).refresh();
+
+                var category = undefined;
+
+                if(qmeCategoryManagement.parentId > 0){
+                    category = {
+                        "categoryName":qmeCategoryManagement.categoryName,
+                        "parentCategoryId":qmeCategoryManagement.parentId
+                    };
+                }else{
+                    category = {
+                        "categoryName":qmeCategoryManagement.categoryName
+                    };
+                }
+
+                if(qmeCategoryManagement.addNew ){
+
+                    qmeCategoryService.createCategory(category)
+                        .then(
+                            function(res){
+                                $("#qmeTreeId").jstree(true).refresh();
+                            },
+                            function(error){
+                                if(error && error.status && error.status == 403) {
+                                    qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                                }else if(error && error.status && error.status == 404){
+                                    qmeFlashService.Error("Oops.....Invalid request Parent Category invalid,not found.");
+
+                                }else if(error && error.status && error.status == 400){
+                                    qmeFlashService.Error("Oops.....Invalid request, please make sure valid category name is provided.");
+
+                                }else if(error && error.status && error.status == 409){
+                                    qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
+
+                                }else {
+                                    qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
+                                }
+                            }
+                        );
+
+                }else{
+
+                    category[ "categoryId" ] = qmeCategoryManagement.categoryId;
+                    qmeCategoryService.updateCategory(category)
+                        .then(
+                            function(res){
+                                $("#qmeTreeId").jstree(true).refresh();
+                            },
+                            function(error){
+                                if(error && error.status && error.status == 403) {
+                                    qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                                }else if(error && error.status && error.status == 404){
+                                    qmeFlashService.Error("Oops.....Invalid request Parent Category/Category invalid, not found.");
+
+                                }else if(error && error.status && error.status == 400){
+                                    qmeFlashService.Error("Oops.....Invalid request, please make sure valid category name is provided.");
+
+                                }else if(error && error.status && error.status == 409){
+                                    qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
+
+                                }else {
+                                    qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
+                                }
+                            }
+                        );
+                }
+
             };
 
 
             qmeCategoryManagement.selectNode = function(selectedNode){
                 if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
                     qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
+                    qmeCategoryManagement.categoryId   = selectedNode.data.categoryId;
                     qmeCategoryManagement.categoryParents  = [];
 
                     for(var a in qmeCategoryManagement.categoryParentsAll){

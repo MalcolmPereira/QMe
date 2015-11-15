@@ -74,6 +74,10 @@
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(categoryAPI);
             };
+            this.categoryUpdateResource = function(authToken, categoryId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(categoryAPI+"/"+categoryId,{},{'updateCategory':{method:'PUT'}});
+            };
             this.categoryCountResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $http.get(categoryCountEndPoint);
