@@ -12,6 +12,7 @@
 
             var qmeCategoryManagement = this;
 
+            qmeCategoryManagement.updateCategoryForm;
             qmeCategoryManagement.addNew               = true;
             qmeCategoryManagement.categoryName         = undefined;
             qmeCategoryManagement.categoryId           = undefined;
@@ -26,6 +27,9 @@
             qmeCategoryManagement.categoryParents      = [];
 
             qmeCategoryManagement.listCategories = function(treecallback, parentId){
+
+                qmeFlashService.Clear();
+
                 qmeCategoryService.listCategoryByParent(parentId)
                     .then(
                         function(res){
@@ -44,6 +48,7 @@
             };
 
             qmeCategoryManagement.addNewCategory = function(){
+                qmeFlashService.Clear();
                 qmeCategoryManagement.categoryParents  = [];
                 for(var a in qmeCategoryManagement.categoryParentsAll){
                     var category = qmeCategoryManagement.categoryParentsAll[a];
@@ -56,7 +61,7 @@
             };
 
             qmeCategoryManagement.submitUpdates = function(){
-
+                qmeFlashService.Clear();
                 var category = undefined;
 
                 if(qmeCategoryManagement.parentId > 0){
@@ -75,7 +80,10 @@
                     qmeCategoryService.createCategory(category)
                         .then(
                             function(res){
+                                qmeCategoryManagement.categoryName = ""
+                                qmeCategoryManagement.parentId     = "0";
                                 $("#qmeTreeId").jstree(true).refresh();
+                                qmeCategoryManagement.updateCategoryForm.$setPristine();
                             },
                             function(error){
                                 if(error && error.status && error.status == 403) {
@@ -102,7 +110,10 @@
                     qmeCategoryService.updateCategory(category)
                         .then(
                             function(res){
+                                qmeCategoryManagement.categoryName = ""
+                                qmeCategoryManagement.parentId     = "0";
                                 $("#qmeTreeId").jstree(true).refresh();
+                                qmeCategoryManagement.updateCategoryForm.$setPristine();
                             },
                             function(error){
                                 if(error && error.status && error.status == 403) {
@@ -128,6 +139,7 @@
 
 
             qmeCategoryManagement.selectNode = function(selectedNode){
+                qmeFlashService.Clear();
                 if(selectedNode !== null && selectedNode !== undefined && selectedNode.data !== null && selectedNode.data !== undefined){
                     qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
                     qmeCategoryManagement.categoryId   = selectedNode.data.categoryId;
@@ -172,6 +184,13 @@
                         nodeData.push(categoryNode);
                     }
                 }
+
+                qmeCategoryManagement.categoryParents  = [];
+                for(var a in qmeCategoryManagement.categoryParentsAll){
+                    var category = qmeCategoryManagement.categoryParentsAll[a];
+                    qmeCategoryManagement.categoryParents.push(category);
+                }
+
                 return nodeData;
             }
 
