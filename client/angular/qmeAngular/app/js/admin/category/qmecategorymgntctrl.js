@@ -62,8 +62,23 @@
             };
 
             qmeCategoryManagement.cancelUpdates = function(){
+                $("#qmeTreeId").jstree("deselect_all");
+                qmeCategoryManagement.categoryName = ""
+                qmeCategoryManagement.parentId     = "0";
                 qmeCategoryManagement.addNew       = true;
                 qmeCategoryManagement.categoryId   = undefined;
+            };
+
+            qmeCategoryManagement.isDeletable = function(){
+                if(qmeCategoryManagement.addNew){
+                    return true;
+                }
+
+                if(qmeCategoryManagement.updateCategoryForm.$invalid){
+                    return true;
+                }
+
+                return true;
             };
 
             qmeCategoryManagement.submitUpdates = function(){
