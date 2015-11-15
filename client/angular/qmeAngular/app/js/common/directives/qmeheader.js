@@ -53,7 +53,7 @@
             };
 
             qmeNav.isActive = function(currentState){
-               return (currentState === $state.current.name);
+               return (currentState.indexOf($state.current.name) > -1);
             };
         }
 
