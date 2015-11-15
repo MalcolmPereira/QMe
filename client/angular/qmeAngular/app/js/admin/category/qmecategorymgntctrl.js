@@ -60,6 +60,11 @@
                 qmeCategoryManagement.categoryId   = undefined;
             };
 
+            qmeCategoryManagement.cancelUpdates = function(){
+                qmeCategoryManagement.addNew       = true;
+                qmeCategoryManagement.categoryId   = undefined;
+            };
+
             qmeCategoryManagement.submitUpdates = function(){
                 qmeFlashService.Clear();
                 var category = undefined;
