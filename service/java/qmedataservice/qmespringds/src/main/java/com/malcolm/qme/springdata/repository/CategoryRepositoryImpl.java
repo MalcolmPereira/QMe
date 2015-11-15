@@ -119,7 +119,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         if(category.getCategoryID() > 0){
             categoryEntity.setCatId(category.getCategoryID());
         }
-        if(category.getCategoryParentID() > 0){
+        if(category.getCategoryParentID() != null && category.getCategoryParentID() > 0){
             categoryEntity.setCatParentId(category.getCategoryParentID());
         }else{
             categoryEntity.setCatParentId(0L);
