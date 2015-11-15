@@ -5,7 +5,8 @@
         </div>
         <div class="panel-body">
            <div class="col-md-5">
-              <qme-tree tree-function="qmeCategoryManagement.listCategories" select-function="qmeCategoryManagement.selectNode"></qme-tree>
+               <button id="addNewCategoryButton" type="button" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.addNewCategory()">Add New</button>
+               <qme-tree tree-function="qmeCategoryManagement.listCategories" select-function="qmeCategoryManagement.selectNode"></qme-tree>
            </div>
            <div class="col-md-7">
                <form name="qmeCategoryManagement.updateCategoryForm" class="form-horizontal">
@@ -19,9 +20,7 @@
                            <option ng-repeat="category in qmeCategoryManagement.categoryParents" title="{{category.categoryName}}" value="{{category.categoryId}}">{{category.categoryName}}</option>
                        </select>
                    </div>
-                   <button id="addNewCategoryButton" type="button" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.addNewCategory()">Add</button>
-                   &nbsp;&nbsp;&nbsp;&nbsp;
-                   <button id="submitUpdateButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.submitUpdates()" ng-disabled="qmeCategoryManagement.updateCategoryForm.$invalid">Save</button>
+                  <button id="submitUpdateButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.submitUpdates()" ng-disabled="qmeCategoryManagement.updateCategoryForm.$invalid">Save</button>
                    &nbsp;&nbsp;&nbsp;&nbsp;
                    <button id="cancelButton" type="reset" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.cancelUpdates()">Reset</button>
                    &nbsp;&nbsp;&nbsp;&nbsp;

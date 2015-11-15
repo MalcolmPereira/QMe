@@ -54,6 +54,7 @@
                     var category = qmeCategoryManagement.categoryParentsAll[a];
                     qmeCategoryManagement.categoryParents.push(category);
                 }
+                $("#qmeTreeId").jstree("deselect_all");
                 qmeCategoryManagement.categoryName = ""
                 qmeCategoryManagement.parentId     = "0";
                 qmeCategoryManagement.addNew       = true;
