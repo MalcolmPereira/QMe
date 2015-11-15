@@ -96,8 +96,11 @@ public final class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public QMeCategoryDetail save(QMeCategory qMeCategory, Long userId) throws QMeInvalidResourceDataException,QMeResourceConflictException, QMeServerException {
+    public QMeCategoryDetail save(QMeCategory qMeCategory, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
         try{
+            if(categoryRepo.findCategoryByName(qMeCategory.getCategoryName()) != null){
+                throw new QMeResourceConflictException("Category with name already exists, please use valid user name");
+            }
             Category category     =  getCategory(qMeCategory,userId);
             category = categoryRepo.save(category);
             return getQMeCategoryDetail(category);
@@ -144,7 +147,14 @@ public final class CategoryServiceImpl implements CategoryService {
      * @param userID User Id
      * @return Category domain object
      */
-    private Category getCategory(QMeCategory qMeCategory,Long userID)  {
+    private Category getCategory(QMeCategory qMeCategory,Long userID) throws QMeException, QMeResourceNotFoundException {
+        Long parentCategoryID = qMeCategory.getParentCategoryId();
+        if(parentCategoryID != null ){
+            Category parentCategory     =  categoryRepo.findById(qMeCategory.getParentCategoryId());
+            if(parentCategory == null){
+                throw new QMeResourceNotFoundException("Category with Category ID "+qMeCategory.getParentCategoryId()+" not found");
+            }
+        }
         return new Category(qMeCategory.getParentCategoryId(),qMeCategory.getCategoryName(),userID);
     }
 

@@ -23,6 +23,14 @@ interface CategorySpringDataRepository extends JpaRepository<CategoryEntity, Lon
 	 * @param categoryName Category Name
 	 * @return CategoryEntity List
 	 */
+	CategoryEntity findByCatName(String categoryName);
+
+
+	/**
+	 * Find by Category Name Like
+	 * @param categoryName Category Name
+	 * @return CategoryEntity List
+	 */
 	List<CategoryEntity> findByCatNameIgnoreCaseLike(String categoryName);
 
 	/**

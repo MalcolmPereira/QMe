@@ -16,6 +16,15 @@ import java.util.List;
 public interface CategoryRepository extends QMeRepository<Category,Long> {
 
     /**
+     * Find By Category Name
+     * @param categoryName Category Name
+     * @return Category matching category name
+     * @throws QMeException
+     */
+    Category findCategoryByName(String categoryName) throws QMeException;
+
+
+    /**
      * Find By Category Name Like
      * @param categoryName Category Name Like
      * @return Category List matching category name like

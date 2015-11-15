@@ -51,6 +51,19 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
+    public Category findCategoryByName(String categoryName) throws QMeException {
+        try{
+            CategoryEntity categoryEntity = categorySpringDataRepository.findByCatName(categoryName);
+            if(categoryEntity != null){
+                return getCategory(categoryEntity);
+            }
+            return null;
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
     public List<Category> findCategoryNameLike(String categoryName) throws QMeException {
         try{
             return(getCategory(categorySpringDataRepository.findByCatNameIgnoreCaseLike(categoryName)));
