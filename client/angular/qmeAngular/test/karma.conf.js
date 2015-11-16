@@ -50,8 +50,8 @@ module.exports = function(config){
             type : 'html',
             dir : 'coverage/',
             subdir: 'report'
-        }
-        ,
+        },
+
         junitReporter : {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'

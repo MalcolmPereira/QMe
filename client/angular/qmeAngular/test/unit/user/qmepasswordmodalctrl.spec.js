@@ -28,7 +28,7 @@
             ctrl.passwordForm = {
                 $setPristine: function(){},
                 $setValidity: function(){}
-            }
+            };
 
         }));
 

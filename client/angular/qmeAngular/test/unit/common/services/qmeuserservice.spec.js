@@ -484,7 +484,7 @@
         it('Should submit reset request with url for password reset ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
-            var useremail = "some-email"
+            var useremail = "some-email";
             httpBackend.expectPUT(userForgotPaswordEndpoint+useremail,qmeContants.reseturl).respond(200,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
@@ -504,7 +504,7 @@
         it('Should return user not found error 404 on password reset ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
-            var useremail = "some-email"
+            var useremail = "some-email";
             httpBackend.expectPUT(userForgotPaswordEndpoint+useremail,qmeContants.reseturl).respond(404,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
@@ -524,7 +524,7 @@
         it('Should return internal server error 500  on password reset ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
-            var useremail = "some-email"
+            var useremail = "some-email";
             httpBackend.expectPUT(userForgotPaswordEndpoint+useremail,qmeContants.reseturl).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
@@ -559,7 +559,7 @@
                 "userLastLoginDate": "2015-28-05 13:35:29",
                 "userRoles": ['ADMIN','USER']
             };
-            var useremail = "some-email"
+            var useremail = "some-email";
             httpBackend.expectPUT(userResetPaswordEndpoint+useremail,resetrequest).respond(200,user);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
@@ -582,7 +582,7 @@
                 userName:"someusername",
                 userPassword:"somepassword"
             };
-            var useremail = "some-email"
+            var useremail = "some-email";
             httpBackend.expectPUT(userResetPaswordEndpoint+useremail,resetrequest).respond(500,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService
@@ -647,7 +647,7 @@
                                             "href": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME"
                                          }
                                     ]
-            }
+            };
             httpBackend.expectGET(userCountEndPoint).respond(200,countresponse);
             httpBackend.whenGET(/js\//).respond(200,{});
             qmeUserService

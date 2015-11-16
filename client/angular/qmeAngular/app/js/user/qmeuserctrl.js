@@ -11,7 +11,7 @@
 
         var qmeUser = this;
 
-        qmeUser.signInForm;
+        qmeUser.signInForm = undefined;
         qmeUser.userEmail = "";
         qmeUser.userName = "";
         qmeUser.userPassword = "";
@@ -20,7 +20,7 @@
         qmeUser.userFirstName = "";
         qmeUser.userLastName = "";
 
-        if(qmeUserSession && qmeUserSession.isSignedIn() && $state != null && $state.current != null && $state.current.name != null){
+        if(qmeUserSession && qmeUserSession.isSignedIn() && $state !== null && $state.current !== null && $state.current.name !== null){
             qmeUser.userEmail = qmeUserSession.useremail();
             qmeUser.userName = qmeUserSession.username();
             qmeUser.userPassword = "**********";
@@ -41,9 +41,7 @@
 
         qmeUser.userNameDisplay = function (){
             if(qmeUser.isSignedIn()){
-                if(qmeUserService.currentUser().userfirstname() && qmeUserService.currentUser().userfirstname().length > 0
-                    && qmeUserService.currentUser().userlastname() && qmeUserService.currentUser().userlastname().length > 0
-                ){
+                if(qmeUserService.currentUser().userfirstname() && qmeUserService.currentUser().userfirstname().length > 0 && qmeUserService.currentUser().userlastname() && qmeUserService.currentUser().userlastname().length > 0){
                     return qmeUserService.currentUser().userfirstname() + " "+ qmeUserService.currentUser().userlastname();
 
                 }else if(qmeUserService.currentUser().userfirstname() && qmeUserService.currentUser().userfirstname().length > 0){
@@ -118,7 +116,7 @@
                     qmeUser.userPassword = "";
                     qmeUser.userUpdatedPassword = "";
                 }
-            )
+            );
         };
 
 

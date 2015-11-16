@@ -24,7 +24,7 @@
         it('Should have a QMe Header Directive', function() {
             expect(compile).toBeDefined();
             expect(rootScope).toBeDefined();
-            qmeHeader = compile("<qme-header></qme-header>")(rootScope)
+            qmeHeader = compile("<qme-header></qme-header>")(rootScope);
             rootScope.$digest();
             expect(qmeHeader.html()).toContain('<span id="qmeAppHeader">QMe Application</span>');
         });

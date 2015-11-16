@@ -129,7 +129,7 @@
             expect(ctrl.isAdmin() ).toBe(false);
             expect(ctrl.userNameDisplay() ).toBe("Test User");
 
-            var user = {
+            var user1 = {
                 "authToken": "someauthtoken",
                 "userID": 1,
                 "userName": "testuser",
@@ -140,7 +140,7 @@
                 "userLastLoginDate": "2015-28-05 13:35:29",
                 "userRoles": ['USER']
             };
-            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user1);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.performSignIn();
             httpBackend.flush();
@@ -317,7 +317,7 @@
             expect(ctrl.isAdmin() ).toBe(false);
             expect(ctrl.userNameDisplay() ).toBe("Test User");
 
-            ctrl.routeUserProfile()
+            ctrl.routeUserProfile();
             scope.$digest();
 
             expect(state).toBeDefined();
@@ -391,7 +391,7 @@
             expect(ctrl.isAdmin() ).toBe(false);
             expect(ctrl.userNameDisplay() ).toBe("Test User");
 
-            ctrl.routeUserProfile()
+            ctrl.routeUserProfile();
             scope.$digest();
 
             expect(state).toBeDefined();
@@ -411,7 +411,7 @@
             expect(ctrl.userFirstName).toBeDefined();
             expect(ctrl.userLastName).toBeDefined();
 
-            ctrl.cancelUserUpdate()
+            ctrl.cancelUserUpdate();
             scope.$digest();
             expect(qmeUserSession.isUpdating()).toBe(false);
             expect(state).toBeDefined();
@@ -454,7 +454,7 @@
             expect(ctrl.isAdmin() ).toBe(true);
 
 
-            ctrl.routeRegistration()
+            ctrl.routeRegistration();
             scope.$digest();
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
@@ -468,7 +468,7 @@
         });
 
         it('Ensure user can route to staging', function() {
-            ctrl.routeStaging()
+            ctrl.routeStaging();
             scope.$digest();
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
@@ -482,7 +482,7 @@
         });
 
         it('Ensure user can route to reset password', function() {
-            ctrl.routeResetPassword()
+            ctrl.routeResetPassword();
             scope.$digest();
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
@@ -495,7 +495,7 @@
         });
 
         it('Ensure user can cancel registration ', function() {
-            ctrl.cancelResetRegistration()
+            ctrl.cancelResetRegistration();
             scope.$digest();
             expect(state).toBeDefined();
             expect(state).not.toBeNull();
@@ -1121,7 +1121,7 @@
                     "test.user@gmail.com",
                     "2015-28-05 13:35:29",
                     ['USER']
-                )
+                );
                 ctrl  = $controller('qmeUserCtrl', {
                     $scope: scope,
                     $state: state,

@@ -188,9 +188,9 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     controllerAs: 'qmeQuizManagementCtrl',
                     authenticate: true,
                     admin: true
-                })
+                });
 
-        })
+        });
 
 })();
 
@@ -200,20 +200,9 @@ var pleaseWait = (function () {
     'use strict';
 
     var pleaseWaitDiv = $(
-        '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">'
-        +
-            '<div class="modal-dialog modal-m">'
-        +
-                    '<div style="text-align:center;color:#1bc2d3">'
-        +
-                            '<i class="glyphicon glyphicon-hourglass"></i>Processing..'
-        +
-                    '</div>'
-        +
-            '</div>'
-        +
-        '</div>'
-    );
+        '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">'+'<div class="modal-dialog modal-m">'+'<div style="text-align:center;color:#1bc2d3">'+'<i class="glyphicon glyphicon-hourglass"></i>Processing..'+'</div>'+'</div>'+'</div>'
+        );
+
     return {
         showPleaseWait: function() {
             pleaseWaitDiv.modal();

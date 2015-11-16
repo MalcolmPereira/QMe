@@ -4,7 +4,7 @@
 
     describe('Unit: QMe Flash Directive', function () {
 
-        var qmeFlash,compile,rootScope;;
+        var qmeFlash,compile,rootScope;
 
         beforeEach(module('qmeApp'));
 
@@ -18,7 +18,7 @@
         it('Should have a QMe Flash Directive', function() {
             expect(compile).toBeDefined();
             expect(rootScope).toBeDefined();
-            qmeFlash = compile("<qme-flash></qme-flash>")(rootScope)
+            qmeFlash = compile("<qme-flash></qme-flash>")(rootScope);
             rootScope.$digest();
             expect(qmeFlash.html()).toContain('<div class="container-fluid">');
         });

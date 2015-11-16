@@ -85,7 +85,7 @@
 
         qmeUserService.stageUser = function(user){
 
-            user[ "confirmURL" ] = QME_CONSTANTS.stageconfirmurl;
+            user.confirmURL = QME_CONSTANTS.stageconfirmurl;
 
             var stageUserPromise = $q.defer();
 
@@ -93,14 +93,10 @@
 
             qmeUserResource.userStageResource()
 
-                .save(user
-                ,
-                function(res){
+                .save(user,function(res){
                     pleaseWait.hidePleaseWait();
                     stageUserPromise.resolve(res);
-                }
-                ,
-                function(error){
+                },function(error){
                     pleaseWait.hidePleaseWait();
                     stageUserPromise.reject(error);
                 });
@@ -112,14 +108,9 @@
             var confirmUserPromise = $q.defer();
 
             qmeUserResource.userConfirmResource()
-
-                .save(stagingtoken
-                ,
-                function(res){
+                .save(stagingtoken,function(res){
                     confirmUserPromise.resolve(res);
-                }
-                ,
-                function(error){
+                },function(error){
                     confirmUserPromise.reject(error);
                 });
             return confirmUserPromise.promise;
@@ -132,13 +123,9 @@
 
            qmeUserResource.userRegisterResource()
 
-                .save(user
-                ,
-                function(res){
+                .save(user,function(res){
                     registeredUserPromise.resolve(res);
-                }
-                ,
-                function(error){
+                },function(error){
                     registeredUserPromise.reject(error);
                 });
             return registeredUserPromise.promise;
@@ -146,23 +133,21 @@
 
         qmeUserService.updateUserProfile = function(updatedUser){
             if(updatedUser.userPassword === QME_CONSTANTS.password_mask ){
-                updatedUser[ "userPassword" ] = "";
-                updatedUser[ "updatedUserPassword" ] = "";
+                updatedUser.userPassword = "";
+                updatedUser.updatedUserPassword = "";
             }
-            updatedUser[ "userId" ] = qmeUserSession.userid();
-            updatedUser[ "userName" ] = qmeUserSession.username();
-            updatedUser[ "userEmail" ] = qmeUserSession.useremail();
+            updatedUser.userId = qmeUserSession.userid();
+            updatedUser.userName = qmeUserSession.username();
+            updatedUser.userEmail = qmeUserSession.useremail();
 
             var updateUserPromise = $q.defer();
 
             qmeUserResource.userUpdateResource(qmeUserSession.authtoken(),qmeUserSession.userid())
-                .updateUser({}, updatedUser
-                ,function(res){
+                .updateUser({}, updatedUser,function(res){
                     qmeUserSession.setUserFirstname(res.userFirstName);
                     qmeUserSession.setUserLastname(res.userLastName);
                     updateUserPromise.resolve(res);
-                },
-                function(error){
+                },function(error){
                     updateUserPromise.reject(error);
                 }
             );
@@ -172,13 +157,11 @@
         qmeUserService.updateUser = function(updatedUser, userId){
             var updateUserPromise = $q.defer();
             qmeUserResource.userUpdateResource(qmeUserSession.authtoken(),userId)
-                .updateUser({}, updatedUser
-                    ,function(res){
-                        updateUserPromise.resolve(res);
-                    },
-                    function(error){
+                .updateUser({}, updatedUser,function(res){
+                    updateUserPromise.resolve(res);
+                 },function(error){
                         updateUserPromise.reject(error);
-                    }
+                 }
                 );
             return updateUserPromise.promise;
         };
@@ -189,11 +172,9 @@
 
             qmeUserResource.userForgotPasswordResource(useremail)
 
-                .reset({}, QME_CONSTANTS.reseturl
-                ,function(res){
+                .reset({}, QME_CONSTANTS.reseturl,function(res){
                     resetPasswordUserPromise.resolve(res);
-                },
-                function(error){
+                },function(error){
                     resetPasswordUserPromise.reject(error);
                 }
             );
@@ -211,8 +192,7 @@
             };
 
             qmeUserResource.userResetPasswordResource(useremail)
-                .resetpassword({}, resetrequest
-                ,function(res){
+                .resetpassword({}, resetrequest,function(res){
                     qmeUserSession.create(
                         res.authToken,
                         res.userID,
@@ -223,10 +203,8 @@
                         res.userLastLoginDate,
                         res.userRoles
                     );
-
                     resetPasswordUserPromise.resolve(res);
-                },
-                function(error){
+                },function(error){
                     resetPasswordUserPromise.reject(error);
                 }
             );

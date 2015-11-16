@@ -23,7 +23,7 @@
         it('Should have a QMe Pagination Directive', function() {
             expect(compile).toBeDefined();
             expect(rootScope).toBeDefined();
-            qmePagination = compile("<qme-page qme-totalcount='200' qme-pagingfunction='mockPageFunc'></qme-page>")(rootScope)
+            qmePagination = compile("<qme-page qme-totalcount='200' qme-pagingfunction='mockPageFunc'></qme-page>")(rootScope);
             rootScope.$digest();
             expect(qmePagination.html()).toContain("qmePageCtrl.goNext()");
         });

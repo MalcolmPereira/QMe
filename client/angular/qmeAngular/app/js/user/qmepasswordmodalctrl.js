@@ -11,7 +11,7 @@
 
         var qmeUpdatePassword = this;
 
-        qmeUpdatePassword.passwordForm;
+        qmeUpdatePassword.passwordForm = undefined;
         qmeUpdatePassword.currentPassword = "";
         qmeUpdatePassword.password = "";
         qmeUpdatePassword.passwordConfirm = "";
@@ -62,7 +62,7 @@
                 qmeUpdatePassword.passwordConfirm &&
                 qmeUpdatePassword.passwordConfirm.length > 0 &&
                 qmeUpdatePassword.validatePasswordFields()
-            )
+            );
         };
     }
 
