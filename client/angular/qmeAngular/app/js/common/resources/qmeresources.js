@@ -25,7 +25,7 @@
             };
             this.userCountResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
-                return $http.get(userCountEndPoint)
+                return $http.get(userCountEndPoint);
             };
             this.userPagedResource = function(authToken,pageIndex,maxRows,sorttype,sortfields){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
@@ -61,7 +61,7 @@
             this.logoutResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(userLogoutEndpoint);
-            }
+            };
         })
 
         .service('qmeCategoryResource',function($resource,$http,QME_CONSTANTS){
@@ -92,5 +92,5 @@
                 return $resource(categorySearchEndPoint+"/"+searchStr);
             };
 
-        })
+        });
 })();

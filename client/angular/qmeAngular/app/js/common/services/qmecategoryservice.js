@@ -34,17 +34,14 @@
 
             qmeCategoryResource.categoryResource(qmeUserSession.authtoken())
 
-                .save(category
-                    ,
-                    function(res){
+                .save(category,function(res){
                         pleaseWait.hidePleaseWait();
                         createCategoryPromise.resolve(res);
-                    }
-                    ,
-                    function(error){
+                    },function(error){
                         pleaseWait.hidePleaseWait();
                         createCategoryPromise.reject(error);
-                    });
+                    }
+                 );
 
             return createCategoryPromise.promise;
         };
@@ -54,12 +51,10 @@
             var updateCategoryPromise = $q.defer();
 
             qmeCategoryResource.categoryUpdateResource(qmeUserSession.authtoken(),category.categoryId)
-                .updateCategory({}, category
-                    ,function(res){
+                .updateCategory({}, category,function(res){
                         pleaseWait.hidePleaseWait();
                         updateCategoryPromise.resolve(res);
-                    },
-                    function(error){
+                    },function(error){
                         pleaseWait.hidePleaseWait();
                         updateCategoryPromise.reject(error);
                     }

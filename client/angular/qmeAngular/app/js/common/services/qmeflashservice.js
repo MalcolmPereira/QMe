@@ -44,6 +44,6 @@
                 type: 'error',
                 keepAfterLocationChange: keepAfterLocationChange
             };
-        }
+        };
     }
 })();

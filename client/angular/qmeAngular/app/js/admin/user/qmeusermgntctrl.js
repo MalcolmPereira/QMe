@@ -12,7 +12,7 @@
 
             var qmeUserManagement = this;
 
-            qmeUserManagement.users;
+            qmeUserManagement.users = undefined;
             qmeUserManagement.usercount = 0;
             qmeUserManagement.currentpage = 0;
             qmeUserManagement.sortasc = undefined;
@@ -55,7 +55,7 @@
                     qmeUserManagement.sortasc = $stateParams.sortasc;
                 }
 
-                if($stateParams.sortfields &&  $stateParams.sortfields != null) {
+                if($stateParams.sortfields &&  $stateParams.sortfields !== null) {
                     qmeUserManagement.sortfields = $stateParams.sortfields;
                 }else{
                     qmeUserManagement.sortfields = "USERNAME";
@@ -65,7 +65,7 @@
                     .then(
                     function(res){
                        qmeUserManagement.users = res;
-                       if($stateParams.currentpage &&  $stateParams.currentpage != null){
+                       if($stateParams.currentpage &&  $stateParams.currentpage !== null){
                           qmeUserManagement.pageUsers($stateParams.currentpage);
                           qmePageSession.setPageState($stateParams.currentpage);
                        }
@@ -196,7 +196,7 @@
                     sortfields:qmeUserManagement.sortfields
                     }
                 );
-           }
+           };
 
            qmeUserManagement.selectedUser = function(){
                qmeUserManagement.userId = $stateParams.currentuser.userId;
@@ -227,10 +227,10 @@
                }else{
                    qmeUserManagement.sortasc = $stateParams.sortasc;
                }
-               if($stateParams.sortfields &&  $stateParams.sortfields != null) {
+               if($stateParams.sortfields &&  $stateParams.sortfields !== null) {
                    qmeUserManagement.sortfields = $stateParams.sortfields;
                }
-           }
+           };
         }
 
 })();

@@ -144,7 +144,7 @@
             };
 
             qmePageSession.showPreviousGroup = function(){
-                return ((!qmePageSession.isFirstPage()) && (_currentGroup) && (_currentGroup > _pagesPerPage))
+                return ((!qmePageSession.isFirstPage()) && (_currentGroup) && (_currentGroup > _pagesPerPage));
             };
 
             qmePageSession.getPreviousGroup = function(){
@@ -185,7 +185,7 @@
                 if(!_currentGroup){
                     return false;
                 }
-                return ((!qmePageSession.isLastPage()) && (_currentGroup) && (_currentGroup > 0 && _currentGroup < _lastPage -1))
+                return ((!qmePageSession.isLastPage()) && (_currentGroup) && (_currentGroup > 0 && _currentGroup < _lastPage -1));
             };
 
             qmePageSession.getNextGroup = function(){
@@ -206,11 +206,11 @@
 
             qmePageSession.requiresPagination = function(){
                 return (_totalRecCount > _recPerPage);
-            }
+            };
 
             qmePageSession.requiresPageGroupings = function(){
                 return (_lastPage > _pagesPerPage);
-            }
+            };
         })
 
         .controller('qmePageCtrl',QMePageController);
@@ -291,6 +291,6 @@
 
             qmePage.requiresPagination = function(){
                 return qmePage.qmePageSession.requiresPagination();
-            }
+            };
         }
 })();

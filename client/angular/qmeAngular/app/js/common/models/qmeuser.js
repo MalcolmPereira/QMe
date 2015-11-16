@@ -7,15 +7,15 @@
 
         var qmeUserSession = this;
 
-        var _authtoken      = undefined;
-        var _userid         = undefined;
-        var _username       = undefined;
-        var _userfirstname  = undefined;
-        var _userlastname   = undefined;
-        var _useremail      = undefined;
-        var _userrole       = undefined;
-        var _userlastlogin  = undefined;
-        var _updating       = undefined;
+        var _authtoken;
+        var _userid;
+        var _username;
+        var _userfirstname;
+        var _userlastname;
+        var _useremail;
+        var _userrole;
+        var _userlastlogin;
+        var _updating;
 
 
         qmeUserSession.create = function (
@@ -100,9 +100,9 @@
         qmeUserSession.isSignedIn = function(){
             return(
                 qmeUserSession.userid() &&
-                qmeUserSession.userid() != null &&
+                qmeUserSession.userid() !== null &&
                 qmeUserSession.authtoken() &&
-                qmeUserSession.authtoken() != null
+                qmeUserSession.authtoken() !== null
             );
         };
 
@@ -118,5 +118,5 @@
         qmeUserSession.isUpdating = function(){
             return _updating;
         };
-    })
+    });
 })();
