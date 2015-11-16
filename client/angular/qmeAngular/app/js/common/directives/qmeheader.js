@@ -29,6 +29,9 @@
             };
 
             qmeNav.isAdmin = function(){
+                if(qmeUserSession.isAdmin() === null){
+                    return false;
+                }
                 return (qmeUserSession && qmeUserSession.isSignedIn() && qmeUserSession.isAdmin());
             };
 
