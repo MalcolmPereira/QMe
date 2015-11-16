@@ -12,7 +12,7 @@
 
             var qmeCategoryManagement = this;
 
-            qmeCategoryManagement.updateCategoryForm;
+            qmeCategoryManagement.updateCategoryForm   = undefined;
             qmeCategoryManagement.addNew               = true;
             qmeCategoryManagement.categoryName         = undefined;
             qmeCategoryManagement.categoryId           = undefined;
@@ -55,7 +55,7 @@
                     qmeCategoryManagement.categoryParents.push(category);
                 }
                 $("#qmeTreeId").jstree("deselect_all");
-                qmeCategoryManagement.categoryName = ""
+                qmeCategoryManagement.categoryName = "";
                 qmeCategoryManagement.parentId     = "0";
                 qmeCategoryManagement.addNew       = true;
                 qmeCategoryManagement.categoryId   = undefined;
@@ -63,7 +63,7 @@
 
             qmeCategoryManagement.cancelUpdates = function(){
                 $("#qmeTreeId").jstree("deselect_all");
-                qmeCategoryManagement.categoryName = ""
+                qmeCategoryManagement.categoryName = "";
                 qmeCategoryManagement.parentId     = "0";
                 qmeCategoryManagement.addNew       = true;
                 qmeCategoryManagement.categoryId   = undefined;
@@ -83,7 +83,7 @@
 
             qmeCategoryManagement.submitUpdates = function(){
                 qmeFlashService.Clear();
-                var category = undefined;
+                var category;
 
                 if(qmeCategoryManagement.parentId > 0){
                     category = {
@@ -101,7 +101,7 @@
                     qmeCategoryService.createCategory(category)
                         .then(
                             function(res){
-                                qmeCategoryManagement.categoryName = ""
+                                qmeCategoryManagement.categoryName = "";
                                 qmeCategoryManagement.parentId     = "0";
                                 $("#qmeTreeId").jstree(true).refresh();
                                 qmeCategoryManagement.updateCategoryForm.$setPristine();
@@ -127,11 +127,11 @@
 
                 }else{
 
-                    category[ "categoryId" ] = qmeCategoryManagement.categoryId;
+                    category.categoryId = qmeCategoryManagement.categoryId;
                     qmeCategoryService.updateCategory(category)
                         .then(
                             function(res){
-                                qmeCategoryManagement.categoryName = ""
+                                qmeCategoryManagement.categoryName = "";
                                 qmeCategoryManagement.parentId     = "0";
                                 $("#qmeTreeId").jstree(true).refresh();
                                 qmeCategoryManagement.updateCategoryForm.$setPristine();
@@ -208,13 +208,11 @@
 
                 qmeCategoryManagement.categoryParents  = [];
                 for(var a in qmeCategoryManagement.categoryParentsAll){
-                    var category = qmeCategoryManagement.categoryParentsAll[a];
-                    qmeCategoryManagement.categoryParents.push(category);
+                    qmeCategoryManagement.categoryParents.push(qmeCategoryManagement.categoryParentsAll[a]);
                 }
 
                 return nodeData;
-            }
-
+            };
         }
 
 })();
