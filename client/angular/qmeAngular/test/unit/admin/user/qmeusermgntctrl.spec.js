@@ -1,6 +1,6 @@
 (function () {
 
-	"use strict";
+    "use strict";
 
     describe('Controller: QMe Admin User Management Controller', function() {
 
@@ -170,8 +170,9 @@
                     "userRoles": ['USER']
                 }
             ];
-            ctrl.usercount == 0;
-            httpBackend.expectGET(userCountEndPoint).respond(200,3);
+
+            var res = {"content": 3}
+            httpBackend.expectGET(userCountEndPoint).respond(200,res);
             httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.listUsers();
@@ -181,11 +182,10 @@
             expect(ctrl.users.length).toBe(3);
             expect(ctrl.sortasc).toBe(true);
             expect(ctrl.sortfields).toBe("USERNAME");
-            //expect(ctrl.usercount).toBe(3); why this does not work ??? need to check on this may be 2 calls ??
-            //expect(ctrl.currentpage).toBe(0);
-            //expect(ctrl.totalRecords()).toBe(3);
-            //expect(ctrl.recordsLoaded()).toBe(true);
-
+            expect(ctrl.usercount).toBe(3);
+            expect(ctrl.currentpage).toBe(0);
+            expect(ctrl.totalRecords()).toBe(3);
+            expect(ctrl.recordsLoaded()).toBe(true);
         });
 
 
