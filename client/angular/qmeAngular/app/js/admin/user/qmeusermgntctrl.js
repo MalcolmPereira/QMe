@@ -30,20 +30,7 @@
             qmeUserManagement.reviewerRole = undefined;
             qmeUserManagement.moderatorRole = undefined;
 
-            qmeUserManagement.listUsers = function(){
-
-                if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
-                    qmeUserManagement.sortasc = true;
-                }else{
-                    qmeUserManagement.sortasc = $stateParams.sortasc;
-                }
-
-                if($stateParams.sortfields &&  $stateParams.sortfields !== null) {
-                    qmeUserManagement.sortfields = $stateParams.sortfields;
-                }else{
-                    qmeUserManagement.sortfields = "USERNAME";
-                }
-
+            qmeUserManagement.countUsers = function() {
                 if(qmeUserManagement.usercount === 0){
                     qmeUserService.countUsers()
                         .then(
@@ -61,6 +48,21 @@
                             }
                         );
 
+                }
+            };
+
+            qmeUserManagement.listUsers = function(){
+
+                if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
+                    qmeUserManagement.sortasc = true;
+                }else{
+                    qmeUserManagement.sortasc = $stateParams.sortasc;
+                }
+
+                if($stateParams.sortfields &&  $stateParams.sortfields !== null) {
+                    qmeUserManagement.sortfields = $stateParams.sortfields;
+                }else{
+                    qmeUserManagement.sortfields = "USERNAME";
                 }
 
                 qmeUserService.listUsersPaged(0,qmeUserManagement.sortasc,qmeUserManagement.sortfields)
