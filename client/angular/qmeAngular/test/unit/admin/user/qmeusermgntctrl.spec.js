@@ -40,6 +40,7 @@
             });
         }));
 
+
         it('Should have a QMe User Management controller and display valid not authorized message for count user ', function() {
             expect(ctrl).toBeDefined();
             expect(ctrl.users).not.toBeDefined();
@@ -58,6 +59,7 @@
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
         });
+
 
         it('Should have a QMe User Management controller and display valid server message for count user ', function() {
             expect(ctrl).toBeDefined();
@@ -98,6 +100,7 @@
             expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
         });
 
+
         it('Should have a QMe User Management controller and display valid server message for list user ', function() {
             expect(ctrl).toBeDefined();
             expect(ctrl.users).not.toBeDefined();
@@ -117,6 +120,7 @@
             expect(scope.flash.message).toBe('Oops.....Error from service getting user lists, please retry in some time.');
         });
 
+
         it('Should have a QMe User Management controller and return set users on init', function() {
             expect(ctrl).toBeDefined();
             expect(ctrl.users).not.toBeDefined();
@@ -128,6 +132,7 @@
             expect(ctrl.recordsLoaded()).toBe(false);
             expect(ctrl.isSortAsc("USERNAME")).toBe(true);
             expect(ctrl.isSortDesc("USERNAME")).toBe(false);
+
             var userList = [
                 {
                     "userID": 1,
@@ -163,20 +168,18 @@
                     "userRoles": ['USER']
                 }
             ];
-            httpBackend.expectGET(userCountEndPoint).respond(200,3);
-            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
             httpBackend.whenGET(/js\//).respond(200,{});
-            ctrl.listUsers();
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
+            ctrl.pageUsers(0);
             httpBackend.flush();
             expect(ctrl.users).toBeDefined();
             expect(ctrl.users.length).toBe(3);
-            expect(ctrl.usercount).toBe(3);
-            expect(ctrl.currentpage).toBe(0);
             expect(ctrl.sortasc).toBe(true);
             expect(ctrl.sortfields).toBe("USERNAME");
-            expect(ctrl.totalRecords()).toBe(3);
-            expect(ctrl.recordsLoaded()).toBe(true);
         });
+
+
+
 
         it('Should return valid not authorized message on page users ', function() {
             expect(ctrl).toBeDefined();
@@ -196,6 +199,7 @@
             expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
         });
 
+
         it('Should return valid server error message on page users ', function() {
             expect(ctrl).toBeDefined();
             expect(ctrl.users).not.toBeDefined();
@@ -213,6 +217,7 @@
             expect(scope.flash.message).toBeDefined();
             expect(scope.flash.message).toBe('Oops.....Error from service getting user lists, please retry in some time.');
         });
+
 
         it('Should return valid user lists on page users ', function() {
             expect(ctrl).toBeDefined();
@@ -258,6 +263,7 @@
             expect(ctrl.users).toBeDefined();
             expect(ctrl.users.length).toBe(3);
         });
+
 
         it('Should return valid user lists on page users with Sorting Fields  ', function() {
             expect(ctrl).toBeDefined();
@@ -322,6 +328,7 @@
             expect(ctrl.users.length).toBe(3);
 
         });
+
 
     });
 

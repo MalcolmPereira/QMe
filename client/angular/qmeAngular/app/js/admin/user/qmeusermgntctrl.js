@@ -15,8 +15,8 @@
             qmeUserManagement.users = undefined;
             qmeUserManagement.usercount = 0;
             qmeUserManagement.currentpage = 0;
-            qmeUserManagement.sortasc = undefined;
-            qmeUserManagement.sortfields = undefined;
+            qmeUserManagement.sortasc = true;
+            qmeUserManagement.sortfields = "USERNAME";
 
             qmeUserManagement.updateUserForm = undefined;
             qmeUserManagement.userId = undefined;
@@ -32,23 +32,6 @@
 
             qmeUserManagement.listUsers = function(){
 
-                if(qmeUserManagement.usercount === 0){
-                    qmeUserService.countUsers()
-                        .then(
-                        function(res){
-                            qmeUserManagement.usercount = res.data.content;
-                        },
-                        function(error){
-                            if(error && error.status && error.status == 403) {
-                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
-
-                            }else {
-                                qmeFlashService.Error("Oops.....Error from service for getting user count, please retry in some time.");
-                            }
-                            qmeUserManagement.usercount = -1;
-                        }
-                    );
-                }
                 if($stateParams.sortasc === undefined ||  $stateParams.sortasc === null) {
                     qmeUserManagement.sortasc = true;
                 }else{
@@ -61,24 +44,44 @@
                     qmeUserManagement.sortfields = "USERNAME";
                 }
 
+                if(qmeUserManagement.usercount === 0){
+
+                    qmeUserService.countUsers()
+                        .then(
+                            function(res){
+                                qmeUserManagement.usercount = res.data.content;
+                            },
+                            function(error){
+                                if(error && error.status && error.status == 403) {
+                                    qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                                }else {
+                                    qmeFlashService.Error("Oops.....Error from service for getting user count, please retry in some time.");
+                                }
+                                qmeUserManagement.usercount = -1;
+                            }
+                        );
+
+                }
+
                 qmeUserService.listUsersPaged(0,qmeUserManagement.sortasc,qmeUserManagement.sortfields)
                     .then(
-                    function(res){
-                       qmeUserManagement.users = res;
-                       if($stateParams.currentpage &&  $stateParams.currentpage !== null){
-                          qmeUserManagement.pageUsers($stateParams.currentpage);
-                          qmePageSession.setPageState($stateParams.currentpage);
-                       }
-                    },
-                    function(error){
-                        if(error && error.status && error.status == 403) {
-                            qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+                          function(res){
+                               qmeUserManagement.users = res;
+                               if($stateParams.currentpage &&  $stateParams.currentpage !== null){
+                                  qmeUserManagement.pageUsers($stateParams.currentpage);
+                                  qmePageSession.setPageState($stateParams.currentpage);
+                               }
+                          },
+                          function(error){
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
 
-                        }else {
-                            qmeFlashService.Error("Oops.....Error from service getting user lists, please retry in some time.");
-                        }
-                    }
-                );
+                            }else {
+                                qmeFlashService.Error("Oops.....Error from service getting user lists, please retry in some time.");
+                            }
+                          }
+                    );
             };
 
             qmeUserManagement.setSortField = function(field){

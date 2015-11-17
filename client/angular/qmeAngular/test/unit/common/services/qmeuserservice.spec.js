@@ -42,6 +42,8 @@
             logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
         }));
 
+
+
         it('Should have a QMe User Service', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -88,6 +90,8 @@
             httpBackend.flush();
         });
 
+
+
         it('Should have QMe User for valid admin login ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -123,6 +127,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should have No QMe User for valid logout ', function() {
             expect(qmeUserService).toBeDefined();
@@ -162,6 +167,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should have valid error for server error ', function() {
             expect(qmeUserService).toBeDefined();
@@ -230,6 +236,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should throw invalid error for wrong data on User Staging ', function() {
             expect(qmeUserService).toBeDefined();
@@ -330,6 +337,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should Confirm User for valid User Staging Confirmation', function() {
             expect(qmeUserService).toBeDefined();
@@ -597,6 +605,7 @@
             httpBackend.flush();
         });
 
+
         it('Should have valid Registration States ', function() {
             expect(qmeUserService).toBeDefined();
             expect(qmeUserService.isRegistering()).toBe(false);
@@ -631,6 +640,8 @@
             );
             httpBackend.flush();
         });
+
+
 
         it('Should handle valid count user  request ', function() {
             expect(qmeUserService).toBeDefined();
@@ -679,6 +690,8 @@
             );
             httpBackend.flush();
         });
+
+
 
         it('Should handle valid list user request ', function() {
             expect(qmeUserService).toBeDefined();
@@ -732,6 +745,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should handle valid 500 Server Error for list user paged request ', function() {
             expect(qmeUserService).toBeDefined();
@@ -803,6 +817,7 @@
             httpBackend.flush();
         });
 
+
         it('Should handle valid 500 Server Error for list user paged request with sort fields ', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -819,6 +834,7 @@
             );
             httpBackend.flush();
         });
+
 
         it('Should handle valid list user paged request ', function() {
             expect(qmeUserService).toBeDefined();
@@ -873,6 +889,7 @@
             httpBackend.flush();
         });
 
+
         it('Should handle valid QMe User Update Request for 500 Server Error', function() {
             expect(qmeUserService).toBeDefined();
             var credentials = {
@@ -908,7 +925,7 @@
             httpBackend.flush();
             httpBackend.expectPUT(userEndPoint+"/1").respond(500,user);
             qmeUserService
-                .updateUser(user)
+                .updateUser(user,1)
                 .then(
                 function(res){
                 },
@@ -918,6 +935,8 @@
             );
             httpBackend.flush();
         });
+
+
 
         it('Should handle valid QMe User Update Request', function() {
             expect(qmeUserService).toBeDefined();
@@ -954,7 +973,7 @@
             httpBackend.flush();
             httpBackend.expectPUT(userEndPoint+"/1").respond(200,user);
             qmeUserService
-                .updateUser(user)
+                .updateUser(user,1)
                 .then(
                 function(res){
                     expect(res).toBeDefined();
@@ -964,5 +983,6 @@
             );
             httpBackend.flush();
         });
+
     });
 })();

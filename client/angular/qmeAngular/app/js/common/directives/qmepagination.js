@@ -144,6 +144,15 @@
             };
 
             qmePageSession.showPreviousGroup = function(){
+                if(_currentGroup === undefined){
+                    return false;
+                }
+                if(_pagesPerPage === undefined){
+                    return false;
+                }
+                if(qmePageSession.isFirstPage() === undefined){
+                    return false;
+                }
                 return ((!qmePageSession.isFirstPage()) && (_currentGroup) && (_currentGroup > _pagesPerPage));
             };
 

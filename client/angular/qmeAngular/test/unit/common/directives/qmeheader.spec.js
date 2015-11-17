@@ -21,6 +21,7 @@
             });
         }));
 
+
         it('Should have a QMe Header Directive', function() {
             expect(compile).toBeDefined();
             expect(rootScope).toBeDefined();
@@ -29,11 +30,14 @@
             expect(qmeHeader.html()).toContain('<span id="qmeAppHeader">QMe Application</span>');
         });
 
+
         it('Should routes to valid QMe Header Navigation States from QMe Header for not logged in User', function() {
             expect(headerNavctrl).toBeDefined();
             expect(headerNavctrl.isSignedIn()).toBe(false);
             expect(headerNavctrl.isAdmin()).toBe(false);
         });
+
+
 
         it('Should routes to valid QMe Header Navigation States from QMe Header for logged in User', function() {
             qmeUserSession.create(
@@ -64,6 +68,7 @@
             expect(headerNavctrl.isSignedIn()).toBe(true);
             expect(headerNavctrl.isAdmin()).toBe(true);
         });
+
 
         it('Should routes to valid QMe States from QMe Header for admin user', function() {
             qmeUserSession.create(
@@ -124,6 +129,7 @@
             expect(qmeStates.current.controllerAs).toBe('qmeQuizManagementCtrl');
 
         });
+
     });
 
 

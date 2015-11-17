@@ -20,6 +20,7 @@
             });
         }));
 
+
         it('Should have a QMe Pagination Directive', function() {
             expect(compile).toBeDefined();
             expect(rootScope).toBeDefined();
@@ -64,6 +65,7 @@
             expect(qmePageSession.getNextGroup()).toBe(0);
         });
 
+
         //No Pagination
         it('Should have a QMe Page Session and return valid page and page group states when total records is 5 ', function() {
             expect(qmePageSession).toBeDefined();
@@ -100,9 +102,11 @@
             expect(qmePageSession.getNextGroup()).toBe(0);
         });
 
+
         //Pagination 120 Records 50 Per Page so 3 Pages (50/50/20) [No Page Groupings]
         it('Should have a QMe Page Session and return valid page and page group states when total records is 120 ', function() {
             expect(qmePageSession).toBeDefined();
+
 
             qmePageSession.create(120);
             expect(qmePageSession.requiresPagination()).toBe(true);
@@ -115,6 +119,8 @@
             expect(qmePageSession.showPreviousGroup()).toBe(false);
             expect(qmePageSession.showNextGroup()).toBe(false);
 
+
+
             qmePageSession.getFirst();
             qmePageSession.setNext();
             expect(qmePageSession.getPage()).toBe(1);
@@ -124,7 +130,9 @@
             expect(qmePageSession.getPage()).toBe(2);
             expect(qmePageSession.showPreviousGroup()).toBe(false);
             expect(qmePageSession.showNextGroup()).toBe(false);
+
         });
+
 
         //Pagination 826 Records 50 Pere Page so 16 Pages (50/50/50/50/50/50/50/50/50/50/50/50/50/50/50/50) [Two Groupings 1 - 10 and 11 - 16]
         it('Should have a QMe Page Session and return valid page and page group states when total records is 826 ', function() {
@@ -453,12 +461,12 @@
             expect(qmePageSession.showNextGroup()).toBe(true);
         });
 
+
         it('Should have a QMe Page Controller and return valid page and page group states when total records is 0', function() {
             expect(qmePageCtrl).toBeDefined();
             qmePageSession.create(0);
             //TODO: Not able to call function on scope from test cases. Need to fix this
         });
-
 
     });
 

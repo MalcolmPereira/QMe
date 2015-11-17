@@ -25,11 +25,17 @@
                 if(qmeUserSession.isSignedIn() === null){
                     return false;
                 }
+                if(qmeUserSession.isSignedIn() === undefined){
+                    return false;
+                }
                 return (qmeUserSession && qmeUserSession.isSignedIn() && !qmeUserSession.isUpdating());
             };
 
             qmeNav.isAdmin = function(){
                 if(qmeUserSession.isAdmin() === null){
+                    return false;
+                }
+                if(qmeUserSession.isAdmin() === undefined){
                     return false;
                 }
                 return (qmeUserSession && qmeUserSession.isSignedIn() && qmeUserSession.isAdmin());
