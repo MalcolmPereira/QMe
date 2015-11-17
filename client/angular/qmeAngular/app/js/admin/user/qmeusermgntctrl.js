@@ -45,7 +45,6 @@
                 }
 
                 if(qmeUserManagement.usercount === 0){
-
                     qmeUserService.countUsers()
                         .then(
                             function(res){
