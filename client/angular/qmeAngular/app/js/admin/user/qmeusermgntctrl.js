@@ -19,10 +19,13 @@
         qmeUserManagement.sortfields = "USERNAME";
 
         qmeUserManagement.updateUserForm = undefined;
+        qmeUserManagement.addUserForm = undefined;
         qmeUserManagement.userId = undefined;
+
         qmeUserManagement.userEmail = undefined;
         qmeUserManagement.userName = undefined;
         qmeUserManagement.userPassword = undefined;
+        qmeUserManagement.userPasswordConfirm = undefined;
         qmeUserManagement.userFirstName = undefined;
         qmeUserManagement.userLastName = undefined;
         qmeUserManagement.userRoles  = undefined;
@@ -149,6 +152,15 @@
             );
         };
 
+        qmeUserManagement.validatePasswordFields = function (){
+            if(qmeUserManagement.userPassword != qmeUserManagement.userPasswordConfirm){
+                qmeFlashService.Error("Password do not match, please confirm password");
+                qmeUserManagement.userPasswordConfirm ="";
+            }else{
+                qmeFlashService.Clear();
+            }
+        };
+
         qmeUserManagement.submitUpdateUser = function(){
             var updatedUserRoles =  [];
             if(qmeUserManagement.userRole && qmeUserManagement.userRole !== ""){
@@ -197,6 +209,16 @@
                     sortasc:qmeUserManagement.sortasc,
                     sortfields:qmeUserManagement.sortfields
                 }
+            );
+        };
+
+        qmeUserManagement.submitAddUser = function(){
+
+        };
+
+
+        qmeUserManagement.cancelAddUser = function(){
+            $state.go('listusers', {}
             );
         };
 
