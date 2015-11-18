@@ -49,6 +49,10 @@
                 $state.go('listusers', {});
             };
 
+            qmeNav.routeAddUser = function(){
+                $state.go('adduser', {});
+            };
+
             qmeNav.routeCategories = function(){
                 $state.go('listcategories', {});
             };

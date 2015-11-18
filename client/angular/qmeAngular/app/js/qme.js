@@ -145,6 +145,14 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                         sortfields:null
                     }
                 })
+                .state('adduser', {
+                    url: "/adduser",
+                    templateUrl: 'js/admin/user/qmeadduser.tmpl.html',
+                    controller: 'qmeUserManagementCtrl',
+                    controllerAs: 'qmeUserManagementCtrl',
+                    authenticate: true,
+                    admin: true,
+                })
                 .state('updateuser', {
                     url: "/updateuser",
                     templateUrl: 'js/admin/user/qmeupdateuser.tmpl.html',

@@ -1,0 +1,36 @@
+<div class="container-fluid" ng-controller="qmeUserManagementCtrl as qmeUserManagement" ng-init="qmeUserManagement.selectedUser()">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Add User</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <form name="addUserForm" class="form-horizontal">
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="userEmail">User Email:</label>
+                        <input ng-model="qmeUserManagement.userEmail" name="userEmail" id="userEmail" style="width:500px;" maxlength="128" min="5" type="email" class="form-control" ng-required="true">
+                    </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input ng-model="qmeUserManagement.userName" id="userName" style="width:500px;" maxlength="128" min="5" type="text"  class="form-control" ng-required="true">
+                    </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="userPassword">User Password:</label>
+                        <input ng-model="qmeUserManagement.userPassword" id="userPassword" style="width:500px;" maxlength="128" min="5" type="password"  class="form-control" ng-required="true">
+                    </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="userFirstName">User First Name:</label>
+                        <input ng-model="qmeUserManagement.userFirstName" id="userFirstName" style="width:500px;" maxlength="128" min="5" type="text" class="form-control" ng-required="true">
+                    </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="userLastName">User Last Name:</label>
+                        <input ng-model="qmeUserManagement.userLastName" id="userLastName" style="width:500px;" maxlength="128" min="5" type="text" class="form-control" ng-required="true">
+                    </div>
+                    <button id="submitAddUserButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeUserManagement.submitUpdateUser()" ng-disabled="updateUserForm.$invalid">Update User</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeUserManagement.cancelUserUpdate()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
