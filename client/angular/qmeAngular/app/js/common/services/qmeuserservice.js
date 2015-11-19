@@ -121,7 +121,7 @@
 
            var registeredUserPromise = $q.defer();
 
-           qmeUserResource.userRegisterResource()
+           qmeUserResource.userRegisterResource(qmeUserSession.userid())
 
                 .save(user,function(res){
                     registeredUserPromise.resolve(res);

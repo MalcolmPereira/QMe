@@ -214,8 +214,36 @@
 
         qmeUserManagement.submitAddUser = function(){
 
-        };
+            qmeFlashService.Clear();
 
+            var user = {
+                "userName": qmeUserManagement.userName,
+                "userPassword": qmeUserManagement.userPassword ,
+                "userFirstName": qmeUserManagement.userFirstName,
+                "userLastName": qmeUserManagement.userLastName,
+                "userEmail": qmeUserManagement.userEmail
+            };
+
+            qmeUserService
+                .register(user)
+                .then(
+                    function(res){
+                        qmeFlashService.Success("User registration completed successfully.",true);
+                        $state.go('home', {});
+                    },
+                    function(error){
+                        if(error && error.status && error.status == 400){
+                            qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
+
+                        }else if(error && error.status && error.status == 409){
+                            qmeFlashService.Error("Oops...User with same email address already exists please enter valid unique email address.");
+
+                        }else{
+                            qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                        }
+                    }
+            );
+        };
 
         qmeUserManagement.cancelAddUser = function(){
             $state.go('listusers', {}
