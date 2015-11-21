@@ -292,6 +292,10 @@
                 qmeUserManagement.sortfields = $stateParams.sortfields;
             }
         };
+
+        qmeUserManagement.deleteUser = function(userid){
+            alert("will delete user"+userid);
+        };
     }
 
 })();
