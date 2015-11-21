@@ -229,7 +229,16 @@
                 .then(
                     function(res){
                         qmeFlashService.Success("User registration completed successfully.",true);
-                        $state.go('home', {});
+                        qmeUserManagement.userId = res.userId;
+                        user.userId = qmeUserManagement.userId;
+                        user.userRoles = [QME_CONSTANTS.userrole];
+                        $state.go('updateuser',{
+                                currentuser:user,
+                                currentpage:qmeUserManagement.currentpage,
+                                sortasc:qmeUserManagement.sortasc,
+                                sortfields:qmeUserManagement.sortfields
+                            }
+                        );
                     },
                     function(error){
                         if(error && error.status && error.status == 400){
