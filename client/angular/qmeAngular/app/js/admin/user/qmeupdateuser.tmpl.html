@@ -37,7 +37,28 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeUserManagement.cancelUserUpdate()">Cancel</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button id="deleteButton" type="button" class="btn btn-danger btn-sm" ng-click="qmeUserManagement.deleteUser()">Delete</button>
+                    <button id="deleteButton" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteUser">Delete</button>
+
+
+                    <!-- TO DO MAKE THIS DIRECTIVE!!! - ->
+                    <div class="modal fade" id="confirmDeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete user ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
