@@ -24,7 +24,9 @@
                    &nbsp;&nbsp;&nbsp;&nbsp;
                    <button id="cancelButton" type="reset" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.cancelUpdates()">Reset</button>
                    &nbsp;&nbsp;&nbsp;&nbsp;
-                   <button id="deleteCategoryButton" type="submit" class="btn btn-danger btn-sm" ng-click="qmeCategoryManagement.deleteCategory()" ng-hide="qmeCategoryManagement.addNew" ng-disabled="qmeCategoryManagement.updateCategoryForm.$invalid">Delete</button>
+                   <button id="deleteCategoryButton" type="submit" class="btn btn-danger btn-sm"  ng-hide="qmeCategoryManagement.addNew" ng-disabled="qmeCategoryManagement.updateCategoryForm.$invalid" data-toggle="modal" data-target="#qmeConfirmModel">Delete</button>
+                   <qme-confirm header-message="'Delete Category'" body-message="'Are you sure you want to delete category ?'" function-call="qmeCategoryManagement.deleteCategory" function-param="qmeCategoryManagement.categoryId"></qme-confirm>
+
                </form>
            </div>
         </div>

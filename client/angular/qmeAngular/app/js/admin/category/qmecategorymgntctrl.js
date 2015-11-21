@@ -81,6 +81,10 @@
                 return true;
             };
 
+            qmeCategoryManagement.deleteCategory = function(categoryid){
+                console.log("to delete category ",categoryid);
+            };
+
             qmeCategoryManagement.submitUpdates = function(){
                 qmeFlashService.Clear();
                 var category;

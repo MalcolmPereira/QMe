@@ -294,7 +294,7 @@
         };
 
         qmeUserManagement.deleteUser = function(userid){
-            alert("will delete user"+userid);
+            console.log("to delete user ",userid);
         };
     }
 

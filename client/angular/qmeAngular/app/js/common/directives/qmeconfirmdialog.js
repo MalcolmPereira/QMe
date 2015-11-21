@@ -25,7 +25,6 @@
         var qmeConfirm = this;
 
         qmeConfirm.header = function(){
-            console.log("got $scope.functionParam",$scope.functionParam);
             return $scope.headerMessage;
         };
 
@@ -34,7 +33,7 @@
         };
 
         qmeConfirm.callFunction = function(){
-
+            $('#qmeConfirmModel').modal('hide')
             $scope.functionCall()($scope.functionParam);
         };
     }
