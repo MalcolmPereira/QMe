@@ -66,7 +66,7 @@
 
             var deleteCategoryPromise = $q.defer();
 
-            qmeCategoryResource.categoryDeleteResource(qmeUserSession.authtoken(),category.categoryId)
+            qmeCategoryResource.categoryDeleteResource(qmeUserSession.authtoken(),categoryId)
                 .deleteCategory({}, {},function(res){
                         pleaseWait.hidePleaseWait();
                         deleteCategoryPromise.resolve(res);

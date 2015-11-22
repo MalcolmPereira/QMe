@@ -82,7 +82,7 @@
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(categoryAPI+"/"+categoryId,{},{'updateCategory':{method:'PUT'}});
             };
-            this.categoryDeleteResource = function(authToken, userId){
+            this.categoryDeleteResource = function(authToken, categoryId){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(categoryAPI+"/"+categoryId,{},{'deleteCategory':{method:'DELETE'}});
             };
