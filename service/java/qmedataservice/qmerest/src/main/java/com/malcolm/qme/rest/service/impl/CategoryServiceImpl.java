@@ -132,6 +132,11 @@ public final class CategoryServiceImpl implements CategoryService {
                 throw new QMeResourceNotFoundException("Category with Category ID "+id+" not found");
             }
 
+            List<Category> categoryList = categoryRepo.findCategoryByParentId(id);
+            if(categoryList != null && categoryList.size() > 0){
+                throw new QMeServerException("Category with child categories cannot be deleted");
+            }
+
             categoryRepo.delete(id);
 
         }catch(QMeException err){
