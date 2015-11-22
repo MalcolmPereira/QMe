@@ -82,7 +82,35 @@
             };
 
             qmeCategoryManagement.deleteCategory = function(categoryid){
-                console.log("to delete category ",categoryid);
+                qmeCategoryService.deleteCategory(categoryid)
+                    .then(
+                        function(res){
+                            qmeCategoryManagement.categoryName = "";
+                            qmeCategoryManagement.parentId     = "0";
+                            $("#qmeTreeId").jstree(true).refresh();
+                            qmeCategoryManagement.updateCategoryForm.$setPristine();
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid request Parent Category/Category invalid, not found.");
+
+                            }else if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request, please make sure valid category name is provided.");
+
+                            }else if(error && error.status && error.status == 409){
+                                qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error deleting category , please contact administrator.");
+                            }
+                        }
+                    );
+
+
+
             };
 
             qmeCategoryManagement.submitUpdates = function(){
@@ -124,7 +152,7 @@
                                     qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
 
                                 }else {
-                                    qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
+                                    qmeFlashService.Error("Oops.....Error addming new category, please retry in some time.");
                                 }
                             }
                         );
@@ -154,7 +182,7 @@
                                     qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
 
                                 }else {
-                                    qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
+                                    qmeFlashService.Error("Oops.....Error updating category, please retry in some time.");
                                 }
                             }
                         );

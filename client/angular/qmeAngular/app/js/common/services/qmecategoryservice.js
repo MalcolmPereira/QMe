@@ -61,6 +61,22 @@
                 );
             return updateCategoryPromise.promise;
         };
+
+        qmeCategoryService.deleteCategory = function(categoryId){
+
+            var deleteCategoryPromise = $q.defer();
+
+            qmeCategoryResource.categoryDeleteResource(qmeUserSession.authtoken(),category.categoryId)
+                .deleteCategory({}, {},function(res){
+                        pleaseWait.hidePleaseWait();
+                        deleteCategoryPromise.resolve(res);
+                    },function(error){
+                        pleaseWait.hidePleaseWait();
+                        deleteCategoryPromise.reject(error);
+                    }
+                );
+            return deleteCategoryPromise.promise;
+        };
     }
 
 })();

@@ -166,6 +166,18 @@
             return updateUserPromise.promise;
         };
 
+        qmeUserService.deleteUser = function(userId){
+            var deleteUserPromise = $q.defer();
+            qmeUserResource.userDeleteResource(qmeUserSession.authtoken(),userId)
+                .deleteUser({}, {},function(res){
+                    deleteUserPromise.resolve(res);
+                    },function(error){
+                    deleteUserPromise.reject(error);
+                    }
+                );
+            return deleteUserPromise.promise;
+        };
+
         qmeUserService.resetPassword = function(useremail){
            var resetPasswordUserPromise = $q.defer();
 
