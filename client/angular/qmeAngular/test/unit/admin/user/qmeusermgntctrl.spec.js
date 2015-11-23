@@ -171,7 +171,7 @@
                 }
             ];
 
-            var res = {"content": 3}
+            var res = {"content": 3};
             httpBackend.expectGET(userCountEndPoint).respond(200,res);
             httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
             httpBackend.whenGET(/js\//).respond(200,{});

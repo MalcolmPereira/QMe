@@ -33,7 +33,7 @@
         };
 
         qmeConfirm.callFunction = function(){
-            $('#qmeConfirmModel').modal('hide')
+            $('#qmeConfirmModel').modal('hide');
             $scope.functionCall()($scope.functionParam);
         };
     }
