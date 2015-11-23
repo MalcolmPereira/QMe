@@ -42,8 +42,6 @@
             logoutUserEndPoint =  qmeContants.qmeservice+"/logout";
         }));
 
-
-
         it('Should have a QMe User Service', function() {
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -647,17 +645,17 @@
             expect(qmeUserService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
             var countresponse =  {
-                                    "content":"264",
-                                    "links":[
-                                        {
-                                         "rel":"self",
-                                         "href":"http://localhost:8002/qme/user/count"
-                                         },
-                                         {
-                                            "rel": "Get_Paged_User_list - (sortfields:USERNAME,EMAIL,FIRSTNAME,LASTNAME,REGISTERDATE,LOGINDATE)",
-                                            "href": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME"
-                                         }
-                                    ]
+                    "content":"264",
+                    "links":[
+                        {
+                         "rel":"self",
+                         "href":"http://localhost:8002/qme/user/count"
+                         },
+                         {
+                            "rel": "Get_Paged_User_list - (sortfields:USERNAME,EMAIL,FIRSTNAME,LASTNAME,REGISTERDATE,LOGINDATE)",
+                            "href": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME"
+                         }
+                    ]
             };
             httpBackend.expectGET(userCountEndPoint).respond(200,countresponse);
             httpBackend.whenGET(/js\//).respond(200,{});
@@ -936,8 +934,6 @@
             httpBackend.flush();
         });
 
-
-
         it('Should handle valid QMe User Update Request', function() {
             expect(qmeUserService).toBeDefined();
             var credentials = {
@@ -981,6 +977,99 @@
                 function(error){
                 }
             );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid QMe User Delete Request', function() {
+            expect(qmeUserService).toBeDefined();
+            var credentials = {
+                "userName": "testuser",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": qmeContants.password_mask,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            expect(qmeUserService.currentUser()).toBe(null);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .login(credentials)
+                .then(
+                    function(){
+                        expect(qmeUserService.currentUser()).toBeDefined();
+                        expect(qmeUserService.currentUser().isSignedIn()).toBe(true);
+                        expect(qmeUserService.currentUser().isAdmin()).toBe(false);
+                        expect(qmeUserService.currentUser().username()).toBe('testuser');
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+            httpBackend.expectDELETE(userEndPoint+"/1").respond(200,{});
+            qmeUserService
+                .deleteUser(1)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should Return Valid Error for QMe User Delete Request', function() {
+            expect(qmeUserService).toBeDefined();
+            var credentials = {
+                "userName": "testuser",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": qmeContants.password_mask,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            expect(qmeUserService.currentUser()).toBe(null);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .login(credentials)
+                .then(
+                    function(){
+                        expect(qmeUserService.currentUser()).toBeDefined();
+                        expect(qmeUserService.currentUser().isSignedIn()).toBe(true);
+                        expect(qmeUserService.currentUser().isAdmin()).toBe(false);
+                        expect(qmeUserService.currentUser().username()).toBe('testuser');
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+            httpBackend.expectDELETE(userEndPoint+"/1").respond(500,{});
+            qmeUserService
+                .deleteUser(1)
+                .then(
+                    function(res){
+
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
             httpBackend.flush();
         });
 
