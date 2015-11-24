@@ -4,14 +4,7 @@
 
     describe('Unit: QMe Tree Directive', function () {
 
-        var qmeTree,compile,rootScope,qmeTreeCtrl, mockselectfunction, mocktreefunction;
-
-        mockselectfunction = function(){
-            return true;
-        };
-        mocktreefunction = function(){
-            return true;
-        };
+        var qmeTree,compile,rootScope,qmeTreeCtrl;
 
         beforeEach(module('qmeApp'));
 
@@ -30,7 +23,7 @@
             expect(rootScope).toBeDefined();
             qmeTree = compile("<qme-tree tree-function='mocktreefunction'  select-function='mockselectfunction'></qme-tree>")(rootScope);
             rootScope.$digest();
-            //expect(qmeTree.html()).toContain("qmeTreeId");
+            expect(qmeTree.html()).toContain("qmeTreeId");
         });
 
     });
