@@ -980,6 +980,52 @@
             httpBackend.flush();
         });
 
+        it('Should handle valid QMe User Update User Prpfile Request', function() {
+            expect(qmeUserService).toBeDefined();
+            var credentials = {
+                "userName": "testuser",
+                "userPassword": "testpassword"
+            };
+            var user = {
+                "authToken": "someauthtoken",
+                "userID": 1,
+                "userName": "testuser",
+                "userPassword": qmeContants.password_mask,
+                "userFirstName": "Test",
+                "userLastName": "User",
+                "userEmail": "test.user@gmail.com",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            expect(qmeUserService.currentUser()).toBe(null);
+            httpBackend.expectPOST(userAuthEndPoint,credentials).respond(200,user);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeUserService
+                .login(credentials)
+                .then(
+                    function(){
+                        expect(qmeUserService.currentUser()).toBeDefined();
+                        expect(qmeUserService.currentUser().isSignedIn()).toBe(true);
+                        expect(qmeUserService.currentUser().isAdmin()).toBe(false);
+                        expect(qmeUserService.currentUser().username()).toBe('testuser');
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+            httpBackend.expectPUT(userEndPoint+"/1").respond(200,user);
+            qmeUserService
+                .updateUserProfile(user,1)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+        });
+
         it('Should handle valid QMe User Delete Request', function() {
             expect(qmeUserService).toBeDefined();
             var credentials = {
