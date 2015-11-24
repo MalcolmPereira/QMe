@@ -25,6 +25,7 @@ module.exports = function(config){
             'app/lib/angular-messages/angular-messages.min.js',
             'app/lib/angular-base64/angular-base64.min.js',
             'app/lib/angular-mocks/angular-mocks.js',
+            'app/lib/jstree/dist/jstree.min.js',
             'app/js/qme.js',
             'app/js/**/*.js',
             'app/js/**/*.html',

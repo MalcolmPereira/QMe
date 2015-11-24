@@ -4,7 +4,7 @@
 
     describe('Unit: QMe Pagination Directive', function () {
 
-        var qmePagination,compile,rootScope,qmePageCtrl,qmePageSession, mockPageFunc, mockScope;
+        var qmePagination,compile,rootScope,qmePageCtrl,qmePageSession, mockPageFunc;
 
         beforeEach(module('qmeApp'));
 

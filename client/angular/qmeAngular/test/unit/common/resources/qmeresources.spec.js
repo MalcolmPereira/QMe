@@ -4,14 +4,15 @@
 
     describe('Service: QMe Resource Service', function() {
 
-        var scope, qmeUserResource, qmeContants;
+        var scope, qmeUserResource, qmeCategoryResource, qmeContants;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function($rootScope,_qmeUserResource_,_QME_CONSTANTS_) {
+        beforeEach(inject(function($rootScope,_qmeUserResource_,_qmeCategoryResource_,_QME_CONSTANTS_) {
             scope = $rootScope.$new();
             qmeContants = _QME_CONSTANTS_;
             qmeUserResource = _qmeUserResource_;
+            qmeCategoryResource = _qmeCategoryResource_;
         }));
 
 
@@ -52,6 +53,30 @@
 
         it('Should have a User Logout Resource Defined', function() {
             expect(qmeUserResource.logoutResource()).toBeDefined();
+        });
+
+        it('Should have a Category Resource Defined', function() {
+            expect(qmeCategoryResource.categoryResource("sometoken")).toBeDefined();
+        });
+
+        it('Should have a Category Update Resource Defined', function() {
+            expect(qmeCategoryResource.categoryUpdateResource("sometoken",1)).toBeDefined();
+        });
+
+        it('Should have a Category Delete Resource Defined', function() {
+            expect(qmeCategoryResource.categoryDeleteResource("sometoken",1)).toBeDefined();
+        });
+
+        it('Should have a Category Count Resource Defined', function() {
+            expect(qmeCategoryResource.categoryCountResource("sometoken")).toBeDefined();
+        });
+
+        it('Should have a Category By Parent Id Resource Defined', function() {
+            expect(qmeCategoryResource.categoryByParentResource("sometoken",1)).toBeDefined();
+        });
+
+        it('Should have a Category By Search String Resource Defined', function() {
+            expect(qmeCategoryResource.categorySearchResource("sometoken","search")).toBeDefined();
         });
     });
 
