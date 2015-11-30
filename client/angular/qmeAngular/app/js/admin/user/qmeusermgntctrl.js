@@ -200,7 +200,7 @@
                             qmeFlashService.Error("Oops.....Invalid request for user update.");
 
                         }else{
-                            qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                            qmeFlashService.Error("Oops.....Error updating user, please retry in some time.");
                         }
                     }
                 );

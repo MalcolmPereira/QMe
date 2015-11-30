@@ -54,8 +54,12 @@
                 userName: '',
                 userEmail: '',
                 userFirstName: '',
-                userLastName: ''
-            });
+                userLastName: '',
+                userRole: undefined,
+                reviewerRole: undefined,
+                moderatorRole: undefined,
+
+        });
         }));
 
 
@@ -445,6 +449,62 @@
             expect(scope.flash.message).toBe('Password do not match, please confirm password');
         });
 
+        it('Should handle valid errors for submit update user request', function() {
+            ctrl.userId = '1';
+            ctrl.userName = 'test';
+            ctrl.userEmail = 'email';
+            ctrl.userFirstName = 'firstname';
+            ctrl.userLastName = 'lastname';
+
+            var updateUser = {
+                "userId": '1',
+                "userName": 'test',
+                "userEmail": 'email',
+                "userFirstName":  'firstname',
+                "userLastName": 'lastname',
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPUT(userApiEndPoint+"/1",updateUser).respond(404,updateUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdateUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request for user update, user not found.');
+
+            httpBackend.expectPUT(userApiEndPoint+"/1",updateUser).respond(403,updateUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdateUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized to update user update.');
+
+            httpBackend.expectPUT(userApiEndPoint+"/1",updateUser).respond(400,updateUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdateUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request for user update.');
+
+            httpBackend.expectPUT(userApiEndPoint+"/1",updateUser).respond(500,updateUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdateUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error updating user, please retry in some time.');
+        });
+
         it('Should submit update user request', function() {
             ctrl.userId = '1';
             ctrl.userName = 'test';
@@ -464,7 +524,31 @@
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.submitUpdateUser();
             httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('User profile update successful.');
 
+
+            updateUser = {
+                "userId": '1',
+                "userName": 'test',
+                "userEmail": 'email',
+                "userFirstName":  'firstname',
+                "userLastName": 'lastname',
+                "userRoles": ['USER','REVIEWER','MODERATOR']
+            };
+
+            ctrl.userRole  = true;
+            ctrl.reviewerRole = true;
+            ctrl.moderatorRole = true;
+            httpBackend.expectPUT(userApiEndPoint+"/1",updateUser).respond(200,updateUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdateUser();
+            httpBackend.flush();
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('User profile update successful.');
         });
 
     });
