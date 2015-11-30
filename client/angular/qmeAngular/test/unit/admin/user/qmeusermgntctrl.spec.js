@@ -620,6 +620,12 @@
 
         });
 
+        it('Should submit cancel add user request', function() {
+            ctrl.cancelAddUser();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+        });
+
     });
 
 })();
