@@ -172,6 +172,9 @@
             if(qmeUserManagement.moderatorRole && qmeUserManagement.moderatorRole !== ""){
                 updatedUserRoles.push(QME_CONSTANTS.moderatorrole);
             }
+            if(updatedUserRoles.length ===0){
+                updatedUserRoles.push(QME_CONSTANTS.userrole);
+            }
             var updateUser = {
                 "userId": qmeUserManagement.userId,
                 "userName": qmeUserManagement.userName,

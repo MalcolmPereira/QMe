@@ -7,6 +7,7 @@
         var rootScope,
             scope,
             state,
+            stateParams,
             httpBackend,
             ctrl,
             qmeContants,
@@ -15,6 +16,7 @@
             qmeFlashService,
             userCountEndPoint,
             userPagedEndPoint,
+            userApiEndPoint,
             timeout
             ;
 
@@ -22,23 +24,37 @@
 
         beforeEach(module('qmeApp.templates'));
 
-        beforeEach(inject(function($rootScope,$state, $controller,$httpBackend,_QME_CONSTANTS_,_qmeUserService_,_qmePageSession_, _qmeFlashService_,_$timeout_) {
+        beforeEach(inject(function($rootScope,$state,$stateParams, $controller,$httpBackend,_QME_CONSTANTS_,_qmeUserService_,_qmePageSession_, _qmeFlashService_,_$timeout_) {
             rootScope = $rootScope;
             scope = $rootScope.$new();
             state = $state;
+            stateParams = $stateParams;
             httpBackend = $httpBackend;
             qmeContants = _QME_CONSTANTS_;
             userPagedEndPoint = qmeContants.qmeservice+"/user/paged";
             userCountEndPoint  = qmeContants.qmeservice+"/user/count";
+            userApiEndPoint = qmeContants.qmeservice+"/user";
             qmeUserService = _qmeUserService_;
             qmePageSession = _qmePageSession_;
             qmeFlashService = _qmeFlashService_;
             timeout = _$timeout_;
+            stateParams.sortasc = true;
+            stateParams.sortfields = "USERNAME";
+            stateParams.currentpage = 1;
             ctrl  = $controller('qmeUserManagementCtrl', {
+                $scope: scope,
                 $state:state,
+                $stateParams:stateParams,
                 qmeFlashService: qmeFlashService,
                 qmeUserService: qmeUserService,
                 qmePageSession: qmePageSession,
+                userPassword: '',
+                userPasswordConfirm: '',
+                userId: '',
+                userName: '',
+                userEmail: '',
+                userFirstName: '',
+                userLastName: ''
             });
         }));
 
@@ -188,9 +204,6 @@
             expect(ctrl.recordsLoaded()).toBe(true);
         });
 
-
-
-
         it('Should return valid not authorized message on page users ', function() {
             expect(ctrl).toBeDefined();
             expect(ctrl.users).not.toBeDefined();
@@ -312,6 +325,71 @@
                     "userRoles": ['USER']
                 }
             ];
+            stateParams.sortasc = true;
+            expect(ctrl.sortasc).toBe(true);
+            expect(ctrl.sortfields).toBe("USERNAME");
+            expect(ctrl.isSortAsc("USERNAME")).toBe(true);
+            expect(ctrl.isSortDesc("USERNAME")).toBe(false);
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.setSortField("USERNAME");
+            httpBackend.flush();
+            expect(ctrl.users).toBeDefined();
+            expect(ctrl.users.length).toBe(3);
+
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=false&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.sortDesc("USERNAME");
+            httpBackend.flush();
+            expect(ctrl.users).toBeDefined();
+            expect(ctrl.users.length).toBe(3);
+
+            httpBackend.expectGET(userPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=USERNAME").respond(200,userList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.sortAsc("USERNAME");
+            httpBackend.flush();
+            expect(ctrl.users).toBeDefined();
+            expect(ctrl.users.length).toBe(3);
+        });
+
+        it('Should route to update user ', function() {
+            expect(ctrl).toBeDefined();
+            var userList = [
+                {
+                    "userID": 1,
+                    "userName": "testuser1",
+                    "userPassword": null,
+                    "userFirstName": "Test1",
+                    "userLastName": "User1",
+                    "userEmail": "test1.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 2,
+                    "userName": "testuser2",
+                    "userPassword": null,
+                    "userFirstName": "Test2",
+                    "userLastName": "User2",
+                    "userEmail": "test2.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                },
+                {
+                    "userID": 3,
+                    "userName": "testuser3",
+                    "userPassword": null,
+                    "userFirstName": "Test3",
+                    "userLastName": "User3",
+                    "userEmail": "test3.user@gmail.com",
+                    "userRegisteredDate": "2015-28-05 13:35:29",
+                    "userLastLoginDate": "2015-28-05 13:35:29",
+                    "userRoles": ['USER']
+                }
+            ];
+            stateParams.sortasc = true;
             expect(ctrl.sortasc).toBe(true);
             expect(ctrl.sortfields).toBe("USERNAME");
             expect(ctrl.isSortAsc("USERNAME")).toBe(true);
@@ -337,8 +415,57 @@
             expect(ctrl.users).toBeDefined();
             expect(ctrl.users.length).toBe(3);
 
+            var qmeuser = {
+                "userID": 3,
+                "userName": "testuser3",
+                "userPassword": null,
+                "userFirstName": "Test3",
+                "userLastName": "User3",
+                "userEmail": "test3.user@gmail.com",
+                "userRegisteredDate": "2015-28-05 13:35:29",
+                "userLastLoginDate": "2015-28-05 13:35:29",
+                "userRoles": ['USER']
+            };
+            ctrl.updateUser(qmeuser);
         });
 
+        it('Should validate password fields ', function() {
+            ctrl.userPassword = 'test';
+            ctrl.userPasswordConfirm = 'test';
+            ctrl.validatePasswordFields();
+            expect(scope.flash).not.toBeDefined();
+
+            ctrl.userPassword = 'test';
+            ctrl.userPasswordConfirm = 'testtest';
+            ctrl.validatePasswordFields();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Password do not match, please confirm password');
+        });
+
+        it('Should submit update user request', function() {
+            ctrl.userId = '1';
+            ctrl.userName = 'test';
+            ctrl.userEmail = 'email';
+            ctrl.userFirstName = 'firstname';
+            ctrl.userLastName = 'lastname';
+
+            var updateUser = {
+                "userId": '1',
+                "userName": 'test',
+                "userEmail": 'email',
+                "userFirstName":  'firstname',
+                "userLastName": 'lastname',
+                "userRoles": ['USER']
+            };
+            httpBackend.expectPUT(userApiEndPoint+"/1",updateUser).respond(200,updateUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdateUser();
+            httpBackend.flush();
+
+        });
 
     });
 
