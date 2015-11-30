@@ -551,6 +551,75 @@
             expect(scope.flash.message).toBe('User profile update successful.');
         });
 
+        it('Should handle error for submit add user request', function() {
+            ctrl.userName = 'test';
+            ctrl.userPassword = 'test';
+            ctrl.userEmail = 'email';
+            ctrl.userFirstName = 'firstname';
+            ctrl.userLastName = 'lastname';
+            var newUser = {
+                "userName": 'test',
+                "userPassword": 'test',
+                "userFirstName":  'firstname',
+                "userLastName": 'lastname',
+                "userEmail": 'email'
+            };
+            httpBackend.expectPOST(userApiEndPoint+"/register",newUser).respond(400,newUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitAddUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request for user registration, please make sure all required fields are valid.');
+
+            httpBackend.expectPOST(userApiEndPoint+"/register",newUser).respond(409,newUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitAddUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops...User with same email address already exists please enter valid unique email address.');
+
+            httpBackend.expectPOST(userApiEndPoint+"/register",newUser).respond(500,newUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitAddUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Server Error updating new user, please retry in some time.');
+        });
+
+        it('Should submit add user request', function() {
+            ctrl.userName = 'test';
+            ctrl.userPassword = 'test';
+            ctrl.userEmail = 'email';
+            ctrl.userFirstName = 'firstname';
+            ctrl.userLastName = 'lastname';
+            var newUser = {
+                "userName": 'test',
+                "userPassword": 'test',
+                "userFirstName":  'firstname',
+                "userLastName": 'lastname',
+                "userEmail": 'email'
+            };
+            httpBackend.expectPOST(userApiEndPoint+"/register",newUser).respond(200,newUser);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitAddUser();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('User registration completed successfully.');
+
+        });
+
     });
 
 })();
