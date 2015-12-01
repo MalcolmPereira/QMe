@@ -41,6 +41,14 @@
             stateParams.sortasc = true;
             stateParams.sortfields = "USERNAME";
             stateParams.currentpage = 1;
+            stateParams.currentuser = {
+                userId:"1",
+                userEmail:"test",
+                userName:"test",
+                userFirstName:"test",
+                userLastName:"test",
+                userRoles:["USER"]
+            };
             ctrl  = $controller('qmeUserManagementCtrl', {
                 $scope: scope,
                 $state:state,
