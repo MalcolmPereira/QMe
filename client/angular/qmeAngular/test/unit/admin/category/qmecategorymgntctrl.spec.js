@@ -48,6 +48,50 @@
             expect(ctrl).toBeDefined();
         });
 
+        it('Should handle error conditions for  list categoies ', function() {
+            expect(ctrl).toBeDefined();
+            var someValue = false;
+            var someFunction = function(some){
+                someValue = true;
+            };
+            httpBackend.expectGET(categoryByParentEndPoint+"/1").respond(403,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.listCategories(someFunction,1);
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
+
+            httpBackend.expectGET(categoryByParentEndPoint+"/1").respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.listCategories(someFunction,1);
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error from service getting category lists, please retry in some time.');
+        });
+
+        it('Should handle successful list categoies ', function() {
+            expect(ctrl).toBeDefined();
+            var someValue = false;
+            var someFunction = function(some){
+                someValue = true;
+            };
+            var categoryList = [
+                {
+                  categoryId:"1",
+                  parentId:"0",
+                  categoryName:"test"
+                }
+            ];
+            httpBackend.expectGET(categoryByParentEndPoint+"/1").respond(200,categoryList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.listCategories(someFunction,1);
+            httpBackend.flush();
+            expect(someValue).toBeDefined();
+            expect(someValue).toBe(true);
+        });
+
     });
 
 })();
