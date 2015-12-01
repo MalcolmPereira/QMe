@@ -592,7 +592,7 @@
             expect(scope.flash.type).toBeDefined();
             expect(scope.flash.type).toBe('error');
             expect(scope.flash.message).toBeDefined();
-            expect(scope.flash.message).toBe('Oops.....Server Error updating new user, please retry in some time.');
+            expect(scope.flash.message).toBe('Oops.....Server Error adding new user, please retry in some time.');
         });
 
         it('Should submit add user request', function() {
@@ -624,6 +624,67 @@
             ctrl.cancelAddUser();
             expect(state).not.toBeNull();
             expect(state.current).not.toBeNull();
+        });
+
+        it('Should select user ', function() {
+            ctrl.selectedUser();
+            expect(state).not.toBeNull();
+            expect(state.current).not.toBeNull();
+        });
+
+        it('Should handle error for submit delete user request', function() {
+
+            httpBackend.expectDELETE(userApiEndPoint+"/1").respond(404,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteUser(1);
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request for user delete, user not found.');
+
+            httpBackend.expectDELETE(userApiEndPoint+"/1").respond(403,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteUser(1);
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized to delete user.');
+
+            httpBackend.expectDELETE(userApiEndPoint+"/1").respond(400,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteUser(1);
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request for delete user.');
+
+            httpBackend.expectDELETE(userApiEndPoint+"/1").respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteUser(1);
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Server Error deleting user, please contact administrator.');
+        });
+
+        it('Should submit delete user request', function() {
+            httpBackend.expectDELETE(userApiEndPoint+"/1").respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteUser(1);
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('success');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('User Delete successful.');
         });
 
     });

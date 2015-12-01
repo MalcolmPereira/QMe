@@ -251,7 +251,7 @@
                             qmeFlashService.Error("Oops...User with same email address already exists please enter valid unique email address.");
 
                         }else{
-                            qmeFlashService.Error("Oops.....Server Error updating new user, please retry in some time.");
+                            qmeFlashService.Error("Oops.....Server Error adding new user, please retry in some time.");
                         }
                     }
             );
@@ -307,13 +307,13 @@
                     },
                     function(error){
                         if(error && error.status && error.status == 404){
-                            qmeFlashService.Error("Oops.....Invalid request for user update, user not found.");
+                            qmeFlashService.Error("Oops.....Invalid request for user delete, user not found.");
 
                         }else if(error && error.status && error.status == 403){
-                            qmeFlashService.Error("Oops.....User not authorized to update user update.");
+                            qmeFlashService.Error("Oops.....User not authorized to delete user.");
 
                         }else if(error && error.status && error.status == 400){
-                            qmeFlashService.Error("Oops.....Invalid request for user update.");
+                            qmeFlashService.Error("Oops.....Invalid request for delete user.");
 
                         }else{
                             qmeFlashService.Error("Oops.....Server Error deleting user, please contact administrator.");
