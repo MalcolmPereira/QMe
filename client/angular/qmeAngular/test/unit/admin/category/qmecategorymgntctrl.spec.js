@@ -51,6 +51,28 @@
                         categoryId:"10",
                         parentId:0,
                         categoryName:"test"
+                    },
+                    {
+                        categoryId:"11",
+                        parentId:11,
+                        categoryName:"test"
+                    }
+                ],
+                categoryParents:[
+                    {
+                        categoryId:"9",
+                        parentId:"0",
+                        categoryName:"test"
+                    },
+                    {
+                        categoryId:"10",
+                        parentId:0,
+                        categoryName:"test"
+                    },
+                    {
+                        categoryId:"11",
+                        parentId:11,
+                        categoryName:"test"
                     }
                 ]
             });
@@ -173,6 +195,10 @@
             httpBackend.expectDELETE(categoryEndPoint+"/1").respond(200,{});
             httpBackend.whenGET(/js\//).respond(200,{});
             ctrl.deleteCategory(1);
+            httpBackend.flush();
+            httpBackend.expectDELETE(categoryEndPoint+"/11").respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteCategory(11);
             httpBackend.flush();
         });
 
