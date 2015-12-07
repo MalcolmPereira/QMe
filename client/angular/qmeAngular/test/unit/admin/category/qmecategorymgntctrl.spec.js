@@ -40,7 +40,19 @@
                 $state:state,
                 $scope:scope,
                 qmeFlashService: qmeFlashService,
-                qmeCategoryService: qmeCategoryService
+                qmeCategoryService: qmeCategoryService,
+                categoryParentsAll:[
+                    {
+                        categoryId:"9",
+                        parentId:"0",
+                        categoryName:"test"
+                    },
+                    {
+                        categoryId:"10",
+                        parentId:0,
+                        categoryName:"test"
+                    }
+                ]
             });
         }));
 
@@ -71,7 +83,7 @@
             expect(scope.flash.message).toBe('Oops.....Error from service getting category lists, please retry in some time.');
         });
 
-        it('Should handle successful list categoies ', function() {
+        it('Should handle successful list categories ', function() {
             expect(ctrl).toBeDefined();
             var someValue = false;
             var someFunction = function(some){
@@ -82,6 +94,11 @@
                   categoryId:"1",
                   parentId:"0",
                   categoryName:"test"
+                },
+                {
+                    categoryId:"1",
+                    parentId:0,
+                    categoryName:"test"
                 }
             ];
             httpBackend.expectGET(categoryByParentEndPoint+"/1").respond(200,categoryList);
@@ -90,6 +107,32 @@
             httpBackend.flush();
             expect(someValue).toBeDefined();
             expect(someValue).toBe(true);
+        });
+
+        it('Should select valid node', function() {
+            var selectedNode = {
+                data:{
+                    categoryId:"1",
+                    parentId:"0",
+                    categoryName:"test"
+                }
+            };
+            ctrl.selectNode(selectedNode);
+        });
+
+        it('Should add new Category controller ', function() {
+            ctrl.addNewCategory();
+        });
+
+        it('Should cancel Category Updates ', function() {
+            ctrl.cancelUpdates();
+        });
+
+        it('Should Check if Category Deletable ', function() {
+            ctrl.addNew = true;
+            expect(ctrl.isDeletable()).toBe(true);
+            ctrl.addNew = false;
+            expect(ctrl.isDeletable()).toBe(true);
         });
 
     });

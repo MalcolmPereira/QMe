@@ -74,7 +74,7 @@
                     return true;
                 }
 
-                if(qmeCategoryManagement.updateCategoryForm.$invalid){
+                if(qmeCategoryManagement.updateCategoryForm && qmeCategoryManagement.updateCategoryForm.$invalid){
                     return true;
                 }
 
@@ -108,9 +108,6 @@
                             }
                         }
                     );
-
-
-
             };
 
             qmeCategoryManagement.submitUpdates = function(){
