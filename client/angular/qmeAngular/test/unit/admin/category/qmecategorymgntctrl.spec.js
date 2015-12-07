@@ -135,6 +135,47 @@
             expect(ctrl.isDeletable()).toBe(true);
         });
 
+        it('Should handle error response for delete category request ', function() {
+            httpBackend.expectDELETE(categoryEndPoint+"/1").respond(403,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteCategory(1);
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
+
+            httpBackend.expectDELETE(categoryEndPoint+"/1").respond(404,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteCategory(1);
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request Parent Category/Category invalid, not found.');
+
+            httpBackend.expectDELETE(categoryEndPoint+"/1").respond(400,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteCategory(1);
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, please make sure valid category name is provided.');
+
+            httpBackend.expectDELETE(categoryEndPoint+"/1").respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteCategory(1);
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error deleting category , please contact administrator.');
+        });
+
+        it('Should handle valid delete category request ', function() {
+            httpBackend.expectDELETE(categoryEndPoint+"/1").respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.deleteCategory(1);
+            httpBackend.flush();
+        });
+
     });
 
 })();

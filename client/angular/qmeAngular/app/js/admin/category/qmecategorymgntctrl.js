@@ -87,8 +87,33 @@
                         function(res){
                             qmeCategoryManagement.categoryName = "";
                             qmeCategoryManagement.parentId     = "0";
-                            $("#qmeTreeId").jstree(true).refresh();
-                            qmeCategoryManagement.updateCategoryForm.$setPristine();
+
+                            if(qmeCategoryManagement.categoryParentsAll.length > 0){
+                                for(var a in qmeCategoryManagement.categoryParentsAll){
+                                    var currentCategory = qmeCategoryManagement.categoryParentsAll[a];
+                                    if(categoryid === currentCategory.categoryId){
+                                        delete qmeCategoryManagement.categoryParentsAll[a];
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if(qmeCategoryManagement.categoryParents.length > 0){
+                                for(var a in qmeCategoryManagement.categoryParents){
+                                    var currentCategory = qmeCategoryManagement.categoryParents[a];
+                                    if(categoryid === currentCategory.categoryId){
+                                        delete qmeCategoryManagement.categoryParents[a];
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if($("#qmeTreeId").jstree(true)){
+                                $("#qmeTreeId").jstree(true).refresh();
+                            }
+                            if(qmeCategoryManagement.updateCategoryForm){
+                                qmeCategoryManagement.updateCategoryForm.$setPristine();
+                            }
                         },
                         function(error){
                             if(error && error.status && error.status == 403) {
@@ -99,9 +124,6 @@
 
                             }else if(error && error.status && error.status == 400){
                                 qmeFlashService.Error("Oops.....Invalid request, please make sure valid category name is provided.");
-
-                            }else if(error && error.status && error.status == 409){
-                                qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
 
                             }else {
                                 qmeFlashService.Error("Oops.....Error deleting category , please contact administrator.");
@@ -215,7 +237,22 @@
 
                     if (category.hasOwnProperty('categoryId')){
 
-                        qmeCategoryManagement.categoryParentsAll.push(category);
+                        if(qmeCategoryManagement.categoryParentsAll.length === 0){
+                            qmeCategoryManagement.categoryParentsAll.push(category);
+
+                        }else{
+                            var isNewCategory =  true;
+                            for(var a in qmeCategoryManagement.categoryParentsAll){
+                                var currentCategory = qmeCategoryManagement.categoryParentsAll[a];
+                                if(category.categoryId === currentCategory.categoryId){
+                                    isNewCategory =  false;
+                                    break;
+                                }
+                            }
+                            if(isNewCategory){
+                                qmeCategoryManagement.categoryParentsAll.push(category);
+                            }
+                        }
 
                         if(parentId === 0){
                             parentId = "#";
