@@ -98,10 +98,10 @@
                             }
 
                             if(qmeCategoryManagement.categoryParents.length > 0){
-                                for(var a in qmeCategoryManagement.categoryParents){
-                                    var currentCategory = qmeCategoryManagement.categoryParents[a];
-                                    if(categoryid === currentCategory.categoryId){
-                                        delete qmeCategoryManagement.categoryParents[a];
+                                for(var b in qmeCategoryManagement.categoryParents){
+                                    var currentParentCategory = qmeCategoryManagement.categoryParents[b];
+                                    if(categoryid === currentParentCategory.categoryId){
+                                        delete qmeCategoryManagement.categoryParents[b];
                                         break;
                                     }
                                 }
@@ -281,8 +281,8 @@
                 }
 
                 qmeCategoryManagement.categoryParents  = [];
-                for(var a in qmeCategoryManagement.categoryParentsAll){
-                    qmeCategoryManagement.categoryParents.push(qmeCategoryManagement.categoryParentsAll[a]);
+                for(var b in qmeCategoryManagement.categoryParentsAll){
+                    qmeCategoryManagement.categoryParents.push(qmeCategoryManagement.categoryParentsAll[b]);
                 }
 
                 return nodeData;

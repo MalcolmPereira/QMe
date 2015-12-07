@@ -251,9 +251,9 @@
 
 
             ctrl.categoryName = "test";
-            ctrl.parentId = 1
+            ctrl.parentId = 1;
             ctrl.addNew = true;
-            var categoryObj = {
+            categoryObj = {
                 "categoryName":"test",
                 "parentCategoryId":1
             };
@@ -302,7 +302,7 @@
             ctrl.categoryName = "test";
             ctrl.categoryId = 1;
             ctrl.addNew = false;
-            var categoryObj = {
+            categoryObj = {
                 "categoryId":1,
                 "categoryName":"test"
             };
@@ -349,9 +349,9 @@
 
             ctrl.categoryId = 1;
             ctrl.categoryName = "test";
-            ctrl.parentId = 1
+            ctrl.parentId = 1;
             ctrl.addNew = false;
-            var categoryObj = {
+            categoryObj = {
                 "categoryId":1,
                 "categoryName":"test",
                 "parentCategoryId":1
@@ -402,9 +402,9 @@
             httpBackend.flush();
 
             ctrl.categoryName = "test";
-            ctrl.parentId = 1
+            ctrl.parentId = 1;
             ctrl.addNew = true;
-            var categoryObj = {
+            categoryObj = {
                 "categoryName":"test",
                 "parentCategoryId":1
             };
@@ -416,7 +416,7 @@
             ctrl.categoryName = "test";
             ctrl.categoryId = 1;
             ctrl.addNew = false;
-            var categoryObj = {
+            categoryObj = {
                 "categoryId":1,
                 "categoryName":"test"
             };
@@ -427,9 +427,9 @@
 
             ctrl.categoryId = 1;
             ctrl.categoryName = "test";
-            ctrl.parentId = 1
+            ctrl.parentId = 1;
             ctrl.addNew = false;
-            var categoryObj = {
+            categoryObj = {
                 "categoryId":1,
                 "categoryName":"test",
                 "parentCategoryId":1
