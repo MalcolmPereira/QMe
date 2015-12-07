@@ -87,7 +87,6 @@
                         function(res){
                             qmeCategoryManagement.categoryName = "";
                             qmeCategoryManagement.parentId     = "0";
-
                             if(qmeCategoryManagement.categoryParentsAll.length > 0){
                                 for(var a in qmeCategoryManagement.categoryParentsAll){
                                     var currentCategory = qmeCategoryManagement.categoryParentsAll[a];
