@@ -203,6 +203,243 @@
             httpBackend.flush();
         });
 
+        it('Should error response for submit updates for add and update category request ', function() {
+            ctrl.categoryName = "test";
+            ctrl.addNew = true;
+            var categoryObj = {
+                "categoryName":"test"
+            };
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(403,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(404,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request Parent Category invalid,not found.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(400,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, please make sure valid category name is provided.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(409,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, category with name already exists, please use unique valid category name.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(500,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error addming new category, please retry in some time.');
+
+
+            ctrl.categoryName = "test";
+            ctrl.parentId = 1
+            ctrl.addNew = true;
+            var categoryObj = {
+                "categoryName":"test",
+                "parentCategoryId":1
+            };
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(403,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(404,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request Parent Category invalid,not found.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(400,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, please make sure valid category name is provided.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(409,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, category with name already exists, please use unique valid category name.');
+
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(500,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error addming new category, please retry in some time.');
+
+
+            ctrl.parentId = undefined;
+            ctrl.categoryName = "test";
+            ctrl.categoryId = 1;
+            ctrl.addNew = false;
+            var categoryObj = {
+                "categoryId":1,
+                "categoryName":"test"
+            };
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(403,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
+
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(404,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request Parent Category/Category invalid, not found.');
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(400,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, please make sure valid category name is provided.');
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(409,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, category with name already exists, please use unique valid category name.');
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(500,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error updating category, please retry in some time.');
+
+            ctrl.categoryId = 1;
+            ctrl.categoryName = "test";
+            ctrl.parentId = 1
+            ctrl.addNew = false;
+            var categoryObj = {
+                "categoryId":1,
+                "categoryName":"test",
+                "parentCategoryId":1
+            };
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(404,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request Parent Category/Category invalid, not found.');
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(400,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, please make sure valid category name is provided.');
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(409,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Invalid request, category with name already exists, please use unique valid category name.');
+
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(500,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....Error updating category, please retry in some time.');
+
+        });
+
+        it('Should handle valid submit updates for add and update category request ', function() {
+            ctrl.categoryName = "test";
+            ctrl.addNew = true;
+            var categoryObj = {
+                "categoryName":"test"
+            };
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(200,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+
+            ctrl.categoryName = "test";
+            ctrl.parentId = 1
+            ctrl.addNew = true;
+            var categoryObj = {
+                "categoryName":"test",
+                "parentCategoryId":1
+            };
+            httpBackend.expectPOST(categoryEndPoint,categoryObj).respond(200,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+
+            ctrl.categoryName = "test";
+            ctrl.categoryId = 1;
+            ctrl.addNew = false;
+            var categoryObj = {
+                "categoryId":1,
+                "categoryName":"test"
+            };
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(200,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+
+            ctrl.categoryId = 1;
+            ctrl.categoryName = "test";
+            ctrl.parentId = 1
+            ctrl.addNew = false;
+            var categoryObj = {
+                "categoryId":1,
+                "categoryName":"test",
+                "parentCategoryId":1
+            };
+            httpBackend.expectPUT(categoryEndPoint+"/1",categoryObj).respond(200,categoryObj);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.submitUpdates();
+            httpBackend.flush();
+        });
+
     });
 
 })();
