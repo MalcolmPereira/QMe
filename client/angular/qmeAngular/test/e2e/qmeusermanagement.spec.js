@@ -138,9 +138,32 @@
             expect(element(by.id('deleteButton')).isDisplayed()).toEqual(true);
             expect(element(by.id('deleteButton')).isEnabled()).toEqual(true);
 
+            element(by.id('deleteButton')).click();
+            browser.wait(EC.visibilityOf($('#qmeCofirmModalLabel')), 5000);
+            expect($('.modal-dialog').element(by.id('qmeCofirmModalLabel')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('confirmCancelID')).isDisplayed()).toEqual(true);
+            expect($('.modal-dialog').element(by.id('confirmSubmitID')).isDisplayed()).toEqual(true);
+            $('.modal-dialog').element(by.id('confirmCancelID')).click();
+
+            browser.wait(EC.visibilityOf($('#deleteButton')), 5000);
+
+            expect(element(by.id('deleteButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('deleteButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+
+            element(by.id('cancelButton')).click();
+
+            browser.wait(EC.visibilityOf($('#qmepageinationDivId')), 5000);
+            expect(element(by.css('.panel-title')).getText()).toEqual('User List');
+            var headers = element.all(by.css('table.table th')).map(function(elm) {
+                return elm.getText();
+            });
+            expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);
+
+
             element(by.id('userNameMenuId')).click();
             element(by.id('logoutLinkId')).click();
-
 
         });
 
