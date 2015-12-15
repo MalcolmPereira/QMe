@@ -162,6 +162,31 @@
             expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);
 
 
+            expect(element(by.id('dUserLabelId')).isDisplayed()).toEqual(true);
+            expect(element(by.id('dUserLabelId')).isEnabled()).toEqual(true);
+            element(by.id('dUserLabelId')).click();
+            expect(element(by.id('addNewUserId')).isDisplayed()).toEqual(true);
+            expect(element(by.id('addNewUserId')).isEnabled()).toEqual(true);
+            element(by.id('addNewUserId')).click();
+
+            expect(element(by.id('userEmail')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userEmail')).isEnabled()).toEqual(true);
+            expect(element(by.id('userName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userName')).isEnabled()).toEqual(true);
+            expect(element(by.id('userPassword')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userPassword')).isEnabled()).toEqual(true);
+            expect(element(by.id('userPasswordConfirm')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userPasswordConfirm')).isEnabled()).toEqual(true);
+            expect(element(by.id('userFirstName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userFirstName')).isEnabled()).toEqual(true);
+            expect(element(by.id('userLastName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('userLastName')).isEnabled()).toEqual(true);
+
+            expect(element(by.id('submitAddUserButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('submitAddUserButton')).isEnabled()).toEqual(false);
+            expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+
             element(by.id('userNameMenuId')).click();
             element(by.id('logoutLinkId')).click();
 

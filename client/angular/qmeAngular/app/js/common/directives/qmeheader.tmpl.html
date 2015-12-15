@@ -43,9 +43,9 @@
                 <li role="presentation" ng-class="{ active: qmeNav.isActive('[listusers,adduser,updateuser]') }" ng-show="qmeNav.isAdmin()" >
                     <a id="usersNavLinkId" href="#" ng-click="qmeNav.routeUsers()">Users</a>
                     <div class="dropdown" ng-show="qmeNav.isActive('[listusers,adduser,updateuser]')">
-                        <a id="dLabel" href="#" data-toggle="dropdown" role="presentation" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+                        <a id="dUserLabelId" href="#" data-toggle="dropdown" role="presentation" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ng-show="qmeNav.isAdmin()"><a href="#" ng-click="qmeNav.routeAddUser();">Add New User</a></li>
+                            <li ng-show="qmeNav.isAdmin()"><a href="#" id="addNewUserId" ng-click="qmeNav.routeAddUser();">Add New User</a></li>
                         </ul>
                     </div>
                 </li>
