@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tr ng-repeat="user in qmeUserManagement.users">
-                    <td><a href="#" ng-click="qmeUserManagement.updateUser(user)">{{user.userName}}</a></td>
+                    <td><a href="#" id="{{'userId' + $index}}" ng-click="qmeUserManagement.updateUser(user)">{{user.userName}}</a></td>
                     <td>{{user.userEmail}}</td>
                     <td>{{user.userFirstName}}</td>
                     <td>{{user.userLastName}}</td>
