@@ -2,7 +2,7 @@
 
 	"use strict";
 
-	describe('End to End : QMe Login Tests ', function () {
+	describe('End to End : QMe Admin Module - User Management Tests ', function () {
 
         var EC = protractor.ExpectedConditions;
 
