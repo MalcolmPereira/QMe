@@ -46,19 +46,21 @@
             expect(element(by.id('quizzesNavLinkId')).isEnabled()).toEqual(true);
 
             element(by.id('categoriesNavLinkId')).click();
-            //browser.wait(EC.visibilityOf($('#categoryHeaderId')), 8000);
+            browser.wait(EC.visibilityOf($('#categoryHeaderId')), 8000);
 
-            //expect(element(by.id('addNewCategoryButton')).isDisplayed()).toEqual(true);
-            //expect(element(by.id('addNewCategoryButton')).isEnabled()).toEqual(true);
-            //expect(element(by.id('categoryName')).isDisplayed()).toEqual(true);
-            //expect(element(by.id('categoryName')).isEnabled()).toEqual(true);
-            //expect(element(by.id('parentCategoryId')).isDisplayed()).toEqual(true);
-            //expect(element(by.id('parentCategoryId')).isEnabled()).toEqual(true);
-            //expect(element(by.id('submitUpdateButton')).isDisplayed()).toEqual(true);
-            //expect(element(by.id('submitUpdateButton')).isEnabled()).toEqual(false);
-            //expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
-            //expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
-            //expect(element(by.id('deleteCategoryButton')).isDisplayed()).toEqual(false);
+            expect(element(by.id('addNewCategoryButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('addNewCategoryButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('categoryName')).isDisplayed()).toEqual(true);
+            expect(element(by.id('categoryName')).isEnabled()).toEqual(true);
+            expect(element(by.id('parentCategoryId')).isDisplayed()).toEqual(true);
+            expect(element(by.id('parentCategoryId')).isEnabled()).toEqual(true);
+            expect(element(by.id('submitUpdateButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('submitUpdateButton')).isEnabled()).toEqual(false);
+            expect(element(by.id('cancelButton')).isDisplayed()).toEqual(true);
+            expect(element(by.id('cancelButton')).isEnabled()).toEqual(true);
+            expect(element(by.id('deleteCategoryButton')).isDisplayed()).toEqual(false);
+
+            element(by.id('addNewCategoryButton')).click();
 
             element(by.id('userNameMenuId')).click();
             element(by.id('logoutLinkId')).click();
