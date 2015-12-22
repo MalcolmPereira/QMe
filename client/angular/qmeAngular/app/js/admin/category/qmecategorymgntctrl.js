@@ -148,9 +148,11 @@
 
                 if(qmeCategoryManagement.addNew ){
 
+                    pleaseWait.showPleaseWait();
                     qmeCategoryService.createCategory(category)
                         .then(
                             function(res){
+                                pleaseWait.hidePleaseWait();
                                 qmeCategoryManagement.categoryName = "";
                                 qmeCategoryManagement.parentId     = "0";
                                 if($("#qmeTreeId").jstree(true)){
@@ -162,6 +164,7 @@
 
                             },
                             function(error){
+                                pleaseWait.hidePleaseWait();
                                 if(error && error.status && error.status == 403) {
                                     qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
 
@@ -183,9 +186,11 @@
                 }else{
 
                     category.categoryId = qmeCategoryManagement.categoryId;
+                    pleaseWait.showPleaseWait();
                     qmeCategoryService.updateCategory(category)
                         .then(
                             function(res){
+                                pleaseWait.hidePleaseWait();
                                 qmeCategoryManagement.categoryName = "";
                                 qmeCategoryManagement.parentId     = "0";
                                 if( $("#qmeTreeId").jstree(true)){
@@ -196,6 +201,7 @@
                                 }
                             },
                             function(error){
+                                pleaseWait.hidePleaseWait();
                                 if(error && error.status && error.status == 403) {
                                     qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
 
@@ -216,7 +222,6 @@
                 }
 
             };
-
 
             qmeCategoryManagement.selectNode = function(selectedNode){
                 qmeFlashService.Clear();

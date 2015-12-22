@@ -89,15 +89,11 @@
 
             var stageUserPromise = $q.defer();
 
-            pleaseWait.showPleaseWait();
-
             qmeUserResource.userStageResource()
 
                 .save(user,function(res){
-                    pleaseWait.hidePleaseWait();
                     stageUserPromise.resolve(res);
                 },function(error){
-                    pleaseWait.hidePleaseWait();
                     stageUserPromise.reject(error);
                 });
             return stageUserPromise.promise;
@@ -156,23 +152,26 @@
 
         qmeUserService.updateUser = function(updatedUser, userId){
             var updateUserPromise = $q.defer();
+
             qmeUserResource.userUpdateResource(qmeUserSession.authtoken(),userId)
                 .updateUser({}, updatedUser,function(res){
                     updateUserPromise.resolve(res);
                  },function(error){
-                        updateUserPromise.reject(error);
+                    updateUserPromise.reject(error);
                  }
                 );
             return updateUserPromise.promise;
         };
 
         qmeUserService.deleteUser = function(userId){
+
             var deleteUserPromise = $q.defer();
+
             qmeUserResource.userDeleteResource(qmeUserSession.authtoken(),userId)
-                .deleteUser({}, {},function(res){
-                    deleteUserPromise.resolve(res);
+                    .deleteUser({}, {},function(res){
+                        deleteUserPromise.resolve(res);
                     },function(error){
-                    deleteUserPromise.reject(error);
+                        deleteUserPromise.reject(error);
                     }
                 );
             return deleteUserPromise.promise;
@@ -180,7 +179,6 @@
 
         qmeUserService.resetPassword = function(useremail){
            var resetPasswordUserPromise = $q.defer();
-
 
             qmeUserResource.userForgotPasswordResource(useremail)
 
@@ -196,7 +194,6 @@
         qmeUserService.submitResetPassword = function(usertoken,username, useremail, userpassword){
             var resetPasswordUserPromise = $q.defer();
 
-
             var resetrequest = {
                     token:usertoken,
                     userName:username,
@@ -205,6 +202,7 @@
 
             qmeUserResource.userResetPasswordResource(useremail)
                 .resetpassword({}, resetrequest,function(res){
+
                     qmeUserSession.create(
                         res.authToken,
                         res.userID,
@@ -229,6 +227,7 @@
 
         qmeUserService.listUsers = function(){
            var listUserPromise = $q.defer();
+
            qmeUserResource.userResource(qmeUserSession.authtoken())
                 .query(
                 function(res){
@@ -243,6 +242,7 @@
 
         qmeUserService.listUsersPaged = function(currentPage,sorttype,sortfields){
             var listUserPagedPromise = $q.defer();
+
             qmeUserResource.userPagedResource(qmeUserSession.authtoken(),currentPage,QME_CONSTANTS.rowsperpage,sorttype,sortfields)
                 .query(
                 function(res){

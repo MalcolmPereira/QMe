@@ -183,13 +183,16 @@
                 "userLastName": qmeUserManagement.userLastName,
                 "userRoles": updatedUserRoles
             };
+            pleaseWait.showPleaseWait();
             qmeUserService
                 .updateUser(updateUser,qmeUserManagement.userId)
                 .then(
                     function(res){
+                        pleaseWait.hidePleaseWait();
                         qmeFlashService.Success("User profile update successful.",false);
                     },
                     function(error){
+                        pleaseWait.hidePleaseWait();
                         if(error && error.status && error.status == 404){
                             qmeFlashService.Error("Oops.....Invalid request for user update, user not found.");
 
@@ -227,10 +230,12 @@
                 "userEmail": qmeUserManagement.userEmail
             };
 
+            pleaseWait.showPleaseWait();
             qmeUserService
                 .register(user)
                 .then(
                     function(res){
+                        pleaseWait.hidePleaseWait();
                         qmeFlashService.Success("User registration completed successfully.",true);
                         qmeUserManagement.userId = res.userId;
                         user.userId = qmeUserManagement.userId;
@@ -244,6 +249,7 @@
                         );
                     },
                     function(error){
+                        pleaseWait.hidePleaseWait();
                         if(error && error.status && error.status == 400){
                             qmeFlashService.Error("Oops.....Invalid request for user registration, please make sure all required fields are valid.");
 
@@ -297,15 +303,19 @@
         };
 
         qmeUserManagement.deleteUser = function(userid){
+
+            pleaseWait.showPleaseWait();
+
             qmeUserService
                 .deleteUser(userid)
                 .then(
                     function(res){
+                        pleaseWait.hidePleaseWait();
                         qmeFlashService.Success("User Delete successful.",true);
-                        $state.go('listusers', {}
-                        );
+                        $state.go('listusers', {});
                     },
                     function(error){
+                        pleaseWait.hidePleaseWait();
                         if(error && error.status && error.status == 404){
                             qmeFlashService.Error("Oops.....Invalid request for user delete, user not found.");
 

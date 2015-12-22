@@ -19,6 +19,8 @@ exports.config = {
     },
 
     specs: [
-        'e2e/*.js'
+        //'e2e/*.js'
+        //'e2e/qmecategory.spec.js'
+        'e2e/qmeusermanagement.spec.js'
     ]
 };

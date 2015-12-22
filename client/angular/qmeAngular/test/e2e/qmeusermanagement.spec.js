@@ -66,6 +66,7 @@
             element(by.id('logoutLinkId')).click();
         });
 
+
         it('Perform Login With Valid Admin Credentials, Validate User Module', function() {
 
             browser.get('');
@@ -205,8 +206,12 @@
             expect(element(by.id('submitAddUserButton')).isEnabled()).toEqual(true);
             element(by.id('submitAddUserButton')).click();
             browser.wait(EC.visibilityOf($('#flashMessageId')), 5000);
-
             expect(element(by.id('flashMessageId')).isDisplayed()).toEqual(true);
+
+            var userNavLinkElement = element(by.id("usersNavLinkId"));
+            browser.wait(EC.presenceOf(userNavLinkElement), 25000);
+            expect(userNavLinkElement.isPresent()).toBeTruthy();
+            browser.wait(EC.elementToBeClickable(userNavLinkElement), 25000);
 
             element(by.id('usersNavLinkId')).click();
             browser.wait(EC.visibilityOf($('#qmepageinationDivId')), 5000);
@@ -215,9 +220,9 @@
                 return elm.getText();
             });
             expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);
+
             expect(element(by.linkText('testme')).isDisplayed()).toBe(true);
             element(by.linkText('testme')).click();
-
             expect(element(by.id('userEmail')).isDisplayed()).toEqual(true);
             expect(element(by.id('userEmail')).isEnabled()).toEqual(false);
             expect(element(by.id('userName')).isDisplayed()).toEqual(true);
@@ -251,8 +256,15 @@
             browser.wait(EC.visibilityOf($('#flashMessageId')), 5000);
             expect(element(by.id('flashMessageId')).isDisplayed()).toEqual(true);
 
-            browser.wait(EC.visibilityOf($('#qmepageinationDivId')), 5000);
-            expect(element(by.css('.panel-title')).getText()).toEqual('User List');
+            userNavLinkElement = element(by.id("usersNavLinkId"));
+            browser.wait(EC.presenceOf(userNavLinkElement), 25000);
+            expect(userNavLinkElement.isPresent()).toBeTruthy();
+            browser.wait(EC.elementToBeClickable(userNavLinkElement), 25000);
+
+            userNavLinkElement.click();
+
+            //element(by.id('userNameMenuId')).click();
+            //element(by.id('logoutLinkId')).click();
 
         });
 

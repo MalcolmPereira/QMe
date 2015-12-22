@@ -30,17 +30,13 @@
 
             var createCategoryPromise = $q.defer();
 
-            pleaseWait.showPleaseWait();
-
             qmeCategoryResource.categoryResource(qmeUserSession.authtoken())
 
                 .save(category,function(res){
-                        pleaseWait.hidePleaseWait();
-                        createCategoryPromise.resolve(res);
-                    },function(error){
-                        pleaseWait.hidePleaseWait();
-                        createCategoryPromise.reject(error);
-                    }
+                   createCategoryPromise.resolve(res);
+                },function(error){
+                   createCategoryPromise.reject(error);
+                   }
                  );
 
             return createCategoryPromise.promise;
@@ -52,10 +48,8 @@
 
             qmeCategoryResource.categoryUpdateResource(qmeUserSession.authtoken(),category.categoryId)
                 .updateCategory({}, category,function(res){
-                        pleaseWait.hidePleaseWait();
                         updateCategoryPromise.resolve(res);
                     },function(error){
-                        pleaseWait.hidePleaseWait();
                         updateCategoryPromise.reject(error);
                     }
                 );
@@ -68,15 +62,12 @@
 
             qmeCategoryResource.categoryDeleteResource(qmeUserSession.authtoken(),categoryId)
                 .deleteCategory({}, {},function(res){
-                        pleaseWait.hidePleaseWait();
                         deleteCategoryPromise.resolve(res);
                     },function(error){
-                        pleaseWait.hidePleaseWait();
                         deleteCategoryPromise.reject(error);
                     }
                 );
             return deleteCategoryPromise.promise;
         };
     }
-
 })();
