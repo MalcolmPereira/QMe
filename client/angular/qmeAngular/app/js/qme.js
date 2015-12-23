@@ -217,6 +217,7 @@ var pleaseWait = (function () {
         },
         hidePleaseWait: function () {
             pleaseWaitDiv.modal('hide');
+            $('.modal-backdrop').remove();
         },
     };
 })();

@@ -34,6 +34,7 @@
 
         qmeConfirm.callFunction = function(){
             $('#qmeConfirmModel').modal('hide');
+            $('.modal-backdrop').remove();
             $scope.functionCall()($scope.functionParam);
         };
     }

@@ -263,8 +263,8 @@
 
             userNavLinkElement.click();
 
-            //element(by.id('userNameMenuId')).click();
-            //element(by.id('logoutLinkId')).click();
+            element(by.id('userNameMenuId')).click();
+            element(by.id('logoutLinkId')).click();
 
         });
 
