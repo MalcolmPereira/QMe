@@ -87,9 +87,13 @@
         };
 
         qmeUser.logout = function (){
+            if(qmeUser.isSignedIn()){
+                qmeUserService.currentUser().doneUpdating();
+            }
             qmeUserService.logout();
             qmeUserService.endRegistering();
             qmeUserService.endResetting();
+
             qmeUser.userEmail = "";
             qmeUser.userPassword = "";
             qmeUser.signInForm.$setPristine();

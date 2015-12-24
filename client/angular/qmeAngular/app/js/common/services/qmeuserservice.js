@@ -80,6 +80,7 @@
 
         qmeUserService.logout = function (){
             qmeUserResource.logoutResource(qmeUserSession.authtoken()).save();
+            qmeUserSession.doneUpdating();
             qmeUserSession.destroy();
         };
 
