@@ -157,7 +157,7 @@
 
             browser.wait(EC.visibilityOf($('#qmepageinationDivId')), 5000);
             expect(element(by.css('.panel-title')).getText()).toEqual('User List');
-            var headers = element.all(by.css('table.table th')).map(function(elm) {
+            headers = element.all(by.css('table.table th')).map(function(elm) {
                 return elm.getText();
             });
             expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);
@@ -216,15 +216,13 @@
             element(by.id('usersNavLinkId')).click();
             browser.wait(EC.visibilityOf($('#qmepageinationDivId')), 5000);
             expect(element(by.css('.panel-title')).getText()).toEqual('User List');
-            var headers = element.all(by.css('table.table th')).map(function(elm) {
+            headers = element.all(by.css('table.table th')).map(function(elm) {
                 return elm.getText();
             });
             expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);
 
             element(by.id('userNameMenuId')).click();
             element(by.id('logoutLinkId')).click();
-
-            //MAXX
 
             userEmail = element(by.model('qmeUserCtrl.userEmail'));
             userPassword = element(by.model('qmeUserCtrl.userPassword'));
@@ -315,7 +313,7 @@
             element(by.id('usersNavLinkId')).click();
             browser.wait(EC.visibilityOf($('#qmepageinationDivId')), 5000);
             expect(element(by.css('.panel-title')).getText()).toEqual('User List');
-            var headers = element.all(by.css('table.table th')).map(function(elm) {
+            headers = element.all(by.css('table.table th')).map(function(elm) {
                 return elm.getText();
             });
             expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);

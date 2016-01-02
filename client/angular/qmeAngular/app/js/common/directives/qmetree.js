@@ -31,8 +31,8 @@
                         }
                     }
                  },
-                "plugins" : [ "wholerow"],
-                "themes": {"dots": false},
+                "plugins" : ["wholerow"],
+                "themes": {"dots": false, "icons": false},
                 "multiple": false
             };
             $("#qmeTreeId").jstree(treeConfig);

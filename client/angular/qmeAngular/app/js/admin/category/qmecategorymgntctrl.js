@@ -276,7 +276,7 @@
                             "id": ""+category.categoryId+"",
                             "parent" : parentId,
                             "text": ""+category.categoryName+"",
-                            "icon": "glyphicon glyphicon-link",
+                            "icon": false,
                             "children": true,
                             "data": category
                         };
