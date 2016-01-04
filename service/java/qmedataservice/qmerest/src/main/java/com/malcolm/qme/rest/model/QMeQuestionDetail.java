@@ -12,4 +12,29 @@ package com.malcolm.qme.rest.model;
  * @author Malcolm
  */
 public class QMeQuestionDetail extends QMeQuestion {
+    /**
+     * Generated Serialized Version Id
+     */
+    private static final long serialVersionUID = 1343257850480182833L;
+
+    /**
+     * Question Answer
+     */
+    private String answer;
+
+    /**
+     * Get Answer Description
+     * @return Answer Description
+     */
+    public String getAnswer() {
+        return answer;
+    }
+
+    /**
+     * Set Answer Description
+     * @param answer Answer Description to set
+     */
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 }
