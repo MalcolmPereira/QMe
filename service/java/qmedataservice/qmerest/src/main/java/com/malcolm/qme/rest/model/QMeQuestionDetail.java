@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.rest.model;
 
+import java.util.List;
+
 /**
  * QMeQuestionDetail Model for REST Service Controller
  *
@@ -23,6 +25,11 @@ public class QMeQuestionDetail extends QMeQuestion {
     private String answer;
 
     /**
+     * Anser Reference Media List
+     */
+    private List<QMeAnswerReferenceMedia> answerReferenceMediaList;
+
+    /**
      * Get Answer Description
      * @return Answer Description
      */
@@ -36,5 +43,21 @@ public class QMeQuestionDetail extends QMeQuestion {
      */
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    /**
+     * Get Answer Reference Media List
+     * @return Answer Reference Media List
+     */
+    public List<QMeAnswerReferenceMedia> getAnswerReferenceMediaList() {
+        return answerReferenceMediaList;
+    }
+
+    /**
+     * Set Answer Reference Media List
+     * @param answerReferenceMediaList Answer Reference Media List to set
+     */
+    public void setAnswerReferenceMediaList(List<QMeAnswerReferenceMedia> answerReferenceMediaList) {
+        this.answerReferenceMediaList = answerReferenceMediaList;
     }
 }
