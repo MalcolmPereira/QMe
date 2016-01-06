@@ -30,6 +30,11 @@ public class QMeQuestionDetail extends QMeQuestion {
     private List<QMeAnswerReferenceMedia> answerReferenceMediaList;
 
     /**
+     * Answer Option List
+     */
+    private List<QMeAnswerOption> answerOptionList;
+
+    /**
      * Get Answer Description
      * @return Answer Description
      */
@@ -59,5 +64,21 @@ public class QMeQuestionDetail extends QMeQuestion {
      */
     public void setAnswerReferenceMediaList(List<QMeAnswerReferenceMedia> answerReferenceMediaList) {
         this.answerReferenceMediaList = answerReferenceMediaList;
+    }
+
+    /**
+     * Get Answer Option List
+     * @return Answer Option List
+     */
+    public List<QMeAnswerOption> getAnswerOptionList() {
+        return answerOptionList;
+    }
+
+    /**
+     * Set Answer Option List
+     * @param answerOptionList Answer Option List
+     */
+    public void setAnswerOptionList(List<QMeAnswerOption> answerOptionList) {
+        this.answerOptionList = answerOptionList;
     }
 }
