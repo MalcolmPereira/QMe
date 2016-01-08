@@ -15,4 +15,21 @@ public interface QuestionAPI extends QMeAPI {
      * QuestionAPI API Root Path
      */
     String ROOT_PATH = APP_STRING + "/question";
+
+    /**
+     * QuestionAPI API Resource Count
+     */
+    String COUNT_PATH = APP_STRING + "/question/count";
+
+    /**
+     * QuestionAPI API Paged Path
+     */
+    String PAGED_PATH = APP_STRING + "/question/paged";
+
+    /**
+     * QuestionAPI API Get By ID Path
+     */
+    String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
+
+
 }
