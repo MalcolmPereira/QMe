@@ -6,6 +6,12 @@
  **/
 package com.malcolm.qme.rest.api;
 
+import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeQuestion;
+import org.springframework.hateoas.Resource;
+
+import java.util.List;
+
 /**
  * @author Malcolm
  */
@@ -30,6 +36,32 @@ public interface QuestionAPI extends QMeAPI {
      * QuestionAPI API Get By ID Path
      */
     String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
+
+    /**
+     * Get Count
+     *
+     * @return Count of Catgeories
+     */
+    Resource<Long> count() throws QMeResourceException;
+
+    /**
+     * Get All Categories
+     *
+     * @return List of Category
+     */
+    List<QMeQuestion> list() throws QMeResourceException;
+
+
+    /**
+     * Get All Categories with Pagination and Sorting
+     * @param page Page
+     * @param pageSize Page Size
+     * @param sortType Sort Type
+     * @param sortFields Sort Fields
+     * @return List of Category
+     * @throws QMeResourceException
+     */
+    List<QMeQuestion> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
 
 }
