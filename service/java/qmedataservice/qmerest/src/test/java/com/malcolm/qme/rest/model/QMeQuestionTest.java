@@ -23,29 +23,29 @@ public class QMeQuestionTest {
     @Test
     public void testGetQuestionID() throws Exception {
         QMeQuestion qMeQuestion = QMeQuestionFixture.simpleQMeQuestion();
-        assertThat(qMeQuestion.getQuestionID(), equalTo(1L));
+        assertThat(qMeQuestion.getQuestionId(), equalTo(1L));
     }
 
     @Test
     public void testSetQuestionID() throws Exception {
         QMeQuestion qMeQuestion = QMeQuestionFixture.simpleQMeQuestion();
-        assertThat(qMeQuestion.getQuestionID(), equalTo(1L));
-        qMeQuestion.setQuestionID(2L);
-        assertThat(qMeQuestion.getQuestionID(), equalTo(2L));
+        assertThat(qMeQuestion.getQuestionId(), equalTo(1L));
+        qMeQuestion.setQuestionId(2L);
+        assertThat(qMeQuestion.getQuestionId(), equalTo(2L));
     }
 
     @Test
     public void testGetCategoryID() throws Exception {
         QMeQuestion qMeQuestion = QMeQuestionFixture.simpleQMeQuestion();
-        assertThat(qMeQuestion.getCategoryID(), equalTo(1L));
+        assertThat(qMeQuestion.getCategoryId(), equalTo(1L));
     }
 
     @Test
     public void testSetCategoryID() throws Exception {
         QMeQuestion qMeQuestion = QMeQuestionFixture.simpleQMeQuestion();
-        assertThat(qMeQuestion.getCategoryID(), equalTo(1L));
-        qMeQuestion.setCategoryID(2L);
-        assertThat(qMeQuestion.getCategoryID(), equalTo(2L));
+        assertThat(qMeQuestion.getCategoryId(), equalTo(1L));
+        qMeQuestion.setCategoryId(2L);
+        assertThat(qMeQuestion.getCategoryId(), equalTo(2L));
     }
 
     @Test

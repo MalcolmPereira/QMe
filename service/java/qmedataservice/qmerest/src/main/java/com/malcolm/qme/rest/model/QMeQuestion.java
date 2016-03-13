@@ -22,12 +22,12 @@ public class QMeQuestion extends QMeResource {
     /**
      * Question Id
      */
-    private Long questionID;
+    private Long questionId;
 
     /**
      * Category Id
      */
-    private Long categoryID;
+    private Long categoryId;
 
     /**
      * Question Text
@@ -66,32 +66,32 @@ public class QMeQuestion extends QMeResource {
      * Get Question Id
      * @return Question Id
      */
-    public Long getQuestionID() {
-        return questionID;
+    public Long getQuestionId() {
+        return questionId;
     }
 
     /**
      * Set Question Id
-     * @param questionID Question Id to set
+     * @param questionId Question Id to set
      */
-    public void setQuestionID(Long questionID) {
-        this.questionID = questionID;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     /**
      * Get Category Id
      * @return Category Id
      */
-    public Long getCategoryID() {
-        return categoryID;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
     /**
      * Set Category Id
-     * @param categoryID Category Id to set
+     * @param categoryId Category Id to set
      */
-    public void setCategoryID(Long categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     /**
