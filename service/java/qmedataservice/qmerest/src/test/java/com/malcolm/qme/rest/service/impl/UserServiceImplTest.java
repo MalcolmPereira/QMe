@@ -63,6 +63,14 @@ public class UserServiceImplTest {
     private final UserService userService = new UserServiceImpl();
 
     @Test
+    public void testCount() throws QMeResourceException, QMeException {
+        when(userRepo.count()).thenReturn(10L);
+        Long userCount = userService.count();
+        assertNotNull(userCount);
+        assertThat(userCount, equalTo(10L));
+    }
+
+    @Test
     public void testList() throws QMeResourceException, QMeException{
         when(userRepo.findAll()).thenReturn(UserFixtures.simpleUserList());
 

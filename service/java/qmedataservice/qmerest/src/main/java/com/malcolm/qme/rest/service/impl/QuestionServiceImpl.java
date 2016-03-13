@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class QuestionServiceImpl implements QuestionService{
-
     /**
      * QMeQuestion Repository
      */
