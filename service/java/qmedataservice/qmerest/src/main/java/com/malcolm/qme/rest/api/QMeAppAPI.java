@@ -127,6 +127,23 @@ public interface QMeAppAPI extends QMeAPI {
     String DELETE_CATEGORY = "Delete_Category";
 
     /**
+     * QMe Question API
+     */
+    String QME_QUESTION_API = "Qme Question API";
+    /**
+     * Question
+     */
+    String QUESTION = "Get_Question_list";
+    /**
+     * Question Count
+     */
+    String QUESTION_COUNT = "Get_Question_Count";
+    /**
+     * Question Paged
+     */
+    String QUESTION_PAGED = "Get_Paged_Question_list - (sortfields:QUESTION)";
+
+    /**
      * List QMe App API
      *
      * @return Map of QMe App Endpoints
