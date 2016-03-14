@@ -7,6 +7,7 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Question;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
@@ -58,12 +59,22 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public List<QMeQuestionDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        try{
+            return  getQMeQuestionDetail(questionRepo.findAll(new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override
     public QMeQuestionDetail searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
-        return null;
+        try{
+            return  getQMeQuestionDetail(questionRepo.findById(id));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override
@@ -99,15 +110,15 @@ public class QuestionServiceImpl implements QuestionService{
      */
     private QMeQuestionDetail getQMeQuestionDetail(Question question){
         QMeQuestionDetail qmeQuestionDetail = new QMeQuestionDetail();
-        qmeQuestionDetail.setQuestionId(qmeQuestionDetail.getQuestionId());
-        qmeQuestionDetail.setCategoryId(qmeQuestionDetail.getCategoryId());
-        qmeQuestionDetail.setQuestionText(qmeQuestionDetail.getQuestionText());
-        qmeQuestionDetail.setQuestionPoint(qmeQuestionDetail.getQuestionPoint());
-        qmeQuestionDetail.setLikes(qmeQuestionDetail.getLikes());
-        qmeQuestionDetail.setQuestionCreateDate(qmeQuestionDetail.getQuestionCreateDate());
-        qmeQuestionDetail.setCreateUserID(qmeQuestionDetail.getCreateUserID());
-        qmeQuestionDetail.setQuestionUpdateDate(qmeQuestionDetail.getQuestionUpdateDate());
-        qmeQuestionDetail.setUpdateUserID(qmeQuestionDetail.getUpdateUserID());
+        qmeQuestionDetail.setQuestionId(question.getQuestionID());
+        qmeQuestionDetail.setCategoryId(question.getCategoryID());
+        qmeQuestionDetail.setQuestionText(question.getQuestionText());
+        qmeQuestionDetail.setQuestionPoint(question.getQuestionPoint());
+        qmeQuestionDetail.setLikes(question.getLikes());
+        qmeQuestionDetail.setQuestionCreateDate(question.getQuestionCreateDate());
+        qmeQuestionDetail.setCreateUserID(question.getCreateUserID());
+        qmeQuestionDetail.setQuestionUpdateDate(question.getQuestionUpdateDate());
+        qmeQuestionDetail.setUpdateUserID(question.getUpdateUserID());
         return qmeQuestionDetail;
     }
 }
