@@ -136,7 +136,7 @@ public class QMeQuestionTest {
     @Test
     public void testGetUpdateUserID() throws Exception {
         QMeQuestion qMeQuestion = QMeQuestionFixture.simpleQMeQuestion();
-        assertThat(qMeQuestion.getUpdateUserID(),equalTo(1));
+        assertThat(qMeQuestion.getUpdateUserID(),equalTo(1L));
     }
 
     @Test

@@ -48,14 +48,35 @@ public class QuestionController implements QuestionAPI {
 
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public @ResponseBody List<QMeQuestionDetail> list() throws QMeResourceException {
         log(getCurrentUser(), "Question - list");
-        return null;
+        List<QMeQuestionDetail> qMeQuestionDetailList = questionService.list();
+        setQuestionLinks(qMeQuestionDetailList);
+        return qMeQuestionDetailList;
     }
 
     @Override
     public List<QMeQuestionDetail> listPaged(String page, String pageSize, String sortType, String sortFields) throws QMeResourceException {
         return null;
     }
+
+    /**
+     * Set Question Links
+     * @param qmeQuestionList QMe Question List
+     */
+    private void setQuestionLinks(List<QMeQuestionDetail> qmeQuestionList){
+        qmeQuestionList.stream().forEach(this::setQuestionLinks);
+    }
+
+    /**
+     * Set Question Links
+     * @param qMeQuestionDetail QMeQuestionDetail
+     */
+    private void setQuestionLinks(QMeQuestionDetail qMeQuestionDetail){
+        qMeQuestionDetail.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qMeQuestionDetail.getQuestionId()+""),QMeAppAPI.QUESTION_BY_ID));
+        //TODO:
+    }
 }
+

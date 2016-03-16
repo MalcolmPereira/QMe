@@ -37,6 +37,11 @@ public class QMeQuestionDetailFixture extends QMeResourceFixture<QMeQuestionDeta
         qmeQuestionList.add(qmeQuestionDetail);
 
         qmeQuestionDetail = getQMeQuestionDetail();
+        qmeQuestionDetail.setQuestionId(qmeQuestionDetail.getQuestionId()+1);
+        qmeQuestionDetail.setQuestionText(qmeQuestionDetail.getQuestionText()+ " "+1);
+        qmeQuestionList.add(qmeQuestionDetail);
+
+        qmeQuestionDetail = getQMeQuestionDetail();
         qmeQuestionDetail.setQuestionId(qmeQuestionDetail.getQuestionId()+2);
         qmeQuestionDetail.setQuestionText(qmeQuestionDetail.getQuestionText()+ " "+2);
         qmeQuestionList.add(qmeQuestionDetail);
@@ -49,11 +54,6 @@ public class QMeQuestionDetailFixture extends QMeResourceFixture<QMeQuestionDeta
         qmeQuestionDetail = getQMeQuestionDetail();
         qmeQuestionDetail.setQuestionId(qmeQuestionDetail.getQuestionId()+4);
         qmeQuestionDetail.setQuestionText(qmeQuestionDetail.getQuestionText()+ " "+4);
-        qmeQuestionList.add(qmeQuestionDetail);
-
-        qmeQuestionDetail = getQMeQuestionDetail();
-        qmeQuestionDetail.setQuestionId(qmeQuestionDetail.getQuestionId()+5);
-        qmeQuestionDetail.setQuestionText(qmeQuestionDetail.getQuestionText()+ " "+5);
         qmeQuestionList.add(qmeQuestionDetail);
 
         return qmeQuestionList;

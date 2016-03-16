@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.model.fixtures.QMeQuestionDetailFixture;
 import com.malcolm.qme.rest.service.QuestionService;
 import com.malcolm.qme.security.service.QMeUserDetails;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.when;
@@ -68,9 +70,28 @@ public class QuestionControllerTest extends QMeControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.content", is(5)))
-
         ;
+    }
 
+    @Test
+    public void testList() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.list()).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetailList());
+
+        mockMvc.perform(
+                get("/qme/question")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].questionId", is(1)))
+                .andExpect(jsonPath("$[1].questionId", is(2)))
+                .andExpect(jsonPath("$[2].questionId", is(3)))
+                .andExpect(jsonPath("$[3].questionId", is(4)))
+                .andExpect(jsonPath("$[4].questionId", is(5)))
+        ;
     }
 }
 

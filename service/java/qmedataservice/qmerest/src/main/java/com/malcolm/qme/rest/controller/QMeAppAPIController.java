@@ -8,6 +8,7 @@ package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.CategoryAPI;
 import com.malcolm.qme.rest.api.QMeAppAPI;
+import com.malcolm.qme.rest.api.QuestionAPI;
 import com.malcolm.qme.rest.api.UserAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,11 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),DELETE_CATEGORY));
         qmeResources.add(qmeCategoryResource);
 
-
+        //QMe Question API
+        Resource<String> qmeQuestionResource = new Resource<>(QME_QUESTION_API,new Link(endpointURL+ QuestionAPI.ROOT_PATH.replaceAll(":.+","}"),QUESTION));
+        qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.COUNT_PATH.replaceAll(":.+","}"),QUESTION_COUNT));
+        qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",QUESTION_PAGED));
+        //TODO:
         return new Resources<>(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
     }
 

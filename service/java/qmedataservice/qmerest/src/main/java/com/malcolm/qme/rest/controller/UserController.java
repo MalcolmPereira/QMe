@@ -226,7 +226,7 @@ public class UserController implements UserAPI {
 
     /**
      * Set User Links
-     * @param qmeUser QMeUSer
+     * @param qmeUser QMeUser
      */
     private void setUserLinks(QMeUserDetail qmeUser){
         qmeUser.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qmeUser.getUserId()+""),QMeAppAPI.USER_BY_ID));
