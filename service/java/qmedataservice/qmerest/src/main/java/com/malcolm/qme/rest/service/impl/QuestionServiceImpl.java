@@ -125,7 +125,15 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public void delete(Long id) throws QMeResourceNotFoundException, QMeServerException {
-
+        try{
+            Question question  =  questionRepo.findById(id);
+            if(question == null){
+                throw new QMeResourceNotFoundException("Question with Question ID "+id+" not found");
+            }
+            questionRepo.delete(id);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     /**

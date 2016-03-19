@@ -36,6 +36,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -239,7 +240,6 @@ public class QuestionServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(null);
         questionService.save(qmeQuestion,1L);
         verify(categoryRepo).findById(1L);
-
     }
 
     @Test(expected = QMeInvalidResourceDataException.class)
@@ -250,7 +250,6 @@ public class QuestionServiceImplTest {
         qmeQuestion.setCategoryId(1L);
         questionService.save(qmeQuestion,1L);
     }
-
 
     @Test
     public void testUpdate() throws Exception {
@@ -264,6 +263,9 @@ public class QuestionServiceImplTest {
         qmeQuestion.setQuestionId(1L);
         qmeQuestion.setCategoryId(1L);
         QMeQuestionDetail questionDetail = questionService.update(qmeQuestion,1L,1L);
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+        verify(questionRepo).update(Matchers.<Question>anyObject(),Matchers.<Long>anyObject());
         assertNotNull(questionDetail);
         assertThat(questionDetail.getQuestionId(), equalTo(1L));
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
@@ -271,6 +273,10 @@ public class QuestionServiceImplTest {
 
     @Test
     public void testDelete() throws Exception {
-
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        doNothing().when(questionRepo).delete(1L);
+        questionService.delete(1L);
+        verify(questionRepo).findById(1L);
+        verify(questionRepo).delete(1L);
     }
 }
