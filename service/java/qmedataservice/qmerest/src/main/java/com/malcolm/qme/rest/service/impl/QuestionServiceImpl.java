@@ -94,6 +94,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public QMeQuestionDetail save(QMeQuestion qMeQuestion, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
         try {
+            qMeQuestion.setCreateUserID(userId);
             Question question = getQuestion(qMeQuestion);
             question = questionRepo.save(question);
             return  getQMeQuestionDetail(question);
@@ -133,6 +134,9 @@ public class QuestionServiceImpl implements QuestionService{
         }
         if(qMeQuestion.getQuestionPoint() == null || qMeQuestion.getQuestionPoint() < 0){
             throw new QMeInvalidResourceDataException("Valid Question Point is required");
+        }
+        if(qMeQuestion.getCreateUserID() == null || qMeQuestion.getCreateUserID() < 0){
+            throw new QMeInvalidResourceDataException("Valid Create User Id is required");
         }
         Category category = categoryRepo.findById(qMeQuestion.getCategoryId());
         if(category == null){
