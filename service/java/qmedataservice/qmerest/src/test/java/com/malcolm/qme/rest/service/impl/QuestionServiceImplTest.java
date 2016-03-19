@@ -254,6 +254,7 @@ public class QuestionServiceImplTest {
 
     @Test
     public void testUpdate() throws Exception {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(questionRepo.update(Matchers.<Question>anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         QMeQuestion qmeQuestion = new QMeQuestion();
@@ -266,8 +267,6 @@ public class QuestionServiceImplTest {
         assertNotNull(questionDetail);
         assertThat(questionDetail.getQuestionId(), equalTo(1L));
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
-
-
     }
 
     @Test

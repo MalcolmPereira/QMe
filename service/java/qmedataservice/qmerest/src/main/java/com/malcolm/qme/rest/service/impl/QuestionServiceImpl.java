@@ -105,7 +105,22 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public QMeQuestionDetail update(QMeQuestion qMeQuestion, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
-        return null;
+        try{
+            Question question  =  questionRepo.findById(id);
+            if(question == null){
+                throw new QMeResourceNotFoundException("Question with Question ID "+id+" not found");
+            }
+            qMeQuestion.setQuestionId(question.getQuestionID());
+            qMeQuestion.setCategoryId(question.getCategoryID());
+            qMeQuestion.setCreateUserID(question.getCreateUserID());
+            qMeQuestion.setUpdateUserID(userId);
+            question = getQuestion(qMeQuestion);
+            question = questionRepo.update(question,userId);
+            return  getQMeQuestionDetail(question);
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override
