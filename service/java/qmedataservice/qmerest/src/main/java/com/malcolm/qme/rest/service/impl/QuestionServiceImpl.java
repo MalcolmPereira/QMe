@@ -70,7 +70,11 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public QMeQuestionDetail searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
         try{
-            return  getQMeQuestionDetail(questionRepo.findById(id));
+            Question question  =  questionRepo.findById(id);
+            if(question == null){
+                throw new QMeResourceNotFoundException("Question with Question ID "+id+" not found");
+            }
+            return  getQMeQuestionDetail(question);
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);

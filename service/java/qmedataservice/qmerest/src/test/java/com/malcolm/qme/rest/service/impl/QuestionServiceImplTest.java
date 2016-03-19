@@ -126,21 +126,48 @@ public class QuestionServiceImplTest {
                     is("Some question text - 4"),
                     is("Some question text - 5")
             ));
-
         }
+    }
 
+    @Test
+    public void testListWithPagingNullReturn() throws QMeResourceException, QMeException{
+        when(questionRepo.findAll(Matchers.<PageSort>anyObject())).thenReturn(null);
+        List<QMeQuestionDetail> questionList = questionService.list(0,5,true,"Question Text");
+        verify(questionRepo).findAll(Matchers.<PageSort>anyObject());
+        assertNotNull(questionList);
+        assertThat(questionList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testListWithPagingQMeException() throws Exception {
+        when(questionRepo.findAll(Matchers.<PageSort>anyObject())).thenThrow(QMeException.class);
+        questionService.list(0,5,true,"Question Text");
     }
 
     @Test
     public void testSearchById() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         QMeQuestionDetail questionDetail = questionService.searchById(1L);
-
         verify(questionRepo).findById(1L);
         assertNotNull(questionDetail);
         assertThat(questionDetail.getQuestionId(), equalTo(1L));
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
     }
+
+    @Test(expected = QMeResourceException.class)
+    public void testSearchByIdResourceException() throws Exception {
+        when(questionRepo.findById(1L)).thenReturn(null);
+        questionService.searchById(1L);
+        verify(questionRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSearchByIdQMeException() throws Exception {
+        when(questionRepo.findById(1L)).thenThrow(QMeException.class);
+        questionService.searchById(1L);
+        verify(questionRepo).findById(1L);
+    }
+
 
     @Test
     public void testSave() throws Exception {

@@ -78,7 +78,7 @@ public final class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<QMeCategoryDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        return list();
     }
 
     @Override
