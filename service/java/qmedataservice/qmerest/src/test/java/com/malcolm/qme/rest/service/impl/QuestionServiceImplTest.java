@@ -35,6 +35,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -251,8 +252,21 @@ public class QuestionServiceImplTest {
     }
 
 
-        @Test
+    @Test
     public void testUpdate() throws Exception {
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(questionRepo.update(Matchers.<Question>anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        qmeQuestion.setQuestionId(1L);
+        qmeQuestion.setCategoryId(1L);
+        QMeQuestionDetail questionDetail = questionService.update(qmeQuestion,1L,1L);
+        assertNotNull(questionDetail);
+        assertThat(questionDetail.getQuestionId(), equalTo(1L));
+        assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
+
 
     }
 
