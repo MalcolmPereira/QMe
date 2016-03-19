@@ -64,4 +64,12 @@ public interface QuestionAPI extends QMeAPI {
     List<QMeQuestionDetail> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
 
+    /**
+     * Search by ID
+     *
+     * @param questionId Question ID
+     * @return QMe Question Detail
+     */
+    QMeQuestionDetail searchById(Long questionId) throws QMeResourceException;
+
 }

@@ -9,6 +9,8 @@ package com.malcolm.qme.rest.controller;
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.QuestionAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuestionDetail;
 import com.malcolm.qme.rest.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +59,45 @@ public class QuestionController implements QuestionAPI {
         return qMeQuestionDetailList;
     }
 
+    @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
-    public List<QMeQuestionDetail> listPaged(String page, String pageSize, String sortType, String sortFields) throws QMeResourceException {
-        return null;
+    public List<QMeQuestionDetail> listPaged(
+            @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+            @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+            @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+            @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "Question - list");
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeQuestionDetail> qMeQuestionDetailList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeQuestionDetailList = questionService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }else{
+            qMeQuestionDetailList= questionService.list();
+        }
+        setQuestionLinks(qMeQuestionDetailList);
+        return qMeQuestionDetailList;
+    }
+
+    @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public @ResponseBody QMeQuestionDetail searchById(@PathVariable(ID_PARAM_STRING) Long questionId) throws QMeResourceNotFoundException,QMeServerException {
+        log(getCurrentUser(), "User - Search By ID for questionId "+questionId);
+        QMeQuestionDetail qMeQuestionDetail = questionService.searchById(questionId);
+        setQuestionLinks(qMeQuestionDetail);
+        return qMeQuestionDetail;
     }
 
     /**
-     * Set Question Links
-     * @param qmeQuestionList QMe Question List
-     */
+    * Set Question Links
+    * @param qmeQuestionList QMe Question List
+    */
     private void setQuestionLinks(List<QMeQuestionDetail> qmeQuestionList){
         qmeQuestionList.stream().forEach(this::setQuestionLinks);
     }

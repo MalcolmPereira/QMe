@@ -68,6 +68,7 @@ public class QMeQuestionDetailFixture extends QMeResourceFixture<QMeQuestionDeta
         qmeQuestionDetail.setQuestionId(1L);
         qmeQuestionDetail.setCategoryId(1L);
         qmeQuestionDetail.setQuestionText("Some Question");
+        qmeQuestionDetail.setAnswer("Some Answer");
         qmeQuestionDetail.setQuestionPoint(1);
         qmeQuestionDetail.setLikes(1L);
         qmeQuestionDetail.setQuestionCreateDate(LocalDateTime.now());

@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.fixtures.QMeQuestionDetailFixture;
 import com.malcolm.qme.rest.service.QuestionService;
 import com.malcolm.qme.security.service.QMeUserDetails;
@@ -28,8 +29,8 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 /**
@@ -93,6 +94,42 @@ public class QuestionControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$[4].questionId", is(5)))
         ;
     }
+
+    @Test
+    public void testListQMeResourceException() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.list()).thenThrow(new QMeServerException("Some Error in the Service"));
+
+        mockMvc.perform(
+                get("/qme/question")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    public void testSearchById() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.searchById(1L)).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetail());
+
+        mockMvc.perform(
+                get("/qme/question/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.questionId", is(1)))
+                .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(jsonPath("$.questionText", is("Some Question")))
+                .andExpect(jsonPath("$.answer", is("Some Answer")))
+        ;
+
+    }
+
 }
 
 
