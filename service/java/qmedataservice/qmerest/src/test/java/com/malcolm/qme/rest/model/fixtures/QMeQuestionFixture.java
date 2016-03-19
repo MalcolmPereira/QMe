@@ -33,6 +33,7 @@ public class QMeQuestionFixture extends QMeResourceFixture<QMeQuestion>{
     public static QMeQuestion simpleQMeQuestionWithQuestionText(String question){
         QMeQuestion qmeQuestion = getQMeQuestion();
         qmeQuestion.setQuestionText(question);
+        qmeQuestion.setAnswer("Some Answer");
         return qmeQuestion;
     }
 
@@ -49,21 +50,25 @@ public class QMeQuestionFixture extends QMeResourceFixture<QMeQuestion>{
         qmeQuestion = getQMeQuestion();
         qmeQuestion.setQuestionId(qmeQuestion.getQuestionId()+2);
         qmeQuestion.setQuestionText(qmeQuestion.getQuestionText()+ " "+2);
+        qmeQuestion.setAnswer("Some Answer");
         qmeQuestionList.add(qmeQuestion);
 
         qmeQuestion = getQMeQuestion();
         qmeQuestion.setQuestionId(qmeQuestion.getQuestionId()+3);
         qmeQuestion.setQuestionText(qmeQuestion.getQuestionText()+ " "+3);
+        qmeQuestion.setAnswer("Some Answer");
         qmeQuestionList.add(qmeQuestion);
 
         qmeQuestion = getQMeQuestion();
         qmeQuestion.setQuestionId(qmeQuestion.getQuestionId()+4);
         qmeQuestion.setQuestionText(qmeQuestion.getQuestionText()+ " "+4);
+        qmeQuestion.setAnswer("Some Answer");
         qmeQuestionList.add(qmeQuestion);
 
         qmeQuestion = getQMeQuestion();
         qmeQuestion.setQuestionId(qmeQuestion.getQuestionId()+5);
         qmeQuestion.setQuestionText(qmeQuestion.getQuestionText()+ " "+5);
+        qmeQuestion.setAnswer("Some Answer");
         qmeQuestionList.add(qmeQuestion);
 
         return qmeQuestionList;
@@ -78,6 +83,7 @@ public class QMeQuestionFixture extends QMeResourceFixture<QMeQuestion>{
         qmeQuestion.setQuestionId(1L);
         qmeQuestion.setCategoryId(1L);
         qmeQuestion.setQuestionText("Some Question");
+        qmeQuestion.setAnswer("Some Answer");
         qmeQuestion.setQuestionPoint(1);
         qmeQuestion.setLikes(1L);
         qmeQuestion.setQuestionCreateDate(LocalDateTime.now());

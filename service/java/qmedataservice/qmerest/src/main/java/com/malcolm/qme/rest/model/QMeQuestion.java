@@ -35,6 +35,11 @@ public class QMeQuestion extends QMeResource {
     private String questionText;
 
     /**
+     * Question Answer
+     */
+    private String answer;
+
+    /**
      * Question Point
      */
     private Integer questionPoint;
@@ -108,6 +113,22 @@ public class QMeQuestion extends QMeResource {
      */
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    /**
+     * Get Answer Description
+     * @return Answer Description
+     */
+    public String getAnswer() {
+        return answer;
+    }
+
+    /**
+     * Set Answer Description
+     * @param answer Answer Description to set
+     */
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     /**

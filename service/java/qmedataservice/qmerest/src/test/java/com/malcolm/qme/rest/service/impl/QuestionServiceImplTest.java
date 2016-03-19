@@ -6,12 +6,16 @@
  */
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.Question;
+import com.malcolm.qme.core.domain.fixtures.CategoryFixtures;
 import com.malcolm.qme.core.domain.fixtures.QuestionFixtures;
+import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeServerException;
+import com.malcolm.qme.rest.model.QMeQuestion;
 import com.malcolm.qme.rest.model.QMeQuestionDetail;
 import com.malcolm.qme.rest.service.QuestionService;
 import org.hamcrest.MatcherAssert;
@@ -41,6 +45,9 @@ public class QuestionServiceImplTest {
 
     @Mock
     private QuestionRepository questionRepo;
+
+    @Mock
+    private CategoryRepository categoryRepo;
 
     @InjectMocks
     private final QuestionService questionService = new QuestionServiceImpl();
@@ -171,7 +178,19 @@ public class QuestionServiceImplTest {
 
     @Test
     public void testSave() throws Exception {
-
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setCategoryId(1L);
+        qmeQuestion.setQuestionPoint(1);
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.save(Matchers.<Question>anyObject())).thenReturn(QuestionFixtures.simpleQuestion());
+        QMeQuestionDetail questionDetail = questionService.save(qmeQuestion,1L);
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).save(Matchers.<Question>anyObject());
+        assertNotNull(questionDetail);
+        assertThat(questionDetail.getQuestionId(), equalTo(1L));
+        assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
     }
 
     @Test

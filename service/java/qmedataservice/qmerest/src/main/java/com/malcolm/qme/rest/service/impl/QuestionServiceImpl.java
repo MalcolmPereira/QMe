@@ -6,7 +6,9 @@
  */
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
+import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
@@ -36,6 +38,14 @@ public class QuestionServiceImpl implements QuestionService{
     @Autowired
     @Qualifier(value = "QuestionRepository")
     private QuestionRepository questionRepo;
+
+    /**
+     * QMeCategory Repository
+     */
+    @Autowired
+    @Qualifier(value = "CategoryRepository")
+    private CategoryRepository categoryRepo;
+
 
     @Override
     public Long count() throws QMeServerException {
@@ -83,7 +93,13 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public QMeQuestionDetail save(QMeQuestion qMeQuestion, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
-        return null;
+        try {
+            Question question = getQuestion(qMeQuestion);
+            question = questionRepo.save(question);
+            return  getQMeQuestionDetail(question);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override
@@ -96,6 +112,41 @@ public class QuestionServiceImpl implements QuestionService{
 
     }
 
+    /**
+     * Map REST Model to Question Domain Object
+     * @param qMeQuestion
+     * @return Question Domain Model
+     * @throws QMeInvalidResourceDataException
+     * @throws QMeResourceConflictException
+     * @throws QMeServerException
+     * @throws QMeException
+     */
+    private Question getQuestion(QMeQuestion qMeQuestion) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
+        if(qMeQuestion.getQuestionText() == null || qMeQuestion.getQuestionText().trim().length() == 0){
+            throw new QMeInvalidResourceDataException("Valid Question Text is required");
+        }
+        if(qMeQuestion.getAnswer() == null || qMeQuestion.getAnswer().trim().length() == 0){
+            throw new QMeInvalidResourceDataException("Valid Answer Text is required");
+        }
+        if(qMeQuestion.getCategoryId() == null || qMeQuestion.getCategoryId() < 0){
+            throw new QMeInvalidResourceDataException("Valid Category is required");
+        }
+        if(qMeQuestion.getQuestionPoint() == null || qMeQuestion.getQuestionPoint() < 0){
+            throw new QMeInvalidResourceDataException("Valid Question Point is required");
+        }
+        Category category = categoryRepo.findById(qMeQuestion.getCategoryId());
+        if(category == null){
+            throw new QMeInvalidResourceDataException("Valid Category is required, Category not found");
+        }
+        Question question = new Question(qMeQuestion.getCategoryId(), qMeQuestion.getQuestionText(),qMeQuestion.getAnswer(), qMeQuestion.getQuestionPoint(), qMeQuestion.getCreateUserID());
+        return question;
+    }
+
+    /**
+     * Map Question Domain Object List to REST Model
+     * @param questionList Question List
+     * @return QMeQuestionDetail List
+     */
     private List<QMeQuestionDetail> getQMeQuestionDetail(List<Question> questionList){
         List<QMeQuestionDetail> qmeQuestionDetails = new ArrayList<>();
         if(questionList == null){
