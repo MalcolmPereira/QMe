@@ -13,6 +13,7 @@ import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuestion;
@@ -191,9 +192,66 @@ public class QuestionServiceImplTest {
         assertNotNull(questionDetail);
         assertThat(questionDetail.getQuestionId(), equalTo(1L));
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
+
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        questionDetail = questionService.searchById(1L);
+        verify(questionRepo).findById(1L);
+        assertNotNull(questionDetail);
+        assertThat(questionDetail.getQuestionId(), equalTo(1L));
+        assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
     }
 
-    @Test
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidQuestionText() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setCategoryId(1L);
+        qmeQuestion.setQuestionPoint(1);
+        questionService.save(qmeQuestion,1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidAnswerText() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setCategoryId(1L);
+        qmeQuestion.setQuestionPoint(1);
+        questionService.save(qmeQuestion,1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidCategory() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        questionService.save(qmeQuestion,1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidCategoryNotFound() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        qmeQuestion.setCategoryId(1L);
+        when(categoryRepo.findById(1L)).thenReturn(null);
+        questionService.save(qmeQuestion,1L);
+        verify(categoryRepo).findById(1L);
+
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidQuestionPoint() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setCategoryId(1L);
+        questionService.save(qmeQuestion,1L);
+    }
+
+
+        @Test
     public void testUpdate() throws Exception {
 
     }

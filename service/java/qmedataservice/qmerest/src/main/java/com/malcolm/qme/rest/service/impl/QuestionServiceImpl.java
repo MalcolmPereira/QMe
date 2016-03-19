@@ -123,6 +123,7 @@ public class QuestionServiceImpl implements QuestionService{
      * @throws QMeException
      */
     private Question getQuestion(QMeQuestion qMeQuestion) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
+        //TODO: May need to check if question text is duplicated :) need some text weigthed search :)
         if(qMeQuestion.getQuestionText() == null || qMeQuestion.getQuestionText().trim().length() == 0){
             throw new QMeInvalidResourceDataException("Valid Question Text is required");
         }
