@@ -44,14 +44,14 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),USER_BY_ID));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.NAME_PATH.replaceAll(":.+","}"),USER_BY_NAME));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.EMAIL_PATH.replaceAll(":.+","}"),USER_BY_EMAIL));
-        qmeUserResource.add(new Link( endpointURL+ UserAPI.REGISTER_PATH.replaceAll(":.+","}"),REGISTER_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.REGISTER_PATH.replaceAll(":.+","}"),REGISTER_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.STAGING_PATH.replaceAll(":.+","}"),STAGE_USER));
-        qmeUserResource.add(new Link( endpointURL+ UserAPI.REGISTER_CONFIRM_PATH.replaceAll(":.+","}"),CONFIRM_STAGE_USER));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.REGISTER_CONFIRM_PATH.replaceAll(":.+","}"),CONFIRM_STAGE_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.ID_PATH.replaceAll(":.+","}"),DELETE_USER));
         qmeUserResource.add(new Link(endpointURL+ UserAPI.FORGOT_USERNAME_PATH.replaceAll(":.+","}"),FORGOT_USER_NAME));
-        qmeUserResource.add(new Link( endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll(":.+","}"),FORGOT_USER_PASSWORD));
-        qmeUserResource.add(new Link( endpointURL+ UserAPI.RESET_PASSWORD_PATH.replaceAll(":.+","}"),RESET_USER_PASSWORD));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.FORGOT_PASSWORD_PATH.replaceAll(":.+","}"),FORGOT_USER_PASSWORD));
+        qmeUserResource.add(new Link(endpointURL+ UserAPI.RESET_PASSWORD_PATH.replaceAll(":.+","}"),RESET_USER_PASSWORD));
         qmeResources.add(qmeUserResource);
 
         //QMe Category API
@@ -70,10 +70,10 @@ public class QMeAppAPIController implements QMeAppAPI {
         Resource<String> qmeQuestionResource = new Resource<>(QME_QUESTION_API,new Link(endpointURL+ QuestionAPI.ROOT_PATH.replaceAll(":.+","}"),QUESTION));
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.COUNT_PATH.replaceAll(":.+","}"),QUESTION_COUNT));
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",QUESTION_PAGED));
+        qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),QUESTION_BY_ID));
         qmeResources.add(qmeQuestionResource);
-
-
         //TODO:
+
         return new Resources<>(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
     }
 

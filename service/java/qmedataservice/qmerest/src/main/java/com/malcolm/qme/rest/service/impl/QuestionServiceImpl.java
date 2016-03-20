@@ -196,6 +196,7 @@ public class QuestionServiceImpl implements QuestionService{
         qmeQuestionDetail.setQuestionId(question.getQuestionID());
         qmeQuestionDetail.setCategoryId(question.getCategoryID());
         qmeQuestionDetail.setQuestionText(question.getQuestionText());
+        qmeQuestionDetail.setAnswer(question.getAnswer());
         qmeQuestionDetail.setQuestionPoint(question.getQuestionPoint());
         qmeQuestionDetail.setLikes(question.getLikes());
         qmeQuestionDetail.setQuestionCreateDate(question.getQuestionCreateDate());
