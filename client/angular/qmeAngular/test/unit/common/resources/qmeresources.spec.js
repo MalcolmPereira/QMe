@@ -4,15 +4,20 @@
 
     describe('Service: QMe Resource Service', function() {
 
-        var scope, qmeUserResource, qmeCategoryResource, qmeContants;
+        var scope, qmeUserResource, qmeCategoryResource, qmeQuestionResource, qmeContants;
 
         beforeEach(module('qmeApp'));
 
-        beforeEach(inject(function($rootScope,_qmeUserResource_,_qmeCategoryResource_,_QME_CONSTANTS_) {
+        beforeEach(inject(function($rootScope,
+                                   _qmeUserResource_,
+                                   _qmeCategoryResource_,
+                                   _qmeQuestionResource_,
+                                   _QME_CONSTANTS_) {
             scope = $rootScope.$new();
             qmeContants = _QME_CONSTANTS_;
             qmeUserResource = _qmeUserResource_;
             qmeCategoryResource = _qmeCategoryResource_;
+            qmeQuestionResource = _qmeQuestionResource_;
         }));
 
 
@@ -77,6 +82,10 @@
 
         it('Should have a Category By Search String Resource Defined', function() {
             expect(qmeCategoryResource.categorySearchResource("sometoken","search")).toBeDefined();
+        });
+
+        it('Should have a Question Resource Defined', function() {
+            expect(qmeQuestionResource.questionResource("sometoken")).toBeDefined();
         });
     });
 

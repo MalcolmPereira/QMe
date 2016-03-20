@@ -100,5 +100,16 @@
                 return $resource(categorySearchEndPoint+"/"+searchStr);
             };
 
+        })
+
+        .service('qmeQuestionResource',function($resource,$http,QME_CONSTANTS){
+            var questionAPI               = QME_CONSTANTS.qmeservice+"/question";
+            var questionEndPoint          = questionAPI+"/count";
+
+            this.questionResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(questionAPI);
+            };
+
         });
 })();
