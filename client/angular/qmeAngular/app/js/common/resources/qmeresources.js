@@ -111,5 +111,9 @@
                 return $resource(questionAPI);
             };
 
+            this.questionCountResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(questionEndPoint);
+            };
         });
 })();

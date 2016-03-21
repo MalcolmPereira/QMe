@@ -20,7 +20,7 @@
             qmeQuestionResource = _qmeQuestionResource_;
         }));
 
-
+        //User Resources
         it('Should have a QMe User Resource', function() {
             expect(qmeUserResource).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -60,6 +60,7 @@
             expect(qmeUserResource.logoutResource()).toBeDefined();
         });
 
+        //Category Resources
         it('Should have a Category Resource Defined', function() {
             expect(qmeCategoryResource.categoryResource("sometoken")).toBeDefined();
         });
@@ -86,6 +87,15 @@
 
         it('Should have a Question Resource Defined', function() {
             expect(qmeQuestionResource.questionResource("sometoken")).toBeDefined();
+        });
+
+        //Question Resources
+        it('Should have a Question Resource Defined', function() {
+            expect(qmeQuestionResource.questionResource("sometoken")).toBeDefined();
+        });
+
+        it('Should have a Question Count Resource Defined', function() {
+            expect(qmeQuestionResource.questionCountResource("sometoken")).toBeDefined();
         });
     });
 
