@@ -60,6 +60,18 @@
             expect(qmeUserResource.logoutResource()).toBeDefined();
         });
 
+        it('Should have a User Count Resource Defined', function() {
+            expect(qmeUserResource.userCountResource("sometoken")).toBeDefined();
+        });
+
+        it('Should have a User List Resource Defined', function() {
+            expect(qmeUserResource.userResource("sometoken")).toBeDefined();
+        });
+
+        it('Should have a User List Paged Resource Defined', function() {
+            expect(qmeUserResource.userPagedResource("sometoken",1,50,true,"USER_NAME")).toBeDefined();
+        });
+
         //Category Resources
         it('Should have a Category Resource Defined', function() {
             expect(qmeCategoryResource.categoryResource("sometoken")).toBeDefined();
@@ -96,6 +108,10 @@
 
         it('Should have a Question Count Resource Defined', function() {
             expect(qmeQuestionResource.questionCountResource("sometoken")).toBeDefined();
+        });
+
+        it('Should have a Question Paged Resource Defined', function() {
+            expect(qmeQuestionResource.questionPagedResource("sometoken",1,50,true,"QUESTION")).toBeDefined();
         });
     });
 

@@ -105,6 +105,7 @@
         .service('qmeQuestionResource',function($resource,$http,QME_CONSTANTS){
             var questionAPI               = QME_CONSTANTS.qmeservice+"/question";
             var questionEndPoint          = questionAPI+"/count";
+            var questionPagedEndPoint     = questionAPI+"/paged";
 
             this.questionResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
@@ -114,6 +115,15 @@
             this.questionCountResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(questionEndPoint);
+            };
+
+            this.questionPagedResource = function(authToken,pageIndex,maxRows,sorttype,sortfields){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                if(sortfields){
+                    return $resource(questionPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows+"&sorttype="+sorttype+"&sortfields="+sortfields);
+                }else{
+                    return $resource(questionPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows);
+                }
             };
         });
 })();
