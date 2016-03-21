@@ -103,8 +103,9 @@
         })
 
         .service('qmeQuestionResource',function($resource,$http,QME_CONSTANTS){
+
             var questionAPI               = QME_CONSTANTS.qmeservice+"/question";
-            var questionEndPoint          = questionAPI+"/count";
+            var questionCountPoint        = questionAPI+"/count";
             var questionPagedEndPoint     = questionAPI+"/paged";
 
             this.questionResource = function(authToken){
@@ -114,7 +115,7 @@
 
             this.questionCountResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
-                return $resource(questionEndPoint);
+                return $resource(questionCountPoint);
             };
 
             this.questionPagedResource = function(authToken,pageIndex,maxRows,sorttype,sortfields){
