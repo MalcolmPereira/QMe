@@ -38,6 +38,9 @@
         it('Should handle valid count question request ', function() {
             expect(qmeQuestionService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
+
+
+
             var countresponse =  {
                 "content":"264",
                 "links":[
