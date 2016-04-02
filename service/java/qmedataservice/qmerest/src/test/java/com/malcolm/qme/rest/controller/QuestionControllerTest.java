@@ -33,6 +33,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,8 +60,8 @@ public class QuestionControllerTest extends QMeControllerTest {
     }
 
     @Before
-    public void setContext(){
-        SecurityContextHolder.getContext().setAuthentication((QMeUserDetails)QMeUserDetails.create(1L, "admin", "password", "USER","ADMIN"));
+    public void setContext() {
+        SecurityContextHolder.getContext().setAuthentication((QMeUserDetails) QMeUserDetails.create(1L, "admin", "password", "USER", "ADMIN"));
     }
 
     @Test
@@ -109,7 +110,7 @@ public class QuestionControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(questionService, notNullValue());
 
-        when(questionService.list(0,10,true,"QUESTION")).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetailList());
+        when(questionService.list(0, 10, true, "QUESTION")).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetailList());
 
         mockMvc.perform(
                 get("/qme/question/paged?page=0&pagesize=10&sorttype=true&sortfields=QUESTION")
@@ -124,7 +125,7 @@ public class QuestionControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$[4].questionId", is(5)))
         ;
 
-        verify(questionService).list(0,10,true,"QUESTION");
+        verify(questionService).list(0, 10, true, "QUESTION");
     }
 
     @Test
@@ -168,9 +169,11 @@ public class QuestionControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(questionService, notNullValue());
 
-        when(questionService.save(Matchers.<QMeQuestionDetail>anyObject(),eq(1L))).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetail());
+        when(questionService.save(Matchers.<QMeQuestionDetail>anyObject(), eq(1L))).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetail());
 
         QMeQuestionDetail questionDetail = QMeQuestionDetailFixture.simpleQMeQuestionDetail();
+        questionDetail.setQuestionCreateDate(null);
+        questionDetail.setQuestionUpdateDate(null);
 
         mockMvc.perform(
                 post("/qme/question")
@@ -183,9 +186,32 @@ public class QuestionControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.questionText", is("Some Question")))
         ;
 
-        verify(questionService).save(Matchers.<QMeQuestionDetail>anyObject(),eq(1L));
+        verify(questionService).save(Matchers.<QMeQuestionDetail>anyObject(), eq(1L));
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.update(Matchers.<QMeQuestionDetail>anyObject(),eq(1L),eq(1L))).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetail());
+
+        QMeQuestionDetail questionDetail = QMeQuestionDetailFixture.simpleQMeQuestionDetail();
+        questionDetail.setQuestionCreateDate(null);
+        questionDetail.setQuestionUpdateDate(null);
+
+        mockMvc.perform(
+                put("/qme/question/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeQuestionDetailFixture.toJson(questionDetail))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.questionId", is(1)))
+                .andExpect(jsonPath("$.questionText", is("Some Question")))
+        ;
+
+        verify(questionService).update(Matchers.<QMeQuestionDetail>anyObject(), eq(1L), eq(1L));
     }
 
 }
-
-

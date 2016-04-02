@@ -230,7 +230,6 @@ public class CategoryControllerTest extends QMeControllerTest{
                                 .andExpect(status().isInternalServerError())
                                 .andDo(print())
         ;
-
     }
 
     @Test

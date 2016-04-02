@@ -97,16 +97,21 @@ public class QuestionController implements QuestionAPI {
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeQuestionDetail create(QMeQuestionDetail question) throws QMeResourceException {
+    public QMeQuestionDetail create(@RequestBody QMeQuestionDetail question) throws QMeResourceException {
         log(getCurrentUser(), "Question - create");
         QMeQuestionDetail  qMeQuestionDetail = questionService.save(question,getCurrentUser().getUserID());
         setQuestionLinks(qMeQuestionDetail);
         return qMeQuestionDetail;
     }
 
+    @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeQuestionDetail update(Long questionId, QMeQuestionDetail question) throws QMeResourceException {
-        return null;
+    public QMeQuestionDetail update(@PathVariable(ID_PARAM_STRING) Long questionId,@RequestBody QMeQuestionDetail question) throws QMeResourceException {
+        log(getCurrentUser(), "Question - update");
+        QMeQuestionDetail  qMeQuestionDetail =  questionService.update(question, questionId,getCurrentUser().getUserID());
+        setQuestionLinks(qMeQuestionDetail);
+        return qMeQuestionDetail;
     }
 
     @Override

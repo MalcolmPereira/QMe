@@ -263,7 +263,6 @@ public class UserControllerTest extends QMeControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
