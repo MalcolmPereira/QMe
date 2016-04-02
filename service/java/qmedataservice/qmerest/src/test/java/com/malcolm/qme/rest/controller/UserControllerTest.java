@@ -325,25 +325,6 @@ public class UserControllerTest extends QMeControllerTest {
     }
 
     @Test
-    public void testStageUserQMeInvalidResourceDataException() throws Exception {
-        assertThat(mockMvc, notNullValue());
-        assertThat(userService, notNullValue());
-
-        doThrow(new QMeInvalidResourceDataException("Some Invalid data error in the Service")).when(userService).stageUser(anyObject());
-
-        QMeStageUser qmeUser = QMeUserFixtures.simpleQMeStagedUser();
-
-        mockMvc.perform(
-                post("/qme/user/stage")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(QMeUserFixtures.toJson(qmeUser))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-        ;
-    }
-
-    @Test
     public void testStageUserQMeResourceConflictException() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());

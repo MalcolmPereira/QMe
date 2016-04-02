@@ -84,7 +84,6 @@ public interface QMeAppAPI extends QMeAPI {
      */
     String RESET_USER_PASSWORD = "Put_Reset_User_Password";
 
-
     /**
      * QMe Category API
      */
@@ -141,7 +140,7 @@ public interface QMeAppAPI extends QMeAPI {
     /**
      * Question Paged
      */
-    String QUESTION_PAGED = "Get_Paged_Question_list - (sortfields:QUESTION)";
+    String QUESTION_PAGED = "Get_Paged_Question_list - (sortfields:QUESTION,USERNAME,QUESTIONCREATEDATE,QUESTIONUPDATEDATE)";
     /**
      * Question by Question ID
      */

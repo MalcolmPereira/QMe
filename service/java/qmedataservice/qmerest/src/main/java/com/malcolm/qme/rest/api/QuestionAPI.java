@@ -72,4 +72,29 @@ public interface QuestionAPI extends QMeAPI {
      */
     QMeQuestionDetail searchById(Long questionId) throws QMeResourceException;
 
+    /**
+     * Create New Question
+     *
+     * @param question
+     * @return QMe Question Detail
+     * @throws QMeResourceException
+     */
+    QMeQuestionDetail create(QMeQuestionDetail question) throws QMeResourceException;
+
+    /**
+     * Update Question
+     *
+     * @param questionId
+     * @param question
+     * @return QMe Question Detail
+     * @throws QMeResourceException
+     */
+    QMeQuestionDetail update(Long questionId, QMeQuestionDetail question) throws QMeResourceException;
+
+    /**
+     * Delete Question
+     * @param questionId
+     * @throws QMeResourceException
+     */
+    void delete(Long questionId) throws QMeResourceException;
 }

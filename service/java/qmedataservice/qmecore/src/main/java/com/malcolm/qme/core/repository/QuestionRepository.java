@@ -16,6 +16,38 @@ import java.util.List;
 public interface QuestionRepository extends QMeRepository<Question,Long> {
 
     /**
+     * Sort Fields Enum
+     */
+    enum QUESTIONSORTFIELDS {
+        QUESTION("question"),
+        USERNAME("userName"),
+        QUESTIONCREATEDATE("questionCreateDate"),
+        QUESTIONUPDATEDATE("questionUpdateDate"),
+        ;
+
+        /**
+         * Enum Constructor
+         * @param fieldName Field Name
+         */
+        QUESTIONSORTFIELDS(String fieldName) {
+            this.questionSortField = fieldName;
+        }
+
+        /**
+         * Sort Field Name
+         */
+        private final String questionSortField;
+
+        /**
+         * Get Question Sort Field Name
+         * @return Question Sort Field Name
+         */
+        public String getQuestionSortField() {
+            return questionSortField;
+        }
+    }
+
+    /**
      * Find By Category
      *
      * @param categoryID Category ID

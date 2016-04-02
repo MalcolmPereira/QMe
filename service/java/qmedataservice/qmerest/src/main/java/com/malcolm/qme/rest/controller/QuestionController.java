@@ -94,6 +94,26 @@ public class QuestionController implements QuestionAPI {
         return qMeQuestionDetail;
     }
 
+    @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public QMeQuestionDetail create(QMeQuestionDetail question) throws QMeResourceException {
+        log(getCurrentUser(), "Question - create");
+        QMeQuestionDetail  qMeQuestionDetail = questionService.save(question,getCurrentUser().getUserID());
+        setQuestionLinks(qMeQuestionDetail);
+        return qMeQuestionDetail;
+    }
+
+    @Override
+    public QMeQuestionDetail update(Long questionId, QMeQuestionDetail question) throws QMeResourceException {
+        return null;
+    }
+
+    @Override
+    public void delete(Long questionId) throws QMeResourceException {
+
+    }
+
     /**
     * Set Question Links
     * @param qmeQuestionList QMe Question List
