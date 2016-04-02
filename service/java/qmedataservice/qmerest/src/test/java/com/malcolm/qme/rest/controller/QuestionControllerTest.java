@@ -29,11 +29,10 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -212,6 +211,22 @@ public class QuestionControllerTest extends QMeControllerTest {
         ;
 
         verify(questionService).update(Matchers.<QMeQuestionDetail>anyObject(), eq(1L), eq(1L));
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        doNothing().when(questionService).delete(1L);
+
+        mockMvc.perform(
+                delete("/qme/question/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+        ;
+
+        verify(questionService).delete(1L);
     }
 
 }

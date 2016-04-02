@@ -114,9 +114,12 @@ public class QuestionController implements QuestionAPI {
         return qMeQuestionDetail;
     }
 
+    @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public void delete(Long questionId) throws QMeResourceException {
-
+    public void delete(@PathVariable(ID_PARAM_STRING) Long questionId) throws QMeResourceException {
+        log(getCurrentUser(), "Question - delete");
+        questionService.delete(questionId);
     }
 
     /**
