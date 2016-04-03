@@ -10,10 +10,7 @@ import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.domain.fixtures.RoleFixtures;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
 import com.malcolm.qme.core.domain.fixtures.UserRoleFixtures;
-import com.malcolm.qme.core.repository.QMeException;
-import com.malcolm.qme.core.repository.RoleRepository;
-import com.malcolm.qme.core.repository.UserRepository;
-import com.malcolm.qme.core.repository.UserRoleRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
@@ -33,7 +30,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -87,6 +85,32 @@ public class UserRoleServiceImplTest {
                             is(3),
                             is(4),
                             is(5)
+            ));
+            assertThat(qMeUserRole.getRoleName(), anyOf(
+                    is("role name 1"),
+                    is("role name 2"),
+                    is("role name 3"),
+                    is("role name 4"),
+                    is("role name 5")
+            ));
+        }
+    }
+
+    @Test
+    public void testListPaged() throws Exception {
+        when(userRoleRepo.findAll()).thenReturn(UserRoleFixtures.simpleUserRoleList());
+        List<QMeUserRole> userRoleList = userRoleService.list(0,10,true, "FIRSTNAME");
+        verify(userRoleRepo).findAll();
+        assertNotNull(userRoleList);
+        assertThat(userRoleList.size(), equalTo(5));
+
+        for (QMeUserRole qMeUserRole : userRoleList) {
+            assertThat(qMeUserRole.getRoleID(), anyOf(
+                    is(1),
+                    is(2),
+                    is(3),
+                    is(4),
+                    is(5)
             ));
             assertThat(qMeUserRole.getRoleName(), anyOf(
                     is("role name 1"),
