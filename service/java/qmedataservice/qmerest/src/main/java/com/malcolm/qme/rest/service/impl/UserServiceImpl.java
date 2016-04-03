@@ -227,7 +227,7 @@ public final class UserServiceImpl implements UserService {
                         }
                     }
                 }
-                for(String roleName : qMeUser.getUserRoles()){
+                for(String roleName : newRoles){
                     Role role = roleRepo.findByRoleName(roleName);
                     if(role != null && (roleName.equalsIgnoreCase(ROLE_REVIEWER) || roleName.equalsIgnoreCase(ROLE_MODERATOR))){
                         UserRole userRole = new UserRole(role.getRoleID(),id);

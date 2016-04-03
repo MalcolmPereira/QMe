@@ -995,6 +995,41 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void testUpdateSetUserRolesUpdateExistingRoles() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        List<UserRole> currentUserRoleList = new ArrayList<>();
+        currentUserRoleList.add(new UserRole(1L,1,"USER",1L));
+        currentUserRoleList.add(new UserRole(2L,2,"BLAH_ROLE_1",1L));
+        currentUserRoleList.add(new UserRole(3L,3,"BLAH_ROLE_2",1L));
+        when(userRoleRepo.findByUserId(1L)).thenReturn(currentUserRoleList);
+        doNothing().when(userRoleRepo).delete(2L);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserId(1L);
+        qmeUser.setUpdateUserID(1L);
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword("spassword1");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("USER");
+        userRoles.add("BLAH_ROLE_2");
+        qmeUser.setUserRoles(userRoles);
+
+        QMeUserDetail userDetail = userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+        verify(userRepo).update(Matchers.<User>anyObject(), eq(1L));
+        verify(userRoleRepo).findByUserId(1L);
+
+        assertNotNull(userDetail);
+        assertThat(userDetail.getUserId(), equalTo(1L));
+        assertThat(userDetail.getUserName(), equalTo("suser1"));
+    }
+
+    @Test
     public void testDelete() throws QMeResourceException, QMeException {
         when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
         doNothing().when(userRepo).delete(1L);
