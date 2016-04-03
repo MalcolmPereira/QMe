@@ -119,6 +119,18 @@ public class CategoryServiceImplTest {
         }
     }
 
+    @Test
+    public void testListEmpty() throws QMeResourceException, QMeException {
+
+        when(categoryRepo.findAll()).thenReturn(null);
+
+        List<QMeCategoryDetail> categoryList = categoryService.list();
+
+        verify(categoryRepo).findAll();
+        assertNotNull(categoryList);
+        assertThat(categoryList.size(),equalTo(0));
+    }
+
     @Test(expected = QMeServerException.class)
     public void testListQMeException() throws QMeResourceException, QMeException {
         when(categoryRepo.findAll()).thenThrow(QMeException.class);
@@ -376,6 +388,18 @@ public class CategoryServiceImplTest {
         verify(categoryRepo).findById(1L);
         verify(categoryRepo).findById(2L);
         verify(categoryRepo).update(Matchers.<Category>anyObject(), eq(1L));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testUpdateSearchCategoryQMeException() throws QMeResourceException , QMeException {
+        when(categoryRepo.findById(1L)).thenThrow(QMeException.class);
+
+        QMeCategory qmeCategory = new QMeCategory();
+        qmeCategory.setCategoryName("Simple Category 1");
+        qmeCategory.setParentCategoryId(2L);
+        categoryService.update(qmeCategory, 1L, 1L);
+
+        verify(categoryRepo).findById(1L);
     }
 
     @Test
