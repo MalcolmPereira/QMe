@@ -263,6 +263,41 @@ public class CategoryServiceImplTest {
     }
 
     @Test
+    public void testSaveWithParentCategory() throws QMeResourceException , QMeException {
+        when(categoryRepo.findCategoryByName(Matchers.<String>anyObject())).thenReturn(null);
+        when(categoryRepo.save(Matchers.<Category>anyObject())).thenReturn(CategoryFixtures.simpleCategory());
+        when(categoryRepo.findById(2L)).thenReturn(CategoryFixtures.simpleCategory());
+
+        QMeCategory qmeCategory = new QMeCategory();
+        qmeCategory.setCategoryName("Simple Category 1");
+        qmeCategory.setParentCategoryId(2L);
+        QMeCategoryDetail qmeCategoryDetail = categoryService.save(qmeCategory,1L);
+
+        verify(categoryRepo).findCategoryByName(Matchers.<String>anyObject());
+        verify(categoryRepo).findById(2L);
+        verify(categoryRepo).save(Matchers.<Category>anyObject());
+
+        assertNotNull(qmeCategoryDetail);
+        assertThat(qmeCategoryDetail.getCategoryId(), equalTo(1L));
+        assertThat(qmeCategoryDetail.getCategoryName(), equalTo("Simple Category 1"));
+        assertThat(qmeCategoryDetail.getCreatedUser(), equalTo(1L));
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testSaveWithParentCategoryQMeResourceNotFoundException() throws QMeResourceException , QMeException {
+        when(categoryRepo.findCategoryByName(Matchers.<String>anyObject())).thenReturn(null);
+        when(categoryRepo.findById(2L)).thenReturn(null);
+
+        QMeCategory qmeCategory = new QMeCategory();
+        qmeCategory.setCategoryName("Simple Category 1");
+        qmeCategory.setParentCategoryId(2L);
+        categoryService.save(qmeCategory,1L);
+
+        verify(categoryRepo).findCategoryByName(Matchers.<String>anyObject());
+        verify(categoryRepo).findById(2L);
+    }
+
+    @Test
     public void testUpdate() throws QMeResourceException , QMeException {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(categoryRepo.update(Matchers.<Category>anyObject(), eq(1L))).thenReturn(CategoryFixtures.simpleCategory());
