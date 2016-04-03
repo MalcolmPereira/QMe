@@ -43,21 +43,21 @@ public class UserFixtures {
      */
     public static List<User> simpleUserList() {
         List<User> userList = new ArrayList<>();
-        userList.add(
-                new User(1L, "suser1", "spassword1", "Simple 1", "Simple User 1", "SimpleUser1@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),1L)
-        );
-        userList.add(
-                new User(2L, "suser2", "spassword2", "Simple 2", "Simple User 2", "SimpleUser2@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),2L)
-        );
-        userList.add(
-                new User(3L, "suser3", "spassword3", "Simple 3", "Simple User 3", "SimpleUser3@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),3L)
-        );
-        userList.add(
-                new User(4L, "suser4", "spassword4", "Simple 4", "Simple User 4", "SimpleUser4@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),4L)
-        );
-        userList.add(
-                new User(5L, "suser5", "spassword5", "Simple 5", "Simple User 5", "SimpleUser5@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),5L)
-        );
+        User user =  new User(1L, "suser1", "spassword1", "Simple 1", "Simple User 1", "SimpleUser1@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),1L);
+        user.setUserRoles(simpleUserRoleList());
+        userList.add(user);
+        user =  new User(2L, "suser2", "spassword2", "Simple 2", "Simple User 2", "SimpleUser2@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),2L);
+        user.setUserRoles(simpleUserRoleList());
+        userList.add(user);
+        user =  new User(3L, "suser3", "spassword3", "Simple 3", "Simple User 3", "SimpleUser3@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),3L);
+        user.setUserRoles(simpleUserRoleList());
+        userList.add(user);
+        user =  new User(4L, "suser4", "spassword4", "Simple 4", "Simple User 4", "SimpleUser4@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),4L);
+        user.setUserRoles(simpleUserRoleList());
+        userList.add(user);
+        user =   new User(5L, "suser5", "spassword5", "Simple 5", "Simple User 5", "SimpleUser5@User.com", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(),5L);
+        user.setUserRoles(simpleUserRoleList());
+        userList.add(user);
         return userList;
     }
 
