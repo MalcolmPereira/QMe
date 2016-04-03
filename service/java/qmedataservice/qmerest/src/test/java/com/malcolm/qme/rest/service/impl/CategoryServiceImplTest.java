@@ -11,6 +11,7 @@ import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.fixtures.CategoryFixtures;
 import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.QMeException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
@@ -221,12 +222,14 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testSave() throws QMeResourceException , QMeException {
+        when(categoryRepo.findCategoryByName(Matchers.<String>anyObject())).thenReturn(null);
         when(categoryRepo.save(Matchers.<Category>anyObject())).thenReturn(CategoryFixtures.simpleCategory());
 
         QMeCategory qmeCategory = new QMeCategory();
         qmeCategory.setCategoryName("Simple Category 1");
         QMeCategoryDetail qmeCategoryDetail = categoryService.save(qmeCategory,1L);
 
+        verify(categoryRepo).findCategoryByName(Matchers.<String>anyObject());
         verify(categoryRepo).save(Matchers.<Category>anyObject());
 
         assertNotNull(qmeCategoryDetail);
@@ -235,16 +238,28 @@ public class CategoryServiceImplTest {
         assertThat(qmeCategoryDetail.getCreatedUser(), equalTo(1L));
     }
 
+    @Test(expected = QMeResourceConflictException.class)
+    public void testSaveQMeResourceConflictException() throws QMeResourceException , QMeException {
+        when(categoryRepo.findCategoryByName("Simple Category 1")).thenReturn(CategoryFixtures.simpleCategory());
+
+        QMeCategory qmeCategory = new QMeCategory();
+        qmeCategory.setCategoryName("Simple Category 1");
+        categoryService.save(qmeCategory, 1L);
+
+        verify(categoryRepo).findCategoryByName(Matchers.<String>anyObject());
+    }
+
     @Test(expected = QMeServerException.class)
     public void testSaveQMeException() throws QMeResourceException , QMeException {
+        when(categoryRepo.findCategoryByName(Matchers.<String>anyObject())).thenReturn(null);
         when(categoryRepo.save(Matchers.<Category>anyObject())).thenThrow(QMeException.class);
 
         QMeCategory qmeCategory = new QMeCategory();
         qmeCategory.setCategoryName("Simple Category 1");
         categoryService.save(qmeCategory, 1L);
 
+        verify(categoryRepo).findCategoryByName(Matchers.<String>anyObject());
         verify(categoryRepo).save(Matchers.<Category>anyObject());
-
     }
 
     @Test
@@ -331,9 +346,11 @@ public class CategoryServiceImplTest {
     @Test
     public void testDelete() throws QMeResourceException , QMeException {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(categoryRepo.findCategoryByParentId(1L)).thenReturn(null);
         doNothing().when(categoryRepo).delete(1L);
         categoryService.delete(1L);
         verify(categoryRepo).findById(1L);
+        verify(categoryRepo).findCategoryByParentId(1L);
         verify(categoryRepo).delete(1L);
     }
 
@@ -342,6 +359,15 @@ public class CategoryServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(null);
         categoryService.delete(1L);
         verify(categoryRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testDeleteHasChildren() throws QMeResourceException , QMeException {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(categoryRepo.findCategoryByParentId(1L)).thenReturn(CategoryFixtures.simpleCategoryList());
+        categoryService.delete(1L);
+        verify(categoryRepo).findById(1L);
+        verify(categoryRepo).findCategoryByParentId(1L);
     }
 
     @Test(expected = QMeServerException.class)
