@@ -9,6 +9,7 @@ package com.malcolm.qme.rest.service.impl;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserRepository;
 import com.malcolm.qme.core.repository.UserRoleRepository;
@@ -66,9 +67,17 @@ public class UserServiceImplTest {
     public void testCount() throws QMeResourceException, QMeException {
         when(userRepo.count()).thenReturn(10L);
         Long userCount = userService.count();
+        verify(userRepo).count();
         assertNotNull(userCount);
         assertThat(userCount, equalTo(10L));
     }
+
+    @Test(expected = QMeServerException.class)
+    public void testCountQMeServerException() throws QMeResourceException, QMeException {
+        when(userRepo.count()).thenThrow(QMeException.class);
+        userService.count();
+        verify(userRepo).count();
+}
 
     @Test
     public void testList() throws QMeResourceException, QMeException{
@@ -97,6 +106,38 @@ public class UserServiceImplTest {
                     is("suser5")
             ));
         }
+    }
+
+    @Test
+    public void testListPaged() throws QMeResourceException, QMeException {
+        when(userRepo.findAll(Matchers.<PageSort>anyObject())).thenReturn(UserFixtures.simpleUserList());
+        List<QMeUserDetail> userList = userService.list(0,10,true, "FIRSTNAME");
+        verify(userRepo).findAll(Matchers.<PageSort>anyObject());
+        assertNotNull(userList);
+        assertThat(userList.size(), equalTo(5));
+        for (QMeUserDetail qmeUserDetail : userList) {
+            assertThat(qmeUserDetail.getUserId(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L))
+            );
+            assertThat(qmeUserDetail.getUserName(), anyOf(
+                    is("suser1"),
+                    is("suser2"),
+                    is("suser3"),
+                    is("suser4"),
+                    is("suser5")
+            ));
+        }
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testListPagedQMeServerException() throws QMeResourceException, QMeException {
+        when(userRepo.findAll(Matchers.<PageSort>anyObject())).thenThrow(QMeException.class);
+        List<QMeUserDetail> userList = userService.list(0,10,true, "FIRSTNAME");
+        verify(userRepo).findAll(Matchers.<PageSort>anyObject());
     }
 
     @Test
