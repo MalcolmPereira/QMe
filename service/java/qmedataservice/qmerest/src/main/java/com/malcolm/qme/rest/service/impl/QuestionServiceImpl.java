@@ -159,9 +159,6 @@ public class QuestionServiceImpl implements QuestionService{
         if(qMeQuestion.getQuestionPoint() == null || qMeQuestion.getQuestionPoint() < 0){
             throw new QMeInvalidResourceDataException("Valid Question Point is required");
         }
-        if(qMeQuestion.getCreateUserID() == null || qMeQuestion.getCreateUserID() < 0){
-            throw new QMeInvalidResourceDataException("Valid Create User Id is required");
-        }
         Category category = categoryRepo.findById(qMeQuestion.getCategoryId());
         if(category == null){
             throw new QMeInvalidResourceDataException("Valid Category is required, Category not found");

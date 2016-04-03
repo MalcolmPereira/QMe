@@ -273,6 +273,17 @@ public class QuestionServiceImplTest {
         questionService.save(qmeQuestion,1L);
     }
 
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidCreateUserId() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        qmeQuestion.setCategoryId(1L);
+        qmeQuestion.setCreateUserID(null);
+        questionService.save(qmeQuestion,1L);
+    }
+
     @Test
     public void testUpdate() throws Exception {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());

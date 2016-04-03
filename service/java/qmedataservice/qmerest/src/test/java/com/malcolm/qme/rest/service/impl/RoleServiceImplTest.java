@@ -88,6 +88,34 @@ public class RoleServiceImplTest {
     }
 
     @Test
+    public void testListPaged() throws Exception {
+        when(roleRepo.findAll()).thenReturn(RoleFixtures.simpleRoleList());
+
+        List<QMeRole> roleList = roleService.list(0,10,true,"ROLE");
+        verify(roleRepo).findAll();
+        assertNotNull(roleList);
+        assertThat(roleList.size(), equalTo(5));
+        for (QMeRole qMeRole : roleList) {
+            assertThat(qMeRole.getRoleID(), anyOf(
+                    is(1),
+                    is(2),
+                    is(3),
+                    is(4),
+                    is(5))
+            );
+            assertThat(qMeRole.getRoleName(), anyOf(
+                    is("role name 1"),
+                    is("role name 2"),
+                    is("role name 3"),
+                    is("role name 4"),
+                    is("role name 5")
+            ));
+
+        }
+    }
+
+
+    @Test
     public void testListNullRoles() throws Exception {
         when(roleRepo.findAll()).thenReturn(null);
         List<QMeRole> roleList = roleService.list();
