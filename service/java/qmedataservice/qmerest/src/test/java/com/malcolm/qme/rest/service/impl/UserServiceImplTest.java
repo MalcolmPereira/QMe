@@ -6,13 +6,11 @@
  **/
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.Role;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserRole;
 import com.malcolm.qme.core.domain.fixtures.UserFixtures;
-import com.malcolm.qme.core.repository.PageSort;
-import com.malcolm.qme.core.repository.QMeException;
-import com.malcolm.qme.core.repository.UserRepository;
-import com.malcolm.qme.core.repository.UserRoleRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.rest.api.AtomicTokenGenerator;
 import com.malcolm.qme.rest.exception.*;
 import com.malcolm.qme.rest.model.*;
@@ -30,6 +28,7 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.anyOf;
@@ -50,6 +49,9 @@ public class UserServiceImplTest {
 
     @Mock
     private UserRoleRepository userRoleRepo;
+
+    @Mock
+    private RoleRepository roleRepo;
 
     @Mock
     public PasswordEncoder passwordEncoder;
@@ -895,6 +897,102 @@ public class UserServiceImplTest {
 
     }
 
+    @Test
+    public void testUpdateSetUserRolesNewRoles() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(null);
+        Role role = new Role(1,"REVIEWER","REVIEWER");
+        when(roleRepo.findByRoleName(Matchers.anyString())).thenReturn(role);
+        when(userRoleRepo.update(Matchers.<UserRole>anyObject(),eq(1L))).thenReturn(null);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserId(1L);
+        qmeUser.setUpdateUserID(1L);
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword("spassword1");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("REVIEWER");
+        qmeUser.setUserRoles(userRoles);
+
+        QMeUserDetail userDetail = userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+        verify(userRepo).update(Matchers.<User>anyObject(), eq(1L));
+        verify(userRoleRepo).findByUserId(1L);
+        verify(roleRepo).findByRoleName(Matchers.anyString());
+        verify(userRoleRepo).update(Matchers.<UserRole>anyObject(),eq(1L));
+
+        assertNotNull(userDetail);
+        assertThat(userDetail.getUserId(), equalTo(1L));
+        assertThat(userDetail.getUserName(), equalTo("suser1"));
+    }
+
+    @Test
+    public void testUpdateSetUserRolesNewRolesRoleNotFound() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(null);
+        when(roleRepo.findByRoleName(Matchers.anyString())).thenReturn(null);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserId(1L);
+        qmeUser.setUpdateUserID(1L);
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword("spassword1");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("REVIEWER");
+        qmeUser.setUserRoles(userRoles);
+
+        QMeUserDetail userDetail = userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+        verify(userRepo).update(Matchers.<User>anyObject(), eq(1L));
+        verify(userRoleRepo).findByUserId(1L);
+        verify(roleRepo).findByRoleName(Matchers.anyString());
+
+        assertNotNull(userDetail);
+        assertThat(userDetail.getUserId(), equalTo(1L));
+        assertThat(userDetail.getUserName(), equalTo("suser1"));
+    }
+
+    @Test
+    public void testUpdateSetUserRolesNewRolesRoleInvalidForUpdate() throws QMeResourceException, QMeException {
+        when(userRepo.findById(1L)).thenReturn(UserFixtures.simpleUser());
+        when(userRepo.update(Matchers.<User>anyObject(), eq(1L))).thenReturn(UserFixtures.simpleUser());
+        when(userRoleRepo.findByUserId(1L)).thenReturn(null);
+        Role role = new Role(1,"SOME_ROLE","SOME_ROLE");
+        when(roleRepo.findByRoleName(Matchers.anyString())).thenReturn(role);
+
+        QMeUpdateUser qmeUser = new QMeUpdateUser();
+        qmeUser.setUserId(1L);
+        qmeUser.setUpdateUserID(1L);
+        qmeUser.setUserName("suser1");
+        qmeUser.setUserPassword("spassword1");
+        qmeUser.setUserFirstName("Simple 1");
+        qmeUser.setUserLastName("Simple User 1");
+        qmeUser.setUserEmail("SimpleUser1@User.com");
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("REVIEWER");
+        qmeUser.setUserRoles(userRoles);
+
+        QMeUserDetail userDetail = userService.update(qmeUser, 1L, 1L);
+
+        verify(userRepo).findById(1L);
+        verify(userRepo).update(Matchers.<User>anyObject(), eq(1L));
+        verify(userRoleRepo).findByUserId(1L);
+        verify(roleRepo).findByRoleName(Matchers.anyString());
+
+        assertNotNull(userDetail);
+        assertThat(userDetail.getUserId(), equalTo(1L));
+        assertThat(userDetail.getUserName(), equalTo("suser1"));
+    }
 
     @Test
     public void testDelete() throws QMeResourceException, QMeException {
