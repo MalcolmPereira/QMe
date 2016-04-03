@@ -46,6 +46,21 @@ public class RoleServiceImplTest {
     private final RoleService roleService = new RoleServiceImpl();
 
     @Test
+    public void testCount() throws Exception {
+        when(roleRepo.count()).thenReturn(10L);
+        Long roleCount = roleService.count();
+        verify(roleRepo).count();
+        assertThat(roleCount, equalTo(10L));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testCountQMeServerException() throws Exception {
+        when(roleRepo.count()).thenThrow(QMeException.class);
+        roleService.count();
+        verify(roleRepo).count();
+    }
+
+    @Test
     public void testList() throws Exception {
         when(roleRepo.findAll()).thenReturn(RoleFixtures.simpleRoleList());
 
@@ -70,6 +85,15 @@ public class RoleServiceImplTest {
             ));
 
         }
+    }
+
+    @Test
+    public void testListNullRoles() throws Exception {
+        when(roleRepo.findAll()).thenReturn(null);
+        List<QMeRole> roleList = roleService.list();
+        verify(roleRepo).findAll();
+        assertNotNull(roleList);
+        assertThat(roleList.size(), equalTo(0));
     }
 
     @Test(expected = QMeServerException.class)

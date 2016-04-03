@@ -35,9 +35,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author malcolm
@@ -56,6 +54,21 @@ public class UserRoleServiceImplTest {
 
     @InjectMocks
     private final UserRoleService userRoleService = new UserRoleServiceImpl();
+
+    @Test
+    public void testCount() throws Exception {
+        when(userRoleRepo.count()).thenReturn(10L);
+        Long roleCount = userRoleService.count();
+        verify(userRoleRepo).count();
+        assertThat(roleCount, equalTo(10L));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testCountQMeServerException() throws Exception {
+        when(userRoleRepo.count()).thenThrow(QMeException.class);
+        userRoleService.count();
+        verify(userRoleRepo).count();
+    }
 
     @Test
     public void testList() throws Exception {
@@ -83,6 +96,17 @@ public class UserRoleServiceImplTest {
                     is("role name 5")
             ));
         }
+    }
+
+    @Test
+    public void testListNullRoles() throws Exception {
+        when(userRoleRepo.findAll()).thenReturn(null);
+
+        List<QMeUserRole> userRoleList = userRoleService.list();
+
+        verify(userRoleRepo).findAll();
+        assertNotNull(userRoleList);
+        assertThat(userRoleList.size(), equalTo(0));
     }
 
     @Test(expected = QMeServerException.class)

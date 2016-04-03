@@ -15,6 +15,7 @@ import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuestion;
 import com.malcolm.qme.rest.model.QMeQuestionDetail;
@@ -36,9 +37,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Malcolm
@@ -64,6 +63,15 @@ public class QuestionServiceImplTest {
         Long questionCount = questionService.count();
         assertNotNull(questionCount);
         assertThat(questionCount, equalTo(10L));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testCountQMeServerException() throws Exception {
+        MatcherAssert.assertThat(questionRepo, notNullValue());
+        MatcherAssert.assertThat(questionService, notNullValue());
+        when(questionRepo.count()).thenThrow(QMeException.class);
+        questionService.count();
+        verify(questionRepo).count();
     }
 
     @Test
@@ -203,6 +211,20 @@ public class QuestionServiceImplTest {
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
     }
 
+    @Test(expected = QMeServerException.class)
+    public void testSaveQMeServerException() throws Exception {
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setCategoryId(1L);
+        qmeQuestion.setQuestionPoint(1);
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.save(Matchers.<Question>anyObject())).thenThrow(QMeException.class);
+        QMeQuestionDetail questionDetail = questionService.save(qmeQuestion,1L);
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).save(Matchers.<Question>anyObject());
+    }
+
     @Test(expected = QMeInvalidResourceDataException.class)
     public void testSaveInvalidQuestionText() throws Exception {
         QMeQuestion qmeQuestion = new QMeQuestion();
@@ -271,10 +293,58 @@ public class QuestionServiceImplTest {
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
     }
 
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testUpdateQMeResourceNotFoundException() throws Exception {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.findById(1L)).thenReturn(null);
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        qmeQuestion.setQuestionId(1L);
+        qmeQuestion.setCategoryId(1L);
+        QMeQuestionDetail questionDetail = questionService.update(qmeQuestion,1L,1L);
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testUpdateQMeServerException() throws Exception {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(questionRepo.update(Matchers.<Question>anyObject(), eq(1L))).thenThrow(QMeException.class);
+        QMeQuestion qmeQuestion = new QMeQuestion();
+        qmeQuestion.setQuestionText("Some Question Text");
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        qmeQuestion.setQuestionId(1L);
+        qmeQuestion.setCategoryId(1L);
+        questionService.update(qmeQuestion,1L,1L);
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+        verify(questionRepo).update(Matchers.<Question>anyObject(),Matchers.<Long>anyObject());
+    }
+
     @Test
     public void testDelete() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         doNothing().when(questionRepo).delete(1L);
+        questionService.delete(1L);
+        verify(questionRepo).findById(1L);
+        verify(questionRepo).delete(1L);
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testDeleteQMeResourceNotFoundException() throws Exception {
+        when(questionRepo.findById(1L)).thenReturn(null);
+        questionService.delete(1L);
+        verify(questionRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testDeleteQMeServerException() throws Exception {
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        doThrow(QMeException.class).when(questionRepo).delete(1L);
         questionService.delete(1L);
         verify(questionRepo).findById(1L);
         verify(questionRepo).delete(1L);

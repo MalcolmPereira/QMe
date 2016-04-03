@@ -89,7 +89,7 @@ public final class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public List<QMeUserRole> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        return  list();
     }
 
     @Override

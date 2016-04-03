@@ -64,7 +64,7 @@ public final class RoleServiceImpl implements RoleService {
 
     @Override
     public List<QMeRole> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        return list();
     }
 
     @Override
