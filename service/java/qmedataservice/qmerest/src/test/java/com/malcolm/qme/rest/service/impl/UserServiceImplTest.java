@@ -838,7 +838,7 @@ public class UserServiceImplTest {
 
         QMeUpdateUser qmeUser = new QMeUpdateUser();
         qmeUser.setUserName("suser1");
-        qmeUser.setUserPassword(null);
+        qmeUser.setUserPassword("newpassword11");
         qmeUser.setUpdatedUserPassword("newpassword");
         qmeUser.setUserFirstName("Simple 1");
         qmeUser.setUserLastName("Simple User 1");
