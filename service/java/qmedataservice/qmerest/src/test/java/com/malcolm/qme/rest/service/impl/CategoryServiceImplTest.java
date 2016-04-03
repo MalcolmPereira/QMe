@@ -45,6 +45,20 @@ public class CategoryServiceImplTest {
     @InjectMocks
     private final CategoryService categoryService = new CategoryServiceImpl();
 
+    @Test
+    public void testCount() throws QMeResourceException, QMeException {
+        when(categoryRepo.count()).thenReturn(10L);
+        Long categoryCount = categoryService.count();
+        verify(categoryRepo).count();
+        assertThat(categoryCount, equalTo(10L));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testCountQMeServerException() throws QMeResourceException, QMeException {
+        when(categoryRepo.count()).thenThrow(QMeException.class);
+        categoryService.count();
+        verify(categoryRepo).count();
+    }
 
     @Test
     public void testList() throws QMeResourceException, QMeException {
@@ -52,6 +66,35 @@ public class CategoryServiceImplTest {
         when(categoryRepo.findAll()).thenReturn(CategoryFixtures.simpleCategoryList());
 
         List<QMeCategoryDetail> categoryList = categoryService.list();
+
+        verify(categoryRepo).findAll();
+        assertNotNull(categoryList);
+        assertThat(categoryList.size(),equalTo(5));
+        for (QMeCategoryDetail qmeCategory : categoryList) {
+            assertThat(qmeCategory.getCategoryId(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L))
+            );
+            assertThat(qmeCategory.getCategoryName(), anyOf(
+                    is("Simple Category 1"),
+                    is("Simple Category 2"),
+                    is("Simple Category 3"),
+                    is("Simple Category 4"),
+                    is("Simple Category 5")
+            ));
+
+        }
+    }
+
+    @Test
+    public void testListPaged() throws QMeResourceException, QMeException {
+
+        when(categoryRepo.findAll()).thenReturn(CategoryFixtures.simpleCategoryList());
+
+        List<QMeCategoryDetail> categoryList = categoryService.list(0,10,true,"CATEGORY");
 
         verify(categoryRepo).findAll();
         assertNotNull(categoryList);
@@ -92,6 +135,38 @@ public class CategoryServiceImplTest {
         assertNotNull(qmeCategory);
         assertThat(qmeCategory.getCategoryId(), equalTo(1L));
         assertThat(qmeCategory.getCategoryName(), equalTo("Simple Category 1"));
+    }
+
+    @Test
+    public void testSearchByParentCategory() throws QMeResourceException, QMeException {
+        when(categoryRepo.findCategoryByParentId(1L)).thenReturn(CategoryFixtures.simpleCategoryList());
+        List<QMeCategoryDetail> categoryList = categoryService.searchByParentCategory(1L);
+        verify(categoryRepo).findCategoryByParentId(1L);
+        assertNotNull(categoryList);
+        assertThat(categoryList.size(),equalTo(5));
+        for (QMeCategoryDetail qmeCategory : categoryList) {
+            assertThat(qmeCategory.getCategoryId(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L))
+            );
+            assertThat(qmeCategory.getCategoryName(), anyOf(
+                    is("Simple Category 1"),
+                    is("Simple Category 2"),
+                    is("Simple Category 3"),
+                    is("Simple Category 4"),
+                    is("Simple Category 5")
+            ));
+        }
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSearchByParentCategoryQMeServerException() throws QMeResourceException, QMeException {
+        when(categoryRepo.findCategoryByParentId(1L)).thenThrow(QMeException.class);
+        categoryService.searchByParentCategory(1L);
+        verify(categoryRepo).findCategoryByParentId(1L);
     }
 
     @Test(expected = QMeResourceNotFoundException.class)
