@@ -138,7 +138,7 @@ public interface QMeAPI {
      * @return String[] Sort Fields Array
      */
     default String[] getSortOrderFields(String sortFields){
-        String[]    sortOrderFields = null;
+        String[]    sortOrderFields = {};
         if(sortFields != null && sortFields.trim().length() > 0){
             sortOrderFields = sortFields.split(SORT_FIELDS_SEPARATOR);
         }

@@ -47,6 +47,13 @@ public class RestConfigTest{
     }
 
     @Test
+    public void testEndpointURL() throws Exception {
+        when(environment.getProperty("endpoint")).thenReturn("ENDPOINT");
+        assertNotNull(restConfig.endpointURL());
+        verify(environment).getProperty("endpoint");
+    }
+
+    @Test
     public void testAtomicTokenGenerator() throws Exception {
         AtomicTokenGenerator tokenGenerator = restConfig.atomicTokenGenerator();
         assertNotNull(tokenGenerator);
