@@ -66,6 +66,25 @@ public class UserControllerTest extends QMeControllerTest {
         return mockMVC;
     }
 
+
+    @Test
+    public void testCount() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(userService.count()).thenReturn(10L);
+
+        mockMvc.perform(
+                get("/qme/user/count")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.content", is(10)))
+        ;
+
+        verify(userService).count();
+    }
+
     @Test
     public void testList() throws Exception {
         assertThat(mockMvc, notNullValue());
@@ -85,7 +104,58 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$[3].userId", is(4)))
                 .andExpect(jsonPath("$[4].userId", is(5)))
         ;
+
+        verify(userService).list();
     }
+
+    @Test
+    public void testListPaged() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+
+        when(userService.list(0,10,true,"FIRSTNAME")).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetailList());
+
+        mockMvc.perform(
+                get("/qme/user/paged?page=0&pagesize=10&sorttype=true&sortfields=FIRSTNAME")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].userId", is(1)))
+                .andExpect(jsonPath("$[1].userId", is(2)))
+                .andExpect(jsonPath("$[2].userId", is(3)))
+                .andExpect(jsonPath("$[3].userId", is(4)))
+                .andExpect(jsonPath("$[4].userId", is(5)))
+        ;
+
+        verify(userService).list(0,10,true,"FIRSTNAME");
+    }
+
+    @Test
+    public void testListPagedNoPageNumber() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+
+        when(userService.list()).thenReturn(QMeUserDetailFixtures.simpleQMeUserDetailList());
+
+        mockMvc.perform(
+                get("/qme/user/paged?page=&pagesize=10&sorttype=true&sortfields=FIRSTNAME")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].userId", is(1)))
+                .andExpect(jsonPath("$[1].userId", is(2)))
+                .andExpect(jsonPath("$[2].userId", is(3)))
+                .andExpect(jsonPath("$[3].userId", is(4)))
+                .andExpect(jsonPath("$[4].userId", is(5)))
+        ;
+
+        verify(userService).list();
+    }
+
 
     @Test
     public void testListQMeResourceException() throws Exception {
@@ -100,6 +170,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).list();
     }
 
     @Test
@@ -121,6 +193,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
         ;
 
+        verify(userService).searchById(1L);
+
     }
 
     @Test
@@ -137,6 +211,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
         ;
 
+        verify(userService).searchById(1L);
     }
 
     @Test
@@ -152,6 +227,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).searchById(1L);
 
     }
 
@@ -174,6 +251,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
         ;
 
+        verify(userService).searchByUser("suser1");
+
     }
 
     @Test
@@ -190,6 +269,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
         ;
 
+        verify(userService).searchByUser("suser1");
     }
 
     @Test
@@ -206,6 +286,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
         ;
 
+        verify(userService).searchByUser("suser1");
     }
 
     @Test
@@ -227,6 +308,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
         ;
 
+        verify(userService).searchByEmail("SimpleUser1@User.com");
     }
 
     @Test
@@ -243,6 +325,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
         ;
 
+        verify(userService).searchByEmail("SimpleUser1@User.com");
     }
 
     @Test
@@ -258,6 +341,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).searchByEmail("SimpleUser1@User.com");
 
     }
 
@@ -283,6 +368,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userLastName", is("Simple User 1")))
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
         ;
+
+        verify(userService).save(anyObject(), eq((Long) 1L));
     }
 
     @Test
@@ -302,6 +389,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
         ;
+
+        verify(userService).stageUser(anyObject());
     }
 
     @Test
@@ -378,6 +467,9 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
         ;
+
+        verify(userService).confirmUserRegistration("sometoken");
+
     }
 
     @Test
@@ -415,6 +507,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print())
         ;
+
+        verify(userService).save(anyObject(), eq((Long) 1L));
     }
 
     @Test
@@ -435,6 +529,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isConflict())
                 .andDo(print())
         ;
+
+        verify(userService).save(anyObject(), eq((Long) 1L));
     }
 
     @Test
@@ -455,6 +551,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).save(anyObject(), eq((Long) 1L));
     }
 
     @Test
@@ -480,6 +578,50 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$.userLastName", is("Simple User 1")))
                 .andExpect(jsonPath("$.userEmail", is("SimpleUser1@User.com")))
         ;
+
+        verify(userService).update(anyObject(), eq(1L), eq(1L));
+    }
+
+    @Test
+    public void testUpdateNullCurrentUser() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        SecurityContextHolder.getContext().setAuthentication(null);
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                put("/qme/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
+    public void testUpdateNoUserRoleUser() throws Exception {
+
+        assertThat(mockMvc, notNullValue());
+        assertThat(userService, notNullValue());
+
+        SecurityContextHolder.getContext().setAuthentication((QMeUserDetails)QMeUserDetails.create(2L, "admin", "password", "USER"));
+
+        QMeUser qmeUser = QMeUserFixtures.simpleQMeUser();
+
+        mockMvc.perform(
+                put("/qme/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeUserFixtures.toJson(qmeUser))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+        ;
+
     }
 
     @Test
@@ -500,6 +642,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
         ;
+
+        verify(userService).update(anyObject(), eq(1L), eq(1L));
     }
 
     @Test
@@ -520,6 +664,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).update(anyObject(), eq(1L), eq(1L));
     }
 
     @Test
@@ -535,6 +681,7 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isOk())
         ;
 
+        verify(userService).delete(1L);
     }
 
     @Test
@@ -550,6 +697,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
         ;
 
+        verify(userService).delete(1L);
+
     }
 
     @Test
@@ -564,6 +713,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).delete(1L);
     }
 
     @Test
@@ -580,6 +731,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("content", is("suser1")))
                 .andDo(print())
         ;
+
+        verify(userService).searchByEmail("SimpleUser1@User.com");
     }
 
     @Test
@@ -595,6 +748,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
         ;
+
+        verify(userService).searchByEmail("SimpleUser1@User.com");
     }
 
     @Test
@@ -610,6 +765,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(userService).searchByEmail("SimpleUser1@User.com");
     }
 
     @Test
@@ -617,7 +774,7 @@ public class UserControllerTest extends QMeControllerTest {
         assertThat(mockMvc, notNullValue());
         assertThat(userService, notNullValue());
 
-        doNothing().when(userService).forgotPassword("SimpleUser1@User.com", "someurl");
+        doNothing().when(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
 
         mockMvc.perform(
                 put("/qme/user/reset/forgotpassword/SimpleUser1@User.com")
@@ -627,6 +784,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
         ;
+
+        verify(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
     }
 
     @Test
@@ -644,6 +803,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
         ;
+
+        verify(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
     }
 
     @Test
@@ -661,6 +822,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isNotFound())
         ;
+
+        verify(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
     }
 
     @Test
@@ -678,6 +841,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isInternalServerError())
         ;
+
+        verify(userService).forgotPassword("SimpleUser1@User.com", "http://localhost:8080");
     }
 
     @Test
@@ -697,6 +862,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
         ;
+
+        verify(userService).resetPassword(any(String.class), any(QMeResetPassword.class));
 
     }
 
@@ -718,6 +885,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isBadRequest())
         ;
 
+        verify(userService).resetPassword(any(String.class), any(QMeResetPassword.class));
+
     }
 
     @Test
@@ -738,6 +907,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andExpect(status().isNotFound())
         ;
 
+        verify(userService).resetPassword(any(String.class), any(QMeResetPassword.class));
+
     }
 
     @Test
@@ -757,6 +928,8 @@ public class UserControllerTest extends QMeControllerTest {
                 .andDo(print())
                 .andExpect(status().isInternalServerError())
         ;
+
+        verify(userService).resetPassword(any(String.class), any(QMeResetPassword.class));
     }
 }
 

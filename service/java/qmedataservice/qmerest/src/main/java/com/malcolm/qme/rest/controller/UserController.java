@@ -167,10 +167,8 @@ public class UserController implements UserAPI {
             }
         }
 
-        if(!updateAllowed){
-            if(currentUser.getUserID().equals(userId)){
+        if(currentUser.getUserID().equals(userId)){
                 updateAllowed = true;
-            }
         }
 
         if(!updateAllowed){
