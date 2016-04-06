@@ -38,18 +38,18 @@ public class QMeCategoryTest {
     @Test
     public void testGetParentCategoryId() {
         QMeCategory qMeCategory = new QMeCategory();
-        qMeCategory.setCategoryName("Some CategoryName");
+        qMeCategory.setCategoryName("Some CategoryName Get");
         qMeCategory.setParentCategoryId(1L);
-        assertThat(qMeCategory.getCategoryName(), equalTo("Some CategoryName"));
+        assertThat(qMeCategory.getCategoryName(), equalTo("Some CategoryName Get"));
         assertThat(qMeCategory.getParentCategoryId(), equalTo(1L));
     }
 
     @Test
     public void testSetParentCategoryId() {
         QMeCategory qMeCategory = new QMeCategory();
-        qMeCategory.setCategoryName("Some CategoryName");
+        qMeCategory.setCategoryName("Some CategoryName Set");
         qMeCategory.setParentCategoryId(1L);
-        assertThat(qMeCategory.getCategoryName(), equalTo("Some CategoryName"));
+        assertThat(qMeCategory.getCategoryName(), equalTo("Some CategoryName Set"));
         assertThat(qMeCategory.getParentCategoryId(), equalTo(1L));
     }
 
