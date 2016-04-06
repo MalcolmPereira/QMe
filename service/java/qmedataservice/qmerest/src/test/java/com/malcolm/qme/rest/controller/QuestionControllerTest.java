@@ -128,6 +128,30 @@ public class QuestionControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testListPagedInvalidPage() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.list()).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetailList());
+
+        mockMvc.perform(
+                get("/qme/question/paged?page=&pagesize=10&sorttype=true&sortfields=QUESTION")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].questionId", is(1)))
+                .andExpect(jsonPath("$[1].questionId", is(2)))
+                .andExpect(jsonPath("$[2].questionId", is(3)))
+                .andExpect(jsonPath("$[3].questionId", is(4)))
+                .andExpect(jsonPath("$[4].questionId", is(5)))
+        ;
+
+        verify(questionService).list();
+    }
+
+
+    @Test
     public void testListQMeResourceException() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(questionService, notNullValue());

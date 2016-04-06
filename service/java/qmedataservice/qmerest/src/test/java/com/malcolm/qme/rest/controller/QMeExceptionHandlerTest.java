@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.access.AccessDeniedException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,6 +41,14 @@ public class QMeExceptionHandlerTest {
         QMeExceptionHandler qMeExceptionHandler = new QMeExceptionHandler();
         qMeExceptionHandler.handleResourceDataException(req, new QMeInvalidResourceDataException("some error"));
         qMeExceptionHandler.handleResourceDataException(req, new QMeInvalidResourceDataException("some error", new Exception("some error")));
+
+    }
+
+    @Test
+    public void testHandleAccessDeniedException() throws Exception {
+        QMeExceptionHandler qMeExceptionHandler = new QMeExceptionHandler();
+        qMeExceptionHandler.handleAccessDeniedException(req, new AccessDeniedException("some error"));
+        qMeExceptionHandler.handleAccessDeniedException(req, new AccessDeniedException("some error", new Exception("some error")));
 
     }
 

@@ -62,6 +62,25 @@ public class CategoryControllerTest extends QMeControllerTest{
     }
 
     @Test
+    public void testCount() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.count()).thenReturn(5L);
+
+        mockMvc.perform(
+                get("/qme/category/count")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.content", is(5)))
+        ;
+
+        verify(categoryService).count();
+    }
+
+
+    @Test
     public void testList() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());
@@ -81,6 +100,54 @@ public class CategoryControllerTest extends QMeControllerTest{
                         .andExpect(jsonPath("$[4].categoryId", is(5)))
         ;
 
+        verify(categoryService).list();
+
+    }
+
+    @Test
+    public void testListPaged() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.list(0, 10, true, "CATEGORYNAME")).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetailList());
+
+        mockMvc.perform(
+                get("/qme/category/paged?page=0&pagesize=10&sorttype=true&sortfields=CATEGORYNAME")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].categoryId", is(1)))
+                .andExpect(jsonPath("$[1].categoryId", is(2)))
+                .andExpect(jsonPath("$[2].categoryId", is(3)))
+                .andExpect(jsonPath("$[3].categoryId", is(4)))
+                .andExpect(jsonPath("$[4].categoryId", is(5)))
+        ;
+
+        verify(categoryService).list(0, 10, true, "CATEGORYNAME");
+    }
+
+    @Test
+    public void testListPagedInvalidPage() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.list()).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetailList());
+
+        mockMvc.perform(
+                get("/qme/category/paged?page=&pagesize=10&sorttype=true&sortfields=CATEGORYNAME")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].categoryId", is(1)))
+                .andExpect(jsonPath("$[1].categoryId", is(2)))
+                .andExpect(jsonPath("$[2].categoryId", is(3)))
+                .andExpect(jsonPath("$[3].categoryId", is(4)))
+                .andExpect(jsonPath("$[4].categoryId", is(5)))
+        ;
+
+        verify(categoryService).list();
     }
 
     @Test
@@ -98,6 +165,30 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         ;
 
+        verify(categoryService).list();
+    }
+
+    @Test
+    public void testListByParent() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.searchByParentCategory(1L)).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetailList());
+
+        mockMvc.perform(
+                get("/qme/category/parent/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].categoryId", is(1)))
+                .andExpect(jsonPath("$[1].categoryId", is(2)))
+                .andExpect(jsonPath("$[2].categoryId", is(3)))
+                .andExpect(jsonPath("$[3].categoryId", is(4)))
+                .andExpect(jsonPath("$[4].categoryId", is(5)))
+
+        ;
+
+        verify(categoryService).searchByParentCategory(1L);
 
     }
 
@@ -121,6 +212,7 @@ public class CategoryControllerTest extends QMeControllerTest{
                         .andExpect(jsonPath("$[4].categoryId", is(5)))
         ;
 
+        verify(categoryService).searchByName("Simple Category 1");
     }
 
     @Test
@@ -138,6 +230,7 @@ public class CategoryControllerTest extends QMeControllerTest{
 
         ;
 
+        verify(categoryService).searchByName("Simple Category 1");
 
     }
 
@@ -156,6 +249,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                         .andExpect(jsonPath("$.categoryId", is(1)))
                         .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
         ;
+
+        verify(categoryService).searchById(1L);
     }
 
     @Test
@@ -171,6 +266,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                 .andExpect(status().isNotFound())
                 .andDo(print())
         ;
+
+        verify(categoryService).searchById(1L);
     }
 
     @Test
@@ -187,6 +284,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                             .andDo(print())
 
         ;
+
+        verify(categoryService).searchById(1L);
     }
 
     @Test
@@ -210,6 +309,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                                 .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
         ;
 
+        verify(categoryService).save(anyObject(),eq(1L));
+
     }
 
     @Test
@@ -230,6 +331,56 @@ public class CategoryControllerTest extends QMeControllerTest{
                                 .andExpect(status().isInternalServerError())
                                 .andDo(print())
         ;
+
+        verify(categoryService).save(anyObject(),eq(1L));
+    }
+
+    @Test
+    public void testCreateWithParent() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.searchById(2L)).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetail());
+        when(categoryService.save(anyObject(),eq(1L))).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetail());
+
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
+        qmeCategory.setParentCategoryId(2L);
+
+        mockMvc.perform(
+                post("/qme/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeCategoryFixtures.toJson(qmeCategory))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
+        ;
+
+        verify(categoryService).searchById(2L);
+        verify(categoryService).save(anyObject(),eq(1L));
+    }
+
+    @Test
+    public void testCreateWithParentInvalid() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.searchById(2L)).thenReturn(null);
+
+        QMeCategory qmeCategory = QMeCategoryFixtures.simpleQMeCategory();
+        qmeCategory.setParentCategoryId(2L);
+
+        mockMvc.perform(
+                post("/qme/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(QMeCategoryFixtures.toJson(qmeCategory))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+
+        verify(categoryService).searchById(2L);
     }
 
     @Test
@@ -253,6 +404,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                             .andExpect(jsonPath("$.categoryName", is("Simple Category 1")))
         ;
 
+        verify(categoryService).update(anyObject(),eq(1L),eq(1L));
+
     }
 
     @Test
@@ -273,6 +426,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                 .andExpect(status().isNotFound())
                 .andDo(print())
         ;
+
+        verify(categoryService).update(anyObject(),eq(1L),eq(1L));
     }
 
     @Test
@@ -293,6 +448,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                             .andExpect(status().isInternalServerError())
                             .andDo(print())
         ;
+
+        verify(categoryService).update(anyObject(),eq(1L),eq(1L));
     }
 
     @Test
@@ -308,6 +465,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                     .andDo(print())
                     .andExpect(status().isOk())
         ;
+
+        verify(categoryService).delete(1L);
     }
 
     @Test
@@ -322,6 +481,8 @@ public class CategoryControllerTest extends QMeControllerTest{
                     .andExpect(status().isNotFound())
                     .andDo(print())
         ;
+
+        verify(categoryService).delete(1L);
     }
 
     @Test
@@ -336,5 +497,7 @@ public class CategoryControllerTest extends QMeControllerTest{
                 .andExpect(status().isInternalServerError())
                 .andDo(print())
         ;
+
+        verify(categoryService).delete(1L);
     }
 }
