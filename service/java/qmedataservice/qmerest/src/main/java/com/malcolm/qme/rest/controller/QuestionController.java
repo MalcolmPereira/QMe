@@ -136,7 +136,8 @@ public class QuestionController implements QuestionAPI {
      */
     private void setQuestionLinks(QMeQuestionDetail qMeQuestionDetail){
         qMeQuestionDetail.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qMeQuestionDetail.getQuestionId()+""),QMeAppAPI.QUESTION_BY_ID));
-        //TODO:
+        qMeQuestionDetail.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qMeQuestionDetail.getQuestionId()+""),QMeAppAPI.UPDATE_QUESTION));
+        qMeQuestionDetail.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll("\\{"+ID_PARAM_STRING+"\\}",qMeQuestionDetail.getQuestionId()+""),QMeAppAPI.DELETE_QUESTION));
     }
 }
 

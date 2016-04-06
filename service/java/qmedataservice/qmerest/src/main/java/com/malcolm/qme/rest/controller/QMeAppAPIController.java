@@ -61,7 +61,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.PARENT_PATH.replaceAll(":.+","}"),CATEGORY_BY_PARENT_ID));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),CATEGORY_BY_ID));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.NAME_PATH.replaceAll(":.+","}"),CATEGORY_BY_NAME));
-        qmeCategoryResource.add(new Link( endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_CATEGORY));
+        qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_CATEGORY));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_CATEGORY));
         qmeCategoryResource.add(new Link(endpointURL+ CategoryAPI.ID_PATH.replaceAll(":.+","}"),DELETE_CATEGORY));
         qmeResources.add(qmeCategoryResource);
@@ -71,8 +71,8 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.COUNT_PATH.replaceAll(":.+","}"),QUESTION_COUNT));
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",QUESTION_PAGED));
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),QUESTION_BY_ID));
+        qmeCategoryResource.add(new Link( endpointURL+ QuestionAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_QUESTION));
         qmeResources.add(qmeQuestionResource);
-        //TODO:
 
         return new Resources<>(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
     }

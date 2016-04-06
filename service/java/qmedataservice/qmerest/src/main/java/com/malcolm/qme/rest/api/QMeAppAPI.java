@@ -145,6 +145,18 @@ public interface QMeAppAPI extends QMeAPI {
      * Question by Question ID
      */
     String QUESTION_BY_ID = "Get_Question_by_id";
+    /**
+     * Create Question
+     */
+    String CREATE_QUESTION = "Post_New_Question";
+    /**
+     * Update Question
+     */
+    String UPDATE_QUESTION = "Put_Update_Question";
+    /**
+     * Delete Question
+     */
+    String DELETE_QUESTION = "Delete_Question";
 
     /**
      * List QMe App API
