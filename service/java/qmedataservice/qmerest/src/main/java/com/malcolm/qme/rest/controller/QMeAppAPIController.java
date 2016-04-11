@@ -71,7 +71,9 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.COUNT_PATH.replaceAll(":.+","}"),QUESTION_COUNT));
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",QUESTION_PAGED));
         qmeQuestionResource.add(new Link(endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),QUESTION_BY_ID));
-        qmeCategoryResource.add(new Link( endpointURL+ QuestionAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_QUESTION));
+        qmeQuestionResource.add(new Link( endpointURL+ QuestionAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_QUESTION));
+        qmeQuestionResource.add(new Link( endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_QUESTION));
+        qmeQuestionResource.add(new Link( endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),DELETE_QUESTION));
         qmeResources.add(qmeQuestionResource);
 
         return new Resources<>(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
