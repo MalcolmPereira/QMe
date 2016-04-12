@@ -39,8 +39,6 @@
             expect(qmeQuestionService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
 
-
-
             var countresponse =  {
                 "content":"264",
                 "links":[
@@ -50,16 +48,20 @@
                     }
                 ]
             };
+
             httpBackend.expectGET(questionCountEndPoint).respond(200,countresponse);
             httpBackend.whenGET(/js\//).respond(200,{});
-            qmeQuestionService.countQuestions().then(
-                function(res){
-                    expect(res).toBeDefined();
-                },
-                function(error){
-                }
-            );
+            qmeQuestionService
+                .countQuestions()
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+                    }
+                );
             httpBackend.flush();
+
         });
 
     });
