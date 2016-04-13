@@ -45,6 +45,50 @@
             return listQuestionPagedPromise.promise;
         };
 
+        qmeQuestionService.createQuestion = function(question){
+            var createQuestionPromise = $q.defer();
+
+            qmeQuestionResource.questionResource(qmeUserSession.authtoken())
+
+                .save(question,function(res){
+                        createQuestionPromise.resolve(res);
+                    },function(error){
+                         createQuestionPromise.reject(error);
+                    }
+                );
+
+            return createQuestionPromise.promise;
+        };
+
+        qmeQuestionService.updateQuestion = function(question){
+
+            var updateQuestionPromise = $q.defer();
+
+            qmeQuestionResource.questionUpdateResource(qmeUserSession.authtoken(),question.questionId)
+                .updateQuestion({}, question,function(res){
+                        updateQuestionPromise.resolve(res);
+                    },function(error){
+                        updateQuestionPromise.reject(error);
+                    }
+                );
+
+            return updateQuestionPromise.promise;
+        };
+
+        qmeQuestionService.deleteQuestion = function(questionId){
+
+            var deleteQuestionPromise = $q.defer();
+
+            qmeQuestionResource.questionDeleteResource(qmeUserSession.authtoken(),questionId)
+                .deleteQuestion({}, {},function(res){
+                        deleteQuestionPromise.resolve(res);
+                    },function(error){
+                        deleteQuestionPromise.reject(error);
+                    }
+                );
+
+            return deleteQuestionPromise.promise;
+        };
     }
 
 })();

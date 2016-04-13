@@ -97,10 +97,6 @@
             expect(qmeCategoryResource.categorySearchResource("sometoken","search")).toBeDefined();
         });
 
-        it('Should have a Question Resource Defined', function() {
-            expect(qmeQuestionResource.questionResource("sometoken")).toBeDefined();
-        });
-
         //Question Resources
         it('Should have a Question Resource Defined', function() {
             expect(qmeQuestionResource.questionResource("sometoken")).toBeDefined();
@@ -112,6 +108,14 @@
 
         it('Should have a Question Paged Resource Defined', function() {
             expect(qmeQuestionResource.questionPagedResource("sometoken",1,50,true,"QUESTION")).toBeDefined();
+        });
+
+        it('Should have a Question Update Resource Defined', function() {
+            expect(qmeQuestionResource.questionUpdateResource("sometoken",1)).toBeDefined();
+        });
+
+        it('Should have a Question Delete Resource Defined', function() {
+            expect(qmeQuestionResource.questionDeleteResource("sometoken",1)).toBeDefined();
         });
     });
 

@@ -126,5 +126,15 @@
                     return $resource(questionPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows);
                 }
             };
+
+            this.questionUpdateResource = function(authToken, questionId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(questionAPI+"/"+questionId,{},{'updateQuestion':{method:'PUT'}});
+            };
+
+            this.questionDeleteResource = function(authToken, questionId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(questionAPI+"/"+questionId,{},{'deleteQuestion':{method:'DELETE'}});
+            };
         });
 })();

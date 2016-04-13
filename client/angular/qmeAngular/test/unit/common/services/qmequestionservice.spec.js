@@ -64,6 +64,25 @@
 
         });
 
+        it('Should handle valid 500 Server Error for list questions request ', function() {
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            httpBackend.expectGET(questionEndPoint).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .listQuestions()
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+
+            httpBackend.flush();
+        });
     });
 
 })();
