@@ -65,10 +65,24 @@
 
         }));
 
-
         it('Should have a QMe Question Management controller and display valid not authorized message for count question for no admin users ', function() {
             expect(ctrl).toBeDefined();
+            expect(ctrl.questions).not.toBeDefined();
+            expect(ctrl.questioncount).toBe(0);
+            expect(ctrl.currentpage).toBe(0);
+            expect(ctrl.sortasc).toBe(true);
+            expect(ctrl.sortfields).toBe("QUESTION");
 
+            httpBackend.expectGET(questionCountEndPoint).respond(403,{});
+            httpBackend.expectGET(questionPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=QUESTION").respond(200,[]);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            ctrl.listQuestions();
+            httpBackend.flush();
+            expect(scope.flash).toBeDefined();
+            expect(scope.flash.type).toBeDefined();
+            expect(scope.flash.type).toBe('error');
+            expect(scope.flash.message).toBeDefined();
+            expect(scope.flash.message).toBe('Oops.....User not authorized for function, please contact system administrator.');
         });
 
     });
