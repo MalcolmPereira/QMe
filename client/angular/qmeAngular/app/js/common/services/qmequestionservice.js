@@ -51,7 +51,7 @@
             qmeQuestionResource.questionResource(qmeUserSession.authtoken())
 
                 .save(question,function(res){
-                        createQuestionPromise.resolve(res);
+                         createQuestionPromise.resolve(res);
                     },function(error){
                          createQuestionPromise.reject(error);
                     }

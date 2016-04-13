@@ -980,7 +980,7 @@
             httpBackend.flush();
         });
 
-        it('Should handle valid QMe User Update User Prpfile Request', function() {
+        it('Should handle valid QMe User Update User Profile Request', function() {
             expect(qmeUserService).toBeDefined();
             var credentials = {
                 "userName": "testuser",

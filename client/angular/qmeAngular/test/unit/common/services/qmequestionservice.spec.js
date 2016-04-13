@@ -292,6 +292,189 @@
                 );
             httpBackend.flush();
         });
+
+        it('Should handle 500 Server Error for Create Question Request', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var question = {
+                "questionId": 1,
+                "categoryId": 1,
+                "questionText": "Some Question Text 1",
+                "answer": "Some Answer",
+                "questionPoint": 1,
+                "likes": 0,
+                "questionCreateDate": "2015-24-12 09:41:45",
+                "createUserID": 1,
+                "questionUpdateDate": "2015-24-12 09:41:45",
+                "updateUserID": 1,
+                "answerReferenceMediaList": null,
+                "answerOptionList": null
+            };
+
+            httpBackend.expectPOST(questionEndPoint).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .createQuestion(question)
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid Create Question Request', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var question = {
+                "questionId": 1,
+                "categoryId": 1,
+                "questionText": "Some Question Text 1",
+                "answer": "Some Answer",
+                "questionPoint": 1,
+                "likes": 0,
+                "questionCreateDate": "2015-24-12 09:41:45",
+                "createUserID": 1,
+                "questionUpdateDate": "2015-24-12 09:41:45",
+                "updateUserID": 1,
+                "answerReferenceMediaList": null,
+                "answerOptionList": null
+            };
+
+            httpBackend.expectPOST(questionEndPoint).respond(200,question);
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .createQuestion(question)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+        });
+
+
+        it('Should handle 500 Server Error for Update Question Request', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var question = {
+                "questionId": 1,
+                "categoryId": 1,
+                "questionText": "Some Question Text 1",
+                "answer": "Some Answer",
+                "questionPoint": 1,
+                "likes": 0,
+                "questionCreateDate": "2015-24-12 09:41:45",
+                "createUserID": 1,
+                "questionUpdateDate": "2015-24-12 09:41:45",
+                "updateUserID": 1,
+                "answerReferenceMediaList": null,
+                "answerOptionList": null
+            };
+
+            httpBackend.expectPUT(questionEndPoint+"/"+1).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .updateQuestion(question)
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+            httpBackend.flush();
+        });
+
+
+        it('Should handle valid Update Question Request', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var question = {
+                "questionId": 1,
+                "categoryId": 1,
+                "questionText": "Some Question Text 1",
+                "answer": "Some Answer",
+                "questionPoint": 1,
+                "likes": 0,
+                "questionCreateDate": "2015-24-12 09:41:45",
+                "createUserID": 1,
+                "questionUpdateDate": "2015-24-12 09:41:45",
+                "updateUserID": 1,
+                "answerReferenceMediaList": null,
+                "answerOptionList": null
+            };
+
+            httpBackend.expectPUT(questionEndPoint+"/"+1).respond(200,question);
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .updateQuestion(question)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should handle 500 Server Error for Delete Question Request', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            httpBackend.expectDELETE(questionEndPoint+"/"+1).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .deleteQuestion(1)
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid Delete Question Request', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            httpBackend.expectDELETE(questionEndPoint+"/"+1).respond(200,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .deleteQuestion(1)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                    },
+                    function(error){
+
+                    }
+                );
+            httpBackend.flush();
+        });
     });
 
 })();
