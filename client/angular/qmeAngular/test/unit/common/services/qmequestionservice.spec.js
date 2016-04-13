@@ -64,6 +64,26 @@
 
         });
 
+        it('Should handle valid 500 Server Error for count question request ', function() {
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            httpBackend.expectGET(questionCountEndPoint).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+
+            qmeQuestionService
+                .countQuestions()
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+            httpBackend.flush();
+
+        });
+
         it('Should handle valid 500 Server Error for list questions request ', function() {
             expect(qmeQuestionService).toBeDefined();
             expect(scope.flash).not.toBeDefined();
@@ -81,6 +101,195 @@
                     }
                 );
 
+            httpBackend.flush();
+        });
+
+        it('Should handle valid list questions request ', function() {
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var questionList = [
+                {
+                    "questionId": 1,
+                    "categoryId": 1,
+                    "questionText": "Some Question Text 1",
+                    "answer": "Some Answer",
+                    "questionPoint": 1,
+                    "likes": 0,
+                    "questionCreateDate": "2015-24-12 09:41:45",
+                    "createUserID": 1,
+                    "questionUpdateDate": "2015-24-12 09:41:45",
+                    "updateUserID": 1,
+                    "answerReferenceMediaList": null,
+                    "answerOptionList": null
+                },
+                {
+                    "questionId": 2,
+                    "categoryId": 1,
+                    "questionText": "Some Question Text 2",
+                    "answer": "Some Answer",
+                    "questionPoint": 1,
+                    "likes": 0,
+                    "questionCreateDate": "2015-24-12 09:41:45",
+                    "createUserID": 1,
+                    "questionUpdateDate": "2015-24-12 09:41:45",
+                    "updateUserID": 1,
+                    "answerReferenceMediaList": null,
+                    "answerOptionList": null
+                }
+            ];
+
+            httpBackend.expectGET(questionEndPoint).respond(200,questionList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeQuestionService
+                .listQuestions()
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                        expect(res.length).toBe(2);
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid 500 Server Error for list question paged request ', function() {
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            httpBackend.expectGET(questionPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage).respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeQuestionService
+                .listQuestionsPaged(0)
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+            httpBackend.flush();
+
+        });
+
+        it('Should handle valid list question paged request ', function() {
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var questionList = [
+                {
+                    "questionId": 1,
+                    "categoryId": 1,
+                    "questionText": "Some Question Text 1",
+                    "answer": "Some Answer",
+                    "questionPoint": 1,
+                    "likes": 0,
+                    "questionCreateDate": "2015-24-12 09:41:45",
+                    "createUserID": 1,
+                    "questionUpdateDate": "2015-24-12 09:41:45",
+                    "updateUserID": 1,
+                    "answerReferenceMediaList": null,
+                    "answerOptionList": null
+                },
+                {
+                    "questionId": 2,
+                    "categoryId": 1,
+                    "questionText": "Some Question Text 2",
+                    "answer": "Some Answer",
+                    "questionPoint": 1,
+                    "likes": 0,
+                    "questionCreateDate": "2015-24-12 09:41:45",
+                    "createUserID": 1,
+                    "questionUpdateDate": "2015-24-12 09:41:45",
+                    "updateUserID": 1,
+                    "answerReferenceMediaList": null,
+                    "answerOptionList": null
+                }
+            ];
+
+            httpBackend.expectGET(questionPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage).respond(200,questionList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeQuestionService
+                .listQuestionsPaged(0)
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                        expect(res.length).toBe(2);
+                    },
+                    function(error){
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid 500 Server Error for list question paged request with sort fields ', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            httpBackend.expectGET(questionPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=QUESTION").respond(500,{});
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeQuestionService
+                .listQuestionsPaged(0,true,"QUESTION")
+                .then(
+                    function(res){
+                    },
+                    function(error){
+                        expect(error).toBeDefined();
+                    }
+                );
+            httpBackend.flush();
+        });
+
+        it('Should handle valid list questions paged request ', function() {
+
+            expect(qmeQuestionService).toBeDefined();
+            expect(scope.flash).not.toBeDefined();
+
+            var questionList = [
+                {
+                    "questionId": 1,
+                    "categoryId": 1,
+                    "questionText": "Some Question Text 1",
+                    "answer": "Some Answer",
+                    "questionPoint": 1,
+                    "likes": 0,
+                    "questionCreateDate": "2015-24-12 09:41:45",
+                    "createUserID": 1,
+                    "questionUpdateDate": "2015-24-12 09:41:45",
+                    "updateUserID": 1,
+                    "answerReferenceMediaList": null,
+                    "answerOptionList": null
+                },
+                {
+                    "questionId": 2,
+                    "categoryId": 1,
+                    "questionText": "Some Question Text 2",
+                    "answer": "Some Answer",
+                    "questionPoint": 1,
+                    "likes": 0,
+                    "questionCreateDate": "2015-24-12 09:41:45",
+                    "createUserID": 1,
+                    "questionUpdateDate": "2015-24-12 09:41:45",
+                    "updateUserID": 1,
+                    "answerReferenceMediaList": null,
+                    "answerOptionList": null
+                }
+            ];
+
+            httpBackend.expectGET(questionPagedEndPoint+"?page="+0+"&pagesize="+qmeContants.rowsperpage+"&sorttype=true&sortfields=QUESTION").respond(200,questionList);
+            httpBackend.whenGET(/js\//).respond(200,{});
+            qmeQuestionService
+                .listQuestionsPaged(0,true,"QUESTION")
+                .then(
+                    function(res){
+                        expect(res).toBeDefined();
+                        expect(res.length).toBe(2);
+                    },
+                    function(error){
+                    }
+                );
             httpBackend.flush();
         });
     });
