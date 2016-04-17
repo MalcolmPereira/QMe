@@ -6,9 +6,9 @@
 
         .controller('qmeQuestionManagementCtrl', QMeQuestionManagementController);
 
-        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService'];
+        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService','qmePageSession','QME_CONSTANTS'];
 
-        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService) {
+        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService,qmePageSession,QME_CONSTANTS) {
 
             var qmeQuestionManagement = this;
 
@@ -90,14 +90,14 @@
                 qmeQuestionManagement.sortasc = true;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
-                qmeQuestionManagement.pageUsers(0);
+                qmeQuestionManagement.pageQuestions(0);
             };
 
             qmeQuestionManagement.sortDesc = function(field){
                 qmeQuestionManagement.sortasc = false;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
-                qmeQuestionManagement.pageUsers(0);
+                qmeQuestionManagement.pageQuestions(0);
             };
 
             qmeQuestionManagement.recordsLoaded = function(){
