@@ -19,9 +19,10 @@ public interface QuestionRepository extends QMeRepository<Question,Long> {
      * Sort Fields Enum
      */
     enum QUESTIONSORTFIELDS {
-        QUESTION("question"),
+        QUESTION("questionText"),
+        QUESTION_LIKES("questionLikes"),
         USERNAME("userName"),
-        QUESTIONCREATEDATE("questionCreateDate"),
+        QUESTIONCREATEDATE("questionCreateUser"),
         QUESTIONUPDATEDATE("questionUpdateDate"),
         ;
 

@@ -11,7 +11,12 @@ import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.springdata.entity.QuestionEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -24,8 +29,13 @@ import java.util.stream.Collectors;
  */
 @Repository(value = "QuestionRepository")
 public class QuestionRepositoryImpl implements QuestionRepository {
-	
-	/**
+
+    /**
+     * Logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionRepositoryImpl.class);
+
+    /**
      * Spring Data QuestionEntity Repository
      */
     @Autowired
@@ -65,7 +75,27 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
 	@Override
 	public List<Question> findAll(PageSort pageSort) throws QMeException {
-		return null;
+		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+        List<String> sortFieldList = new ArrayList<>();
+        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0) {
+            String[] sortFields = pageSort.getSortFields();
+            for (String sortField : sortFields) {
+                try {
+                    sortFieldList.add(QUESTIONSORTFIELDS.valueOf(sortField.toUpperCase()).getQuestionSortField());
+
+                } catch (IllegalArgumentException err) {
+                    LOG.debug("Invalid Sort Field "+sortField.toUpperCase()+" Will be ignored");
+                }
+            }
+        }
+        PageRequest pageRequest;
+        if(!sortFieldList.isEmpty()){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+        }else{
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        }
+        Page<QuestionEntity> questionList = questionSpringDataRepository.findAll(pageRequest);
+        return (getQuestion(questionList.getContent()));
 	}
 
 	@Override
