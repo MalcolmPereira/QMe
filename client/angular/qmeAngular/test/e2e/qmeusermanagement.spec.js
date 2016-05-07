@@ -162,7 +162,6 @@
             });
             expect(headers).toEqual(['User Name', 'User Email', 'First Name', 'Last Name', 'Registered Date', 'Last Login Date', 'User Roles']);
 
-
             expect(element(by.id('dUserLabelId')).isDisplayed()).toEqual(true);
             expect(element(by.id('dUserLabelId')).isEnabled()).toEqual(true);
             element(by.id('dUserLabelId')).click();
@@ -355,6 +354,7 @@
 
             userNavLinkElement = element(by.id("usersNavLinkId"));
             browser.wait(EC.presenceOf(userNavLinkElement), 25000);
+
             expect(userNavLinkElement.isPresent()).toBeTruthy();
             browser.wait(EC.elementToBeClickable(userNavLinkElement), 25000);
 

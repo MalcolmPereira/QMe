@@ -1,7 +1,7 @@
 <div class="container-fluid" ng-controller="qmeQuestionManagementCtrl as qmeQuestionManagement" ng-init="qmeQuestionManagement.listQuestions();">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Question List</h3>
+            <h3 id="questionHeaderId" class="panel-title">Question List</h3>
         </div>
         <div class="panel-body">
             <qme-page ng-if="qmeQuestionManagement.recordsLoaded()" qme-totalcount="qmeQuestionManagement.totalRecords()" qme-pagingfunction="qmeQuestionManagement.pageQuestions"></qme-page>
