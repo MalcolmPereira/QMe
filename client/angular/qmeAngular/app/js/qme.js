@@ -187,11 +187,43 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     authenticate: true,
                     admin: true
                 })
+                .state('addquestion', {
+                    url: "/addquestion",
+                    templateUrl: 'js/admin/question/qmeaddquestion.tmpl.html',
+                    controller: 'qmeQuestionManagementCtrl',
+                    controllerAs: 'qmeQuestionManagementCtrl',
+                    authenticate: true,
+                    admin: true
+                })
+                .state('updatequestion', {
+                    url: "/updatequestion",
+                    templateUrl: 'js/admin/question/qmeupdatequestion.tmpl.html',
+                    controller: 'qmeQuestionManagementCtrl',
+                    controllerAs: 'qmeQuestionManagementCtrl',
+                    authenticate: true,
+                    admin: true
+                })
 
                 //Quiz Routing Quizzes
                 .state('listquizzes', {
                     url: "/listquizzes",
                     templateUrl: 'js/admin/quiz/qmequizlist.tmpl.html',
+                    controller: 'qmeQuizManagementCtrl',
+                    controllerAs: 'qmeQuizManagementCtrl',
+                    authenticate: true,
+                    admin: true
+                })
+                .state('addquiz', {
+                    url: "/addquiz",
+                    templateUrl: 'js/admin/quiz/qmeaddquiz.tmpl.html',
+                    controller: 'qmeQuizManagementCtrl',
+                 controllerAs: 'qmeQuizManagementCtrl',
+                    authenticate: true,
+                    admin: true
+                 })
+                .state('updatequiz', {
+                    url: "/updatequiz",
+                    templateUrl: 'js/admin/quiz/qmeupdatequiz.tmpl.html',
                     controller: 'qmeQuizManagementCtrl',
                     controllerAs: 'qmeQuizManagementCtrl',
                     authenticate: true,
