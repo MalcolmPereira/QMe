@@ -6,9 +6,9 @@
 
         .controller('qmeQuestionManagementCtrl', QMeQuestionManagementController);
 
-        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService','qmePageSession','QME_CONSTANTS'];
+        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','QME_CONSTANTS'];
 
-        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService,qmePageSession,QME_CONSTANTS) {
+        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,QME_CONSTANTS) {
 
             var qmeQuestionManagement = this;
 
@@ -18,6 +18,10 @@
             qmeQuestionManagement.sortasc = true;
             qmeQuestionManagement.sortfields = "QUESTION";
 
+            qmeQuestionManagement.addQuestionForm = undefined;
+
+            qmeQuestionManagement.category = [];
+            qmeQuestionManagement.categoryId = undefined;
 
             qmeQuestionManagement.listQuestions = function() {
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
@@ -121,6 +125,32 @@
 
                             }else {
                                 qmeFlashService.Error("Oops.....Error from service getting question lists, please retry in some time.");
+                            }
+                        }
+                    );
+            };
+
+            qmeQuestionManagement.loadCategories = function(){
+
+                qmeFlashService.Clear();
+
+                qmeCategoryService.listCategory()
+                    .then(
+                        function(res){
+                            console.log(res);
+                            for (var key in res) {
+                                var category = res[key];
+                                if (category.hasOwnProperty('categoryId')){
+                                    qmeQuestionManagement.category.push(category);
+                                }
+                            }
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
                             }
                         }
                     );

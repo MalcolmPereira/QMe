@@ -11,6 +11,22 @@
 
         var qmeCategoryService = this;
 
+        qmeCategoryService.listCategory = function(){
+            var listCategoryPromise = $q.defer();
+
+            qmeCategoryResource.categoryResource(qmeUserSession.authtoken())
+                .query(
+                    function(res){
+                        listCategoryPromise.resolve(res);
+                    },
+                    function(error){
+                        listCategoryPromise.reject(error);
+                    }
+                );
+
+            return listCategoryPromise.promise;
+        };
+
         qmeCategoryService.listCategoryByParent = function(parentId){
             var listCategoryPromise = $q.defer();
 

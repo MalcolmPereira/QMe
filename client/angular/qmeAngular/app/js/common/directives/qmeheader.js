@@ -61,8 +61,16 @@
                 $state.go('listquestions', {});
             };
 
+            qmeNav.routeAddQuestion = function(){
+                $state.go('addquestion', {});
+            };
+
             qmeNav.routeQuizzes = function(){
                 $state.go('listquizzes', {});
+            };
+
+            qmeNav.routeAddQuiz = function(){
+                $state.go('addquiz', {});
             };
 
             qmeNav.isActive = function(currentState){
