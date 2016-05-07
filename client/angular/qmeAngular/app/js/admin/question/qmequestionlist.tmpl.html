@@ -17,12 +17,12 @@
                     </tr>
                 </thead>
                 <tr ng-repeat="question in qmeQuestionManagement.questions">
-                    <td>{{question.categoryId}}</td>
+                    <td>{{question.categoryName}}</td>
                     <td><a href="#" id="{{'questionId' + $index}}" ng-click="qmeQuestionManagement.updateQuestion(question)">{{question.questionText}}</a></td>
                     <td>{{question.questionPoint}}</td>
                     <td>{{question.likes}}</td>
                     <td>{{question.questionCreateDate}}</td>
-                    <td>{{question.createUserID}}</td>
+                    <td>{{question.createUserName}}</td>
                 </tr>
             </table>
             <qme-page ng-if="qmeQuestionManagementCtrl.recordsLoaded()" qme-totalcount="qmeQuestionManagementCtrl.totalRecords()" qme-pagingfunction="qmeQuestionManagementCtrl.pageQuestions"></qme-page>
