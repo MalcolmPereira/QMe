@@ -44,6 +44,11 @@ public final class Category {
     private final Long categoryLikes;
 
     /**
+     * Update User
+     */
+    private User updateUser;
+
+    /**
      * Public Constructor
      *
      * @param categoryID Category ID
@@ -141,6 +146,22 @@ public final class Category {
     public Long getCategoryLikes() {
 		return categoryLikes;
 	}
+
+    /**
+     * Get Update User
+     * @return Update User
+     */
+    public User getUpdateUser() {
+        return updateUser;
+    }
+
+    /**
+     * Set Update User
+     * @param updateUser Update User
+     */
+    public void setUpdateUser(User updateUser) {
+        this.updateUser = updateUser;
+    }
 
     @Override
     public boolean equals(Object o) {

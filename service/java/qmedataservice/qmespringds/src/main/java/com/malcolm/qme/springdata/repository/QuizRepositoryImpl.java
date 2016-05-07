@@ -6,7 +6,9 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Quiz;
+import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizRepository;
@@ -172,7 +174,7 @@ public class QuizRepositoryImpl implements QuizRepository {
 	 * @return Quiz
 	 */
 	private Quiz getQuiz(QuizEntity quizEntity){
-		return new Quiz(
+		Quiz quiz = new Quiz(
 				quizEntity.getQuizId(),
 				quizEntity.getQuizName(),
 				quizEntity.getQuizDesc(),
@@ -184,6 +186,40 @@ public class QuizRepositoryImpl implements QuizRepository {
 				quizEntity.getQuizCreateUser(),
 				quizEntity.getQuizUpdateDate(),
 				quizEntity.getQuizUpdateUser());
+
+		if(quizEntity.getCreateUser() != null){
+            quiz.setCreateUser(new User(
+                    quizEntity.getCreateUser().getUserId(),quizEntity.getCreateUser().getUserName(),
+                    quizEntity.getCreateUser().getUserPasscode(), quizEntity.getCreateUser().getUserFirstName(),
+                    quizEntity.getCreateUser().getUserLastName(), quizEntity.getCreateUser().getUserEmail(),
+                    quizEntity.getCreateUser().getUserRegisteredDate(),
+                    quizEntity.getCreateUser().getUserUpdatedDate(),
+                    quizEntity.getCreateUser().getUserLastLoginDate(),
+                    quizEntity.getCreateUser().getUserLoginDate(),
+                    quizEntity.getCreateUser().getUpdateUser()));
+        }
+        if(quizEntity.getUpdateUser() != null){
+            quiz.setUpdateUser(new User(
+                    quizEntity.getUpdateUser().getUserId(),quizEntity.getUpdateUser().getUserName(),
+                    quizEntity.getUpdateUser().getUserPasscode(), quizEntity.getUpdateUser().getUserFirstName(),
+                    quizEntity.getUpdateUser().getUserLastName(), quizEntity.getUpdateUser().getUserEmail(),
+                    quizEntity.getUpdateUser().getUserRegisteredDate(),
+                    quizEntity.getUpdateUser().getUserUpdatedDate(),
+                    quizEntity.getUpdateUser().getUserLastLoginDate(),
+                    quizEntity.getUpdateUser().getUserLoginDate(),
+                    quizEntity.getUpdateUser().getUpdateUser()));
+        }
+        if(quizEntity.getCategory() != null){
+            quiz.setCategory(new Category(quizEntity.getCategory().getCatId(),
+                    quizEntity.getCategory().getCatParentId(),
+                    quizEntity.getCategory().getCatName(),
+                    quizEntity.getCategory().getCatLikes(),
+                    quizEntity.getCategory().getCatCreateDate(),
+                    quizEntity.getCategory().getCatCreateUser()
+
+            ));
+        }
+		return quiz;
 	}
 
 

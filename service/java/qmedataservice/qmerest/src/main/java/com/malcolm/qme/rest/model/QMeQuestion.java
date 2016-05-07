@@ -68,6 +68,21 @@ public class QMeQuestion extends QMeResource {
     private Long  updateUserID;
 
     /**
+     * Create User Name
+     */
+    private String createUserName;
+
+    /**
+     * Update User Name
+     */
+    private String udateUserName;
+
+    /**
+     * Category Name
+     */
+    private String categoryName;
+
+    /**
      * Get Question Id
      * @return Question Id
      */
@@ -225,5 +240,53 @@ public class QMeQuestion extends QMeResource {
      */
     public void setUpdateUserID(Long updateUserID) {
         this.updateUserID = updateUserID;
+    }
+
+    /**
+     * Get Create User Name
+     * @return Create User Name
+     */
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    /**
+     * Set Create User Name
+     * @param createUserName Create User Name
+     */
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    /**
+     * Get Update User Name
+     * @return Update User Name
+     */
+    public String getUdateUserName() {
+        return udateUserName;
+    }
+
+    /**
+     * Set Update User Name
+     * @param udateUserName
+     */
+    public void setUdateUserName(String udateUserName) {
+        this.udateUserName = udateUserName;
+    }
+
+    /**
+     * Get Category Name
+     * @return Category Name
+     */
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    /**
+     * Set Category Name
+     * @param categoryName category name
+     */
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

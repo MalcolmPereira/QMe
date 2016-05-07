@@ -7,6 +7,7 @@
 package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.core.domain.Category;
+import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
@@ -171,7 +172,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 	 * @return Category
 	 */
 	private Category getCategory(CategoryEntity categoryEntity){
-       return new Category(categoryEntity.getCatId(),
+        Category category = new Category(categoryEntity.getCatId(),
 				categoryEntity.getCatParentId(),
 				categoryEntity.getCatName(),
 				categoryEntity.getCatLikes(),
@@ -179,6 +180,18 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 				categoryEntity.getCatCreateUser()
 
 	   );
+       if(categoryEntity.getUpdateUser() != null){
+           category.setUpdateUser(new User(
+                   categoryEntity.getUpdateUser().getUserId(),categoryEntity.getUpdateUser().getUserName(),
+                   categoryEntity.getUpdateUser().getUserPasscode(), categoryEntity.getUpdateUser().getUserFirstName(),
+                   categoryEntity.getUpdateUser().getUserLastName(), categoryEntity.getUpdateUser().getUserEmail(),
+                   categoryEntity.getUpdateUser().getUserRegisteredDate(),
+                   categoryEntity.getUpdateUser().getUserUpdatedDate(),
+                   categoryEntity.getUpdateUser().getUserLastLoginDate(),
+                   categoryEntity.getUpdateUser().getUserLoginDate(),
+                   categoryEntity.getUpdateUser().getUpdateUser()));
+       }
+       return category;
 	}
 
 }

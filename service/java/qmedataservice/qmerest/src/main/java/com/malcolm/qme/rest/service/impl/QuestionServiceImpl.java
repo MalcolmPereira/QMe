@@ -200,6 +200,16 @@ public class QuestionServiceImpl implements QuestionService{
         qmeQuestionDetail.setCreateUserID(question.getCreateUserID());
         qmeQuestionDetail.setQuestionUpdateDate(question.getQuestionUpdateDate());
         qmeQuestionDetail.setUpdateUserID(question.getUpdateUserID());
+        if(question.getCreateUser() != null){
+            qmeQuestionDetail.setCreateUserName(question.getCreateUser().getUserName());
+        }
+        if(question.getUpdateUser() != null){
+            qmeQuestionDetail.setCreateUserName(question.getUpdateUser().getUserName());
+        }
+        if(question.getCategory() != null){
+            qmeQuestionDetail.setCategoryName(question.getCategory().getCategoryName());
+        }
+
         return qmeQuestionDetail;
     }
 }

@@ -87,6 +87,18 @@ public class QuizEntity implements java.io.Serializable {
 	@Column(name = "QUIZ_UPDATE_USER", nullable = false)
 	private Long quizUpdateUser;
 
+
+	@ManyToOne
+	@JoinColumn(name = "QUIZ_CREATE_USER", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+	private UserEntity createUser;
+
+	@ManyToOne
+	@JoinColumn(name = "QUIZ_UPDATE_USER", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+	private UserEntity updateUser;
+
+	@ManyToOne
+	@JoinColumn(name = "CAT_ID", referencedColumnName = "CAT_ID", insertable = false, updatable = false)
+	private CategoryEntity category;
 	/**
 	 * public Constructor
 	 */
@@ -276,6 +288,54 @@ public class QuizEntity implements java.io.Serializable {
 	public void setQuizUpdateUser(Long quizUpdateUser) {
 		this.quizUpdateUser = quizUpdateUser;
 	}
+
+    /**
+     * Get Create User
+     * @return Create User
+     */
+    public UserEntity getCreateUser() {
+        return createUser;
+    }
+
+    /**
+     * Set Create User
+     * @param createUser Create User
+     */
+    public void setCreateUser(UserEntity createUser) {
+        this.createUser = createUser;
+    }
+
+    /**
+     * Get Update User
+     * @return Update User
+     */
+    public UserEntity getUpdateUser() {
+        return updateUser;
+    }
+
+    /**
+     * Set Update User
+     * @param updateUser Update USer
+     */
+    public void setUpdateUser(UserEntity updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    /**
+     * Get Category
+     * @return Category
+     */
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    /**
+     * Set Category
+     * @param category Category
+     */
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
+    }
 
     @Override
     public boolean equals(Object o) {

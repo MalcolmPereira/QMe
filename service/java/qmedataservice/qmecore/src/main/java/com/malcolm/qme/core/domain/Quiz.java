@@ -70,6 +70,19 @@ public final class Quiz {
     private final Long  updateUserID;
 
     /**
+     * Create User
+     */
+    private User createUser;
+    /**
+     * Update User
+     */
+    private User updateUser;
+    /**
+     * Question Category
+     */
+    private Category category;
+
+    /**
      * Public Constructor
      *
      * @param quizID Quiz ID
@@ -207,6 +220,54 @@ public final class Quiz {
      */
     public Long getUpdateUserID() {
         return updateUserID;
+    }
+
+    /**
+     * Get Create User
+     * @return Create User
+     */
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    /**
+     * Set Create User
+     * @param createUser Create User
+     */
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    /**
+     * Get Update User
+     * @return Update User
+     */
+    public User getUpdateUser() {
+        return updateUser;
+    }
+
+    /**
+     * Set Update User
+     * @param updateUser Update User
+     */
+    public void setUpdateUser(User updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    /**
+     * Get Category
+     * @return Category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Set Category
+     * @param category Category
+     */
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

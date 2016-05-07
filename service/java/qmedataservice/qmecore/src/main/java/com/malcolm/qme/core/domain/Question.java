@@ -56,11 +56,19 @@ public final class Question {
      * Question Update Date
      */
     private final LocalDateTime questionUpdateDate;
+
     /**
-     * Update User Id
+     * Create User
      */
-    private final Long  updateUserID;
-    
+    private User createUser;
+    /**
+     * Update User
+     */
+    private User updateUser;
+    /**
+     * Question Category
+     */
+    private Category category;
     
 	/**
 	 * Public Constructor
@@ -205,6 +213,59 @@ public final class Question {
 	public Long getUpdateUserID() {
 		return updateUserID;
 	}
+
+    /**
+     * Update User Id
+     */
+    private final Long  updateUserID;
+
+    /**
+     * Get Create User
+     * @return Create User
+     */
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    /**
+     * Set Create User
+     * @param createUser Create User
+     */
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    /**
+     * Get Update User
+     * @return Update User
+     */
+    public User getUpdateUser() {
+        return updateUser;
+    }
+
+    /**
+     * Set Update User
+     * @param updateUser Update User
+     */
+    public void setUpdateUser(User updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    /**
+     * Get Category
+     * @return Category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Set Category
+     * @param category Category to update
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public boolean equals(Object o) {

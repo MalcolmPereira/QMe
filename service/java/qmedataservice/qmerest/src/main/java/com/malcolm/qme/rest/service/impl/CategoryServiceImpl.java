@@ -232,8 +232,9 @@ public final class CategoryServiceImpl implements CategoryService {
         qmeCategory.setCategoryLikes(category.getCategoryLikes());
         qmeCategory.setCreatedDate(category.getCategoryCreateDate());
         qmeCategory.setCreatedUser(category.getCategoryCreateUserID());
-        //Fixme: Need to add created user name
-        qmeCategory.setCreatedUserName("");
+        if(category.getUpdateUser() != null){
+            qmeCategory.setCreatedUserName(category.getUpdateUser().getUserName());
+        }
         return qmeCategory;
     }
 }

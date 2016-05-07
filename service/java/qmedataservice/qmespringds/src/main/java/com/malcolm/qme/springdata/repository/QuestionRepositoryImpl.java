@@ -6,7 +6,9 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
+import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
@@ -194,7 +196,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
      * @return Question
      */
     private Question getQuestion(QuestionEntity questionEntity){
-        return new Question (
+        Question question = new Question (
         		questionEntity.getQuestionId(),
         		questionEntity.getCatId(),
         		questionEntity.getQuestionText(),
@@ -206,6 +208,43 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         		questionEntity.getQuestionUpdateDate(),
         		questionEntity.getQuestionUpdateUser()
         );
+
+        if(questionEntity.getCreateUser() != null){
+            question.setCreateUser(new User(
+                    questionEntity.getCreateUser().getUserId(),questionEntity.getCreateUser().getUserName(),
+                    questionEntity.getCreateUser().getUserPasscode(), questionEntity.getCreateUser().getUserFirstName(),
+                    questionEntity.getCreateUser().getUserLastName(), questionEntity.getCreateUser().getUserEmail(),
+                    questionEntity.getCreateUser().getUserRegisteredDate(),
+                    questionEntity.getCreateUser().getUserUpdatedDate(),
+                    questionEntity.getCreateUser().getUserLastLoginDate(),
+                    questionEntity.getCreateUser().getUserLoginDate(),
+                    questionEntity.getCreateUser().getUpdateUser()));
+        }
+
+        if(questionEntity.getUpdateUser() != null){
+            question.setUpdateUser(new User(
+                    questionEntity.getUpdateUser().getUserId(),questionEntity.getUpdateUser().getUserName(),
+                    questionEntity.getUpdateUser().getUserPasscode(), questionEntity.getUpdateUser().getUserFirstName(),
+                    questionEntity.getUpdateUser().getUserLastName(), questionEntity.getUpdateUser().getUserEmail(),
+                    questionEntity.getUpdateUser().getUserRegisteredDate(),
+                    questionEntity.getUpdateUser().getUserUpdatedDate(),
+                    questionEntity.getUpdateUser().getUserLastLoginDate(),
+                    questionEntity.getUpdateUser().getUserLoginDate(),
+                    questionEntity.getUpdateUser().getUpdateUser()));
+        }
+
+        if(questionEntity.getCategory() != null){
+            question.setCategory(new Category(questionEntity.getCategory().getCatId(),
+                    questionEntity.getCategory().getCatParentId(),
+                    questionEntity.getCategory().getCatName(),
+                    questionEntity.getCategory().getCatLikes(),
+                    questionEntity.getCategory().getCatCreateDate(),
+                    questionEntity.getCategory().getCatCreateUser()
+
+            ));
+        }
+
+        return question;
     }
 	
 }

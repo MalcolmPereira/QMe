@@ -57,6 +57,10 @@ public class CategoryEntity implements java.io.Serializable {
 	@Column(name = "CAT_LIKES")
 	private Long catLikes;
 
+    @ManyToOne
+    @JoinColumn(name = "CAT_CREATE_USER", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+    private UserEntity updateUser;
+
 	/**
 	 * Public Constructor
 	 */
@@ -178,6 +182,22 @@ public class CategoryEntity implements java.io.Serializable {
 	public void setCatLikes(Long catLikes) {
 		this.catLikes = catLikes;
 	}
+
+    /**
+     * Set Update User
+     * @return Update User
+     */
+    public UserEntity getUpdateUser() {
+        return updateUser;
+    }
+
+    /**
+     * Get Update User
+     * @param updateUser Update User
+     */
+    public void setUpdateUser(UserEntity updateUser) {
+        this.updateUser = updateUser;
+    }
 
     @Override
     public boolean equals(Object o) {
