@@ -37,7 +37,13 @@
         <div class="navbar-collapse collapse">
             <ul class="nav nav-pills">
 
-                <li role="presentation" ng-class="{ active: qmeNav.isActive('[home]') }"><a id="homeNavLinkId" href="#" ng-click="qmeNav.routeHome()">Home</a></li>
+                <!-- Home Routes -->
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('[home]') }">
+                    <a id="homeNavLinkId" href="#" ng-click="qmeNav.routeHome()">Home</a>
+                    <div class="dropdown" ng-show="qmeNav.isActive('[home]')">
+                        <a id="dHomeLabelId" href="#" role="presentation" ><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                    </div>
+                </li>
 
                 <!-- User Routes -->
                 <li role="presentation" ng-class="{ active: qmeNav.isActive('[listusers,adduser,updateuser]') }" ng-show="qmeNav.isAdmin()" >
@@ -50,11 +56,35 @@
                     </div>
                 </li>
 
-                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listcategories]') }" ng-show="qmeNav.isAdmin()" ><a id="categoriesNavLinkId" href="#" ng-click="qmeNav.routeCategories()">Categories</a></li>
+                <!-- Category Routes -->
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listcategories]') }" ng-show="qmeNav.isAdmin()" >
+                    <a id="categoriesNavLinkId" href="#" ng-click="qmeNav.routeCategories()">Categories</a>
+                    <div class="dropdown" ng-show="qmeNav.isActive('[listcategories]')">
+                        <a id="dCategoryLabelId" href="#" role="presentation" ><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                    </div>
+                </li>
 
-                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listquestions]') }" ng-show="qmeNav.isAdmin()" ><a id="questionsNavLinkId" href="#" ng-click="qmeNav.routeQuestions()">Questions</a></li>
+                <!-- Question Routes -->
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listquestions, addquestion, updatequestion]') }" ng-show="qmeNav.isAdmin()" >
+                    <a id="questionsNavLinkId" href="#" ng-click="qmeNav.routeQuestions()">Questions</a>
+                    <div class="dropdown" ng-show="qmeNav.isActive('[listquestions,addquestion,updatequestion]')">
+                        <a id="dQuestionLabelId" href="#" data-toggle="dropdown" role="presentation" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ng-show="qmeNav.isAdmin()"><a href="#" id="addNewQuestionId" ng-click="qmeNav.routeAddQuestion();">Add New Question</a></li>
+                        </ul>
+                    </div>
+                </li>
 
-                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listquizzes]') }" ng-show="qmeNav.isAdmin()" ><a id="quizzesNavLinkId" href="#" ng-click="qmeNav.routeQuizzes()">Quizzes</a></li>
+                <!-- Quiz Routes -->
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listquizzes, addquiz, updatequiz]') }" ng-show="qmeNav.isAdmin()" >
+                    <a id="quizzesNavLinkId" href="#" ng-click="qmeNav.routeQuizzes()">Quizzes</a>
+                    <div class="dropdown" ng-show="qmeNav.isActive('[listquizzes, addquiz, updatequiz]')">
+                        <a id="dQuizLabelId" href="#" data-toggle="dropdown" role="presentation" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ng-show="qmeNav.isAdmin()"><a href="#" id="addNewQuizId" ng-click="qmeNav.routeAddQuiz();">Add New Quiz</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
