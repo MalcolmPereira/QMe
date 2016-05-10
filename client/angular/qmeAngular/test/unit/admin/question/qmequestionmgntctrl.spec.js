@@ -37,7 +37,7 @@
             questionPagedEndPoint = qmeContants.qmeservice+"/question/paged";
             questionCountEndPoint  = qmeContants.qmeservice+"/question/count";
             qmeUserService = _qmeUserService_;
-            qmeQuestionService = _qmeQuestionService_
+            qmeQuestionService = _qmeQuestionService_;
             qmePageSession = _qmePageSession_;
             qmeFlashService = _qmeFlashService_;
             timeout = _$timeout_;
