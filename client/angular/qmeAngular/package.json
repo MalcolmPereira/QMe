@@ -27,6 +27,7 @@
     "http-server": "^0.8.0",
     "jasmine-core": "2.3.4",
     "jshint-stylish": "latest",
+    "jshint" : "latest",
     "karma": "^0.13.9",
     "karma-chrome-launcher": "^0.2.0 ",
     "karma-coverage": "~0.4.2",
@@ -51,6 +52,7 @@
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor test/protractor-conf.js"
+    "protractor": "protractor test/protractor-conf.js",
+    "lint": "jshint app/js test"
   }
 }
