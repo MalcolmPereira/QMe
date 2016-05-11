@@ -11,7 +11,8 @@
     "angular-mocks": "^1.4.7",
     "jquery": "^2.1.4",
     "bootstrap": "^3.3.5",
-    "jstree": "^3.2.1 "
+    "jstree": "^3.2.1 ",
+    "ng-flow": "~2"
   },
   "devDependencies": {
     "bower": "^1.5.1",
@@ -54,6 +55,6 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
     "lint": "jshint app/js test",
-    "watch": "nodemon --watch app"
+    "watch": "nodemon"
   }
 }
