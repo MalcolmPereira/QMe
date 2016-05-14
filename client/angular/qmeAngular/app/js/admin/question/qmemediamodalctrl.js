@@ -15,17 +15,12 @@
 
         qmeMediaReference.mediaForm = undefined;
         qmeMediaReference.selectedMediaType = undefined;
+        qmeMediaReference.refLink  = undefined;
         qmeMediaReference.uploadedImage = undefined;
 
         qmeMediaReference.mediaType = [
-            {
-              "mediaTypeId":"LINK",
-              "mediaTypeDesc":"Http Link",
-            },
-            {
-              "mediaTypeId":"IMAGE",
-              "mediaTypeDesc":"Image",
-            }
+            {mediaTypeId:"LINK",mediaTypeDesc:"Http Link"},
+            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"}
         ];
 
         qmeMediaReference.save = function(){
@@ -47,7 +42,5 @@
             qmeMediaReference.uploadedImage = undefined;
         };
     }
-
-
 
 })();
