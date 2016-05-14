@@ -57,7 +57,7 @@
                     <form name="qmeMediaModalCtrl.mediaForm">
                         <div class="form-group">
                             <label  for="mediaTypeId">Media Type:</label>
-                            <select class="form-control" ng-model="qmeMediaModalCtrl.selectedMediaType" name="mediaTypeId" id="mediaTypeId" style="width:150px;" ng-required="true">
+                            <select class="form-control" ng-change="$flow.files[0].cancel();" ng-model="qmeMediaModalCtrl.selectedMediaType" name="mediaTypeId" id="mediaTypeId" style="width:150px;" ng-required="true">
                                 <option ng-repeat="media in qmeMediaModalCtrl.mediaType" title="{{media.mediaTypeDesc}}" value="{{media.mediaTypeId}}">{{media.mediaTypeDesc}}</option>
                             </select>
                         </div>

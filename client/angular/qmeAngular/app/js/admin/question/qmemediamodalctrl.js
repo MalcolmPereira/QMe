@@ -18,6 +18,7 @@
         qmeMediaReference.refLink  = undefined;
         qmeMediaReference.uploadedImage = undefined;
 
+
         qmeMediaReference.mediaType = [
             {mediaTypeId:"LINK",mediaTypeDesc:"Http Link"},
             {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"}
@@ -29,6 +30,10 @@
 
         qmeMediaReference.cancel = function(){
             $('#addMediaModal').modal('hide');
+            qmeMediaReference.mediaForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.uploadedImage = undefined;
         };
 
         qmeMediaReference.isInValidForm = function(){
