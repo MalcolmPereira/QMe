@@ -6,9 +6,9 @@
 
         .controller('qmeQuestionManagementCtrl', QMeQuestionManagementController);
 
-        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','QME_CONSTANTS'];
+        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
 
-        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,QME_CONSTANTS) {
+        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
 
             var qmeQuestionManagement = this;
 
@@ -22,6 +22,18 @@
 
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
+
+            qmeQuestionManagement.answerReferenceMedia = [
+                {
+                  mediaType:'link',
+                  mediaContent: 'Some Content'
+                },
+                {
+                  mediaType:'image',
+                  mediaContent: 'Some Image'
+                }
+            ];
+
 
             qmeQuestionManagement.listQuestions = function() {
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
@@ -156,6 +168,24 @@
                     );
             };
 
+            qmeQuestionManagement.addAnswerReferenceMedia = function(){
+                $('#addMediaModal').modal('show');
+                var promise = qmeModelSession.modalShown();
+                promise.then(
+                    function(data){
+                        //todoadd to array
+                    },
+                    function(){
+                        //nothing
+                    }
+                );
+            };
+
+
+            qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
+                qmeQuestionManagement.answerReferenceMedia.splice(index,1);
+            };
         }
+
 
 })();
