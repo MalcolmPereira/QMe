@@ -25,12 +25,9 @@
 
             qmeQuestionManagement.answerReferenceMedia = [
                 {
-                  mediaType:'link',
-                  mediaContent: 'Some Content'
-                },
-                {
-                  mediaType:'image',
-                  mediaContent: 'Some Image'
+                  mediaType:{mediaTypeId:"LINK",mediaTypeDesc:"Http Link"},
+                  media: 'some http link',
+                  mediaObj: {}
                 }
             ];
 
@@ -149,7 +146,6 @@
                 qmeCategoryService.listCategory()
                     .then(
                         function(res){
-                            console.log(res);
                             for (var key in res) {
                                 var category = res[key];
                                 if (category.hasOwnProperty('categoryId')){
@@ -173,7 +169,27 @@
                 var promise = qmeModelSession.modalShown();
                 promise.then(
                     function(data){
-                        //todoadd to array
+                       if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
+                           console.log("got data as image ",data);
+                           console.log("got data as image ",data.media.flowObj.files[0]);
+                           qmeQuestionManagement.answerReferenceMedia.push(
+                               {
+                                   mediaType: data.mediaType,
+                                   media: data.media.flowObj.files[0].name,
+                                   mediaObj: data.media.flowObj.files[0]
+                               }
+                           );
+
+                       }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
+                           console.log("got data as link ",data);
+                           qmeQuestionManagement.answerReferenceMedia.push(
+                               {
+                                   mediaType: data.mediaType,
+                                   media: data.media,
+                                   mediaObj: {}
+                               }
+                           );
+                       }
                     },
                     function(){
                         //nothing

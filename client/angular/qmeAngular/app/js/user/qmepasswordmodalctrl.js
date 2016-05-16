@@ -27,6 +27,7 @@
             );
         };
 
+
         qmeUpdatePassword.cancel = function(){
             qmeUpdatePassword.passwordForm.$setPristine();
             qmeUpdatePassword.currentPassword = "";

@@ -26,7 +26,26 @@
 
         qmeMediaReference.save = function(){
             $('#addMediaModal').modal('hide');
+
+            var mediaObjType = undefined;
+            var mediaObj     = undefined;
+            if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
+                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
+                mediaObj     = qmeMediaReference.uploadedImage;
+            }else  if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
+                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"Http Link"};
+                mediaObj     = qmeMediaReference.refLink ;
+            }
+
+            if(mediaObjType && mediaObj){
+                qmeModelSession.create({
+                        mediaType:mediaObjType,
+                        media:mediaObj
+                    }
+                );
+            }
         };
+
 
         qmeMediaReference.cancel = function(){
             $('#addMediaModal').modal('hide');
@@ -46,6 +65,7 @@
         qmeMediaReference.removeUploadedFile = function(){
             qmeMediaReference.uploadedImage = undefined;
         };
+
     }
 
 })();
