@@ -170,8 +170,6 @@
                 promise.then(
                     function(data){
                        if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
-                           console.log("got data as image ",data);
-                           console.log("got data as image ",data.media.flowObj.files[0]);
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
                                    mediaType: data.mediaType,
@@ -181,7 +179,6 @@
                            );
 
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
-                           console.log("got data as link ",data);
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
                                    mediaType: data.mediaType,
@@ -192,7 +189,6 @@
                        }
                     },
                     function(){
-                        //nothing
                     }
                 );
             };
