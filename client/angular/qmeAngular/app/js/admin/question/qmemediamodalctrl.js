@@ -11,8 +11,6 @@
 
         var qmeMediaReference = this;
 
-        qmeMediaReference.uploader = {};
-
         qmeMediaReference.mediaForm = undefined;
         qmeMediaReference.selectedMediaType = undefined;
         qmeMediaReference.refLink  = undefined;

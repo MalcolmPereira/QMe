@@ -6,9 +6,9 @@
 
         .controller('qmeQuestionManagementCtrl', QMeQuestionManagementController);
 
-        QMeQuestionManagementController.$inject = ['$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
+        QMeQuestionManagementController.$inject = ['$scope','$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
 
-        function QMeQuestionManagementController($state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
+        function QMeQuestionManagementController($scope,$state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
 
             var qmeQuestionManagement = this;
 
@@ -195,6 +195,7 @@
 
 
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
+                $scope.uploader.flow.files[0].cancel();
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
             };
         }

@@ -1,4 +1,4 @@
-<div class="container-fluid" flow-init="{singleFile: true}">
+<div class="container-fluid" flow-init="{singleFile: true}" flow-name="uploader.flow" >
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Add Question</h3>
@@ -68,7 +68,7 @@
                         </div>
                         <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'IMAGE')" class="form-group">
                             <label for="mediaTypeImageUpload">Image Upload:</label>
-                            <div name="mediaTypeImageUpload" id="mediaTypeImageUpload"  flow-name="qmeMediaReference.uploader.flow" flow-file-added="qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
+                            <div name="mediaTypeImageUpload" id="mediaTypeImageUpload"  flow-file-added="qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
                                 <input ng-hide="qmeMediaModalCtrl.uploadedImage" name="flowFileUploadCtrl" id="flowFileUploadCtrl" type="file" flow-btn/>
                                 <a ng-show="qmeMediaModalCtrl.uploadedImage" href="#" ng-click="$flow.files[0].cancel();qmeMediaModalCtrl.removeUploadedFile()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                 <img style="width:250px;height:250px" ng-show="qmeMediaModalCtrl.uploadedImage" flow-img="$flow.files[0]" />
