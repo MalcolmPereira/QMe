@@ -27,26 +27,28 @@
                     </div>
                     <div class="form-group">
                          <label for="answerReferenceMedia">Answer Reference Media:</label>&nbsp;<a href="#" ng-click="qmeQuestionManagement.addAnswerReferenceMedia()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                         <table style="width:550px;" class ="table table-bordered table-striped" name="answerReferenceMedia" id="answerReferenceMedia" >
-                                <thead>
-                                    <tr>
-                                        <th style="width:150px;">Media Type</th>
-                                        <th style="width:400px;">Media</th>
-                                        <th style="width:50px;"></th>
-                                    </tr>
-                                 </thead>
-                                 <tr ng-repeat="answerRefMedia in qmeQuestionManagement.answerReferenceMedia">
-                                    <td>{{answerRefMedia.mediaType.mediaTypeDesc}}</td>
-                                    <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'LINK'">{{answerRefMedia.media}}</td>
-                                    <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'">
-                                        <img style="width:100px;height:100px"
-                                             ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'"
-                                             flow-img="$flow.files[$index]" />
-                                        {{answerRefMedia.mediaObjIndex}}
-                                    </td>
-                                    <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-                                 </tr>
-                         </table>
+                         <div class="container" flow-init="{singleFile: false}" flow-name="uploader.main.answerref.flow" >
+                                 <table style="width:550px;" class ="table table-bordered table-striped" name="answerReferenceMedia" id="answerReferenceMedia" >
+                                        <thead>
+                                            <tr>
+                                                <th style="width:150px;">Media Type</th>
+                                                <th style="width:400px;">Media</th>
+                                                <th style="width:50px;"></th>
+                                            </tr>
+                                         </thead>
+                                         <tr ng-repeat="answerRefMedia in qmeQuestionManagement.answerReferenceMedia">
+                                            <td>{{answerRefMedia.mediaType.mediaTypeDesc}}</td>
+                                            <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'LINK'">{{answerRefMedia.media}}</td>
+                                            <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'">
+                                                <img style="width:100px;height:100px"
+                                                     ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'"
+                                                     flow-img="$flow.files[$index]" />
+                                                {{answerRefMedia.mediaObjIndex}}
+                                            </td>
+                                            <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                         </tr>
+                                 </table>
+                         </div>
                     </div>
                 </form>
             </div>

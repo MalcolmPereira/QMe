@@ -173,7 +173,9 @@
                                }
                            );
                            qmeQuestionManagement.answerReferenceMediaIndex++;
-                           $scope.uploader.main.flow.files.push(data.media.flowObj.files[0]);
+                           $scope.uploader.main.answerref.flow.files.push(data.media.flowObj.files[0]);
+
+                           $scope.uploader.flow.files[0].cancel();
 
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
