@@ -44,7 +44,6 @@
             }
         };
 
-
         qmeMediaReference.cancel = function(){
             $('#addMediaModal').modal('hide');
             qmeMediaReference.mediaForm = undefined;

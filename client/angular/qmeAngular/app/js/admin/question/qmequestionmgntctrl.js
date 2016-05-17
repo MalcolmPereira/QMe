@@ -23,13 +23,8 @@
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
 
-            qmeQuestionManagement.answerReferenceMedia = [
-                {
-                  mediaType:{mediaTypeId:"LINK",mediaTypeDesc:"Http Link"},
-                  media: 'some http link',
-                  mediaObj: {}
-                }
-            ];
+            qmeQuestionManagement.answerReferenceMediaIndex = 0;
+            qmeQuestionManagement.answerReferenceMedia = [];
 
 
             qmeQuestionManagement.listQuestions = function() {
@@ -174,9 +169,11 @@
                                {
                                    mediaType: data.mediaType,
                                    media: data.media.flowObj.files[0].name,
-                                   mediaObj: data.media.flowObj.files[0]
+                                   mediaObj:  qmeQuestionManagement.answerReferenceMediaIndex
                                }
                            );
+                           qmeQuestionManagement.answerReferenceMediaIndex++;
+                           $scope.uploader.main.flow.files.push(data.media.flowObj.files[0]);
 
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
@@ -195,7 +192,6 @@
 
 
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
-                $scope.uploader.flow.files[0].cancel();
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
             };
         }
