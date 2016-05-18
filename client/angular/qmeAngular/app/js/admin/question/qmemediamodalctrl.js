@@ -55,7 +55,15 @@
         };
 
         qmeMediaReference.handleFilesAdded = function(file, event, flow){
-            qmeMediaReference.uploadedImage = file ;
+            /*if (file.size > 2048) {
+                alert("Invalid file, file zie too big!!!");
+                qmeMediaReference.removeUploadedFile();
+
+            }else{
+                qmeMediaReference.uploadedImage = file;
+            }
+            */
+            qmeMediaReference.uploadedImage = file;
         };
 
         qmeMediaReference.reset = function(){
