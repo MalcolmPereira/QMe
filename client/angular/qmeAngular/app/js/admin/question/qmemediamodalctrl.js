@@ -5,9 +5,9 @@
     ngQMe
         .controller('qmeMediaModalCtrl', QMeMediaModalController);
 
-    QMeMediaModalController.$inject = ['qmeModelSession'];
+    QMeMediaModalController.$inject = ['$scope','qmeModelSession'];
 
-    function QMeMediaModalController(qmeModelSession) {
+    function QMeMediaModalController($scope,qmeModelSession) {
 
         var qmeMediaReference = this;
 
@@ -34,7 +34,6 @@
                 mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"Http Link"};
                 mediaObj     = qmeMediaReference.refLink ;
             }
-
             if(mediaObjType && mediaObj){
                 qmeModelSession.create({
                         mediaType:mediaObjType,
@@ -42,14 +41,14 @@
                     }
                 );
             }
+            qmeMediaReference.mediaForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
         };
 
         qmeMediaReference.cancel = function(){
             $('#addMediaModal').modal('hide');
-            qmeMediaReference.mediaForm = undefined;
-            qmeMediaReference.selectedMediaType = undefined;
-            qmeMediaReference.refLink  = undefined;
-            qmeMediaReference.uploadedImage = undefined;
+            qmeMediaReference.reset();
         };
 
         qmeMediaReference.isInValidForm = function(){
@@ -59,8 +58,18 @@
             qmeMediaReference.uploadedImage = file ;
         };
 
+        qmeMediaReference.reset = function(){
+            qmeMediaReference.mediaForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.removeUploadedFile();
+        };
+
         qmeMediaReference.removeUploadedFile = function(){
             qmeMediaReference.uploadedImage = undefined;
+            if( $scope.uploader.flow && $scope.uploader.flow.files && $scope.uploader.flow.files[0]){
+                $scope.uploader.flow.files[0].cancel();
+            }
         };
 
     }

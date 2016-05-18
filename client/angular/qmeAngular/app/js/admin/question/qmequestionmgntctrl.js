@@ -160,6 +160,10 @@
             };
 
             qmeQuestionManagement.addAnswerReferenceMedia = function(){
+                if( $scope.uploader.flow && $scope.uploader.flow.files && $scope.uploader.flow.files[0]){
+                    $scope.uploader.flow.files[0].cancel();
+                }
+
                 $('#addMediaModal').modal('show');
                 var promise = qmeModelSession.modalShown();
                 promise.then(
