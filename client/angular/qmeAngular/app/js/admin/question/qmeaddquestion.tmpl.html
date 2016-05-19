@@ -58,6 +58,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <div ng-show="qmeMediaModalCtrl.uploadError" class="alert alert-danger">{{qmeMediaModalCtrl.uploadError}}</div>
                     <button type="button" class="close" aria-label="Close" ng-click="qmeMediaModalCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="mediaModalLabel">Reference Media</h4>
                 </div>

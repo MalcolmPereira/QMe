@@ -15,6 +15,7 @@
         qmeMediaReference.selectedMediaType = undefined;
         qmeMediaReference.refLink  = undefined;
         qmeMediaReference.uploadedImage = undefined;
+        qmeMediaReference.uploadError = undefined;
 
 
         qmeMediaReference.mediaType = [
@@ -55,21 +56,23 @@
         };
 
         qmeMediaReference.handleFilesAdded = function(file, event, flow){
-            /*if (file.size > 2048) {
-                alert("Invalid file, file zie too big!!!");
+            if (file.size > 2048) {
+                if(flow.files[0]){
+                    flow.files[0].cancel();
+                }
                 qmeMediaReference.removeUploadedFile();
-
+                qmeMediaReference.uploadError = "File size not acceptable";
+                qmeMediaReference.uploadedImage = undefined;
             }else{
-                qmeMediaReference.uploadedImage = file;
+                qmeMediaReference.uploadError = undefined;
             }
-            */
-            qmeMediaReference.uploadedImage = file;
-        };
+         };
 
         qmeMediaReference.reset = function(){
             qmeMediaReference.mediaForm = undefined;
             qmeMediaReference.selectedMediaType = undefined;
             qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.uploadError = undefined;
             qmeMediaReference.removeUploadedFile();
         };
 
