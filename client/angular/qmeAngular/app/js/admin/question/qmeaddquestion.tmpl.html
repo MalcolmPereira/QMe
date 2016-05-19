@@ -74,7 +74,7 @@
                             <label for="mediaTypeImageUpload">Image Upload:</label>
                             <div name="mediaTypeImageUpload" id="mediaTypeImageUpload" flow-init="{singleFile: true}" flow-name="uploader.flow" flow-file-added="qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
                                 <input ng-hide="$flow.files[0]" name="flowFileUploadCtrl" id="flowFileUploadCtrl" type="file" flow-btn flow-attrs="{accept:'image/*'}"/>
-                                <a ng-show="$flow.files[0]" href="#" ng-click="qmeMediaModalCtrl.removeUploadedFile()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                <a ng-show="$flow.files[0]" href="#" ng-click="qmeMediaModalCtrl.removeUploadedFile();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                 <img style="width:250px;height:250px" ng-show="$flow.files[0]" flow-img="$flow.files[0]" />
                             </div>
                         </div>

@@ -53,14 +53,23 @@
         };
 
         qmeMediaReference.isInValidForm = function(){
+            if(qmeMediaReference.uploadError){
+                return true;
+            }
+            if(!qmeMediaReference.selectedMediaType){
+                return true;
+            }
+            if( !qmeMediaReference.refLink && ! qmeMediaReference.uploadedImage ){
+                return true;
+            }
+            return false;
         };
 
         qmeMediaReference.handleFilesAdded = function(file, event, flow){
-            if (file.size > 2048) {
+            if (file.size > 7777) {
                 if(flow.files[0]){
                     flow.files[0].cancel();
                 }
-                qmeMediaReference.removeUploadedFile();
                 qmeMediaReference.uploadError = "File size not acceptable";
                 qmeMediaReference.uploadedImage = undefined;
             }else{
@@ -78,6 +87,7 @@
 
         qmeMediaReference.removeUploadedFile = function(){
             qmeMediaReference.uploadedImage = undefined;
+            qmeMediaReference.uploadError = undefined;
             if( $scope.uploader.flow && $scope.uploader.flow.files && $scope.uploader.flow.files[0]){
                 $scope.uploader.flow.files[0].cancel();
             }
