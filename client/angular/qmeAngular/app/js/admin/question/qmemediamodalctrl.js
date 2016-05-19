@@ -66,14 +66,18 @@
         };
 
         qmeMediaReference.handleFilesAdded = function(file, event, flow){
-            if (file.size > 7777) {
+            const KB_SIZE  = 1000;
+            const MAX_KB   = 40;
+            const MAX_FILE = MAX_KB * KB_SIZE ;
+            if (file.size > MAX_FILE ) {
                 if(flow.files[0]){
                     flow.files[0].cancel();
                 }
-                qmeMediaReference.uploadError = "File size not acceptable";
+                qmeMediaReference.uploadError = "File size "+(file.size/KB_SIZE)+" KB not acceptable, max file size supported  "+(MAX_FILE/KB_SIZE)+" KB";
                 qmeMediaReference.uploadedImage = undefined;
             }else{
-                qmeMediaReference.uploadError = undefined;
+                qmeMediaReference.uploadError   = undefined;
+                qmeMediaReference.uploadedImage = file;
             }
          };
 
@@ -92,7 +96,6 @@
                 $scope.uploader.flow.files[0].cancel();
             }
         };
-
     }
 
 })();
