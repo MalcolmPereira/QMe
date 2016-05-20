@@ -23,9 +23,9 @@
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
 
-            qmeQuestionManagement.answerReferenceMediaIndex = 0;
             qmeQuestionManagement.answerReferenceMedia = [];
 
+            qmeQuestionManagement.answerOptions = [];
 
             qmeQuestionManagement.listQuestions = function() {
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
@@ -175,6 +175,7 @@
                                }
                            );
                            $scope.uploader.main.answerref.flow.files.push(data.media.flowObj.files[0]);
+                           $scope.uploader.flow.files[0].cancel();
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
@@ -189,9 +190,15 @@
                     }
                 );
             };
+
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
             };
+
+            qmeQuestionManagement.removeAnswerOption = function(index){
+                qmeQuestionManagement.answerOptions.splice(index,1);
+            };
+
         }
 
 
