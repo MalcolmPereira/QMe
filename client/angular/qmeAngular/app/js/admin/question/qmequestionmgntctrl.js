@@ -160,8 +160,8 @@
             };
 
             qmeQuestionManagement.addAnswerReferenceMedia = function(){
-                if( $scope.uploader.flow && $scope.uploader.flow.files && $scope.uploader.flow.files[0]){
-                    $scope.uploader.flow.files[0].cancel();
+                if( $scope.uploader.flow && $scope.uploader.flow.files){
+                    $scope.uploader.flow.cancel();
                 }
                 $('#addMediaModal').modal('show');
                 var promise = qmeModelSession.modalShown();
@@ -175,7 +175,6 @@
                                }
                            );
                            $scope.uploader.main.answerref.flow.files.push(data.media.flowObj.files[0]);
-                           $scope.uploader.flow.files[0].cancel();
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
@@ -193,6 +192,9 @@
 
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
+                if( $scope.uploader.main.answerref.flow && $scope.uploader.main.answerref.flow.files && $scope.uploader.main.answerref.flow.files[index]){
+                    $scope.uploader.main.answerref.flow.removeFile($scope.uploader.main.answerref.flow.files[index]);
+                }
             };
 
             qmeQuestionManagement.removeAnswerOption = function(index){

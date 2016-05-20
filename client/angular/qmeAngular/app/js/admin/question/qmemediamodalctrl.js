@@ -70,8 +70,8 @@
             const MAX_KB   = 40;
             const MAX_FILE = MAX_KB * KB_SIZE ;
             if (file.size > MAX_FILE ) {
-                if(flow.files[0]){
-                    flow.files[0].cancel();
+                if(flow){
+                    flow.cancel();
                 }
                 qmeMediaReference.uploadError = "File size "+(file.size/KB_SIZE)+" KB not acceptable, max file size supported  "+(MAX_FILE/KB_SIZE)+" KB";
                 qmeMediaReference.uploadedImage = undefined;
@@ -92,8 +92,8 @@
         qmeMediaReference.removeUploadedFile = function(){
             qmeMediaReference.uploadedImage = undefined;
             qmeMediaReference.uploadError = undefined;
-            if( $scope.uploader.flow && $scope.uploader.flow.files && $scope.uploader.flow.files[0]){
-                $scope.uploader.flow.files[0].cancel();
+            if( $scope.uploader.flow && $scope.uploader.flow.files){
+                $scope.uploader.flow.cancel();
             }
         };
     }
