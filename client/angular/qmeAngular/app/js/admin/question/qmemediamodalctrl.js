@@ -32,7 +32,7 @@
                 mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
                 mediaObj     = qmeMediaReference.uploadedImage;
             }else  if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
-                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"Http Link"};
+                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link"};
                 mediaObj     = qmeMediaReference.refLink ;
             }
             if(mediaObjType && mediaObj){

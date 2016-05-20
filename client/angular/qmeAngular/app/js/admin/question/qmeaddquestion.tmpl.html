@@ -40,10 +40,9 @@
                                             <td>{{answerRefMedia.mediaType.mediaTypeDesc}}</td>
                                             <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'LINK'">{{answerRefMedia.media}}</td>
                                             <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'">
-                                                <img style="width:100px;height:100px"
-                                                     ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'"
-                                                     flow-img="$flow.files[$index]" />
-                                                {{answerRefMedia.mediaObjIndex}}
+                                                <div class="thumbnail" ng-show="$flow.files.length">
+                                                    <img ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
+                                                </div>
                                             </td>
                                             <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                                          </tr>
@@ -74,21 +73,11 @@
                             <label for="mediaTypeImageUpload">Image Upload:</label>
 
                             <div name="mediaTypeImageUpload" id="mediaTypeImageUpload" flow-init="{singleFile: true}" flow-name="uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
-                                <span class="btn btn-primary" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/png,image/jpeg,image/jpg,image/gif'}">Select image</span>
-                                <a ng-show="$flow.files.length"  href="#" ng-click="qmeMediaModalCtrl.removeUploadedFile();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                <span class="btn btn-info" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/png,image/jpeg,image/jpg,image/gif'}">Upload</span>
                                 <div class="thumbnail" ng-show="$flow.files.length">
                                     <img flow-img="$flow.files[0]" />
                                 </div>
-                                <p>Only PNG,GIF,JPG,JEPG files allowed.</p>
-                                <!--
-                                ;qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )
-                                <button ng-hide="$flow.files[0]" name="flowFileUploadCtrl" id="flowFileUploadCtrl" type="button" class="btn btn-default" flow-btn flow-attrs="{accept:'image/*'}">Choose File</button>
-                                <img style="width:250px;height:250px" ng-show="$flow.files[0]" flow-img="$flow.files[0]" />
-                                -->
-                                <!--
-                                <input ng-hide="$flow.files[0]" name="flowFileUploadCtrl" id="flowFileUploadCtrl" type="file" class="btn btn-default" flow-btn flow-attrs="{accept:'image/*'}"/>
-                                -->
-
+                                <span class="btn btn-danger" ng-show="$flow.files.length"  ng-click="qmeMediaModalCtrl.removeUploadedFile();">Remove</span>
                             </div>
                         </div>
                         <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'LINK')" class="form-group">
