@@ -190,6 +190,21 @@
                 );
             };
 
+            qmeQuestionManagement.addAnswerOptions = function() {
+                if ($scope.uploader.flow && $scope.uploader.flow.files) {
+                    $scope.uploader.flow.cancel();
+                }
+                $('#addOptionsModal').modal('show');
+                var promise = qmeModelSession.modalShown();
+                promise.then(
+                    function(data){
+
+                    },
+                    function(){
+                    }
+                );
+            };
+
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
                 if( $scope.uploader.main.answerref.flow && $scope.uploader.main.answerref.flow.files && $scope.uploader.main.answerref.flow.files[index]){

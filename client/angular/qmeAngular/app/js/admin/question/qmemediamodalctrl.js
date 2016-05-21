@@ -12,10 +12,14 @@
         var qmeMediaReference = this;
 
         qmeMediaReference.mediaForm = undefined;
+        qmeMediaReference.optionForm  = undefined;
         qmeMediaReference.selectedMediaType = undefined;
         qmeMediaReference.refLink  = undefined;
         qmeMediaReference.uploadedImage = undefined;
         qmeMediaReference.uploadError = undefined;
+
+        qmeMediaReference.optionText = undefined;
+        qmeMediaReference.optionCorrect = undefined;
 
 
         qmeMediaReference.mediaType = [
@@ -47,9 +51,17 @@
             qmeMediaReference.refLink  = undefined;
         };
 
+        qmeMediaReference.saveOptions = function(){
+            $('#addOptionsModal').modal('hide');
+        };
+
         qmeMediaReference.cancel = function(){
             $('#addMediaModal').modal('hide');
             qmeMediaReference.reset();
+        };
+
+        qmeMediaReference.cancelOptions = function(){
+            $('#addOptionsModal').modal('hide');
         };
 
         qmeMediaReference.isInValidForm = function(){
@@ -63,6 +75,10 @@
                 return true;
             }
             return false;
+        };
+
+        qmeMediaReference.isInValidOptionsForm = function(){
+            return true;
         };
 
         qmeMediaReference.handleFilesAdded = function(file, event, flow){
