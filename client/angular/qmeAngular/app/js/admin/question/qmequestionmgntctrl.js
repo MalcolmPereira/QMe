@@ -198,7 +198,34 @@
                 var promise = qmeModelSession.modalShown();
                 promise.then(
                     function(data){
-
+                        if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
+                            qmeQuestionManagement.answerOptions.push(
+                                {
+                                    answerOption: data.answerOption,
+                                    answerCorrect: data.answerCorrect,
+                                    mediaType: data.mediaType,
+                                    media: data.media.flowObj.files[0].name
+                                }
+                            );
+                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
+                            qmeQuestionManagement.answerOptions.push(
+                                {
+                                    answerOption: data.answerOption,
+                                    answerCorrect: data.answerCorrect,
+                                    mediaType: data.mediaType,
+                                    media: data.media
+                                }
+                            );
+                        }else{
+                            qmeQuestionManagement.answerOptions.push(
+                                {
+                                    answerOption: data.answerOption,
+                                    answerCorrect: data.answerCorrect,
+                                    mediaType: undefined,
+                                    media: undefined
+                                }
+                             );
+                        }
                     },
                     function(){
                     }

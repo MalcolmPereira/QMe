@@ -53,6 +53,30 @@
 
         qmeMediaReference.saveOptions = function(){
             $('#addOptionsModal').modal('hide');
+
+            var mediaObjType = undefined;
+            var mediaObj     = undefined;
+            if(qmeMediaReference.uploadedImage && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
+                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
+                mediaObj     = qmeMediaReference.uploadedImage;
+            }else if(qmeMediaReference.refLink && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
+                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link"};
+                mediaObj     = qmeMediaReference.refLink ;
+            }
+            if(mediaObjType && mediaObj){
+                qmeModelSession.create({
+                        answerOption: qmeMediaReference.optionText,
+                        answerCorrect: qmeMediaReference.optionCorrect,
+                        mediaType: mediaObjType,
+                        media: mediaObj
+                    }
+                );
+            }
+            qmeMediaReference.optionForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.optionText = undefined;
+            qmeMediaReference.optionCorrect = undefined;
         };
 
         qmeMediaReference.cancel = function(){
@@ -71,14 +95,23 @@
             if(!qmeMediaReference.selectedMediaType){
                 return true;
             }
-            if( !qmeMediaReference.refLink && ! qmeMediaReference.uploadedImage ){
+            if( !qmeMediaReference.refLink && !qmeMediaReference.uploadedImage ){
                 return true;
             }
             return false;
         };
 
         qmeMediaReference.isInValidOptionsForm = function(){
-            return true;
+            if(qmeMediaReference.uploadError){
+                return true;
+            }
+            if(qmeMediaReference.selectedMediaType == 'IMAGE' && !qmeMediaReference.uploadedImage){
+                return true;
+            }
+            if(qmeMediaReference.selectedMediaType == 'LINK' && !qmeMediaReference.refLink){
+                return true;
+            }
+            return false;
         };
 
         qmeMediaReference.handleFilesAdded = function(file, event, flow){
