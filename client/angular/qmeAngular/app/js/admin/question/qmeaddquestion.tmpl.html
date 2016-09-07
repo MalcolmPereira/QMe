@@ -143,17 +143,13 @@
                         </div>
                         <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'IMAGE')" class="form-group">
                             <label for="optionMediaTypeImageUpload">Image Upload:</label>
-                            <div name="mediaTypeImageUpload" id="optionMediaTypeImageUpload" flow-init="{singleFile: true}" flow-name="uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
+                            <div name="mediaTypeImageUpload" id="optionMediaTypeImageUpload" flow-init="{singleFile: true}" flow-name="option.uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
                                 <span class="btn btn-info" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/png,image/jpeg,image/jpg,image/gif'}">Upload</span>
                                 <div class="thumbnail" ng-show="$flow.files.length">
                                     <img flow-img="$flow.files[0]" />
                                 </div>
                                 <span class="btn btn-danger" ng-show="$flow.files.length"  ng-click="qmeMediaModalCtrl.removeUploadedFile();">Remove</span>
                             </div>
-                        </div>
-                        <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'LINK')" class="form-group">
-                            <label for="mediaTypeLink">HTTP/HTTPS Link:</label>
-                            <input ng-model="qmeMediaModalCtrl.refLink" name="mediaTypeLink" id="mediaTypeLink" style="width:500px;" type="url" class="form-control" ng-required="true">
                         </div>
                     </form>
                 </div>
