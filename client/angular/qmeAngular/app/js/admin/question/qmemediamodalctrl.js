@@ -28,7 +28,8 @@
         ];
 
         qmeMediaReference.optionMediaType = [
-            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"}
+            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"},
+            {mediaTypeId:"NONE",mediaTypeDesc:""}
         ];
 
         qmeMediaReference.save = function(){
@@ -57,22 +58,27 @@
 
         qmeMediaReference.saveOptions = function(){
             $('#addOptionsModal').modal('hide');
-
             var mediaObjType = undefined;
             var mediaObj     = undefined;
             if(qmeMediaReference.uploadedImage && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
                 mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
                 mediaObj     = qmeMediaReference.uploadedImage;
-            }else if(qmeMediaReference.refLink && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
-                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link"};
-                mediaObj     = qmeMediaReference.refLink ;
             }
+
             if(mediaObjType && mediaObj){
                 qmeModelSession.create({
                         answerOption: qmeMediaReference.optionText,
                         answerCorrect: qmeMediaReference.optionCorrect,
                         mediaType: mediaObjType,
                         media: mediaObj
+                    }
+                );
+            }else{
+                qmeModelSession.create({
+                        answerOption: qmeMediaReference.optionText,
+                        answerCorrect: qmeMediaReference.optionCorrect,
+                        mediaType: null,
+                        media: null
                     }
                 );
             }
