@@ -118,7 +118,10 @@
             if(qmeMediaReference.selectedMediaType == 'IMAGE' && !qmeMediaReference.uploadedImage){
                 return true;
             }
-            if(qmeMediaReference.selectedMediaType == 'LINK' && !qmeMediaReference.refLink){
+            if(qmeMediaReference.optionCorrect === undefined){
+                return true;
+            }
+            if(qmeMediaReference.optionText === undefined || qmeMediaReference.optionText.trim().length === 0){
                 return true;
             }
             return false;
