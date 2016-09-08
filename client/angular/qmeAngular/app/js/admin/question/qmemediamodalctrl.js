@@ -27,6 +27,10 @@
             {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"}
         ];
 
+        qmeMediaReference.optionMediaType = [
+            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"}
+        ];
+
         qmeMediaReference.save = function(){
             $('#addMediaModal').modal('hide');
 

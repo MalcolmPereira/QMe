@@ -139,7 +139,7 @@
                         <div class="form-group">
                             <label  for="optionMediaTypeId">Option Media Type:</label>
                             <select class="form-control" ng-change="$flow.files[0].cancel();qmeMediaModalCtrl.removeUploadedFile();" ng-model="qmeMediaModalCtrl.selectedMediaType" name="optionMediaTypeId" id="optionMediaTypeId" style="width:150px;" ng-required="true">
-                                <option ng-repeat="media in qmeMediaModalCtrl.mediaType" title="{{media.mediaTypeDesc}}" value="{{media.mediaTypeId}}">{{media.mediaTypeDesc}}</option>
+                                <option ng-repeat="media in qmeMediaModalCtrl.optionMediaType" title="{{media.mediaTypeDesc}}" value="{{media.mediaTypeId}}">{{media.mediaTypeDesc}}</option>
                             </select>
                         </div>
                         <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'IMAGE')" class="form-group">
