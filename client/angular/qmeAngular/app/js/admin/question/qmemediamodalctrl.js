@@ -129,14 +129,13 @@
                 qmeMediaReference.uploadedImage = file;
             }
          };
-
-        qmeMediaReference.reset = function(){
+         qmeMediaReference.reset = function(){
             qmeMediaReference.mediaForm = undefined;
             qmeMediaReference.selectedMediaType = undefined;
             qmeMediaReference.refLink  = undefined;
             qmeMediaReference.uploadError = undefined;
             qmeMediaReference.removeUploadedFile();
-        };
+         };
 
         qmeMediaReference.removeUploadedFile = function(){
             qmeMediaReference.uploadedImage = undefined;

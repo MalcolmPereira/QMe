@@ -46,7 +46,6 @@
                         <label for="answer">Explanation:</label>
                         <textarea style="width:950px;" rows="4"  ng-model="qmeQuestionManagement.answer" name="answer" id="answer" class="form-control" placeholder="Answer Text" ng-required="true"></textarea>
                     </div>
-
                     <div class="form-group">
                          <label for="answerReferenceMedia">Reference Media:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerReferenceMedia.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerReferenceMedia();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                          <div class="container" flow-init="{singleFile: false}" flow-name="uploader.main.answerref.flow" >
