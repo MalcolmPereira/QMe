@@ -36,8 +36,7 @@
                                 <tbody>
                                     <tr ng-repeat="answerOption in qmeQuestionManagement.answerOptions">
                                         <td>{{answerOption.answerOption}}</td>
-                                        <td>{{answerOption.answerCorrect}}</td>
-
+                                        <td>{{answerOption.answerCorrect ? 'Correct' : 'Incorrect'}}</td>
                                         <td ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'">
                                             <div class="thumbnail" ng-show="$flow.files.length">
                                                 <img ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
@@ -81,6 +80,11 @@
                             </table>
                         </div>
                     </div>
+
+                    <button id="submitAddQuestionButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeQuestionManagement.submitAddQuestion()" ng-disabled="qmeQuestionManagement.addQuestionForm.$invalid">Add Question</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeQuestionManagement.cancelAddQuestion()">Cancel</button>
+
                 </form>
             </div>
         </div>

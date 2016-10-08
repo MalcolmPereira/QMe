@@ -237,6 +237,16 @@
                 }
             };
 
+            qmeQuestionManagement.submitAddQuestion = function(){
+
+            };
+
+            qmeQuestionManagement.cancelAddQuestion = function(){
+                $state.go('listquestions', {}
+                );
+            };
+
+
         }
 
 
