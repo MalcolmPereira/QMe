@@ -237,6 +237,13 @@
                 }
             };
 
+            qmeQuestionManagement.noOptions = function(){
+                if(qmeQuestionManagement.answerOptions && qmeQuestionManagement.answerOptions.length > 0){
+                    return false;
+                }
+                return true;
+            };
+
             qmeQuestionManagement.submitAddQuestion = function(){
 
             };
