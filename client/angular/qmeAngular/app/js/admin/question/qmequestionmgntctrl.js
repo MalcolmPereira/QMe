@@ -23,6 +23,9 @@
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
 
+            qmeQuestionManagement.uploaderAnswerOptionFlow = undefined;
+            qmeQuestionManagement.uploaderAnswerReferenceFlow = undefined;
+
             qmeQuestionManagement.answerReferenceMedia = [];
 
             qmeQuestionManagement.answerOptions = [];
@@ -160,9 +163,6 @@
             };
 
             qmeQuestionManagement.addAnswerReferenceMedia = function(){
-                if( $scope.uploader.flow && $scope.uploader.flow.files){
-                    $scope.uploader.flow.cancel();
-                }
                 $('#addMediaModal').modal('show');
                 var promise = qmeModelSession.modalShown();
                 promise.then(
@@ -171,16 +171,17 @@
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
                                    mediaType: data.mediaType,
-                                   media: data.media.flowObj.files[0].name
+                                   mediaRef: data.media.flowObj.files[0]
                                }
                            );
-                           $scope.uploader.main.answerref.flow.files.push(data.media.flowObj.files[0]);
+                           if(qmeQuestionManagement.uploaderAnswerReferenceFlow && data.media.flowObj){
+                               qmeQuestionManagement.uploaderAnswerReferenceFlow.files.push(data.media.flowObj.files[0]);
+                           }
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
                                    mediaType: data.mediaType,
-                                   media: data.media,
-                                   mediaObj: {}
+                                   media: data.media
                                }
                            );
                        }
@@ -191,9 +192,6 @@
             };
 
             qmeQuestionManagement.addAnswerOptions = function() {
-                if ($scope.uploader.flow && $scope.uploader.flow.files) {
-                    $scope.uploader.flow.cancel();
-                }
                 $('#addOptionsModal').modal('show');
                 var promise = qmeModelSession.modalShown();
                 promise.then(
@@ -204,18 +202,12 @@
                                     answerOption: data.answerOption,
                                     answerCorrect: data.answerCorrect,
                                     mediaType: data.mediaType,
-                                    media: data.media.flowObj.files[0].name
+                                    media: data.media.flowObj.files[0]
                                 }
                             );
-                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
-                            qmeQuestionManagement.answerOptions.push(
-                                {
-                                    answerOption: data.answerOption,
-                                    answerCorrect: data.answerCorrect,
-                                    mediaType: data.mediaType,
-                                    media: data.media
-                                }
-                            );
+                            if(qmeQuestionManagement.uploaderAnswerOptionFlow && data.media.flowObj){
+                                qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(data.media.flowObj.files[0]);
+                            }
                         }else{
                             qmeQuestionManagement.answerOptions.push(
                                 {
@@ -231,16 +223,18 @@
                     }
                 );
             };
-
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
-                if( $scope.uploader.main.answerref.flow && $scope.uploader.main.answerref.flow.files && $scope.uploader.main.answerref.flow.files[index]){
-                    $scope.uploader.main.answerref.flow.removeFile($scope.uploader.main.answerref.flow.files[index]);
+                if( qmeQuestionManagement.uploaderAnswerReferenceFlow && qmeQuestionManagement.uploaderAnswerReferenceFlow.files && qmeQuestionManagement.uploaderAnswerReferenceFlow.files[index]){
+                    qmeQuestionManagement.uploaderAnswerReferenceFlow.removeFile(qmeQuestionManagement.uploaderAnswerReferenceFlow.files[index]);
                 }
             };
 
             qmeQuestionManagement.removeAnswerOption = function(index){
                 qmeQuestionManagement.answerOptions.splice(index,1);
+                if( qmeQuestionManagement.uploaderAnswerOptionFlow && qmeQuestionManagement.uploaderAnswerOptionFlow.files && qmeQuestionManagement.uploaderAnswerOptionFlow.files[index]){
+                    qmeQuestionManagement.uploaderAnswerOptionFlow.removeFile(qmeQuestionManagement.uploaderAnswerOptionFlow.files[index]);
+                }
             };
 
         }

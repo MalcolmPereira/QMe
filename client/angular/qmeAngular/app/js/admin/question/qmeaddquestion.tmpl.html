@@ -1,9 +1,9 @@
-<div class="container-fluid" flow-init="{singleFile: false}" flow-name="uploader.main.flow" >
+<div class="container-fluid">
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Add Question</h3>
         </div>
-
         <div class="panel-body" ng-controller="qmeQuestionManagementCtrl as qmeQuestionManagement" ng-init="qmeQuestionManagement.loadCategories();">
             <div class="container-fluid">
                 <form name="qmeQuestionManagement.addQuestionForm" class="form-horizontal">
@@ -21,29 +21,32 @@
                         <label for="questionText">Question Text:</label>
                         <textarea style="width:950px;" rows="3"  ng-model="qmeQuestionManagement.questionText" name="questionText" id="questionText" class="form-control" placeholder="Question Text" ng-required="true"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" flow-init="{singleFile: false}" flow-name="qmeQuestionManagement.uploaderAnswerOptionFlow">
                         <label for="answerOption">Answer Options:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerOptions.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerOptions();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                        <div class="container" flow-init="{singleFile: false}" flow-name="uploader.main.answeroption.flow" >
+                        <div class="container">
                             <table style="width: 80%" class="table table-bordered table-striped" name="answerReferenceMedia" id="answerOption" >
                                 <thead>
-                                <tr>
-                                    <th style="width: 43%">Option</th>
-                                    <th style="width: 3%">Correct/Incorrect</th>
-                                    <th style="width: 52%">Media</th>
-                                    <th style="width: 2%">Manage</th>
-                                </tr>
+                                    <tr>
+                                        <th style="width: 43%">Option</th>
+                                        <th style="width: 3%">Correct/Incorrect</th>
+                                        <th style="width: 52%">Media</th>
+                                        <th style="width: 2%">Manage</th>
+                                    </tr>
                                 </thead>
-                                <tr ng-repeat="answerOption in qmeQuestionManagement.answerOptions">
-                                    <td>{{answerOption.answerOption}}</td>
-                                    <td>{{answerOption.answerCorrect}}</td>
-                                    <td ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'">
-                                        <div class="thumbnail" ng-show="$flow.files.length">
-                                            <img ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
-                                        </div>
-                                    </td>
-                                    <td ng-show="answerOption.mediaType.mediaTypeId === undefined"></td>
-                                    <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerOption($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-                                </tr>
+                                <tbody>
+                                    <tr ng-repeat="answerOption in qmeQuestionManagement.answerOptions">
+                                        <td>{{answerOption.answerOption}}</td>
+                                        <td>{{answerOption.answerCorrect}}</td>
+
+                                        <td ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'">
+                                            <div class="thumbnail" ng-show="$flow.files.length">
+                                                <img ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
+                                            </div>
+                                        </td>
+                                        <td ng-show="answerOption.mediaType.mediaTypeId === undefined"></td>
+                                        <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerOption($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -51,78 +54,41 @@
                         <label for="answer">Explanation:</label>
                         <textarea style="width:950px;" rows="4"  ng-model="qmeQuestionManagement.answer" name="answer" id="answer" class="form-control" placeholder="Answer Text" ng-required="true"></textarea>
                     </div>
-                    <div class="form-group">
-                         <label for="answerReferenceMedia">Reference:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerReferenceMedia.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerReferenceMedia();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                         <div class="container" flow-init="{singleFile: false}" flow-name="uploader.main.answerref.flow" >
-                                 <table style="width: 80%" class ="table table-bordered table-striped" name="answerReferenceMedia" id="answerReferenceMedia" >
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 43%;">Media Type</th>
-                                                <th style="width: 55%;">Media</th>
-                                                <th style="width: 2%;">Manage</th>
-                                            </tr>
-                                        </thead>
-                                        <tr ng-repeat="answerRefMedia in qmeQuestionManagement.answerReferenceMedia">
-                                            <td>{{answerRefMedia.mediaType.mediaTypeDesc}}</td>
-                                            <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'LINK'">{{answerRefMedia.media}}</td>
-                                            <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'">
-                                                <div class="thumbnail" ng-show="$flow.files.length">
-                                                    <img ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
-                                                </div>
-                                            </td>
-                                            <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-                                         </tr>
-                                 </table>
-                         </div>
-                    </div>
+                    <div class="form-group" flow-init="{singleFile: false}" flow-name="qmeQuestionManagement.uploaderAnswerReferenceFlow">
+                        <label for="answerReferenceMedia">Reference:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerReferenceMedia.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerReferenceMedia();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                        <div class="container">
+                            <table style="width: 80%" class ="table table-bordered table-striped" name="answerReferenceMedia" id="answerReferenceMedia" >
+                                <thead>
+                                    <tr>
+                                        <th style="width: 43%;">Media Type</th>
+                                        <th style="width: 55%;">Media</th>
+                                        <th style="width: 2%;">Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="answerRefMedia in qmeQuestionManagement.answerReferenceMedia">
+                                        <td>{{answerRefMedia.mediaType.mediaTypeDesc}}</td>
+                                        <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'LINK'">{{answerRefMedia.media}}</td>
 
+                                        <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'">
+                                            <div class="thumbnail" ng-show="$flow.files.length">
+                                                <img ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
+                                            </div>
+                                        </td>
+                                        <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="addMediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" ng-controller="qmeMediaModalCtrl as qmeMediaModalCtrl">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div ng-show="qmeMediaModalCtrl.uploadError" class="alert alert-danger">{{qmeMediaModalCtrl.uploadError}}</div>
-                    <button type="button" class="close" aria-label="Close" ng-click="qmeMediaModalCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="mediaModalLabel">Reference Media</h4>
-                </div>
-                <div class="modal-body">
-                    <form name="qmeMediaModalCtrl.mediaForm">
-                        <div class="form-group">
-                            <label  for="mediaTypeId">Media Type:</label>
-                            <select class="form-control" ng-change="$flow.files[0].cancel();qmeMediaModalCtrl.removeUploadedFile();" ng-model="qmeMediaModalCtrl.selectedMediaType" name="mediaTypeId" id="mediaTypeId" style="width:150px;" ng-required="true">
-                                <option ng-repeat="media in qmeMediaModalCtrl.mediaType" title="{{media.mediaTypeDesc}}" value="{{media.mediaTypeId}}">{{media.mediaTypeDesc}}</option>
-                            </select>
-                        </div>
-                        <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'IMAGE')" class="form-group">
-                            <label for="mediaTypeImageUpload">Image Upload:</label>
 
-                            <div name="mediaTypeImageUpload" id="mediaTypeImageUpload" flow-init="{singleFile: true}" flow-name="uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
-                                <span class="btn btn-info" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/png,image/jpeg,image/jpg,image/gif'}">Upload</span>
-                                <div class="thumbnail" ng-show="$flow.files.length">
-                                    <img flow-img="$flow.files[0]" />
-                                </div>
-                                <span class="btn btn-danger" ng-show="$flow.files.length"  ng-click="qmeMediaModalCtrl.removeUploadedFile();">Remove</span>
-                            </div>
-                        </div>
-                        <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'LINK')" class="form-group">
-                            <label for="mediaTypeLink">HTTP/HTTPS Link:</label>
-                            <input ng-model="qmeMediaModalCtrl.refLink" name="mediaTypeLink" id="mediaTypeLink" style="width:500px;" type="url" class="form-control" ng-required="true">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id="cancelButtonId" type="button" class="btn btn-default"  ng-click="qmeMediaModalCtrl.cancel();">Cancel</button>
-                    <button id="saveButtonId" type="button" class="btn btn-info"  ng-click="qmeMediaModalCtrl.save()" ng-disabled="qmeMediaModalCtrl.isInValidForm()">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="addOptionsModal" tabindex="-1" role="dialog" aria-labelledby="optionsModalLabel" ng-controller="qmeMediaModalCtrl as qmeMediaModalCtrl">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content" flow-init="{singleFile: true}" flow-name="qmeMediaModalCtrl.uploaderAnswerOptionModalFlow" >
                 <div class="modal-header">
                     <div ng-show="qmeMediaModalCtrl.uploadError" class="alert alert-danger">{{qmeMediaModalCtrl.uploadError}}</div>
                     <button type="button" class="close" aria-label="Close" ng-click="qmeMediaModalCtrl.cancelOptions()"><span aria-hidden="true">&times;</span></button>
@@ -143,13 +109,13 @@
                         </div>
                         <div class="form-group">
                             <label  for="optionMediaTypeId">Option Media Type:</label>
-                            <select class="form-control" ng-change="$flow.files[0].cancel();qmeMediaModalCtrl.removeUploadedFile();" ng-model="qmeMediaModalCtrl.selectedMediaType" name="optionMediaTypeId" id="optionMediaTypeId" style="width:150px;" ng-required="true">
+                            <select class="form-control" ng-change="qmeMediaModalCtrl.removeUploadedFile();" ng-model="qmeMediaModalCtrl.selectedMediaType" name="optionMediaTypeId" id="optionMediaTypeId" style="width:150px;" ng-required="true">
                                 <option ng-repeat="media in qmeMediaModalCtrl.optionMediaType" title="{{media.mediaTypeDesc}}" value="{{media.mediaTypeId}}">{{media.mediaTypeDesc}}</option>
                             </select>
                         </div>
                         <div ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'IMAGE')" class="form-group">
                             <label for="optionMediaTypeImageUpload">Image Upload:</label>
-                            <div name="mediaTypeImageUpload" id="optionMediaTypeImageUpload" flow-init="{singleFile: true}" flow-name="option.uploader.flow" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $event, $flow )">
+                            <div name="mediaTypeImageUpload" id="optionMediaTypeImageUpload" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $flow )">
                                 <span class="btn btn-info" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/png,image/jpeg,image/jpg,image/gif'}">Upload</span>
                                 <div class="thumbnail" ng-show="$flow.files.length">
                                     <img flow-img="$flow.files[0]" />
@@ -166,4 +132,46 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addMediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" ng-controller="qmeMediaModalCtrl as qmeMediaModalCtrl">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" flow-init="{singleFile: true}" flow-name="qmeMediaModalCtrl.uploaderAnswerReferenceModalFlow" >
+                <div class="modal-header">
+                    <div ng-show="qmeMediaModalCtrl.uploadError" class="alert alert-danger">{{qmeMediaModalCtrl.uploadError}}</div>
+                    <button type="button" class="close" aria-label="Close" ng-click="qmeMediaModalCtrl.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mediaModalLabel">Reference Media</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="qmeMediaModalCtrl.mediaForm">
+                        <div class="form-group">
+                            <label  for="mediaTypeId">Media Type:</label>
+                            <select class="form-control" ng-change="qmeMediaModalCtrl.removeUploadedFile();" ng-model="qmeMediaModalCtrl.selectedMediaType" name="mediaTypeId" id="mediaTypeId" style="width:150px;" ng-required="true">
+                                <option ng-repeat="media in qmeMediaModalCtrl.mediaType" title="{{media.mediaTypeDesc}}" value="{{media.mediaTypeId}}">{{media.mediaTypeDesc}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'IMAGE')">
+                            <label for="mediaTypeImageUpload">Image Upload:</label>
+                            <div name="mediaTypeImageUpload" id="mediaTypeImageUpload" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()];qmeMediaModalCtrl.handleFilesAdded($file, $flow )">
+                                <span class="btn btn-info" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/png,image/jpeg,image/jpg,image/gif'}">Upload</span>
+                                <div class="thumbnail" ng-show="$flow.files.length">
+                                    <img flow-img="$flow.files[0]" />
+                                </div>
+                                <span class="btn btn-danger" ng-show="$flow.files.length"  ng-click="qmeMediaModalCtrl.removeUploadedFile();">Remove</span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="(qmeMediaModalCtrl.selectedMediaType && qmeMediaModalCtrl.selectedMediaType === 'LINK')" >
+                            <label for="mediaTypeLink">HTTP/HTTPS Link:</label>
+                            <input ng-model="qmeMediaModalCtrl.refLink" name="mediaTypeLink" id="mediaTypeLink" style="width:500px;" type="url" class="form-control" ng-required="true">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelButtonId" type="button" class="btn btn-default"  ng-click="qmeMediaModalCtrl.cancel();">Cancel</button>
+                    <button id="saveButtonId" type="button" class="btn btn-info"  ng-click="qmeMediaModalCtrl.save()" ng-disabled="qmeMediaModalCtrl.isInValidForm()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>

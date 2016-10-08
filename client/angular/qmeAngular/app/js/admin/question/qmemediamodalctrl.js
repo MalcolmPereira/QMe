@@ -8,18 +8,23 @@
     QMeMediaModalController.$inject = ['$scope','qmeModelSession'];
 
     function QMeMediaModalController($scope,qmeModelSession) {
-
         var qmeMediaReference = this;
 
+
+        qmeMediaReference.uploaderAnswerOptionModalFlow = undefined;
+        qmeMediaReference.uploaderAnswerReferenceModalFlow = undefined;
+
+
         qmeMediaReference.mediaForm = undefined;
+
         qmeMediaReference.optionForm  = undefined;
+        qmeMediaReference.optionText = undefined;
+        qmeMediaReference.optionCorrect = undefined;
+
         qmeMediaReference.selectedMediaType = undefined;
         qmeMediaReference.refLink  = undefined;
         qmeMediaReference.uploadedImage = undefined;
         qmeMediaReference.uploadError = undefined;
-
-        qmeMediaReference.optionText = undefined;
-        qmeMediaReference.optionCorrect = undefined;
 
 
         qmeMediaReference.mediaType = [
@@ -32,39 +37,23 @@
             {mediaTypeId:"NONE",mediaTypeDesc:""}
         ];
 
-        qmeMediaReference.save = function(){
+        qmeMediaReference.cancel = function(){
             $('#addMediaModal').modal('hide');
+            qmeMediaReference.reset();
+        };
 
-            var mediaObjType = undefined;
-            var mediaObj     = undefined;
-            if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
-                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
-                mediaObj     = qmeMediaReference.uploadedImage;
-            }else  if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
-                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link"};
-                mediaObj     = qmeMediaReference.refLink ;
-            }
-            if(mediaObjType && mediaObj){
-                qmeModelSession.create({
-                        mediaType:mediaObjType,
-                        media:mediaObj
-                    }
-                );
-            }
-            qmeMediaReference.mediaForm = undefined;
-            qmeMediaReference.selectedMediaType = undefined;
-            qmeMediaReference.refLink  = undefined;
+        qmeMediaReference.cancelOptions = function(){
+            $('#addOptionsModal').modal('hide');
+            qmeMediaReference.reset();
         };
 
         qmeMediaReference.saveOptions = function(){
-            $('#addOptionsModal').modal('hide');
             var mediaObjType = undefined;
             var mediaObj     = undefined;
             if(qmeMediaReference.uploadedImage && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
                 mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
                 mediaObj     = qmeMediaReference.uploadedImage;
             }
-
             if(mediaObjType && mediaObj){
                 qmeModelSession.create({
                         answerOption: qmeMediaReference.optionText,
@@ -82,20 +71,43 @@
                     }
                 );
             }
+            $('#addOptionsModal').modal('hide');
             qmeMediaReference.optionForm = undefined;
             qmeMediaReference.selectedMediaType = undefined;
             qmeMediaReference.refLink  = undefined;
             qmeMediaReference.optionText = undefined;
             qmeMediaReference.optionCorrect = undefined;
+            qmeMediaReference.mediaForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
         };
 
-        qmeMediaReference.cancel = function(){
+        qmeMediaReference.save = function(){
+            var mediaObjType = undefined;
+            var mediaObj     = undefined;
+            if(qmeMediaReference.uploadedImage && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
+                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
+                mediaObj     = qmeMediaReference.uploadedImage;
+            }else if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
+                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link"};
+                mediaObj     = qmeMediaReference.refLink ;
+            }
+            if(mediaObjType && mediaObj){
+                qmeModelSession.create({
+                        mediaType:mediaObjType,
+                        media:mediaObj
+                    }
+                );
+            }
             $('#addMediaModal').modal('hide');
-            qmeMediaReference.reset();
-        };
-
-        qmeMediaReference.cancelOptions = function(){
-            $('#addOptionsModal').modal('hide');
+            qmeMediaReference.mediaForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.optionForm = undefined;
+            qmeMediaReference.selectedMediaType = undefined;
+            qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.optionText = undefined;
+            qmeMediaReference.optionCorrect = undefined;
         };
 
         qmeMediaReference.isInValidForm = function(){
@@ -127,7 +139,7 @@
             return false;
         };
 
-        qmeMediaReference.handleFilesAdded = function(file, event, flow){
+        qmeMediaReference.handleFilesAdded = function(file, flow){
             const KB_SIZE  = 1000;
             const MAX_KB   = 40;
             const MAX_FILE = MAX_KB * KB_SIZE ;
@@ -141,22 +153,32 @@
                 qmeMediaReference.uploadError   = undefined;
                 qmeMediaReference.uploadedImage = file;
             }
-         };
-         qmeMediaReference.reset = function(){
+        };
+
+
+        qmeMediaReference.reset = function(){
             qmeMediaReference.mediaForm = undefined;
+            qmeMediaReference.optionForm  = undefined;
+            qmeMediaReference.optionText = undefined;
+            qmeMediaReference.optionCorrect = undefined;
             qmeMediaReference.selectedMediaType = undefined;
             qmeMediaReference.refLink  = undefined;
+            qmeMediaReference.uploadedImage = undefined;
             qmeMediaReference.uploadError = undefined;
             qmeMediaReference.removeUploadedFile();
-         };
+        };
 
         qmeMediaReference.removeUploadedFile = function(){
             qmeMediaReference.uploadedImage = undefined;
             qmeMediaReference.uploadError = undefined;
-            if( $scope.uploader.flow && $scope.uploader.flow.files){
-                $scope.uploader.flow.cancel();
+            if( qmeMediaReference.uploaderAnswerOptionModalFlow && qmeMediaReference.uploaderAnswerOptionModalFlow.files){
+                qmeMediaReference.uploaderAnswerOptionModalFlow.cancel();
+            }
+            if( qmeMediaReference.uploaderAnswerReferenceModalFlow && qmeMediaReference.uploaderAnswerReferenceModalFlow.files){
+                qmeMediaReference.uploaderAnswerReferenceModalFlow.cancel();
             }
         };
+
     }
 
 })();
