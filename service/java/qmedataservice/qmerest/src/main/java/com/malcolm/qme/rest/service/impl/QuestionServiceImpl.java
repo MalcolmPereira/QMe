@@ -6,12 +6,10 @@
  */
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.AnswerOption;
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
-import com.malcolm.qme.core.repository.CategoryRepository;
-import com.malcolm.qme.core.repository.PageSort;
-import com.malcolm.qme.core.repository.QMeException;
-import com.malcolm.qme.core.repository.QuestionRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
@@ -39,6 +37,28 @@ public class QuestionServiceImpl implements QuestionService{
     @Autowired
     @Qualifier(value = "QuestionRepository")
     private QuestionRepository questionRepo;
+
+    /**
+     * Answer Option Repository
+     */
+    @Autowired
+    @Qualifier("AnswerOptionRepository")
+    private AnswerOptionRepository answerOptionRepository;
+
+    /**
+     * Answer OptionMedia  Repository
+     */
+    @Autowired
+    @Qualifier("AnswerOptionMediaRepository")
+    private AnswerOptionMediaRepository answerOptionMediaRepository;
+
+    /**
+     * Answer Reference Media Repository
+     */
+    @Autowired
+    @Qualifier("AnswerReferenceMediaRepository")
+    private AnswerReferenceMediaRepository answerReferenceMediaRepository;
+
 
     /**
      * QMeCategory Repository
@@ -201,7 +221,7 @@ public class QuestionServiceImpl implements QuestionService{
      * @param question
      * @return QMeQuestionDetail
      */
-    private QMeQuestionDetail getQMeQuestionDetail(Question question){
+    private QMeQuestionDetail getQMeQuestionDetail(Question question)  {
         QMeQuestionDetail qmeQuestionDetail = new QMeQuestionDetail();
         qmeQuestionDetail.setQuestionId(question.getQuestionID());
         qmeQuestionDetail.setCategoryId(question.getCategoryID());
@@ -222,6 +242,20 @@ public class QuestionServiceImpl implements QuestionService{
         if(question.getCategory() != null){
             qmeQuestionDetail.setCategoryName(question.getCategory().getCategoryName());
         }
+        try{
+            List<AnswerOption>  answerOpionList =  answerOptionRepository.findByQuestionId(question.getQuestionID());
+            for (AnswerOption answerOption:answerOpionList) {
+                if(answerOption.getOptionText() != null){
+                    QMeAnswerOption qmeAnswerOption = new QMeAnswerOption();
+                    qmeAnswerOption.setOptionText(answerOption.getOptionText());
+                    qmeQuestionDetail.getAnswerOptionList().add(qmeAnswerOption);
+                }
+
+            }
+        }catch(QMeException qmeErr){
+
+        }
+
         return qmeQuestionDetail;
     }
 }

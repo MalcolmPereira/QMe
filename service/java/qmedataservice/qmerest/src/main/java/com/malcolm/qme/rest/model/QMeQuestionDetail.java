@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,6 +51,9 @@ public class QMeQuestionDetail extends QMeQuestion {
      * @return Answer Option List
      */
     public List<QMeAnswerOption> getAnswerOptionList() {
+        if(answerOptionList == null){
+            answerOptionList = new ArrayList<>();
+        }
         return answerOptionList;
     }
 
