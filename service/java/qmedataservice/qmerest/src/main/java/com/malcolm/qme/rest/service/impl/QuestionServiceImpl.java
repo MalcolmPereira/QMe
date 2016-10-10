@@ -16,6 +16,7 @@ import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
+import com.malcolm.qme.rest.model.QMeAnswerOption;
 import com.malcolm.qme.rest.model.QMeQuestion;
 import com.malcolm.qme.rest.model.QMeQuestionDetail;
 import com.malcolm.qme.rest.service.QuestionService;
@@ -94,8 +95,9 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public QMeQuestionDetail save(QMeQuestion qMeQuestion, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
         try {
+            QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail)qMeQuestion;
             qMeQuestion.setCreateUserID(userId);
-            Question question = getQuestion(qMeQuestion);
+            Question question = getQuestion(qMeQuestionDetail);
             question = questionRepo.save(question);
             return  getQMeQuestionDetail(question);
         }catch(QMeException err){
@@ -114,7 +116,8 @@ public class QuestionServiceImpl implements QuestionService{
             qMeQuestion.setCategoryId(question.getCategoryID());
             qMeQuestion.setCreateUserID(question.getCreateUserID());
             qMeQuestion.setUpdateUserID(userId);
-            question = getQuestion(qMeQuestion);
+            QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail)qMeQuestion;
+            question = getQuestion(qMeQuestionDetail);
             question = questionRepo.update(question,userId);
             return  getQMeQuestionDetail(question);
 
@@ -145,7 +148,7 @@ public class QuestionServiceImpl implements QuestionService{
      * @throws QMeServerException
      * @throws QMeException
      */
-    private Question getQuestion(QMeQuestion qMeQuestion) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
+    private Question getQuestion(QMeQuestionDetail qMeQuestion) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeException {
         //TODO: May need to check if question text is duplicated :) need some text weighted search :)
         if(qMeQuestion.getQuestionText() == null || qMeQuestion.getQuestionText().trim().length() == 0){
             throw new QMeInvalidResourceDataException("Valid Question Text is required");
@@ -159,11 +162,21 @@ public class QuestionServiceImpl implements QuestionService{
         if(qMeQuestion.getQuestionPoint() == null || qMeQuestion.getQuestionPoint() < 0){
             throw new QMeInvalidResourceDataException("Valid Question Point is required");
         }
+        if(qMeQuestion.getAnswerOptionList() == null || qMeQuestion.getAnswerOptionList().isEmpty()){
+            throw new QMeInvalidResourceDataException("Valid Question Option List is required");
+        }
         Category category = categoryRepo.findById(qMeQuestion.getCategoryId());
         if(category == null){
             throw new QMeInvalidResourceDataException("Valid Category is required, Category not found");
         }
         Question question = new Question(qMeQuestion.getCategoryId(), qMeQuestion.getQuestionText(),qMeQuestion.getAnswer(), qMeQuestion.getQuestionPoint(), qMeQuestion.getCreateUserID());
+        if(question != null){
+            question.getQuestionID();
+            List<QMeAnswerOption> ansertOptionList = qMeQuestion.getAnswerOptionList();
+            for (QMeAnswerOption answerOption:ansertOptionList) {
+            }
+        }
+
         return question;
     }
 
@@ -209,7 +222,6 @@ public class QuestionServiceImpl implements QuestionService{
         if(question.getCategory() != null){
             qmeQuestionDetail.setCategoryName(question.getCategory().getCategoryName());
         }
-
         return qmeQuestionDetail;
     }
 }
