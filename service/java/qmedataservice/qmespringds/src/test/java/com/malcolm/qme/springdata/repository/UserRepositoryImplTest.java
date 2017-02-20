@@ -501,6 +501,11 @@ public class UserRepositoryImplTest {
     public void testUpdateLoginDate() throws QMeException, InterruptedException {
         assertNotNull(userRepo);
 
+        User existingUser = userRepo.findByUserName("URepoImplTestUserNamePassReset2");
+        if(existingUser !=null ){
+            userRepo.delete(existingUser.getUserID());
+        }
+
         User user = new User("URepoImplTestUserNamePassReset2", "Test", "Test", "Test", "URepoImplTestUserNamePassReset2@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
