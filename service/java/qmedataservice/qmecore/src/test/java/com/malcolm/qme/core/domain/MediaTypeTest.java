@@ -33,6 +33,20 @@ public class MediaTypeTest {
     }
 
     @Test
+    public void testGetMediaTypeEnum() throws Exception {
+        assertThat(MediaTypeEnum.LINK.getMediaTypeId(), equalTo(1));
+        assertThat(MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), equalTo(2));
+        assertThat(MediaTypeEnum.fromValue(1).getMediaTypeId(), equalTo(1));
+        assertThat(MediaTypeEnum.fromValue(2).getMediaTypeId(), equalTo(2));
+        assertThat(MediaTypeEnum.fromValue("link").getMediaTypeId(), equalTo(1));
+        assertThat(MediaTypeEnum.fromValue("image/png").getMediaTypeId(), equalTo(2));
+        assertThat(MediaTypeEnum.fromValue(1).getMediaType(), equalTo("link"));
+        assertThat(MediaTypeEnum.fromValue(2).getMediaType(), equalTo("image/png"));
+        assertThat(MediaTypeEnum.fromValue("link").getMediaType(),  equalTo("link"));
+        assertThat(MediaTypeEnum.fromValue("image/png").getMediaType(), equalTo("image/png"));
+    }
+
+    @Test
     public void testEquals(){
         MediaType mediaType1 = new MediaType(1, "some media type");
         MediaType mediaType2 = new MediaType(1, "some media type");
