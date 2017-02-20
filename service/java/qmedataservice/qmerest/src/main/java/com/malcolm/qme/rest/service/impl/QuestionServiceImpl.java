@@ -6,7 +6,6 @@
  */
 package com.malcolm.qme.rest.service.impl;
 
-import com.malcolm.qme.core.domain.AnswerOption;
 import com.malcolm.qme.core.domain.Category;
 import com.malcolm.qme.core.domain.Question;
 import com.malcolm.qme.core.repository.*;
@@ -242,6 +241,8 @@ public class QuestionServiceImpl implements QuestionService{
         if(question.getCategory() != null){
             qmeQuestionDetail.setCategoryName(question.getCategory().getCategoryName());
         }
+        //TODO: Revist update of Answers!!!
+        /*
         try{
             List<AnswerOption>  answerOpionList =  answerOptionRepository.findByQuestionId(question.getQuestionID());
             for (AnswerOption answerOption:answerOpionList) {
@@ -255,6 +256,7 @@ public class QuestionServiceImpl implements QuestionService{
         }catch(QMeException qmeErr){
 
         }
+        */
 
         return qmeQuestionDetail;
     }
