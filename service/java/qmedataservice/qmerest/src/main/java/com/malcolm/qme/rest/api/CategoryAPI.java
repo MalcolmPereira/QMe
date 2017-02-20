@@ -10,7 +10,6 @@ import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.model.QMeCategory;
 import com.malcolm.qme.rest.model.QMeCategoryDetail;
 import org.springframework.hateoas.Resource;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
