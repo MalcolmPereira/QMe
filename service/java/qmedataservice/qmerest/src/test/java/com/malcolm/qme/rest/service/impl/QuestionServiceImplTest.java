@@ -904,8 +904,22 @@ public class QuestionServiceImplTest {
         verify(questionRepo).update(Matchers.anyObject(),Matchers.<Long>anyObject());
     }
 
-    //TODO:
-    //testUpdateInvalidQuestionText
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidQuestionText() throws Exception {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
+        qmeQuestion.setQuestionText(null);
+        qmeQuestion.setAnswer("Some Answer");
+        qmeQuestion.setQuestionPoint(1);
+        qmeQuestion.setQuestionId(1L);
+        qmeQuestion.setCategoryId(1L);
+        questionService.update(qmeQuestion,1L,1L);
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+
+    }
+
     //TODO:
     //testUpdateInvalidAnswerText
     //TODO:
