@@ -878,7 +878,7 @@ public class QuestionServiceImplTest {
         qmeQuestion.setQuestionPoint(1);
         qmeQuestion.setQuestionId(1L);
         qmeQuestion.setCategoryId(1L);
-        QMeQuestionDetail questionDetail = questionService.update(qmeQuestion,1L,1L);
+        questionService.update(qmeQuestion,1L,1L);
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
     }
@@ -903,6 +903,49 @@ public class QuestionServiceImplTest {
         verify(questionRepo).findById(1L);
         verify(questionRepo).update(Matchers.anyObject(),Matchers.<Long>anyObject());
     }
+
+    //TODO:
+    //testUpdateInvalidQuestionText
+    //TODO:
+    //testUpdateInvalidAnswerText
+    //TODO:
+    //testUpdateInvalidCategory
+    //TODO:
+    //testUpdateInvalidCategoryNotFound
+    //TODO:
+    //testUpdateInvalidQuestionPoint
+    //TODO:
+    //testUpdateInvalidUpdateUserId
+    //TODO:
+    //testUpdateAnswerOptions
+    //TODO:
+    //testUpdateAnswerOptionsInvalid
+    //TODO:
+    //testUpdateAnswerOptionsQMeServerException
+    //TODO:
+    //testUpdateAnswerOptionsWithMediaInvalid
+    //TODO:
+    //testUpdateAnswerOptionsWithMediaLink
+    //TODO:
+    //testUpdateAnswerOptionsWithMediaLinkQMeServerException
+    //TODO:
+    //testUpdateAnswerOptionsWithMediaImagePng
+    //TODO:
+    //testUpdateAnswerOptionsWithMediaImagePngInvalid
+    //TODO:
+    //testUpdateAnswerOptionsWithMediaImagePngQMeServerException
+    //TODO:
+    //testUpdateAnswerReferenceMedia
+    //TODO:
+    //testUpdateAnswerReferenceMediaInvalid
+    //TODO:
+    //testUpdateAnswerReferenceMediaQMeServerException
+    //TODO:
+    //testUpdateAnswerReferenceMediaImagePNG
+    //TODO:
+    //testUpdateAnswerReferenceMediaImagePNGInvalid
+    //TODO:
+    //testUpdateAnswerReferenceMediaImagePNGQMeServerException
 
     @Test
     public void testDelete() throws Exception {
