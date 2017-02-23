@@ -1,4 +1,4 @@
-/**
+        /**
  * Name      : com.malcolm.qme.rest.service.impl.QuestionServiceImplTest.java
  * Date      : 3/12/16
  * Developer : Malcolm
@@ -848,18 +848,15 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
 
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some Answer");
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
-        qmeQuestion.setCategoryId(1L);
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
+
         QMeAnswerOption answerOption = getQMeAnswerOption();
         List<QMeAnswerOption> answerOptionList = new ArrayList<>();
         answerOptionList.add(answerOption);
         qmeQuestion.setAnswerOptionList(answerOptionList);
 
         QMeQuestionDetail questionDetail = questionService.update(qmeQuestion, 1L, 1L);
+
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
         verify(questionRepo).update(Matchers.anyObject(), Matchers.<Long>anyObject());
@@ -870,16 +867,9 @@ public class QuestionServiceImplTest {
 
     @Test(expected = QMeResourceNotFoundException.class)
     public void testUpdateQMeResourceNotFoundException() throws Exception {
-        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.findById(1L)).thenReturn(null);
-        QMeQuestion qmeQuestion = new QMeQuestion();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some Answer");
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
-        qmeQuestion.setCategoryId(1L);
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
         questionService.update(qmeQuestion, 1L, 1L);
-        verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
     }
 
@@ -888,16 +878,14 @@ public class QuestionServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenThrow(QMeException.class);
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some Answer");
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
-        qmeQuestion.setCategoryId(1L);
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
+
         QMeAnswerOption answerOption = getQMeAnswerOption();
         List<QMeAnswerOption> answerOptionList = new ArrayList<>();
         answerOptionList.add(answerOption);
         qmeQuestion.setAnswerOptionList(answerOptionList);
+
         questionService.update(qmeQuestion, 1L, 1L);
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
@@ -908,12 +896,10 @@ public class QuestionServiceImplTest {
     public void testUpdateInvalidQuestionText() throws Exception {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
         qmeQuestion.setQuestionText(null);
-        qmeQuestion.setAnswer("Some Answer");
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
-        qmeQuestion.setCategoryId(1L);
+
         questionService.update(qmeQuestion, 1L, 1L);
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
@@ -923,12 +909,10 @@ public class QuestionServiceImplTest {
     public void testUpdateInvalidAnswerText() throws Exception {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
         qmeQuestion.setAnswer(null);
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
-        qmeQuestion.setCategoryId(1L);
+
         questionService.update(qmeQuestion, 1L, 1L);
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
@@ -937,12 +921,10 @@ public class QuestionServiceImplTest {
     @Test(expected = QMeInvalidResourceDataException.class)
     public void testUpdateInvalidCategory() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some AnswerText");
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
         qmeQuestion.setCategoryId(null);
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
+
         questionService.update(qmeQuestion, 1L, 1L);
         verify(questionRepo).findById(1L);
     }
@@ -951,13 +933,10 @@ public class QuestionServiceImplTest {
     public void testUpdateInvalidCategoryNotFound() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(null);
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some AnswerText");
-        qmeQuestion.setCategoryId(null);
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
         questionService.update(qmeQuestion, 1L, 1L);
+
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
     }
@@ -966,12 +945,10 @@ public class QuestionServiceImplTest {
     public void testUpdateInvalidQuestionPoint() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(null);
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some AnswerText");
-        qmeQuestion.setCategoryId(1L);
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
         qmeQuestion.setQuestionPoint(null);
-        qmeQuestion.setQuestionId(1L);
+
         questionService.update(qmeQuestion,1L,1L);
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
@@ -981,19 +958,46 @@ public class QuestionServiceImplTest {
     public void testUpdateInvalidUpdateUserId() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(null);
-        QMeQuestionDetail qmeQuestion = new QMeQuestionDetail();
-        qmeQuestion.setQuestionText("Some Question Text");
-        qmeQuestion.setAnswer("Some AnswerText");
-        qmeQuestion.setCategoryId(1L);
-        qmeQuestion.setQuestionPoint(1);
-        qmeQuestion.setQuestionId(1L);
+
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
+
         questionService.update(qmeQuestion,1L,null);
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
     }
 
+    @Test
+    public void testUpdateAnswerOptions() throws Exception {
+        //Question
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
+
+        //Answer Option
+        QMeAnswerOption answerOption = getQMeAnswerOption();
+
+        //Answer Option List
+        List<QMeAnswerOption> answerOptionList = new ArrayList<>();
+        answerOptionList.add(answerOption);
+        qmeQuestion.setAnswerOptionList(answerOptionList);
+
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
+        when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
+
+        QMeQuestionDetail questionDetail = questionService.update(qmeQuestion, 1L, 1L);
+
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+        verify(questionRepo).update(Matchers.anyObject(), Matchers.anyObject());
+        verify(answerOptionRepo).update(Matchers.anyObject(), Matchers.anyObject());
+
+        assertNotNull(questionDetail);
+        assertThat(questionDetail.getQuestionId(), equalTo(1L));
+        assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
+    }
+
     //TODO:
-    //testUpdateAnswerOptions
+    //
     //TODO:
     //testUpdateAnswerOptionsInvalid
     //TODO:
