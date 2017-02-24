@@ -267,16 +267,20 @@ public class QuestionServiceImpl implements QuestionService {
     private void saveAnswerOption(Long questionId, QMeAnswerOption qmeAnswerOption, Long userID) throws QMeException, QMeInvalidResourceDataException {
         AnswerOption answerOption = getAnswerOption(questionId, qmeAnswerOption);
 
-        answerOption = answerOptionRepository.save(answerOption);
-
-        List<AnswerOptionMedia> answerOptionMediaList = getAnswerOptionMedias(answerOption.getAnswerOptionID());
         List<Long> answerOptionMediaIdList = new ArrayList<>();
-        for (AnswerOptionMedia answerOptionMedia:answerOptionMediaList) {
-            answerOptionMediaIdList.add(answerOptionMedia.getAnswerOptionMediaID());
+        if(answerOption.getAnswerOptionID() != null && answerOption.getAnswerOptionID() > 0){
+            List<AnswerOptionMedia> answerOptionMediaList = getAnswerOptionMedias(answerOption.getAnswerOptionID());
+            for (AnswerOptionMedia answerOptionMedia:answerOptionMediaList) {
+                answerOptionMediaIdList.add(answerOptionMedia.getAnswerOptionMediaID());
+            }
         }
 
+        answerOption = answerOptionRepository.save(answerOption);
+
         if (qmeAnswerOption.getAnswerOptionMediaList() != null && qmeAnswerOption.getAnswerOptionMediaList().size() > 0) {
+
             List<QMeAnswerOptionMedia> qmeAnswerOptionMediaList = qmeAnswerOption.getAnswerOptionMediaList();
+
             for (QMeAnswerOptionMedia answerOptionMedia : qmeAnswerOptionMediaList) {
                 if(answerOptionMedia.getAnswerOptionMediaID() != null && answerOptionMediaIdList.contains(answerOptionMedia.getAnswerOptionMediaID())){
                     saveAnswerOptionMedia(answerOption.getAnswerOptionID(), answerOptionMedia, userID);
@@ -332,7 +336,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     private void saveAnswerOptionMedia(Long answerOptionID, QMeAnswerOptionMedia qmeAnswerOptionMedia, Long userID) throws QMeException, QMeInvalidResourceDataException {
         AnswerOptionMedia answerOptionMedia = getAnswerOptionMedia(answerOptionID, qmeAnswerOptionMedia);
-        if (answerOptionMedia.getAnswerOptionMediaID() != null) {
+        if (answerOptionMedia.getAnswerOptionMediaID() != null && answerOptionMedia.getAnswerOptionMediaID() > 0) {
             answerOptionMediaRepository.update(answerOptionMedia, userID);
         } else {
             answerOptionMediaRepository.save(answerOptionMedia);
@@ -371,7 +375,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     private void saveAnswerReferenceMedia(Long questionId, QMeAnswerReferenceMedia qMeAnswerReferenceMedia, Long userId) throws QMeException, QMeInvalidResourceDataException {
         AnswerReferenceMedia answerReferenceMedia = getAnswerReferenceMedia(questionId, qMeAnswerReferenceMedia);
-        if (answerReferenceMedia.getAnswerRefMediaID() != null) {
+        if (answerReferenceMedia.getAnswerRefMediaID() != null && answerReferenceMedia.getAnswerRefMediaID() > 0) {
             answerReferenceMediaRepository.update(answerReferenceMedia, userId);
         } else {
             answerReferenceMediaRepository.save(answerReferenceMedia);
