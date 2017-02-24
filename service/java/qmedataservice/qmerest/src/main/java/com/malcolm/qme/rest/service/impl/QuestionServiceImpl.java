@@ -124,14 +124,15 @@ public class QuestionServiceImpl implements QuestionService {
             if (qMeQuestionDetail.getAnswerOptionList() != null && qMeQuestionDetail.getAnswerOptionList().size() > 0) {
                 List<QMeAnswerOption> answerOptionList = qMeQuestionDetail.getAnswerOptionList();
                 for (QMeAnswerOption answerOption : answerOptionList) {
-                    saveAnswerOption(question.getQuestionID(), answerOption);
+                    saveAnswerOption(question.getQuestionID(), answerOption, userId);
                 }
             }
+
             //Check Answer Option Reference Media List
             if (qMeQuestionDetail.getAnswerReferenceMediaList() != null && qMeQuestionDetail.getAnswerReferenceMediaList().size() > 0) {
                 List<QMeAnswerReferenceMedia> answerReferenceMediaList = qMeQuestionDetail.getAnswerReferenceMediaList();
                 for (QMeAnswerReferenceMedia qMeAnswerReferenceMedia : answerReferenceMediaList) {
-                    saveAnswerReferenceMedia(question.getQuestionID(), qMeAnswerReferenceMedia);
+                    saveAnswerReferenceMedia(question.getQuestionID(), qMeAnswerReferenceMedia, userId);
                 }
             }
 
@@ -146,21 +147,72 @@ public class QuestionServiceImpl implements QuestionService {
     @Transactional
     public QMeQuestionDetail update(QMeQuestion qMeQuestion, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
         try {
+            QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail) qMeQuestion;
+
             Question question = questionRepo.findById(id);
             if (question == null) {
                 throw new QMeResourceNotFoundException("Question with Question ID " + id + " not found");
             }
-            qMeQuestion.setQuestionId(question.getQuestionID());
-            qMeQuestion.setCategoryId(question.getCategoryID());
-            qMeQuestion.setCreateUserID(question.getCreateUserID());
+
+            qMeQuestionDetail.setQuestionId(question.getQuestionID());
+            qMeQuestionDetail.setCategoryId(question.getCategoryID());
+            qMeQuestionDetail.setCreateUserID(question.getCreateUserID());
             qMeQuestion.setUpdateUserID(userId);
-            QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail) qMeQuestion;
+
             question = getQuestion(qMeQuestionDetail);
             question = questionRepo.update(question, userId);
 
-            //TODO: Update Answer Option
+            List<AnswerOption> existingAnswerOptions = getAnswerOptions(question.getQuestionID());
+            List<Long> answerOptionIdList = new ArrayList<>();
+            for (AnswerOption answerOption : existingAnswerOptions) {
+                answerOptionIdList.add(answerOption.getAnswerOptionID());
+            }
 
-            //TODO: Update Answer Reference Media
+            if (qMeQuestionDetail.getAnswerOptionList() != null && qMeQuestionDetail.getAnswerOptionList().size() > 0) {
+                List<QMeAnswerOption> answerOptionList = qMeQuestionDetail.getAnswerOptionList();
+                for (QMeAnswerOption answerOption : answerOptionList) {
+                    if (answerOption.getAnswerOptionID() != null && answerOptionIdList.contains(answerOption.getAnswerOptionID())) {
+                        saveAnswerOption(question.getQuestionID(), answerOption, userId);
+                        answerOptionIdList.remove(answerOption.getAnswerOptionID());
+                    } else {
+                        saveAnswerOption(question.getQuestionID(), answerOption, userId);
+                    }
+                }
+            } else {
+                answerOptionIdList.clear();
+            }
+
+            if (!answerOptionIdList.isEmpty()) {
+                for (Long answerOptionId : answerOptionIdList) {
+                    removeAnswerOption(answerOptionId);
+                }
+            }
+
+            List<AnswerReferenceMedia>  existingAnswerReferenceMediaList  = getAnswerReferenceMedias(question.getQuestionID());
+            List<Long> answerReferenceMediaIdList = new ArrayList<>();
+            for (AnswerReferenceMedia answerReferenceMedia:existingAnswerReferenceMediaList) {
+                answerReferenceMediaIdList.add(answerReferenceMedia.getAnswerRefMediaID());
+            }
+
+            if (qMeQuestionDetail.getAnswerReferenceMediaList() != null && qMeQuestionDetail.getAnswerReferenceMediaList().size() > 0) {
+                List<QMeAnswerReferenceMedia> answerReferenceMediaList = qMeQuestionDetail.getAnswerReferenceMediaList();
+                for (QMeAnswerReferenceMedia qMeAnswerReferenceMedia : answerReferenceMediaList) {
+                    if(qMeAnswerReferenceMedia.getAnswerRefMediaID() != null && answerReferenceMediaIdList.contains(qMeAnswerReferenceMedia.getAnswerRefMediaID())){
+                        saveAnswerReferenceMedia(question.getQuestionID(), qMeAnswerReferenceMedia, userId);
+                        answerReferenceMediaIdList.remove(qMeAnswerReferenceMedia.getAnswerRefMediaID());
+                    }else{
+                        saveAnswerReferenceMedia(question.getQuestionID(), qMeAnswerReferenceMedia, userId);
+                    }
+                }
+            }else{
+                answerReferenceMediaIdList.clear();
+            }
+
+            if (!answerReferenceMediaIdList.isEmpty()) {
+                for (Long answerReferenceMediaId : answerReferenceMediaIdList) {
+                    removeAnswerReferenceMedia(answerReferenceMediaId);
+                }
+            }
 
             return getQMeQuestionDetail(question);
 
@@ -177,6 +229,17 @@ public class QuestionServiceImpl implements QuestionService {
             if (question == null) {
                 throw new QMeResourceNotFoundException("Question with Question ID " + id + " not found");
             }
+
+            List<AnswerOption> answerOptionList = getAnswerOptions(question.getQuestionID());
+            for (AnswerOption answerOption : answerOptionList) {
+                removeAnswerOption(answerOption.getAnswerOptionID());
+            }
+
+            List<AnswerReferenceMedia> answerReferenceMediaList = getAnswerReferenceMedias(question.getQuestionID());
+            for (AnswerReferenceMedia answerReferenceMedia : answerReferenceMediaList) {
+                answerReferenceMediaRepository.delete(answerReferenceMedia.getAnswerRefMediaID());
+            }
+
             questionRepo.delete(id);
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);
@@ -186,34 +249,76 @@ public class QuestionServiceImpl implements QuestionService {
     /**
      * Save Answer Option
      *
-     * @param questionId      Question ID
-     * @param qmeAnswerOption QMe Answer Option
+     * @param questionId Question ID
      * @throws QMeException
      */
-    private void saveAnswerOption(Long questionId, QMeAnswerOption qmeAnswerOption) throws QMeException, QMeInvalidResourceDataException {
+    private List<AnswerOption> getAnswerOptions(Long questionId) throws QMeException {
+        return answerOptionRepository.findByQuestionId(questionId);
+    }
+
+    /**
+     * Save Answer Option
+     *
+     * @param questionId      Question ID
+     * @param qmeAnswerOption QMe Answer Option
+     * @param userID          User Id
+     * @throws QMeException
+     */
+    private void saveAnswerOption(Long questionId, QMeAnswerOption qmeAnswerOption, Long userID) throws QMeException, QMeInvalidResourceDataException {
         AnswerOption answerOption = getAnswerOption(questionId, qmeAnswerOption);
 
         answerOption = answerOptionRepository.save(answerOption);
 
+        List<AnswerOptionMedia> answerOptionMediaList = getAnswerOptionMedias(answerOption.getAnswerOptionID());
+        List<Long> answerOptionMediaIdList = new ArrayList<>();
+        for (AnswerOptionMedia answerOptionMedia:answerOptionMediaList) {
+            answerOptionMediaIdList.add(answerOptionMedia.getAnswerOptionMediaID());
+        }
+
         if (qmeAnswerOption.getAnswerOptionMediaList() != null && qmeAnswerOption.getAnswerOptionMediaList().size() > 0) {
             List<QMeAnswerOptionMedia> qmeAnswerOptionMediaList = qmeAnswerOption.getAnswerOptionMediaList();
             for (QMeAnswerOptionMedia answerOptionMedia : qmeAnswerOptionMediaList) {
-                saveAnswerOptionMedia(answerOption.getAnswerOptionID(), answerOptionMedia);
+                if(answerOptionMedia.getAnswerOptionMediaID() != null && answerOptionMediaIdList.contains(answerOptionMedia.getAnswerOptionMediaID())){
+                    saveAnswerOptionMedia(answerOption.getAnswerOptionID(), answerOptionMedia, userID);
+                    answerOptionMediaIdList.remove(answerOptionMedia.getAnswerOptionMediaID());
+                }else{
+                    saveAnswerOptionMedia(answerOption.getAnswerOptionID(), answerOptionMedia, userID);
+                }
+
+            }
+        }else{
+            answerOptionMediaIdList.clear();
+        }
+
+        if (!answerOptionMediaIdList.isEmpty()) {
+            for (Long answerOptionMediaId : answerOptionMediaIdList) {
+                removeAnswerOptionMedia(answerOptionMediaId);
             }
         }
     }
 
     /**
-     * Save Answer Reference Media
+     * Remove Answer Option
      *
-     * @param questionId              Question ID
-     * @param qMeAnswerReferenceMedia Answer Reference Media
+     * @param answerOptionId Answer Option Id
      * @throws QMeException
-     * @throws QMeInvalidResourceDataException
      */
-    private void saveAnswerReferenceMedia(Long questionId, QMeAnswerReferenceMedia qMeAnswerReferenceMedia) throws QMeException, QMeInvalidResourceDataException {
-        AnswerReferenceMedia answerReferenceMedia = getAnswerReferenceMedia(questionId, qMeAnswerReferenceMedia);
-        answerReferenceMediaRepository.save(answerReferenceMedia);
+    private void removeAnswerOption(Long answerOptionId) throws QMeException {
+        List<AnswerOptionMedia> answerOptionMediaList = getAnswerOptionMedias(answerOptionId);
+        for (AnswerOptionMedia answerOptionMedia : answerOptionMediaList) {
+            answerOptionMediaRepository.delete(answerOptionMedia.getAnswerOptionMediaID());
+        }
+        answerOptionRepository.delete(answerOptionId);
+    }
+
+    /**
+     * Get Answer Option Media List
+     * @param answerOptionId Answer Option Id
+     * @return AnserOption Media List
+     * @throws QMeException
+     */
+    private List<AnswerOptionMedia> getAnswerOptionMedias(Long answerOptionId) throws QMeException {
+        return answerOptionMediaRepository.findByAnswerOptionId(answerOptionId);
     }
 
     /**
@@ -221,12 +326,65 @@ public class QuestionServiceImpl implements QuestionService {
      *
      * @param answerOptionID       Answer Option Id
      * @param qmeAnswerOptionMedia Answer Option Media
+     * @param userID               User Id
      * @throws QMeException
      * @throws QMeInvalidResourceDataException
      */
-    private void saveAnswerOptionMedia(Long answerOptionID, QMeAnswerOptionMedia qmeAnswerOptionMedia) throws QMeException, QMeInvalidResourceDataException {
+    private void saveAnswerOptionMedia(Long answerOptionID, QMeAnswerOptionMedia qmeAnswerOptionMedia, Long userID) throws QMeException, QMeInvalidResourceDataException {
         AnswerOptionMedia answerOptionMedia = getAnswerOptionMedia(answerOptionID, qmeAnswerOptionMedia);
-        answerOptionMediaRepository.save(answerOptionMedia);
+        if (answerOptionMedia.getAnswerOptionMediaID() != null) {
+            answerOptionMediaRepository.update(answerOptionMedia, userID);
+        } else {
+            answerOptionMediaRepository.save(answerOptionMedia);
+        }
+    }
+
+    /**
+     * Remove Answer Option Media
+     * @param answerOptionMediaId Answer Option Media Id
+     * @throws QMeException
+     */
+    private void removeAnswerOptionMedia(Long answerOptionMediaId) throws QMeException {
+        answerOptionMediaRepository.delete(answerOptionMediaId);
+    }
+
+
+    /**
+     * Get Answer Reference Medias
+     *
+     * @param questionId Question Id
+     * @return Answer Reference Medai List
+     * @throws QMeException
+     */
+    private List<AnswerReferenceMedia> getAnswerReferenceMedias(Long questionId) throws QMeException {
+        return answerReferenceMediaRepository.findByQuestionId(questionId);
+    }
+
+    /**
+     * Save Answer Reference Media
+     *
+     * @param questionId              Question ID
+     * @param qMeAnswerReferenceMedia Answer Reference Media
+     * @param userId                  Update User Id
+     * @throws QMeException
+     * @throws QMeInvalidResourceDataException
+     */
+    private void saveAnswerReferenceMedia(Long questionId, QMeAnswerReferenceMedia qMeAnswerReferenceMedia, Long userId) throws QMeException, QMeInvalidResourceDataException {
+        AnswerReferenceMedia answerReferenceMedia = getAnswerReferenceMedia(questionId, qMeAnswerReferenceMedia);
+        if (answerReferenceMedia.getAnswerRefMediaID() != null) {
+            answerReferenceMediaRepository.update(answerReferenceMedia, userId);
+        } else {
+            answerReferenceMediaRepository.save(answerReferenceMedia);
+        }
+    }
+
+    /**
+     * Remove Answer Reference Media
+     * @param answerReferenceMediaID  Answer Reference Media Id
+     * @throws QMeException
+     */
+    private void removeAnswerReferenceMedia(Long answerReferenceMediaID) throws QMeException {
+        answerReferenceMediaRepository.delete(answerReferenceMediaID);
     }
 
     /**
@@ -263,8 +421,8 @@ public class QuestionServiceImpl implements QuestionService {
         if (qmeAnswerOptionMedia.getMediaTypeID() == null || qmeAnswerOptionMedia.getMediaTypeID() == 0) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required");
         }
-        if(MediaTypeEnum.fromValue(qmeAnswerOptionMedia.getMediaTypeID()) == null){
-            throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required - "+MediaTypeEnum.supportedMediaTypes());
+        if (MediaTypeEnum.fromValue(qmeAnswerOptionMedia.getMediaTypeID()) == null) {
+            throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required - " + MediaTypeEnum.supportedMediaTypes());
         }
         if (qmeAnswerOptionMedia.getMedia() == null) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media is required");
@@ -288,8 +446,8 @@ public class QuestionServiceImpl implements QuestionService {
         if (qMeAnswerReferenceMedia.getMediaTypeID() == null || qMeAnswerReferenceMedia.getMediaTypeID() == 0) {
             throw new QMeInvalidResourceDataException("Valid Answer Reference Media Type Id is required");
         }
-        if(MediaTypeEnum.fromValue(qMeAnswerReferenceMedia.getMediaTypeID()) == null){
-            throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required - "+MediaTypeEnum.supportedMediaTypes());
+        if (MediaTypeEnum.fromValue(qMeAnswerReferenceMedia.getMediaTypeID()) == null) {
+            throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required - " + MediaTypeEnum.supportedMediaTypes());
         }
         if (qMeAnswerReferenceMedia.getMedia() == null) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media is required");

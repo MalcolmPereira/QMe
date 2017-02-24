@@ -996,10 +996,34 @@ public class QuestionServiceImplTest {
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
     }
 
-    //TODO:
-    //
-    //TODO:
-    //testUpdateAnswerOptionsInvalid
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateAnswerOptionsInvalid() throws Exception {
+        //Question
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
+
+        //Answer Option
+        QMeAnswerOption answerOption = getQMeAnswerOption();
+        answerOption.setOptionText(null);
+        answerOption.setCorrect(null);
+
+        //Answer Option List
+        List<QMeAnswerOption> answerOptionList = new ArrayList<>();
+        answerOptionList.add(answerOption);
+        qmeQuestion.setAnswerOptionList(answerOptionList);
+
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
+        when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
+
+        questionService.update(qmeQuestion, 1L, 1L);
+
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+        verify(questionRepo).update(Matchers.anyObject(), Matchers.anyObject());
+        verify(answerOptionRepo).update(Matchers.anyObject(), Matchers.anyObject());
+    }
+
     //TODO:
     //testUpdateAnswerOptionsQMeServerException
     //TODO:
