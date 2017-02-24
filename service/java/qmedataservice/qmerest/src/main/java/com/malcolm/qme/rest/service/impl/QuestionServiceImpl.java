@@ -275,7 +275,12 @@ public class QuestionServiceImpl implements QuestionService {
             }
         }
 
-        answerOption = answerOptionRepository.save(answerOption);
+        if(answerOption.getAnswerOptionID() != null && answerOption.getAnswerOptionID() > 0){
+            answerOption = answerOptionRepository.update(answerOption, userID);
+        }else{
+            answerOption = answerOptionRepository.save(answerOption);
+        }
+
 
         if (qmeAnswerOption.getAnswerOptionMediaList() != null && qmeAnswerOption.getAnswerOptionMediaList().size() > 0) {
 

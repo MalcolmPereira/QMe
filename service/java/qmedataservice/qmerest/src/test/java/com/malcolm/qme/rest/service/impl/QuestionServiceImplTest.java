@@ -973,6 +973,7 @@ public class QuestionServiceImplTest {
 
         //Answer Option
         QMeAnswerOption answerOption = getQMeAnswerOption();
+        answerOption.setAnswerOptionID(1L);
 
         //Answer Option List
         List<QMeAnswerOption> answerOptionList = new ArrayList<>();
@@ -981,6 +982,8 @@ public class QuestionServiceImplTest {
 
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
+
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
 
