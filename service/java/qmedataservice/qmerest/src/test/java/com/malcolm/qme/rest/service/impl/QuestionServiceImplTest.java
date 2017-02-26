@@ -983,7 +983,6 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
-
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
 
@@ -1006,6 +1005,7 @@ public class QuestionServiceImplTest {
 
         //Answer Option
         QMeAnswerOption answerOption = getQMeAnswerOption();
+        answerOption.setAnswerOptionID(1L);
         answerOption.setOptionText(null);
         answerOption.setCorrect(null);
 
@@ -1017,20 +1017,45 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
-        when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
-
         questionService.update(qmeQuestion, 1L, 1L);
 
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
         verify(questionRepo).update(Matchers.anyObject(), Matchers.anyObject());
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testUpdateAnswerOptionsQMeServerException() throws Exception {
+        //Question
+        QMeQuestionDetail qmeQuestion = getQMeQuestionDetail();
+
+        //Answer Option
+        QMeAnswerOption answerOption = getQMeAnswerOption();
+        answerOption.setAnswerOptionID(1L);
+
+        //Answer Option List
+        List<QMeAnswerOption> answerOptionList = new ArrayList<>();
+        answerOptionList.add(answerOption);
+        qmeQuestion.setAnswerOptionList(answerOptionList);
+
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L,1L,answerOption.getOptionText(),answerOption.getCorrect()));
+        when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
+        when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenThrow(QMeException.class);
+
+        questionService.update(qmeQuestion, 1L, 1L);
+
+        verify(categoryRepo).findById(1L);
+        verify(questionRepo).findById(1L);
+        verify(answerOptionRepo).findById(1L);
+        verify(questionRepo).update(Matchers.anyObject(), Matchers.anyObject());
         verify(answerOptionRepo).update(Matchers.anyObject(), Matchers.anyObject());
     }
 
     //TODO:
-    //testUpdateAnswerOptionsQMeServerException
-    //TODO:
     //testUpdateAnswerOptionsWithMediaInvalid
+
     //TODO:
     //testUpdateAnswerOptionsWithMediaLink
     //TODO:
