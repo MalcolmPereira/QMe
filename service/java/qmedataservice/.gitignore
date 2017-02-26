@@ -5,6 +5,7 @@
 target/
 /target/
 /.settings/
+/classes/
 .idea
 .classpath
 .settings
