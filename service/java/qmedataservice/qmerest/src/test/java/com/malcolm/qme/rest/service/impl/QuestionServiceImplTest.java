@@ -1573,6 +1573,30 @@ public class QuestionServiceImplTest {
         verify(questionRepo).delete(1L);
     }
 
+    @Test
+    public void testDeleteWithAnswerOptionsAnswerOptionsMediaAndAnswerReferenceMedia() throws Exception {
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, "Some Option Text", Boolean.TRUE));
+        when(answerOptionMediaRepo.findByAnswerOptionId(1L)).thenReturn(AnswerOptionMediaFixtures.simpleAnswerOptionMediaList(1L, 1L, 1, "http://www.google.com".getBytes()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, 1, "http://www.google.com".getBytes()));
+
+        doNothing().when(answerOptionMediaRepo).delete(1L);
+        doNothing().when(answerOptionRepo).delete(1L);
+        doNothing().when(answerReferenceMediaRepo).delete(1L);
+        doNothing().when(questionRepo).delete(1L);
+
+        questionService.delete(1L);
+
+        verify(questionRepo).findById(1L);
+        verify(answerOptionRepo).findByQuestionId(1L);
+        verify(answerOptionMediaRepo).findByAnswerOptionId(1L);
+        verify(answerReferenceMediaRepo).findByQuestionId(1L);
+        verify(answerOptionMediaRepo).delete(1L);
+        verify(answerOptionRepo).delete(1L);
+        verify(answerReferenceMediaRepo).delete(1L);
+        verify(questionRepo).delete(1L);
+    }
+
     @Test(expected = QMeResourceNotFoundException.class)
     public void testDeleteQMeResourceNotFoundException() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(null);
