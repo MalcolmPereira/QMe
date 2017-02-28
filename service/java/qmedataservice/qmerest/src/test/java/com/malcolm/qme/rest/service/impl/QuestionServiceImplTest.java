@@ -182,6 +182,8 @@ public class QuestionServiceImplTest {
         assertNotNull(questionDetail);
         assertThat(questionDetail.getQuestionId(), equalTo(1L));
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
+        assertNotNull(questionDetail.getAnswerOptionList());
+        assertThat(questionDetail.getAnswerOptionList().size(), equalTo(4));
     }
 
     @Test(expected = QMeResourceException.class)

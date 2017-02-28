@@ -17,7 +17,6 @@ import com.malcolm.qme.rest.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -103,7 +102,20 @@ public class QuestionServiceImpl implements QuestionService {
             if (question == null) {
                 throw new QMeResourceNotFoundException("Question with Question ID " + id + " not found");
             }
-            return getQMeQuestionDetail(question);
+
+            QMeQuestionDetail questionDetail = getQMeQuestionDetail(question);
+
+            List<AnswerOption>  answerOptionList = getAnswerOptions(question.getQuestionID());
+            if(answerOptionList != null && answerOptionList.size() > 0){
+                setAnswerOptionList(questionDetail, answerOptionList);
+            }
+
+            List<AnswerReferenceMedia> answerReferenceMediaList = getAnswerReferenceMedias(question.getQuestionID());
+            if(answerReferenceMediaList != null && answerReferenceMediaList.size() > 0){
+                setAnswerReferenceMediaList(questionDetail, answerReferenceMediaList);
+            }
+
+            return questionDetail;
 
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);
@@ -244,6 +256,24 @@ public class QuestionServiceImpl implements QuestionService {
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);
         }
+    }
+
+    /**
+     * Set Answer Option List
+     * @param questionDetail Question Detail
+     * @param answerOptionList Answer Option List
+     */
+    private void setAnswerOptionList(QMeQuestionDetail questionDetail, List<AnswerOption> answerOptionList) {
+        //TODO:
+    }
+
+    /**
+     * Set Answer Reference Media List
+     * @param questionDetail Question Detail
+     * @param answerReferenceMediaList Answer Reference Media List
+     */
+    private void setAnswerReferenceMediaList(QMeQuestionDetail questionDetail, List<AnswerReferenceMedia> answerReferenceMediaList) {
+        //TODO:
     }
 
     /**
