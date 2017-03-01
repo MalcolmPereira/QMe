@@ -188,6 +188,29 @@ public class QuestionControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testSearchByIdWithAnswerOptions() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.searchById(1L)).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetail());
+
+        mockMvc.perform(
+                get("/qme/question/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.questionId", is(1)))
+                .andExpect(jsonPath("$.categoryId", is(1)))
+                .andExpect(jsonPath("$.questionText", is("Some Question")))
+                .andExpect(jsonPath("$.answer", is("Some Answer")))
+                .andExpect(jsonPath("$.answerReferenceMediaList", hasSize(1)))
+                .andExpect(jsonPath("$.answerOptionList", hasSize(1)))
+        ;
+        verify(questionService).searchById(1L);
+    }
+
+
+    @Test
     public void testCreate() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(questionService, notNullValue());

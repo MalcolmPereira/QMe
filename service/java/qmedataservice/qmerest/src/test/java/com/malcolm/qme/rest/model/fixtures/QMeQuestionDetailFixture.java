@@ -6,6 +6,9 @@
  */
 package com.malcolm.qme.rest.model.fixtures;
 
+import com.malcolm.qme.rest.model.QMeAnswerOption;
+import com.malcolm.qme.rest.model.QMeAnswerOptionMedia;
+import com.malcolm.qme.rest.model.QMeAnswerReferenceMedia;
 import com.malcolm.qme.rest.model.QMeQuestionDetail;
 
 import java.time.LocalDateTime;
@@ -74,6 +77,35 @@ public class QMeQuestionDetailFixture extends QMeResourceFixture<QMeQuestionDeta
         qmeQuestionDetail.setQuestionCreateDate(LocalDateTime.now());
         qmeQuestionDetail.setCreateUserID(1L);
         qmeQuestionDetail.setQuestionUpdateDate(LocalDateTime.now());
+
+        List<QMeAnswerOption> answerOptionList = new ArrayList<>();
+        QMeAnswerOption qMeAnswerOption = new QMeAnswerOption();
+        qMeAnswerOption.setQuestionID(1L);
+        qMeAnswerOption.setAnswerOptionID(1L);
+        qMeAnswerOption.setOptionText("Some Option Text");
+        qMeAnswerOption.setCorrect(Boolean.TRUE);
+
+        List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
+        QMeAnswerOptionMedia qMeAnswerOptionMedia = new QMeAnswerOptionMedia();
+        qMeAnswerOptionMedia.setAnswerOptionID(1L);
+        qMeAnswerOptionMedia.setAnswerOptionMediaID(1L);
+        qMeAnswerOptionMedia.setMediaTypeID(1);
+        qMeAnswerOptionMedia.setMedia("http://www.google.com".getBytes());
+        answerOptionMediaList.add(qMeAnswerOptionMedia);
+        qMeAnswerOption.setAnswerOptionMediaList(answerOptionMediaList);
+
+        answerOptionList.add(qMeAnswerOption);
+        qmeQuestionDetail.setAnswerOptionList(answerOptionList);
+
+        List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
+        QMeAnswerReferenceMedia qMeAnswerReferenceMedia = new QMeAnswerReferenceMedia();
+        qMeAnswerReferenceMedia.setQuestionID(1L);
+        qMeAnswerReferenceMedia.setAnswerRefMediaID(1L);
+        qMeAnswerReferenceMedia.setMediaTypeID(1);
+        qMeAnswerReferenceMedia.setMedia("http://www.google.com".getBytes());
+        answerReferenceMediaList.add(qMeAnswerReferenceMedia);
+        qmeQuestionDetail.setAnswerReferenceMediaList(answerReferenceMediaList);
+
         qmeQuestionDetail.setUpdateUserID(1L);
         return qmeQuestionDetail;
     }
