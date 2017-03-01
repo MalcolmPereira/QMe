@@ -29,7 +29,7 @@ public class QMeAnswerOptionMedia extends QMeResource {
     /**
      * Media Type
      */
-    private Integer mediaTypeID;
+    private String mediaType;
 
     /**
      * Media
@@ -52,7 +52,6 @@ public class QMeAnswerOptionMedia extends QMeResource {
         this.answerOptionMediaID = answerOptionMediaID;
     }
 
-
     /**
      * Get Answer Option Id
      * @return Answer Option Id
@@ -73,16 +72,16 @@ public class QMeAnswerOptionMedia extends QMeResource {
      * Get Media Type Id
      * @return Media Type Id
      */
-    public Integer getMediaTypeID() {
-        return mediaTypeID;
+    public String getMediaType() {
+        return mediaType;
     }
 
     /**
      * Set Media Type Id
-     * @param mediaTypeID Media Type Id
+     * @param mediaType Media
      */
-    public void setMediaTypeID(Integer mediaTypeID) {
-        this.mediaTypeID = mediaTypeID;
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
 
     /**

@@ -38,11 +38,11 @@ public class MediaTypeTest {
         assertThat(MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), equalTo(2));
         assertThat(MediaTypeEnum.fromValue(1).getMediaTypeId(), equalTo(1));
         assertThat(MediaTypeEnum.fromValue(2).getMediaTypeId(), equalTo(2));
-        assertThat(MediaTypeEnum.fromValue("link").getMediaTypeId(), equalTo(1));
+        assertThat(MediaTypeEnum.fromValue("text/plain").getMediaTypeId(), equalTo(1));
         assertThat(MediaTypeEnum.fromValue("image/png").getMediaTypeId(), equalTo(2));
-        assertThat(MediaTypeEnum.fromValue(1).getMediaType(), equalTo("link"));
+        assertThat(MediaTypeEnum.fromValue(1).getMediaType(), equalTo("text/plain"));
         assertThat(MediaTypeEnum.fromValue(2).getMediaType(), equalTo("image/png"));
-        assertThat(MediaTypeEnum.fromValue("link").getMediaType(),  equalTo("link"));
+        assertThat(MediaTypeEnum.fromValue("text/plain").getMediaType(),  equalTo("text/plain"));
         assertThat(MediaTypeEnum.fromValue("image/png").getMediaType(), equalTo("image/png"));
     }
 

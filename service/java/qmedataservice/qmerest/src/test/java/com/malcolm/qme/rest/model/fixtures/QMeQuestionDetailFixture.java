@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.model.fixtures;
 
+import com.malcolm.qme.core.domain.MediaTypeEnum;
 import com.malcolm.qme.rest.model.QMeAnswerOption;
 import com.malcolm.qme.rest.model.QMeAnswerOptionMedia;
 import com.malcolm.qme.rest.model.QMeAnswerReferenceMedia;
@@ -89,7 +90,7 @@ public class QMeQuestionDetailFixture extends QMeResourceFixture<QMeQuestionDeta
         QMeAnswerOptionMedia qMeAnswerOptionMedia = new QMeAnswerOptionMedia();
         qMeAnswerOptionMedia.setAnswerOptionID(1L);
         qMeAnswerOptionMedia.setAnswerOptionMediaID(1L);
-        qMeAnswerOptionMedia.setMediaTypeID(1);
+        qMeAnswerOptionMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         qMeAnswerOptionMedia.setMedia("http://www.google.com".getBytes());
         answerOptionMediaList.add(qMeAnswerOptionMedia);
         qMeAnswerOption.setAnswerOptionMediaList(answerOptionMediaList);

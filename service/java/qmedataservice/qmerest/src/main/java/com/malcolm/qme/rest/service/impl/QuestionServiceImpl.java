@@ -466,19 +466,19 @@ public class QuestionServiceImpl implements QuestionService {
      * @throws QMeInvalidResourceDataException
      */
     private AnswerOptionMedia getAnswerOptionMedia(Long answerOptionID, QMeAnswerOptionMedia qmeAnswerOptionMedia) throws QMeInvalidResourceDataException {
-        if (qmeAnswerOptionMedia.getMediaTypeID() == null || qmeAnswerOptionMedia.getMediaTypeID() == 0) {
+        if (qmeAnswerOptionMedia.getMediaType() == null || qmeAnswerOptionMedia.getMediaType().trim().length() == 0) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required");
         }
-        if (MediaTypeEnum.fromValue(qmeAnswerOptionMedia.getMediaTypeID()) == null) {
+        if (MediaTypeEnum.fromValue(qmeAnswerOptionMedia.getMediaType()) == null) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required - " + MediaTypeEnum.supportedMediaTypes());
         }
         if (qmeAnswerOptionMedia.getMedia() == null) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media is required");
         }
         if (qmeAnswerOptionMedia.getAnswerOptionMediaID() != null) {
-            return new AnswerOptionMedia(qmeAnswerOptionMedia.getAnswerOptionMediaID(), answerOptionID, qmeAnswerOptionMedia.getMediaTypeID(), qmeAnswerOptionMedia.getMedia());
+            return new AnswerOptionMedia(qmeAnswerOptionMedia.getAnswerOptionMediaID(), answerOptionID, MediaTypeEnum.fromValue(qmeAnswerOptionMedia.getMediaType()).getMediaTypeId(), qmeAnswerOptionMedia.getMedia());
         } else {
-            return new AnswerOptionMedia(answerOptionID, qmeAnswerOptionMedia.getMediaTypeID(), qmeAnswerOptionMedia.getMedia());
+            return new AnswerOptionMedia(answerOptionID, MediaTypeEnum.fromValue(qmeAnswerOptionMedia.getMediaType()).getMediaTypeId(), qmeAnswerOptionMedia.getMedia());
         }
     }
 
@@ -640,7 +640,7 @@ public class QuestionServiceImpl implements QuestionService {
         QMeAnswerOptionMedia qMeAnswerOptionMedia = new QMeAnswerOptionMedia();
         qMeAnswerOptionMedia.setAnswerOptionID(answerOptionMedia.getAnswerOptionID());
         qMeAnswerOptionMedia.setAnswerOptionMediaID(answerOptionMedia.getAnswerOptionMediaID());
-        qMeAnswerOptionMedia.setMediaTypeID(answerOptionMedia.getMediaTypeID());
+        qMeAnswerOptionMedia.setMediaType(MediaTypeEnum.fromValue(answerOptionMedia.getMediaTypeID()).getMediaType());
         qMeAnswerOptionMedia.setMedia(answerOptionMedia.getMedia());
         return qMeAnswerOptionMedia;
     }

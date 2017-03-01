@@ -11,7 +11,7 @@ package com.malcolm.qme.core.domain;
  */
 public enum MediaTypeEnum {
 
-    LINK(1, "link"),
+    LINK(1, "text/plain"),
     IMAGE_PNG(2, "image/png")
     ;
 
