@@ -491,19 +491,19 @@ public class QuestionServiceImpl implements QuestionService {
      * @throws QMeInvalidResourceDataException
      */
     private AnswerReferenceMedia getAnswerReferenceMedia(Long questionId, QMeAnswerReferenceMedia qMeAnswerReferenceMedia) throws QMeInvalidResourceDataException {
-        if (qMeAnswerReferenceMedia.getMediaTypeID() == null || qMeAnswerReferenceMedia.getMediaTypeID() == 0) {
+        if (qMeAnswerReferenceMedia.getMediaType() == null || qMeAnswerReferenceMedia.getMediaType().trim().length() == 0) {
             throw new QMeInvalidResourceDataException("Valid Answer Reference Media Type Id is required");
         }
-        if (MediaTypeEnum.fromValue(qMeAnswerReferenceMedia.getMediaTypeID()) == null) {
+        if (MediaTypeEnum.fromValue(qMeAnswerReferenceMedia.getMediaType()) == null) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media Type Id  is required - " + MediaTypeEnum.supportedMediaTypes());
         }
         if (qMeAnswerReferenceMedia.getMedia() == null) {
             throw new QMeInvalidResourceDataException("Valid Answer Option Media is required");
         }
         if (qMeAnswerReferenceMedia.getAnswerRefMediaID() != null) {
-            return new AnswerReferenceMedia(qMeAnswerReferenceMedia.getAnswerRefMediaID(), questionId, qMeAnswerReferenceMedia.getMediaTypeID(), qMeAnswerReferenceMedia.getMedia());
+            return new AnswerReferenceMedia(qMeAnswerReferenceMedia.getAnswerRefMediaID(), questionId, MediaTypeEnum.fromValue(qMeAnswerReferenceMedia.getMediaType()).getMediaTypeId(), qMeAnswerReferenceMedia.getMedia());
         } else {
-            return new AnswerReferenceMedia(questionId, qMeAnswerReferenceMedia.getMediaTypeID(), qMeAnswerReferenceMedia.getMedia());
+            return new AnswerReferenceMedia(questionId, MediaTypeEnum.fromValue(qMeAnswerReferenceMedia.getMediaType()).getMediaTypeId(), qMeAnswerReferenceMedia.getMedia());
         }
     }
 
@@ -613,7 +613,7 @@ public class QuestionServiceImpl implements QuestionService {
         QMeAnswerReferenceMedia qMeAnswerReferenceMedia = new QMeAnswerReferenceMedia();
         qMeAnswerReferenceMedia.setAnswerRefMediaID(answerReferenceMedia.getAnswerRefMediaID());
         qMeAnswerReferenceMedia.setQuestionID(answerReferenceMedia.getQuestionID());
-        qMeAnswerReferenceMedia.setMediaTypeID(answerReferenceMedia.getMediaTypeID());
+        qMeAnswerReferenceMedia.setMediaType(MediaTypeEnum.fromValue(answerReferenceMedia.getMediaTypeID()).getMediaType());
         qMeAnswerReferenceMedia.setMedia(answerReferenceMedia.getMedia());
         return qMeAnswerReferenceMedia;
     }

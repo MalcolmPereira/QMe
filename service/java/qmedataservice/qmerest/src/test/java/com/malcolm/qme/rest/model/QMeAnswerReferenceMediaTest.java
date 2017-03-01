@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.model;
 
+import com.malcolm.qme.core.domain.MediaTypeEnum;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -47,15 +48,15 @@ public class QMeAnswerReferenceMediaTest {
     @Test
     public void testGetMediaTypeID() throws Exception {
         QMeAnswerReferenceMedia qMeAnswerReferenceMedia = new QMeAnswerReferenceMedia();
-        qMeAnswerReferenceMedia.setMediaTypeID(1);
-        assertThat(qMeAnswerReferenceMedia.getMediaTypeID(), equalTo(1));
+        qMeAnswerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
+        assertThat(qMeAnswerReferenceMedia.getMediaType(), equalTo(MediaTypeEnum.LINK.getMediaType()));
     }
 
     @Test
     public void testSetMediaTypeID() throws Exception {
         QMeAnswerReferenceMedia qMeAnswerReferenceMedia = new QMeAnswerReferenceMedia();
-        qMeAnswerReferenceMedia.setMediaTypeID(2);
-        assertThat(qMeAnswerReferenceMedia.getMediaTypeID(), equalTo(2));
+        qMeAnswerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
+        assertThat(qMeAnswerReferenceMedia.getMediaType(), equalTo(MediaTypeEnum.IMAGE_PNG.getMediaType()));
     }
 
     @Test

@@ -243,7 +243,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(1);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         answerReferenceMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -253,7 +253,7 @@ public class QuestionServiceImplTest {
         when(questionRepo.save(Matchers.anyObject())).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.save(Matchers.anyObject())).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
         when(answerOptionMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerOptionMediaFixtures.simpleAnswerOptionMedia(1L, 1L,   MediaTypeEnum.fromValue(answerOptionMedia.getMediaType()).getMediaTypeId() , answerOptionMedia.getMedia()));
-        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         QMeQuestionDetail questionDetail = questionService.save(qmeQuestion, 1L);
         verify(categoryRepo).findById(1L);
@@ -661,7 +661,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(1);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         answerReferenceMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -670,7 +670,7 @@ public class QuestionServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.save(Matchers.anyObject())).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.save(Matchers.anyObject())).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         QMeQuestionDetail questionDetail = questionService.save(qmeQuestion, 1L);
         verify(categoryRepo).findById(1L);
@@ -705,7 +705,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(null);
+        answerReferenceMedia.setMediaType(null);
         answerReferenceMedia.setMedia(null);
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -714,7 +714,7 @@ public class QuestionServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.save(Matchers.anyObject())).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.save(Matchers.anyObject())).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         questionService.save(qmeQuestion, 1L);
         verify(categoryRepo).findById(1L);
@@ -738,7 +738,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(1);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         answerReferenceMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -771,7 +771,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(2);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
         answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -780,7 +780,7 @@ public class QuestionServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.save(Matchers.anyObject())).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.save(Matchers.anyObject())).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         QMeQuestionDetail questionDetail = questionService.save(qmeQuestion, 1L);
         verify(categoryRepo).findById(1L);
@@ -815,7 +815,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(2);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
         answerReferenceMedia.setMedia(null);
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -824,7 +824,7 @@ public class QuestionServiceImplTest {
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(questionRepo.save(Matchers.anyObject())).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.save(Matchers.anyObject())).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.save(Matchers.anyObject())).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         questionService.save(qmeQuestion, 1L);
         verify(categoryRepo).findById(1L);
@@ -848,7 +848,7 @@ public class QuestionServiceImplTest {
 
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
-        answerReferenceMedia.setMediaTypeID(2);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
         answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1352,7 +1352,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
-        answerReferenceMedia.setMediaTypeID(1);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         answerReferenceMedia.setMedia("http://google.com".getBytes());
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1361,10 +1361,10 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         QMeQuestionDetail questionDetail = questionService.update(qmeQuestion, 1L, 1L);
 
@@ -1398,7 +1398,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
-        answerReferenceMedia.setMediaTypeID(null);
+        answerReferenceMedia.setMediaType(null);
         answerReferenceMedia.setMedia(null);
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1407,7 +1407,7 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
 
@@ -1437,7 +1437,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
-        answerReferenceMedia.setMediaTypeID(1);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         answerReferenceMedia.setMedia("http://google.com".getBytes());
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1446,7 +1446,7 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, MediaTypeEnum.LINK.getMediaTypeId(), answerReferenceMedia.getMedia()));
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
         when(answerReferenceMediaRepo.update(Matchers.anyObject(), eq(1L))).thenThrow(QMeException.class);
@@ -1478,7 +1478,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
-        answerReferenceMedia.setMediaTypeID(2);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
         answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1487,10 +1487,10 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), answerReferenceMedia.getMedia()));
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMedia(1L, 1L, MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), answerReferenceMedia.getMedia()));
 
         QMeQuestionDetail questionDetail = questionService.update(qmeQuestion, 1L, 1L);
 
@@ -1523,7 +1523,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
-        answerReferenceMedia.setMediaTypeID(2);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
         answerReferenceMedia.setMedia(null);
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1532,7 +1532,7 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), answerReferenceMedia.getMedia()));
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
 
@@ -1562,7 +1562,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
-        answerReferenceMedia.setMediaTypeID(2);
+        answerReferenceMedia.setMediaType(MediaTypeEnum.IMAGE_PNG.getMediaType());
         answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
@@ -1571,7 +1571,7 @@ public class QuestionServiceImplTest {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, answerReferenceMedia.getMediaTypeID(), answerReferenceMedia.getMedia()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, MediaTypeEnum.IMAGE_PNG.getMediaTypeId(), answerReferenceMedia.getMedia()));
         when(questionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(AnswerOptionFixtures.simpleAnswerOption(1L, 1L, answerOption.getOptionText(), answerOption.getCorrect()));
         when(answerReferenceMediaRepo.update(Matchers.anyObject(), eq(1L))).thenThrow(QMeException.class);

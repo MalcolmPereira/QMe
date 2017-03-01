@@ -102,7 +102,7 @@ public class QMeQuestionDetailFixture extends QMeResourceFixture<QMeQuestionDeta
         QMeAnswerReferenceMedia qMeAnswerReferenceMedia = new QMeAnswerReferenceMedia();
         qMeAnswerReferenceMedia.setQuestionID(1L);
         qMeAnswerReferenceMedia.setAnswerRefMediaID(1L);
-        qMeAnswerReferenceMedia.setMediaTypeID(1);
+        qMeAnswerReferenceMedia.setMediaType(MediaTypeEnum.LINK.getMediaType());
         qMeAnswerReferenceMedia.setMedia("http://www.google.com".getBytes());
         answerReferenceMediaList.add(qMeAnswerReferenceMedia);
         qmeQuestionDetail.setAnswerReferenceMediaList(answerReferenceMediaList);
