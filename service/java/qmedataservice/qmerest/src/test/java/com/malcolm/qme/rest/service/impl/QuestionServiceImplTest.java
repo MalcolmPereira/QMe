@@ -188,8 +188,8 @@ public class QuestionServiceImplTest {
     public void testSearchByIdWithAnswerOptions() throws Exception {
         when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
         when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, "Some Option Text", Boolean.TRUE));
-        when(answerOptionMediaRepo.findByAnswerOptionId(1L)).thenReturn(AnswerOptionMediaFixtures.simpleAnswerOptionMediaList(1L, 1L, 1, "http://www.google.com".getBytes()));
-        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, 1, "http://www.google.com".getBytes()));
+        when(answerOptionMediaRepo.findByAnswerOptionId(1L)).thenReturn(AnswerOptionMediaFixtures.simpleAnswerOptionMediaList(1L, 1L, 1, getStringBase64("http://www.google.com")));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, 1, getStringBase64("http://www.google.com")));
         QMeQuestionDetail questionDetail = questionService.searchById(1L);
         verify(questionRepo).findById(1L);
         verify(answerOptionRepo).findByQuestionId(1L);
@@ -230,7 +230,7 @@ public class QuestionServiceImplTest {
         //Answer Option Media
         QMeAnswerOptionMedia answerOptionMedia = new QMeAnswerOptionMedia();
         answerOptionMedia.setMediaTypeID(1);
-        answerOptionMedia.setMedia("http://google.com".getBytes());
+        answerOptionMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
         answerOption.setAnswerOptionMediaList(answerOptionMediaList);
@@ -243,7 +243,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setMediaTypeID(1);
-        answerReferenceMedia.setMedia("http://google.com".getBytes());
+        answerReferenceMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -436,7 +436,7 @@ public class QuestionServiceImplTest {
         //Answer Option Media
         QMeAnswerOptionMedia answerOptionMedia = new QMeAnswerOptionMedia();
         answerOptionMedia.setMediaTypeID(null);
-        answerOptionMedia.setMedia("http://google.com".getBytes());
+        answerOptionMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
         answerOption.setAnswerOptionMediaList(answerOptionMediaList);
@@ -474,7 +474,7 @@ public class QuestionServiceImplTest {
         //Answer Option Media
         QMeAnswerOptionMedia answerOptionMedia = new QMeAnswerOptionMedia();
         answerOptionMedia.setMediaTypeID(1);
-        answerOptionMedia.setMedia("http://google.com".getBytes());
+        answerOptionMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
         answerOption.setAnswerOptionMediaList(answerOptionMediaList);
@@ -518,7 +518,7 @@ public class QuestionServiceImplTest {
         //Answer Option Media
         QMeAnswerOptionMedia answerOptionMedia = new QMeAnswerOptionMedia();
         answerOptionMedia.setMediaTypeID(1);
-        answerOptionMedia.setMedia("http://google.com".getBytes());
+        answerOptionMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
         answerOption.setAnswerOptionMediaList(answerOptionMediaList);
@@ -551,7 +551,7 @@ public class QuestionServiceImplTest {
         //Answer Option Media
         QMeAnswerOptionMedia answerOptionMedia = new QMeAnswerOptionMedia();
         answerOptionMedia.setMediaTypeID(2);
-        answerOptionMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerOptionMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
         answerOption.setAnswerOptionMediaList(answerOptionMediaList);
@@ -628,7 +628,7 @@ public class QuestionServiceImplTest {
         //Answer Option Media
         QMeAnswerOptionMedia answerOptionMedia = new QMeAnswerOptionMedia();
         answerOptionMedia.setMediaTypeID(2);
-        answerOptionMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerOptionMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
         answerOption.setAnswerOptionMediaList(answerOptionMediaList);
@@ -661,7 +661,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setMediaTypeID(1);
-        answerReferenceMedia.setMedia("http://google.com".getBytes());
+        answerReferenceMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -738,7 +738,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setMediaTypeID(1);
-        answerReferenceMedia.setMedia("http://google.com".getBytes());
+        answerReferenceMedia.setMedia(getStringBase64("http://google.com"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -771,7 +771,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setMediaTypeID(2);
-        answerReferenceMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -848,7 +848,7 @@ public class QuestionServiceImplTest {
         //Answer Reference Media
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setMediaTypeID(2);
-        answerReferenceMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -1131,7 +1131,7 @@ public class QuestionServiceImplTest {
         answerOptionMedia.setAnswerOptionID(1L);
         answerOptionMedia.setAnswerOptionMediaID(1L);
         answerOptionMedia.setMediaTypeID(1);
-        answerOptionMedia.setMedia("http://google.com".getBytes());
+        answerOptionMedia.setMedia(getStringBase64("http://google.com"));
 
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
@@ -1175,7 +1175,7 @@ public class QuestionServiceImplTest {
         answerOptionMedia.setAnswerOptionID(1L);
         answerOptionMedia.setAnswerOptionMediaID(1L);
         answerOptionMedia.setMediaTypeID(1);
-        answerOptionMedia.setMedia("http://google.com".getBytes());
+        answerOptionMedia.setMedia(getStringBase64("http://google.com"));
 
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
@@ -1219,7 +1219,7 @@ public class QuestionServiceImplTest {
         answerOptionMedia.setAnswerOptionID(1L);
         answerOptionMedia.setAnswerOptionMediaID(1L);
         answerOptionMedia.setMediaTypeID(2);
-        answerOptionMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerOptionMedia.setMedia(getImageBase64("cube.png"));
 
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
@@ -1304,7 +1304,7 @@ public class QuestionServiceImplTest {
         answerOptionMedia.setAnswerOptionID(1L);
         answerOptionMedia.setAnswerOptionMediaID(1L);
         answerOptionMedia.setMediaTypeID(2);
-        answerOptionMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerOptionMedia.setMedia(getImageBase64("cube.png"));
 
         List<QMeAnswerOptionMedia> answerOptionMediaList = new ArrayList<>();
         answerOptionMediaList.add(answerOptionMedia);
@@ -1478,7 +1478,7 @@ public class QuestionServiceImplTest {
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
         answerReferenceMedia.setMediaTypeID(2);
-        answerReferenceMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -1562,7 +1562,7 @@ public class QuestionServiceImplTest {
         QMeAnswerReferenceMedia answerReferenceMedia = new QMeAnswerReferenceMedia();
         answerReferenceMedia.setAnswerRefMediaID(1L);
         answerReferenceMedia.setMediaTypeID(2);
-        answerReferenceMedia.setMedia(getImageBase64("cube.png").getBytes());
+        answerReferenceMedia.setMedia(getImageBase64("cube.png"));
         List<QMeAnswerReferenceMedia> answerReferenceMediaList = new ArrayList<>();
         answerReferenceMediaList.add(answerReferenceMedia);
         qmeQuestion.setAnswerReferenceMediaList(answerReferenceMediaList);
@@ -1667,8 +1667,19 @@ public class QuestionServiceImplTest {
      * @return Base64 Encoded String
      * @throws IOException
      */
-    private String getImageBase64(String filePath) throws IOException, URISyntaxException {
+    private byte[] getImageBase64(String filePath) throws IOException, URISyntaxException {
         byte byteArray[] = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(filePath).toURI()));
-        return Base64Utils.encodeToString(byteArray);
+        return Base64Utils.encodeToString(byteArray).getBytes();
+    }
+
+    /**
+     * Get String Base 64 String
+     *
+     * @param string
+     * @return Base64 Encoded String
+     * @throws IOException
+     */
+    private byte[] getStringBase64(String string) throws IOException, URISyntaxException {
+        return Base64Utils.encodeToString(string.getBytes()).getBytes();
     }
 }
