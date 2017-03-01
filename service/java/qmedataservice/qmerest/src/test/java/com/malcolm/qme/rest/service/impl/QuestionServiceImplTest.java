@@ -182,8 +182,26 @@ public class QuestionServiceImplTest {
         assertNotNull(questionDetail);
         assertThat(questionDetail.getQuestionId(), equalTo(1L));
         assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
+    }
+
+    @Test
+    public void testSearchByIdWithAnswerOptions() throws Exception {
+        when(questionRepo.findById(1L)).thenReturn(QuestionFixtures.simpleQuestion());
+        when(answerOptionRepo.findByQuestionId(1L)).thenReturn(AnswerOptionFixtures.simpleAnswerOptionList(1L, 1L, "Some Option Text", Boolean.TRUE));
+        when(answerOptionMediaRepo.findByAnswerOptionId(1L)).thenReturn(AnswerOptionMediaFixtures.simpleAnswerOptionMediaList(1L, 1L, 1, "http://www.google.com".getBytes()));
+        when(answerReferenceMediaRepo.findByQuestionId(1L)).thenReturn(AnswerReferenceMediaFixtures.simpleAnswerReferenceMediaList(1L, 1L, 1, "http://www.google.com".getBytes()));
+        QMeQuestionDetail questionDetail = questionService.searchById(1L);
+        verify(questionRepo).findById(1L);
+        verify(answerOptionRepo).findByQuestionId(1L);
+        verify(answerOptionMediaRepo).findByAnswerOptionId(1L);
+        verify(answerReferenceMediaRepo).findByQuestionId(1L);
+        assertNotNull(questionDetail);
+        assertThat(questionDetail.getQuestionId(), equalTo(1L));
+        assertThat(questionDetail.getQuestionText(), equalTo("Some question text"));
         assertNotNull(questionDetail.getAnswerOptionList());
-        assertThat(questionDetail.getAnswerOptionList().size(), equalTo(4));
+        assertThat(questionDetail.getAnswerOptionList().size(), equalTo(1));
+        assertThat(questionDetail.getAnswerOptionList().get(0).getAnswerOptionMediaList().size(), equalTo(1));
+        assertThat(questionDetail.getAnswerReferenceMediaList().size(), equalTo(1));
     }
 
     @Test(expected = QMeResourceException.class)
@@ -1352,6 +1370,7 @@ public class QuestionServiceImplTest {
         verify(categoryRepo).findById(1L);
         verify(questionRepo).findById(1L);
         verify(answerOptionRepo).findByQuestionId(1L);
+        verify(answerReferenceMediaRepo).findByQuestionId(1L);
         verify(questionRepo).update(Matchers.anyObject(), Matchers.anyObject());
         verify(answerOptionRepo).update(Matchers.anyObject(), Matchers.anyObject());
         verify(answerReferenceMediaRepo).update(Matchers.anyObject(), Matchers.anyObject());

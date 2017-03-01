@@ -263,8 +263,13 @@ public class QuestionServiceImpl implements QuestionService {
      * @param questionDetail Question Detail
      * @param answerOptionList Answer Option List
      */
-    private void setAnswerOptionList(QMeQuestionDetail questionDetail, List<AnswerOption> answerOptionList) {
-        //TODO:
+    private void setAnswerOptionList(QMeQuestionDetail questionDetail, List<AnswerOption> answerOptionList) throws QMeException {
+        List<QMeAnswerOption>  qmeAnswerOptionList = new ArrayList<>();
+        for (AnswerOption answerOption:answerOptionList) {
+            List<AnswerOptionMedia> answerOptionMediaList = getAnswerOptionMedias(answerOption.getAnswerOptionID());
+            qmeAnswerOptionList.add(getQMeAnswerOption(answerOption,answerOptionMediaList));
+        }
+        questionDetail.setAnswerOptionList(qmeAnswerOptionList);
     }
 
     /**
@@ -273,7 +278,11 @@ public class QuestionServiceImpl implements QuestionService {
      * @param answerReferenceMediaList Answer Reference Media List
      */
     private void setAnswerReferenceMediaList(QMeQuestionDetail questionDetail, List<AnswerReferenceMedia> answerReferenceMediaList) {
-        //TODO:
+        List<QMeAnswerReferenceMedia> qmeAnswerReferenceMediaList = new ArrayList<>();
+        for (AnswerReferenceMedia answerReferenceMedia :answerReferenceMediaList) {
+            qmeAnswerReferenceMediaList.add(getQMeAnswerReferenceMedia(answerReferenceMedia));
+        }
+        questionDetail.setAnswerReferenceMediaList(qmeAnswerReferenceMediaList);
     }
 
     /**
@@ -577,5 +586,62 @@ public class QuestionServiceImpl implements QuestionService {
             qmeQuestionDetail.setCategoryName(question.getCategory().getCategoryName());
         }
         return qmeQuestionDetail;
+    }
+
+    /**
+     * Get Qme Answer Option
+     * @param answerOption Answer Option
+     * @param answerOptionMediaList Answer Option Media List
+     * @return QMeAnswerOption QMe Answer Option
+     */
+    private QMeAnswerOption getQMeAnswerOption(AnswerOption answerOption, List<AnswerOptionMedia> answerOptionMediaList) {
+        QMeAnswerOption qMeAnswerOption = new QMeAnswerOption();
+        qMeAnswerOption.setAnswerOptionID(answerOption.getAnswerOptionID());
+        qMeAnswerOption.setQuestionID(answerOption.getQuestionID());
+        qMeAnswerOption.setOptionText(answerOption.getOptionText());
+        qMeAnswerOption.setCorrect(answerOption.isCorrect());
+        qMeAnswerOption.setAnswerOptionMediaList(getQMeAnswerOptionMediaList(answerOptionMediaList));
+        return qMeAnswerOption;
+    }
+
+    /**
+     * Get Qme Answer Reference Media
+     * @param answerReferenceMedia Answer Reference Media
+     * @return QMeAnswerReferenceMedia QMe Answer Reference Media
+     */
+    private QMeAnswerReferenceMedia getQMeAnswerReferenceMedia(AnswerReferenceMedia answerReferenceMedia) {
+        QMeAnswerReferenceMedia qMeAnswerReferenceMedia = new QMeAnswerReferenceMedia();
+        qMeAnswerReferenceMedia.setAnswerRefMediaID(answerReferenceMedia.getAnswerRefMediaID());
+        qMeAnswerReferenceMedia.setQuestionID(answerReferenceMedia.getQuestionID());
+        qMeAnswerReferenceMedia.setMediaTypeID(answerReferenceMedia.getMediaTypeID());
+        qMeAnswerReferenceMedia.setMedia(answerReferenceMedia.getMedia());
+        return qMeAnswerReferenceMedia;
+    }
+
+    /**
+     * Get QMe Answer Option Media List
+     * @param answerOptionMediaList Answer Option Media List
+     * @return QMeAnswerOptionMedia QMe Answer Option Media List
+     */
+    private List<QMeAnswerOptionMedia> getQMeAnswerOptionMediaList(List<AnswerOptionMedia> answerOptionMediaList) {
+        List<QMeAnswerOptionMedia> qMeAnswerOptionMediaList = new ArrayList<>();
+        for (AnswerOptionMedia answerOptionMedia:answerOptionMediaList) {
+            qMeAnswerOptionMediaList.add(getQMeAnswerOptionMedia(answerOptionMedia));
+        }
+        return qMeAnswerOptionMediaList;
+    }
+
+    /**
+     * Get QMe Answer Option Media
+     * @param answerOptionMedia Answer Option Media
+     * @return QMeAnswerOptionMedia QMe Answer Option Media
+     */
+    private QMeAnswerOptionMedia getQMeAnswerOptionMedia(AnswerOptionMedia answerOptionMedia) {
+        QMeAnswerOptionMedia qMeAnswerOptionMedia = new QMeAnswerOptionMedia();
+        qMeAnswerOptionMedia.setAnswerOptionID(answerOptionMedia.getAnswerOptionID());
+        qMeAnswerOptionMedia.setAnswerOptionMediaID(answerOptionMedia.getAnswerOptionMediaID());
+        qMeAnswerOptionMedia.setMediaTypeID(answerOptionMedia.getMediaTypeID());
+        qMeAnswerOptionMedia.setMedia(answerOptionMedia.getMedia());
+        return qMeAnswerOptionMedia;
     }
 }
