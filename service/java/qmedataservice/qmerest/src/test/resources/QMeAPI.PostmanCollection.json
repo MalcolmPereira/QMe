@@ -1,0 +1,88 @@
+{
+	"variables": [],
+	"info": {
+		"name": "QMeAPI",
+		"_postman_id": "6a28de21-b861-c657-de30-07c3f4b0521b",
+		"description": "QMe API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"description": "",
+			"item": []
+		},
+		{
+			"name": "Questions",
+			"description": "",
+			"item": []
+		},
+		{
+			"name": "Quiz",
+			"description": "",
+			"item": []
+		},
+		{
+			"name": "Users",
+			"description": "User API",
+			"item": []
+		},
+		{
+			"name": "QMe API List",
+			"request": {
+				"url": "http://localhost:8002/qme/api",
+				"method": "GET",
+				"header": [
+					{
+						"key": "QME-AUTH-TOKEN",
+						"value": "",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "QMe API List"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin User Login",
+			"request": {
+				"url": "http://localhost:8002/qme/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"test.admin@gmail.com\",\n\t\"userPassword\": \"testtest\"\n}"
+				},
+				"description": "Admin User Login"
+			},
+			"response": []
+		},
+		{
+			"name": "User Login ",
+			"request": {
+				"url": "http://localhost:8002/qme/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"test.user@gmail.com\",\n\t\"userPassword\": \"testtest\"\n}"
+				},
+				"description": "User Login"
+			},
+			"response": []
+		}
+	]
+}
