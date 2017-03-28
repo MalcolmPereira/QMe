@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QMeAPI",
-		"_postman_id": "6a28de21-b861-c657-de30-07c3f4b0521b",
+		"_postman_id": "2a2b11d7-865a-866e-0972-b19a40b4b111",
 		"description": "QMe API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -25,7 +25,28 @@
 		{
 			"name": "Users",
 			"description": "User API",
-			"item": []
+			"item": [
+				{
+					"name": "Stage User",
+					"request": {
+						"url": "http://localhost:8002/qme/user/stage",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"mpereria\",\n\t\"userPassword\": \"testtest\" ,\n\t\"userFirstName\": \"malcolm\",\n\t\"userLastName\": \"pereira\",\n\t\"userEmail\": \"malcolm_pereira@hotmail.com\",\n\t\"confirmURL\": \"some app url\"\n}\n\t\t\t\t"
+						},
+						"description": "Stage User"
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "QMe API List",
@@ -39,7 +60,10 @@
 						"description": ""
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"description": "QMe API List"
 			},
 			"response": []
