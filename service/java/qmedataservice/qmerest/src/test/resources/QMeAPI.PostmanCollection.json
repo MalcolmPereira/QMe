@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QMeAPI",
-		"_postman_id": "2a2b11d7-865a-866e-0972-b19a40b4b111",
+		"_postman_id": "110463b6-2baf-9de7-f20c-cb31001dda6e",
 		"description": "QMe API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -43,6 +43,259 @@
 							"raw": "{\n\t\"userName\": \"mpereria\",\n\t\"userPassword\": \"testtest\" ,\n\t\"userFirstName\": \"malcolm\",\n\t\"userLastName\": \"pereira\",\n\t\"userEmail\": \"malcolm_pereira@hotmail.com\",\n\t\"confirmURL\": \"some app url\"\n}\n\t\t\t\t"
 						},
 						"description": "Stage User"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"url": "http://localhost:8002/qme/user",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Get All Users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Count",
+					"request": {
+						"url": "http://localhost:8002/qme/user/count",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Get User Count"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Paged User List",
+					"request": {
+						"url": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Get Paged User List"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By User Id",
+					"request": {
+						"url": "http://localhost:8002/qme/user/2",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Get User By User Id"
+					},
+					"response": []
+				},
+				{
+					"name": "Search User By User Name",
+					"request": {
+						"url": "http://localhost:8002/qme/user/search/jdoe",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Search User By User Name"
+					},
+					"response": []
+				},
+				{
+					"name": "Search User By User Email",
+					"request": {
+						"url": "http://localhost:8002/qme/user/searchemail/john.doe@doe.com",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Search User By User Email"
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"url": "http://localhost:8002/qme/user/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"mpereria\",\n\t\"userPassword\": \"testtest\" ,\n\t\"userFirstName\": \"malcolm\",\n\t\"userLastName\": \"pereira\",\n\t\"userEmail\": \"malcolm_pereira@hotmail.com\",\n\t\"confirmURL\": \"some app url\"\n}\n\t\t\t\t"
+						},
+						"description": "Register User"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm User",
+					"request": {
+						"url": "http://localhost:8002/qme/user/confirm",
+						"method": "POST",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "80826943c827ffb4571f2044a956c4e2ce8e7bade257e8132d795d3ce91c790e"
+						},
+						"description": "Confirm User"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"url": "http://localhost:8002/qme/user/6",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"mpereria\",\n\t\"userPassword\": \"testtest\" ,\n\t\"userFirstName\": \"malcolm\",\n\t\"userLastName\": \"pereira\",\n\t\"userEmail\": \"malcolm_pereira@hotmail.com\"\n}\n\t\t\t\t"
+						},
+						"description": "Update User"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"url": "http://localhost:8002/qme/user/6",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"mpereria\",\n\t\"userPassword\": \"testtest\" ,\n\t\"userFirstName\": \"malcolm\",\n\t\"userLastName\": \"pereira\",\n\t\"userEmail\": \"malcolm_pereira@hotmail.com\"\n}\n\t\t\t\t"
+						},
+						"description": "Delete User"
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot User Name",
+					"request": {
+						"url": "http://localhost:8002/qme/user/reset/forgotusername/malcolm_pereira@hotmail.com",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Forgot User Name"
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot User Password",
+					"request": {
+						"url": "http://localhost:8002/qme/user/reset/forgotpassword/malcolm_pereira@hotmail.com",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Forgot User Password"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset User Password",
+					"request": {
+						"url": "http://localhost:8002/qme/user/reset/resetpassword/malcolm_pereira@hotmail.com",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTA3NTYyODd9.i4m3QTDGZDpsR3nBFmGVBMrHcoxerueYo_Lzw53C10nOxVmY02QJ1SVBovdZjm7tMsot0tHWpJ5vB1Pv6Pyczg",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Reset User Password"
 					},
 					"response": []
 				}
