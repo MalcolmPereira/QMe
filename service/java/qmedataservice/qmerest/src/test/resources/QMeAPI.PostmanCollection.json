@@ -157,7 +157,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"categoryName\": \"Some New Category\",\n    \"categoryId\": 12,\n    \"categoryLikes\": 1,\n    \"createdUser\": 1,\n    \"createdUserName\": \"testadmin\"\n }"
+							"raw": " {\n    \"categoryName\": \"Some New Category\",\n    \"categoryId\": 12,\n    \"categoryLikes\": 2,\n    \"createdUser\": 1,\n    \"createdUserName\": \"testadmin\"\n }"
 						},
 						"description": "Update Category"
 					},
@@ -166,7 +166,7 @@
 				{
 					"name": "Delete Category",
 					"request": {
-						"url": "http://localhost:8002/qme/category/12",
+						"url": "http://localhost:8002/qme/category/13",
 						"method": "DELETE",
 						"header": [
 							{
