@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QMeAPI",
-		"_postman_id": "110463b6-2baf-9de7-f20c-cb31001dda6e",
+		"_postman_id": "fb96b244-040b-c87f-aa7f-c40024644f6e",
 		"description": "QMe API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -10,7 +10,177 @@
 		{
 			"name": "Category",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "List Category",
+					"request": {
+						"url": "http://localhost:8002/qme/category",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "List Category"
+					},
+					"response": []
+				},
+				{
+					"name": "Category Count",
+					"request": {
+						"url": "http://localhost:8002/qme/category/count",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Category Count"
+					},
+					"response": []
+				},
+				{
+					"name": "Category Paged List",
+					"request": {
+						"url": "http://localhost:8002/qme/category/paged?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Category Pages List"
+					},
+					"response": []
+				},
+				{
+					"name": "Category By Parent Id",
+					"request": {
+						"url": "http://localhost:8002/qme/category/parent/3",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Category By Parent Id"
+					},
+					"response": []
+				},
+				{
+					"name": "Category By ID",
+					"request": {
+						"url": "http://localhost:8002/qme/category/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Category By ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Category By Name",
+					"request": {
+						"url": "http://localhost:8002/qme/category/search/math",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Category By Name"
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Category",
+					"request": {
+						"url": "http://localhost:8002/qme/category",
+						"method": "POST",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryName\": \"Some New Category\"\n}   "
+						},
+						"description": "Add New Category"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"url": "http://localhost:8002/qme/category/12",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"categoryName\": \"Some New Category\",\n    \"categoryId\": 12,\n    \"categoryLikes\": 1,\n    \"createdUser\": 1,\n    \"createdUserName\": \"testadmin\"\n }"
+						},
+						"description": "Update Category"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"url": "http://localhost:8002/qme/category/12",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Questions",
@@ -58,7 +228,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get All Users"
 					},
 					"response": []
@@ -75,7 +248,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get User Count"
 					},
 					"response": []
@@ -92,7 +268,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get Paged User List"
 					},
 					"response": []
@@ -109,7 +288,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get User By User Id"
 					},
 					"response": []
@@ -126,7 +308,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Search User By User Name"
 					},
 					"response": []
@@ -143,7 +328,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Search User By User Email"
 					},
 					"response": []
@@ -260,7 +448,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Forgot User Name"
 					},
 					"response": []
@@ -277,7 +468,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Forgot User Password"
 					},
 					"response": []
@@ -294,7 +488,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Reset User Password"
 					},
 					"response": []
