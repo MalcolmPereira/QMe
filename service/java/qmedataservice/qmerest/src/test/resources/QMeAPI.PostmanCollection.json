@@ -166,7 +166,7 @@
 				{
 					"name": "Delete Category",
 					"request": {
-						"url": "http://localhost:8002/qme/category/13",
+						"url": "http://localhost:8002/qme/category/14",
 						"method": "DELETE",
 						"header": [
 							{
