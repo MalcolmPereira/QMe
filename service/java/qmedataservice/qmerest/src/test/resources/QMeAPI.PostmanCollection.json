@@ -194,7 +194,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
 								"description": ""
 							}
 						],
@@ -245,12 +245,87 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
 								"description": ""
 							}
 						],
 						"body": {},
 						"description": "Get Question By ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Question",
+					"request": {
+						"url": "http://localhost:8002/qme/question/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"categoryId\":1,\n\t\"questionText\":\"Some Question Text\",\n\t\"answer\":\"Some Answer\",\n\t\"questionPoint\":1,\n\t\"likes\":1,\n\t\"answerReferenceMediaList\":[],\n\t\"answerOptionList\":[\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 1\",\n\t\t\t\t\"correct\":true,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 2\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 3\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t}\n\t\t]\n}"
+						},
+						"description": "Add New Question"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Question",
+					"request": {
+						"url": "http://localhost:8002/qme/question/3",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"questionId\": 3,\n\t\"categoryId\":1,\n\t\"questionText\":\"Some Question Text Updated\",\n\t\"answer\":\"Some Answer Updated\",\n\t\"questionPoint\":1,\n\t\"likes\":1,\n\t\"answerReferenceMediaList\":[],\n\t\"answerOptionList\":[\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 1\",\n\t\t\t\t\"correct\":true,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 2\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 3\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t}\n\t\t]\n}"
+						},
+						"description": "Add New Question"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Question",
+					"request": {
+						"url": "http://localhost:8002/qme/question/4",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Add New Question"
 					},
 					"response": []
 				}
