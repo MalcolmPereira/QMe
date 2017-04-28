@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -169,7 +170,9 @@ public class QuestionServiceImpl implements QuestionService {
             qMeQuestionDetail.setQuestionId(question.getQuestionID());
             qMeQuestionDetail.setCategoryId(question.getCategoryID());
             qMeQuestionDetail.setCreateUserID(question.getCreateUserID());
+            qMeQuestionDetail.setQuestionCreateDate(question.getQuestionCreateDate());
             qMeQuestion.setUpdateUserID(userId);
+            qMeQuestion.setQuestionUpdateDate(LocalDateTime.now());
 
             question = getQuestion(qMeQuestionDetail);
             question = questionRepo.update(question, userId);
@@ -537,8 +540,11 @@ public class QuestionServiceImpl implements QuestionService {
         if (category == null) {
             throw new QMeInvalidResourceDataException("Valid Category is required, Category not found");
         }
-        Question question = new Question(qMeQuestion.getCategoryId(), qMeQuestion.getQuestionText(), qMeQuestion.getAnswer(), qMeQuestion.getQuestionPoint(), qMeQuestion.getCreateUserID());
-        return question;
+        if (qMeQuestion.getQuestionId() == null || qMeQuestion.getQuestionId() == 0) {
+            return new Question(qMeQuestion.getCategoryId(), qMeQuestion.getQuestionText(), qMeQuestion.getAnswer(), qMeQuestion.getQuestionPoint(), qMeQuestion.getCreateUserID());
+        } else {
+            return new Question(qMeQuestion.getQuestionId(), qMeQuestion.getCategoryId(), qMeQuestion.getQuestionText(), qMeQuestion.getAnswer(), qMeQuestion.getQuestionPoint(), qMeQuestion.getLikes(), qMeQuestion.getQuestionCreateDate(), qMeQuestion.getCreateUserID(), qMeQuestion.getQuestionUpdateDate(), qMeQuestion.getUpdateUserID());
+        }
     }
 
     /**

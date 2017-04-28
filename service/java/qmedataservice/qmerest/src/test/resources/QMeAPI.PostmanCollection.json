@@ -287,7 +287,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDY3OTV9.VdxcoDHEV-cmwQhPmnn8gX1Fg0SVZCWTTVN-aIkairkPdED36dIEoXfipzk8XcWCCJdi97JI2d1qHvX4tCE5vg",
 								"description": ""
 							},
 							{
@@ -298,7 +298,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"questionId\": 3,\n\t\"categoryId\":1,\n\t\"questionText\":\"Some Question Text Updated\",\n\t\"answer\":\"Some Answer Updated\",\n\t\"questionPoint\":1,\n\t\"likes\":1,\n\t\"answerReferenceMediaList\":[],\n\t\"answerOptionList\":[\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 1\",\n\t\t\t\t\"correct\":true,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 2\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 3\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t}\n\t\t]\n}"
+							"raw": "{\n\t\"questionId\": 3,\n\t\"categoryId\":1,\n\t\"questionText\":\"Some Question Text Updated 1\",\n\t\"answer\":\"Some Answer Updated 1\",\n\t\"questionPoint\":1,\n\t\"likes\":1,\n\t\"answerReferenceMediaList\":[],\n\t\"answerOptionList\":[\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 1\",\n\t\t\t\t\"correct\":true,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 2\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"optionText\":\"Some Option Text 3\",\n\t\t\t\t\"correct\":false,\n\t\t\t\t\"answerOptionMediaList\":[]\n\t\t\t}\n\t\t]\n}"
 						},
 						"description": "Add New Question"
 					},
@@ -307,7 +307,7 @@
 				{
 					"name": "Delete Question",
 					"request": {
-						"url": "http://localhost:8002/qme/question/4",
+						"url": "http://localhost:8002/qme/question/6",
 						"method": "DELETE",
 						"header": [
 							{
