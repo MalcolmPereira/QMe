@@ -245,16 +245,73 @@
             };
 
             qmeQuestionManagement.submitAddQuestion = function(){
+                var question = {
+                    "categoryId": qmeQuestionManagement.categoryId,
+                    "questionText": qmeQuestionManagement.questionText ,
+                    "answer": qmeQuestionManagement.answer,
+                    "questionPoint": qmeQuestionManagement.questionPoint,
+                    "answerOptionList": [],
+                    "answerReferenceMediaList": []
+                };
+                for (var answerOption in qmeQuestionManagement.answerOptions) {
+                    if(answerOption.mediaType && answerOption.media){
+                        var answerOptionObj = {
+                            "optionText":answerOption.answerOption,
+                            "correct":answerOption.answerCorrect,
+                            "answerOptionMediaList":[
+                                {
+                                    "mediaType":answerOption.mediaType,
+                                    "media":answerOption.media
+                                }
+                            ]
+                        };
+                        question.answerOptionList.push(answerOptionObj);
 
+                    }else{
+                        var answerOptionObj = {
+                            "optionText":answerOption.answerOption,
+                            "correct":answerOption.answerCorrect,
+                            "answerOptionMediaList":[]
+                        };
+                        question.answerOptionList.push(answerOptionObj);
+                    }
+                }
+                for (var answerRefMedia in qmeQuestionManagement.addAnswerReferenceMedia) {
+                    var answerRefMediaObj = {
+                        "mediaType":answerRefMedia.mediaType,
+                        "media":answerRefMedia.media
+                    };
+                    question.answerReferenceMediaList.push(answerRefMediaObj);
+                }
+                console.log("question",question);
+
+                qmeQuestionService
+                    .createQuestion(question)
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Question submitted successfully, .",true);
+                            $state.go('listquestions', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for submit question, please make sure all required fields are valid.");
+
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else if(error && error.status && error.status == 409){
+                                qmeFlashService.Error("Oops.....Invalid request, question already exists or duplicated.");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                            }
+                        }
+                    );
             };
 
             qmeQuestionManagement.cancelAddQuestion = function(){
                 $state.go('listquestions', {}
                 );
             };
-
-
         }
-
-
 })();
