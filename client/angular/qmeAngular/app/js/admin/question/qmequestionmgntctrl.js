@@ -196,6 +196,14 @@
                 var promise = qmeModelSession.modalShown();
                 promise.then(
                     function(data){
+                        console.log("data ",data);
+                        if(data.mediaType){
+                            console.log("got data.mediaType ",data.mediaType);
+                        }
+                        if(data.mediaType &&  data.mediaType.mediaTypeId){
+                            console.log("got data.mediaType and data.mediaType.mediaTypeId ",data.mediaType.mediaTypeId);
+                        }
+
                         if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
                             qmeQuestionManagement.answerOptions.push(
                                 {
@@ -209,6 +217,9 @@
                                 qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(data.media.flowObj.files[0]);
                             }
                         }else{
+                            console.log("no image data.answerOption ",data.answerOption);
+                            console.log("no image data.answerCorrect ",data.answerCorrect);
+
                             qmeQuestionManagement.answerOptions.push(
                                 {
                                     answerOption: data.answerOption,
@@ -254,6 +265,9 @@
                     "answerReferenceMediaList": []
                 };
                 for (var answerOption in qmeQuestionManagement.answerOptions) {
+                    console.log("answerOption.answerOption ",answerOption.answerOption);
+                    console.log("answerOption.answerCorrect ",answerOption.answerCorrect);
+
                     if(answerOption.mediaType && answerOption.media){
                         var answerOptionObj = {
                             "optionText":answerOption.answerOption,
