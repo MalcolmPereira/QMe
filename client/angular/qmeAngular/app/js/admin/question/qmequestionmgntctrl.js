@@ -171,7 +171,8 @@
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
                                    mediaType: data.mediaType,
-                                   mediaRef: data.media.flowObj.files[0]
+                                   media: qmeQuestionManagement.base64File(data.media.flowObj.files[0])
+
                                }
                            );
                            if(qmeQuestionManagement.uploaderAnswerReferenceFlow && data.media.flowObj){
@@ -202,7 +203,7 @@
                                     answerOption: data.answerOption,
                                     answerCorrect: data.answerCorrect,
                                     mediaType: data.mediaType,
-                                    media: data.media.flowObj.files[0]
+                                    media: qmeQuestionManagement.base64File(data.media.flowObj.files[0])
                                 }
                             );
                             if(qmeQuestionManagement.uploaderAnswerOptionFlow && data.media.flowObj){
@@ -254,36 +255,41 @@
                     "answerReferenceMediaList": []
                 };
                 if(qmeQuestionManagement.answerOptions && qmeQuestionManagement.answerOptions.length > 0){
+
                     qmeQuestionManagement.answerOptions.forEach(function (answerOptionElem){
                         if(answerOptionElem.mediaType && answerOptionElem.media){
-                            var answerOptionObj = {
-                                "optionText":answerOptionElem.answerOption,
-                                "correct":answerOptionElem.answerCorrect,
-                                "answerOptionMediaList":[
-                                    {
-                                        "mediaType":answerOptionElem.mediaType,
-                                        "media":answerOptionElem.media
-                                    }
-                                ]
-                            };
-                            question.answerOptionList.push(answerOptionObj);
+                            question.answerOptionList.push(
+                                {
+                                    "optionText":answerOptionElem.answerOption,
+                                    "correct":answerOptionElem.answerCorrect,
+                                    "answerOptionMediaList":[
+                                        {
+                                            "mediaType":answerOptionElem.mediaType,
+                                            "media":answerOptionElem.media
+                                        }
+                                    ]
+                                }
+                            );
+
                         }else{
-                            var answerOptionObj = {
-                                "optionText":answerOptionElem.answerOption,
-                                "correct":answerOptionElem.answerCorrect,
-                                "answerOptionMediaList":[]
-                            };
-                            question.answerOptionList.push(answerOptionObj);
+                            question.answerOptionList.push(
+                                {
+                                    "optionText":answerOptionElem.answerOption,
+                                    "correct":answerOptionElem.answerCorrect,
+                                    "answerOptionMediaList":[]
+                                }
+                            );
                         }
                      });
                 }
                 if(qmeQuestionManagement.addAnswerReferenceMedia && qmeQuestionManagement.addAnswerReferenceMedia.length > 0){
                     qmeQuestionManagement.addAnswerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
-                        var answerRefMediaObj = {
-                            "mediaType":addAnswerReferenceMediaElem.mediaType,
-                            "media":addAnswerReferenceMediaElem.media
-                        };
-                        question.answerReferenceMediaList.push(answerRefMediaObj);
+                        question.answerReferenceMediaList.push(
+                            {
+                                "mediaType":addAnswerReferenceMediaElem.mediaType,
+                                "media":addAnswerReferenceMediaElem.media
+                            }
+                        );
                     });
                 }
 
@@ -310,9 +316,26 @@
                         }
                     );
             };
+
             qmeQuestionManagement.cancelAddQuestion = function(){
                 $state.go('listquestions', {}
                 );
+            };
+
+            qmeQuestionManagement.base64File = function getBase64(file) {
+                if(file.file instanceof Blob || file.file instanceof File){
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        return event.target.result.substr(event.target.result.indexOf('base64')+7);
+                    };
+                    reader.onerror = function (error) {
+                        qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
+                        return undefined;
+                    };
+                    reader.readAsDataURL(file.file);
+                }else{
+                    qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
+                }
             };
         }
 })();
