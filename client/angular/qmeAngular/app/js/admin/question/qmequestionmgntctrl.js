@@ -263,9 +263,8 @@
                         }
                      });
                 }
-                console.log("got qmeQuestionManagement.addAnswerReferenceMedia",qmeQuestionManagement.addAnswerReferenceMedia.length);
-                if(qmeQuestionManagement.addAnswerReferenceMedia && qmeQuestionManagement.addAnswerReferenceMedia.length > 0){
-                    qmeQuestionManagement.addAnswerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
+                if(qmeQuestionManagement.answerReferenceMedia && qmeQuestionManagement.answerReferenceMedia.length > 0){
+                    qmeQuestionManagement.answerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
                         question.answerReferenceMediaList.push(
                             {
                                 "mediaType":addAnswerReferenceMediaElem.mediaTypeId,
@@ -292,7 +291,7 @@
                                 qmeFlashService.Error("Oops.....Invalid request, question already exists or duplicated.");
 
                             }else{
-                                qmeFlashService.Error("Oops.....Error registering new user, please retry in some time.");
+                                qmeFlashService.Error("Oops.....Error adding new question, please retry in some time.");
                             }
                         }
                     );
@@ -336,6 +335,7 @@
                 if(data && data.media && data.media.flowObj && data.media.flowObj.files && data.media.flowObj.files.length > 0 && data.media.flowObj.files[0]){
                     if(data.media.flowObj.files[0].file instanceof Blob || data.media.flowObj.files[0].file instanceof File){
                         var reader = new FileReader();
+
                         reader.onload = function (event) {
                             qmeQuestionManagement.answerReferenceMedia.push(
                                 {
