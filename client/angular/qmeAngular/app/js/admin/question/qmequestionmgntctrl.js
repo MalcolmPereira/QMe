@@ -196,14 +196,6 @@
                 var promise = qmeModelSession.modalShown();
                 promise.then(
                     function(data){
-                        console.log("data ",data);
-                        if(data.mediaType){
-                            console.log("got data.mediaType ",data.mediaType);
-                        }
-                        if(data.mediaType &&  data.mediaType.mediaTypeId){
-                            console.log("got data.mediaType and data.mediaType.mediaTypeId ",data.mediaType.mediaTypeId);
-                        }
-
                         if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
                             qmeQuestionManagement.answerOptions.push(
                                 {
@@ -217,9 +209,6 @@
                                 qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(data.media.flowObj.files[0]);
                             }
                         }else{
-                            console.log("no image data.answerOption ",data.answerOption);
-                            console.log("no image data.answerCorrect ",data.answerCorrect);
-
                             qmeQuestionManagement.answerOptions.push(
                                 {
                                     answerOption: data.answerOption,
@@ -264,40 +253,39 @@
                     "answerOptionList": [],
                     "answerReferenceMediaList": []
                 };
-                for (var answerOption in qmeQuestionManagement.answerOptions) {
-                    console.log("answerOption.answerOption ",answerOption.answerOption);
-                    console.log("answerOption.answerCorrect ",answerOption.answerCorrect);
-
-                    if(answerOption.mediaType && answerOption.media){
-                        var answerOptionObj = {
-                            "optionText":answerOption.answerOption,
-                            "correct":answerOption.answerCorrect,
-                            "answerOptionMediaList":[
-                                {
-                                    "mediaType":answerOption.mediaType,
-                                    "media":answerOption.media
-                                }
-                            ]
-                        };
-                        question.answerOptionList.push(answerOptionObj);
-
-                    }else{
-                        var answerOptionObj = {
-                            "optionText":answerOption.answerOption,
-                            "correct":answerOption.answerCorrect,
-                            "answerOptionMediaList":[]
-                        };
-                        question.answerOptionList.push(answerOptionObj);
-                    }
+                if(qmeQuestionManagement.answerOptions && qmeQuestionManagement.answerOptions.length > 0){
+                    qmeQuestionManagement.answerOptions.forEach(function (answerOptionElem){
+                        if(answerOptionElem.mediaType && answerOptionElem.media){
+                            var answerOptionObj = {
+                                "optionText":answerOptionElem.answerOption,
+                                "correct":answerOptionElem.answerCorrect,
+                                "answerOptionMediaList":[
+                                    {
+                                        "mediaType":answerOptionElem.mediaType,
+                                        "media":answerOptionElem.media
+                                    }
+                                ]
+                            };
+                            question.answerOptionList.push(answerOptionObj);
+                        }else{
+                            var answerOptionObj = {
+                                "optionText":answerOptionElem.answerOption,
+                                "correct":answerOptionElem.answerCorrect,
+                                "answerOptionMediaList":[]
+                            };
+                            question.answerOptionList.push(answerOptionObj);
+                        }
+                     });
                 }
-                for (var answerRefMedia in qmeQuestionManagement.addAnswerReferenceMedia) {
-                    var answerRefMediaObj = {
-                        "mediaType":answerRefMedia.mediaType,
-                        "media":answerRefMedia.media
-                    };
-                    question.answerReferenceMediaList.push(answerRefMediaObj);
+                if(qmeQuestionManagement.addAnswerReferenceMedia && qmeQuestionManagement.addAnswerReferenceMedia.length > 0){
+                    qmeQuestionManagement.addAnswerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
+                        var answerRefMediaObj = {
+                            "mediaType":addAnswerReferenceMediaElem.mediaType,
+                            "media":addAnswerReferenceMediaElem.media
+                        };
+                        question.answerReferenceMediaList.push(answerRefMediaObj);
+                    });
                 }
-                console.log("question",question);
 
                 qmeQuestionService
                     .createQuestion(question)
@@ -322,7 +310,6 @@
                         }
                     );
             };
-
             qmeQuestionManagement.cancelAddQuestion = function(){
                 $state.go('listquestions', {}
                 );
