@@ -12,7 +12,10 @@ package com.malcolm.qme.core.domain;
 public enum MediaTypeEnum {
 
     LINK(1, "text/plain"),
-    IMAGE_PNG(2, "image/png")
+    IMAGE_PNG(2, "image/png"),
+    IMAGE_JPEG(3, "image/jpeg"),
+    IMAGE_JPG(4, "image/jpg"),
+    IMAGE_GIF(5, "image/gif")
     ;
 
     /**

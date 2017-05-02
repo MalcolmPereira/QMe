@@ -168,13 +168,7 @@
                 promise.then(
                     function(data){
                        if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
-                           qmeQuestionManagement.answerReferenceMedia.push(
-                               {
-                                   mediaType: data.mediaType,
-                                   media: qmeQuestionManagement.base64File(data.media.flowObj.files[0])
-
-                               }
-                           );
+                           qmeQuestionManagement.base64FileRefMedia(data);
                            if(qmeQuestionManagement.uploaderAnswerReferenceFlow && data.media.flowObj){
                                qmeQuestionManagement.uploaderAnswerReferenceFlow.files.push(data.media.flowObj.files[0]);
                            }
@@ -198,17 +192,7 @@
                 promise.then(
                     function(data){
                         if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
-                            qmeQuestionManagement.answerOptions.push(
-                                {
-                                    answerOption: data.answerOption,
-                                    answerCorrect: data.answerCorrect,
-                                    mediaType: data.mediaType,
-                                    media: qmeQuestionManagement.base64File(data.media.flowObj.files[0])
-                                }
-                            );
-                            if(qmeQuestionManagement.uploaderAnswerOptionFlow && data.media.flowObj){
-                                qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(data.media.flowObj.files[0]);
-                            }
+                            qmeQuestionManagement.base64FileOptions(data);
                         }else{
                             qmeQuestionManagement.answerOptions.push(
                                 {
@@ -264,13 +248,12 @@
                                     "correct":answerOptionElem.answerCorrect,
                                     "answerOptionMediaList":[
                                         {
-                                            "mediaType":answerOptionElem.mediaType,
+                                            "mediaType":answerOptionElem.mediaTypeId,
                                             "media":answerOptionElem.media
                                         }
                                     ]
                                 }
                             );
-
                         }else{
                             question.answerOptionList.push(
                                 {
@@ -286,13 +269,12 @@
                     qmeQuestionManagement.addAnswerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
                         question.answerReferenceMediaList.push(
                             {
-                                "mediaType":addAnswerReferenceMediaElem.mediaType,
+                                "mediaType":addAnswerReferenceMediaElem.mediaTypeId,
                                 "media":addAnswerReferenceMediaElem.media
                             }
                         );
                     });
                 }
-
                 qmeQuestionService
                     .createQuestion(question)
                     .then(
@@ -322,19 +304,56 @@
                 );
             };
 
-            qmeQuestionManagement.base64File = function getBase64(file) {
-                if(file.file instanceof Blob || file.file instanceof File){
-                    var reader = new FileReader();
-                    reader.onload = function (event) {
-                        return event.target.result.substr(event.target.result.indexOf('base64')+7);
-                    };
-                    reader.onerror = function (error) {
+            qmeQuestionManagement.base64FileOptions = function getBase64Options(data){
+                if(data && data.media && data.media.flowObj && data.media.flowObj.files && data.media.flowObj.files.length > 0 && data.media.flowObj.files[0]){
+                    if(data.media.flowObj.files[0].file instanceof Blob || data.media.flowObj.files[0].file instanceof File){
+                        var reader = new FileReader();
+                        reader.onload = function (event) {
+                            qmeQuestionManagement.answerOptions.push(
+                                {
+                                    answerOption: data.answerOption,
+                                    answerCorrect: data.answerCorrect,
+                                    mediaType: data.mediaType,
+                                    mediaTypeId: data.media.flowObj.files[0].file.type,
+                                    media:event.target.result.substr(event.target.result.indexOf('base64')+7)
+                                }
+                            );
+                            if(qmeQuestionManagement.uploaderAnswerOptionFlow && data.media.flowObj){
+                                qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(data.media.flowObj.files[0]);
+                            }
+                            $scope.$apply();
+                        };
+                        reader.onerror = function (error) {
+                            qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
+                        };
+                        reader.readAsDataURL(data.media.flowObj.files[0].file);
+                    }else{
                         qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
-                        return undefined;
-                    };
-                    reader.readAsDataURL(file.file);
-                }else{
-                    qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
+                    }
+                }
+            };
+            qmeQuestionManagement.base64FileRefMedia = function getBase64RefMedia(data){
+                if(data && data.media && data.media.flowObj && data.media.flowObj.files && data.media.flowObj.files.length > 0 && data.media.flowObj.files[0]){
+                    if(data.media.flowObj.files[0].file instanceof Blob || data.media.flowObj.files[0].file instanceof File){
+                        var reader = new FileReader();
+                        reader.onload = function (event) {
+                            qmeQuestionManagement.answerReferenceMedia.push(
+                                {
+                                    mediaType: data.mediaType,
+                                    mediaTypeId: data.media.flowObj.files[0].file.type,
+                                    media: event.target.result.substr(event.target.result.indexOf('base64')+7)
+                                }
+                            );
+                            $scope.$apply();
+                        };
+                        reader.onerror = function (error) {
+                            qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
+                        };
+                        reader.readAsDataURL(data.media.flowObj.files[0].file);
+
+                    }else{
+                        qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
+                    }
                 }
             };
         }
