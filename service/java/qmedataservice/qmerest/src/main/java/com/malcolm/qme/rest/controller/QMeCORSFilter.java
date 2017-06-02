@@ -10,12 +10,15 @@ package com.malcolm.qme.rest.controller;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -23,6 +26,26 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class QMeCORSFilter implements Filter {
+
+    /**
+     * Supported Client
+     */
+    private static List<String> supportedClients = new ArrayList<>();
+    static{
+        supportedClients.add("http://10.85.22.86:8000");
+        supportedClients.add("http://127.0.0.1:8000");
+        supportedClients.add("http://localhost:8000");
+        supportedClients.add("http://10.85.22.86:4200");
+        supportedClients.add("http://127.0.0.1:4200");
+        supportedClients.add("http://localhost:4200");
+    }
+
+    /*
+    * Request Origin
+    */
+    private static final String REQUEST_ORIGIN = "Origin";
+
+
     /*
     * Allow Origin
     */
@@ -89,7 +112,15 @@ public class QMeCORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_LOCAL_DOMAIN);
+        HttpServletRequest  request  = (HttpServletRequest) req;
+
+        String requestOrigin = request.getHeader(REQUEST_ORIGIN);
+        if(requestOrigin != null && QMeCORSFilter.supportedClients.contains(requestOrigin.trim())){
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, requestOrigin);
+        }else{
+            response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, ALLOW_ORIGIN_LOCAL_DOMAIN);
+        }
+
         response.setHeader(ACCESS_CONTROL_ALLOW_METHODS,ALLOW_METHODS );
         response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS,ACCESS_CONTROL_ALLOW_CREDENTIALS_TRUE );
         response.setHeader(ACCESS_CONTROL_REQUEST_HEADERS, ACCESS_CONTROL_HEADERS_NAME);
