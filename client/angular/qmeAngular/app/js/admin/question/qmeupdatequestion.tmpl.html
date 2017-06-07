@@ -1,10 +1,17 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="qmeQuestionManagementCtrl as qmeQuestionManagement" ng-init="qmeQuestionManagement.selectedQuestion()">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Update Question</h3>
         </div>
         <div class="panel-body">
-            Update Question
+            <div class="container-fluid">
+                <form name="qmeQuestionManagement.updateQuestionForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label  for="categoryName">Category:</label>
+                        <input style="width:500px;" type="number" min="1" max="10" style="width:950px;" ng-disabled="true" ng-model="qmeQuestionManagement.categoryName" name="categoryName" id="categoryName" class="form-control" ng-required="false"/>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

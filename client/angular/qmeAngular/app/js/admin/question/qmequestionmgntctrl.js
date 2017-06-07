@@ -22,6 +22,7 @@
 
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
+            qmeQuestionManagement.categoryName = undefined;
 
             qmeQuestionManagement.uploaderAnswerOptionFlow = undefined;
             qmeQuestionManagement.uploaderAnswerReferenceFlow = undefined;
@@ -295,6 +296,20 @@
                             }
                         }
                     );
+            };
+
+            qmeQuestionManagement.selectedQuestion = function(){
+                qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryId;
+            };
+
+            qmeQuestionManagement.updateQuestion = function(question){
+                $state.go('updatequestion',{
+                        currentQuestion:question,
+                        currentpage:qmeQuestionManagement.currentpage,
+                        sortasc: qmeQuestionManagement.sortasc,
+                        sortfields:qmeQuestionManagement.sortfields
+                    }
+                );
             };
 
             qmeQuestionManagement.cancelAddQuestion = function(){
