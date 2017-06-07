@@ -299,7 +299,9 @@
             };
 
             qmeQuestionManagement.selectedQuestion = function(){
-                qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryId;
+                //qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
+                //qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
+
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
