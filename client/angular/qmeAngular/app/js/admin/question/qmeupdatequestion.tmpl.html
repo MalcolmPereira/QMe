@@ -8,8 +8,16 @@
                 <form name="qmeQuestionManagement.updateQuestionForm" class="form-horizontal">
                     <div class="form-group">
                         <label  for="categoryName">Category:</label>
-                        <input style="width:500px;" type="number" min="1" max="10" style="width:950px;" ng-disabled="true" ng-model="qmeQuestionManagement.categoryName" name="categoryName" id="categoryName" class="form-control" ng-required="false"/>
+                        <input style="width:500px;" type="text" min="1" max="10" style="width:950px;" ng-disabled="true" ng-model="qmeQuestionManagement.categoryName" name="categoryName" id="categoryName" class="form-control" ng-required="false"/>
                     </div>
+
+                    <button id="submitUpdateQuestionButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeQuestionManagement.submitUpdateQuestion()" ng-disabled="updateQuestionForm.$invalid">Update Question</button>
+                     &nbsp;&nbsp;
+                    <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeQuestionManagement.cancelUpdateQuestion()">Cancel</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="deleteButton" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#qmeConfirmModel">Delete</button>
+                    <qme-confirm header-message="'Delete Question'" body-message="'Are you sure you want to delete question ?'" function-call="qmeQuestionManagement.deleteQuestion" function-param="qmeQuestionManagement.questionId"></qme-confirm>
+
                 </form>
             </div>
         </div>

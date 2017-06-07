@@ -19,6 +19,8 @@
             qmeQuestionManagement.sortfields = "QUESTION";
 
             qmeQuestionManagement.addQuestionForm = undefined;
+            qmeQuestionManagement.updateQuestionForm = undefined;
+            qmeQuestionManagement.questionId = undefined;
 
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
@@ -299,9 +301,8 @@
             };
 
             qmeQuestionManagement.selectedQuestion = function(){
-                //qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
-                //qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
-
+                qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
+                qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
@@ -312,6 +313,16 @@
                         sortfields:qmeQuestionManagement.sortfields
                     }
                 );
+            };
+
+            qmeQuestionManagement.cancelUpdateQuestion = function(){
+                $state.go('listquestions', {
+                        currentpage:qmeQuestionManagement.currentpage,
+                        sortasc:qmeQuestionManagement.sortasc,
+                        sortfields:qmeQuestionManagement.sortfields
+                    }
+                );
+
             };
 
             qmeQuestionManagement.cancelAddQuestion = function(){
