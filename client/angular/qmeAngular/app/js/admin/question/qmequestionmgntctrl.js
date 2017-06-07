@@ -89,7 +89,7 @@
                 qmeQuestionManagement.sortasc = true;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
-                qmeQuestionManagement.pageUsers(0);
+                qmeQuestionManagement.pageQuestions(0);
             };
 
             qmeQuestionManagement.isSortAsc = function(field){
