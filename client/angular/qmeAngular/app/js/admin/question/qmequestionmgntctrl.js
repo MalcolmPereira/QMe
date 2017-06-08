@@ -303,6 +303,7 @@
             };
 
             qmeQuestionManagement.selectedQuestion = function(){
+                qmeQuestionManagement.questionId = $stateParams.currentQuestion.questionId;
                 qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
                 qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
                 qmeQuestionManagement.questionPoint = $stateParams.currentQuestion.questionPoint;
@@ -311,12 +312,29 @@
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
-                $state.go('updatequestion',{
-                        currentQuestion:question,
-                        currentpage:qmeQuestionManagement.currentpage,
-                        sortasc: qmeQuestionManagement.sortasc,
-                        sortfields:qmeQuestionManagement.sortfields
-                    }
+                qmeQuestionManagement.questionId = undefined;
+                qmeQuestionManagement.categoryId = undefined;
+                qmeQuestionManagement.categoryName = undefined;
+
+                qmeQuestionService.getQuestionById(question.questionId)
+                    .then(
+                        function(res){
+                                $state.go('updatequestion',{
+                                    currentQuestion:res,
+                                    currentpage:qmeQuestionManagement.currentpage,
+                                    sortasc: qmeQuestionManagement.sortasc,
+                                    sortfields:qmeQuestionManagement.sortfields
+                                }
+                            );
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid question resource, question not found");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error getring question detail, please retry in some time.");
+                            }
+                        }
                 );
             };
 
@@ -331,9 +349,33 @@
             };
 
             qmeQuestionManagement.cancelAddQuestion = function(){
-                $state.go('listquestions', {}
-                );
+                $state.go('listquestions', {});
             };
+
+            qmeQuestionManagement.deleteQuestion = function(){
+                qmeQuestionService.deleteQuestion(qmeQuestionManagement.questionId)
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Question Delete successful.",true);
+                            $state.go('listquestions', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid request for question delete, question not found.");
+
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized to delete question .");
+
+                            }else if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for delete question .");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Server Error deleting question , please contact administrator.");
+                            }
+                        }
+                    );
+            };
+
 
             qmeQuestionManagement.base64FileOptions = function getBase64Options(data){
                 if(data && data.media && data.media.flowObj && data.media.flowObj.files && data.media.flowObj.files.length > 0 && data.media.flowObj.files[0]){
