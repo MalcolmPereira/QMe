@@ -25,6 +25,8 @@
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
             qmeQuestionManagement.categoryName = undefined;
+            qmeQuestionManagement.questionPoint = undefined;
+            qmeQuestionManagement.questionText = undefined;
 
             qmeQuestionManagement.uploaderAnswerOptionFlow = undefined;
             qmeQuestionManagement.uploaderAnswerReferenceFlow = undefined;
@@ -303,6 +305,9 @@
             qmeQuestionManagement.selectedQuestion = function(){
                 qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
                 qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
+                qmeQuestionManagement.questionPoint = $stateParams.currentQuestion.questionPoint;
+                qmeQuestionManagement.questionText = $stateParams.currentQuestion.questionText;
+                qmeQuestionManagement.answerOptions = $stateParams.currentQuestion.answerOptions ;
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
