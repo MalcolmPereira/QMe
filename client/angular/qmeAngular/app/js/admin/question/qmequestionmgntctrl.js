@@ -303,19 +303,47 @@
             };
 
             qmeQuestionManagement.selectedQuestion = function(){
+                console.log("$stateParams.currentQuestion ",$stateParams.currentQuestion);
                 qmeQuestionManagement.questionId = $stateParams.currentQuestion.questionId;
                 qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
                 qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
                 qmeQuestionManagement.questionPoint = $stateParams.currentQuestion.questionPoint;
                 qmeQuestionManagement.questionText = $stateParams.currentQuestion.questionText;
-                qmeQuestionManagement.answerOptions = $stateParams.currentQuestion.answerOptions ;
+
+                qmeQuestionManagement.answerOptions = [];
+                $stateParams.currentQuestion.answerOptionList.forEach(function (answerOptionElem){
+                    var answerOptionObj = {
+                        "answerOption":answerOptionElem.optionText,
+                        "answerCorrect":answerOptionElem.correct,
+                        "answerOptionID": answerOptionElem.answerOptionID,
+                        "questionID": answerOptionElem.questionID,
+                        "mediaTypeId":'',
+                        "media":''
+                    };
+                    answerOptionElem.answerOptionMediaList.forEach(function (answerOptionMediaElem){
+                        answerOptionObj.mediaTypeId = answerOptionMediaElem.mediaType;
+                        answerOptionObj.media = answerOptionMediaElem.media;
+                    });
+                    qmeQuestionManagement.answerOptions.push(answerOptionObj);
+                });
+
+                qmeQuestionManagement.answerReferenceMedia = [];
+                $stateParams.currentQuestion.answerReferenceMediaList.forEach(function (answerReferenceMediaElem){
+                    qmeQuestionManagement.answerReferenceMedia.push({
+                        "mediaTypeId": answerReferenceMediaElem.mediaType,
+                        "media": answerReferenceMediaElem.media,
+                        "answerRefMediaID": answerReferenceMediaElem.answerRefMediaID,
+                        "questionID": answerReferenceMediaElem.questionID
+                    });
+                });
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
                 qmeQuestionManagement.questionId = undefined;
                 qmeQuestionManagement.categoryId = undefined;
                 qmeQuestionManagement.categoryName = undefined;
-
+                qmeQuestionManagement.answerOptions = [];
+                qmeQuestionManagement.answerReferenceMedia = [];
                 qmeQuestionService.getQuestionById(question.questionId)
                     .then(
                         function(res){
