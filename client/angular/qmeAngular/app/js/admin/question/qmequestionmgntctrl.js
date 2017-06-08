@@ -309,8 +309,22 @@
                 qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
                 qmeQuestionManagement.questionPoint = $stateParams.currentQuestion.questionPoint;
                 qmeQuestionManagement.questionText = $stateParams.currentQuestion.questionText;
+                qmeQuestionManagement.answerReferenceMedia = [];
+                $stateParams.currentQuestion.answerReferenceMediaList.forEach(function (answerReferenceMediaElem){
+                    qmeQuestionManagement.answerReferenceMedia.push({
+                        "mediaTypeId": answerReferenceMediaElem.mediaType,
+                        "media": answerReferenceMediaElem.media,
+                        "answerRefMediaID": answerReferenceMediaElem.answerRefMediaID,
+                        "questionID": answerReferenceMediaElem.questionID
+                    });
+                });
+            };
 
+            qmeQuestionManagement.loadAnswerOptions = function(){
+                console.log("loadAnswerOptions  is called ");
+                console.log("got flow",qmeQuestionManagement.uploaderAnswerOptionFlow);
                 qmeQuestionManagement.answerOptions = [];
+
                 $stateParams.currentQuestion.answerOptionList.forEach(function (answerOptionElem){
                     var answerOptionObj = {
                         "answerOption":answerOptionElem.optionText,
@@ -323,19 +337,22 @@
                     answerOptionElem.answerOptionMediaList.forEach(function (answerOptionMediaElem){
                         answerOptionObj.mediaTypeId = answerOptionMediaElem.mediaType;
                         answerOptionObj.media = answerOptionMediaElem.media;
+
+                        //var blob = new Blob([answerOptionMediaElem.media], {type: answerOptionMediaElem.mediaType});
+                        //blob.name = 'file.png';
+                        //$scope.$apply(function(){
+                         //   $scope.qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blob);
+                        //});
+                        //$scope.$apply(function() {
+                            //
+                            //
+                            //qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blob);
+                            //$scope.someData = someData;
+                        //});
                     });
                     qmeQuestionManagement.answerOptions.push(answerOptionObj);
                 });
 
-                qmeQuestionManagement.answerReferenceMedia = [];
-                $stateParams.currentQuestion.answerReferenceMediaList.forEach(function (answerReferenceMediaElem){
-                    qmeQuestionManagement.answerReferenceMedia.push({
-                        "mediaTypeId": answerReferenceMediaElem.mediaType,
-                        "media": answerReferenceMediaElem.media,
-                        "answerRefMediaID": answerReferenceMediaElem.answerRefMediaID,
-                        "questionID": answerReferenceMediaElem.questionID
-                    });
-                });
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
