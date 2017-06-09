@@ -27,6 +27,7 @@
             qmeQuestionManagement.categoryName = undefined;
             qmeQuestionManagement.questionPoint = undefined;
             qmeQuestionManagement.questionText = undefined;
+            qmeQuestionManagement.answer = undefined;
 
             qmeQuestionManagement.uploaderAnswerOptionFlow = undefined;
             qmeQuestionManagement.uploaderAnswerReferenceFlow = undefined;
@@ -302,21 +303,44 @@
                     );
             };
 
+            qmeQuestionManagement.updateQuestion = function(question){
+                qmeQuestionManagement.questionId = undefined;
+                qmeQuestionManagement.categoryId = undefined;
+                qmeQuestionManagement.categoryName = undefined;
+                qmeQuestionManagement.questionPoint = undefined;
+                qmeQuestionManagement.questionText = undefined;
+                qmeQuestionManagement.answer = undefined;
+                qmeQuestionManagement.answerOptions = [];
+                qmeQuestionManagement.answerReferenceMedia = [];
+                qmeQuestionService.getQuestionById(question.questionId)
+                    .then(
+                        function(res){
+                            $state.go('updatequestion',{
+                                    currentQuestion:res,
+                                    currentpage:qmeQuestionManagement.currentpage,
+                                    sortasc: qmeQuestionManagement.sortasc,
+                                    sortfields:qmeQuestionManagement.sortfields
+                                }
+                            );
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid question resource, question not found");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error getring question detail, please retry in some time.");
+                            }
+                        }
+                    );
+            };
+
             qmeQuestionManagement.selectedQuestion = function(){
                 qmeQuestionManagement.questionId = $stateParams.currentQuestion.questionId;
                 qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
                 qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
                 qmeQuestionManagement.questionPoint = $stateParams.currentQuestion.questionPoint;
                 qmeQuestionManagement.questionText = $stateParams.currentQuestion.questionText;
-                qmeQuestionManagement.answerReferenceMedia = [];
-                $stateParams.currentQuestion.answerReferenceMediaList.forEach(function (answerReferenceMediaElem){
-                    qmeQuestionManagement.answerReferenceMedia.push({
-                        "mediaTypeId": answerReferenceMediaElem.mediaType,
-                        "media": answerReferenceMediaElem.media,
-                        "answerRefMediaID": answerReferenceMediaElem.answerRefMediaID,
-                        "questionID": answerReferenceMediaElem.questionID
-                    });
-                });
+                qmeQuestionManagement.answer = $stateParams.currentQuestion.answer;
             };
 
             qmeQuestionManagement.loadAnswerOptions = function(){
@@ -374,32 +398,53 @@
                 }
             };
 
-            qmeQuestionManagement.updateQuestion = function(question){
-                qmeQuestionManagement.questionId = undefined;
-                qmeQuestionManagement.categoryId = undefined;
-                qmeQuestionManagement.categoryName = undefined;
-                qmeQuestionManagement.answerOptions = [];
-                qmeQuestionManagement.answerReferenceMedia = [];
-                qmeQuestionService.getQuestionById(question.questionId)
-                    .then(
-                        function(res){
-                                $state.go('updatequestion',{
-                                    currentQuestion:res,
-                                    currentpage:qmeQuestionManagement.currentpage,
-                                    sortasc: qmeQuestionManagement.sortasc,
-                                    sortfields:qmeQuestionManagement.sortfields
-                                }
-                            );
-                        },
-                        function(error){
-                            if(error && error.status && error.status == 404){
-                                qmeFlashService.Error("Oops.....Invalid question resource, question not found");
+            qmeQuestionManagement.loadAnswerReferenceMedia = function(){
+                if($stateParams && $stateParams.currentQuestion && $stateParams.currentQuestion.answerReferenceMediaList && $stateParams.currentQuestion.answerReferenceMediaList.length > 0){
+                    qmeQuestionManagement.answerReferenceMedia = [];
+                    var blobArr = [];
+                    var fileCounter = 1;
+                    $stateParams.currentQuestion.answerReferenceMediaList .forEach(function (answerMediaElem){
+                        var answerReferenceObj = {
+                            "answerRefMediaID": answerMediaElem.answerRefMediaID,
+                            "questionID": answerMediaElem.questionID,
+                            "mediaType" : {
+                                "mediaTypeId":''
+                            },
+                            "media":''
+                        };
+                        if(answerMediaElem.mediaType === 'image/png' || answerMediaElem.mediaType === 'image/gif' || answerMediaElem.mediaType === 'image/jpeg' || answerMediaElem.mediaType === 'image/jpg'){
 
-                            }else{
-                                qmeFlashService.Error("Oops.....Error getring question detail, please retry in some time.");
+                            answerReferenceObj.mediaType.mediaTypeId = "IMAGE";
+                            answerReferenceObj.media = answerMediaElem.media;
+
+                            var raw  = atob(answerMediaElem.media);
+                            var byteNumbers = new Array(raw.length);
+                            for (var i = 0; i < raw.length; i++) {
+                                byteNumbers[i] = raw.charCodeAt(i);
                             }
+                            var byteArray = new Uint8Array(byteNumbers);
+
+                            var blob = new Blob([byteArray], {type: answerMediaElem.mediaType});
+                            blob.name = 'file_'+fileCounter +'.png';
+                            blobArr.push(blob);
+                            fileCounter += 1;
+
+                        }else if(answerMediaElem.mediaType === 'text/plain'){
+                            answerReferenceObj.mediaType.mediaTypeId = "LINK";
+                            answerReferenceObj.media = answerMediaElem.media;
+                        }else{
+                            answerReferenceObj.mediaType.mediaTypeId = "";
+                            answerReferenceObj.media = "";
                         }
-                );
+                        qmeQuestionManagement.answerReferenceMedia.push(answerReferenceObj);
+                    });
+                    $timeout(function(){
+                        blobArr.forEach(function (blobFileObj){
+                            //qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blobFileObj);
+                            //TODO
+                        });
+                    },100);
+                }
             };
 
             qmeQuestionManagement.cancelUpdateQuestion = function(){
