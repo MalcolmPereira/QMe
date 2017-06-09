@@ -365,6 +365,7 @@
                             if(answerOptionMediaElem.mediaType === 'image/png' || answerOptionMediaElem.mediaType === 'image/gif' || answerOptionMediaElem.mediaType === 'image/jpeg' || answerOptionMediaElem.mediaType === 'image/jpg'){
 
                                 answerOptionObj.mediaType.mediaTypeId = "IMAGE";
+                                answerOptionObj.mediaType.mediaTypeDesc = "Image";
                                 answerOptionObj.media = answerOptionMediaElem.media;
 
                                 var raw  = atob(answerOptionMediaElem.media);
@@ -381,9 +382,12 @@
 
                             }else if(answerOptionMediaElem.mediaType === 'text/plain'){
                                 answerOptionObj.mediaType.mediaTypeId = "LINK";
+                                answerOptionObj.mediaType.mediaTypeDesc = "Http Link";
                                 answerOptionObj.media = answerOptionMediaElem.media;
+
                             }else{
-                                answerOptionObj.mediaType.mediaTypeId = "";
+                                answerOptionObj.mediaType.mediaTypeId = "NONE";
+                                answerOptionObj.mediaType.mediaTypeDesc = "";
                                 answerOptionObj.media = "";
                             }
                         });
@@ -408,13 +412,15 @@
                             "answerRefMediaID": answerMediaElem.answerRefMediaID,
                             "questionID": answerMediaElem.questionID,
                             "mediaType" : {
-                                "mediaTypeId":''
+                                "mediaTypeId":'',
+                                "mediaTypeDesc":''
                             },
                             "media":''
                         };
                         if(answerMediaElem.mediaType === 'image/png' || answerMediaElem.mediaType === 'image/gif' || answerMediaElem.mediaType === 'image/jpeg' || answerMediaElem.mediaType === 'image/jpg'){
 
                             answerReferenceObj.mediaType.mediaTypeId = "IMAGE";
+                            answerReferenceObj.mediaType.mediaTypeDesc = "Image";
                             answerReferenceObj.media = answerMediaElem.media;
 
                             var raw  = atob(answerMediaElem.media);
@@ -431,17 +437,18 @@
 
                         }else if(answerMediaElem.mediaType === 'text/plain'){
                             answerReferenceObj.mediaType.mediaTypeId = "LINK";
+                            answerReferenceObj.mediaType.mediaTypeDesc = "Http Link";
                             answerReferenceObj.media = answerMediaElem.media;
                         }else{
-                            answerReferenceObj.mediaType.mediaTypeId = "";
+                            answerReferenceObj.mediaType.mediaTypeId = "NONE";
+                            answerReferenceObj.mediaType.mediaTypeDesc = "";
                             answerReferenceObj.media = "";
                         }
                         qmeQuestionManagement.answerReferenceMedia.push(answerReferenceObj);
                     });
                     $timeout(function(){
                         blobArr.forEach(function (blobFileObj){
-                            //qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blobFileObj);
-                            //TODO
+                            qmeQuestionManagement.uploaderAnswerReferenceFlow.addFile(blobFileObj);
                         });
                     },100);
                 }
