@@ -21,8 +21,7 @@
 
                     <div class="form-group" flow-init="{singleFile: false}" flow-name="qmeQuestionManagement.uploaderAnswerOptionFlow"  ng-init="qmeQuestionManagement.loadAnswerOptions()">
                         <label for="answerOption">Answer Options:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerOptions.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerOptions();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                        <div class="container">
-                            <table style="width: 80%" class="table table-bordered table-striped" name="answerReferenceMedia" id="answerOption" >
+                        <table style="width:950px;" class="table table-bordered table-striped" name="answerReferenceMedia" id="answerOption" >
                                 <thead>
                                 <tr>
                                     <th style="width: 43%">Option</th>
@@ -44,8 +43,7 @@
                                     <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerOption($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                                 </tr>
                                 </tbody>
-                            </table>
-                        </div>
+                        </table>
                     </div>
                     <div class="form-group">
                         <label for="answer">Explanation:</label>
@@ -54,8 +52,7 @@
 
                     <div class="form-group" flow-init="{singleFile: false}" flow-name="qmeQuestionManagement.uploaderAnswerReferenceFlow" ng-init="qmeQuestionManagement.loadAnswerReferenceMedia()">
                         <label for="answerReferenceMedia">Reference:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerReferenceMedia.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerReferenceMedia();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                        <div class="container">
-                            <table style="width: 80%" class ="table table-bordered table-striped" name="answerReferenceMedia" id="answerReferenceMedia" >
+                        <table style="width:950px;" class ="table table-bordered table-striped" name="answerReferenceMedia" id="answerReferenceMedia" >
                                 <thead>
                                 <tr>
                                     <th style="width: 43%;">Media Type</th>
@@ -76,8 +73,7 @@
                                     <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                                 </tr>
                                 </tbody>
-                            </table>
-                        </div>
+                        </table>
                     </div>
 
 
