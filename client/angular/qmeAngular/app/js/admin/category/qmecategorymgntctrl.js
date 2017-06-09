@@ -6,9 +6,9 @@
 
         .controller('qmeCategoryManagementCtrl', QMeCategoryManagementController);
 
-        QMeCategoryManagementController.$inject = ['$state','$scope','qmeFlashService','qmeCategoryService'];
+        QMeCategoryManagementController.$inject = ['$scope','qmeFlashService','qmeCategoryService'];
 
-        function QMeCategoryManagementController($state,$scope,qmeFlashService,qmeCategoryService) {
+        function QMeCategoryManagementController($scope,qmeFlashService,qmeCategoryService) {
 
             var qmeCategoryManagement = this;
 
@@ -62,6 +62,7 @@
             };
 
             qmeCategoryManagement.cancelUpdates = function(){
+                qmeFlashService.Clear();
                 $("#qmeTreeId").jstree("deselect_all");
                 qmeCategoryManagement.categoryName = "";
                 qmeCategoryManagement.parentId     = "0";
