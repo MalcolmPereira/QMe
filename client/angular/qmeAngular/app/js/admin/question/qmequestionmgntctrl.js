@@ -302,10 +302,7 @@
                     );
             };
 
-
-            qmeQuestionManagement.loadOptions = false;
             qmeQuestionManagement.selectedQuestion = function(){
-                console.log("$stateParams.currentQuestion ",$stateParams.currentQuestion);
                 qmeQuestionManagement.questionId = $stateParams.currentQuestion.questionId;
                 qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
                 qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
@@ -322,16 +319,13 @@
                 });
             };
 
-
             qmeQuestionManagement.loadAnswerOptions = function(){
-                console.log("loadAnswerOptions  is called ");
-                console.log("got flow",qmeQuestionManagement.uploaderAnswerOptionFlow);
-
                 qmeQuestionManagement.answerOptions = [];
-                var answerOptionObj = undefined;
-                var blob = undefined;
+                var blobArr = [];
+                var fileCounter = 1;
+
                 $stateParams.currentQuestion.answerOptionList.forEach(function (answerOptionElem){
-                    answerOptionObj = {
+                    var answerOptionObj = {
                         "answerOption":answerOptionElem.optionText,
                         "answerCorrect":answerOptionElem.correct,
                         "answerOptionID": answerOptionElem.answerOptionID,
@@ -352,36 +346,22 @@
                         }
                         var byteArray = new Uint8Array(byteNumbers);
 
-                        //var raw = window.atob(answerOptionMediaElem.media);
-                        //var rawLength = raw.length;
-                        //var array = new Uint8Array(new ArrayBuffer(rawLength));
-                        //for(var i = 0; i < rawLength; i++) {
-                        //   array[i] = raw.charCodeAt(i);
-                        //}
-                        //blob = new Blob([answerOptionMediaElem.media], {'type': answerOptionMediaElem.mediaType});
-                        //blob = new Blob(array, {type: answerOptionMediaElem.mediaType});
-
-                        blob = new Blob([byteArray], {type: answerOptionMediaElem.mediaType});
-                        blob.name = 'file.png';
+                        var blob = new Blob([byteArray], {type: answerOptionMediaElem.mediaType});
+                        blob.name = 'file_'+fileCounter +'.png';
+                        blobArr.push(blob);
+                        fileCounter += 1;
                     });
-                });
-                $timeout(function(){
                     qmeQuestionManagement.answerOptions.push(answerOptionObj);
+                });
 
-                    //var file = new Flow.FlowFile(qmeQuestionManagement.uploaderAnswerOptionFlow,blob);
-                    //qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(file);
-                    //qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(file);
-
-                    qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blob);
-                    //$scope.$apply();
-                    console.log("got flow",qmeQuestionManagement.uploaderAnswerOptionFlow);
-                    qmeQuestionManagement.loadOptions = true;
-                },500);
-
+                $timeout(function(){
+                    blobArr.forEach(function (blobFileObj){
+                        qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blobFileObj);
+                    });
+                },100);
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
-                qmeQuestionManagement.loadOptions = false;
                 qmeQuestionManagement.questionId = undefined;
                 qmeQuestionManagement.categoryId = undefined;
                 qmeQuestionManagement.categoryName = undefined;
