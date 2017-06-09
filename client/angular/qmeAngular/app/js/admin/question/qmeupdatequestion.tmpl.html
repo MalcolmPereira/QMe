@@ -18,7 +18,8 @@
                         <label for="questionText">Question Text:</label>
                         <textarea style="width:950px;" rows="3" ng-model="qmeQuestionManagement.questionText" name="questionText" id="questionText" class="form-control" placeholder="Question Text" ng-required="true"></textarea>
                     </div>
-                    <div class="form-group" flow-init="{singleFile: false}" flow-name="qmeQuestionManagement.uploaderAnswerOptionFlow" ng-init="qmeQuestionManagement.loadAnswerOptions()">
+                    <div flow-init="{singleFile: false}" flow-name="qmeQuestionManagement.uploaderAnswerOptionFlow" ng-init="qmeQuestionManagement.loadAnswerOptions()">
+                    <div class="form-group" flow-init="{singleFile: false}" flow-object="qmeQuestionManagement.uploaderAnswerOptionFlow" ng-if="qmeQuestionManagement.loadOptions">
                         <label for="answerOption">Answer Options:</label>&nbsp;<a ng-show="(qmeQuestionManagement.answerOptions.length < 5 )" ng-href="#" ng-click="qmeQuestionManagement.addAnswerOptions();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                         <div class="container">
                             <table style="width: 80%" class="table table-bordered table-striped" name="answerReferenceMedia" id="answerOption" >
@@ -45,6 +46,7 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                     </div>
 
                     <button id="submitUpdateQuestionButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeQuestionManagement.submitUpdateQuestion()" ng-disabled="updateQuestionForm.$invalid">Update Question</button>

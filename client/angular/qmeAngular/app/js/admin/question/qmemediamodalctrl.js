@@ -153,6 +153,8 @@
                 qmeMediaReference.uploadError   = undefined;
                 qmeMediaReference.uploadedImage = file;
             }
+            console.log("got flow",flow);
+            console.log("got file",file);
         };
 
 

@@ -6,9 +6,9 @@
 
         .controller('qmeQuestionManagementCtrl', QMeQuestionManagementController);
 
-        QMeQuestionManagementController.$inject = ['$scope','$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
+        QMeQuestionManagementController.$inject = ['$scope','$timeout','$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
 
-        function QMeQuestionManagementController($scope,$state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
+        function QMeQuestionManagementController($scope,$timeout,$state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
 
             var qmeQuestionManagement = this;
 
@@ -302,6 +302,8 @@
                     );
             };
 
+
+            qmeQuestionManagement.loadOptions = false;
             qmeQuestionManagement.selectedQuestion = function(){
                 console.log("$stateParams.currentQuestion ",$stateParams.currentQuestion);
                 qmeQuestionManagement.questionId = $stateParams.currentQuestion.questionId;
@@ -320,42 +322,66 @@
                 });
             };
 
+
             qmeQuestionManagement.loadAnswerOptions = function(){
                 console.log("loadAnswerOptions  is called ");
                 console.log("got flow",qmeQuestionManagement.uploaderAnswerOptionFlow);
-                qmeQuestionManagement.answerOptions = [];
 
+                qmeQuestionManagement.answerOptions = [];
+                var answerOptionObj = undefined;
+                var blob = undefined;
                 $stateParams.currentQuestion.answerOptionList.forEach(function (answerOptionElem){
-                    var answerOptionObj = {
+                    answerOptionObj = {
                         "answerOption":answerOptionElem.optionText,
                         "answerCorrect":answerOptionElem.correct,
                         "answerOptionID": answerOptionElem.answerOptionID,
                         "questionID": answerOptionElem.questionID,
-                        "mediaTypeId":'',
+                        "mediaType" : {
+                            "mediaTypeId":''
+                        },
                         "media":''
                     };
                     answerOptionElem.answerOptionMediaList.forEach(function (answerOptionMediaElem){
-                        answerOptionObj.mediaTypeId = answerOptionMediaElem.mediaType;
+                        answerOptionObj.mediaType.mediaTypeId = "IMAGE";
                         answerOptionObj.media = answerOptionMediaElem.media;
 
-                        //var blob = new Blob([answerOptionMediaElem.media], {type: answerOptionMediaElem.mediaType});
-                        //blob.name = 'file.png';
-                        //$scope.$apply(function(){
-                         //   $scope.qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blob);
-                        //});
-                        //$scope.$apply(function() {
-                            //
-                            //
-                            //qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blob);
-                            //$scope.someData = someData;
-                        //});
+                        var raw  = atob(answerOptionMediaElem.media);
+                        var byteNumbers = new Array(raw.length);
+                        for (var i = 0; i < raw.length; i++) {
+                            byteNumbers[i] = raw.charCodeAt(i);
+                        }
+                        var byteArray = new Uint8Array(byteNumbers);
+
+                        //var raw = window.atob(answerOptionMediaElem.media);
+                        //var rawLength = raw.length;
+                        //var array = new Uint8Array(new ArrayBuffer(rawLength));
+                        //for(var i = 0; i < rawLength; i++) {
+                        //   array[i] = raw.charCodeAt(i);
+                        //}
+                        //blob = new Blob([answerOptionMediaElem.media], {'type': answerOptionMediaElem.mediaType});
+                        //blob = new Blob(array, {type: answerOptionMediaElem.mediaType});
+
+                        blob = new Blob([byteArray], {type: answerOptionMediaElem.mediaType});
+                        blob.name = 'file.png';
                     });
-                    qmeQuestionManagement.answerOptions.push(answerOptionObj);
                 });
+                $timeout(function(){
+                    qmeQuestionManagement.answerOptions.push(answerOptionObj);
+
+                    //var file = new Flow.FlowFile(qmeQuestionManagement.uploaderAnswerOptionFlow,blob);
+                    //qmeQuestionManagement.uploaderAnswerOptionFlow.files.push(file);
+                    //qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(file);
+
+                    qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blob);
+                    //$scope.$apply();
+                    console.log("got flow",qmeQuestionManagement.uploaderAnswerOptionFlow);
+                    qmeQuestionManagement.loadOptions = true;
+                },500);
 
             };
 
             qmeQuestionManagement.updateQuestion = function(question){
+                qmeQuestionManagement.loadOptions = false;
                 qmeQuestionManagement.questionId = undefined;
                 qmeQuestionManagement.categoryId = undefined;
                 qmeQuestionManagement.categoryName = undefined;
