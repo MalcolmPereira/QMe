@@ -179,8 +179,8 @@
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
-                                   mediaType : "text/plain",
-                                   media: btoa(data.media)
+                                   mediaType : data.mediaType,
+                                   media: data.media
                                }
                            );
                        }
@@ -197,6 +197,7 @@
                     function(data){
                         if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
                             qmeQuestionManagement.base64FileOptions(data);
+
                         }else{
                             qmeQuestionManagement.answerOptions.push(
                                 {
@@ -246,7 +247,7 @@
                 if(qmeQuestionManagement.answerOptions && qmeQuestionManagement.answerOptions.length > 0){
 
                     qmeQuestionManagement.answerOptions.forEach(function (answerOptionElem){
-                        if(answerOptionElem.mediaType && answerOptionElem.media){
+if(answerOptionElem.mediaType && answerOptionElem.media){
                             question.answerOptionList.push(
                                 {
                                     "optionText":answerOptionElem.answerOption,
@@ -272,12 +273,23 @@
                 }
                 if(qmeQuestionManagement.answerReferenceMedia && qmeQuestionManagement.answerReferenceMedia.length > 0){
                     qmeQuestionManagement.answerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
-                        question.answerReferenceMediaList.push(
-                            {
-                                "mediaType":addAnswerReferenceMediaElem.mediaTypeId,
-                                "media":addAnswerReferenceMediaElem.media
-                            }
-                        );
+                        if(addAnswerReferenceMediaElem.mediaType.mediaTypeId === "IMAGE"){
+                            question.answerReferenceMediaList.push(
+                                {
+                                    "mediaType":addAnswerReferenceMediaElem.mediaTypeId,
+                                    "media":addAnswerReferenceMediaElem.media
+                                }
+                            );
+                        }else{
+                            console.log("got :addAnswerReferenceMediaElem",addAnswerReferenceMediaElem);
+                            question.answerReferenceMediaList.push(
+                                {
+                                    "mediaType":addAnswerReferenceMediaElem.mediaType,
+                                    "media":btoa(addAnswerReferenceMediaElem.media)
+                                }
+                            );
+                        }
+
                     });
                 }
                 qmeQuestionService
@@ -518,7 +530,7 @@
                                         "answerOptionMediaList":[
                                             {
                                                 "mediaType":mediaTypeVal,
-                                                "media":btoa(answerOptionElem.media),
+                                                "media":atob(answerOptionElem.media),
                                                 "answerOptionMediaID": answerOptionElem.answerOptionMediaID,
                                                 "answerOptionID": answerOptionElem.answerOptionID,
                                             }
@@ -562,7 +574,7 @@
                                     "answerRefMediaID": addAnswerReferenceMediaElem.answerRefMediaID,
                                     "questionID": addAnswerReferenceMediaElem.questionID,
                                     "mediaType":mediaTypeVal,
-                                    "media":btoa(addAnswerReferenceMediaElem.media)
+                                    "media":atob(addAnswerReferenceMediaElem.media)
                                 }
                             );
                         }
