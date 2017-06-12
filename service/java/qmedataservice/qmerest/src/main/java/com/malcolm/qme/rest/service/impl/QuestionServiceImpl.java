@@ -124,7 +124,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public QMeQuestionDetail save(QMeQuestion qMeQuestion, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
         try {
             QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail) qMeQuestion;
@@ -157,7 +157,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public QMeQuestionDetail update(QMeQuestion qMeQuestion, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
         try {
             QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail) qMeQuestion;
@@ -171,6 +171,7 @@ public class QuestionServiceImpl implements QuestionService {
             qMeQuestionDetail.setCategoryId(question.getCategoryID());
             qMeQuestionDetail.setCreateUserID(question.getCreateUserID());
             qMeQuestionDetail.setQuestionCreateDate(question.getQuestionCreateDate());
+            qMeQuestionDetail.setLikes(question.getLikes());
             qMeQuestion.setUpdateUserID(userId);
             qMeQuestion.setQuestionUpdateDate(LocalDateTime.now());
 
@@ -237,7 +238,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) throws QMeResourceNotFoundException, QMeServerException {
         try {
             Question question = questionRepo.findById(id);
