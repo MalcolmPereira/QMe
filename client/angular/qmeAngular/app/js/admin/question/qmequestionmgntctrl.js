@@ -247,7 +247,7 @@
                 if(qmeQuestionManagement.answerOptions && qmeQuestionManagement.answerOptions.length > 0){
 
                     qmeQuestionManagement.answerOptions.forEach(function (answerOptionElem){
-if(answerOptionElem.mediaType && answerOptionElem.media){
+                        if(answerOptionElem.mediaType && answerOptionElem.media){
                             question.answerOptionList.push(
                                 {
                                     "optionText":answerOptionElem.answerOption,
@@ -281,10 +281,9 @@ if(answerOptionElem.mediaType && answerOptionElem.media){
                                 }
                             );
                         }else{
-                            console.log("got :addAnswerReferenceMediaElem",addAnswerReferenceMediaElem);
                             question.answerReferenceMediaList.push(
                                 {
-                                    "mediaType":addAnswerReferenceMediaElem.mediaType,
+                                    "mediaType":addAnswerReferenceMediaElem.mediaType.mediaTypeMime,
                                     "media":btoa(addAnswerReferenceMediaElem.media)
                                 }
                             );
