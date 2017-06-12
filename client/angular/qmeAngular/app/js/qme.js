@@ -201,7 +201,13 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     controller: 'qmeQuestionManagementCtrl',
                     controllerAs: 'qmeQuestionManagementCtrl',
                     authenticate: true,
-                    admin: true
+                    admin: true,
+                    params: {
+                        currentQuestion: null,
+                        currentpage: null,
+                        sortasc:null,
+                        sortfields:null
+                    }
                 })
 
                 //Quiz Routing Quizzes

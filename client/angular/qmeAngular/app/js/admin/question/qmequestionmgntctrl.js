@@ -6,9 +6,9 @@
 
         .controller('qmeQuestionManagementCtrl', QMeQuestionManagementController);
 
-        QMeQuestionManagementController.$inject = ['$scope','$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
+        QMeQuestionManagementController.$inject = ['$scope','$timeout','$state','$stateParams','qmeFlashService','qmeQuestionService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
 
-        function QMeQuestionManagementController($scope,$state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
+        function QMeQuestionManagementController($scope,$timeout,$state,$stateParams,qmeFlashService,qmeQuestionService,qmeCategoryService, qmePageSession,qmeModelSession,QME_CONSTANTS) {
 
             var qmeQuestionManagement = this;
 
@@ -19,10 +19,15 @@
             qmeQuestionManagement.sortfields = "QUESTION";
 
             qmeQuestionManagement.addQuestionForm = undefined;
+            qmeQuestionManagement.updateQuestionForm = undefined;
+            qmeQuestionManagement.questionId = undefined;
 
             qmeQuestionManagement.category = [];
             qmeQuestionManagement.categoryId = undefined;
             qmeQuestionManagement.categoryName = undefined;
+            qmeQuestionManagement.questionPoint = undefined;
+            qmeQuestionManagement.questionText = undefined;
+            qmeQuestionManagement.answer = undefined;
 
             qmeQuestionManagement.uploaderAnswerOptionFlow = undefined;
             qmeQuestionManagement.uploaderAnswerReferenceFlow = undefined;
@@ -87,7 +92,7 @@
                 qmeQuestionManagement.sortasc = true;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
-                qmeQuestionManagement.pageUsers(0);
+                qmeQuestionManagement.pageQuestions(0);
             };
 
             qmeQuestionManagement.isSortAsc = function(field){
@@ -170,10 +175,11 @@
                     function(data){
                        if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
                            qmeQuestionManagement.base64FileRefMedia(data);
+
                        }else if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'LINK'){
                            qmeQuestionManagement.answerReferenceMedia.push(
                                {
-                                   mediaType: data.mediaType,
+                                   mediaType : data.mediaType,
                                    media: data.media
                                }
                            );
@@ -191,6 +197,7 @@
                     function(data){
                         if(data && data.mediaType && data.mediaType.mediaTypeId && data.mediaType.mediaTypeId === 'IMAGE'){
                             qmeQuestionManagement.base64FileOptions(data);
+
                         }else{
                             qmeQuestionManagement.answerOptions.push(
                                 {
@@ -266,12 +273,22 @@
                 }
                 if(qmeQuestionManagement.answerReferenceMedia && qmeQuestionManagement.answerReferenceMedia.length > 0){
                     qmeQuestionManagement.answerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
-                        question.answerReferenceMediaList.push(
-                            {
-                                "mediaType":addAnswerReferenceMediaElem.mediaTypeId,
-                                "media":addAnswerReferenceMediaElem.media
-                            }
-                        );
+                        if(addAnswerReferenceMediaElem.mediaType.mediaTypeId === "IMAGE"){
+                            question.answerReferenceMediaList.push(
+                                {
+                                    "mediaType":addAnswerReferenceMediaElem.mediaTypeId,
+                                    "media":addAnswerReferenceMediaElem.media
+                                }
+                            );
+                        }else{
+                            question.answerReferenceMediaList.push(
+                                {
+                                    "mediaType":addAnswerReferenceMediaElem.mediaType.mediaTypeMime,
+                                    "media":btoa(addAnswerReferenceMediaElem.media)
+                                }
+                            );
+                        }
+
                     });
                 }
                 qmeQuestionService
@@ -298,24 +315,319 @@
                     );
             };
 
-            qmeQuestionManagement.selectedQuestion = function(){
-                qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryId;
+            qmeQuestionManagement.updateQuestion = function(question){
+                qmeQuestionManagement.questionId = undefined;
+                qmeQuestionManagement.categoryId = undefined;
+                qmeQuestionManagement.categoryName = undefined;
+                qmeQuestionManagement.questionPoint = undefined;
+                qmeQuestionManagement.questionText = undefined;
+                qmeQuestionManagement.answer = undefined;
+                qmeQuestionManagement.answerOptions = [];
+                qmeQuestionManagement.answerReferenceMedia = [];
+                qmeQuestionService.getQuestionById(question.questionId)
+                    .then(
+                        function(res){
+                            $state.go('updatequestion',{
+                                    currentQuestion:res,
+                                    currentpage:qmeQuestionManagement.currentpage,
+                                    sortasc: qmeQuestionManagement.sortasc,
+                                    sortfields:qmeQuestionManagement.sortfields
+                                }
+                            );
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid question resource, question not found");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error getring question detail, please retry in some time.");
+                            }
+                        }
+                    );
             };
 
-            qmeQuestionManagement.updateQuestion = function(question){
-                $state.go('updatequestion',{
-                        currentQuestion:question,
+            qmeQuestionManagement.selectedQuestion = function(){
+                qmeQuestionManagement.questionId = $stateParams.currentQuestion.questionId;
+                qmeQuestionManagement.categoryId = $stateParams.currentQuestion.categoryId;
+                qmeQuestionManagement.categoryName = $stateParams.currentQuestion.categoryName;
+                qmeQuestionManagement.questionPoint = $stateParams.currentQuestion.questionPoint;
+                qmeQuestionManagement.questionText = $stateParams.currentQuestion.questionText;
+                qmeQuestionManagement.answer = $stateParams.currentQuestion.answer;
+            };
+
+            qmeQuestionManagement.loadAnswerOptions = function(){
+                if($stateParams && $stateParams.currentQuestion && $stateParams.currentQuestion.answerOptionList && $stateParams.currentQuestion.answerOptionList.length > 0){
+
+                    qmeQuestionManagement.answerOptions = [];
+                    var blobArr = [];
+                    var fileCounter = 1;
+
+                    $stateParams.currentQuestion.answerOptionList.forEach(function (answerOptionElem){
+                        var answerOptionObj = {
+                            "answerOption":answerOptionElem.optionText,
+                            "answerCorrect":answerOptionElem.correct,
+                            "answerOptionID": answerOptionElem.answerOptionID,
+                            "questionID": answerOptionElem.questionID,
+                            "answerOptionMediaID": undefined,
+                            "mediaType" : {
+                                "mediaTypeId":''
+                            },
+                            "media":''
+                        };
+                        answerOptionElem.answerOptionMediaList.forEach(function (answerOptionMediaElem){
+                            if(answerOptionMediaElem.mediaType === 'image/png' || answerOptionMediaElem.mediaType === 'image/gif' || answerOptionMediaElem.mediaType === 'image/jpeg' || answerOptionMediaElem.mediaType === 'image/jpg'){
+
+                                answerOptionObj.mediaType.mediaTypeId = "IMAGE";
+                                answerOptionObj.mediaType.mediaTypeDesc = "Image";
+                                answerOptionObj.media = answerOptionMediaElem.media;
+                                answerOptionObj.answerOptionMediaID = answerOptionMediaElem.answerOptionMediaID;
+
+                                var raw  = atob(answerOptionMediaElem.media);
+                                var byteNumbers = new Array(raw.length);
+                                for (var i = 0; i < raw.length; i++) {
+                                    byteNumbers[i] = raw.charCodeAt(i);
+                                }
+                                var byteArray = new Uint8Array(byteNumbers);
+
+                                var blob = new Blob([byteArray], {type: answerOptionMediaElem.mediaType});
+                                blob.name = 'file_'+fileCounter +'.png';
+                                blobArr.push(blob);
+                                fileCounter += 1;
+
+                            }else if(answerOptionMediaElem.mediaType === 'text/plain'){
+                                answerOptionObj.mediaType.mediaTypeId = "LINK";
+                                answerOptionObj.mediaType.mediaTypeDesc = "Http Link";
+                                answerOptionObj.media = atob(answerOptionMediaElem.media);
+                                answerOptionObj.answerOptionMediaID = answerOptionMediaElem.answerOptionMediaID;
+
+                            }else{
+                                answerOptionObj.mediaType.mediaTypeId = "NONE";
+                                answerOptionObj.mediaType.mediaTypeDesc = "";
+                                answerOptionObj.media = "";
+                                answerOptionObj.answerOptionMediaID = answerOptionMediaElem.answerOptionMediaID;
+                            }
+                        });
+                        qmeQuestionManagement.answerOptions.push(answerOptionObj);
+                    });
+
+                    $timeout(function(){
+                        blobArr.forEach(function (blobFileObj){
+                            qmeQuestionManagement.uploaderAnswerOptionFlow.addFile(blobFileObj);
+                        });
+                    },100);
+                }
+            };
+
+            qmeQuestionManagement.loadAnswerReferenceMedia = function(){
+                if($stateParams && $stateParams.currentQuestion && $stateParams.currentQuestion.answerReferenceMediaList && $stateParams.currentQuestion.answerReferenceMediaList.length > 0){
+                    qmeQuestionManagement.answerReferenceMedia = [];
+                    var blobArr = [];
+                    var fileCounter = 1;
+                    $stateParams.currentQuestion.answerReferenceMediaList .forEach(function (answerMediaElem){
+                        var answerReferenceObj = {
+                            "answerRefMediaID": answerMediaElem.answerRefMediaID,
+                            "questionID": answerMediaElem.questionID,
+                            "mediaType" : {
+                                "mediaTypeId":'',
+                                "mediaTypeDesc":''
+                            },
+                            "media":''
+                        };
+                        if(answerMediaElem.mediaType === 'image/png' || answerMediaElem.mediaType === 'image/gif' || answerMediaElem.mediaType === 'image/jpeg' || answerMediaElem.mediaType === 'image/jpg'){
+
+                            answerReferenceObj.mediaType.mediaTypeId = "IMAGE";
+                            answerReferenceObj.mediaType.mediaTypeDesc = "Image";
+                            answerReferenceObj.media = answerMediaElem.media;
+
+                            var raw  = atob(answerMediaElem.media);
+                            var byteNumbers = new Array(raw.length);
+                            for (var i = 0; i < raw.length; i++) {
+                                byteNumbers[i] = raw.charCodeAt(i);
+                            }
+                            var byteArray = new Uint8Array(byteNumbers);
+
+                            var blob = new Blob([byteArray], {type: answerMediaElem.mediaType});
+                            blob.name = 'file_'+fileCounter +'.png';
+                            blobArr.push(blob);
+                            fileCounter += 1;
+
+                        }else if(answerMediaElem.mediaType === 'text/plain'){
+                            answerReferenceObj.mediaType.mediaTypeId = "LINK";
+                            answerReferenceObj.mediaType.mediaTypeDesc = "Http Link";
+                            answerReferenceObj.media = atob(answerMediaElem.media);
+                        }else{
+                            answerReferenceObj.mediaType.mediaTypeId = "NONE";
+                            answerReferenceObj.mediaType.mediaTypeDesc = "";
+                            answerReferenceObj.media = "";
+                        }
+                        qmeQuestionManagement.answerReferenceMedia.push(answerReferenceObj);
+                    });
+                    $timeout(function(){
+                        blobArr.forEach(function (blobFileObj){
+                            qmeQuestionManagement.uploaderAnswerReferenceFlow.addFile(blobFileObj);
+                        });
+                    },100);
+                }
+            };
+
+            qmeQuestionManagement.cancelUpdateQuestion = function(){
+                $state.go('listquestions', {
                         currentpage:qmeQuestionManagement.currentpage,
-                        sortasc: qmeQuestionManagement.sortasc,
+                        sortasc:qmeQuestionManagement.sortasc,
                         sortfields:qmeQuestionManagement.sortfields
                     }
                 );
+
             };
 
             qmeQuestionManagement.cancelAddQuestion = function(){
-                $state.go('listquestions', {}
-                );
+                $state.go('listquestions', {});
             };
+
+            qmeQuestionManagement.submitUpdateQuestion = function () {
+                var question = {
+                    "questionId": qmeQuestionManagement.questionId,
+                    "categoryId": qmeQuestionManagement.categoryId,
+                    "questionText": qmeQuestionManagement.questionText ,
+                    "answer": qmeQuestionManagement.answer,
+                    "questionPoint": qmeQuestionManagement.questionPoint,
+                    "answerOptionList": [],
+                    "answerReferenceMediaList": []
+                };
+                if(qmeQuestionManagement.answerOptions && qmeQuestionManagement.answerOptions.length > 0){
+
+                    qmeQuestionManagement.answerOptions.forEach(function (answerOptionElem){
+                        if(answerOptionElem.mediaType && answerOptionElem.media){
+                            var mediaTypeVal = "text/plain";
+                            if(answerOptionElem.mediaType.mediaTypeId === "IMAGE"){
+                                mediaTypeVal = "image/png";
+                                question.answerOptionList.push(
+                                    {
+                                        "answerOptionID": answerOptionElem.answerOptionID,
+                                        "questionID": answerOptionElem.questionID,
+                                        "optionText":answerOptionElem.answerOption,
+                                        "correct":answerOptionElem.answerCorrect,
+                                        "answerOptionMediaList":[
+                                            {
+                                                "mediaType":mediaTypeVal,
+                                                "media":answerOptionElem.media,
+                                                "answerOptionMediaID": answerOptionElem.answerOptionMediaID,
+                                                "answerOptionID": answerOptionElem.answerOptionID,
+                                            }
+                                        ]
+                                    }
+                                );
+                            }
+                            if(answerOptionElem.mediaType.mediaTypeId === "LINK"){
+                                mediaTypeVal = "text/plain";
+                                question.answerOptionList.push(
+                                    {
+                                        "answerOptionID": answerOptionElem.answerOptionID,
+                                        "questionID": answerOptionElem.questionID,
+                                        "optionText":answerOptionElem.answerOption,
+                                        "correct":answerOptionElem.answerCorrect,
+                                        "answerOptionMediaList":[
+                                            {
+                                                "mediaType":mediaTypeVal,
+                                                "media":atob(answerOptionElem.media),
+                                                "answerOptionMediaID": answerOptionElem.answerOptionMediaID,
+                                                "answerOptionID": answerOptionElem.answerOptionID,
+                                            }
+                                        ]
+                                    }
+                                );
+                            }
+
+
+                        }else{
+                            question.answerOptionList.push(
+                                {
+                                    "answerOptionID": answerOptionElem.answerOptionID,
+                                    "questionID": answerOptionElem.questionID,
+                                    "optionText":answerOptionElem.answerOption,
+                                    "correct":answerOptionElem.answerCorrect,
+                                    "answerOptionMediaList":[]
+                                }
+                            );
+                        }
+                    });
+                }
+                if(qmeQuestionManagement.answerReferenceMedia && qmeQuestionManagement.answerReferenceMedia.length > 0){
+                    qmeQuestionManagement.answerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
+                        var mediaTypeVal = "text/plain";
+                        if(addAnswerReferenceMediaElem.mediaTypeId === "IMAGE"){
+                            mediaTypeVal = "image/png";
+                            question.answerReferenceMediaList.push(
+                                {
+                                    "answerRefMediaID": addAnswerReferenceMediaElem.answerRefMediaID,
+                                    "questionID": addAnswerReferenceMediaElem.questionID,
+                                    "mediaType":mediaTypeVal,
+                                    "media":addAnswerReferenceMediaElem.media
+                                }
+                            );
+                        }
+                        if(addAnswerReferenceMediaElem.mediaTypeId  === "LINK"){
+                            mediaTypeVal = "text/plain";
+                            question.answerReferenceMediaList.push(
+                                {
+                                    "answerRefMediaID": addAnswerReferenceMediaElem.answerRefMediaID,
+                                    "questionID": addAnswerReferenceMediaElem.questionID,
+                                    "mediaType":mediaTypeVal,
+                                    "media":atob(addAnswerReferenceMediaElem.media)
+                                }
+                            );
+                        }
+
+                    });
+                }
+                qmeQuestionService
+                    .updateQuestion(question)
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Question submitted successfully, .",true);
+                            $state.go('listquestions', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for submit question, please make sure all required fields are valid.");
+
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else if(error && error.status && error.status == 409){
+                                qmeFlashService.Error("Oops.....Invalid request, question already exists or duplicated.");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error adding new question, please retry in some time.");
+                            }
+                        }
+                    );
+            };
+
+            qmeQuestionManagement.deleteQuestion = function(){
+                qmeQuestionService.deleteQuestion(qmeQuestionManagement.questionId)
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Question Delete successful.",true);
+                            $state.go('listquestions', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid request for question delete, question not found.");
+
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized to delete question .");
+
+                            }else if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for delete question .");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Server Error deleting question , please contact administrator.");
+                            }
+                        }
+                    );
+            };
+
 
             qmeQuestionManagement.base64FileOptions = function getBase64Options(data){
                 if(data && data.media && data.media.flowObj && data.media.flowObj.files && data.media.flowObj.files.length > 0 && data.media.flowObj.files[0]){

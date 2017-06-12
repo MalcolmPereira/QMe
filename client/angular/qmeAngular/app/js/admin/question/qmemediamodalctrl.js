@@ -28,13 +28,13 @@
 
 
         qmeMediaReference.mediaType = [
-            {mediaTypeId:"LINK",mediaTypeDesc:"Http Link"},
-            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"}
+            {mediaTypeId:"LINK",mediaTypeDesc:"Http Link", mediaTypeMime:"text/plain"},
+            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image", mediaTypeMime:"image/png"}
         ];
 
         qmeMediaReference.optionMediaType = [
-            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"},
-            {mediaTypeId:"NONE",mediaTypeDesc:""}
+            {mediaTypeId:"NONE",mediaTypeDesc:"", mediaTypeMime:"text/plain"},
+            {mediaTypeId:"IMAGE",mediaTypeDesc:"Image", mediaTypeMime:"image/png"}
         ];
 
         qmeMediaReference.cancel = function(){
@@ -50,10 +50,12 @@
         qmeMediaReference.saveOptions = function(){
             var mediaObjType = undefined;
             var mediaObj     = undefined;
+
             if(qmeMediaReference.uploadedImage && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
-                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
+                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image", mediaTypeMime:"image/png"};
                 mediaObj     = qmeMediaReference.uploadedImage;
             }
+
             if(mediaObjType && mediaObj){
                 qmeModelSession.create({
                         answerOption: qmeMediaReference.optionText,
@@ -86,10 +88,10 @@
             var mediaObjType = undefined;
             var mediaObj     = undefined;
             if(qmeMediaReference.uploadedImage && qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'IMAGE'){
-                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image"};
+                mediaObjType = {mediaTypeId:"IMAGE",mediaTypeDesc:"Image", mediaTypeMime:"image/png"};
                 mediaObj     = qmeMediaReference.uploadedImage;
             }else if(qmeMediaReference.selectedMediaType && qmeMediaReference.selectedMediaType === 'LINK'){
-                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link"};
+                mediaObjType = {mediaTypeId:"LINK",mediaTypeDesc:"HTTP/HTTPS Link", mediaTypeMime:"text/plain"};
                 mediaObj     = qmeMediaReference.refLink ;
             }
             if(mediaObjType && mediaObj){

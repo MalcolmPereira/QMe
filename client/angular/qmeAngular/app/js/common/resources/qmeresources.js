@@ -127,6 +127,11 @@
                 }
             };
 
+            this.questionByIdResource = function(authToken, questionId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(questionAPI+"/"+questionId);
+            };
+
             this.questionUpdateResource = function(authToken, questionId){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(questionAPI+"/"+questionId,{},{'updateQuestion':{method:'PUT'}});

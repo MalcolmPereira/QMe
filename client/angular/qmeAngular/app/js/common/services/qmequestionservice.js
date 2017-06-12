@@ -45,6 +45,21 @@
             return listQuestionPagedPromise.promise;
         };
 
+        qmeQuestionService.getQuestionById = function(questionId){
+            var questionPromise = $q.defer();
+
+            qmeQuestionResource.questionByIdResource(qmeUserSession.authtoken(),questionId)
+                .get(
+                    function(res){
+                        questionPromise.resolve(res);
+                    },
+                    function(error){
+                        questionPromise.reject(error);
+                    }
+                );
+            return questionPromise.promise;
+        };
+
         qmeQuestionService.createQuestion = function(question){
             var createQuestionPromise = $q.defer();
 
