@@ -533,7 +533,7 @@
                                         "answerOptionMediaList":[
                                             {
                                                 "mediaType":mediaTypeVal,
-                                                "media":atob(answerOptionElem.media),
+                                                "media":btoa(answerOptionElem.media),
                                                 "answerOptionMediaID": answerOptionElem.answerOptionMediaID,
                                                 "answerOptionID": answerOptionElem.answerOptionID,
                                             }
@@ -557,9 +557,11 @@
                     });
                 }
                 if(qmeQuestionManagement.answerReferenceMedia && qmeQuestionManagement.answerReferenceMedia.length > 0){
+
                     qmeQuestionManagement.answerReferenceMedia.forEach(function (addAnswerReferenceMediaElem){
+
                         var mediaTypeVal = "text/plain";
-                        if(addAnswerReferenceMediaElem.mediaTypeId === "IMAGE"){
+                        if(addAnswerReferenceMediaElem.mediaType.mediaTypeId === "IMAGE"){
                             mediaTypeVal = "image/png";
                             question.answerReferenceMediaList.push(
                                 {
@@ -570,18 +572,17 @@
                                 }
                             );
                         }
-                        if(addAnswerReferenceMediaElem.mediaTypeId  === "LINK"){
+                        if(addAnswerReferenceMediaElem.mediaType.mediaTypeId  === "LINK"){
                             mediaTypeVal = "text/plain";
                             question.answerReferenceMediaList.push(
                                 {
                                     "answerRefMediaID": addAnswerReferenceMediaElem.answerRefMediaID,
                                     "questionID": addAnswerReferenceMediaElem.questionID,
                                     "mediaType":mediaTypeVal,
-                                    "media":atob(addAnswerReferenceMediaElem.media)
+                                    "media":btoa(addAnswerReferenceMediaElem.media)
                                 }
                             );
                         }
-
                     });
                 }
                 qmeQuestionService
