@@ -35,8 +35,8 @@
                                     <td>{{answerOption.answerOption}}</td>
                                     <td>{{answerOption.answerCorrect ? 'Correct' : 'Incorrect'}}</td>
                                     <td ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'">
-                                        <div class="thumbnail" ng-show="$flow.files.length">
-                                            <img ng-show="answerOption.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
+                                        <div class="thumbnail" ng-if="$flow.files.length">
+                                            <img ng-if="answerOption.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[{{answerOption.mediaIndex}}]" />
                                         </div>
                                     </td>
                                     <td ng-show="answerOption.mediaType.mediaTypeId !== 'IMAGE'">&nbsp;</td>
@@ -64,11 +64,12 @@
                                 <tr ng-repeat="answerRefMedia in qmeQuestionManagement.answerReferenceMedia">
                                     <td>{{answerRefMedia.mediaType.mediaTypeDesc}}</td>
                                     <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'LINK'">{{answerRefMedia.media}}</td>
-                                    <td ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'">
-                                        <div class="thumbnail" ng-show="$flow.files.length">
-                                            <img ng-show="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[$index]" />
+                                    <td ng-show="(answerRefMedia.mediaType.mediaTypeId === 'IMAGE')">
+                                        <div class="thumbnail" ng-if="($flow.files.length)">
+                                            <img ng-if="answerRefMedia.mediaType.mediaTypeId === 'IMAGE'" flow-img="$flow.files[{{answerRefMedia.mediaIndex}}]" />
                                         </div>
                                     </td>
+                                    <td ng-show="answerRefMedia.mediaType.mediaTypeId === undefined"></td>
                                     <td><a href="#" ng-click="qmeQuestionManagement.removeAnswerReferenceMedia($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                                 </tr>
                                 </tbody>

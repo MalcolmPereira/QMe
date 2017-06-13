@@ -214,16 +214,20 @@
                 );
             };
             qmeQuestionManagement.removeAnswerReferenceMedia = function(index){
+                var answerReferenceMediaObj = qmeQuestionManagement.answerReferenceMedia[index];
                 qmeQuestionManagement.answerReferenceMedia.splice(index,1);
-                if( qmeQuestionManagement.uploaderAnswerReferenceFlow && qmeQuestionManagement.uploaderAnswerReferenceFlow.files && qmeQuestionManagement.uploaderAnswerReferenceFlow.files[index]){
-                    qmeQuestionManagement.uploaderAnswerReferenceFlow.removeFile(qmeQuestionManagement.uploaderAnswerReferenceFlow.files[index]);
+
+                if( answerReferenceMediaObj && answerReferenceMediaObj.mediaIndex && qmeQuestionManagement.uploaderAnswerReferenceFlow && qmeQuestionManagement.uploaderAnswerReferenceFlow.files && qmeQuestionManagement.uploaderAnswerReferenceFlow.files[answerReferenceMediaObj.mediaIndex]){
+                    qmeQuestionManagement.uploaderAnswerReferenceFlow.removeFile(qmeQuestionManagement.uploaderAnswerReferenceFlow.files[answerReferenceMediaObj.mediaIndex]);
                 }
             };
 
             qmeQuestionManagement.removeAnswerOption = function(index){
+                var answerOptionObj =  qmeQuestionManagement.answerOptions[index];
                 qmeQuestionManagement.answerOptions.splice(index,1);
-                if( qmeQuestionManagement.uploaderAnswerOptionFlow && qmeQuestionManagement.uploaderAnswerOptionFlow.files && qmeQuestionManagement.uploaderAnswerOptionFlow.files[index]){
-                    qmeQuestionManagement.uploaderAnswerOptionFlow.removeFile(qmeQuestionManagement.uploaderAnswerOptionFlow.files[index]);
+
+                if( answerOptionObj && answerOptionObj.mediaIndex && qmeQuestionManagement.uploaderAnswerOptionFlow && qmeQuestionManagement.uploaderAnswerOptionFlow.files && qmeQuestionManagement.uploaderAnswerOptionFlow.files[answerOptionObj.mediaIndex]){
+                    qmeQuestionManagement.uploaderAnswerOptionFlow.removeFile(qmeQuestionManagement.uploaderAnswerOptionFlow.files[answerOptionObj.mediaIndex]);
                 }
             };
 
@@ -640,6 +644,7 @@
                                     answerCorrect: data.answerCorrect,
                                     mediaType: data.mediaType,
                                     mediaTypeId: data.media.flowObj.files[0].file.type,
+                                    mediaIndex: qmeQuestionManagement.uploaderAnswerOptionFlow.files.length,
                                     media:event.target.result.substr(event.target.result.indexOf('base64')+7)
                                 }
                             );
@@ -660,22 +665,29 @@
             qmeQuestionManagement.base64FileRefMedia = function getBase64RefMedia(data){
 
                 if(data && data.media && data.media.flowObj && data.media.flowObj.files && data.media.flowObj.files.length > 0 && data.media.flowObj.files[0]){
+
                     if(data.media.flowObj.files[0].file instanceof Blob || data.media.flowObj.files[0].file instanceof File){
                         var reader = new FileReader();
 
                         reader.onload = function (event) {
+
+
                             qmeQuestionManagement.answerReferenceMedia.push(
                                 {
                                     mediaType: data.mediaType,
                                     mediaTypeId: data.media.flowObj.files[0].file.type,
+                                    mediaIndex: qmeQuestionManagement.uploaderAnswerReferenceFlow.files.length,
                                     media: event.target.result.substr(event.target.result.indexOf('base64')+7)
                                 }
                             );
+
                             if(qmeQuestionManagement.uploaderAnswerReferenceFlow && data.media.flowObj){
                                 qmeQuestionManagement.uploaderAnswerReferenceFlow.files.push(data.media.flowObj.files[0]);
                             }
+
                             $scope.$apply();
                         };
+
                         reader.onerror = function (error) {
                             qmeFlashService.Error("Oops.....Error reading file , please validate file upload.");
                         };
