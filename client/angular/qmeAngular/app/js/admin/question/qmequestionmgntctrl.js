@@ -365,6 +365,7 @@
                     qmeQuestionManagement.answerOptions = [];
                     var blobArr = [];
                     var fileCounter = 1;
+                    var fileIndexCounter = 0;
 
                     $stateParams.currentQuestion.answerOptionList.forEach(function (answerOptionElem){
                         var answerOptionObj = {
@@ -385,6 +386,7 @@
                                 answerOptionObj.mediaType.mediaTypeDesc = "Image";
                                 answerOptionObj.media = answerOptionMediaElem.media;
                                 answerOptionObj.answerOptionMediaID = answerOptionMediaElem.answerOptionMediaID;
+                                answerOptionObj.mediaIndex = fileIndexCounter;
 
                                 var raw  = atob(answerOptionMediaElem.media);
                                 var byteNumbers = new Array(raw.length);
@@ -397,6 +399,7 @@
                                 blob.name = 'file_'+fileCounter +'.png';
                                 blobArr.push(blob);
                                 fileCounter += 1;
+                                fileIndexCounter += 1;
 
                             }else if(answerOptionMediaElem.mediaType === 'text/plain'){
                                 answerOptionObj.mediaType.mediaTypeId = "LINK";
@@ -427,6 +430,7 @@
                     qmeQuestionManagement.answerReferenceMedia = [];
                     var blobArr = [];
                     var fileCounter = 1;
+                    var fileIndexCounter = 0;
                     $stateParams.currentQuestion.answerReferenceMediaList .forEach(function (answerMediaElem){
                         var answerReferenceObj = {
                             "answerRefMediaID": answerMediaElem.answerRefMediaID,
@@ -442,6 +446,7 @@
                             answerReferenceObj.mediaType.mediaTypeId = "IMAGE";
                             answerReferenceObj.mediaType.mediaTypeDesc = "Image";
                             answerReferenceObj.media = answerMediaElem.media;
+                            answerReferenceObj.mediaIndex = fileIndexCounter;
 
                             var raw  = atob(answerMediaElem.media);
                             var byteNumbers = new Array(raw.length);
@@ -454,6 +459,7 @@
                             blob.name = 'file_'+fileCounter +'.png';
                             blobArr.push(blob);
                             fileCounter += 1;
+                            fileIndexCounter += 1;
 
                         }else if(answerMediaElem.mediaType === 'text/plain'){
                             answerReferenceObj.mediaType.mediaTypeId = "LINK";
