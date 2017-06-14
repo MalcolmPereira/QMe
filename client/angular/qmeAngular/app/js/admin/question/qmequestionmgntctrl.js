@@ -121,7 +121,7 @@
             };
 
             qmeQuestionManagement.recordsLoaded = function(){
-                return (qmeQuestionManagement.usercount > 0 );
+                return (qmeQuestionManagement.questioncount > 0 );
             };
 
             qmeQuestionManagement.totalRecords = function(){
