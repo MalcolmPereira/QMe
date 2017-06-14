@@ -20,9 +20,11 @@ public interface QuestionRepository extends QMeRepository<Question,Long> {
      */
     enum QUESTIONSORTFIELDS {
         QUESTION("questionText"),
-        QUESTION_LIKES("questionLikes"),
+        QUESTIONLIKES("questionLikes"),
+        QUESTIONPOINT("questionPoint"),
         USERNAME("userName"),
-        QUESTIONCREATEDATE("questionCreateUser"),
+        CATEGORY("catId"),
+        QUESTIONCREATEDATE("questionCreateDate"),
         QUESTIONUPDATEDATE("questionUpdateDate"),
         ;
 
