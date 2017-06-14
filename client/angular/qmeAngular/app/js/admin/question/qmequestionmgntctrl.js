@@ -89,6 +89,7 @@
             };
 
             qmeQuestionManagement.setSortField = function(field){
+                qmeFlashService.Clear();
                 qmeQuestionManagement.sortasc = true;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
@@ -104,6 +105,7 @@
             };
 
             qmeQuestionManagement.sortAsc = function(field){
+                qmeFlashService.Clear();
                 qmeQuestionManagement.sortasc = true;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
@@ -111,6 +113,7 @@
             };
 
             qmeQuestionManagement.sortDesc = function(field){
+                qmeFlashService.Clear();
                 qmeQuestionManagement.sortasc = false;
                 qmeQuestionManagement.sortfields = field;
                 qmePageSession.create(qmeQuestionManagement.questioncount);
