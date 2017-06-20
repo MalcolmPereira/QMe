@@ -45,7 +45,7 @@ public interface QuestionAPI extends QMeAPI {
     Resource<Long> count() throws QMeResourceException;
 
     /**
-     * Get All Categories
+     * Get All Question
      *
      * @return List of Question Details
      */
@@ -58,7 +58,7 @@ public interface QuestionAPI extends QMeAPI {
      * @param pageSize Page Size
      * @param sortType Sort Type
      * @param sortFields Sort Fields
-     * @return List of Category
+     * @return List of Question
      * @throws QMeResourceException
      */
     List<QMeQuestionDetail> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;

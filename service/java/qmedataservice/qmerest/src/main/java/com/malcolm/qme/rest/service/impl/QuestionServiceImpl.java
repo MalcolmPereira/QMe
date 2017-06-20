@@ -587,7 +587,7 @@ public class QuestionServiceImpl implements QuestionService {
             qmeQuestionDetail.setCreateUserName(question.getCreateUser().getUserName());
         }
         if (question.getUpdateUser() != null) {
-            qmeQuestionDetail.setUdateUserName(question.getUpdateUser().getUserName());
+            qmeQuestionDetail.setUpdateUserName(question.getUpdateUser().getUserName());
         }
         if (question.getCategory() != null) {
             qmeQuestionDetail.setCategoryName(question.getCategory().getCategoryName());
