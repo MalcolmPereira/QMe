@@ -48,7 +48,7 @@ public class QuizController implements QuizAPI {
     public Resource<Long> count() throws QMeResourceException {
         log(getCurrentUser(), "Quiz - count");
         Resource<Long> quizCount = new Resource<>(quizService.count(),new Link(endpointURL+ QuizAPI.COUNT_PATH.replaceAll(":.+","}")));
-        quizCount.add(new Link(endpointURL + QuizAPI.PAGED_PATH.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=QUESTION", QMeAppAPI.QUIZ_PAGED));
+        quizCount.add(new Link(endpointURL + QuizAPI.PAGED_PATH.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=QUIZ", QMeAppAPI.QUIZ_PAGED));
         return quizCount;
     }
 
