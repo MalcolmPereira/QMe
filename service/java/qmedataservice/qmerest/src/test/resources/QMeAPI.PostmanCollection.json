@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QMeAPI",
-		"_postman_id": "fb96b244-040b-c87f-aa7f-c40024644f6e",
+		"_postman_id": "58036536-9f8e-1e90-36b0-6970f8678ee0",
 		"description": "QMe API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -23,7 +23,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "List Category"
 					},
 					"response": []
@@ -40,7 +43,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category Count"
 					},
 					"response": []
@@ -48,7 +54,38 @@
 				{
 					"name": "Category Paged List",
 					"request": {
-						"url": "http://localhost:8002/qme/category/paged?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",
+						"url": {
+							"raw": "http://localhost:8002/qme/category/paged?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"category",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pagesize",
+									"value": "1"
+								},
+								{
+									"key": "sorttype",
+									"value": "true"
+								},
+								{
+									"key": "sortfields",
+									"value": "CATEGORYNAME"
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -57,7 +94,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category Pages List"
 					},
 					"response": []
@@ -74,7 +114,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category By Parent Id"
 					},
 					"response": []
@@ -91,7 +134,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category By ID"
 					},
 					"response": []
@@ -108,7 +154,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category By Name"
 					},
 					"response": []
@@ -175,7 +224,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -198,7 +250,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -215,7 +270,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -223,7 +281,38 @@
 				{
 					"name": "Questions Paged List",
 					"request": {
-						"url": "http://localhost:8002/qme/question/paged?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",
+						"url": {
+							"raw": "http://localhost:8002/qme/question/paged?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"question",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pagesize",
+									"value": "1"
+								},
+								{
+									"key": "sorttype",
+									"value": "true"
+								},
+								{
+									"key": "sortfields",
+									"value": "QUESTION"
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -232,7 +321,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Questions Paged List"
 					},
 					"response": []
@@ -249,7 +341,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get Question By ID"
 					},
 					"response": []
@@ -266,7 +361,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get Question By ID"
 					},
 					"response": []
@@ -401,7 +499,42 @@
 		{
 			"name": "Quiz",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "List Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTgxNzA4MTV9.ILplMztS8zS3JzILVgpiZV1LBqyo965QQYC1hlrNK5nmgtLRpdxLfTcVqvoMIP7qF4SY3HT9jOrCJLGdVCMC-Q",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Quiz Count",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/count",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTgxNzA4MTV9.ILplMztS8zS3JzILVgpiZV1LBqyo965QQYC1hlrNK5nmgtLRpdxLfTcVqvoMIP7qF4SY3HT9jOrCJLGdVCMC-Q",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Users",
@@ -470,7 +603,38 @@
 				{
 					"name": "Get Paged User List",
 					"request": {
-						"url": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",
+						"url": {
+							"raw": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"user",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pagesize",
+									"value": "1"
+								},
+								{
+									"key": "sorttype",
+									"value": "true"
+								},
+								{
+									"key": "sortfields",
+									"value": "USERNAME"
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
