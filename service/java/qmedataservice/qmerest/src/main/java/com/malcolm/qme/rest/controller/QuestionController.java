@@ -42,7 +42,7 @@ public class QuestionController implements QuestionAPI {
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
     public Resource<Long> count() throws QMeResourceException {
-        log(getCurrentUser(), "User - count");
+        log(getCurrentUser(), "Question - count");
         Resource<Long> questionCount = new Resource<>(questionService.count(),new Link(endpointURL+ QuestionAPI.COUNT_PATH.replaceAll(":.+","}")));
         questionCount.add(new Link(endpointURL + QuestionAPI.PAGED_PATH.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=QUESTION", QMeAppAPI.QUESTION_PAGED));
         return questionCount;
