@@ -7,6 +7,7 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Quiz;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuestionRepository;
 import com.malcolm.qme.core.repository.QuizRepository;
@@ -68,12 +69,31 @@ public class QuizServiceImpl  implements QuizService{
 
     @Override
     public List<QMeQuizDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        try {
+            return getQMeQuizDetail(quizRepo.findAll(new PageSort(pageIndex, maxRows, sortAscending, sortFields)));
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
     }
 
     @Override
     public QMeQuizDetail searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
-        return null;
+        try {
+            Quiz quiz = quizRepo.findById(id);
+            if (quiz == null) {
+                throw new QMeResourceNotFoundException("Quiz with Quiz ID " + id + " not found");
+            }
+            QMeQuizDetail quizDetail = getQMeQuizDetail(quiz);
+
+            //TODO:
+            //Get Quiz Questions
+
+            return quizDetail;
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
     }
 
     @Override
