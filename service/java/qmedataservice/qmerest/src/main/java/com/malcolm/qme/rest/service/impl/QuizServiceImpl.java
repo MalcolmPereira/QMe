@@ -7,16 +7,15 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.Quiz;
-import com.malcolm.qme.core.repository.PageSort;
-import com.malcolm.qme.core.repository.QMeException;
-import com.malcolm.qme.core.repository.QuestionRepository;
-import com.malcolm.qme.core.repository.QuizRepository;
+import com.malcolm.qme.core.domain.QuizQuestion;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuiz;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
+import com.malcolm.qme.rest.service.QuestionService;
 import com.malcolm.qme.rest.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,11 +40,17 @@ public class QuizServiceImpl  implements QuizService{
     private QuizRepository quizRepo;
 
     /**
-     * QMeQuestion Repository
+     * QMe Quiz Question Repository
      */
     @Autowired
-    @Qualifier(value = "QuestionRepository")
-    private QuestionRepository questionRepo;
+    @Qualifier(value = "QuizQuestionRepository")
+    private QuizQuestionRepository quizQuestionRepo;
+
+    /**
+     * Question Service
+     */
+    @Autowired
+    private QuestionService questionService;
 
     @Override
     public Long count() throws QMeServerException {
@@ -86,8 +91,16 @@ public class QuizServiceImpl  implements QuizService{
             }
             QMeQuizDetail quizDetail = getQMeQuizDetail(quiz);
 
-            //TODO:
-            //Get Quiz Questions
+            List<QuizQuestion> quizQuestionList = quizQuestionRepo.findByQuizId(quiz.getQuizID());
+
+            if(quizQuestionList != null && !quizQuestionList.isEmpty()){
+
+                for(QuizQuestion quizQuestion : quizQuestionList){
+                    quizDetail.addQmeQuestionDetailList(questionService.searchById(quizQuestion.getQuestionID()));
+                }
+
+            }
+
 
             return quizDetail;
 
@@ -108,6 +121,17 @@ public class QuizServiceImpl  implements QuizService{
 
     @Override
     public void delete(Long id) throws QMeResourceNotFoundException, QMeServerException {
+        try {
+            Quiz quiz = quizRepo.findById(id);
+            if (quiz == null) {
+                throw new QMeResourceNotFoundException("Quiz with Quiz ID " + id + " not found");
+            }
+
+            quizRepo.delete(id);
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
     }
 
     /**

@@ -7,6 +7,7 @@
 package com.malcolm.qme.core.domain.fixtures;
 
 import com.malcolm.qme.core.domain.Quiz;
+import com.malcolm.qme.core.domain.QuizQuestion;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,5 +39,19 @@ public class QuizFixtures {
         quizList.add(new Quiz(4L, "Some quiz - 4", "Some quiz - 4", 1l, 4L, 4L, 3, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L));
         quizList.add(new Quiz(5L, "Some quiz - 5", "Some quiz - 5", 1l, 5L, 5L, 3, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L));
         return quizList;
+    }
+
+    /**
+     * Simple Quiz Queszion List
+     * @return Quiz List
+     */
+    public static List<QuizQuestion> simpleQuizQuestionList() {
+        List<QuizQuestion> quizQuestionList = new ArrayList<>();
+        quizQuestionList.add(new QuizQuestion(1L, 1L, 1L));
+        quizQuestionList.add(new QuizQuestion(2L, 1L, 2L));
+        quizQuestionList.add(new QuizQuestion(3L, 1L, 3L));
+        quizQuestionList.add(new QuizQuestion(4L, 1L, 4L));
+        quizQuestionList.add(new QuizQuestion(5L, 1L, 5L));
+        return quizQuestionList;
     }
 }

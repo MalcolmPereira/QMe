@@ -8,10 +8,13 @@ package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.fixtures.QuizFixtures;
 import com.malcolm.qme.core.repository.QMeException;
+import com.malcolm.qme.core.repository.QuizQuestionRepository;
 import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
+import com.malcolm.qme.rest.model.fixtures.QMeQuestionDetailFixture;
+import com.malcolm.qme.rest.service.QuestionService;
 import com.malcolm.qme.rest.service.QuizService;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -29,6 +32,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,6 +44,12 @@ public class QuizServiceImplTest {
     @Mock
     private QuizRepository quizRepo;
 
+    @Mock
+    private QuizQuestionRepository quizQuestionRepo;
+
+    @Mock
+    private QuestionService questionService;
+
     @InjectMocks
     private final QuizService quizService = new QuizServiceImpl();
 
@@ -47,7 +57,6 @@ public class QuizServiceImplTest {
     public void testCount() throws Exception {
         MatcherAssert.assertThat(quizRepo, notNullValue());
         MatcherAssert.assertThat(quizService, notNullValue());
-
         when(quizService.count()).thenReturn(10L);
         Long quizCount = quizService.count();
         assertNotNull(quizCount);
@@ -151,11 +160,28 @@ public class QuizServiceImplTest {
 
     @Test
     public void testSearchById() throws Exception {
+        MatcherAssert.assertThat(quizRepo, notNullValue());
+        MatcherAssert.assertThat(quizQuestionRepo, notNullValue());
+        MatcherAssert.assertThat(quizService, notNullValue());
+        MatcherAssert.assertThat(questionService, notNullValue());
+
         when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        when(quizQuestionRepo.findByQuizId(1L)).thenReturn(QuizFixtures.simpleQuizQuestionList());
+        when(questionService.searchById(1L)).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetail());
+
         QMeQuizDetail quizDetail = quizService.searchById(1L);
         verify(quizRepo).findById(1L);
         assertNotNull(quizDetail);
         assertThat(quizDetail.getQuizID(), equalTo(1L));
         assertThat(quizDetail.getQuizName(), equalTo("Some simple quiz"));
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        doNothing().when(quizRepo).delete(1L);
+        quizService.delete(1L);
+        verify(quizRepo).findById(1L);
+        verify(quizRepo).delete(1L);
     }
 }

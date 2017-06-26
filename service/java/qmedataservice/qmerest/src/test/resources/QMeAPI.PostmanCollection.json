@@ -508,7 +508,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTgxNzA4MTV9.ILplMztS8zS3JzILVgpiZV1LBqyo965QQYC1hlrNK5nmgtLRpdxLfTcVqvoMIP7qF4SY3HT9jOrCJLGdVCMC-Q",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg1MTA1MDh9.Gu5cdajVq_peaktujPeDvzphAIcLdBUwQE7vOfRm35YtcZVtsfa9VQ1pSSIt5mBc3PmcCspxLRwpVLoGevSlbQ",
 								"description": ""
 							}
 						],
@@ -525,7 +525,24 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTgxNzA4MTV9.ILplMztS8zS3JzILVgpiZV1LBqyo965QQYC1hlrNK5nmgtLRpdxLfTcVqvoMIP7qF4SY3HT9jOrCJLGdVCMC-Q",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg1MTA2Nzd9.hWjSBUBomEZfEmEuIOnS0mrmUHWKWr9c8SZGfojnJtunKnZ2TrtjpH2JXHwiaF1Uro1fbVOyZOezzEhIuBU6lw",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Quiz By Id",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg1MTA1MDh9.Gu5cdajVq_peaktujPeDvzphAIcLdBUwQE7vOfRm35YtcZVtsfa9VQ1pSSIt5mBc3PmcCspxLRwpVLoGevSlbQ",
 								"description": ""
 							}
 						],
