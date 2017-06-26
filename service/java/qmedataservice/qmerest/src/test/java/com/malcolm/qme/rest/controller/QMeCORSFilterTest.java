@@ -13,7 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.mockito.Mockito.doNothing;
@@ -31,7 +31,7 @@ public class QMeCORSFilterTest  {
     private static final String QME_AUTH_HEADER_NAME = "QME-AUTH-TOKEN";
 
     @Mock
-    private ServletRequest req;
+    private HttpServletRequest req;
 
     @Mock
     private HttpServletResponse res;
