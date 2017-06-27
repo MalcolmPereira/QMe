@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -127,13 +128,11 @@ public class QuizServiceImpl  implements QuizService{
             Quiz quiz = getQuiz(quizDetail);
             quiz = quizRepo.save(quiz);
 
-            //Check Answer Option List
-            if (quizDetail.getQuestionIdList() != null && quizDetail.getQuestionIdList().size() > 0) {
-                for (Long questionId : quizDetail.getQuestionIdList()) {
-                    QuizQuestion quizQuestion = getQuizQuestion(quiz.getQuizID(), questionId);
-                    quizQuestionRepo.save(quizQuestion);
-                }
+            for (Long questionId : quizDetail.getQuestionIdList()) {
+                QuizQuestion quizQuestion = getQuizQuestion(quiz.getQuizID(), questionId);
+                quizQuestionRepo.save(quizQuestion);
             }
+
             quizDetail.setQuizID(quiz.getQuizID());
             return quizDetail;
         } catch (QMeException err) {
@@ -144,6 +143,39 @@ public class QuizServiceImpl  implements QuizService{
     @Override
     @Transactional(rollbackFor = Exception.class)
     public QMeQuizDetail update(QMeQuiz qMeQuiz, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
+        try{
+            Quiz quiz = quizRepo.findById(id);
+            if (quiz == null) {
+                throw new QMeResourceNotFoundException("Quiz with Quiz ID " + id + " not found");
+            }
+
+            QMeQuizDetail quizDetail = (QMeQuizDetail) qMeQuiz;
+            quizDetail.setQuizID(quiz.getQuizID());
+            quizDetail.setCategoryID(quiz.getCategoryID());
+            quizDetail.setCreateUserID(quiz.getCreateUserID());
+            quizDetail.setQuizCreateDate(quiz.getQuizCreateDate());
+            quizDetail.setLikes(quiz.getLikes());
+            quizDetail.setQuizHit(quiz.getQuizHit());
+            quizDetail.setQuizUpdateDate(LocalDateTime.now());
+            quizDetail.setUpdateUserID(userId);
+
+            quiz = getQuiz(quizDetail);
+            quiz = quizRepo.update(quiz,userId);
+
+            List<QuizQuestion> existingQuizQuestionList = quizQuestionRepo.findByQuizId(quiz.getQuizID());
+            List<Long> quizQuestionIdList = new ArrayList<>();
+            if(existingQuizQuestionList != null && !existingQuizQuestionList.isEmpty()){
+                for(QuizQuestion quizQuestion : existingQuizQuestionList){
+                    quizQuestionIdList.add(quizQuestion.getQuizQuestionID());
+                }
+            }
+
+
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
+
         return null;
     }
 
@@ -154,6 +186,13 @@ public class QuizServiceImpl  implements QuizService{
             Quiz quiz = quizRepo.findById(id);
             if (quiz == null) {
                 throw new QMeResourceNotFoundException("Quiz with Quiz ID " + id + " not found");
+            }
+
+            List<QuizQuestion> quizQuestionIdList = quizQuestionRepo.findByQuizId(id);
+            if(quizQuestionIdList != null && !quizQuestionIdList.isEmpty()){
+                for (QuizQuestion quizQuestion:quizQuestionIdList) {
+                    quizQuestionRepo.delete(quizQuestion.getQuizQuestionID());
+                }
             }
 
             quizRepo.delete(id);
@@ -232,6 +271,9 @@ public class QuizServiceImpl  implements QuizService{
         Category category = categoryRepo.findById(quizDetail.getCategoryID());
         if (category == null) {
             throw new QMeInvalidResourceDataException("Valid Category is required, Category not found");
+        }
+        if (quizDetail.getQuestionIdList() == null || quizDetail.getQuestionIdList().isEmpty()) {
+            throw new QMeInvalidResourceDataException("Valid Quiz Questions required");
         }
         if (quizDetail.getQuizID() == null || quizDetail.getQuizID() == 0) {
             return new Quiz(quizDetail.getQuizName(), quizDetail.getQuizDesc(), quizDetail.getCategoryID() , quizDetail.getQuizMaxAttempts(), quizDetail.getCreateUserID());
