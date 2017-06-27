@@ -22,6 +22,11 @@ public class QMeQuizDetail extends QMeQuiz {
     private static final long serialVersionUID = 1123217150480182211L;
 
     /**
+     * Question Id List
+     */
+    private List<Long> questionIdList;
+
+    /**
      * QMe Quiz Question List
      */
     private List<QMeQuestionDetail> qmeQuestionDetailList;
@@ -53,4 +58,33 @@ public class QMeQuizDetail extends QMeQuiz {
         qmeQuestionDetailList.add(qmeQuetionDetail);
     }
 
+    /**
+     * Get Question Id List
+     * @return List QuestionID
+     */
+    public List<Long> getQuestionIdList() {
+        return questionIdList;
+    }
+
+    /**
+     * Set Question ID
+     * @param questionIdList Question Id List
+     */
+    public void setQuestionIdList(List<Long> questionIdList) {
+        this.questionIdList = questionIdList;
+    }
+
+    /**
+     * Add Question Id List
+     * @param questionID Question ID
+     */
+    public void addQuestionIdList(Long questionID){
+        if(questionIdList == null){
+            questionIdList = new ArrayList<>();
+        }
+        if(!questionIdList.contains(questionID)){
+            questionIdList.add(questionID);
+        }
+
+    }
 }

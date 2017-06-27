@@ -129,7 +129,7 @@ public class QuestionServiceImpl implements QuestionService {
         try {
             QMeQuestionDetail qMeQuestionDetail = (QMeQuestionDetail) qMeQuestion;
 
-            qMeQuestion.setCreateUserID(userId);
+            qMeQuestionDetail.setCreateUserID(userId);
             Question question = getQuestion(qMeQuestionDetail);
             question = questionRepo.save(question);
 
