@@ -6,14 +6,19 @@
  */
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.fixtures.CategoryFixtures;
 import com.malcolm.qme.core.domain.fixtures.QuizFixtures;
+import com.malcolm.qme.core.domain.fixtures.QuizQuestionFixtures;
+import com.malcolm.qme.core.repository.CategoryRepository;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizQuestionRepository;
 import com.malcolm.qme.core.repository.QuizRepository;
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
 import com.malcolm.qme.rest.model.fixtures.QMeQuestionDetailFixture;
+import com.malcolm.qme.rest.model.fixtures.QMeQuizDetailFixture;
 import com.malcolm.qme.rest.service.QuestionService;
 import com.malcolm.qme.rest.service.QuizService;
 import org.hamcrest.MatcherAssert;
@@ -32,9 +37,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Malcolm
@@ -49,6 +52,9 @@ public class QuizServiceImplTest {
 
     @Mock
     private QuestionService questionService;
+
+    @Mock
+    private CategoryRepository categoryRepo;
 
     @InjectMocks
     private final QuizService quizService = new QuizServiceImpl();
@@ -174,6 +180,80 @@ public class QuizServiceImplTest {
         assertNotNull(quizDetail);
         assertThat(quizDetail.getQuizID(), equalTo(1L));
         assertThat(quizDetail.getQuizName(), equalTo("Some simple quiz"));
+    }
+
+    @Test
+    public void testSave() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(quizRepo.save(Matchers.anyObject())).thenReturn(QuizFixtures.simpleQuiz());
+        when(quizQuestionRepo.save(Matchers.anyObject())).thenReturn(QuizQuestionFixtures.simpleQuizQuestion());
+
+        qmeQuiz = quizService.save(qmeQuiz, 1L);
+
+        verify(categoryRepo).findById(1L);
+        verify(quizRepo).save(Matchers.anyObject());
+        verify(quizQuestionRepo, times(5)).save(Matchers.anyObject());
+
+        assertNotNull(qmeQuiz);
+        assertThat(qmeQuiz.getQuizID(), equalTo(1L));
+        assertThat(qmeQuiz.getQuizName(), equalTo("Some Quiz Name"));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testSaveQMeServerException() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(quizRepo.save(Matchers.anyObject())).thenThrow(QMeException.class);
+
+        quizService.save(qmeQuiz, 1L);
+
+        verify(categoryRepo).findById(1L);
+        verify(quizRepo).save(Matchers.anyObject());
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidQuizName() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizName(null);
+        quizService.save(qmeQuiz, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidQuizDesc() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizDesc(null);
+        quizService.save(qmeQuiz, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidCategory() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setCategoryID(null);
+        quizService.save(qmeQuiz, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidCategoryNotFound() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+        when(categoryRepo.findById(1L)).thenReturn(null);
+        quizService.save(qmeQuiz, 1L);
+        verify(categoryRepo).findById(1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidQuizAttempts() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizMaxAttempts(null);
+        quizService.save(qmeQuiz, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testSaveInvalidQuizQuestion() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        quizService.save(qmeQuiz, 1L);
     }
 
     @Test

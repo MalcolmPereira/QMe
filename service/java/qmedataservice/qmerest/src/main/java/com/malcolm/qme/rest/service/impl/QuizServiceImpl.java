@@ -166,11 +166,30 @@ public class QuizServiceImpl  implements QuizService{
             List<Long> quizQuestionIdList = new ArrayList<>();
             if(existingQuizQuestionList != null && !existingQuizQuestionList.isEmpty()){
                 for(QuizQuestion quizQuestion : existingQuizQuestionList){
-                    quizQuestionIdList.add(quizQuestion.getQuizQuestionID());
+                    quizQuestionIdList.add(quizQuestion.getQuestionID());
                 }
             }
 
+            List<Long> newQuizQuestionIdList = quizDetail.getQuestionIdList();
+            for(Long questionId : newQuizQuestionIdList){
+                if(quizQuestionIdList.contains(questionId)){
+                    quizQuestionIdList.remove(questionId);
+                }else{
+                    QuizQuestion quizQuestion = getQuizQuestion(quiz.getQuizID(), questionId);
+                    quizQuestionRepo.save(quizQuestion);
+                }
+            }
 
+            if(existingQuizQuestionList != null && !existingQuizQuestionList.isEmpty()){
+                for(QuizQuestion quizQuestion : existingQuizQuestionList){
+                    for(Long questionId : newQuizQuestionIdList){
+                        if(quizQuestion.getQuestionID() == questionId){
+                            quizQuestionRepo.delete(quizQuestion.getQuizQuestionID());
+                            break;
+                        }
+                    }
+                }
+            }
 
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);
