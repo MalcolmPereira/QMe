@@ -16,10 +16,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,12 +31,8 @@ public class QuizController implements QuizAPI {
     @Autowired
     private String endpointURL;
 
-    /**
-     * Question Service
-     */
     @Autowired
     private QuizService quizService;
-
 
     @RequestMapping(value=COUNT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -63,29 +56,67 @@ public class QuizController implements QuizAPI {
         return qMeQuizDetailList;
     }
 
+    @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
-    public List<QMeQuizDetail> listPaged(String page, String pageSize, String sortType, String sortFields) throws QMeResourceException {
-        return null;
+    public List<QMeQuizDetail> listPaged(
+            @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+            @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+            @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+            @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "Quiz  - list");
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeQuizDetail> qMeQuizDetailList = null;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeQuizDetailList = quizService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }else{
+            qMeQuizDetailList= quizService.list();
+        }
+        setQuizLinks(qMeQuizDetailList);
+        return qMeQuizDetailList;
     }
 
+    @RequestMapping(value=ID_PATH,method=RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Override
-    public QMeQuizDetail searchById(Long quizId) throws QMeResourceException {
-        return null;
+    public QMeQuizDetail searchById(@PathVariable(ID_PARAM_STRING) Long quizId) throws QMeResourceException {
+        log(getCurrentUser(), "User - Search By ID for questionId "+quizId);
+        QMeQuizDetail qMeQuizDetail = quizService.searchById(quizId);
+        setQuizLinks(qMeQuizDetail);
+        return qMeQuizDetail;
     }
 
+    @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
     @Override
     public QMeQuizDetail create(QMeQuizDetail quiz) throws QMeResourceException {
-        return null;
+        log(getCurrentUser(), "Quiz  - create");
+        QMeQuizDetail qMeQuizDetail =  quizService.save(quiz,getCurrentUser().getUserID());
+        setQuizLinks(qMeQuizDetail);
+        return qMeQuizDetail;
     }
 
+    @RequestMapping(value=ID_PATH,method=RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeQuizDetail update(Long quizId, QMeQuizDetail quiz) throws QMeResourceException {
-        return null;
+    public QMeQuizDetail update(@PathVariable(ID_PARAM_STRING)Long quizId, @RequestBody QMeQuizDetail quiz) throws QMeResourceException {
+        log(getCurrentUser(), "Quiz - update");
+        QMeQuizDetail qMeQuizDetail =  quizService.update(quiz,quizId,getCurrentUser().getUserID());
+        setQuizLinks(qMeQuizDetail);
+        return qMeQuizDetail;
     }
 
+    @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
     @Override
     public void delete(Long quizId) throws QMeResourceException {
-
+        log(getCurrentUser(), "Quiz - delete");
+        quizService.delete(quizId);
     }
 
     /**
