@@ -15,6 +15,7 @@ import com.malcolm.qme.core.repository.QuizQuestionRepository;
 import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
 import com.malcolm.qme.rest.model.fixtures.QMeQuestionDetailFixture;
@@ -257,9 +258,117 @@ public class QuizServiceImplTest {
     }
 
     @Test
+    public void testUpdate() throws Exception {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        when(quizRepo.update(Matchers.anyObject(), eq(1L))).thenReturn(QuizFixtures.simpleQuiz());
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+        qmeQuiz.setQuizID(1L);
+        qmeQuiz = quizService.update(qmeQuiz, 1L, 1L);
+        verify(categoryRepo).findById(1L);
+        verify(quizRepo).findById(1L);
+        verify(quizRepo).update(Matchers.anyObject(), Matchers.<Long>anyObject());
+        assertNotNull(qmeQuiz);
+        assertThat(qmeQuiz.getQuizID(), equalTo(1L));
+        assertThat(qmeQuiz.getQuizName(), equalTo("Some Quiz Name"));
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testUpdateQMeResourceNotFoundException() throws Exception {
+        when(quizRepo.findById(1L)).thenReturn(null);
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+        qmeQuiz.setQuizID(1L);
+        quizService.update(qmeQuiz, 1L, 1L);
+        verify(quizRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testUpdateQMeServerException() throws Exception {
+        when(categoryRepo.findById(1L)).thenReturn(CategoryFixtures.simpleCategory());
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        when(quizRepo.update(Matchers.anyObject(), eq(1L))).thenThrow(QMeException.class);
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+        qmeQuiz.setQuizID(1L);
+        quizService.update(qmeQuiz, 1L, 1L);
+        verify(categoryRepo).findById(1L);
+        verify(quizRepo).findById(1L);
+        verify(quizRepo).update(Matchers.anyObject(), Matchers.<Long>anyObject());
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidQuizName() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizID(1L);
+        qmeQuiz.setQuizName(null);
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        quizService.update(qmeQuiz, 1L, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidQuizDesc() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizID(1L);
+        qmeQuiz.setQuizDesc(null);
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        quizService.update(qmeQuiz, 1L, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidCategory() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizID(1L);
+        qmeQuiz.setCategoryID(null);
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        quizService.update(qmeQuiz, 1L, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidCategoryNotFound() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.qMeQuizDetailWithQuestions();
+        qmeQuiz.setQuizID(1L);
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        when(categoryRepo.findById(1L)).thenReturn(null);
+        quizService.update(qmeQuiz, 1L, 1L);
+        verify(categoryRepo).findById(1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidQuizAttempts() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizID(1L);
+        qmeQuiz.setQuizMaxAttempts(null);
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        quizService.update(qmeQuiz, 1L, 1L);
+    }
+
+    @Test(expected = QMeInvalidResourceDataException.class)
+    public void testUpdateInvalidQuizQuestion() throws Exception {
+        QMeQuizDetail qmeQuiz = QMeQuizDetailFixture.simpleQMeQuizDetail();
+        qmeQuiz.setQuizID(1L);
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        quizService.update(qmeQuiz, 1L, 1L);
+    }
+
+    @Test
     public void testDelete() throws Exception {
         when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
         doNothing().when(quizRepo).delete(1L);
+        quizService.delete(1L);
+        verify(quizRepo).findById(1L);
+        verify(quizRepo).delete(1L);
+    }
+
+    @Test(expected = QMeResourceNotFoundException.class)
+    public void testDeleteQMeResourceNotFoundException() throws Exception {
+        when(quizRepo.findById(1L)).thenReturn(null);
+        quizService.delete(1L);
+        verify(quizRepo).findById(1L);
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testDeleteQMeServerException() throws Exception {
+        when(quizRepo.findById(1L)).thenReturn(QuizFixtures.simpleQuiz());
+        doThrow(QMeException.class).when(quizRepo).delete(1L);
         quizService.delete(1L);
         verify(quizRepo).findById(1L);
         verify(quizRepo).delete(1L);

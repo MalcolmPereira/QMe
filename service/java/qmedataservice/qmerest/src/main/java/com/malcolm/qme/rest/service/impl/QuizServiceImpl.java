@@ -191,11 +191,11 @@ public class QuizServiceImpl  implements QuizService{
                 }
             }
 
+            return quizDetail;
+
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);
         }
-
-        return null;
     }
 
     @Override
