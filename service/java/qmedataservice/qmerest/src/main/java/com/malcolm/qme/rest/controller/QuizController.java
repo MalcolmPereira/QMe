@@ -114,7 +114,7 @@ public class QuizController implements QuizAPI {
     @RequestMapping(value=ID_PATH,method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void delete(Long quizId) throws QMeResourceException {
+    public void delete(@PathVariable(ID_PARAM_STRING) Long quizId) throws QMeResourceException {
         log(getCurrentUser(), "Quiz - delete");
         quizService.delete(quizId);
     }

@@ -9,6 +9,8 @@ package com.malcolm.qme.rest.model.fixtures;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Test Fixtures for QMe Quiz Details
@@ -40,15 +42,42 @@ public class QMeQuizDetailFixture extends QMeResourceFixture<QMeQuizDetail>{
     }
 
     /**
+     * Return QMe Quiz Detail List
+     * @return List QMeQuizDetail
+     */
+    public static List<QMeQuizDetail> simpleQMeQuizDetailList(){
+        List<QMeQuizDetail> qMeQuizDetailList = new ArrayList<>();
+        QMeQuizDetail qMeQuizDetail = qMeQuizDetailWithQuestions();
+        qMeQuizDetail.setQuizID(1L);
+        qMeQuizDetailList.add(qMeQuizDetail);
+        qMeQuizDetail = qMeQuizDetailWithQuestions();
+        qMeQuizDetail.setQuizID(2L);
+        qMeQuizDetailList.add(qMeQuizDetail);
+        qMeQuizDetail = qMeQuizDetailWithQuestions();
+        qMeQuizDetail.setQuizID(3L);
+        qMeQuizDetailList.add(qMeQuizDetail);
+        qMeQuizDetail = qMeQuizDetailWithQuestions();
+        qMeQuizDetail.setQuizID(4L);
+        qMeQuizDetailList.add(qMeQuizDetail);
+        qMeQuizDetail = qMeQuizDetailWithQuestions();
+        qMeQuizDetail.setQuizID(5L);
+        qMeQuizDetailList.add(qMeQuizDetail);
+        return qMeQuizDetailList;
+    }
+
+    /**
      * Get QMe Quiz Detail
      * @return QMeQuizDetail
      */
     private static QMeQuizDetail getQMeQuizDetail() {
         QMeQuizDetail qMeQuizDetail = new QMeQuizDetail();
+        qMeQuizDetail.setQuizID(1L);
         qMeQuizDetail.setQuizName("Some Quiz Name");
         qMeQuizDetail.setQuizDesc("Some Quiz Desc");
         qMeQuizDetail.setCategoryID(1L);
         qMeQuizDetail.setQuizMaxAttempts(3);
         return qMeQuizDetail;
     }
+
+
 }
