@@ -24,6 +24,7 @@ public interface QuizRepository extends QMeRepository<Quiz,Long> {
         USERNAME("userName"),
         CATEGORY("catId"),
         QUIZHITS("quizHits"),
+        QUIZMAXATTEMPTS("quizMaxAttempts"),
         QUIZCREATEDATE("quizCreateDate"),
         QUIZUPDATEDATE("quizUpdateDate")
         ;
