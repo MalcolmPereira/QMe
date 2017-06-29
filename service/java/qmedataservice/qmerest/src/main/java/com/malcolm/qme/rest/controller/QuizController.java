@@ -94,7 +94,7 @@ public class QuizController implements QuizAPI {
     @RequestMapping(value=ROOT_PATH,method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public QMeQuizDetail create(QMeQuizDetail quiz) throws QMeResourceException {
+    public QMeQuizDetail create(@RequestBody QMeQuizDetail quiz) throws QMeResourceException {
         log(getCurrentUser(), "Quiz  - create");
         QMeQuizDetail qMeQuizDetail =  quizService.save(quiz,getCurrentUser().getUserID());
         setQuizLinks(qMeQuizDetail);
