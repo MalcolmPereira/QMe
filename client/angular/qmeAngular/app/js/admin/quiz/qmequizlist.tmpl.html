@@ -9,12 +9,22 @@
                 <thead>
                     <tr>
                         <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('CATEGORY')">Category </span><span ng-if="qmeQuizManagement.isSortAsc('CATEGORY')" ng-click="qmeQuizManagement.sortDesc('CATEGORY')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('CATEGORY')" ng-click="qmeQuizManagement.sortAsc('CATEGORY')" class="glyphicon glyphicon-chevron-down"></span></th>
-                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('QUIZ')">Quiz </span><span ng-if="qmeQuizManagement.isSortAsc('QUIZ')" ng-click="qmeQuizManagement.sortDesc('QUIZ')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZ')" ng-click="qmeQuizManagement.sortAsc('QUIZ')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="30%"><span ng-Click="qmeQuizManagement.setSortField('QUIZ')">Name</span><span ng-if="qmeQuizManagement.isSortAsc('QUIZ')" ng-click="qmeQuizManagement.sortDesc('QUIZ')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZ')" ng-click="qmeQuizManagement.sortAsc('QUIZ')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('QUIZMAXATTEMPTS')">Max Attempts</span><span ng-if="qmeQuizManagement.isSortAsc('QUIZMAXATTEMPTS')" ng-click="qmeQuizManagement.sortDesc('QUIZMAXATTEMPTS')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZMAXATTEMPTS')" ng-click="qmeQuizManagement.sortAsc('QUIZMAXATTEMPTS')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('QUIZHITS')">Hits</span><span ng-if="qmeQuizManagement.isSortAsc('QUIZHITS')" ng-click="qmeQuizManagement.sortDesc('QUIZHITS')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZHITS')" ng-click="qmeQuizManagement.sortAsc('QUIZHITS')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('QUIZLIKES')">Likes</span><span ng-if="qmeQuizManagement.isSortAsc('QUIZLIKES')" ng-click="qmeQuizManagement.sortDesc('QUIZLIKES')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZLIKES')" ng-click="qmeQuizManagement.sortAsc('QUIZLIKES')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="20%"><span ng-Click="qmeQuizManagement.setSortField('QUIZUPDATEDATE')">Update Date</span><span ng-if="qmeQuizManagement.isSortAsc('QUIZUPDATEDATE')" ng-click="qmeQuizManagement.sortDesc('QUIZUPDATEDATE')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZUPDATEDATE')" ng-click="qmeQuizManagement.sortAsc('QUIZUPDATEDATE')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('USERNAME')">User</span><span ng-if="qmeQuizManagement.isSortAsc('USERNAME')" ng-click="qmeQuizManagement.sortDesc('USERNAME')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('USERNAME')" ng-click="qmeQuizManagement.sortAsc('USERNAME')" class="glyphicon glyphicon-chevron-down"></span></th>
                     </tr>
                 </thead>
                 <tr ng-repeat="quiz in qmeQuizManagement.quiz">
                     <td>{{quiz.categoryName}}</td>
                     <td>{{quiz.quizName}}</td>
+                    <td>{{quiz.quizMaxAttempts}}</td>
+                    <td>{{quiz.quizHit}}</td>
+                    <td>{{quiz.likes}}</td>
+                    <td>{{quiz.quizUpdateDate}}</td>
+                    <td>{{quiz.updateUserName}}</td>
                 </tr>
             </table>
             <qme-page ng-if="qmeQuizManagement.recordsLoaded()" qme-totalcount="qmeQuizManagement.totalRecords()" qme-pagingfunction="qmeQuizManagement.pageQuiz"></qme-page>
