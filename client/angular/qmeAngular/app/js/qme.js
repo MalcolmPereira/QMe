@@ -8,7 +8,7 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
     ngQMe
         .constant(
                 'QME_CONSTANTS', {
-                      qmeservice: 'http://localhost:8002/qme',
+                      qmeservice: 'http://10.85.22.37:8002/qme',
                       reseturl: 'http://localhost:8000/app/#/resetpassword/',
                       stageconfirmurl: 'http://localhost:8000/app/#/confirmuser/',
                       qme_auth_header:'QME-AUTH-TOKEN',

@@ -6,11 +6,140 @@
 
         .controller('qmeQuizManagementCtrl', QMeQuizManagementController);
 
-    QMeQuizManagementController.$inject = ['$state','qmeFlashService','qmeUserService'];
 
-        function QMeQuizManagementController($state,qmeFlashService,qmeUserService) {
+        QMeQuizManagementController.$inject = ['$scope','$timeout','$state','$stateParams','qmeFlashService','qmeQuizService','qmeUserService','qmeCategoryService','qmePageSession','qmeModelSession','QME_CONSTANTS'];
+
+
+        function QMeQuizManagementController($scope,$timeout,$state,$stateParams,qmeFlashService,qmeQuizService,qmeUserService,qmeCategoryService,qmePageSession,qmeModelSession,QME_CONSTANTS) {
 
             var qmeQuizManagement = this;
+
+            qmeQuizManagement.quiz = undefined;
+            qmeQuizManagement.quizcount = 0;
+            qmeQuizManagement.currentpage = 0;
+            qmeQuizManagement.sortasc = true;
+            qmeQuizManagement.sortfields = "QUIZ";
+
+            qmeQuizManagement.addQuizForm = undefined;
+            qmeQuizManagement.updateQuizForm = undefined;
+            qmeQuizManagement.quizId = undefined;
+
+            qmeQuizManagement.category = [];
+            qmeQuizManagement.categoryId = undefined;
+            qmeQuizManagement.categoryName = undefined;
+            qmeQuizManagement.quizName = undefined;
+            qmeQuizManagement.quizDesc = undefined;
+
+
+            qmeQuizManagement.listQuiz = function() {
+                if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
+                    qmeQuizManagement.sortasc = true;
+                } else {
+                    qmeQuizManagement.sortasc = $stateParams.sortasc;
+                }
+                if ($stateParams.sortfields && $stateParams.sortfields !== null) {
+                    qmeQuizManagement.sortfields = $stateParams.sortfields;
+                } else {
+                    qmeQuizManagement.sortfields = "QUIZ";
+                }
+
+                if (qmeQuizManagement.quizcount === 0) {
+
+                    qmeQuizService.countQuiz()
+                        .then(
+                            function (res) {
+                                qmeQuizManagement.quizcount = res.data.content;
+                            },
+                            function (error) {
+                                if (error && error.status && error.status == 403) {
+                                    qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                                } else {
+                                    qmeFlashService.Error("Oops.....Error from service for getting quiz count, please retry in some time.");
+                                }
+                                qmeQuizManagement.quizcount = -1;
+                            }
+                        );
+                }
+
+                qmeQuizService.listQuizPaged(0, qmeQuizManagement.sortasc, qmeQuizManagement.sortfields)
+                    .then(
+                        function(res){
+                            qmeQuizManagement.quiz = res;
+                            if($stateParams.currentpage &&  $stateParams.currentpage !== null){
+                                qmeQuizManagement.pageQuiz($stateParams.currentpage);
+                                qmeQuizManagement.setPageState($stateParams.currentpage);
+                            }
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error from service getting quiz lists, please retry in some time.");
+                            }
+                        }
+                    );
+
+            };
+
+            qmeQuizManagement.isSortAsc = function(field){
+                return (qmeQuizManagement.sortasc &&  qmeQuizManagement.sortfields === field);
+            };
+
+            qmeQuizManagement.isSortDesc = function(field){
+                return (!qmeQuizManagement.sortasc &&  qmeQuizManagement.sortfields === field);
+            };
+
+            qmeQuizManagement.sortAsc = function(field){
+                qmeFlashService.Clear();
+                qmeQuizManagement.sortasc = true;
+                qmeQuizManagement.sortfields = field;
+                qmePageSession.create(qmeQuizManagement.quizcount);
+                qmeQuizManagement.pageQuiz(0);
+            };
+
+            qmeQuizManagement.sortDesc = function(field){
+                qmeFlashService.Clear();
+                qmeQuizManagement.sortasc = false;
+                qmeQuizManagement.sortfields = field;
+                qmePageSession.create(qmeQuizManagement.quizcount);
+                qmeQuizManagement.pageQuiz(0);
+            };
+
+            qmeQuizManagement.setSortField = function(field){
+                qmeFlashService.Clear();
+                qmeQuizManagement.sortasc = true;
+                qmeQuizManagement.sortfields = field;
+                qmePageSession.create(qmeQuizManagement.quizcount);
+                qmeQuizManagement.pageQuiz(0);
+            };
+
+            qmeQuizManagement.recordsLoaded = function(){
+                return (qmeQuizManagement.quizcount > 0 );
+            };
+
+            qmeQuizManagement.totalRecords = function(){
+                return qmeQuizManagement.quizcount;
+            };
+
+            qmeQuizManagement.pageQuiz = function(pageNumber){
+                qmeQuizManagement.currentpage = pageNumber;
+                qmeQuizService.listQuizPaged(pageNumber, qmeQuizManagement.sortasc, qmeQuizManagement.sortfields)
+                    .then(
+                        function(res){
+                            qmeQuizManagement.quiz = res;
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error from service getting quiz lists, please retry in some time.");
+                            }
+                        }
+                    );
+            };
 
         }
 

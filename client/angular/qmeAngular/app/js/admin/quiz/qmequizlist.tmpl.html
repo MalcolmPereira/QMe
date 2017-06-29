@@ -1,10 +1,23 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="qmeQuizManagementCtrl as qmeQuizManagement" ng-init="qmeQuizManagement.listQuiz();">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Quiz List</h3>
+            <h3 id="quizHeaderId" class="panel-title">Quiz List</h3>
         </div>
         <div class="panel-body">
-            List Quizzes
+            <qme-page ng-if="qmeQuizManagement.recordsLoaded()" qme-totalcount="qmeQuizManagement.totalRecords()" qme-pagingfunction="qmeQuizManagement.pageQuiz"></qme-page>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('CATEGORY')">Category </span><span ng-if="qmeQuizManagement.isSortAsc('CATEGORY')" ng-click="qmeQuizManagement.sortDesc('CATEGORY')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('CATEGORY')" ng-click="qmeQuizManagement.sortAsc('CATEGORY')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="10%"><span ng-Click="qmeQuizManagement.setSortField('QUIZ')">Quiz </span><span ng-if="qmeQuizManagement.isSortAsc('QUIZ')" ng-click="qmeQuizManagement.sortDesc('QUIZ')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuizManagement.isSortDesc('QUIZ')" ng-click="qmeQuizManagement.sortAsc('QUIZ')" class="glyphicon glyphicon-chevron-down"></span></th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="quiz in qmeQuizManagement.quiz">
+                    <td>{{quiz.categoryName}}</td>
+                    <td>{{quiz.quizName}}</td>
+                </tr>
+            </table>
+            <qme-page ng-if="qmeQuizManagement.recordsLoaded()" qme-totalcount="qmeQuizManagement.totalRecords()" qme-pagingfunction="qmeQuizManagement.pageQuiz"></qme-page>
         </div>
     </div>
 </div>
