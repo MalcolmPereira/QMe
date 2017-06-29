@@ -246,14 +246,11 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
 								"description": ""
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -508,7 +505,63 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg1MTA1MDh9.Gu5cdajVq_peaktujPeDvzphAIcLdBUwQE7vOfRm35YtcZVtsfa9VQ1pSSIt5mBc3PmcCspxLRwpVLoGevSlbQ",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Quiz Paged",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8002/qme/quiz/paged?page=0&pagesize=1&sorttype=true&sortfields=QUIZ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"quiz",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "pagesize",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sorttype",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sortfields",
+									"value": "QUIZ",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
 								"description": ""
 							}
 						],
@@ -525,7 +578,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg1MTA2Nzd9.hWjSBUBomEZfEmEuIOnS0mrmUHWKWr9c8SZGfojnJtunKnZ2TrtjpH2JXHwiaF1Uro1fbVOyZOezzEhIuBU6lw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
 								"description": ""
 							}
 						],
@@ -542,11 +595,36 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg1MTA1MDh9.Gu5cdajVq_peaktujPeDvzphAIcLdBUwQE7vOfRm35YtcZVtsfa9VQ1pSSIt5mBc3PmcCspxLRwpVLoGevSlbQ",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
 								"description": ""
 							}
 						],
 						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post New Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"quizName\":\"Test Quiz 1\",\n\t\"quizDesc\":\"Some Test Quiz 1 Desc\",\n\t\"categoryID\":1,\n\t\"quizMaxAttempts\":3,\n\t\"questionIdList\":[1,2]\n}"
+						},
 						"description": ""
 					},
 					"response": []
