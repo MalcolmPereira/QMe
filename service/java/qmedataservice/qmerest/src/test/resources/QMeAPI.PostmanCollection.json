@@ -628,6 +628,48 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Update Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/68",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quizID\": 68,\n    \"quizName\": \"Test Quiz 1 Update\",\n    \"quizDesc\": \"Some Test Quiz 1 Desc\",\n    \"categoryID\": 1,\n    \"categoryName\": null,\n    \"likes\": null,\n    \"quizHit\": null,\n    \"quizMaxAttempts\": 3,\n    \"quizCreateDate\": null,\n    \"createUserID\": 1,\n    \"createUserName\": null,\n    \"quizUpdateDate\": null,\n    \"updateUserID\": null,\n    \"updateUserName\": null,\n    \"questionIdList\": [\n        1,\n        2\n    ],\n    \"qmeQuestionDetailList\": null,\n    \"links\": [\n        {\n            \"rel\": \"Get_Quiz_by_id\",\n            \"href\": \"http://localhost:8002/qme/quiz/68\"\n        },\n        {\n            \"rel\": \"Put_Update_Quiz\",\n            \"href\": \"http://localhost:8002/qme/quiz/68\"\n        },\n        {\n            \"rel\": \"Delete_Quiz\",\n            \"href\": \"http://localhost:8002/qme/quiz/68\"\n        }\n    ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/68",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
