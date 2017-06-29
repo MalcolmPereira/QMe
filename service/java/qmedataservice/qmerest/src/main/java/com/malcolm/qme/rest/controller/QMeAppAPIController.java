@@ -76,7 +76,7 @@ public class QMeAppAPIController implements QMeAppAPI {
         //QMe Quiz API
         Resource<String> qmeQuizResource = new Resource<>(QME_QUIZ_API,new Link(endpointURL+ QuizAPI.ROOT_PATH.replaceAll(":.+","}"),QUIZ));
         qmeQuizResource.add(new Link(endpointURL+ QuizAPI.COUNT_PATH.replaceAll(":.+","}"),QUIZ_COUNT));
-        qmeQuizResource.add(new Link(endpointURL+ QuizAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",QUIZ_PAGED));
+        qmeQuizResource.add(new Link(endpointURL+ QuizAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUIZ",QUIZ_PAGED));
         qmeQuizResource.add(new Link(endpointURL+ QuizAPI.ID_PATH.replaceAll(":.+","}"),QUIZ_BY_ID));
         qmeQuizResource.add(new Link( endpointURL+ QuizAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_QUIZ));
         qmeQuizResource.add(new Link( endpointURL+ QuizAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_QUIZ));

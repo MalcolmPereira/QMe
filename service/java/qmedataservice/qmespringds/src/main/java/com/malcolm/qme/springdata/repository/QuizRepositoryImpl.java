@@ -13,7 +13,12 @@ import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.QuizRepository;
 import com.malcolm.qme.springdata.entity.QuizEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -26,6 +31,10 @@ import java.util.stream.Collectors;
  */
 @Repository(value = "QuizRepository")
 public class QuizRepositoryImpl implements QuizRepository {
+	/**
+	 * Logger
+	 */
+	private static final Logger LOG = LoggerFactory.getLogger(QuizRepositoryImpl.class);
 
 	/**
 	 * Spring Data QuizRepository Repository
@@ -49,7 +58,27 @@ public class QuizRepositoryImpl implements QuizRepository {
 
 	@Override
 	public List<Quiz> findAll(PageSort pageSort) throws QMeException {
-		return null;
+		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+		List<String> sortFieldList = new ArrayList<>();
+		if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0) {
+			String[] sortFields = pageSort.getSortFields();
+			for (String sortField : sortFields) {
+				try {
+					sortFieldList.add(QUIZSORTFIELDS.valueOf(sortField.toUpperCase()).getQuizSortField());
+
+				} catch (IllegalArgumentException err) {
+					LOG.debug("Invalid Sort Field "+sortField.toUpperCase()+" Will be ignored");
+				}
+			}
+		}
+		PageRequest pageRequest;
+		if(!sortFieldList.isEmpty()){
+			pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+		}else{
+			pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+		}
+		Page<QuizEntity> quizList = quizSpringDataRepository.findAll(pageRequest);
+		return (getQuiz(quizList .getContent()));
 	}
 
 	@Override

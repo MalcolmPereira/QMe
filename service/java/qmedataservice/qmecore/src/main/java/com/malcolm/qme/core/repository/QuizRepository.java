@@ -16,6 +16,41 @@ import java.util.List;
 public interface QuizRepository extends QMeRepository<Quiz,Long> {
 
     /**
+     * Sort Fields Enum
+     */
+    enum QUIZSORTFIELDS {
+        QUIZ("quizName"),
+        QUIZLIKES("quizLikes"),
+        USERNAME("userName"),
+        CATEGORY("catId"),
+        QUIZHITS("quizHits"),
+        QUIZCREATEDATE("quizCreateDate"),
+        QUIZUPDATEDATE("quizUpdateDate")
+        ;
+
+        /**
+         * Enum Constructor
+         * @param fieldName Field Name
+         */
+        QUIZSORTFIELDS(String fieldName) {
+            this.quizSortField = fieldName;
+        }
+
+        /**
+         * Sort Field Name
+         */
+        private final String quizSortField;
+
+        /**
+         * Get Question Sort Field Name
+         * @return Question Sort Field Name
+         */
+        public String getQuizSortField() {
+            return quizSortField;
+        }
+    }
+
+    /**
      * Find By Category
      *
      * @param categoryID Category ID
