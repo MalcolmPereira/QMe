@@ -75,7 +75,7 @@ public class QMeQuestion extends QMeResource {
     /**
      * Update User Name
      */
-    private String udateUserName;
+    private String updateUserName;
 
     /**
      * Category Name
@@ -262,16 +262,16 @@ public class QMeQuestion extends QMeResource {
      * Get Update User Name
      * @return Update User Name
      */
-    public String getUdateUserName() {
-        return udateUserName;
+    public String getUpdateUserName() {
+        return updateUserName;
     }
 
     /**
      * Set Update User Name
-     * @param udateUserName
+     * @param updateUserName
      */
-    public void setUdateUserName(String udateUserName) {
-        this.udateUserName = udateUserName;
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
     }
 
     /**

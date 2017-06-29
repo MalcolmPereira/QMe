@@ -6,10 +6,7 @@
  */
 package com.malcolm.qme.rest.controller;
 
-import com.malcolm.qme.rest.api.CategoryAPI;
-import com.malcolm.qme.rest.api.QMeAppAPI;
-import com.malcolm.qme.rest.api.QuestionAPI;
-import com.malcolm.qme.rest.api.UserAPI;
+import com.malcolm.qme.rest.api.*;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -75,6 +72,16 @@ public class QMeAppAPIController implements QMeAppAPI {
         qmeQuestionResource.add(new Link( endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_QUESTION));
         qmeQuestionResource.add(new Link( endpointURL+ QuestionAPI.ID_PATH.replaceAll(":.+","}"),DELETE_QUESTION));
         qmeResources.add(qmeQuestionResource);
+
+        //QMe Quiz API
+        Resource<String> qmeQuizResource = new Resource<>(QME_QUIZ_API,new Link(endpointURL+ QuizAPI.ROOT_PATH.replaceAll(":.+","}"),QUIZ));
+        qmeQuizResource.add(new Link(endpointURL+ QuizAPI.COUNT_PATH.replaceAll(":.+","}"),QUIZ_COUNT));
+        qmeQuizResource.add(new Link(endpointURL+ QuizAPI.PAGED_PATH.replaceAll(":.+","}")+"?page=0&pagesize=1&sorttype=true&sortfields=QUIZ",QUIZ_PAGED));
+        qmeQuizResource.add(new Link(endpointURL+ QuizAPI.ID_PATH.replaceAll(":.+","}"),QUIZ_BY_ID));
+        qmeQuizResource.add(new Link( endpointURL+ QuizAPI.ROOT_PATH.replaceAll(":.+","}"),CREATE_QUIZ));
+        qmeQuizResource.add(new Link( endpointURL+ QuizAPI.ID_PATH.replaceAll(":.+","}"),UPDATE_QUIZ));
+        qmeQuizResource.add(new Link( endpointURL+ QuizAPI.ID_PATH.replaceAll(":.+","}"),DELETE_QUIZ));
+        qmeResources.add(qmeQuizResource);
 
         return new Resources<>(qmeResources,new Link(endpointURL+ROOT_PATH,QME_API));
     }

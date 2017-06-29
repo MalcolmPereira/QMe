@@ -157,6 +157,38 @@ public interface QMeAppAPI extends QMeAPI {
      * Delete Question
      */
     String DELETE_QUESTION = "Delete_Question";
+    /**
+     * QMe Quiz API
+     */
+    String QME_QUIZ_API = "Qme Quiz API";
+    /**
+     * Quiz
+     */
+    String QUIZ = "Get_Quiz_list";
+    /**
+     * Quiz Count
+     */
+    String QUIZ_COUNT = "Get_Quiz_Count";
+    /**
+     * Quiz Paged
+     */
+    String QUIZ_PAGED = "Get_Paged_Quiz_list - (sortfields:QUIZ,USERNAME,QUIZCREATEDATE,QUIZUPDATEDATE)";
+    /**
+     * Quiz by Quiz ID
+     */
+    String QUIZ_BY_ID = "Get_Quiz_by_id";
+    /**
+     * Create Quiz
+     */
+    String CREATE_QUIZ = "Post_New_Quiz";
+    /**
+     * Update Quiz
+     */
+    String UPDATE_QUIZ = "Put_Update_Quiz";
+    /**
+     * Delete Quiz
+     */
+    String DELETE_QUIZ = "Delete_Quiz";
 
     /**
      * List QMe App API

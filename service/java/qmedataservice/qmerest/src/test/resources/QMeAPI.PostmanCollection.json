@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QMeAPI",
-		"_postman_id": "fb96b244-040b-c87f-aa7f-c40024644f6e",
+		"_postman_id": "58036536-9f8e-1e90-36b0-6970f8678ee0",
 		"description": "QMe API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -23,7 +23,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "List Category"
 					},
 					"response": []
@@ -40,7 +43,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category Count"
 					},
 					"response": []
@@ -48,7 +54,38 @@
 				{
 					"name": "Category Paged List",
 					"request": {
-						"url": "http://localhost:8002/qme/category/paged?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",
+						"url": {
+							"raw": "http://localhost:8002/qme/category/paged?page=0&pagesize=1&sorttype=true&sortfields=CATEGORYNAME",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"category",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pagesize",
+									"value": "1"
+								},
+								{
+									"key": "sorttype",
+									"value": "true"
+								},
+								{
+									"key": "sortfields",
+									"value": "CATEGORYNAME"
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -57,7 +94,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category Pages List"
 					},
 					"response": []
@@ -74,7 +114,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category By Parent Id"
 					},
 					"response": []
@@ -91,7 +134,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category By ID"
 					},
 					"response": []
@@ -108,7 +154,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Category By Name"
 					},
 					"response": []
@@ -175,7 +224,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -194,7 +246,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
 								"description": ""
 							}
 						],
@@ -215,7 +267,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -223,7 +278,38 @@
 				{
 					"name": "Questions Paged List",
 					"request": {
-						"url": "http://localhost:8002/qme/question/paged?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",
+						"url": {
+							"raw": "http://localhost:8002/qme/question/paged?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"question",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pagesize",
+									"value": "1"
+								},
+								{
+									"key": "sorttype",
+									"value": "true"
+								},
+								{
+									"key": "sortfields",
+									"value": "QUESTION"
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -232,7 +318,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Questions Paged List"
 					},
 					"response": []
@@ -249,7 +338,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get Question By ID"
 					},
 					"response": []
@@ -266,7 +358,10 @@
 								"description": ""
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Get Question By ID"
 					},
 					"response": []
@@ -401,7 +496,182 @@
 		{
 			"name": "Quiz",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "List Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Quiz Paged",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8002/qme/quiz/paged?page=0&pagesize=1&sorttype=true&sortfields=QUIZ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"quiz",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "pagesize",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sorttype",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sortfields",
+									"value": "QUIZ",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Quiz Count",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/count",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Quiz By Id",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post New Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"quizName\":\"Test Quiz 1\",\n\t\"quizDesc\":\"Some Test Quiz 1 Desc\",\n\t\"categoryID\":1,\n\t\"quizMaxAttempts\":3,\n\t\"questionIdList\":[1,2]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/68",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quizID\": 68,\n    \"quizName\": \"Test Quiz 1 Update\",\n    \"quizDesc\": \"Some Test Quiz 1 Desc\",\n    \"categoryID\": 1,\n    \"categoryName\": null,\n    \"likes\": null,\n    \"quizHit\": null,\n    \"quizMaxAttempts\": 3,\n    \"quizCreateDate\": null,\n    \"createUserID\": 1,\n    \"createUserName\": null,\n    \"quizUpdateDate\": null,\n    \"updateUserID\": null,\n    \"updateUserName\": null,\n    \"questionIdList\": [\n        1,\n        2\n    ],\n    \"qmeQuestionDetailList\": null,\n    \"links\": [\n        {\n            \"rel\": \"Get_Quiz_by_id\",\n            \"href\": \"http://localhost:8002/qme/quiz/68\"\n        },\n        {\n            \"rel\": \"Put_Update_Quiz\",\n            \"href\": \"http://localhost:8002/qme/quiz/68\"\n        },\n        {\n            \"rel\": \"Delete_Quiz\",\n            \"href\": \"http://localhost:8002/qme/quiz/68\"\n        }\n    ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Quiz",
+					"request": {
+						"url": "http://localhost:8002/qme/quiz/68",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Users",
@@ -470,7 +740,38 @@
 				{
 					"name": "Get Paged User List",
 					"request": {
-						"url": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",
+						"url": {
+							"raw": "http://localhost:8002/qme/user/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"user",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pagesize",
+									"value": "1"
+								},
+								{
+									"key": "sorttype",
+									"value": "true"
+								},
+								{
+									"key": "sortfields",
+									"value": "USERNAME"
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
