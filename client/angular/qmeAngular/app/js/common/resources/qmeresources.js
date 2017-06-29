@@ -141,5 +141,42 @@
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(questionAPI+"/"+questionId,{},{'deleteQuestion':{method:'DELETE'}});
             };
+        })
+
+
+        .service('qmeQuizResource',function($resource,$http,QME_CONSTANTS){
+            var quizAPI                   = QME_CONSTANTS.qmeservice+"/quiz";
+            var quizCountEndPoint         = quizAPI+"/count";
+            var quizPagedEndPoint         = quizAPI+"/paged";
+
+            this.quizResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(quizAPI);
+            };
+            this.quizCountResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $http.get(quizCountEndPoint);
+            };
+            this.quizPagedResource = function(authToken,pageIndex,maxRows,sorttype,sortfields){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                if(sortfields){
+                    return $resource(quizPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows+"&sorttype="+sorttype+"&sortfields="+sortfields);
+                }else{
+                    return $resource(quizPagedEndPoint+"?page="+pageIndex+"&pagesize="+maxRows);
+                }
+            };
+            this.quizByIdResource = function(authToken, quizId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(quizAPI+"/"+quizId);
+            };
+            this.quizUpdateResource = function(authToken, quizId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(quizAPI+"/"+quizId,{},{'updateQuiz':{method:'PUT'}});
+            };
+            this.quizDeleteResource = function(authToken, quizId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(quizAPI+"/"+quizId,{},{'deleteQuiz':{method:'DELETE'}});
+            };
+
         });
 })();
