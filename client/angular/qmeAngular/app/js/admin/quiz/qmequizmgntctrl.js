@@ -29,6 +29,7 @@
             qmeQuizManagement.categoryName = undefined;
             qmeQuizManagement.quizName = undefined;
             qmeQuizManagement.quizDesc = undefined;
+            qmeQuizManagement.quizQuestions = [];
 
 
             qmeQuizManagement.listQuiz = function() {
@@ -141,6 +142,43 @@
                     );
             };
 
-        }
+            qmeQuizManagement.loadCategories = function(){
 
+                qmeFlashService.Clear();
+
+                qmeCategoryService.listCategory()
+                    .then(
+                        function(res){
+                            for (var key in res) {
+                                var category = res[key];
+                                if (category.hasOwnProperty('categoryId')){
+                                    qmeQuizManagement.category.push(category);
+                                }
+                            }
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
+                            }
+                        }
+                    );
+            };
+
+            qmeQuizManagement.addQuizQuestion = function() {
+                $('#addQuestionsModal').modal('show');
+            };
+
+            qmeQuizManagement.cancelQuestions = function() {
+                $('#addQuestionsModal').modal('hide');
+            };
+
+            qmeQuizManagement.removeQuizQuestion = function() {
+
+            };
+
+
+        }
 })();
