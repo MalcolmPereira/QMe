@@ -21,10 +21,10 @@ public interface QuizRepository extends QMeRepository<Quiz,Long> {
     enum QUIZSORTFIELDS {
         QUIZ("quizName"),
         QUIZLIKES("quizLikes"),
-        USERNAME("userName"),
+        USERNAME("updateUser.userName"),
         CATEGORY("catId"),
         QUIZHITS("quizHits"),
-        QUIZMAXATTEMPTS("quizMaxAttempts"),
+        QUIZMAXATTEMPTS("maxAttempts"),
         QUIZCREATEDATE("quizCreateDate"),
         QUIZUPDATEDATE("quizUpdateDate")
         ;
