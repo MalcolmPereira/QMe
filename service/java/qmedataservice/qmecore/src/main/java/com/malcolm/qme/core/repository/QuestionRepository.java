@@ -22,7 +22,7 @@ public interface QuestionRepository extends QMeRepository<Question,Long> {
         QUESTION("questionText"),
         QUESTIONLIKES("questionLikes"),
         QUESTIONPOINT("questionPoint"),
-        USERNAME("userName"),
+        USERNAME("updateUser.userName"),
         CATEGORY("catId"),
         QUESTIONCREATEDATE("questionCreateDate"),
         QUESTIONUPDATEDATE("questionUpdateDate"),
