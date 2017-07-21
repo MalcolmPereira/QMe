@@ -8,9 +8,7 @@
                 <form name="qmeQuizManagement.addQuizForm" class="form-horizontal">
                     <div class="form-group">
                         <label  for="categoryId">Category:</label>
-                        <select class="form-control" ng-model="qmeQuizManagement.categoryId"  name="categoryId" id="categoryId" style="width:500px;" ng-required="true">
-                            <option ng-repeat="category in qmeQuizManagement.category | orderBy: 'categoryName'" title="{{category.categoryName}}" value="{{category.categoryId}}">{{category.categoryName}}</option>
-                        </select>
+                        <select class="form-control" ng-model="qmeQuizManagement.categoryId"  name="categoryId" id="categoryId" style="width:500px;" ng-required="true" ng-change="qmeQuizManagement.clearQuestion(qmeQuizManagement.categoryId,'{{qmeQuizManagement.categoryId}}');" ng-options="category.categoryId as category.categoryName for category in qmeQuizManagement.category | orderBy: 'categoryName' track by category.categoryId "></select>
                     </div>
                     <div class="form-group">
                         <label for="quizName">Name:</label>
@@ -55,6 +53,24 @@
                 <h4 class="modal-title" id="optionsModalLabel">Questions</h4>
             </div>
             <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="categoryChangeConfirm" tabindex="-1" role="dialog" aria-labelledby="categoryChangeConfirmModalLabel" ng-controller="qmeQuizManagementCtrl as qmeQuizManagement">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="qmeQuizManagement.cancelChangeCategory()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="categoryChangeConfirmModalLabel">Change Category</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to change category ?, All selected questions will be cleared out.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmCancelID" class="btn btn-info" data-dismiss="modal" ng-click="qmeQuizManagement.cancelChangeCategory()">Cancel</button>
+                <button type="button" id="confirmSubmitID" class="btn btn-danger" data-backdrop="false" data-dismiss="modal" ng-click="qmeQuizManagement.clearAllQuestions()">OK</button>
             </div>
         </div>
     </div>
