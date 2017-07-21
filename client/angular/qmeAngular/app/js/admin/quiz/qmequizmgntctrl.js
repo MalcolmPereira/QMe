@@ -31,9 +31,6 @@
             qmeQuizManagement.quizDesc = undefined;
             qmeQuizManagement.quizQuestions = [];
 
-            qmeQuizManagement.selectedCategory = undefined;
-            qmeQuizManagement.previousCategory = undefined;
-
             qmeQuizManagement.listQuiz = function() {
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
                     qmeQuizManagement.sortasc = true;
@@ -170,49 +167,56 @@
             };
 
             qmeQuizManagement.clearQuestion = function(newValue, oldValue){
-                qmeQuizManagement.selectedCategory = undefined;
-                qmeQuizManagement.previousCategory = undefined;
-
-                //This will move under condition block
-                //qmeQuizManagement.selectedCategory = newValue;
-                //qmeQuizManagement.previousCategory = oldValue;
-                //$('#categoryChangeConfirm').modal('show');
+                console.log("newValue ",newValue);
+                console.log("oldValue ",oldValue);
+                console.log("qmeQuizManagement.categoryId ",qmeQuizManagement.categoryId);
 
 
                 //if(qmeQuizManagement.quizQuestions && qmeQuizManagement.quizQuestions.length > 0 && newValue && oldValue && newValue !== oldValue){
+                if(newValue && oldValue && newValue != oldValue){
+                    $('#categoryChangeConfirm').modal('show');
+                    var promise = qmeModelSession.modalShown();
+                    promise.then(
+                        function(data){
+                            if(data){
+                                qmeQuizManagement.quizQuestions = undefined;
+                                qmeQuizManagement.quizQuestions = [];
+
+                            }else {
+                                for (var i in qmeQuizManagement.category) {
+                                    var categoryObj = qmeQuizManagement.category[i];
+                                    if ((oldValue && oldValue.categoryId && categoryObj.categoryId == oldValue.categoryId) || (oldValue && categoryObj.categoryId == oldValue)) {
+                                        qmeQuizManagement.categoryId = categoryObj.categoryId;
+                                        $scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[i];
+                                    }
+                                }
+                            }
+                        },
+                        function(){
+                        }
+                    );
+                }
+
+
+                //$scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[8];
+                //This will move under condition block
+                //qmeQuizManagement.selectedCategory = newValue;
+                //qmeQuizManagement.previousCategory = oldValue;
+                //
+                //if(qmeQuizManagement.quizQuestions && qmeQuizManagement.quizQuestions.length > 0 && newValue && oldValue && newValue !== oldValue){
                     //$('#qmeConfirmModel').modal('show');
                 //}
-
-                //qmeQuizManagement.categoryId = 9;
-                //$scope.categoryId = qmeQuizManagement.category[8];
-                $scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[8];
-            };
-
-            qmeQuizManagement.clearAllQuestions = function(){
-                console.log("clearAllQuestions is called");
-                qmeQuizManagement.quizQuestions = undefined;
-                qmeQuizManagement.quizQuestions = [];
-                qmeQuizManagement.selectedCategory = undefined;
-                qmeQuizManagement.previousCategory = undefined;
-            };
-
-            qmeQuizManagement.cancelChangeCategory = function(){
-                console.log("cancelChangeCategory is called");
-
                 //qmeQuizManagement.categoryId = 9;
                 //$scope.categoryId = qmeQuizManagement.category[8];
                 //$scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[8];
+            };
 
-                //qmeQuizManagement.categoryId = 9;
-                //$scope.categoryId = qmeQuizManagement.category[8];
-                //for (var categoryObj in qmeQuizManagement.category) {
-                //    if(categoryObj.categoryId === qmeQuizManagement.previousCategory){
-                //       $scope.categoryId = categoryObj;
-                //        qmeQuizManagement.selectedCategory = undefined;
-                //        qmeQuizManagement.previousCategory = undefined;
-                //        return;
-                //   }
-                //}
+            qmeQuizManagement.clearAllQuestions = function(clear){
+                if(clear){
+                    qmeModelSession.create(true);
+                }else{
+                    qmeModelSession.create(false);
+                }
             };
 
             qmeQuizManagement.addQuizQuestion = function() {
