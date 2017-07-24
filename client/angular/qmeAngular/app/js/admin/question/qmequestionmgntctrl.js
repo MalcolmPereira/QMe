@@ -36,7 +36,12 @@
 
             qmeQuestionManagement.answerOptions = [];
 
+            qmeQuestionManagement.selectedQuestions = [];
+
             qmeQuestionManagement.listQuestions = function() {
+                qmeQuestionManagement.selectedQuestions = undefined;
+                qmeQuestionManagement.selectedQuestions = [];
+
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
                     qmeQuestionManagement.sortasc = true;
                 } else {
@@ -709,5 +714,25 @@
                     }
                 }
             };
+
+            qmeQuestionManagement.checkQuestion = function(event,question){
+                if(event && event.target && event.target.checked){
+                    for(var i in qmeQuestionManagement.selectedQuestions){
+                        if(qmeQuestionManagement.selectedQuestions[i].questionId.questionId == question.questionId){
+                            return;
+                        }
+                    }
+                    qmeQuestionManagement.selectedQuestions.push(question);
+
+                }else if(event && event.target && !event.target.checked){
+                    for(var j in qmeQuestionManagement.selectedQuestions){
+                        if(qmeQuestionManagement.selectedQuestions[j].questionId == question.questionId){
+                            qmeQuestionManagement.selectedQuestions.splice(j , 1);
+                            return;
+                        }
+                    }
+                }
+            };
+
         }
 })();
