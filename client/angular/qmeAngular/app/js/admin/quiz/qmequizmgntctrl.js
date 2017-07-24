@@ -229,7 +229,14 @@
                 $('#addQuestionsModal').modal('hide');
             };
 
-            qmeQuizManagement.removeQuizQuestion = function() {
+            qmeQuizManagement.removeQuizQuestion = function(quizQuestionId) {
+                console.log("got quizQuestionId ",quizQuestionId);
+                for(var i in qmeQuizManagement.quizQuestions){
+                    if(qmeQuizManagement.quizQuestions[i].questionId == quizQuestionId){
+                        qmeQuizManagement.quizQuestions.splice(i,1);
+                        break;
+                    }
+                }
             };
         }
 })();

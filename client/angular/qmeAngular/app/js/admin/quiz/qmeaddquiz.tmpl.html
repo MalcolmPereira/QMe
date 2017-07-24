@@ -36,7 +36,7 @@
                                     <td>{{quizQuestion.questionText}}</td>
                                     <td>{{quizQuestion.answer}}</td>
                                     <td>{{quizQuestion.questionPoint}}</td>
-                                    <td><a href="#" ng-click="qmeQuizManagement.removeQuizQuestion($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                    <td><a href="#" ng-click="qmeQuizManagement.removeQuizQuestion(quizQuestion.questionId);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
