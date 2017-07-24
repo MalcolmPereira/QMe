@@ -1,0 +1,24 @@
+<div class="container-fluid" ng-controller="qmeQuestionManagementCtrl as qmeQuestionManagement" ng-init="qmeQuestionManagement.listQuestions();">
+    <div class="container-fluid" ng-controller="qmeQuestionManagementCtrl as qmeQuestionManagement" ng-init="qmeQuestionManagement.listQuestions();">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <qme-page ng-if="qmeQuestionManagement.recordsLoaded()" qme-totalcount="qmeQuestionManagement.totalRecords()" qme-pagingfunction="qmeQuestionManagement.pageQuestions"></qme-page>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th width="50%"><span ng-Click="qmeQuestionManagement.setSortField('QUESTION')">Question </span><span ng-if="qmeQuestionManagement.isSortAsc('QUESTION')" ng-click="qmeQuestionManagement.sortDesc('QUESTION')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuestionManagement.isSortDesc('QUESTION')" ng-click="qmeQuestionManagement.sortAsc('QUESTION')" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th width="40%">Answer </th>
+                        <th width="10%"><span ng-Click="qmeQuestionManagement.setSortField('QUESTIONPOINT')">Point </span><span ng-if="qmeQuestionManagement.isSortAsc('QUESTIONPOINT')" ng-click="qmeQuestionManagement.sortDesc('QUESTIONPOINT')" class="glyphicon glyphicon-chevron-up"></span><span ng-if="qmeQuestionManagement.isSortDesc('QUESTIONPOINT')" ng-click="qmeQuestionManagement.sortAsc('QUESTIONPOINT')" class="glyphicon glyphicon-chevron-down"></span></th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="question in qmeQuestionManagement.questions">
+                        <td>{{question.questionText}}</td>
+                        <td>{{question.answer}}</td>
+                        <td>{{question.questionPoint}}</td>
+                    </tr>
+                </table>
+                <qme-page ng-if="qmeQuestionManagement.recordsLoaded()" qme-totalcount="qmeQuestionManagement.totalRecords()" qme-pagingfunction="qmeQuestionManagement.pageQuestions"></qme-page>
+            </div>
+        </div>
+    </div>
+</div>

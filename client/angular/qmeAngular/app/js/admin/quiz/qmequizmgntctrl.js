@@ -198,6 +198,10 @@
                 }
             };
 
+            qmeQuizManagement.goSelectQuizQuestions = function () {
+                $state.go('selectquizquestions');
+            };
+
             qmeQuizManagement.addQuizQuestion = function() {
                 $('#addQuestionsModal').modal('show');
             };
@@ -207,9 +211,6 @@
             };
 
             qmeQuizManagement.removeQuizQuestion = function() {
-
             };
-
-
         }
 })();
