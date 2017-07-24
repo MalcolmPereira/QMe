@@ -8,18 +8,18 @@
                 <form name="qmeQuizManagement.addQuizForm" class="form-horizontal">
                     <div class="form-group">
                         <label  for="categoryId">Category:</label>
-                        <select class="form-control" ng-model="qmeQuizManagement.categoryId"  name="categoryId" id="categoryId" style="width:500px;" ng-required="true" ng-change="qmeQuizManagement.clearQuestion(qmeQuizManagement.categoryId,'{{qmeQuizManagement.categoryId}}');" ng-options="category.categoryId as category.categoryName for category in qmeQuizManagement.category | orderBy: 'categoryName' track by category.categoryId "></select>
+                        <select class="form-control" ng-model="qmeQuizManagement.categoryId"  name="categoryId" id="categoryId" style="width:500px;" ng-required="true" ng-change="qmeQuizManagement.clearQuestion(qmeQuizManagement.categoryId,'{{qmeQuizManagement.categoryId}}');" ng-options="category.categoryId as category.categoryName for category in qmeQuizManagement.category | orderBy: 'categoryName'"></select>
                     </div>
                     <div class="form-group">
                         <label for="quizName">Name:</label>
-                        <input style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizName" name="quizName" id="quizName" class="form-control" placeholder="Quiz Name" ng-required="true"></input>
+                        <input style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizName" name="quizName" id="quizName" class="form-control" placeholder="Quiz Name" ng-disabled="!(qmeQuizManagement.categoryId)" ng-required="true"/>
                     </div>
                     <div class="form-group">
                         <label for="quizDesc">Description:</label>
-                        <textarea style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizDesc" name="quizDesc" id="quizDesc" class="form-control" placeholder="Description" ng-required="true"></textarea>
+                        <textarea style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizDesc" name="quizDesc" id="quizDesc" class="form-control" placeholder="Description" ng-disabled="!(qmeQuizManagement.categoryId)" ng-required="true"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="answerOption">Quiz Questions :</label>&nbsp;<a ng-show="(qmeQuizManagement.quizQuestions .length < 101 )" ng-href="#" ng-click="qmeQuizManagement.addQuizQuestion();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                        <label for="answerOption">Quiz Questions :</label>&nbsp;<a ng-show="(qmeQuizManagement.quizQuestions .length < 101 )" ng-href="#" ng-click="qmeQuizManagement.addQuizQuestion();" ng-hide="!(qmeQuizManagement.categoryId)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                         <table border="1" style="width:950px;" class="table table-bordered table-striped" name="answerOption" id="answerOption">
                             <thead>
                                 <tr>

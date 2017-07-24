@@ -167,13 +167,7 @@
             };
 
             qmeQuizManagement.clearQuestion = function(newValue, oldValue){
-                console.log("newValue ",newValue);
-                console.log("oldValue ",oldValue);
-                console.log("qmeQuizManagement.categoryId ",qmeQuizManagement.categoryId);
-
-
-                //if(qmeQuizManagement.quizQuestions && qmeQuizManagement.quizQuestions.length > 0 && newValue && oldValue && newValue !== oldValue){
-                if(newValue && oldValue && newValue != oldValue){
+                if(qmeQuizManagement.quizQuestions && qmeQuizManagement.quizQuestions.length > 0 && newValue && oldValue && newValue !== oldValue){
                     $('#categoryChangeConfirm').modal('show');
                     var promise = qmeModelSession.modalShown();
                     promise.then(
@@ -181,13 +175,11 @@
                             if(data){
                                 qmeQuizManagement.quizQuestions = undefined;
                                 qmeQuizManagement.quizQuestions = [];
-
                             }else {
                                 for (var i in qmeQuizManagement.category) {
                                     var categoryObj = qmeQuizManagement.category[i];
                                     if ((oldValue && oldValue.categoryId && categoryObj.categoryId == oldValue.categoryId) || (oldValue && categoryObj.categoryId == oldValue)) {
                                         qmeQuizManagement.categoryId = categoryObj.categoryId;
-                                        $scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[i];
                                     }
                                 }
                             }
@@ -196,19 +188,6 @@
                         }
                     );
                 }
-
-
-                //$scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[8];
-                //This will move under condition block
-                //qmeQuizManagement.selectedCategory = newValue;
-                //qmeQuizManagement.previousCategory = oldValue;
-                //
-                //if(qmeQuizManagement.quizQuestions && qmeQuizManagement.quizQuestions.length > 0 && newValue && oldValue && newValue !== oldValue){
-                    //$('#qmeConfirmModel').modal('show');
-                //}
-                //qmeQuizManagement.categoryId = 9;
-                //$scope.categoryId = qmeQuizManagement.category[8];
-                //$scope.qmeQuizManagement.categoryId = qmeQuizManagement.category[8];
             };
 
             qmeQuizManagement.clearAllQuestions = function(clear){
