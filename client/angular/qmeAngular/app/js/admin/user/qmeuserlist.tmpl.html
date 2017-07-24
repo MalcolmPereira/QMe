@@ -17,15 +17,17 @@
                         <th width="16%">User Roles</th>
                     </tr>
                 </thead>
-                <tr ng-repeat="user in qmeUserManagement.users">
-                    <td><a href="#" id="{{'userId' + $index}}" ng-click="qmeUserManagement.updateUser(user)">{{user.userName}}</a></td>
-                    <td>{{user.userEmail}}</td>
-                    <td>{{user.userFirstName}}</td>
-                    <td>{{user.userLastName}}</td>
-                    <td>{{user.userRegisteredDate}}</td>
-                    <td>{{user.userLastLoginDate}}</td>
-                    <td>{{user.userRoles.join(" , ");}}</td>
-                </tr>
+                <tbody>
+                    <tr ng-repeat="user in qmeUserManagement.users">
+                        <td><a href="#" id="{{'userId' + $index}}" ng-click="qmeUserManagement.updateUser(user)">{{user.userName}}</a></td>
+                        <td>{{user.userEmail}}</td>
+                        <td>{{user.userFirstName}}</td>
+                        <td>{{user.userLastName}}</td>
+                        <td>{{user.userRegisteredDate}}</td>
+                        <td>{{user.userLastLoginDate}}</td>
+                        <td>{{user.userRoles.join(" , ");}}</td>
+                    </tr>
+                </tbody>
             </table>
             <qme-page ng-if="qmeUserManagement.recordsLoaded()" qme-totalcount="qmeUserManagement.totalRecords()" qme-pagingfunction="qmeUserManagement.pageUsers"></qme-page>
         </div>
