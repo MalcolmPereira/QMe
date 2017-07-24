@@ -24,16 +24,18 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%">ID</th>
-                                    <th style="width: 8%">Point</th>
-                                    <th style="width: 85%">Question</th>
+                                    <th style="width: 48%">Question</th>
+                                    <th style="width: 40%">Answer</th>
+                                    <th style="width: 5%">Point</th>
                                     <th style="width: 2%">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="quizQuestion in qmeQuizManagement.quizQuestions">
                                     <td>{{quizQuestion.questionId}}</td>
-                                    <td>{{quizQuestion.questionPoint}}</td>
                                     <td>{{quizQuestion.questionText}}</td>
+                                    <td>{{quizQuestion.answer}}</td>
+                                    <td>{{quizQuestion.questionPoint}}</td>
                                     <td><a href="#" ng-click="qmeQuizManagement.removeQuizQuestion($index);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                                 </tr>
                             </tbody>
@@ -52,7 +54,7 @@
                 <button type="button" class="close" aria-label="Close" ng-click="qmeQuizManagement.cancelQuestions()"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="optionsModalLabel">Questions</h4>
             </div>
-            <div class="modal-body" style="overflow-y: auto;">
+            <div class="modal-body">
                 <qme-select-question></qme-select-question>
             </div>
         </div>

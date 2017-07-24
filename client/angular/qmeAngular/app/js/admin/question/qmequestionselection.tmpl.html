@@ -21,6 +21,10 @@
                 </table>
                 <qme-page ng-if="qmeQuestionManagement.recordsLoaded()" qme-totalcount="qmeQuestionManagement.totalRecords()" qme-pagingfunction="qmeQuestionManagement.pageQuestions"></qme-page>
             </div>
+            <div class="panel-footer">
+                <button id="cancelSelectQuestionButtonId" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="saveSelectQuestionButtonId" type="button" class="btn btn-info"  data-dismiss="modal" ng-click="qmeQuestionManagement.setSelectedQuestions()" ng-disabled="(!qmeQuestionManagement.selectedQuestions || qmeQuestionManagement.selectedQuestions.length == 0)">Save</button>
+            </div>
         </div>
     </div>
 </div>

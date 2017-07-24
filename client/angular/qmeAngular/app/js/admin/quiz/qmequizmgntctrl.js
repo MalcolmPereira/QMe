@@ -198,12 +198,31 @@
                 }
             };
 
-            qmeQuizManagement.goSelectQuizQuestions = function () {
-                $state.go('selectquizquestions');
-            };
-
             qmeQuizManagement.addQuizQuestion = function() {
+                qmeModelSession.destroy();
                 $('#addQuestionsModal').modal('show');
+                var promise = qmeModelSession.modalShown();
+                promise.then(
+                    function(data){
+                        if(data){
+
+                            for(var i in data){
+                                var toAdd = true;
+                                for(var j in qmeQuizManagement.quizQuestions){
+                                    if(data[i].questionId == qmeQuizManagement.quizQuestions[j].questionId){
+                                        toAdd = false;
+                                        break;
+                                    }
+                                }
+                                if(toAdd){
+                                    qmeQuizManagement.quizQuestions.push(data[i]);
+                                }
+                            }
+                        }
+                    },
+                    function(){
+                    }
+                );
             };
 
             qmeQuizManagement.cancelQuestions = function() {

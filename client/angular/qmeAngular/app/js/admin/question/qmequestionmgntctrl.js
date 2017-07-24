@@ -718,7 +718,7 @@
             qmeQuestionManagement.checkQuestion = function(event,question){
                 if(event && event.target && event.target.checked){
                     for(var i in qmeQuestionManagement.selectedQuestions){
-                        if(qmeQuestionManagement.selectedQuestions[i].questionId.questionId == question.questionId){
+                        if(qmeQuestionManagement.selectedQuestions[i].questionId == question.questionId){
                             return;
                         }
                     }
@@ -732,6 +732,10 @@
                         }
                     }
                 }
+            };
+
+            qmeQuestionManagement.setSelectedQuestions = function(){
+                qmeModelSession.create(qmeQuestionManagement.selectedQuestions);
             };
 
         }
