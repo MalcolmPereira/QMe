@@ -238,5 +238,13 @@
                     }
                 }
             };
+
+            qmeQuizManagement.submitAddQuiz = function(){
+
+            };
+
+            qmeQuizManagement.cancelAddQuiz = function(){
+                $state.go('listquizzes', {});
+            };
         }
 })();
