@@ -32,12 +32,16 @@ public class QMeCORSFilter implements Filter {
      */
     private static List<String> supportedClients = new ArrayList<>();
     static{
-        supportedClients.add("http://10.85.22.86:8000");
-        supportedClients.add("http://127.0.0.1:8000");
         supportedClients.add("http://localhost:8000");
-        supportedClients.add("http://10.85.22.86:4200");
-        supportedClients.add("http://127.0.0.1:4200");
         supportedClients.add("http://localhost:4200");
+        supportedClients.add("http://127.0.0.1:8000");
+        supportedClients.add("http://127.0.0.1:4200");
+        supportedClients.add("http://10.85.22.86:8000");
+        supportedClients.add("http://10.85.22.86:4200");
+        supportedClients.add("http://10.85.22.37:8000");
+        supportedClients.add("http://10.85.22.37:4200");
+
+
     }
 
     /*
