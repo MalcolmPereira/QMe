@@ -30,18 +30,24 @@
             return listQuestionPromise.promise;
         };
 
-        qmeQuestionService.listQuestionsPaged = function(currentPage,sorttype,sortfields){
+        qmeQuestionService.listQuestionsPaged = function(currentPage,sorttype,sortfields, selectedCategoryId){
             var listQuestionPagedPromise = $q.defer();
 
-            qmeQuestionResource.questionPagedResource(qmeUserSession.authtoken(),currentPage,QME_CONSTANTS.rowsperpage,sorttype,sortfields)
-                .query(
-                    function(res){
-                        listQuestionPagedPromise.resolve(res);
-                    },
-                    function(error){
-                        listQuestionPagedPromise.reject(error);
-                    }
+            if(selectedCategoryId && selectedCategoryId > 0){
+
+            }else{
+
+                qmeQuestionResource.questionPagedResource(qmeUserSession.authtoken(),currentPage,QME_CONSTANTS.rowsperpage,sorttype,sortfields)
+                    .query(
+                        function(res){
+                            listQuestionPagedPromise.resolve(res);
+                        },
+                        function(error){
+                            listQuestionPagedPromise.reject(error);
+                        }
                 );
+            }
+
             return listQuestionPagedPromise.promise;
         };
 

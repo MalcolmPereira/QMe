@@ -38,9 +38,12 @@
 
             qmeQuestionManagement.selectedQuestions = [];
 
-            qmeQuestionManagement.listQuestions = function() {
-                qmeQuestionManagement.selectedQuestions = undefined;
-                qmeQuestionManagement.selectedQuestions = [];
+            qmeQuestionManagement.selectedCategoryid = undefined;
+
+            qmeQuestionManagement.listQuestions = function(selectedCategoryid) {
+                qmeQuestionManagement.selectedCategoryid = selectedCategoryid;
+                qmeQuestionManagement.selectedQuestions  = undefined;
+                qmeQuestionManagement.selectedQuestions  = [];
 
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
                     qmeQuestionManagement.sortasc = true;
@@ -72,7 +75,7 @@
                         );
                 }
 
-                qmeQuestionService.listQuestionsPaged(0, qmeQuestionManagement.sortasc, qmeQuestionManagement.sortfields)
+                qmeQuestionService.listQuestionsPaged(0, qmeQuestionManagement.sortasc, qmeQuestionManagement.sortfields, qmeQuestionManagement.selectedCategoryid)
                     .then(
 
                         function(res){
@@ -135,7 +138,7 @@
 
             qmeQuestionManagement.pageQuestions = function(pageNumber){
                 qmeQuestionManagement.currentpage = pageNumber;
-                qmeQuestionService.listQuestionsPaged(pageNumber, qmeQuestionManagement.sortasc, qmeQuestionManagement.sortfields)
+                qmeQuestionService.listQuestionsPaged(pageNumber, qmeQuestionManagement.sortasc, qmeQuestionManagement.sortfields, qmeQuestionManagement.selectedCategoryid)
                     .then(
                         function(res){
                             qmeQuestionManagement.questions = res;

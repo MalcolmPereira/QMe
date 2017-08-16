@@ -9,7 +9,10 @@
                 restrict: 'E',
                 controller: 'qmeQuestionManagementCtrl',
                 controllerAs: 'qmeQuestionManagement',
-                templateUrl: 'js/admin/question/qmequestionselection.tmpl.html'
+                templateUrl: 'js/admin/question/qmequestionselection.tmpl.html',
+                scope: {
+                    selectedCategoryid: '='
+                }
             };
         })
 
