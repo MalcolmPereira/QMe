@@ -31,6 +31,8 @@
             qmeQuizManagement.quizDesc = undefined;
             qmeQuizManagement.quizQuestions = [];
 
+            qmeQuizManagement.shownSelectQuestions = false;
+
             qmeQuizManagement.listQuiz = function() {
                 if ($stateParams.sortasc === undefined || $stateParams.sortasc === null) {
                     qmeQuizManagement.sortasc = true;
@@ -199,6 +201,7 @@
             };
 
             qmeQuizManagement.addQuizQuestion = function() {
+                qmeQuizManagement.shownSelectQuestions = true;
                 qmeModelSession.destroy();
                 $('#addQuestionsModal').modal('show');
                 var promise = qmeModelSession.modalShown();
@@ -219,6 +222,9 @@
                                 }
                             }
                         }
+                        qmeQuizManagement.shownSelectQuestions = false;
+                        qmeModelSession.destroy();
+                        $('#addQuestionsModal').modal('hide');
                     },
                     function(){
                     }
@@ -226,6 +232,7 @@
             };
 
             qmeQuizManagement.cancelQuestions = function() {
+                qmeQuizManagement.shownSelectQuestions = false;
                 $('#addQuestionsModal').modal('hide');
             };
 
