@@ -60,6 +60,12 @@ public interface QuestionRepository extends QMeRepository<Question,Long> {
     List<Question> findByCategoryId(Long categoryID) throws QMeException;
 
     /**
+     * Find all Question by Category Id with Pagination and Sorting
+     * @return List of T
+     */
+    List<Question> findByCategoryId(Long categoryID, PageSort pageSort) throws QMeException;
+
+    /**
      * Find By Most Liked
      *
      * @return Questions sorted by Likes

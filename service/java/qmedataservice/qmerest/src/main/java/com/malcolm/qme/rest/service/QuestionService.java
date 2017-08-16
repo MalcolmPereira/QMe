@@ -6,12 +6,34 @@
  */
 package com.malcolm.qme.rest.service;
 
+import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuestion;
 import com.malcolm.qme.rest.model.QMeQuestionDetail;
+
+import java.util.List;
 
 /**
  * @author malcolm
  */
 public interface QuestionService extends QMeService<QMeQuestionDetail,QMeQuestion,Long> {
+    /**
+     * Return List of Questions by Category Id
+     * @param categoryId
+     * @return
+     * @throws QMeServerException
+     */
+    List<QMeQuestionDetail> list(Long categoryId) throws QMeServerException;
 
+    /**
+     * Return List of Questions by Category Id
+     *
+     * @param categoryId
+     * @param pageIndex
+     * @param maxRows
+     * @param sortAscending
+     * @param sortFields
+     * @return
+     * @throws QMeServerException
+     */
+    List<QMeQuestionDetail> list(Long categoryId, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException;
 }

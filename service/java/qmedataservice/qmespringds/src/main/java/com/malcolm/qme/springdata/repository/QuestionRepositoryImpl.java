@@ -57,7 +57,14 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         }
 	}
 
-	@Override
+    @Override
+    public List<Question> findByCategoryId(Long categoryID, PageSort pageSort) throws QMeException {
+        PageRequest pageRequest = getPageRequest(pageSort);
+        Page<QuestionEntity> questionList = questionSpringDataRepository.findByCatId(categoryID,pageRequest);
+        return (getQuestion(questionList.getContent()));
+    }
+
+    @Override
 	public List<Question> findByMostLiked() throws QMeException {
         try{
 		    return(getQuestion(questionSpringDataRepository.findTop50ByOrderByQuestionLikesDesc()));
@@ -77,30 +84,12 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
 	@Override
 	public List<Question> findAll(PageSort pageSort) throws QMeException {
-		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-        List<String> sortFieldList = new ArrayList<>();
-        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0) {
-            String[] sortFields = pageSort.getSortFields();
-            for (String sortField : sortFields) {
-                try {
-                    sortFieldList.add(QUESTIONSORTFIELDS.valueOf(sortField.toUpperCase()).getQuestionSortField());
-
-                } catch (IllegalArgumentException err) {
-                    LOG.debug("Invalid Sort Field "+sortField.toUpperCase()+" Will be ignored");
-                }
-            }
-        }
-        PageRequest pageRequest;
-        if(!sortFieldList.isEmpty()){
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
-        }else{
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
-        }
+        PageRequest pageRequest = getPageRequest(pageSort);
         Page<QuestionEntity> questionList = questionSpringDataRepository.findAll(pageRequest);
         return (getQuestion(questionList.getContent()));
 	}
 
-	@Override
+    @Override
 	public Question findById(Long id) throws QMeException {
         try{
 		    QuestionEntity questionEntity = questionSpringDataRepository.findOne(id);
@@ -246,5 +235,33 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         return question;
     }
-	
+
+    /**
+     * Get PageRequest for PageSorting
+     *
+     * @param pageSort
+     * @return PageRequest
+     */
+    private PageRequest getPageRequest(PageSort pageSort) {
+        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+        List<String> sortFieldList = new ArrayList<>();
+        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0) {
+            String[] sortFields = pageSort.getSortFields();
+            for (String sortField : sortFields) {
+                try {
+                    sortFieldList.add(QUESTIONSORTFIELDS.valueOf(sortField.toUpperCase()).getQuestionSortField());
+
+                } catch (IllegalArgumentException err) {
+                    LOG.debug("Invalid Sort Field "+sortField.toUpperCase()+" Will be ignored");
+                }
+            }
+        }
+        PageRequest pageRequest;
+        if(!sortFieldList.isEmpty()){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+        }else{
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        }
+        return pageRequest;
+    }
 }

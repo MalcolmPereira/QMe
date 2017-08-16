@@ -59,6 +59,18 @@ public class QuestionController implements QuestionAPI {
         return qMeQuestionDetailList;
     }
 
+    @RequestMapping(value=ROOT_PATH_BY_CATID,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public @ResponseBody List<QMeQuestionDetail> list(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException {
+        log(getCurrentUser(), "Question - list by category id");
+    List<QMeQuestionDetail> qMeQuestionDetailList = questionService.list(categoryId);
+        setQuestionLinks(qMeQuestionDetailList);
+        return qMeQuestionDetailList;
+    }
+
+
     @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
@@ -78,6 +90,31 @@ public class QuestionController implements QuestionAPI {
             qMeQuestionDetailList = questionService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
         }else{
             qMeQuestionDetailList= questionService.list();
+        }
+        setQuestionLinks(qMeQuestionDetailList);
+        return qMeQuestionDetailList;
+    }
+
+    @RequestMapping(value=PAGED_PATH_BY_CATID,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public List<QMeQuestionDetail> listPaged(
+            @PathVariable(ID_PARAM_STRING) Long categoryId,
+            @RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+            @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+            @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+            @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "Question - listPaged by Category Id");
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeQuestionDetail> qMeQuestionDetailList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeQuestionDetailList = questionService.list(categoryId,pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }else{
+            qMeQuestionDetailList= questionService.list(categoryId);
         }
         setQuestionLinks(qMeQuestionDetailList);
         return qMeQuestionDetailList;

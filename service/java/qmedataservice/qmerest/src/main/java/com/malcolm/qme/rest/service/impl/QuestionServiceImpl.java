@@ -87,9 +87,29 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<QMeQuestionDetail> list(Long categoryId) throws QMeServerException {
+        try {
+            return getQMeQuestionDetail(questionRepo.findByCategoryId(categoryId));
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
+    }
+
+    @Override
     public List<QMeQuestionDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
         try {
             return getQMeQuestionDetail(questionRepo.findAll(new PageSort(pageIndex, maxRows, sortAscending, sortFields)));
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
+    }
+
+    @Override
+    public List<QMeQuestionDetail> list(Long categoryId,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        try {
+            return getQMeQuestionDetail(questionRepo.findByCategoryId(categoryId , new PageSort(pageIndex, maxRows, sortAscending, sortFields)));
 
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);

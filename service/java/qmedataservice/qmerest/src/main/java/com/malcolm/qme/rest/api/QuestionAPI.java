@@ -23,6 +23,11 @@ public interface QuestionAPI extends QMeAPI {
     String ROOT_PATH = APP_STRING + "/question";
 
     /**
+     * QuestionAPI API Questions By Category
+     */
+    String ROOT_PATH_BY_CATID = APP_STRING + "/question/category" + "/{" + ID_PARAM_STRING + "}";
+
+    /**
      * QuestionAPI API Resource Count
      */
     String COUNT_PATH = APP_STRING + "/question/count";
@@ -33,6 +38,11 @@ public interface QuestionAPI extends QMeAPI {
     String PAGED_PATH = APP_STRING + "/question/paged";
 
     /**
+     * QuestionAPI API Paged Path By Category
+     */
+    String PAGED_PATH_BY_CATID = APP_STRING + "/question/paged/category";
+
+    /**
      * QuestionAPI API Get By ID Path
      */
     String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
@@ -41,6 +51,7 @@ public interface QuestionAPI extends QMeAPI {
      * Get Count
      *
      * @return Count of Catgeories
+     * @throws QMeResourceException
      */
     Resource<Long> count() throws QMeResourceException;
 
@@ -48,8 +59,17 @@ public interface QuestionAPI extends QMeAPI {
      * Get All Question
      *
      * @return List of Question Details
+     * @throws QMeResourceException
      */
     List<QMeQuestionDetail> list() throws QMeResourceException;
+
+    /**
+     *  Get All Question By Category Id
+     * @param categoryId
+     * @return List of Question Details
+     * @throws QMeResourceException
+     */
+    List<QMeQuestionDetail> list(Long categoryId) throws QMeResourceException;
 
 
     /**
@@ -63,12 +83,25 @@ public interface QuestionAPI extends QMeAPI {
      */
     List<QMeQuestionDetail> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
+    /**
+     * Get All Question Details by Category Id with Pagination and Sorting
+     *
+     * @param categoryId
+     * @param page Page
+     * @param pageSize Page Size
+     * @param sortType Sort Type
+     * @param sortFields Sort Fields
+     * @return List of Question
+     * @throws QMeResourceException
+     */
+    List<QMeQuestionDetail> listPaged(Long categoryId, String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
     /**
      * Search by ID
      *
      * @param questionId Question ID
      * @return QMe Question Detail
+     * @throws QMeResourceException
      */
     QMeQuestionDetail searchById(Long questionId) throws QMeResourceException;
 
