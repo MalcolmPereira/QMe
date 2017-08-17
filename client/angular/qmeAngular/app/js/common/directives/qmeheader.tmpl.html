@@ -57,10 +57,13 @@
                 </li>
 
                 <!-- Category Routes -->
-                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listcategories]') }" ng-show="qmeNav.isAdmin()" >
+                <li role="presentation" ng-class="{ active: qmeNav.isActive('[listcategories, addcategory]') }" ng-show="qmeNav.isAdmin()" >
                     <a id="categoriesNavLinkId" href="#" ng-click="qmeNav.routeCategories()">Categories</a>
-                    <div class="dropdown" ng-show="qmeNav.isActive('[listcategories]')">
-                        <a id="dCategoryLabelId" href="#" role="presentation" ><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                    <div class="dropdown" ng-show="qmeNav.isActive('[listcategories,addcategory]')">
+                        <a id="dCategoryLabelId" href="#" data-toggle="dropdown" role="presentation" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ng-show="qmeNav.isAdmin()"><a href="#" id="addNewCategoryId" ng-click="qmeNav.routeAddCategory();">Add New Category</a></li>
+                        </ul>
                     </div>
                 </li>
 

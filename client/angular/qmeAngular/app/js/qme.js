@@ -177,6 +177,14 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     authenticate: true,
                     admin: true
                 })
+                .state('addcategory', {
+                    url: "/addcategory",
+                    templateUrl: 'js/admin/category/qmecategoryadd.tmpl.html',
+                    controller: 'qmeCategoryManagementCtrl',
+                    controllerAs: 'qmeCategoryManagementCtrl',
+                    authenticate: true,
+                    admin: true
+                })
 
                 //Question Routing
                 .state('listquestions', {

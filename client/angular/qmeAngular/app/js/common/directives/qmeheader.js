@@ -57,6 +57,10 @@
                 $state.go('listcategories', {});
             };
 
+            qmeNav.routeAddCategory = function(){
+                $state.go('addcategory', {});
+            };
+
             qmeNav.routeQuestions = function(){
                 $state.go('listquestions', {});
             };

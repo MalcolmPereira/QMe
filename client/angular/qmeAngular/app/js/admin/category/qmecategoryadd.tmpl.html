@@ -1,0 +1,30 @@
+<div class="container-fluid" ng-controller="qmeCategoryManagementCtrl as qmeCategoryManagement">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 id="categoryHeaderId" class="panel-title">Add Category</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <form name="qmeCategoryManagement.updateCategoryForm" class="form-horizontal">
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label for="categoryName">Category Name:</label>
+                        <input ng-model="qmeCategoryManagement.categoryName" name="categoryName" id="categoryName" style="width:500px;" maxlength="150" min="4" class="form-control" ng-required="true">
+                    </div>
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <label  for="parentCategoryId">Parent Category Name:</label>
+                        <select class="form-control" ng-model="qmeCategoryManagement.parentId"  name="parentCategoryId" id="parentCategoryId" style="width:500px;">
+                            <option ng-repeat="category in qmeCategoryManagement.categoryParents" title="{{category.categoryName}}" value="{{category.categoryId}}">{{category.categoryName}}</option>
+                        </select>
+                    </div>
+                    <button id="submitUpdateButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.submitUpdates()" ng-disabled="qmeCategoryManagement.updateCategoryForm.$invalid">Save</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="cancelButton" type="reset" class="btn btn-info btn-sm" ng-click="qmeCategoryManagement.cancelUpdates()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
