@@ -169,6 +169,9 @@
             };
 
             qmeQuizManagement.clearQuestion = function(newValue, oldValue){
+                qmeQuizManagement.shownSelectQuestions = false;
+                qmeModelSession.destroy();
+
                 if(qmeQuizManagement.quizQuestions && qmeQuizManagement.quizQuestions.length > 0 && newValue && oldValue && newValue !== oldValue){
                     $('#categoryChangeConfirm').modal('show');
                     var promise = qmeModelSession.modalShown();
