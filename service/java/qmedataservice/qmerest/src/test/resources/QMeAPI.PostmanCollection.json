@@ -246,7 +246,24 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDI5OTYwNTN9.grEj-qtGlPEeYaGpj6W9VMJMtUIi4bxKjEU1poMpRdghlRGZHA_e0zG7U7APzia94pSUtBZeuX34M9Ed-N8XGA",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Questions By Category",
+					"request": {
+						"url": "http://localhost:8002/qme/question/category/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDI5OTYwNTN9.grEj-qtGlPEeYaGpj6W9VMJMtUIi4bxKjEU1poMpRdghlRGZHA_e0zG7U7APzia94pSUtBZeuX34M9Ed-N8XGA",
 								"description": ""
 							}
 						],
@@ -293,19 +310,27 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "0"
+									"value": "0",
+									"equals": true,
+									"description": ""
 								},
 								{
 									"key": "pagesize",
-									"value": "1"
+									"value": "1",
+									"equals": true,
+									"description": ""
 								},
 								{
 									"key": "sorttype",
-									"value": "true"
+									"value": "true",
+									"equals": true,
+									"description": ""
 								},
 								{
 									"key": "sortfields",
-									"value": "QUESTION"
+									"value": "QUESTION",
+									"equals": true,
+									"description": ""
 								}
 							],
 							"variable": []
@@ -314,14 +339,69 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDI5OTYwNTN9.grEj-qtGlPEeYaGpj6W9VMJMtUIi4bxKjEU1poMpRdghlRGZHA_e0zG7U7APzia94pSUtBZeuX34M9Ed-N8XGA",
 								"description": ""
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"body": {},
+						"description": "Questions Paged List"
+					},
+					"response": []
+				},
+				{
+					"name": "Questions Paged By Category",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8002/qme/question/category/1/paged?page=0&pagesize=1&sorttype=true&sortfields=QUESTION",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"question",
+								"category",
+								"1",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "pagesize",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sorttype",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sortfields",
+									"value": "QUESTION",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
 						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDI5OTYwNTN9.grEj-qtGlPEeYaGpj6W9VMJMtUIi4bxKjEU1poMpRdghlRGZHA_e0zG7U7APzia94pSUtBZeuX34M9Ed-N8XGA",
+								"description": ""
+							}
+						],
+						"body": {},
 						"description": "Questions Paged List"
 					},
 					"response": []
@@ -505,7 +585,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDA2NTk5MDF9.zn9kyj9ueC10oqpjewcOZjG6YA6BId_HVHhW0TW3b28ufaP57gliRTH9vGpi7MMjpg6lb0XHhkfaowR89fi0eQ",
 								"description": ""
 							}
 						],
@@ -561,7 +641,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDA2NTk5MDF9.zn9kyj9ueC10oqpjewcOZjG6YA6BId_HVHhW0TW3b28ufaP57gliRTH9vGpi7MMjpg6lb0XHhkfaowR89fi0eQ",
 								"description": ""
 							}
 						],
@@ -578,7 +658,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDA2NTk5MDF9.zn9kyj9ueC10oqpjewcOZjG6YA6BId_HVHhW0TW3b28ufaP57gliRTH9vGpi7MMjpg6lb0XHhkfaowR89fi0eQ",
 								"description": ""
 							}
 						],
@@ -595,7 +675,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTg3NjAwNDR9.YeizxUOKvCuW0_k2cwm-Wym7GHxueqS8oHhFq5wT7Wdx1PdkjtkmjYa-UK7cjpSCoge2NhgvJY7kscm4F-oNqA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDA2NTk5MDF9.zn9kyj9ueC10oqpjewcOZjG6YA6BId_HVHhW0TW3b28ufaP57gliRTH9vGpi7MMjpg6lb0XHhkfaowR89fi0eQ",
 								"description": ""
 							}
 						],
