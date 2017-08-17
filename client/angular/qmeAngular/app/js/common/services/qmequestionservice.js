@@ -11,8 +11,12 @@
 
         var qmeQuestionService = this;
 
-        qmeQuestionService.countQuestions = function(){
-            return qmeQuestionResource.questionCountResource(qmeUserSession.authtoken());
+        qmeQuestionService.countQuestions = function(catIdSelected){
+            if(catIdSelected && catIdSelected > 0 ){
+                return qmeQuestionResource.questionByCategoryCountResource(qmeUserSession.authtoken(),catIdSelected);
+            }else{
+                return qmeQuestionResource.questionCountResource(qmeUserSession.authtoken());
+            }
         };
 
         qmeQuestionService.listQuestions = function(){

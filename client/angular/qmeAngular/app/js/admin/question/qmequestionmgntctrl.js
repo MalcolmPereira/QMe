@@ -58,7 +58,7 @@
                 }
 
                 if (qmeQuestionManagement.questioncount === 0) {
-                    qmeQuestionService.countQuestions()
+                    qmeQuestionService.countQuestions(qmeQuestionManagement.selectedCategoryid)
                         .then(
                             function (res) {
                                 qmeQuestionManagement.questioncount = res.data.content;

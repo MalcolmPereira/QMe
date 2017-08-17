@@ -104,10 +104,10 @@
 
         .service('qmeQuestionResource',function($resource,$http,QME_CONSTANTS){
 
-            var questionAPI               = QME_CONSTANTS.qmeservice+"/question";
-            var questionCountEndPoint     = questionAPI+"/count";
-            var questionPagedEndPoint     = questionAPI+"/paged";
-            var questionByCategoryPagedEndPoint  = questionAPI+"/category/";
+            var questionAPI                = QME_CONSTANTS.qmeservice+"/question";
+            var questionCountEndPoint      = questionAPI+"/count";
+            var questionPagedEndPoint      = questionAPI+"/paged";
+            var questionByCategoryEndPoint = questionAPI+"/category/";
 
             this.questionResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
@@ -117,6 +117,11 @@
             this.questionCountResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $http.get(questionCountEndPoint);
+            };
+
+            this.questionByCategoryCountResource = function(authToken,categoryId){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $http.get(questionByCategoryEndPoint+categoryId+"/count");
             };
 
             this.questionPagedResource = function(authToken,pageIndex,maxRows,sorttype,sortfields){
@@ -131,9 +136,9 @@
             this.questionByCategoryIDPagedResource = function(authToken,categoryId,pageIndex,maxRows,sorttype,sortfields){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 if(sortfields){
-                    return $resource(questionByCategoryPagedEndPoint+categoryId+"/paged?page="+pageIndex+"&pagesize="+maxRows+"&sorttype="+sorttype+"&sortfields="+sortfields);
+                    return $resource(questionByCategoryEndPoint+categoryId+"/paged?page="+pageIndex+"&pagesize="+maxRows+"&sorttype="+sorttype+"&sortfields="+sortfields);
                 }else{
-                    return $resource(questionByCategoryPagedEndPoint+categoryId+"/paged?page="+pageIndex+"&pagesize="+maxRows);
+                    return $resource(questionByCategoryEndPoint+categoryId+"/paged?page="+pageIndex+"&pagesize="+maxRows);
                 }
             };
 
