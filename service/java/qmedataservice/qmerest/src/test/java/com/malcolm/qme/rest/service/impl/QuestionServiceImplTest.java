@@ -82,6 +82,7 @@ public class QuestionServiceImplTest {
     public void testCountQMeServerException() throws Exception {
         MatcherAssert.assertThat(questionRepo, notNullValue());
         MatcherAssert.assertThat(questionService, notNullValue());
+
         when(questionRepo.count()).thenThrow(QMeException.class);
         questionService.count();
         verify(questionRepo).count();
@@ -128,11 +129,56 @@ public class QuestionServiceImplTest {
         assertThat(questionList.size(), equalTo(0));
     }
 
-
     @Test(expected = QMeServerException.class)
     public void testListQMeException() throws Exception {
         when(questionRepo.findAll()).thenThrow(QMeException.class);
         questionService.list();
+    }
+
+    @Test
+    public void testListByCategoryId() throws Exception {
+        MatcherAssert.assertThat(questionRepo, notNullValue());
+        MatcherAssert.assertThat(questionService, notNullValue());
+
+        when(questionRepo.findByCategoryId(1L)).thenReturn(QuestionFixtures.simpleQuestionList());
+
+        List<QMeQuestionDetail> questionList = questionService.list(1L);
+
+        verify(questionRepo).findByCategoryId(1L);
+        assertNotNull(questionList);
+        assertThat(questionList.size(), equalTo(5));
+        for (QMeQuestionDetail qmeQuestion : questionList) {
+            assertThat(qmeQuestion.getQuestionId(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L))
+            );
+            assertThat(qmeQuestion.getQuestionText(), anyOf(
+                    is("Some question text - 1"),
+                    is("Some question text - 2"),
+                    is("Some question text - 3"),
+                    is("Some question text - 4"),
+                    is("Some question text - 5")
+            ));
+        }
+    }
+
+    @Test
+    public void testListByCategoryIdNullReturn() throws QMeResourceException, QMeException {
+        when(questionRepo.findByCategoryId(1L)).thenReturn(null);
+        List<QMeQuestionDetail> questionList = questionService.list(1L);
+        verify(questionRepo).findByCategoryId(1L);
+        assertNotNull(questionList);
+        assertThat(questionList.size(), equalTo(0));
+    }
+
+
+    @Test(expected = QMeServerException.class)
+    public void testListByCategoryIdQMeException() throws Exception {
+        when(questionRepo.findByCategoryId(1L)).thenThrow(QMeException.class);
+        questionService.list(1L);
     }
 
     @Test
@@ -173,6 +219,46 @@ public class QuestionServiceImplTest {
     public void testListWithPagingQMeException() throws Exception {
         when(questionRepo.findAll(Matchers.anyObject())).thenThrow(QMeException.class);
         questionService.list(0, 5, true, "Question Text");
+    }
+
+    @Test
+    public void testListByCategoryIdWithPaging() throws Exception {
+        when(questionRepo.findByCategoryId(Matchers.anyObject(),Matchers.anyObject())).thenReturn(QuestionFixtures.simpleQuestionList());
+        List<QMeQuestionDetail> questionList = questionService.list(1L,0, 5, true, "Question Text");
+        verify(questionRepo).findByCategoryId(Matchers.anyObject(),Matchers.anyObject());
+        assertNotNull(questionList);
+        assertThat(questionList.size(), equalTo(5));
+        for (QMeQuestionDetail qmeQuestion : questionList) {
+            assertThat(qmeQuestion.getQuestionId(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L))
+            );
+            assertThat(qmeQuestion.getQuestionText(), anyOf(
+                    is("Some question text - 1"),
+                    is("Some question text - 2"),
+                    is("Some question text - 3"),
+                    is("Some question text - 4"),
+                    is("Some question text - 5")
+            ));
+        }
+    }
+
+    @Test
+    public void testListByCategoryIdWithPagingNullReturn() throws QMeResourceException, QMeException {
+        when(questionRepo.findByCategoryId(Matchers.anyObject(),Matchers.anyObject())).thenReturn(null);
+        List<QMeQuestionDetail> questionList = questionService.list(1L,0, 5, true, "Question Text");
+        verify(questionRepo).findByCategoryId(Matchers.anyObject(),Matchers.anyObject());
+        assertNotNull(questionList);
+        assertThat(questionList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testListByCategoryIdWithPagingQMeException() throws Exception {
+        when(questionRepo.findByCategoryId(Matchers.anyObject(),Matchers.anyObject())).thenThrow(QMeException.class);
+        questionService.list(1L,0, 5, true, "Question Text");
     }
 
     @Test

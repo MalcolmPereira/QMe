@@ -40,7 +40,7 @@ public interface QuestionAPI extends QMeAPI {
     /**
      * QuestionAPI API Paged Path By Category
      */
-    String PAGED_PATH_BY_CATID = APP_STRING + "/question/paged/category";
+    String PAGED_PATH_BY_CATID = APP_STRING + "/question/category"+ "/{" + ID_PARAM_STRING + "}/paged";
 
     /**
      * QuestionAPI API Get By ID Path

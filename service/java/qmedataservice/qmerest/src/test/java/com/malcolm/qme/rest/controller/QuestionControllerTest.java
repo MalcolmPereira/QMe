@@ -105,6 +105,29 @@ public class QuestionControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testListByCategoryId() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.list(1L)).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetailList());
+
+        mockMvc.perform(
+                get("/qme/question/category/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].questionId", is(1)))
+                .andExpect(jsonPath("$[1].questionId", is(2)))
+                .andExpect(jsonPath("$[2].questionId", is(3)))
+                .andExpect(jsonPath("$[3].questionId", is(4)))
+                .andExpect(jsonPath("$[4].questionId", is(5)))
+        ;
+
+        verify(questionService).list(1L);
+    }
+
+    @Test
     public void testListPaged() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(questionService, notNullValue());
@@ -125,6 +148,29 @@ public class QuestionControllerTest extends QMeControllerTest {
         ;
 
         verify(questionService).list(0, 10, true, "QUESTION");
+    }
+
+    @Test
+    public void testListByCategoryIdPaged() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.list(1L,0, 10, true, "QUESTION")).thenReturn(QMeQuestionDetailFixture.simpleQMeQuestionDetailList());
+
+        mockMvc.perform(
+                get("/qme/question/category/1/paged?page=0&pagesize=10&sorttype=true&sortfields=QUESTION")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].questionId", is(1)))
+                .andExpect(jsonPath("$[1].questionId", is(2)))
+                .andExpect(jsonPath("$[2].questionId", is(3)))
+                .andExpect(jsonPath("$[3].questionId", is(4)))
+                .andExpect(jsonPath("$[4].questionId", is(5)))
+        ;
+
+        verify(questionService).list(1L,0, 10, true, "QUESTION");
     }
 
     @Test

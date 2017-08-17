@@ -8,7 +8,7 @@ package com.malcolm.qme.springdata.repository;
 
 import com.malcolm.qme.springdata.entity.QuestionEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +38,5 @@ interface QuestionSpringDataRepository extends JpaRepository<QuestionEntity, Lon
      * Find By Category ID
      * @return QuestionEntity List
      */
-    Page<QuestionEntity> findByCatId(Long catId, PageRequest pageRequest);
+    Page<QuestionEntity> findByCatId(Long catId, Pageable pageRequest);
 }	
