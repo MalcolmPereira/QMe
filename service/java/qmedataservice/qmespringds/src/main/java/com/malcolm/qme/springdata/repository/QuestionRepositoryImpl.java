@@ -49,6 +49,11 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 	}
 
     @Override
+    public Long countByCategoryId(Long categoryID) throws QMeException {
+        return questionSpringDataRepository.countByCatId(categoryID);
+    }
+
+    @Override
 	public List<Question> findByCategoryId(Long categoryID) throws QMeException {
 		try{
     	    return(getQuestion(questionSpringDataRepository.findByCatId(categoryID)));

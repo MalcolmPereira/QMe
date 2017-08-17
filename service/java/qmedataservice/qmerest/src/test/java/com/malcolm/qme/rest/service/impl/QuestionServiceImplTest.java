@@ -89,6 +89,27 @@ public class QuestionServiceImplTest {
     }
 
     @Test
+    public void testCountByCategoryId() throws Exception {
+        MatcherAssert.assertThat(questionRepo, notNullValue());
+        MatcherAssert.assertThat(questionService, notNullValue());
+
+        when(questionRepo.countByCategoryId(1L)).thenReturn(10L);
+        Long questionCount = questionService.countByCategoryId(1L);
+        assertNotNull(questionCount);
+        assertThat(questionCount, equalTo(10L));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testCountByCategoryIdQMeServerException() throws Exception {
+        MatcherAssert.assertThat(questionRepo, notNullValue());
+        MatcherAssert.assertThat(questionService, notNullValue());
+
+        when(questionRepo.countByCategoryId(1L)).thenThrow(QMeException.class);
+        questionService.countByCategoryId(1L);
+        verify(questionRepo).countByCategoryId(1L);
+    }
+
+    @Test
     public void testList() throws Exception {
         MatcherAssert.assertThat(questionRepo, notNullValue());
         MatcherAssert.assertThat(questionService, notNullValue());

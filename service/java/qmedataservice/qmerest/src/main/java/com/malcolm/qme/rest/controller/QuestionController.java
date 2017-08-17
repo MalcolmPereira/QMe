@@ -48,6 +48,17 @@ public class QuestionController implements QuestionAPI {
         return questionCount;
     }
 
+    @RequestMapping(value=COUNT_PATH_BY_CATID,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public Resource<Long> countByCategoryId(@PathVariable(ID_PARAM_STRING) Long categoryId) throws QMeResourceException {
+        log(getCurrentUser(), "Question - count by category ");
+        Resource<Long> questionCount = new Resource<>(questionService.countByCategoryId(categoryId),new Link(endpointURL+ QuestionAPI.COUNT_PATH_BY_CATID.replaceAll(":.+","}")));
+        questionCount.add(new Link(endpointURL + QuestionAPI.PAGED_PATH_BY_CATID.replaceAll(":.+", "}") + "?page=0&pagesize=1&sorttype=true&sortfields=QUESTION", QMeAppAPI.QUESTION_PAGED));
+        return questionCount;
+    }
+
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")

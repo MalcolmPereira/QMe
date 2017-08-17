@@ -66,6 +66,22 @@ public class QuestionRepositoryImplTest {
     }
 
     @Test
+    public void testCount() throws QMeException {
+        assertNotNull(questionRepository);
+        final Long count  = questionRepository.count();
+        assertNotNull(count);
+        assertThat(count.intValue() , greaterThan(0));
+    }
+
+    @Test
+    public void testCountByCatId() throws QMeException {
+        assertNotNull(questionRepository);
+        final Long count  = questionRepository.countByCategoryId(1L);
+        assertNotNull(count);
+        assertThat(count.intValue() , greaterThan(0));
+    }
+
+    @Test
     public void testFindAll() throws QMeException {
         assertNotNull(questionRepository);
         final List<Question> questionList = questionRepository.findAll();

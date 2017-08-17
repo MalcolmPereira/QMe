@@ -33,6 +33,11 @@ public interface QuestionAPI extends QMeAPI {
     String COUNT_PATH = APP_STRING + "/question/count";
 
     /**
+     * QuestionAPI API Resource Count By Category Id
+     */
+    String COUNT_PATH_BY_CATID = APP_STRING + "/question/category"+"/{" + ID_PARAM_STRING + "}"+"/count";
+
+    /**
      * QuestionAPI API Paged Path
      */
     String PAGED_PATH = APP_STRING + "/question/paged";
@@ -54,6 +59,14 @@ public interface QuestionAPI extends QMeAPI {
      * @throws QMeResourceException
      */
     Resource<Long> count() throws QMeResourceException;
+
+    /**
+     * Get Count By Category ID
+     * @param categoryId
+     * @return Long count of Question by Category
+     * @throws QMeResourceException
+     */
+    Resource<Long> countByCategoryId(Long categoryId) throws QMeResourceException;
 
     /**
      * Get All Question

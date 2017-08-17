@@ -17,7 +17,17 @@ import java.util.List;
  */
 public interface QuestionService extends QMeService<QMeQuestionDetail,QMeQuestion,Long> {
     /**
+     * Count By Category Id
+     *
+     * @param categoryId
+     * @return
+     * @throws QMeServerException
+     */
+    Long countByCategoryId(Long categoryId) throws QMeServerException;
+
+    /**
      * Return List of Questions by Category Id
+     *
      * @param categoryId
      * @return
      * @throws QMeServerException

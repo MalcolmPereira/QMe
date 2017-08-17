@@ -82,6 +82,24 @@ public class QuestionControllerTest extends QMeControllerTest {
     }
 
     @Test
+    public void testCountByCategoryId() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(questionService, notNullValue());
+
+        when(questionService.countByCategoryId(1L)).thenReturn(5L);
+
+        mockMvc.perform(
+                get("/qme/question/category/1/count")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.content", is(5)))
+        ;
+
+        verify(questionService).countByCategoryId(1L);
+    }
+
+    @Test
     public void testList() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(questionService, notNullValue());

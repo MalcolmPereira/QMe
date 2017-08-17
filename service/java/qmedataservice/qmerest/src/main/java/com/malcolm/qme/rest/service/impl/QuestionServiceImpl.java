@@ -77,6 +77,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Long countByCategoryId(Long categoryId) throws QMeServerException {
+        try {
+            return questionRepo.countByCategoryId(categoryId);
+
+        } catch (QMeException err) {
+            throw new QMeServerException(err.getMessage(), err);
+        }
+    }
+
+    @Override
     public List<QMeQuestionDetail> list() throws QMeServerException {
         try {
             return getQMeQuestionDetail(questionRepo.findAll());
@@ -85,6 +95,8 @@ public class QuestionServiceImpl implements QuestionService {
             throw new QMeServerException(err.getMessage(), err);
         }
     }
+
+
 
     @Override
     public List<QMeQuestionDetail> list(Long categoryId) throws QMeServerException {

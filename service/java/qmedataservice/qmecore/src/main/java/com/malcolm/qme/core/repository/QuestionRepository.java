@@ -51,6 +51,14 @@ public interface QuestionRepository extends QMeRepository<Question,Long> {
     }
 
     /**
+     * Count Questions By Category Id
+     * @param categoryID
+     * @return
+     * @throws QMeException
+     */
+    Long countByCategoryId(Long categoryID) throws QMeException;
+
+    /**
      * Find By Category
      *
      * @param categoryID Category ID

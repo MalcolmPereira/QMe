@@ -280,14 +280,28 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDI5OTYwNTN9.grEj-qtGlPEeYaGpj6W9VMJMtUIi4bxKjEU1poMpRdghlRGZHA_e0zG7U7APzia94pSUtBZeuX34M9Ed-N8XGA",
 								"description": ""
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Questions Count By Category",
+					"request": {
+						"url": "http://localhost:8002/qme/question/category/1/count",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDI5OTYwNTN9.grEj-qtGlPEeYaGpj6W9VMJMtUIi4bxKjEU1poMpRdghlRGZHA_e0zG7U7APzia94pSUtBZeuX34M9Ed-N8XGA",
+								"description": ""
+							}
+						],
+						"body": {},
 						"description": ""
 					},
 					"response": []

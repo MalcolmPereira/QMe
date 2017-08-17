@@ -19,7 +19,12 @@ import java.util.List;
  */
 @Repository
 interface QuestionSpringDataRepository extends JpaRepository<QuestionEntity, Long> {
-	
+    /**
+     * Count By Category Id
+     * @param catId
+     * @return
+     */
+    Long countByCatId(Long catId);
 	 /**
      * Find By Category ID
      * @param catId Category ID
