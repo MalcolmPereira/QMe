@@ -147,7 +147,7 @@
 
                 qmeFlashService.Clear();
 
-                qmeCategoryService.listCategory()
+                qmeCategoryService.listCategoryWithQuestions()
                     .then(
                         function(res){
                             for (var key in res) {

@@ -73,11 +73,18 @@
             var categoryCountEndPoint     = categoryAPI+"/count";
             var categoryByParentEndPoint  = categoryAPI+"/parent";
             var categorySearchEndPoint    = categoryAPI+"/search/";
+            var categoryWithQuestionsEndPoint = categoryAPI+"/questions";
 
             this.categoryResource = function(authToken){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(categoryAPI);
             };
+
+            this.categoryWithQuestionsResource = function(authToken){
+                $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
+                return $resource(categoryWithQuestionsEndPoint);
+            };
+
             this.categoryUpdateResource = function(authToken, categoryId){
                 $http.defaults.headers.common[QME_CONSTANTS.qme_auth_header] = authToken;
                 return $resource(categoryAPI+"/"+categoryId,{},{'updateCategory':{method:'PUT'}});

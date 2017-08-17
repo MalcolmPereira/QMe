@@ -27,6 +27,24 @@
             return listCategoryPromise.promise;
         };
 
+        qmeCategoryService.listCategoryWithQuestions = function(){
+            var listCategoryPromise = $q.defer();
+
+            qmeCategoryResource.categoryWithQuestionsResource(qmeUserSession.authtoken())
+                .query(
+                    function(res){
+                        listCategoryPromise.resolve(res);
+                    },
+                    function(error){
+                        listCategoryPromise.reject(error);
+                    }
+                );
+
+            return listCategoryPromise.promise;
+        };
+
+
+
         qmeCategoryService.listCategoryByParent = function(parentId){
             var listCategoryPromise = $q.defer();
 
