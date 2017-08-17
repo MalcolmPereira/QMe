@@ -40,8 +40,8 @@
 
             qmeQuestionManagement.selectedCategoryid = undefined;
 
-            qmeQuestionManagement.listQuestions = function(selectedCategoryid) {
-                qmeQuestionManagement.selectedCategoryid = selectedCategoryid;
+            qmeQuestionManagement.listQuestions = function(catIdSelected) {
+                qmeQuestionManagement.selectedCategoryid = catIdSelected;
                 qmeQuestionManagement.selectedQuestions  = undefined;
                 qmeQuestionManagement.selectedQuestions  = [];
 
