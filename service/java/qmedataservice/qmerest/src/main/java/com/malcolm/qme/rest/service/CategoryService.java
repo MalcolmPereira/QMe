@@ -18,6 +18,14 @@ import java.util.List;
 public interface CategoryService extends QMeService<QMeCategoryDetail,QMeCategory,Long> {
 
     /**
+     * List Categories containing questions
+     *
+     * @return QMeCategoryDetail List
+     * @throws QMeServerException
+     */
+    List<QMeCategoryDetail>  listContainingQuestions() throws QMeServerException;
+
+    /**
      * Search By Name
      *
      * @param categoryName Category Name
@@ -34,4 +42,6 @@ public interface CategoryService extends QMeService<QMeCategoryDetail,QMeCategor
      * @throws QMeServerException
      */
     List<QMeCategoryDetail> searchByParentCategory(Long parentCategoryId) throws QMeServerException;
+
+
 }

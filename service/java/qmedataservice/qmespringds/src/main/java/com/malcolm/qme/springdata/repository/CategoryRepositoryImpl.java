@@ -52,6 +52,15 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
+    public List<Category> findCategoriesWithQuestions() throws QMeException {
+        try{
+            return(getCategory(categorySpringDataRepository.findCategoriesWithQuestions()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+    }
+
+    @Override
     public Category findCategoryByName(String categoryName) throws QMeException {
         try{
             CategoryEntity categoryEntity = categorySpringDataRepository.findByCatName(categoryName);

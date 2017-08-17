@@ -24,6 +24,11 @@ public interface CategoryAPI extends QMeAPI {
     String ROOT_PATH = APP_STRING + "/category";
 
     /**
+     * QMeCategory API With Questions
+     */
+    String ROOT_PATH_WITH_QUESTIONS = APP_STRING + "/category/questions";
+
+    /**
      * QMeCategory API Category By Parent
      */
     String PARENT_PATH = ROOT_PATH + "/parent" + "/{" + ID_PARAM_STRING + "}";
@@ -61,6 +66,13 @@ public interface CategoryAPI extends QMeAPI {
      * @return List of Category
      */
     List<QMeCategoryDetail> list() throws QMeResourceException;
+
+    /**
+     * Get All Categories Which have Questions
+     *
+     * @return List of Category
+     */
+    List<QMeCategoryDetail> listContainingQuestions() throws QMeResourceException;
 
     /**
      * Get All Categories with Pagination and Sorting

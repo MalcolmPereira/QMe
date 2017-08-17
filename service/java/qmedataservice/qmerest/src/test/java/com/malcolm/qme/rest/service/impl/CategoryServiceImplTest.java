@@ -120,6 +120,34 @@ public class CategoryServiceImplTest {
     }
 
     @Test
+    public void testListContainingQuestions() throws QMeResourceException, QMeException {
+
+        when(categoryRepo.findCategoriesWithQuestions()).thenReturn(CategoryFixtures.simpleCategoryList());
+
+        List<QMeCategoryDetail> categoryList = categoryService.listContainingQuestions();
+
+        verify(categoryRepo).findCategoriesWithQuestions();
+        assertNotNull(categoryList);
+        assertThat(categoryList.size(),equalTo(5));
+        for (QMeCategoryDetail qmeCategory : categoryList) {
+            assertThat(qmeCategory.getCategoryId(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L))
+            );
+            assertThat(qmeCategory.getCategoryName(), anyOf(
+                    is("Simple Category 1"),
+                    is("Simple Category 2"),
+                    is("Simple Category 3"),
+                    is("Simple Category 4"),
+                    is("Simple Category 5")
+            ));
+        }
+    }
+
+    @Test
     public void testListEmpty() throws QMeResourceException, QMeException {
 
         when(categoryRepo.findAll()).thenReturn(null);
@@ -131,11 +159,30 @@ public class CategoryServiceImplTest {
         assertThat(categoryList.size(),equalTo(0));
     }
 
+    @Test
+    public void testListContainingQuestionsEmpty() throws QMeResourceException, QMeException {
+
+        when(categoryRepo.findCategoriesWithQuestions()).thenReturn(null);
+
+        List<QMeCategoryDetail> categoryList = categoryService.listContainingQuestions();
+
+        verify(categoryRepo).findCategoriesWithQuestions();
+        assertNotNull(categoryList);
+        assertThat(categoryList.size(),equalTo(0));
+    }
+
     @Test(expected = QMeServerException.class)
     public void testListQMeException() throws QMeResourceException, QMeException {
         when(categoryRepo.findAll()).thenThrow(QMeException.class);
         categoryService.list();
         verify(categoryRepo).findAll();
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testListContainingQuestionsQMeException() throws QMeResourceException, QMeException {
+        when(categoryRepo.findCategoriesWithQuestions()).thenThrow(QMeException.class);
+        categoryService.listContainingQuestions();
+        verify(categoryRepo).findCategoriesWithQuestions();
     }
 
     @Test

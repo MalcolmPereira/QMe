@@ -105,6 +105,30 @@ public class CategoryControllerTest extends QMeControllerTest{
     }
 
     @Test
+    public void testListContainingQuestions() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(categoryService, notNullValue());
+
+        when(categoryService.listContainingQuestions()).thenReturn(QMeCategoryDetailFixtures.simpleQMeCategoryDetailList());
+
+        mockMvc.perform(
+                get("/qme/category/questions")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].categoryId", is(1)))
+                .andExpect(jsonPath("$[1].categoryId", is(2)))
+                .andExpect(jsonPath("$[2].categoryId", is(3)))
+                .andExpect(jsonPath("$[3].categoryId", is(4)))
+                .andExpect(jsonPath("$[4].categoryId", is(5)))
+        ;
+
+        verify(categoryService).listContainingQuestions();
+
+    }
+
+    @Test
     public void testListPaged() throws Exception {
         assertThat(mockMvc, notNullValue());
         assertThat(categoryService, notNullValue());

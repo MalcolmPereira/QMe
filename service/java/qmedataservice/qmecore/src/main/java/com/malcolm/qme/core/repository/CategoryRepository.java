@@ -16,13 +16,19 @@ import java.util.List;
 public interface CategoryRepository extends QMeRepository<Category,Long> {
 
     /**
+     * Find Categories with questions
+     * @return Category List matching category name like
+     * @throws QMeException
+     */
+    List<Category> findCategoriesWithQuestions()throws QMeException;
+
+    /**
      * Find By Category Name
      * @param categoryName Category Name
      * @return Category matching category name
      * @throws QMeException
      */
     Category findCategoryByName(String categoryName) throws QMeException;
-
 
     /**
      * Find By Category Name Like

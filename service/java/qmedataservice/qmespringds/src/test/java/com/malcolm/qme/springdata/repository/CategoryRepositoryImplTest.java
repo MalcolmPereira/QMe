@@ -73,6 +73,15 @@ public class CategoryRepositoryImplTest {
     }
 
     @Test
+    public void testFindCategoryWithQuestions() throws QMeException {
+        assertNotNull(categoryRepo);
+
+        List<Category> categoryList = categoryRepo.findCategoriesWithQuestions();
+        assertNotNull(categoryList);
+        assertThat(categoryList.size(), greaterThan(1));
+    }
+
+    @Test
     public void testCRUD() throws QMeException {
         assertNotNull(categoryRepo);
 

@@ -63,6 +63,16 @@ public class CategoryController implements CategoryAPI {
         return categoryDetails;
     }
 
+    @RequestMapping(value=ROOT_PATH_WITH_QUESTIONS,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @Override
+    public List<QMeCategoryDetail> listContainingQuestions() throws QMeResourceException {
+        log(getCurrentUser(), "Category - list containing questions");
+        List<QMeCategoryDetail> categoryDetails = categoryService.listContainingQuestions();
+        setCategoryLinks(categoryDetails);
+        return categoryDetails;
+    }
+
     @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Override
