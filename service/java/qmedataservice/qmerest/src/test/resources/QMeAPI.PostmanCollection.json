@@ -19,14 +19,28 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTMzMjU2OTJ9.1q8rUVlOFRG-1oef-BR1u_Iz7YSa_AT5wyan5tmgsYdE4aEAXeG9BiMmMtb_YbLmy7a-E3nC-qYkZAl6tHx6kw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDMwMDc2MTd9.8NsyQSSJ4aelkE97m4qRjcgL8LlDFjwt1-Jb1E7Lgm3CMte2SXM2tQf_HRUug0_uP6gS_ZHsUe4DeBOcOWxe9Q",
 								"description": ""
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"body": {},
+						"description": "List Category"
+					},
+					"response": []
+				},
+				{
+					"name": "List Category With Questions",
+					"request": {
+						"url": "http://localhost:8002/qme/category/questions",
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MDMwMDc2MTd9.8NsyQSSJ4aelkE97m4qRjcgL8LlDFjwt1-Jb1E7Lgm3CMte2SXM2tQf_HRUug0_uP6gS_ZHsUe4DeBOcOWxe9Q",
+								"description": ""
+							}
+						],
+						"body": {},
 						"description": "List Category"
 					},
 					"response": []
