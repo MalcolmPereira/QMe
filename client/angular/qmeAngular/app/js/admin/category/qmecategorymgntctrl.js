@@ -329,6 +329,7 @@
                     qmeCategoryManagement.categoryName = selectedNode.data.categoryName;
                     qmeCategoryManagement.categoryId   = selectedNode.data.categoryId;
                     qmeCategoryManagement.categoryParents  = [];
+                    qmeCategoryManagement.updateCategoryForm.$setPristine();
 
                     for(var a in qmeCategoryManagement.categoryParentsAll){
                         var category = qmeCategoryManagement.categoryParentsAll[a];
