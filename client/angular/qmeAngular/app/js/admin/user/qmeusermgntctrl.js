@@ -264,8 +264,7 @@
         };
 
         qmeUserManagement.cancelAddUser = function(){
-            $state.go('listusers', {}
-            );
+            $state.go('listusers', {});
         };
 
         qmeUserManagement.selectedUser = function(){

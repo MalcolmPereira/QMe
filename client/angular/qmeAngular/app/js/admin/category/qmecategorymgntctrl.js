@@ -6,9 +6,9 @@
 
         .controller('qmeCategoryManagementCtrl', QMeCategoryManagementController);
 
-        QMeCategoryManagementController.$inject = ['$scope','qmeFlashService','qmeCategoryService'];
+        QMeCategoryManagementController.$inject = ['$scope','$state','qmeFlashService','qmeCategoryService'];
 
-        function QMeCategoryManagementController($scope,qmeFlashService,qmeCategoryService) {
+        function QMeCategoryManagementController($scope,$state,qmeFlashService,qmeCategoryService) {
 
             var qmeCategoryManagement = this;
 
@@ -45,6 +45,49 @@
 
                         }
                     );
+            };
+
+            qmeCategoryManagement.listParentCategories = function(){
+
+                qmeFlashService.Clear();
+
+                qmeCategoryService.listCategory().then(
+                    function(res){
+                        for (var key in res) {
+                            var category = res[key];
+                            if (category.hasOwnProperty('categoryId')){
+                                if(qmeCategoryManagement.categoryParentsAll.length === 0){
+                                    qmeCategoryManagement.categoryParentsAll.push(category);
+
+                                }else{
+                                    var isNewCategory =  true;
+                                    for(var a in qmeCategoryManagement.categoryParentsAll){
+                                        var currentCategory = qmeCategoryManagement.categoryParentsAll[a];
+                                        if(category.categoryId === currentCategory.categoryId){
+                                            isNewCategory =  false;
+                                            break;
+                                        }
+                                    }
+                                    if(isNewCategory){
+                                        qmeCategoryManagement.categoryParentsAll.push(category);
+                                    }
+                                }
+                            }
+                        }
+                        qmeCategoryManagement.categoryParents  = [];
+                        for(var b in qmeCategoryManagement.categoryParentsAll){
+                            qmeCategoryManagement.categoryParents.push(qmeCategoryManagement.categoryParentsAll[b]);
+                        }
+                    },
+                    function(error){
+                        if(error && error.status && error.status == 403) {
+                            qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                        }else {
+                            qmeFlashService.Error("Oops.....Error from service getting category lists, please retry in some time.");
+                        }
+                    }
+                );
             };
 
             qmeCategoryManagement.addNewCategory = function(){
@@ -130,6 +173,62 @@
                             }
                         }
                     );
+            };
+
+            qmeCategoryManagement.submitAdd = function(){
+                qmeFlashService.Clear();
+
+                var category;
+
+                if(qmeCategoryManagement.parentId > 0){
+                    category = {
+                        "categoryName":qmeCategoryManagement.categoryName,
+                        "parentCategoryId":qmeCategoryManagement.parentId
+                    };
+                }else{
+                    category = {
+                        "categoryName":qmeCategoryManagement.categoryName
+                    };
+                }
+
+                pleaseWait.showPleaseWait();
+
+                qmeCategoryService.createCategory(category)
+                    .then(
+                        function(res){
+                            pleaseWait.hidePleaseWait();
+                            qmeCategoryManagement.categoryName = "";
+                            qmeCategoryManagement.parentId     = "0";
+                            $state.go('listcategories', {});
+                        },
+                        function(error){
+                            pleaseWait.hidePleaseWait();
+                            if(error && error.status && error.status == 403) {
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid request Parent Category invalid,not found.");
+
+                            }else if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request, please make sure valid category name is provided.");
+
+                            }else if(error && error.status && error.status == 409){
+                                qmeFlashService.Error("Oops.....Invalid request, category with name already exists, please use unique valid category name.");
+
+                            }else {
+                                qmeFlashService.Error("Oops.....Error addming new category, please retry in some time.");
+                            }
+                        }
+                    );
+            };
+
+            qmeCategoryManagement.cancelAdd = function(){
+                qmeFlashService.Clear();
+                qmeCategoryManagement.categoryName = "";
+                qmeCategoryManagement.parentId     = "0";
+                qmeCategoryManagement.addNew       = true;
+                qmeCategoryManagement.categoryId   = undefined;
+                $state.go('listcategories', {});
             };
 
             qmeCategoryManagement.submitUpdates = function(){
