@@ -20,7 +20,7 @@
                 <tbody>
                     <tr ng-repeat="quiz in qmeQuizManagement.quiz">
                         <td>{{quiz.categoryName}}</td>
-                        <td>{{quiz.quizName}}</td>
+                        <td><a href="#" id="{{'quizID' + $index}}" ng-click="qmeQuizManagement.updateQuiz(quiz)">{{quiz.quizName}}</a></td>
                         <td>{{quiz.quizMaxAttempts}}</td>
                         <td>{{quiz.quizHit}}</td>
                         <td>{{quiz.likes}}</td>

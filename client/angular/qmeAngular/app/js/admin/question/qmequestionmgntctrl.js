@@ -355,7 +355,7 @@
                                 qmeFlashService.Error("Oops.....Invalid question resource, question not found");
 
                             }else{
-                                qmeFlashService.Error("Oops.....Error getring question detail, please retry in some time.");
+                                qmeFlashService.Error("Oops.....Error getting question detail, please retry in some time.");
                             }
                         }
                     );

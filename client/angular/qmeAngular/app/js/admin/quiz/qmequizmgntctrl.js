@@ -25,6 +25,7 @@
             qmeQuizManagement.quizId = undefined;
 
             qmeQuizManagement.category = [];
+            qmeQuizManagement.quizID = undefined;
             qmeQuizManagement.categoryId = undefined;
             qmeQuizManagement.categoryName = undefined;
             qmeQuizManagement.quizName = undefined;
@@ -283,6 +284,36 @@
                         }
                     );
 
+            };
+
+            qmeQuizManagement.updateQuiz = function(quiz){
+                qmeQuizManagement.quizID = undefined;
+                qmeQuizManagement.categoryId = undefined;
+                qmeQuizManagement.categoryName = undefined;
+                qmeQuizManagement.quizName = undefined;
+                qmeQuizManagement.quizDesc = undefined;
+                qmeQuizManagement.quizQuestions = [];
+                qmeQuizService.getQuizById(quiz.quizID)
+                    .then(
+                        function(res){
+                            $state.go('updatequiz',{
+                                    currentQuiz:res,
+                                    currentpage:qmeQuizManagement.currentpage,
+                                    sortasc: qmeQuizManagement.sortasc,
+                                    sortfields:qmeQuizManagement.sortfields
+                                }
+                            );
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid quiz resource, quiz not found");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error getting quiz detail, please retry in some time.");
+                            }
+                        }
+
+                    );
             };
 
             qmeQuizManagement.cancelAddQuiz = function(){

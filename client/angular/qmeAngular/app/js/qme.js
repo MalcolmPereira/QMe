@@ -241,7 +241,13 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     controller: 'qmeQuizManagementCtrl',
                     controllerAs: 'qmeQuizManagementCtrl',
                     authenticate: true,
-                    admin: true
+                    admin: true,
+                    params: {
+                        currentQuiz: null,
+                        currentpage: null,
+                        sortasc:null,
+                        sortfields:null
+                    }
                 });
 
         });
