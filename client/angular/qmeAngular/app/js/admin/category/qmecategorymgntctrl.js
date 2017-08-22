@@ -199,6 +199,7 @@
                             pleaseWait.hidePleaseWait();
                             qmeCategoryManagement.categoryName = "";
                             qmeCategoryManagement.parentId     = "0";
+                            qmeFlashService.Success("Category submitted successfully, .",true);
                             $state.go('listcategories', {});
                         },
                         function(error){

@@ -250,6 +250,38 @@
             };
 
             qmeQuizManagement.submitAddQuiz = function(){
+                var quiz = {
+                    "categoryID": qmeQuizManagement.categoryId,
+                    "quizName": qmeQuizManagement.quizName ,
+                    "quizDesc": qmeQuizManagement.quizDesc ,
+                    "quizMaxAttempts": 3,
+                    "questionIdList": [],
+                };
+                for(var i in qmeQuizManagement.quizQuestions){
+                    quiz.questionIdList.push(qmeQuizManagement.quizQuestions[i].questionId);
+                }
+                qmeQuizService
+                    .createQuiz(quiz)
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Quiz submitted successfully, .",true);
+                            $state.go('listquizzes', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for submit quiz, please make sure all required fields are valid.");
+
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else if(error && error.status && error.status == 409){
+                                qmeFlashService.Error("Oops.....Invalid request, quiz already exists or duplicated.");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error adding new quiz, please retry in some time.");
+                            }
+                        }
+                    );
 
             };
 
