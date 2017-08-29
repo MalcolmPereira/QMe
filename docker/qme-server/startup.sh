@@ -37,4 +37,6 @@ EOF
 
 fi
 
-exec /usr/bin/mysqld --user=root --console
+/qmeserver.sh
+
+exec /usr/bin/mysqld --user=root

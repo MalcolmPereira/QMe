@@ -16,7 +16,7 @@ RUN apk add --no-cache mysql mysql-client  && rm -f /var/cache/apk/*
 
 #Initialize Work dir and Volume
 WORKDIR /app
-VOLUME /app
+VOLUME  /app
 
 #Copy Start up Script and set script execution permission
 COPY startup.sh /startup.sh
@@ -28,8 +28,21 @@ RUN chmod 777 /qme.sql
 #Copy MySQL conf and set permission
 COPY my.cnf /etc/mysql/my.cnf
 
+#Copy QMe Service 
+COPY qmerest.jar /qmerest.jar
+RUN chmod 777 /qmerest.jar
+
+#Copy Qme Service Start Script
+COPY qmeserver.sh /qmeserver.sh
+RUN chmod 777 /qmeserver.sh
+
 #Expose MySQL Port 3306
 EXPOSE 3306
 
-#Execute MySQL Install and Config
+#Expose QMe Server Port 8002
+EXPOSE 8002
+
+#Start MySQL
 CMD ["/startup.sh"]
+
+
