@@ -13,6 +13,7 @@ services:
             - 8002:8002
         volumes:
             - ./qme-server:/app
+            - ~/QMe/QMe/service/java/qmedataservice/qmerest//build/libs/qmerest.jar:/qmerest.jar
   qme-webapp:
         build: ./qme-webapp
         container_name: qme-webapp

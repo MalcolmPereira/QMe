@@ -28,10 +28,6 @@ RUN chmod 777 /qme.sql
 #Copy MySQL conf and set permission
 COPY my.cnf /etc/mysql/my.cnf
 
-#Copy QMe Service 
-COPY qmerest.jar /qmerest.jar
-RUN chmod 777 /qmerest.jar
-
 #Copy Qme Service Start Script
 COPY qmeserver.sh /qmeserver.sh
 RUN chmod 777 /qmeserver.sh
@@ -44,5 +40,3 @@ EXPOSE 8002
 
 #Start MySQL
 CMD ["/startup.sh"]
-
-
