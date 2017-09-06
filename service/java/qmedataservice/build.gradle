@@ -4,37 +4,53 @@ apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: "jacoco"
 
-repositories {
-    maven {
-        url "http://repo.spring.io/plugins-release"
-    }
-    maven {
-        url "http://repo.spring.io/milestone"
-    }
-    maven {
-        url "http://repo.spring.io/release"
-    }
-    mavenCentral()
-}
-
-jacoco {
-    toolVersion = "0.7.5.201505241946"
-    reportsDir = file("$buildDir/qmeJacocoReportDir")
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/qmeJacocoHtml"
-    }
-}
-
-sourceCompatibility = 1.8
-
-targetCompatibility = 1.8
-
 subprojects {
+	
+	ext {
+        servletAPIVersion       = "3.1.0"
+        
+		springVersion 		    = "4.3.10.RELEASE"
+        springSecurityVersion   = "4.2.3.RELEASE"
+		springBootVersion       = '1.5.6.RELEASE'
+        springHateosVersion     = "0.23.0.RELEASE"
+		springDataVersion 	    = "1.11.6.RELEASE"
+		aspectJWeaverVersion    = "1.8.7"
+		
+		hibernateVersion	    = "4.3.10.Final"
+        mySQLDriverVersion	    = "5.1.35"
+		
+        jjwtVersion             = "0.5.1"
+		
+		javaMailVersion		    = "1.5.4"
+        
+		jsonpathVersion         = "2.0.0"
+
+        slf4jVersion	        = "1.7.12"
+        junitVersion	        = "4.12"
+        mockitoVersion	        = "1.10.19"
+        hamcrestVersion	        = "1.3"
+	}
+
+    repositories {
+        maven {
+            url "http://repo.spring.io/plugins-release"
+        }
+        
+		maven {
+            url "http://repo.spring.io/milestone"
+        }
+		
+		maven{
+			url 'https://repo.spring.io/libs-release'
+		}
+		
+        maven {
+            url "http://repo.spring.io/release"
+        }
+		
+        mavenCentral()
+    }
+	
 	apply plugin: 'java'
 
     apply plugin: 'eclipse'
@@ -42,50 +58,50 @@ subprojects {
     apply plugin: 'idea'
 
     apply plugin: "jacoco"
-
-    sourceCompatibility = 1.8
+	
+	sourceCompatibility = 1.8
 
     targetCompatibility = 1.8
 
-    ext {
-        servletAPIVersion       = "3.1.0"
-        slf4jVersion	        = "1.7.12"
-        junitVersion	        = "4.12"
-        mockitoVersion	        = "1.10.19"
-        hamcrestVersion	        = "1.3"
-
-        springVersion 		    = "4.2.1.RELEASE"
-        springSecurityVersion   = "4.0.3.RELEASE"
-        jjwtVersion             = "0.5.1"
-
-        springDataVersion 	    = "1.8.1.RELEASE"
-        hibernateVersion	    = "4.3.10.Final"
-        mySQLDriverVersion	    = "5.1.35"
-    }
-
-    repositories {
-        maven {
-            url "http://repo.spring.io/plugins-release"
-        }
-        maven {
-            url "http://repo.spring.io/milestone"
-        }
-        maven {
-            url "http://repo.spring.io/release"
-        }
-        mavenCentral()
-    }
-
     dependencies {
-        compile("javax.servlet:javax.servlet-api:${servletAPIVersion}")
-        compile ("org.slf4j:slf4j-api:${slf4jVersion}");
-        compile ("org.slf4j:slf4j-log4j12:${slf4jVersion}");
-
-        testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
-        testCompile("junit:junit:${junitVersion}")
-        testCompile("org.mockito:mockito-core:${mockitoVersion}")
+	
+		compile("javax.servlet:javax.servlet-api:${servletAPIVersion}")
+        
+		compile ("org.slf4j:slf4j-api:${slf4jVersion}");
+        
+		compile ("org.slf4j:slf4j-log4j12:${slf4jVersion}");
+		
+		testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
+        
+		testCompile("junit:junit:${junitVersion}")
+        
+		testCompile("org.mockito:mockito-core:${mockitoVersion}")
     }
+	
+	jacoco {
+		toolVersion = "0.7.5.201505241946"
+		reportsDir = file("$buildDir/qmeJacocoReportDir")
+	}
 
+	jacocoTestReport {
+		reports {
+			xml.enabled false
+			csv.enabled false
+			html.destination file("${buildDir}/qmeJacocoHtml")
+		}
+	}
+	
+	buildscript {
+		dependencies {
+			classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		
+		}
+		repositories {
+			maven {
+				url "http://repo.spring.io/plugins-release"
+			}
+		}
+    }
 }
 
 
