@@ -1,0 +1,24 @@
+version: '3'
+services:
+  qme-server:
+        build: ./qme-server
+        container_name: qme-server
+        environment:
+            - MYSQL_DATABASE=qme
+            - MYSQL_USER=dbuser
+            - MYSQL_PASSWORD=dbuser
+            - MYSQL_ROOT_PASSWORD=dbuser
+        ports:
+            - 3306:3306
+            - 8002:8002
+        volumes:
+            - ./qme-server:/app
+  qme-webapp:
+        build: ./qme-webapp
+        container_name: qme-webapp
+        depends_on:
+            - qme-server
+        ports:
+            - 8000:8000
+        volumes:
+            - ~/QMe/QMe/client/angular/qmeAngular/app:/usr/share/nginx/app:ro
