@@ -14,7 +14,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -22,20 +21,13 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author malcolm
@@ -51,9 +43,6 @@ public class QMeSecurityConfigTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
-
-    @Mock
-    private Map<Class<Object>, Object> sharedObjects;
 
     @Mock
     private DaoAuthenticationConfigurer daoAuthenticationConfigurer;
@@ -92,7 +81,7 @@ public class QMeSecurityConfigTest {
         when(authenticationBuilder.userDetailsService(Matchers.<UserDetailsService>anyObject())).thenReturn(daoAuthenticationConfigurer);
         when(daoAuthenticationConfigurer.passwordEncoder(Matchers.<PasswordEncoder>anyObject())).thenReturn(daoAuthenticationConfigurer);
         when(authenticationConfiguration.getAuthenticationManager()).thenReturn(authenticationManager);
-        HttpSecurity httpSecurity = new HttpSecurity(objectPostProcessor,authenticationBuilder,sharedObjects);
+        HttpSecurity httpSecurity = new HttpSecurity(objectPostProcessor,authenticationBuilder,anyMap());
         QMeSecurityConfig qMeSecurityConfig = new QMeSecurityConfig();
         boolean isConfigured;
         try {
