@@ -1,17 +1,18 @@
-apply plugin: 'java' 
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'war'
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "war"
 apply plugin: "jacoco"
 
 subprojects {
 	
 	ext {
         servletAPIVersion       = "3.1.0"
+		jettyVersion			= "9.3.20.v20170531"
         
 		springVersion 		    = "4.3.10.RELEASE"
         springSecurityVersion   = "4.2.3.RELEASE"
-		springBootVersion       = '1.5.6.RELEASE'
+		springBootVersion       = "1.5.6.RELEASE"
         springHateosVersion     = "0.23.0.RELEASE"
 		springDataVersion 	    = "1.11.6.RELEASE"
 		aspectJWeaverVersion    = "1.8.7"
@@ -51,11 +52,11 @@ subprojects {
         mavenCentral()
     }
 	
-	apply plugin: 'java'
+	apply plugin: "java"
 
-    apply plugin: 'eclipse'
+    apply plugin: "eclipse"
 
-    apply plugin: 'idea'
+    apply plugin: "idea"
 
     apply plugin: "jacoco"
 	

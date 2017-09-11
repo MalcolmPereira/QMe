@@ -1,11 +1,12 @@
-apply plugin: 'java' 
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
 
 dependencies {
 
-    compile project(':qmecore')
-    compile project(':qmespringds')
+    compile project(":qmecore")
+
+    compile project(":qmespringds")
 
     compile("org.springframework:spring-context:${springVersion}")
 
@@ -19,7 +20,8 @@ dependencies {
         exclude module: "spring-web"
         exclude module: "spring-webmvc"
     }
-	compile("org.springframework.security:spring-security-web:${springSecurityVersion}"){
+
+    compile("org.springframework.security:spring-security-web:${springSecurityVersion}"){
         exclude module: "spring-core"
         exclude module: "spring-beans"
         exclude module: "spring-aop"
@@ -29,8 +31,14 @@ dependencies {
         exclude module: "spring-web"
         exclude module: "spring-webmvc"
     }
-    compile("org.springframework:spring-web:${springVersion}")
-	compile("org.springframework:spring-test:${springVersion}")
+
+    compile("org.springframework:spring-web:${springVersion}"){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+
+    compile("org.springframework:spring-test:${springVersion}")
+
     compile("org.springframework.security:spring-security-test:${springSecurityVersion}")
+
     compile("io.jsonwebtoken:jjwt:${jjwtVersion}")
 }

@@ -21,6 +21,7 @@ import com.malcolm.qme.rest.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -57,7 +58,7 @@ public final class UserServiceImpl implements UserService {
     @Qualifier(value = "RoleRepository")
     private RoleRepository roleRepo;
 
-    @Autowired
+    @Autowired @Lazy
     private PasswordEncoder passcodeEncoder;
 
     @Autowired

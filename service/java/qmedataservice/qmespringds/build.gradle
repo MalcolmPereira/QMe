@@ -1,9 +1,9 @@
-apply plugin: 'java' 
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
 
 dependencies {
-	compile project(':qmecore')
+	compile project(":qmecore")
 
 	compile("org.springframework.data:spring-data-jpa:${springDataVersion}"){
         exclude module: "spring-core"
