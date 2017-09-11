@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -52,6 +53,9 @@ public class QMeSecurityConfigTest {
 
     @Mock
     private QMETokenAuthenticationService qmeTokenAuthenticationService;
+
+    @Mock
+    private Environment environment;
 
     @Mock
     private AuthenticationConfiguration authenticationConfiguration;
