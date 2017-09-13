@@ -316,8 +316,29 @@
                     );
             };
 
+            qmeQuizManagement.selectedQuiz = function(){
+                qmeQuizManagement.quizID = $stateParams.currentQuiz.quizID;
+                qmeQuizManagement.categoryId = $stateParams.currentQuiz.categoryID;
+                qmeQuizManagement.categoryName = $stateParams.currentQuiz.categoryName;
+                qmeQuizManagement.quizName = $stateParams.currentQuiz.quizName;
+                qmeQuizManagement.quizDesc = $stateParams.currentQuiz.quizDesc;
+                qmeQuizManagement.quizQuestions = $stateParams.currentQuiz.questionIdList;
+            };
+
             qmeQuizManagement.cancelAddQuiz = function(){
                 $state.go('listquizzes', {});
+            };
+
+            qmeQuizManagement.submitUpdateQuiz = function(){
+
+            };
+
+            qmeQuizManagement.cancelUpdateQuiz = function(){
+                $state.go('listquizzes', {});
+            };
+
+            qmeQuizManagement.deleteQuiz = function(){
+
             };
         }
 })();

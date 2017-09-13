@@ -1,10 +1,32 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="qmeQuizManagementCtrl as qmeQuizManagement"  ng-init="qmeQuizManagement.selectedQuiz()">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Update Quiz</h3>
         </div>
         <div class="panel-body">
-            Update Quiz
+            <div class="container-fluid">
+                <form name="qmeQuizManagement.updateQuizForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="categoryName">Category:</label>
+                        <input style="width:500px;" type="text" min="1" max="10" style="width:950px;" ng-disabled="true" ng-model="qmeQuizManagement.categoryName" name="categoryName" id="categoryName" class="form-control" ng-required="false"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="quizName">Name:</label>
+                        <input style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizName" name="quizName" id="quizName" class="form-control" placeholder="Quiz Name" ng-disabled="!(qmeQuizManagement.categoryId)" ng-required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="quizDesc">Description:</label>
+                        <textarea style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizDesc" name="quizDesc" id="quizDesc" class="form-control" placeholder="Description" ng-disabled="!(qmeQuizManagement.categoryId)" ng-required="true"></textarea>
+                    </div>
+
+                    <button id="submitUpdateQuestionButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeQuizManagement.submitUpdateQuiz()" ng-disabled="updateQuestionForm.$invalid">Update Question</button>
+                    &nbsp;&nbsp;
+                    <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeQuizManagement.cancelUpdateQuiz()">Cancel</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="deleteButton" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#qmeConfirmModel">Delete</button>
+                    <qme-confirm header-message="'Delete Quiz'" body-message="'Are you sure you want to delete quiz ?'" function-call="qmeQuizManagement.deleteQuiz" function-param="qmeQuizManagement.quizID"></qme-confirm>
+                </form>
+            </div>
         </div>
     </div>
 </div>
