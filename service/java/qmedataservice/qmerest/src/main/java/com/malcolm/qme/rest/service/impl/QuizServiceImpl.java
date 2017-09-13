@@ -107,13 +107,10 @@ public class QuizServiceImpl  implements QuizService{
 
                 for(QuizQuestion quizQuestion : quizQuestionList){
                     quizDetail.addQmeQuestionDetailList(questionService.searchById(quizQuestion.getQuestionID()));
+                    quizDetail.addQuestionIdList(quizQuestion.getQuestionID());
                 }
-
             }
-
-
             return quizDetail;
-
         } catch (QMeException err) {
             throw new QMeServerException(err.getMessage(), err);
         }
