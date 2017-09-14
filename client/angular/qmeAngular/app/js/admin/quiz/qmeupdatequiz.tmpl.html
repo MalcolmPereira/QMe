@@ -18,14 +18,50 @@
                         <label for="quizDesc">Description:</label>
                         <textarea style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizDesc" name="quizDesc" id="quizDesc" class="form-control" placeholder="Description" ng-disabled="!(qmeQuizManagement.categoryId)" ng-required="true"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="quizQuestions">Quiz Questions :</label>&nbsp;<a ng-show="(qmeQuizManagement.quizQuestions .length < 101 )" ng-href="#" ng-click="qmeQuizManagement.addQuizQuestion();" ng-hide="!(qmeQuizManagement.categoryId)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                        <table border="1" style="width:950px;" class="table table-bordered table-striped" name="quizQuestions" id="quizQuestions">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">ID</th>
+                                    <th style="width: 48%">Question</th>
+                                    <th style="width: 40%">Answer</th>
+                                    <th style="width: 5%">Point</th>
+                                    <th style="width: 2%">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="quizQuestion in qmeQuizManagement.quizQuestions">
+                                    <td>{{quizQuestion.questionId}}</td>
+                                    <td>{{quizQuestion.questionText}}</td>
+                                    <td>{{quizQuestion.answer}}</td>
+                                    <td>{{quizQuestion.questionPoint}}</td>
+                                    <td><a href="#" ng-click="qmeQuizManagement.removeQuizQuestion(quizQuestion.questionId);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <button id="submitUpdateQuestionButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeQuizManagement.submitUpdateQuiz()" ng-disabled="updateQuestionForm.$invalid">Update Question</button>
+                    <button id="submitUpdateQuestionButton" type="submit" class="btn btn-info btn-sm" ng-click="qmeQuizManagement.submitUpdateQuiz()" ng-disabled="updateQuestionForm.$invalid || qmeQuizManagement.quizQuestions.length < 1">Update Question</button>
                     &nbsp;&nbsp;
                     <button id="cancelButton" type="button" class="btn btn-info btn-sm" ng-click="qmeQuizManagement.cancelUpdateQuiz()">Cancel</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="deleteButton" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#qmeConfirmModel">Delete</button>
                     <qme-confirm header-message="'Delete Quiz'" body-message="'Are you sure you want to delete quiz ?'" function-call="qmeQuizManagement.deleteQuiz" function-param="qmeQuizManagement.quizID"></qme-confirm>
                 </form>
+            </div>
+            <div class="modal fade" id="addQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="questionsModalLabel">
+                <div class="modal-dialog" style="width:95%;" role="document">
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close" ng-click="qmeQuizManagement.cancelQuestions()"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="optionsModalLabel">Questions</h4>
+                        </div>
+                        <div class="modal-body" ng-if="qmeQuizManagement.shownSelectQuestions">
+                            <qme-select-question selected-categoryid="qmeQuizManagement.categoryId"></qme-select-question>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

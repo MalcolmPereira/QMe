@@ -19,8 +19,8 @@
                         <textarea style="width:950px;" rows="3"  ng-model="qmeQuizManagement.quizDesc" name="quizDesc" id="quizDesc" class="form-control" placeholder="Description" ng-disabled="!(qmeQuizManagement.categoryId)" ng-required="true"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="answerOption">Quiz Questions :</label>&nbsp;<a ng-show="(qmeQuizManagement.quizQuestions .length < 101 )" ng-href="#" ng-click="qmeQuizManagement.addQuizQuestion();" ng-hide="!(qmeQuizManagement.categoryId)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                        <table border="1" style="width:950px;" class="table table-bordered table-striped" name="answerOption" id="answerOption">
+                        <label for="quizQuestions">Quiz Questions :</label>&nbsp;<a ng-show="(qmeQuizManagement.quizQuestions .length < 101 )" ng-href="#" ng-click="qmeQuizManagement.addQuizQuestion();" ng-hide="!(qmeQuizManagement.categoryId)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                        <table border="1" style="width:950px;" class="table table-bordered table-striped" name="quizQuestions" id="quizQuestions">
                             <thead>
                                 <tr>
                                     <th style="width: 5%">ID</th>

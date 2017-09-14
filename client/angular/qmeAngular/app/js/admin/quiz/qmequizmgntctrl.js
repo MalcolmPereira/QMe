@@ -322,7 +322,7 @@
                 qmeQuizManagement.categoryName = $stateParams.currentQuiz.categoryName;
                 qmeQuizManagement.quizName = $stateParams.currentQuiz.quizName;
                 qmeQuizManagement.quizDesc = $stateParams.currentQuiz.quizDesc;
-                qmeQuizManagement.quizQuestions = $stateParams.currentQuiz.questionIdList;
+                qmeQuizManagement.quizQuestions = $stateParams.currentQuiz.qmeQuestionDetailList;
             };
 
             qmeQuizManagement.cancelAddQuiz = function(){
