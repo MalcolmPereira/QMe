@@ -212,7 +212,6 @@
                 promise.then(
                     function(data){
                         if(data){
-
                             for(var i in data){
                                 var toAdd = true;
                                 for(var j in qmeQuizManagement.quizQuestions){
@@ -250,19 +249,27 @@
                 }
             };
 
-            qmeQuizManagement.submitAddQuiz = function(){
+            qmeQuizManagement.getQuiz =  function() {
                 var quiz = {
+                    "quizID": undefined,
                     "categoryID": qmeQuizManagement.categoryId,
-                    "quizName": qmeQuizManagement.quizName ,
-                    "quizDesc": qmeQuizManagement.quizDesc ,
+                    "quizName": qmeQuizManagement.quizName,
+                    "quizDesc": qmeQuizManagement.quizDesc,
                     "quizMaxAttempts": 3,
                     "questionIdList": [],
                 };
-                for(var i in qmeQuizManagement.quizQuestions){
+                if(qmeQuizManagement.quizID){
+                    quiz.quizID = qmeQuizManagement.quizID;
+                }
+                for (var i in qmeQuizManagement.quizQuestions) {
                     quiz.questionIdList.push(qmeQuizManagement.quizQuestions[i].questionId);
                 }
+                return quiz;
+            };
+
+            qmeQuizManagement.submitAddQuiz = function(){
                 qmeQuizService
-                    .createQuiz(quiz)
+                    .createQuiz(qmeQuizManagement.getQuiz())
                     .then(
                         function(res){
                             qmeFlashService.Success("Quiz submitted successfully, .",true);
@@ -283,7 +290,6 @@
                             }
                         }
                     );
-
             };
 
             qmeQuizManagement.updateQuiz = function(quiz){
@@ -329,16 +335,55 @@
                 $state.go('listquizzes', {});
             };
 
-            qmeQuizManagement.submitUpdateQuiz = function(){
-
-            };
-
             qmeQuizManagement.cancelUpdateQuiz = function(){
                 $state.go('listquizzes', {});
             };
 
-            qmeQuizManagement.deleteQuiz = function(){
+            qmeQuizManagement.submitUpdateQuiz = function(){
+                qmeQuizService
+                    .updateQuiz(qmeQuizManagement.getQuiz())
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Quiz updates submitted successfully, .",true);
+                            $state.go('listquizzes', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for submit quiz, please make sure all required fields are valid.");
 
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized for function, please contact system administrator.");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Error updating quiz, please retry in some time.");
+                            }
+                        }
+                    );
+            };
+
+            qmeQuizManagement.deleteQuiz = function(){
+                qmeQuizService
+                    .deleteQuiz(qmeQuizManagement.quizID)
+                    .then(
+                        function(res){
+                            qmeFlashService.Success("Quiz Delete successful.",true);
+                            $state.go('listquizzes', {});
+                        },
+                        function(error){
+                            if(error && error.status && error.status == 404){
+                                qmeFlashService.Error("Oops.....Invalid request for quiz delete, quiz not found.");
+
+                            }else if(error && error.status && error.status == 403){
+                                qmeFlashService.Error("Oops.....User not authorized to delete quiz.");
+
+                            }else if(error && error.status && error.status == 400){
+                                qmeFlashService.Error("Oops.....Invalid request for delete quiz.");
+
+                            }else{
+                                qmeFlashService.Error("Oops.....Server Error deleting quiz , please contact administrator.");
+                            }
+                        }
+                    );
             };
         }
 })();
