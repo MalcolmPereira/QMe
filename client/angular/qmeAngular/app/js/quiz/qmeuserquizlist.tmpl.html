@@ -1,0 +1,14 @@
+<div class="container-fluid" ng-controller="qmeUserQuizCtrl as qmeUserQuizCtrl" ng-init="qmeUserQuizCtrl.listQuiz();">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 id="quizHeaderId" class="panel-title">Quiz List</h3>
+        </div>
+        <div class="panel-body">
+           <qme-page ng-if="qmeUserQuizCtrl.recordsLoaded()" qme-totalcount="qmeUserQuizCtrl.totalRecords()" qme-pagingfunction="qmeUserQuizCtrl.pageQuiz"></qme-page>
+           <table class="table table-striped">
+               TODO:
+           </table>
+           <qme-page ng-if="qmeUserQuizCtrl.recordsLoaded()" qme-totalcount="qmeUserQuizCtrl.totalRecords()" qme-pagingfunction="qmeUserQuizCtrl.pageQuiz"></qme-page>
+        </div>
+    </div>
+</div>

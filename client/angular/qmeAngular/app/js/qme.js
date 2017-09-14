@@ -69,6 +69,16 @@ var ngQMe  = angular.module(qmeApp, ['ui.router','ngResource','ngMessages','base
                     admin: false
                 })
 
+                //User Quiz Routing
+                .state('userquiz', {
+                    url: "/userquiz",
+                    templateUrl: 'js/quiz/qmeuserquizlist.tmpl.html',
+                    controller: 'qmeUserQuizCtrl',
+                    controllerAs: 'qmeUserQuizCtrl',
+                    authenticate: true,
+                    admin: false
+                })
+
                 //User Routing
                 .state('stage', {
                     url: "/stage",

@@ -41,8 +41,22 @@
                 return (qmeUserSession && qmeUserSession.isSignedIn() && qmeUserSession.isAdmin());
             };
 
+            qmeNav.isUser = function(){
+                if(qmeUserSession.isUser() === null){
+                    return false;
+                }
+                if(qmeUserSession.isUser() === undefined){
+                    return false;
+                }
+                return (qmeUserSession && qmeUserSession.isSignedIn() && qmeUserSession.isUser());
+            };
+
             qmeNav.routeHome = function(){
                 $state.go('home', {});
+            };
+
+            qmeNav.routeUserQuiz = function(){
+                $state.go('userquiz', {});
             };
 
             qmeNav.routeUsers = function(){

@@ -115,6 +115,15 @@
             );
         };
 
+        qmeUserSession.isUser = function(){
+                return (
+                    qmeUserSession.isSignedIn() &&
+                    qmeUserSession.userrole() &&
+                    qmeUserSession.userrole().length > 0 &&
+                    qmeUserSession.userrole().indexOf(QME_CONSTANTS.userrole) > -1
+                );
+        };
+
         qmeUserSession.isUpdating = function(){
             return _updating;
         };
