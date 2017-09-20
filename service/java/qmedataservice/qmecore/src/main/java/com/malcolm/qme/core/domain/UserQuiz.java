@@ -61,9 +61,19 @@ public final class UserQuiz {
     private final Integer quizMaxScore;
 
     /**
-     * Correct
+     * Quiz Complete
      */
     private final Boolean quizComplete;
+
+    /**
+	 * Quiz
+	 */
+	private Quiz quiz;
+
+    /**
+     * Category
+     */
+	private Category category;
 
 	/**
 	 * Public Constructor
@@ -185,6 +195,38 @@ public final class UserQuiz {
 	public Boolean getQuizComplete() {
 		return quizComplete;
 	}
+
+    /**
+     * Get Quiz
+     * @return
+     */
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    /**
+     * Set Quiz
+     * @param quiz
+     */
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    /**
+     * Get Category
+     * @return
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Set Category
+     * @param category
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
 	@Override
 	public boolean equals(Object o) {

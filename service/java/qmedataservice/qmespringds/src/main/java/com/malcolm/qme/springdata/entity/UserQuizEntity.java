@@ -81,6 +81,11 @@ public class UserQuizEntity implements java.io.Serializable {
 	@Column(name = "QUIZ_COMPLETE", nullable = false)
 	private byte quizComplete;
 
+    @ManyToOne
+	@JoinColumn(name = "QUIZ_ID", referencedColumnName = "QUIZ_ID", insertable = false, updatable = false)
+	private QuizEntity quiz;
+
+
 	/**
 	 * Public Constructor
 	 */
@@ -265,6 +270,22 @@ public class UserQuizEntity implements java.io.Serializable {
 	public byte getQuizComplete() {
 		return quizComplete;
 	}
+
+    /**
+     * Get Quiz
+     * @return
+     */
+    public QuizEntity getQuiz() {
+        return quiz;
+    }
+
+    /**
+     * Set Quiz
+     * @param quiz
+     */
+    public void setQuiz(QuizEntity quiz) {
+        this.quiz = quiz;
+    }
 
 	/**
 	 * @param quizComplete the quizComplete to set
