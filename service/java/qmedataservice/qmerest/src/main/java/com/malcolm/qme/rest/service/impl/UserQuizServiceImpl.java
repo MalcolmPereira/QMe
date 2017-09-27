@@ -8,6 +8,7 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.UserQuiz;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
@@ -57,7 +58,12 @@ public class UserQuizServiceImpl implements UserQuizService {
 
     @Override
     public List<QMeUserQuiz> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
-        return null;
+        try{
+            return  getQMeUserQuiz(userQuizRepo.findAll(new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override

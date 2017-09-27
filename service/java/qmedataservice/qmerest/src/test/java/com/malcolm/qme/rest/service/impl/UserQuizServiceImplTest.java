@@ -7,6 +7,7 @@
 package com.malcolm.qme.rest.service.impl;
 
 import com.malcolm.qme.core.domain.fixtures.UserQuizFixtures;
+import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.rest.exception.QMeResourceException;
@@ -16,6 +17,7 @@ import com.malcolm.qme.rest.service.UserQuizService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -78,6 +80,26 @@ public class UserQuizServiceImplTest {
                     is(5L)
             ));
         }
+    }
 
+    @Test
+    public void testListPaged() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findAll(Matchers.<PageSort>anyObject())).thenReturn(UserQuizFixtures.simpleUserQuizList());
+
+        List<QMeUserQuiz> userQuizList = userQuizService.list(0,10,true, "QUIZNAME");
+
+        verify(userQuizRepo).findAll(Matchers.<PageSort>anyObject());
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(5));
+        for (QMeUserQuiz qmeUserQuiz : userQuizList) {
+            assertThat(qmeUserQuiz.getUserID(), equalTo(1L));
+            assertThat(qmeUserQuiz.getUserQuizID(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L)
+            ));
+        }
     }
 }
