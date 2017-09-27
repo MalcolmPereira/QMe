@@ -79,7 +79,7 @@ public class UserServiceImplTest {
         when(userRepo.count()).thenThrow(QMeException.class);
         userService.count();
         verify(userRepo).count();
-}
+    }
 
     @Test
     public void testList() throws QMeResourceException, QMeException{
