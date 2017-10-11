@@ -70,6 +70,11 @@ public class QMeUserQuiz extends QMeResource {
     private Boolean quizComplete;
 
     /**
+     * Quiz Details
+     */
+    private QMeQuizDetail quiz;
+
+    /**
      * Get User Quiz ID
      * @return userQuizID
      */
@@ -227,5 +232,21 @@ public class QMeUserQuiz extends QMeResource {
      */
     public void setQuizComplete(Boolean quizComplete) {
         this.quizComplete = quizComplete;
+    }
+
+    /**
+     * Get Quiz
+     * @return QMeQuizDetail
+     */
+    public QMeQuizDetail getQuiz() {
+        return quiz;
+    }
+
+    /**
+     * Set Quiz
+     * @param quiz Quiz
+     */
+    public void setQuiz(QMeQuizDetail quiz) {
+        this.quiz = quiz;
     }
 }

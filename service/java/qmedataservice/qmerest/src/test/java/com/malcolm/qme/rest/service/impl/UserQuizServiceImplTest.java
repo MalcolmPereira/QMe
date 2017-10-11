@@ -13,6 +13,8 @@ import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.fixtures.QMeQuizDetailFixture;
+import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,13 +25,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.core.Is.is;
 
 /**
  * @author Malcolm
@@ -38,6 +40,9 @@ import static org.hamcrest.core.Is.is;
 public class UserQuizServiceImplTest {
     @Mock
     private UserQuizRepository userQuizRepo;
+
+    @Mock
+    private QuizService quizService;
 
     @InjectMocks
     private final UserQuizService userQuizService = new UserQuizServiceImpl();
@@ -102,4 +107,43 @@ public class UserQuizServiceImplTest {
             ));
         }
     }
+
+    @Test(expected = QMeServerException.class)
+    public void testListPagedQMeServerException() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findAll(Matchers.<PageSort>anyObject())).thenThrow(QMeException.class);
+        List<QMeUserQuiz> userQuizList = userQuizService.list(0,10,true, "QUIZNAME");
+        verify(userQuizRepo).findAll(Matchers.<PageSort>anyObject());
+    }
+
+    @Test
+    public void testListNullReturn() throws QMeResourceException, QMeException{
+        when(userQuizRepo.findAll()).thenReturn(null);
+        List<QMeUserQuiz> userQuizList = userQuizService.list();
+        verify(userQuizRepo).findAll();
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeServerException.class)
+    public void testListQMeException() throws QMeResourceException, QMeException{
+        when(userQuizRepo.findAll()).thenThrow(QMeException.class);
+        userQuizService.list();
+        verify(userQuizRepo).findAll();
+    }
+
+    @Test
+    public void testSearchById() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findById(1L)).thenReturn(UserQuizFixtures.simpleUserQuiz());
+
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestions());
+
+        QMeUserQuiz userQuiz = userQuizService.searchById(1L);
+
+        verify(userQuizRepo).findById(1L);
+
+        assertNotNull(userQuiz);
+
+        assertThat(userQuiz.getUserQuizID(), equalTo(1L));
+    }
+
 }

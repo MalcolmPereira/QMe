@@ -15,7 +15,9 @@ import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
+import com.malcolm.qme.rest.model.QMeQuizDetail;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,6 +37,8 @@ public class UserQuizServiceImpl implements UserQuizService {
     @Qualifier(value = "UserQuizRepository")
     private UserQuizRepository userQuizRepo;
 
+    @Autowired
+    private QuizService quizService;
 
     @Override
     public Long count() throws QMeServerException {
@@ -68,8 +72,15 @@ public class UserQuizServiceImpl implements UserQuizService {
 
     @Override
     public QMeUserQuiz searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
-        return null;
-    }
+        try{
+            QMeUserQuiz qMeUserQuiz = getQMeUserQuiz(userQuizRepo.findById(id));
+            QMeQuizDetail qMeQuizDetail = quizService.searchById(qMeUserQuiz.getQuizID());
+            qMeUserQuiz.setQuiz(qMeQuizDetail);
+            return qMeUserQuiz;
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+     }
 
     @Override
     public QMeUserQuiz save(QMeUserQuiz qMeUserQuiz, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {

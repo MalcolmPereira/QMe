@@ -36,4 +36,13 @@ public class UserQuizFixtures {
         userQuizList.add(userQuiz);
         return userQuizList;
     }
+
+    /**
+     * Return Simple User Quiz
+     *
+     * @return User Quiz
+     */
+    public static UserQuiz simpleUserQuiz() {
+        return new UserQuiz(1L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+    }
 }
