@@ -56,6 +56,10 @@ public interface QMeAPI {
      * Admin Role
      */
     String ADMIN_ROLE = "ADMIN";
+    /**
+     * User Role
+     */
+    String USER_ROLE = "USER";
 
 	/**
 	 * Logger

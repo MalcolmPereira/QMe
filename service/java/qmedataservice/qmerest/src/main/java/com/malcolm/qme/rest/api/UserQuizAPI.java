@@ -6,6 +6,12 @@
  **/
 package com.malcolm.qme.rest.api;
 
+import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeUserQuiz;
+import org.springframework.hateoas.Resource;
+
+import java.util.List;
+
 /**
  * @author Malcolm
  */
@@ -24,4 +30,24 @@ public interface UserQuizAPI extends QMeAPI {
      * QMeUser API Paged Path
      */
     String PAGED_PATH = APP_STRING + "/userquiz/paged";
+
+    /**
+     * UserQuizAPI API Get By ID Path
+     */
+    String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
+
+    /**
+     * Get Count
+     *
+     * @return Count of Catgeories
+     */
+    Resource<Long> count() throws QMeResourceException;
+
+    /**
+     * Get All User Quiz
+     *
+     * @return List of User Quiz
+     */
+    List<QMeUserQuiz> list() throws QMeResourceException;
+
 }

@@ -19,10 +19,12 @@ public interface QMeAppAPI extends QMeAPI {
      * QMe API Root Path
      */
     String ROOT_PATH = APP_STRING + "/api";
+
     /**
      * QMe API
      */
     String QME_API = "Qme API";
+
     /**
      * QMe User API
      */
@@ -157,6 +159,7 @@ public interface QMeAppAPI extends QMeAPI {
      * Delete Question
      */
     String DELETE_QUESTION = "Delete_Question";
+
     /**
      * QMe Quiz API
      */
@@ -189,6 +192,28 @@ public interface QMeAppAPI extends QMeAPI {
      * Delete Quiz
      */
     String DELETE_QUIZ = "Delete_Quiz";
+
+
+    /**
+     * QMe User Quiz API
+     */
+    String QME_USER_QUIZ_API = "Qme User Quiz API";
+    /**
+     * User Quiz
+     */
+    String USER_QUIZ = "Get_User_Quiz_list";
+    /**
+     * User Quiz Count
+     */
+    String USER_QUIZ_COUNT = "Get_User_Quiz_Count";
+    /**
+     * User Quiz Paged
+     */
+    String USER_QUIZ_PAGED = "Get_Paged_User_Quiz_list - (sortfields:QUIZ_NAME)";
+    /**
+     * User Quiz by User Quiz ID
+     */
+    String USER_QUIZ_BY_ID = "Get_User_Quiz_by_id";
 
     /**
      * List QMe App API
