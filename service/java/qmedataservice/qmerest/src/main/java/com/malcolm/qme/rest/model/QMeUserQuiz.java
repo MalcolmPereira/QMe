@@ -65,11 +65,6 @@ public class QMeUserQuiz extends QMeResource {
     private Integer quizMaxScore;
 
     /**
-     * Quiz Complete
-     */
-    private Boolean quizComplete;
-
-    /**
      * Quiz Details
      */
     private QMeQuizDetail quiz;
@@ -218,23 +213,7 @@ public class QMeUserQuiz extends QMeResource {
         this.quizMaxScore = quizMaxScore;
     }
 
-    /**
-     * Get Quiz Complete
-     * @return quizComplete
-     */
-    public Boolean getQuizComplete() {
-        return quizComplete;
-    }
-
-    /**
-     * Set Quiz Complete
-     * @param quizComplete
-     */
-    public void setQuizComplete(Boolean quizComplete) {
-        this.quizComplete = quizComplete;
-    }
-
-    /**
+   /**
      * Get Quiz
      * @return QMeQuizDetail
      */

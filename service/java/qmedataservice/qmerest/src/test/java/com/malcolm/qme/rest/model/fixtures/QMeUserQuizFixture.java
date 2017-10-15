@@ -65,7 +65,6 @@ public class QMeUserQuizFixture {
         qMeUserQuiz.setUserQuizToken("sometoken");
         qMeUserQuiz.setQuizUserScore(10);
         qMeUserQuiz.setQuizMaxScore(10);
-        qMeUserQuiz.setQuizComplete(Boolean.TRUE);
         return qMeUserQuiz;
     }
 

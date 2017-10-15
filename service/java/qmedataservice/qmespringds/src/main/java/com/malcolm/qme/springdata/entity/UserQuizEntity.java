@@ -75,13 +75,7 @@ public class UserQuizEntity implements java.io.Serializable {
 	@Column(name = "QUIZ_TOKEN", length = 256)
 	private String quizToken;
 
-	/**
-	 * Quiz Complete
-	 */
-	@Column(name = "QUIZ_COMPLETE", nullable = false)
-	private byte quizComplete;
-
-    @ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "QUIZ_ID", referencedColumnName = "QUIZ_ID", insertable = false, updatable = false)
 	private QuizEntity quiz;
 
@@ -101,16 +95,14 @@ public class UserQuizEntity implements java.io.Serializable {
 	 * @param quizStartDate Quiz Start Date
 	 * @param quizUserScore Quiz User Score
 	 * @param quizMaxScore Quiz Max Score
-	 * @param quizComplete Quiz Complete 1 - Complete/ 0 - Incomplete
 	 */
-	public UserQuizEntity(Long userId, Long quizId, Long catId,LocalDateTime quizStartDate, Integer quizUserScore, Integer quizMaxScore,byte quizComplete) {
+	public UserQuizEntity(Long userId, Long quizId, Long catId,LocalDateTime quizStartDate, Integer quizUserScore, Integer quizMaxScore) {
 		this.userId = userId;
 		this.quizId = quizId;
 		this.catId = catId;
 		this.quizStartDate = quizStartDate;
 		this.quizUserScore = quizUserScore;
 		this.quizMaxScore = quizMaxScore;
-		this.quizComplete = quizComplete;
 	}
 
 	/**
@@ -124,9 +116,8 @@ public class UserQuizEntity implements java.io.Serializable {
 	 * @param quizUserScore Quiz User Score
 	 * @param quizMaxScore  Quiz Max Score
 	 * @param quizToken  Quiz Token
-	 * @param quizComplete  Quiz Complete 1 - Complete/ 0 - Incomplete
 	 */
-	public UserQuizEntity(Long userId, Long quizId, Long catId, LocalDateTime quizStartDate, LocalDateTime quizEndDate, Integer quizUserScore, Integer quizMaxScore, String quizToken, byte quizComplete) {
+	public UserQuizEntity(Long userId, Long quizId, Long catId, LocalDateTime quizStartDate, LocalDateTime quizEndDate, Integer quizUserScore, Integer quizMaxScore, String quizToken) {
 		this.userId = userId;
 		this.quizId = quizId;
 		this.catId = catId;
@@ -135,7 +126,6 @@ public class UserQuizEntity implements java.io.Serializable {
 		this.quizUserScore = quizUserScore;
 		this.quizMaxScore = quizMaxScore;
 		this.quizToken = quizToken;
-		this.quizComplete = quizComplete;
 	}
 
 	/**
@@ -265,13 +255,6 @@ public class UserQuizEntity implements java.io.Serializable {
 	}
 
 	/**
-	 * @return the quizComplete
-	 */
-	public byte getQuizComplete() {
-		return quizComplete;
-	}
-
-    /**
      * Get Quiz
      * @return
      */
@@ -286,13 +269,6 @@ public class UserQuizEntity implements java.io.Serializable {
     public void setQuiz(QuizEntity quiz) {
         this.quiz = quiz;
     }
-
-	/**
-	 * @param quizComplete the quizComplete to set
-	 */
-	public void setQuizComplete(byte quizComplete) {
-		this.quizComplete = quizComplete;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -319,8 +295,7 @@ public class UserQuizEntity implements java.io.Serializable {
 				+ userId + ", quizId=" + quizId + ", catId=" + catId
 				+ ", quizStartDate=" + quizStartDate + ", quizEndDate="
 				+ quizEndDate + ", quizUserScore=" + quizUserScore
-				+ ", quizMaxScore=" + quizMaxScore + ", quizToken=" + quizToken
-				+ ", quizComplete=" + quizComplete + "]";
+				+ ", quizMaxScore=" + quizMaxScore + ", quizToken=" + quizToken;
 	}
 
 }

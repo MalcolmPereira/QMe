@@ -61,11 +61,6 @@ public final class UserQuiz {
     private final Integer quizMaxScore;
 
     /**
-     * Quiz Complete
-     */
-    private final Boolean quizComplete;
-
-    /**
 	 * Quiz
 	 */
 	private Quiz quiz;
@@ -87,11 +82,10 @@ public final class UserQuiz {
 	 * @param userQuizToken Unique User Quiz Token
 	 * @param quizUserScore Quiz User Score
 	 * @param quizMaxScore Quiz Max Score
-	 * @param quizComplete Quiz Complete - True Complete/False Incomplete
 	 */
 	public UserQuiz(Long userQuizID, Long userID, Long quizID, Long categoryID,
 			LocalDateTime quizStartDate, LocalDateTime quizEndDate, String userQuizToken,
-			Integer quizUserScore, Integer quizMaxScore, Boolean quizComplete) {
+			Integer quizUserScore, Integer quizMaxScore) {
 		super();
 		this.userQuizID = userQuizID;
 		this.userID = userID;
@@ -102,7 +96,6 @@ public final class UserQuiz {
 		this.userQuizToken = userQuizToken;
 		this.quizUserScore = quizUserScore;
 		this.quizMaxScore = quizMaxScore;
-		this.quizComplete = quizComplete;
 	}
     
 	/**
@@ -123,7 +116,6 @@ public final class UserQuiz {
         this.userQuizToken = userQuizToken;
         this.quizUserScore = 0;
 		this.quizMaxScore = quizMaxScore;
-        this.quizComplete = Boolean.FALSE;
     }
 
 	/**
@@ -190,13 +182,6 @@ public final class UserQuiz {
 	}
 
 	/**
-	 * @return the quizComplete
-	 */
-	public Boolean getQuizComplete() {
-		return quizComplete;
-	}
-
-    /**
      * Get Quiz
      * @return
      */
@@ -254,7 +239,7 @@ public final class UserQuiz {
 				+ ", quizStartDate=" + quizStartDate + ", quizEndDate="
 				+ quizEndDate + ", userQuizToken=" + userQuizToken
 				+ ", quizUserScore=" + quizUserScore + ", quizMaxScore="
-				+ quizMaxScore + ", quizComplete=" + quizComplete + "]";
+				+ quizMaxScore + "]";
 	}
 
 }

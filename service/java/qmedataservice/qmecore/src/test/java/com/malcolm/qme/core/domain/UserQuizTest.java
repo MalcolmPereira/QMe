@@ -20,7 +20,7 @@ public class UserQuizTest {
 
     @Test
     public void testGetUserQuizID() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getUserQuizID(), equalTo(1L));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getUserQuizID(), equalTo(0L));
@@ -28,7 +28,7 @@ public class UserQuizTest {
 
     @Test
     public void testGetUserID() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getUserID(), equalTo(1L));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getUserID(), equalTo(1L));
@@ -36,7 +36,7 @@ public class UserQuizTest {
 
     @Test
     public void testGetQuizID() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getQuizID(), equalTo(1L));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getQuizID(), equalTo(1L));
@@ -44,7 +44,7 @@ public class UserQuizTest {
 
     @Test
     public void testGetCategoryID() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getCategoryID(), equalTo(1L));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getCategoryID(), equalTo(1L));
@@ -53,7 +53,7 @@ public class UserQuizTest {
     @Test
     public void testGetQuizStartDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,now, now, "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,now, now, "sometoken",1, 1);
         assertThat(userQuiz.getQuizStartDate(), equalTo(now));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertNotNull(userQuiz.getQuizStartDate());
@@ -62,7 +62,7 @@ public class UserQuizTest {
     @Test
     public void testGetQuizEndDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,now, now, "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,now, now, "sometoken",1, 1);
         assertThat(userQuiz.getQuizEndDate(), equalTo(now));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertNull(userQuiz.getQuizEndDate());
@@ -70,7 +70,7 @@ public class UserQuizTest {
 
     @Test
     public void testGetUserQuizToken() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getUserQuizToken(), equalTo("sometoken"));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getUserQuizToken(), equalTo("sometoken"));
@@ -78,7 +78,7 @@ public class UserQuizTest {
 
     @Test
     public void testGetQuizUserScore() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getQuizUserScore(), equalTo(1));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getQuizUserScore(), equalTo(0));
@@ -86,28 +86,20 @@ public class UserQuizTest {
 
     @Test
     public void testGetQuizMaxScore() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz.getQuizMaxScore(), equalTo(1));
         userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         assertThat(userQuiz.getQuizMaxScore(), equalTo(1));
-    }
-
-    @Test
-    public void testGetQuizComplete() throws Exception {
-        UserQuiz userQuiz = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
-        assertThat(userQuiz.getQuizComplete(), equalTo(Boolean.TRUE));
-        userQuiz = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
-        assertThat(userQuiz.getQuizComplete(), equalTo(Boolean.FALSE));
     }
 
     @Test
     public void testEquals(){
-        UserQuiz userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
-        UserQuiz userQuiz2 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
+        UserQuiz userQuiz2 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertTrue(userQuiz1.equals(userQuiz2));
         assertTrue(userQuiz1.equals(userQuiz1));
-        userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken1",1, 1, Boolean.TRUE);
-        userQuiz2 = new UserQuiz(2L, 2L, 2L, 2L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1, Boolean.TRUE);
+        userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken1",1, 1);
+        userQuiz2 = new UserQuiz(2L, 2L, 2L, 2L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1);
         assertFalse(userQuiz1.equals(userQuiz2));
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         userQuiz2 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
@@ -121,11 +113,11 @@ public class UserQuizTest {
 
     @Test
     public void testHashCode(){
-        UserQuiz userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
-        UserQuiz userQuiz2 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1, Boolean.TRUE);
+        UserQuiz userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
+        UserQuiz userQuiz2 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken",1, 1);
         assertThat(userQuiz1.hashCode(), equalTo(userQuiz2.hashCode()));
-        userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken1",1, 1, Boolean.TRUE);
-        userQuiz2 = new UserQuiz(2L, 2L, 2L, 2L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1, Boolean.TRUE);
+        userQuiz1 = new UserQuiz(1L, 1L, 1L, 1L,LocalDateTime.now(), LocalDateTime.now(), "sometoken1",1, 1);
+        userQuiz2 = new UserQuiz(2L, 2L, 2L, 2L,LocalDateTime.now(), LocalDateTime.now(), "sometoken2",1, 1);
         assertNotEquals(userQuiz1.hashCode(),userQuiz2.hashCode());
         userQuiz1 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");
         userQuiz2 = new UserQuiz(1L, 1L, 1L, 1, "sometoken");

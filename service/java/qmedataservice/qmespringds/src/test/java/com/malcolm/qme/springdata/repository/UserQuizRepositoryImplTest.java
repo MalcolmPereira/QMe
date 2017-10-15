@@ -126,7 +126,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(false));
+
 
         UserQuiz userQuizUpdate = new UserQuiz(
                 userQuiz.getUserQuizID(),
@@ -137,8 +137,7 @@ public class UserQuizRepositoryImplTest {
                 LocalDateTime.now(),
                 userQuiz.getUserQuizToken(),
                 10,
-                userQuiz.getQuizMaxScore(),
-                true
+                userQuiz.getQuizMaxScore()
         );
         userQuizUpdate = userQuizRepository.update(userQuizUpdate, userID);
         assertNotNull(userQuizUpdate);
@@ -146,7 +145,6 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getUserID(), equalTo(userID));
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizUpdate.getQuizComplete(), equalTo(true));
 
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNotNull(userQuiz);
@@ -154,7 +152,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(true));
+
 
         userQuizRepository.delete(userQuizID);
         userQuiz = userQuizRepository.findById(userQuizID);
@@ -203,7 +201,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(false));
+
 
         List<UserQuiz> userQuizList = userQuizRepository.findByUserId(userID);
         assertNotNull(userQuizList);
@@ -212,7 +210,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizList.get(0).getQuizComplete(), equalTo(false));
+
 
         UserQuiz userQuizUpdate = new UserQuiz(
                 userQuiz.getUserQuizID(),
@@ -223,8 +221,7 @@ public class UserQuizRepositoryImplTest {
                 LocalDateTime.now(),
                 userQuiz.getUserQuizToken(),
                 10,
-                userQuiz.getQuizMaxScore(),
-                true
+                userQuiz.getQuizMaxScore()
         );
         userQuizUpdate = userQuizRepository.update(userQuizUpdate, userID);
         assertNotNull(userQuizUpdate);
@@ -232,7 +229,6 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getUserID(), equalTo(userID));
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizUpdate.getQuizComplete(), equalTo(true));
 
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNotNull(userQuiz);
@@ -240,7 +236,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(true));
+
 
         userQuizList = userQuizRepository.findByUserId(userID);
         assertNotNull(userQuizList);
@@ -249,7 +245,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizList.get(0).getQuizComplete(), equalTo(true));
+
 
 
         userQuizRepository.delete(userQuizID);
@@ -299,7 +295,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(false));
+
 
         List<UserQuiz> userQuizList = userQuizRepository.findByQuizId(quizID);
         assertNotNull(userQuizList);
@@ -308,7 +304,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizList.get(0).getQuizComplete(), equalTo(false));
+
 
         UserQuiz userQuizUpdate = new UserQuiz(
                 userQuiz.getUserQuizID(),
@@ -319,8 +315,7 @@ public class UserQuizRepositoryImplTest {
                 LocalDateTime.now(),
                 userQuiz.getUserQuizToken(),
                 10,
-                userQuiz.getQuizMaxScore(),
-                true
+                userQuiz.getQuizMaxScore()
         );
         userQuizUpdate = userQuizRepository.update(userQuizUpdate, userID);
         assertNotNull(userQuizUpdate);
@@ -328,7 +323,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getUserID(), equalTo(userID));
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizUpdate.getQuizComplete(), equalTo(true));
+
 
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNotNull(userQuiz);
@@ -336,7 +331,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(true));
+
 
         userQuizList = userQuizRepository.findByQuizId(quizID);
         assertNotNull(userQuizList);
@@ -345,7 +340,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizList.get(0).getQuizComplete(), equalTo(true));
+
 
 
         userQuizRepository.delete(userQuizID);
@@ -395,7 +390,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(false));
+
 
         List<UserQuiz> userQuizList = userQuizRepository.findCompletedByUserId(userID);
         assertNotNull(userQuizList);
@@ -411,8 +406,7 @@ public class UserQuizRepositoryImplTest {
                 LocalDateTime.now(),
                 userQuiz.getUserQuizToken(),
                 10,
-                userQuiz.getQuizMaxScore(),
-                true
+                userQuiz.getQuizMaxScore()
         );
         userQuizUpdate = userQuizRepository.update(userQuizUpdate, userID);
         assertNotNull(userQuizUpdate);
@@ -420,7 +414,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getUserID(), equalTo(userID));
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizUpdate.getQuizComplete(), equalTo(true));
+
 
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNotNull(userQuiz);
@@ -428,7 +422,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(true));
+
 
         userQuizList = userQuizRepository.findCompletedByUserId(userID);
         assertNotNull(userQuizList);
@@ -437,7 +431,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizList.get(0).getQuizComplete(), equalTo(true));
+
 
 
         userQuizRepository.delete(userQuizID);
@@ -487,7 +481,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(false));
+
 
         List<UserQuiz> userQuizList = userQuizRepository.findPendingByUserId(userID);
         assertNotNull(userQuizList);
@@ -496,7 +490,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizList.get(0).getQuizComplete(), equalTo(false));
+
 
         UserQuiz userQuizUpdate = new UserQuiz(
                 userQuiz.getUserQuizID(),
@@ -507,8 +501,7 @@ public class UserQuizRepositoryImplTest {
                 LocalDateTime.now(),
                 userQuiz.getUserQuizToken(),
                 10,
-                userQuiz.getQuizMaxScore(),
-                true
+                userQuiz.getQuizMaxScore()
         );
         userQuizUpdate = userQuizRepository.update(userQuizUpdate, userID);
         assertNotNull(userQuizUpdate);
@@ -516,7 +509,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getUserID(), equalTo(userID));
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuizUpdate.getQuizComplete(), equalTo(true));
+
 
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNotNull(userQuiz);
@@ -524,7 +517,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-        assertThat(userQuiz.getQuizComplete(), equalTo(true));
+
 
         userQuizList = userQuizRepository.findPendingByUserId(userID);
         assertNotNull(userQuizList);

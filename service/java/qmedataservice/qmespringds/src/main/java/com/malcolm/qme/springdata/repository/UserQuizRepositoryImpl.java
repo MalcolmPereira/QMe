@@ -106,7 +106,6 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 			UserQuizEntity userQuizEntity = getUserQuizEntity(userQuiz);
 			userQuizEntity.setQuizStartDate(LocalDateTime.now());
 			userQuizEntity.setQuizUserScore(0);
-			userQuizEntity.setQuizComplete((byte)0);
 			userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
 			return  getUserQuiz(userQuizEntity);
 		}catch(Exception err){
@@ -119,7 +118,6 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 		try{
 			UserQuizEntity userQuizEntity = getUserQuizEntity(userQuiz);
 			userQuizEntity.setQuizEndDate(LocalDateTime.now());
-			userQuizEntity.setQuizComplete((byte)1);
 			userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
 			return  getUserQuiz(userQuizEntity);
 		}catch(Exception err){
@@ -155,11 +153,6 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 		userQuizEntity.setQuizToken(userQuiz.getUserQuizToken());
 		userQuizEntity.setQuizUserScore(userQuiz.getQuizUserScore());
 		userQuizEntity.setQuizMaxScore(userQuiz.getQuizMaxScore());
-		if(userQuiz.getQuizComplete()){
-			userQuizEntity.setQuizComplete((byte)1);	
-		}else{
-			userQuizEntity.setQuizComplete((byte)0);
-		}
 		return userQuizEntity;
 	}
 	
@@ -193,8 +186,7 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 			userQuizEntity.getQuizEndDate(),
 			userQuizEntity.getQuizToken(),
 			userQuizEntity.getQuizUserScore(),
-			userQuizEntity.getQuizMaxScore(),
-			userQuizEntity.getQuizComplete() == (byte)0 ? Boolean.FALSE : Boolean.TRUE
+			userQuizEntity.getQuizMaxScore()
 		);
 	}
 }

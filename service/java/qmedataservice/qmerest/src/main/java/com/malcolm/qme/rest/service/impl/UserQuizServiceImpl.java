@@ -131,7 +131,6 @@ public class UserQuizServiceImpl implements UserQuizService {
         qMeUserQuiz.setUserQuizToken(userQuiz.getUserQuizToken());
         qMeUserQuiz.setQuizUserScore(userQuiz.getQuizUserScore());
         qMeUserQuiz.setQuizMaxScore(userQuiz.getQuizMaxScore());
-        qMeUserQuiz.setQuizComplete(userQuiz.getQuizComplete());
         return qMeUserQuiz;
     }
 }

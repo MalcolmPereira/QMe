@@ -24,15 +24,15 @@ public class UserQuizFixtures {
      */
     public static List<UserQuiz> simpleUserQuizList() {
         List<UserQuiz> userQuizList = new ArrayList<>();
-        UserQuiz userQuiz = new UserQuiz(1L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+        UserQuiz userQuiz = new UserQuiz(1L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10);
         userQuizList.add(userQuiz);
-        userQuiz = new UserQuiz(2L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+        userQuiz = new UserQuiz(2L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10);
         userQuizList.add(userQuiz);
-        userQuiz = new UserQuiz(3L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+        userQuiz = new UserQuiz(3L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10);
         userQuizList.add(userQuiz);
-        userQuiz = new UserQuiz(4L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+        userQuiz = new UserQuiz(4L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10);
         userQuizList.add(userQuiz);
-        userQuiz = new UserQuiz(5L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+        userQuiz = new UserQuiz(5L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10);
         userQuizList.add(userQuiz);
         return userQuizList;
     }
@@ -43,6 +43,6 @@ public class UserQuizFixtures {
      * @return User Quiz
      */
     public static UserQuiz simpleUserQuiz() {
-        return new UserQuiz(1L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10, true);
+        return new UserQuiz(1L,1L, 1L, 1L, LocalDateTime.now(),LocalDateTime.now(), "somequiztoken", 10,10);
     }
 }
