@@ -50,7 +50,7 @@ public class UserQuizController implements UserQuizAPI  {
 
     @RequestMapping(value=ROOT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
     @Override
     public List<QMeUserQuiz> list() throws QMeResourceException {
         log(getCurrentUser(), "User Quiz - list");
