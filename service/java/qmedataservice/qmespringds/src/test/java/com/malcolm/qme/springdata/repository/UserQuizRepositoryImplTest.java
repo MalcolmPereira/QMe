@@ -72,7 +72,7 @@ public class UserQuizRepositoryImplTest {
     private UserQuizRepository userQuizRepositoryWithMOCK;
 
     @Before
-    public void initMocks(){
+    public void initMocks() {
         userQuizRepositoryWithMOCK = new UserQuizRepositoryImpl();
         MockitoAnnotations.initMocks(this);
     }
@@ -248,7 +248,6 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
 
 
-
         userQuizRepository.delete(userQuizID);
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNull(userQuiz);
@@ -395,7 +394,7 @@ public class UserQuizRepositoryImplTest {
     @Test(expected = QMeException.class)
     public void testSaveQMeException() throws QMeException {
         when(userQuizSpringDataRepositoryMOCK.save(Matchers.<UserQuizEntity>anyObject())).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.save(new UserQuiz(1L, 1L, 1L,1,"Some token"));
+        userQuizRepositoryWithMOCK.save(new UserQuiz(1L, 1L, 1L, 1, "Some token"));
         verify(userQuizSpringDataRepositoryMOCK).save(Matchers.<UserQuizEntity>anyObject());
     }
 
@@ -601,5 +600,59 @@ public class UserQuizRepositoryImplTest {
         when(userQuizSpringDataRepositoryMOCK.findPendingByUserId(1L)).thenThrow(new RuntimeException("some error"));
         userQuizRepositoryWithMOCK.findPendingByUserId(1L);
         verify(userQuizSpringDataRepositoryMOCK).findPendingByUserId(1L);
+    }
+
+    @Test
+    public void testFindQuizzesForUser() throws QMeException {
+        assertNotNull(userQuizRepository);
+
+        assertNotNull(userRepo);
+
+        assertNotNull(quizRepository);
+
+        User user = new User("UserQuizRepositoryImplTest 1", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
+
+        Quiz quiz = new Quiz(
+                "UserQuizRepositoryImplTest 1 Quiz", "UserQuizRepositoryImplTest 1 Quiz Desc", 1L, 0, 1L);
+        quiz = quizRepository.save(quiz);
+        assertNotNull(quiz);
+        assertThat(quiz.getQuizID(), greaterThan(0L));
+        final Long quizID = quiz.getQuizID();
+
+        UserQuiz userQuiz = new UserQuiz(userID, quizID, 1L, 10, "Some token");
+        userQuiz = userQuizRepository.save(userQuiz);
+        assertNotNull(userQuiz);
+        assertThat(userQuiz.getUserQuizID(), greaterThan(0L));
+        final Long userQuizID = userQuiz.getUserQuizID();
+
+        Quiz quizAnother = new Quiz(
+                "UserQuizRepositoryImplTest Quiz Test 2", "UserQuizRepositoryImplTest Quiz Test 2 Desc", 1L, 0, 1L);
+        quizAnother = quizRepository.save(quizAnother);
+        assertNotNull(quizAnother);
+        assertThat(quizAnother.getQuizID(), greaterThan(0L));
+        final Long quizIDAnother = quizAnother.getQuizID();
+
+        List<UserQuiz> userQuizList = userQuizRepository.findQuizzesForUser(userID);
+        assertNotNull(userQuizList);
+
+        userQuizRepository.delete(userQuizID);
+        userQuiz = userQuizRepository.findById(userQuizID);
+        assertNull(userQuiz);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
+        quizRepository.delete(quizID);
+        quiz = quizRepository.findById(quizID);
+        assertNull(quiz);
+
+        quizRepository.delete(quizIDAnother);
+        quizAnother = quizRepository.findById(quizIDAnother);
+        assertNull(quizAnother);
     }
 }

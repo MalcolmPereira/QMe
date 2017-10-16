@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  */
 @Repository(value = "UserQuizRepository")
 public class UserQuizRepositoryImpl implements UserQuizRepository {
-	
 	/**
 	 * Spring Data UserQuizEntity Repository
 	 */
@@ -48,7 +47,20 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	@Override
 	public List<UserQuiz> findAll(PageSort pageSort) throws QMeException {
-		return null;
+        try{
+            return (getUserQuiz(userQuizSpringDataRepository.findAll()));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
+	@Override
+	public List<UserQuiz> findQuizzesForUser(Long userID) throws QMeException {
+        try{
+            return (getUserQuiz(userQuizSpringDataRepository.findQuizzesForUser(userID)));
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
 	}
 
 	@Override
@@ -167,8 +179,8 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 		if (userQuizEntities == null) {
 			return userQuizList;
 		}
-		userQuizList.addAll(userQuizEntities.stream().map(this::getUserQuiz).collect(Collectors.toList()));
-		return userQuizList;
+        userQuizList.addAll(userQuizEntities.stream().filter(userQuiz -> userQuiz != null).map(this::getUserQuiz).collect(Collectors.toList()));
+        return userQuizList;
 	}
 	
 	/**
@@ -178,15 +190,15 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	 * @return UserQuiz
 	 */
 	private UserQuiz getUserQuiz(UserQuizEntity userQuizEntity) {
-		return new UserQuiz(userQuizEntity.getUserQuizId(),
-			userQuizEntity.getUserId(),
-			userQuizEntity.getQuizId(),
-			userQuizEntity.getCatId(),
-			userQuizEntity.getQuizStartDate(),
-			userQuizEntity.getQuizEndDate(),
-			userQuizEntity.getQuizToken(),
-			userQuizEntity.getQuizUserScore(),
-			userQuizEntity.getQuizMaxScore()
-		);
-	}
+	    return new UserQuiz(userQuizEntity.getUserQuizId(),
+                    userQuizEntity.getUserId(),
+                    userQuizEntity.getQuizId(),
+                    userQuizEntity.getCatId(),
+                    userQuizEntity.getQuizStartDate(),
+                    userQuizEntity.getQuizEndDate(),
+                    userQuizEntity.getQuizToken(),
+                    userQuizEntity.getQuizUserScore(),
+                    userQuizEntity.getQuizMaxScore()
+            );
+   }
 }

@@ -74,7 +74,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UserQuizSpringDataRepositoryTest",
                 "Test", "Test", "UserQuizSpringDataRepositoryTest@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -137,7 +137,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UQuizSpringDataRepositoryTestByUserID",
                 "Test", "Test", "UQuizSpringDataRepositoryTestByUserID@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -176,7 +176,6 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntityList.get(0).getQuizMaxScore(), equalTo(10));
 
 
-
         userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
         assertNotNull(userQuizEntity);
 
@@ -195,7 +194,6 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntityList.get(0).getUserId(), equalTo(userID));
         assertThat(userQuizEntityList.get(0).getQuizId(), equalTo(quizID));
         assertThat(userQuizEntityList.get(0).getQuizMaxScore(), equalTo(10));
-
 
 
         userQuizSpringDataRepository.delete(userQuizID);
@@ -222,7 +220,7 @@ public class UserQuizSpringDataRepositoryTest {
 
         UserEntity userEntity = new UserEntity("UQuizSpringDataRepositoryTestByQuizID",
                 "Test", "Test", "UQuizSpringDataRepositoryTestByQuizID@test.com",
-                "Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
+                "Test", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
         userEntity = userSpringDataRepo.save(userEntity);
         assertNotNull(userEntity);
         assertThat(userEntity.getUserId(), greaterThan(0L));
@@ -278,8 +276,6 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntityList.get(0).getQuizId(), equalTo(quizID));
         assertThat(userQuizEntityList.get(0).getQuizMaxScore(), equalTo(10));
 
-
-
         userQuizSpringDataRepository.delete(userQuizID);
         userQuizEntity = userQuizSpringDataRepository.findOne(userQuizID);
         assertNull(userQuizEntity);
@@ -293,9 +289,9 @@ public class UserQuizSpringDataRepositoryTest {
         assertNull(quizEntity);
     }
 
-    @Test
-    public void testFindByUserIdAndQuizComplete() {
 
+    @Test
+    public void testFindQuizzesForUser() {
         assertNotNull(userQuizSpringDataRepository);
 
         assertNotNull(userSpringDataRepo);
@@ -326,42 +322,18 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntity.getUserQuizId(), greaterThan(0L));
         final Long userQuizID = userQuizEntity.getUserQuizId();
 
-        userQuizEntity = userQuizSpringDataRepository.findOne(userQuizID);
-        assertNotNull(userQuizEntity);
-        assertThat(userQuizEntity.getUserQuizId(), equalTo(userQuizID));
-        assertThat(userQuizEntity.getUserId(), equalTo(userID));
-        assertThat(userQuizEntity.getQuizId(), equalTo(quizID));
-        assertThat(userQuizEntity.getQuizMaxScore(), equalTo(10));
+        QuizEntity quizEntityAnother = new QuizEntity(
+                "UQuizSpringDataRepositoryTestByQuizStatus Quiz 2", "UQuizSpringDataRepositoryTestByQuizStatus Quiz 2 Desc", 1L, 0L, 0L,
+                0, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L
+        );
+        quizEntityAnother = quizSpringDataRepository.save(quizEntityAnother);
+        assertNotNull(quizEntityAnother);
+        assertThat(quizEntityAnother.getQuizId(), greaterThan(0L));
+        final Long quizIDAnother = quizEntityAnother.getQuizId();
 
-
-        //TODO - Revisit This
-        //List<UserQuizEntity> userQuizEntityList = userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID, (byte) 0);
-        //assertNotNull(userQuizEntityList);
-        //assertThat(userQuizEntityList.size(), equalTo(1));
-        //assertThat(userQuizEntityList.get(0).getUserQuizId(), equalTo(userQuizID));
-        //assertThat(userQuizEntityList.get(0).getUserId(), equalTo(userID));
-        //assertThat(userQuizEntityList.get(0).getQuizId(), equalTo(quizID));
-        //assertThat(userQuizEntityList.get(0).getQuizMaxScore(), equalTo(10));
-
-        userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
-        assertNotNull(userQuizEntity);
-
-        userQuizEntity = userQuizSpringDataRepository.findOne(userQuizID);
-        assertNotNull(userQuizEntity);
-        assertThat(userQuizEntity.getUserQuizId(), equalTo(userQuizID));
-        assertThat(userQuizEntity.getUserId(), equalTo(userID));
-        assertThat(userQuizEntity.getQuizId(), equalTo(quizID));
-        assertThat(userQuizEntity.getQuizMaxScore(), equalTo(10));
-
-        //TODO - Revisit This
-        //userQuizEntityList = userQuizSpringDataRepository.findByUserIdAndQuizComplete(userID, (byte) 1);
-        //assertNotNull(userQuizEntityList);
-        //assertThat(userQuizEntityList.size(), equalTo(1));
-        //assertThat(userQuizEntityList.get(0).getUserQuizId(), equalTo(userQuizID));
-        //assertThat(userQuizEntityList.get(0).getUserId(), equalTo(userID));
-        //assertThat(userQuizEntityList.get(0).getQuizId(), equalTo(quizID));
-        //assertThat(userQuizEntityList.get(0).getQuizMaxScore(), equalTo(10));
-
+        List<UserQuizEntity> userQuizEntityList = userQuizSpringDataRepository.findQuizzesForUser(userID);
+        assertNotNull(userQuizEntityList);
+        assertThat(userQuizEntityList.size(), equalTo(3));
 
         userQuizSpringDataRepository.delete(userQuizID);
         userQuizEntity = userQuizSpringDataRepository.findOne(userQuizID);
@@ -373,6 +345,10 @@ public class UserQuizSpringDataRepositoryTest {
 
         quizSpringDataRepository.delete(quizID);
         quizEntity = quizSpringDataRepository.findOne(quizID);
+        assertNull(quizEntity);
+
+        quizSpringDataRepository.delete(quizIDAnother);
+        quizEntity = quizSpringDataRepository.findOne(quizIDAnother);
         assertNull(quizEntity);
     }
 }

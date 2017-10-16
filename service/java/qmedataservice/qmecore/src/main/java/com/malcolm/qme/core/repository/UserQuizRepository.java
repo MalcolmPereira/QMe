@@ -16,6 +16,15 @@ import java.util.List;
 public interface UserQuizRepository extends QMeRepository<UserQuiz, Long> {
 
     /**
+     * Find Quizzes User ID
+     *
+     * @param userID User ID
+     * @return UserQuiz by User ID
+     * @throws QMeException
+     */
+    List<UserQuiz> findQuizzesForUser(Long userID) throws QMeException;
+
+    /**
      * Find By User ID
      *
      * @param userID User ID

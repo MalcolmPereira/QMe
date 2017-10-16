@@ -75,10 +75,9 @@ public class UserQuizEntity implements java.io.Serializable {
 	@Column(name = "QUIZ_TOKEN", length = 256)
 	private String quizToken;
 
-	//@ManyToOne
-	//@JoinColumn(name = "QUIZ_ID", referencedColumnName = "QUIZ_ID", insertable = false, updatable = false)
-	//private QuizEntity quiz;
-
+	@OneToOne
+	@JoinColumn(name = "QUIZ_ID", referencedColumnName = "QUIZ_ID", insertable = false, updatable = false)
+	private QuizEntity quiz;
 
 	/**
 	 * Public Constructor
@@ -258,17 +257,17 @@ public class UserQuizEntity implements java.io.Serializable {
      * Get Quiz
      * @return
      */
-   // public QuizEntity getQuiz() {
-   //     return quiz;
-   // }
+   public QuizEntity getQuiz() {
+     return quiz;
+   }
 
     /**
      * Set Quiz
      * @param quiz
      */
-   // public void setQuiz(QuizEntity quiz) {
-   //     this.quiz = quiz;
-   // }
+   public void setQuiz(QuizEntity quiz) {
+     this.quiz = quiz;
+   }
 
 	@Override
 	public boolean equals(Object o) {
@@ -297,5 +296,4 @@ public class UserQuizEntity implements java.io.Serializable {
 				+ quizEndDate + ", quizUserScore=" + quizUserScore
 				+ ", quizMaxScore=" + quizMaxScore + ", quizToken=" + quizToken;
 	}
-
 }
