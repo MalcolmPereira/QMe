@@ -342,8 +342,6 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
         assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
 
-
-
         userQuizRepository.delete(userQuizID);
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNull(userQuiz);
@@ -357,10 +355,67 @@ public class UserQuizRepositoryImplTest {
         assertNull(quiz);
     }
 
-    @Ignore("TODO Need to revist this")
+    @Test
+    public void testFindAllNullReturn() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findAll()).thenReturn(null);
+        List<UserQuiz> userQuizList = userQuizRepositoryWithMOCK.findAll();
+        verify(userQuizSpringDataRepositoryMOCK).findAll();
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(0));
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindAllQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findAll();
+        verify(userQuizSpringDataRepositoryMOCK).findAll();
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByUserIDQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findByUserId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findByUserId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByQuizIdQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findByQuizId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findByQuizId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findByQuizId(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testFindByIDQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findById(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findOne(1L);
+    }
+
+    @Test(expected = QMeException.class)
+    public void testSaveQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.save(Matchers.<UserQuizEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.save(new UserQuiz(1L, 1L, 1L,1,"Some token"));
+        verify(userQuizSpringDataRepositoryMOCK).save(Matchers.<UserQuizEntity>anyObject());
+    }
+
+    @Test(expected = QMeException.class)
+    public void testUpdateQMeException() throws QMeException {
+        when(userQuizSpringDataRepositoryMOCK.save(Matchers.<UserQuizEntity>anyObject())).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.update(new UserQuiz(1L, 1L, 1L, 10, "Some token"), 1L);
+        verify(userQuizSpringDataRepositoryMOCK).save(Matchers.<UserQuizEntity>anyObject());
+    }
+
+
+    @Test(expected = QMeException.class)
+    public void testDeleteQMeException() throws QMeException {
+        doThrow(new RuntimeException("some error")).when(userQuizSpringDataRepositoryMOCK).delete(1L);
+        userQuizRepositoryWithMOCK.delete(1L);
+        verify(userQuizSpringDataRepositoryMOCK).delete(1L);
+    }
+
     @Test
     public void testFindCompletedByUserId() throws QMeException {
-
         assertNotNull(userQuizRepository);
 
         assertNotNull(userRepo);
@@ -373,8 +428,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
-        Quiz quiz = new Quiz(
-                "UserQuizRepositoryImplTest Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
+        Quiz quiz = new Quiz("UserQuizRepositoryImplTest Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
@@ -393,11 +447,13 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
-
         List<UserQuiz> userQuizList = userQuizRepository.findCompletedByUserId(userID);
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
+        userQuizList = userQuizRepository.findPendingByUserId(userID);
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(1));
 
         UserQuiz userQuizUpdate = new UserQuiz(
                 userQuiz.getUserQuizID(),
@@ -417,6 +473,13 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
 
+        userQuizList = userQuizRepository.findCompletedByUserId(userID);
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(1));
+
+        userQuizList = userQuizRepository.findPendingByUserId(userID);
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(0));
 
         userQuiz = userQuizRepository.findById(userQuizID);
         assertNotNull(userQuiz);
@@ -424,17 +487,6 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getUserID(), equalTo(userID));
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
-
-
-        userQuizList = userQuizRepository.findCompletedByUserId(userID);
-        assertNotNull(userQuizList);
-        assertThat(userQuizList.size(), equalTo(1));
-        assertThat(userQuizList.get(0).getUserQuizID(), equalTo(userQuizID));
-        assertThat(userQuizList.get(0).getUserID(), equalTo(userID));
-        assertThat(userQuizList.get(0).getQuizID(), equalTo(quizID));
-        assertThat(userQuizList.get(0).getQuizMaxScore(), equalTo(10));
-
-
 
         userQuizRepository.delete(userQuizID);
         userQuiz = userQuizRepository.findById(userQuizID);
@@ -520,7 +572,6 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
-
         userQuizList = userQuizRepository.findPendingByUserId(userID);
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
@@ -538,79 +589,17 @@ public class UserQuizRepositoryImplTest {
         assertNull(quiz);
     }
 
-    @Test
-    public void testFindAllNullReturn() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findAll()).thenReturn(null);
-        List<UserQuiz> userQuizList = userQuizRepositoryWithMOCK.findAll();
-        verify(userQuizSpringDataRepositoryMOCK).findAll();
-        assertNotNull(userQuizList);
-        assertThat(userQuizList.size(), equalTo(0));
-    }
-
-    @Test(expected = QMeException.class)
-    public void testFindAllQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findAll()).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findAll();
-        verify(userQuizSpringDataRepositoryMOCK).findAll();
-    }
-
-    @Test(expected = QMeException.class)
-    public void testFindByUserIDQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findByUserId(1L)).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findByUserId(1L);
-        verify(userQuizSpringDataRepositoryMOCK).findByUserId(1L);
-    }
-
-    @Ignore("TODO: Revisit This")
     @Test(expected = QMeException.class)
     public void testFindCompletedByUserIdQMeException() throws QMeException {
-        //when(userQuizSpringDataRepositoryMOCK.findByUserIdAndQuizComplete(1L, (byte) 1)).thenThrow(new RuntimeException("some error"));
-        //userQuizRepositoryWithMOCK.findCompletedByUserId(1L);
-        //verify(userQuizSpringDataRepositoryMOCK).findByUserIdAndQuizComplete(1L, (byte) 1);
+        when(userQuizSpringDataRepositoryMOCK.findCompletedByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findCompletedByUserId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findCompletedByUserId(1L);
     }
 
-    @Ignore("TODO: Revisit This")
     @Test(expected = QMeException.class)
     public void testFindPendingByUserIdQMeException() throws QMeException {
-        //when(userQuizSpringDataRepositoryMOCK.findByUserIdAndQuizComplete(1L,(byte)0)).thenThrow(new RuntimeException("some error"));
-        //userQuizRepositoryWithMOCK.findPendingByUserId(1L);
-        //verify(userQuizSpringDataRepositoryMOCK).findByUserIdAndQuizComplete(1L, (byte) 0);
+        when(userQuizSpringDataRepositoryMOCK.findPendingByUserId(1L)).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findPendingByUserId(1L);
+        verify(userQuizSpringDataRepositoryMOCK).findPendingByUserId(1L);
     }
-
-    @Test(expected = QMeException.class)
-    public void testFindByQuizIdQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findByQuizId(1L)).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findByQuizId(1L);
-        verify(userQuizSpringDataRepositoryMOCK).findByQuizId(1L);
-    }
-
-    @Test(expected = QMeException.class)
-    public void testFindByIDQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findOne(1L)).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findById(1L);
-        verify(userQuizSpringDataRepositoryMOCK).findOne(1L);
-    }
-
-    @Test(expected = QMeException.class)
-    public void testSaveQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.save(Matchers.<UserQuizEntity>anyObject())).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.save(new UserQuiz(1L, 1L, 1L,1,"Some token"));
-        verify(userQuizSpringDataRepositoryMOCK).save(Matchers.<UserQuizEntity>anyObject());
-    }
-
-    @Test(expected = QMeException.class)
-    public void testUpdateQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.save(Matchers.<UserQuizEntity>anyObject())).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.update(new UserQuiz(1L, 1L, 1L, 10, "Some token"), 1L);
-        verify(userQuizSpringDataRepositoryMOCK).save(Matchers.<UserQuizEntity>anyObject());
-    }
-
-
-    @Test(expected = QMeException.class)
-    public void testDeleteQMeException() throws QMeException {
-        doThrow(new RuntimeException("some error")).when(userQuizSpringDataRepositoryMOCK).delete(1L);
-        userQuizRepositoryWithMOCK.delete(1L);
-        verify(userQuizSpringDataRepositoryMOCK).delete(1L);
-    }
-
 }

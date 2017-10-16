@@ -62,14 +62,20 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	@Override
 	public List<UserQuiz> findCompletedByUserId(Long userID) throws QMeException {
-		//TODO
-		return null;
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findCompletedByUserId(userID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
 	public List<UserQuiz> findPendingByUserId(Long userID) throws QMeException {
-		//TODO
-		return null;
+		try{
+			return (getUserQuiz(userQuizSpringDataRepository.findPendingByUserId(userID)));
+		}catch(Exception err){
+			throw new QMeException(err);
+		}
 	}
 
 	@Override
