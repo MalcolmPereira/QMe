@@ -31,13 +31,4 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      */
     List<UserQuizEntity> findByQuizId(Long quizId);
     
-    /**
-     * Find By User ID and Complete Status
-     * 
-     * @param userId  User ID
-     * @param quizComplete Quiz Complete Flag 1 - Complete, 0 - InComplete
-     * @return UserQuizEntity List
-     */
-    List<UserQuizEntity> findByUserIdAndQuizComplete(Long userId, byte quizComplete);
-	
 }
