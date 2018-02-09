@@ -18,12 +18,11 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz, Long> {
      * Sort Fields Enum
      */
     enum USERQUIZSORTFIELDS {
-        MAXSCORE("quizMaxScore"),
-        USERSCORE("quizUserScore"),
-        QUIZSTART("quizStartDate"),
-        QUIZEND("quizEndDate"),
-        QUIZNAME("quizName"),
-        CATEGORY("categoryID")
+        MAXSCORE("QUIZ_MAX_SCORE"),
+        USERSCORE("QUIZ_USER_SCORE"),
+        QUIZSTART("QUIZ_START_DATE"),
+        QUIZEND("QUIZ_END_DATE"),
+        CATEGORY("CAT_ID")
         ;
         /**
          * Enum Constructor

@@ -442,11 +442,11 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
-        List<UserQuiz> userQuizList = userQuizRepository.findCompletedByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        List<UserQuiz> userQuizList = userQuizRepository.findCompletedByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
-        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(1));
 
@@ -468,11 +468,11 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
 
-        userQuizList = userQuizRepository.findCompletedByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        userQuizList = userQuizRepository.findCompletedByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(1));
 
-        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
@@ -532,7 +532,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
 
-        List<UserQuiz> userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        List<UserQuiz> userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(1));
         assertThat(userQuizList.get(0).getUserQuizID(), equalTo(userQuizID));
@@ -567,7 +567,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
-        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
@@ -632,7 +632,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(quizAnother.getQuizID(), greaterThan(0L));
         final Long quizIDAnother = quizAnother.getQuizID();
 
-        List<UserQuiz> userQuizList = userQuizRepository.findQuizzesForUser(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
+        List<UserQuiz> userQuizList = userQuizRepository.findQuizzesForUser(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
         assertNotNull(userQuizList);
 
         userQuizRepository.delete(userQuizID);

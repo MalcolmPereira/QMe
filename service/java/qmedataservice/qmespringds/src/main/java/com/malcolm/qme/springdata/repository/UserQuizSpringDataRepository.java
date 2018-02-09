@@ -33,7 +33,9 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND (userQuiz.USER_ID = :userId OR userQuiz.USER_ID IS NULL)", nativeQuery = true)
+    @Query( value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND (userQuiz.USER_ID = :userId OR userQuiz.USER_ID IS NULL) \n#pageable\n",
+            countQuery = "SELECT count(*) FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND (userQuiz.USER_ID = :userId OR userQuiz.USER_ID IS NULL)",
+            nativeQuery = true)
     Page<UserQuizEntity> findQuizzesForUser(@Param("userId") Long userId, Pageable pageable);
 
     /**
@@ -41,7 +43,9 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID, quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = :userId AND userQuiz.QUIZ_END_DATE IS NOT NULL", nativeQuery = true)
+    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID, quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = :userId AND userQuiz.QUIZ_END_DATE IS NOT NULL \n#pageable\n",
+           countQuery = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID, quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = :userId AND userQuiz.QUIZ_END_DATE IS NOT NULL",
+           nativeQuery = true)
     Page<UserQuizEntity> findCompletedByUserId(@Param("userId")Long userId, Pageable pageable);
 
     /**
@@ -49,7 +53,9 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = :userId AND userQuiz.QUIZ_END_DATE IS NULL", nativeQuery = true)
+    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = :userId AND userQuiz.QUIZ_END_DATE IS NULL \n#pageable\n",
+           countQuery = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = :userId AND userQuiz.QUIZ_END_DATE IS NULL",
+           nativeQuery = true)
     Page<UserQuizEntity> findPendingByUserId(@Param("userId")Long userId,Pageable pageable);
 
     /**
