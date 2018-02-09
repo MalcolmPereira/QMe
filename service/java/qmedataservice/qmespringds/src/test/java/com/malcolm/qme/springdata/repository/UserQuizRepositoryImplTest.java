@@ -21,6 +21,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -586,16 +588,16 @@ public class UserQuizRepositoryImplTest {
 
     @Test(expected = QMeException.class)
     public void testFindCompletedByUserIdQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findCompletedByUserId(1L,any())).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findCompletedByUserId(1L,any());
-        verify(userQuizSpringDataRepositoryMOCK).findCompletedByUserId(1L,any());
+        when(userQuizSpringDataRepositoryMOCK.findCompletedByUserId(eq(1L),any(Pageable.class))).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findCompletedByUserId(1L,new PageSort(0,50,true,""));
+        verify(userQuizSpringDataRepositoryMOCK).findCompletedByUserId(eq(1L),any(Pageable.class));
     }
 
     @Test(expected = QMeException.class)
     public void testFindPendingByUserIdQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findPendingByUserId(1L,any())).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findPendingByUserId(1L,any());
-        verify(userQuizSpringDataRepositoryMOCK).findPendingByUserId(1L,any());
+        when(userQuizSpringDataRepositoryMOCK.findPendingByUserId(eq(1L),any(Pageable.class))).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findPendingByUserId(1L,new PageSort(0,50,true,""));
+        verify(userQuizSpringDataRepositoryMOCK).findPendingByUserId(eq(1L),any(Pageable.class));
     }
 
     @Test

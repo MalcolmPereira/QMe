@@ -48,37 +48,49 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	@Override
 	public List<UserQuiz> findAll() throws QMeException {
-		return getUserQuiz(userQuizSpringDataRepository.findAll());
-	}
+        try{
+		    return getUserQuiz(userQuizSpringDataRepository.findAll());
+	    }catch(Exception err) {
+            throw new QMeException(err);
+        }
+    }
 
 	@Override
 	public List<UserQuiz> findAll(PageSort pageSort) throws QMeException {
-        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-        PageRequest pageRequest;
-        List<String> sortFieldList = new ArrayList<>();
-        setSortFields(pageSort, sortFieldList);
-        if(!sortFieldList.isEmpty()){
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
-        }else{
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        try{
+	        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+            PageRequest pageRequest;
+            List<String> sortFieldList = new ArrayList<>();
+            setSortFields(pageSort, sortFieldList);
+            if(!sortFieldList.isEmpty()){
+                pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+            }else{
+                pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+            }
+            Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findAll(pageRequest);
+            return (getUserQuiz(userQuizList.getContent()));
+        }catch(Exception err){
+            throw new QMeException(err);
         }
-        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findAll(pageRequest);
-        return (getUserQuiz(userQuizList.getContent()));
     }
 
     @Override
 	public List<UserQuiz> findQuizzesForUser(Long userID,PageSort pageSort) throws QMeException {
-		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-		PageRequest pageRequest;
-		List<String> sortFieldList = new ArrayList<>();
-        setSortFields(pageSort, sortFieldList);
-        if(!sortFieldList.isEmpty()){
-			pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
-		}else{
-			pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
-		}
-        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findQuizzesForUser(userID,pageRequest);
-		return getUserQuiz(userQuizList.getContent());
+		try{
+	        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+		    PageRequest pageRequest;
+		    List<String> sortFieldList = new ArrayList<>();
+            setSortFields(pageSort, sortFieldList);
+            if(!sortFieldList.isEmpty()){
+			    pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+		    }else{
+			    pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+		    }
+            Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findQuizzesForUser(userID,pageRequest);
+		    return getUserQuiz(userQuizList.getContent());
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
     }
 
 	@Override
@@ -92,32 +104,40 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	@Override
 	public List<UserQuiz> findCompletedByUserId(Long userID,PageSort pageSort) throws QMeException {
-        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-        PageRequest pageRequest;
-        List<String> sortFieldList = new ArrayList<>();
-        setSortFields(pageSort, sortFieldList);
-        if(!sortFieldList.isEmpty()){
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
-        }else{
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        try{
+	        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+            PageRequest pageRequest;
+            List<String> sortFieldList = new ArrayList<>();
+            setSortFields(pageSort, sortFieldList);
+            if(!sortFieldList.isEmpty()){
+                pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+            }else{
+                pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+            }
+            Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findCompletedByUserId(userID,pageRequest);
+            return getUserQuiz(userQuizList.getContent());
+        }catch(Exception err){
+            throw new QMeException(err);
         }
-        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findCompletedByUserId(userID,pageRequest);
-        return getUserQuiz(userQuizList.getContent());
 	}
 
 	@Override
 	public List<UserQuiz> findPendingByUserId(Long userID,PageSort pageSort) throws QMeException {
-        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
-        PageRequest pageRequest;
-        List<String> sortFieldList = new ArrayList<>();
-        setSortFields(pageSort, sortFieldList);
-        if(!sortFieldList.isEmpty()){
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
-        }else{
-            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        try {
+            Sort.Direction direction = (pageSort.getSort()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+            PageRequest pageRequest;
+            List<String> sortFieldList = new ArrayList<>();
+            setSortFields(pageSort, sortFieldList);
+            if (!sortFieldList.isEmpty()) {
+                pageRequest = new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction, sortFieldList.toArray(new String[sortFieldList.size()]));
+            } else {
+                pageRequest = new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+            }
+            Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findPendingByUserId(userID, pageRequest);
+            return getUserQuiz(userQuizList.getContent());
+        }catch(Exception err){
+            throw new QMeException(err);
         }
-        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findPendingByUserId(userID,pageRequest);
-        return getUserQuiz(userQuizList.getContent());
 	}
 
 	@Override
