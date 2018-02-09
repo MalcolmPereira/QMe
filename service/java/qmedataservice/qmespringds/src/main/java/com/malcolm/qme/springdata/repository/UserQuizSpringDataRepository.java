@@ -30,7 +30,7 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND (userQuiz.USER_ID = ?1 OR userQuiz.USER_ID IS NULL)", nativeQuery = true)
+    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND (userQuiz.USER_ID = ?1 OR userQuiz.USER_ID IS NULL)", nativeQuery = true)
     List<UserQuizEntity> findQuizzesForUser(Long userId);
 
     /**
@@ -38,7 +38,7 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query(value = "SELECT USER_QUIZ_ID,USER_ID,QUIZ_ID,CAT_ID,QUIZ_START_DATE,QUIZ_END_DATE,QUIZ_USER_SCORE,QUIZ_MAX_SCORE,QUIZ_TOKEN FROM USER_QUIZ WHERE USER_ID  = ?1 AND QUIZ_END_DATE IS NOT NULL", nativeQuery = true)
+    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID, quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = ?1 AND userQuiz.QUIZ_END_DATE IS NOT NULL", nativeQuery = true)
     List<UserQuizEntity> findCompletedByUserId(Long userId);
 
     /**
@@ -46,7 +46,7 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query(value = "SELECT USER_QUIZ_ID,USER_ID,QUIZ_ID,CAT_ID,QUIZ_START_DATE,QUIZ_END_DATE,QUIZ_USER_SCORE,QUIZ_MAX_SCORE,QUIZ_TOKEN FROM USER_QUIZ WHERE USER_ID  = ?1 AND QUIZ_END_DATE IS NULL", nativeQuery = true)
+    @Query(value = "SELECT userQuiz.USER_QUIZ_ID,userQuiz.USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,userQuiz.CAT_ID,userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID  = ?1 AND userQuiz.QUIZ_END_DATE IS NULL", nativeQuery = true)
     List<UserQuizEntity> findPendingByUserId(Long userId);
 
     /**
