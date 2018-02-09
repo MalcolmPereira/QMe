@@ -9,14 +9,10 @@ package com.malcolm.qme.springdata.repository;
 import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.domain.User;
 import com.malcolm.qme.core.domain.UserQuiz;
-import com.malcolm.qme.core.repository.QMeException;
-import com.malcolm.qme.core.repository.QuizRepository;
-import com.malcolm.qme.core.repository.UserQuizRepository;
-import com.malcolm.qme.core.repository.UserRepository;
+import com.malcolm.qme.core.repository.*;
 import com.malcolm.qme.springdata.config.QMeSpringDataJPAConfig;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -446,11 +442,11 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
-        List<UserQuiz> userQuizList = userQuizRepository.findCompletedByUserId(userID);
+        List<UserQuiz> userQuizList = userQuizRepository.findCompletedByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
-        userQuizList = userQuizRepository.findPendingByUserId(userID);
+        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(1));
 
@@ -472,11 +468,11 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuizUpdate.getQuizID(), equalTo(quizID));
         assertThat(userQuizUpdate.getQuizMaxScore(), equalTo(10));
 
-        userQuizList = userQuizRepository.findCompletedByUserId(userID);
+        userQuizList = userQuizRepository.findCompletedByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(1));
 
-        userQuizList = userQuizRepository.findPendingByUserId(userID);
+        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
@@ -536,7 +532,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
 
-        List<UserQuiz> userQuizList = userQuizRepository.findPendingByUserId(userID);
+        List<UserQuiz> userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(1));
         assertThat(userQuizList.get(0).getUserQuizID(), equalTo(userQuizID));
@@ -571,7 +567,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(userQuiz.getQuizID(), equalTo(quizID));
         assertThat(userQuiz.getQuizMaxScore(), equalTo(10));
 
-        userQuizList = userQuizRepository.findPendingByUserId(userID);
+        userQuizList = userQuizRepository.findPendingByUserId(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
 
@@ -590,16 +586,16 @@ public class UserQuizRepositoryImplTest {
 
     @Test(expected = QMeException.class)
     public void testFindCompletedByUserIdQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findCompletedByUserId(1L)).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findCompletedByUserId(1L);
-        verify(userQuizSpringDataRepositoryMOCK).findCompletedByUserId(1L);
+        when(userQuizSpringDataRepositoryMOCK.findCompletedByUserId(1L,any())).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findCompletedByUserId(1L,any());
+        verify(userQuizSpringDataRepositoryMOCK).findCompletedByUserId(1L,any());
     }
 
     @Test(expected = QMeException.class)
     public void testFindPendingByUserIdQMeException() throws QMeException {
-        when(userQuizSpringDataRepositoryMOCK.findPendingByUserId(1L)).thenThrow(new RuntimeException("some error"));
-        userQuizRepositoryWithMOCK.findPendingByUserId(1L);
-        verify(userQuizSpringDataRepositoryMOCK).findPendingByUserId(1L);
+        when(userQuizSpringDataRepositoryMOCK.findPendingByUserId(1L,any())).thenThrow(new RuntimeException("some error"));
+        userQuizRepositoryWithMOCK.findPendingByUserId(1L,any());
+        verify(userQuizSpringDataRepositoryMOCK).findPendingByUserId(1L,any());
     }
 
     @Test
@@ -636,7 +632,7 @@ public class UserQuizRepositoryImplTest {
         assertThat(quizAnother.getQuizID(), greaterThan(0L));
         final Long quizIDAnother = quizAnother.getQuizID();
 
-        List<UserQuiz> userQuizList = userQuizRepository.findQuizzesForUser(userID);
+        List<UserQuiz> userQuizList = userQuizRepository.findQuizzesForUser(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.QUIZNAME.toString()));
         assertNotNull(userQuizList);
 
         userQuizRepository.delete(userQuizID);

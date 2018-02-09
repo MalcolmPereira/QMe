@@ -13,6 +13,8 @@ import com.malcolm.qme.springdata.entity.UserQuizEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -328,7 +330,8 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntityAnother.getUserQuizId(), greaterThan(0L));
         final Long userQuizIDAnother = userQuizEntityAnother.getUserQuizId();
 
-        List<UserQuizEntity> userQuizEntityList = userQuizSpringDataRepository.findQuizzesForUser(userID);
+        Page<UserQuizEntity> pageList = userQuizSpringDataRepository.findQuizzesForUser(userID, new PageRequest(0, 50));
+        List<UserQuizEntity> userQuizEntityList = pageList.getContent();
         assertNotNull(userQuizEntityList);
         assertThat(userQuizEntityList.size(), greaterThan(2));
 
@@ -379,7 +382,8 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntity.getUserQuizId(), greaterThan(0L));
         final Long userQuizID = userQuizEntity.getUserQuizId();
 
-        List<UserQuizEntity> userQuizEntityList = userQuizSpringDataRepository.findCompletedByUserId(userID);
+        Page<UserQuizEntity> pageList = userQuizSpringDataRepository.findCompletedByUserId(userID, new PageRequest(0, 50));
+        List<UserQuizEntity> userQuizEntityList = pageList.getContent();
         assertNotNull(userQuizEntityList);
         assertThat(userQuizEntityList.size(), greaterThan(0));
 
@@ -422,7 +426,8 @@ public class UserQuizSpringDataRepositoryTest {
         assertThat(userQuizEntity.getUserQuizId(), greaterThan(0L));
         final Long userQuizID = userQuizEntity.getUserQuizId();
 
-        List<UserQuizEntity> userQuizEntityList = userQuizSpringDataRepository.findQuizzesForUser(userID);
+        Page<UserQuizEntity> pageList = userQuizSpringDataRepository.findQuizzesForUser(userID,new PageRequest(0, 50));
+        List<UserQuizEntity> userQuizEntityList = pageList.getContent();
         assertNotNull(userQuizEntityList);
         assertThat(userQuizEntityList.size(), greaterThan(0));
 

@@ -22,6 +22,7 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz, Long> {
         USERSCORE("quizUserScore"),
         QUIZSTART("quizStartDate"),
         QUIZEND("quizEndDate"),
+        QUIZNAME("quizName"),
         CATEGORY("categoryID")
         ;
         /**
