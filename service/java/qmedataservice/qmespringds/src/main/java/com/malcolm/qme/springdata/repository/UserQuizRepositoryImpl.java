@@ -11,7 +11,12 @@ import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -24,6 +29,11 @@ import java.util.stream.Collectors;
  */
 @Repository(value = "UserQuizRepository")
 public class UserQuizRepositoryImpl implements UserQuizRepository {
+	/**
+	 * Logger
+	 */
+	private static final Logger LOG = LoggerFactory.getLogger(UserQuizRepositoryImpl.class);
+
 	/**
 	 * Spring Data UserQuizEntity Repository
 	 */
@@ -38,30 +48,38 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 
 	@Override
 	public List<UserQuiz> findAll() throws QMeException {
-		try{
-			return (getUserQuiz(userQuizSpringDataRepository.findAll()));
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
+		return getUserQuiz(userQuizSpringDataRepository.findAll());
 	}
 
 	@Override
 	public List<UserQuiz> findAll(PageSort pageSort) throws QMeException {
-        try{
-            return (getUserQuiz(userQuizSpringDataRepository.findAll()));
-        }catch(Exception err){
-            throw new QMeException(err);
+        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+        PageRequest pageRequest;
+        List<String> sortFieldList = new ArrayList<>();
+        setSortFields(pageSort, sortFieldList);
+        if(!sortFieldList.isEmpty()){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+        }else{
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
         }
-	}
+        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findAll(pageRequest);
+        return (getUserQuiz(userQuizList.getContent()));
+    }
 
-	@Override
-	public List<UserQuiz> findQuizzesForUser(Long userID) throws QMeException {
-        try{
-            return (getUserQuiz(userQuizSpringDataRepository.findQuizzesForUser(userID)));
-        }catch(Exception err){
-            throw new QMeException(err);
-        }
-	}
+    @Override
+	public List<UserQuiz> findQuizzesForUser(Long userID,PageSort pageSort) throws QMeException {
+		Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+		PageRequest pageRequest;
+		List<String> sortFieldList = new ArrayList<>();
+        setSortFields(pageSort, sortFieldList);
+        if(!sortFieldList.isEmpty()){
+			pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+		}else{
+			pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+		}
+        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findQuizzesForUser(userID,pageRequest);
+		return getUserQuiz(userQuizList.getContent());
+    }
 
 	@Override
 	public List<UserQuiz> findByUserId(Long userID) throws QMeException {
@@ -73,21 +91,33 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	}
 
 	@Override
-	public List<UserQuiz> findCompletedByUserId(Long userID) throws QMeException {
-		try{
-			return (getUserQuiz(userQuizSpringDataRepository.findCompletedByUserId(userID)));
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
+	public List<UserQuiz> findCompletedByUserId(Long userID,PageSort pageSort) throws QMeException {
+        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+        PageRequest pageRequest;
+        List<String> sortFieldList = new ArrayList<>();
+        setSortFields(pageSort, sortFieldList);
+        if(!sortFieldList.isEmpty()){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+        }else{
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        }
+        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findCompletedByUserId(userID,pageRequest);
+        return getUserQuiz(userQuizList.getContent());
 	}
 
 	@Override
-	public List<UserQuiz> findPendingByUserId(Long userID) throws QMeException {
-		try{
-			return (getUserQuiz(userQuizSpringDataRepository.findPendingByUserId(userID)));
-		}catch(Exception err){
-			throw new QMeException(err);
-		}
+	public List<UserQuiz> findPendingByUserId(Long userID,PageSort pageSort) throws QMeException {
+        Sort.Direction direction = (pageSort.getSort())? Sort.Direction.ASC:Sort.Direction.DESC;
+        PageRequest pageRequest;
+        List<String> sortFieldList = new ArrayList<>();
+        setSortFields(pageSort, sortFieldList);
+        if(!sortFieldList.isEmpty()){
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows(), direction,sortFieldList.toArray(new String[sortFieldList.size()]));
+        }else{
+            pageRequest  =  new PageRequest(pageSort.getPageIndex(), pageSort.getMaxRows());
+        }
+        Page<UserQuizEntity> userQuizList = userQuizSpringDataRepository.findPendingByUserId(userID,pageRequest);
+        return getUserQuiz(userQuizList.getContent());
 	}
 
 	@Override
@@ -200,5 +230,24 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
                     userQuizEntity.getQuizUserScore(),
                     userQuizEntity.getQuizMaxScore()
             );
+   }
+
+    /**
+     * Set Sort Fields
+     * @param pageSort
+     * @param sortFieldList
+     */
+   private void setSortFields(PageSort pageSort, List<String> sortFieldList) {
+        if(pageSort.getSortFields() != null && pageSort.getSortFields().length > 0) {
+            String[] sortFields = pageSort.getSortFields();
+            for (String sortField : sortFields) {
+                try {
+                    sortFieldList.add(USERQUIZSORTFIELDS.valueOf(sortField.toUpperCase()).getUserQuizSortField());
+
+                } catch (IllegalArgumentException err) {
+                    LOG.debug("Invalid Sort Field "+sortField.toUpperCase()+" Will be ignored");
+                }
+            }
+        }
    }
 }
