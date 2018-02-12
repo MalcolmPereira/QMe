@@ -80,7 +80,37 @@ public class UserQuizServiceImpl implements UserQuizService {
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
         }
-     }
+    }
+
+    @Override
+    public List<QMeUserQuiz> findQuizzesForUser(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        try{
+            return  getQMeUserQuiz(userQuizRepo.findQuizzesForUser(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
+    public List<QMeUserQuiz> findCompletedByUserId(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        try{
+            return  getQMeUserQuiz(userQuizRepo.findCompletedByUserId(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
+    public List<QMeUserQuiz> findPendingByUserId(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+        try{
+            return  getQMeUserQuiz(userQuizRepo.findPendingByUserId(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
 
     @Override
     public QMeUserQuiz save(QMeUserQuiz qMeUserQuiz, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {

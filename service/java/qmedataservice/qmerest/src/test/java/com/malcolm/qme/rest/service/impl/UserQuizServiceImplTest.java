@@ -30,6 +30,9 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -144,6 +147,63 @@ public class UserQuizServiceImplTest {
         assertNotNull(userQuiz);
 
         assertThat(userQuiz.getUserQuizID(), equalTo(1L));
+    }
+
+    @Test
+    public void testFindQuizzesForUser() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findQuizzesForUser(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
+        List<QMeUserQuiz> userQuizList = userQuizService.findQuizzesForUser(1L,0,10,true, "MAXSCORE");
+        verify(userQuizRepo).findQuizzesForUser(eq(1L),any(PageSort.class));
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(5));
+        for (QMeUserQuiz qmeUserQuiz : userQuizList) {
+            assertThat(qmeUserQuiz.getUserID(), equalTo(1L));
+            assertThat(qmeUserQuiz.getUserQuizID(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L)
+            ));
+        }
+    }
+
+    @Test
+    public void findCompletedByUserId() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findCompletedByUserId(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
+        List<QMeUserQuiz> userQuizList = userQuizService.findCompletedByUserId(1L,0,10,true, "MAXSCORE");
+        verify(userQuizRepo).findCompletedByUserId(eq(1L),any(PageSort.class));
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(5));
+        for (QMeUserQuiz qmeUserQuiz : userQuizList) {
+            assertThat(qmeUserQuiz.getUserID(), equalTo(1L));
+            assertThat(qmeUserQuiz.getUserQuizID(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L)
+            ));
+        }
+    }
+
+    @Test
+    public void findPendingByUserId() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findPendingByUserId(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
+        List<QMeUserQuiz> userQuizList = userQuizService.findPendingByUserId(1L,0,10,true, "MAXSCORE");
+        verify(userQuizRepo).findPendingByUserId(eq(1L),any(PageSort.class));
+        assertNotNull(userQuizList);
+        assertThat(userQuizList.size(), equalTo(5));
+        for (QMeUserQuiz qmeUserQuiz : userQuizList) {
+            assertThat(qmeUserQuiz.getUserID(), equalTo(1L));
+            assertThat(qmeUserQuiz.getUserQuizID(), anyOf(
+                    is(1L),
+                    is(2L),
+                    is(3L),
+                    is(4L),
+                    is(5L)
+            ));
+        }
     }
 
 }

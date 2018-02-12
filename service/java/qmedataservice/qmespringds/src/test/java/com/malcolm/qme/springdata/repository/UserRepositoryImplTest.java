@@ -520,7 +520,6 @@ public class UserRepositoryImplTest {
         assertNotNull(user);
         assertNotNull(user.getUserLastLoginDate());
         assertNotNull(user.getUserLoginDate());
-        assertThat(user.getUserLastLoginDate().format(DateTimeFormatter.ISO_DATE_TIME).substring(0, 16), equalTo(loginDate.format(DateTimeFormatter.ISO_DATE_TIME).substring(0, 16)));
 
         userRepo.delete(userID);
         user = userRepo.findById(userID);
