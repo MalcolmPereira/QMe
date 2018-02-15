@@ -50,4 +50,15 @@ public interface UserQuizAPI extends QMeAPI {
      */
     List<QMeUserQuiz> list() throws QMeResourceException;
 
+    /**
+     * Get User Quiz Paged
+     * @param page
+     * @param pageSize
+     * @param sortType
+     * @param sortFields
+     * @return List of User Quiz
+     * @throws QMeResourceException
+     */
+    List<QMeUserQuiz> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+
 }

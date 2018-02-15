@@ -9,6 +9,7 @@ package com.malcolm.qme.rest.controller;
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserQuizAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,6 +56,32 @@ public class UserQuizController implements UserQuizAPI  {
         setUserQuizLinks(qMeUserQuizList);
         return qMeUserQuizList;
     }
+
+    @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Override
+    public @ResponseBody
+    List<QMeUserQuiz> listPaged(@RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+            @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+            @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+            @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "User Quiz - listPaged");
+
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeUserQuiz> qMeUserQuizList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeUserQuizList = userQuizService.findQuizzesForUser(getCurrentUser().getUserID(),pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+        }else{
+            qMeUserQuizList= userQuizService.list();
+        }
+        setUserQuizLinks(qMeUserQuizList);
+        return qMeUserQuizList;
+    }
+
 
     /**
      * Set User Quiz Links
