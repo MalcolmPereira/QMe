@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -175,14 +174,14 @@ public class UserQuizRepositoryImplTest {
 
         assertNotNull(quizRepository);
 
-        User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        User user = new User("UserQuizRepositoryImplTest2", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
-                "UserQuizRepositoryImplTest Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
+                "UserQuizRepositoryImplTest 2 Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
@@ -268,14 +267,14 @@ public class UserQuizRepositoryImplTest {
 
         assertNotNull(quizRepository);
 
-        User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        User user = new User("UserQuizRepositoryImplTest1", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
-                "UserQuizRepositoryImplTest Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
+                "UserQuizRepositoryImplTest 1 Quiz", "UserQuizRepositoryImplTest 1 Quiz Desc", 1L, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
@@ -419,13 +418,13 @@ public class UserQuizRepositoryImplTest {
 
         assertNotNull(quizRepository);
 
-        User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        User user = new User("UserQuizRepositoryImplTest4", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
-        Quiz quiz = new Quiz("UserQuizRepositoryImplTest Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
+        Quiz quiz = new Quiz("UserQuizRepositoryImplTest 4 Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
@@ -507,14 +506,14 @@ public class UserQuizRepositoryImplTest {
 
         assertNotNull(quizRepository);
 
-        User user = new User("UserQuizRepositoryImplTest", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        User user = new User("UserQuizRepositoryImplTest3", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
-                "UserQuizRepositoryImplTest Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
+                "UserQuizRepositoryImplTest 3 Quiz", "UserQuizRepositoryImplTest Quiz Desc", 1L, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
@@ -608,14 +607,14 @@ public class UserQuizRepositoryImplTest {
 
         assertNotNull(quizRepository);
 
-        User user = new User("UserQuizRepositoryImplTest 1", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        User user = new User("UserQuizRepositoryImplTest5", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
         user = userRepo.save(user);
         assertNotNull(user);
         assertThat(user.getUserID(), greaterThan(0L));
         Long userID = user.getUserID();
 
         Quiz quiz = new Quiz(
-                "UserQuizRepositoryImplTest 1 Quiz", "UserQuizRepositoryImplTest 1 Quiz Desc", 1L, 0, 1L);
+                "UserQuizRepositoryImplTest 5 Quiz", "UserQuizRepositoryImplTest 1 Quiz Desc", 1L, 0, 1L);
         quiz = quizRepository.save(quiz);
         assertNotNull(quiz);
         assertThat(quiz.getQuizID(), greaterThan(0L));
