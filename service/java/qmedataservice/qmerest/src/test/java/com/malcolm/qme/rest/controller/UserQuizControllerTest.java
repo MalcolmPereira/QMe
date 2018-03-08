@@ -22,9 +22,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -99,4 +101,74 @@ public class UserQuizControllerTest extends QMeControllerTest {
         ;
         verify(userQuizService).list();
     }
+
+    @Test
+    public void testFindQuizzesForUser() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+
+        when(userQuizService.findQuizzesForUser(1L,0,10,true,"MAXSCORE")).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetailList());
+
+
+        mockMvc.perform(
+                get("/qme/userquiz/list?page=0&pagesize=10&sorttype=true&sortfields=MAXSCORE")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].userQuizID", is(1)))
+                .andExpect(jsonPath("$[1].userQuizID", is(2)))
+                .andExpect(jsonPath("$[2].userQuizID", is(3)))
+                .andExpect(jsonPath("$[3].userQuizID", is(4)))
+                .andExpect(jsonPath("$[4].userQuizID", is(5)))
+        ;
+        verify(userQuizService).findQuizzesForUser(1L,0,10,true,"MAXSCORE");
+    }
+
+    @Test
+    public void testFindPendingQuizzesForUser() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+
+        when(userQuizService.findPendingByUserId(1L,0,10,true,"MAXSCORE")).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetailList());
+
+
+        mockMvc.perform(
+                get("/qme/userquiz/listpending?page=0&pagesize=10&sorttype=true&sortfields=MAXSCORE")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].userQuizID", is(1)))
+                .andExpect(jsonPath("$[1].userQuizID", is(2)))
+                .andExpect(jsonPath("$[2].userQuizID", is(3)))
+                .andExpect(jsonPath("$[3].userQuizID", is(4)))
+                .andExpect(jsonPath("$[4].userQuizID", is(5)))
+        ;
+        verify(userQuizService).findPendingByUserId(1L,0,10,true,"MAXSCORE");
+    }
+
+    @Test
+    public void testFindCompletedQuizzesForUser() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+
+        when(userQuizService.findCompletedByUserId(1L,0,10,true,"MAXSCORE")).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetailList());
+
+
+        mockMvc.perform(
+                get("/qme/userquiz/listcompleted?page=0&pagesize=10&sorttype=true&sortfields=MAXSCORE")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$[0].userQuizID", is(1)))
+                .andExpect(jsonPath("$[1].userQuizID", is(2)))
+                .andExpect(jsonPath("$[2].userQuizID", is(3)))
+                .andExpect(jsonPath("$[3].userQuizID", is(4)))
+                .andExpect(jsonPath("$[4].userQuizID", is(5)))
+        ;
+        verify(userQuizService).findCompletedByUserId(1L,0,10,true,"MAXSCORE");
+    }
+
 }

@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,7 +60,7 @@ public class UserQuizController implements UserQuizAPI  {
 
     @RequestMapping(value=PAGED_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
     @Override
     public @ResponseBody
     List<QMeUserQuiz> listPaged(@RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
@@ -74,7 +75,7 @@ public class UserQuizController implements UserQuizAPI  {
         boolean     sortAsc         = getSortAsc(sortType);
         List<QMeUserQuiz> qMeUserQuizList;
         if(pageNumber != null && pageSizeNumber != null){
-            qMeUserQuizList = userQuizService.findQuizzesForUser(getCurrentUser().getUserID(),pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+            qMeUserQuizList = userQuizService.list(pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
         }else{
             qMeUserQuizList= userQuizService.list();
         }
@@ -82,6 +83,74 @@ public class UserQuizController implements UserQuizAPI  {
         return qMeUserQuizList;
     }
 
+    @RequestMapping(value=QUIZ_PATH,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
+    @Override
+    public @ResponseBody List<QMeUserQuiz> listQuizzes(@RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+                                         @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+                                         @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+                                         @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "User Quiz - listQuizzes");
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeUserQuiz> qMeUserQuizList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeUserQuizList = userQuizService.findQuizzesForUser(getCurrentUser().getUserID(),pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+            setUserQuizLinks(qMeUserQuizList);
+        }else{
+            qMeUserQuizList = new ArrayList<>();
+        }
+        return qMeUserQuizList;
+    }
+
+    @RequestMapping(value=QUIZ_PATH_PENDING,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
+    @Override
+    public @ResponseBody List<QMeUserQuiz> listQuizzesPending(@RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+                                                @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+                                                @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+                                                @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "User Quiz - listQuizzesPending");
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeUserQuiz> qMeUserQuizList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeUserQuizList = userQuizService.findPendingByUserId(getCurrentUser().getUserID(),pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+            setUserQuizLinks(qMeUserQuizList);
+        }else{
+            qMeUserQuizList = new ArrayList<>();
+        }
+        return qMeUserQuizList;
+    }
+
+    @RequestMapping(value=QUIZ_PATH_COMPLETED,method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
+    @Override
+    public @ResponseBody List<QMeUserQuiz> listQuizzesCompleted(@RequestParam(value=PAGE_PARAM_STRING, defaultValue="") String page,
+                                                  @RequestParam(value=PAGE_SIZE_PARAM_STRING, defaultValue="") String pageSize,
+                                                  @RequestParam(value=SORT_PARAM_STRING, defaultValue="true") String sortType,
+                                                  @RequestParam(value=SORT_FIELDS, defaultValue="") String sortFields) throws QMeResourceException {
+        log(getCurrentUser(), "User Quiz - listQuizzesCompleted");
+        Integer     pageNumber      = getPageNumber(page);
+        Integer     pageSizeNumber  = getPageSizeNumber(pageSize);
+        String[]    sortOrderFields = getSortOrderFields(sortFields);
+        boolean     sortAsc         = getSortAsc(sortType);
+        List<QMeUserQuiz> qMeUserQuizList;
+        if(pageNumber != null && pageSizeNumber != null){
+            qMeUserQuizList = userQuizService.findCompletedByUserId(getCurrentUser().getUserID(),pageNumber, pageSizeNumber,sortAsc,sortOrderFields);
+            setUserQuizLinks(qMeUserQuizList);
+        }else{
+            qMeUserQuizList = new ArrayList<>();
+        }
+        return qMeUserQuizList;
+    }
 
     /**
      * Set User Quiz Links
