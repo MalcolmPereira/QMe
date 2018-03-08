@@ -229,7 +229,7 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 		if (userQuizEntities == null) {
 			return userQuizList;
 		}
-        userQuizList.addAll(userQuizEntities.stream().filter(userQuiz -> userQuiz != null).map(this::getUserQuiz).collect(Collectors.toList()));
+        userQuizList.addAll(userQuizEntities.stream().map(this::getUserQuiz).collect(Collectors.toList()));
         return userQuizList;
 	}
 	
