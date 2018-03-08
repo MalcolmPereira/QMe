@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "QMeAPI",
-		"_postman_id": "3f4e5e34-fa30-629b-6a02-a7283f6af882",
+		"_postman_id": "b7d5439f-6c83-766e-ec7d-6957c89aa9e1",
 		"description": "QMe API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -648,7 +648,7 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE0OTM0MDQ0NTZ9.NvtNs-e_XsPDjcryJHXYRFgrCxQB2SmnBgLqU3uJBIItyxqhKxNbJLEe-3OZKG0H0WRa3YaesEKAUx_1w9A37A"
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJleHAiOjE1MTgxOTg2NzR9.FIkDTU0Ib-CdBCg2t-uZOjFKKJ_j5KW7Zv28GCtqrNXp-RFzoVRO546rIKWqYlB3lsaXVgVWjj8p7Ba5_R8Vyg"
 							},
 							{
 								"key": "Content-Type",
@@ -1545,7 +1545,6 @@
 		},
 		{
 			"name": "UserQuiz",
-			"description": "",
 			"item": [
 				{
 					"name": "Get User Quiz List",
@@ -1554,12 +1553,12 @@
 						"header": [
 							{
 								"key": "QME-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImV4cCI6MTUwODExNjA3OX0.fMUEDBYbW6HrAS7xTNyCbRb8yOSw0TqfTfw0vNndSyFaCJDJWADnho9dq2yEPlz6N7SthtpOm_sM1kzcBeJbag"
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImV4cCI6MTUyMDUzODg1OX0.ebgCcLAA2FNwFYVtqVVRxH6QDA3I7EVp-HCW1GF-dfa6q7A8rOu8u3g0CIOb0igUT33Bc6yuaFwq947aYoXQ8w"
 							}
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:8002/qme/userquiz",
+							"raw": "http://localhost:8002/qme/userquiz/paged?page=0&pagesize=1&sorttype=true&sortfields=USERNAME",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1567,7 +1566,80 @@
 							"port": "8002",
 							"path": [
 								"qme",
-								"userquiz"
+								"userquiz",
+								"paged"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"equals": true
+								},
+								{
+									"key": "pagesize",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "sorttype",
+									"value": "true",
+									"equals": true
+								},
+								{
+									"key": "sortfields",
+									"value": "USERNAME",
+									"equals": true
+								}
+							]
+						},
+						"description": "Get User Quiz List"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User Quiz",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "QME-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImV4cCI6MTUyMDU1NTYyOH0.5c2Q9SMvOwoj64XvrJBsZJMmZh4FH68UJ7JSJrR6ghihJyE_mkUW7bKFqXjF6_9whiiUSoPlxhsjqMk9FVIU8w"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8002/qme/userquiz/list?page=0&pagesize=50&sorttype=true&sortfields=MAXSCORE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"qme",
+								"userquiz",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"equals": true
+								},
+								{
+									"key": "pagesize",
+									"value": "50",
+									"equals": true
+								},
+								{
+									"key": "sorttype",
+									"value": "true",
+									"equals": true
+								},
+								{
+									"key": "sortfields",
+									"value": "MAXSCORE",
+									"equals": true
+								}
 							]
 						},
 						"description": "Get User Quiz List"
