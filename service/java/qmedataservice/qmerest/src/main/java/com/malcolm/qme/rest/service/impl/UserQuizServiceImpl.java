@@ -172,7 +172,9 @@ public class UserQuizServiceImpl implements UserQuizService {
                 quizDetail.setCategoryName(quiz.getCategory().getCategoryName());
                 quizDetail.setCategoryID(quiz.getCategoryID());
             }
+            qMeUserQuiz.setQuiz(quizDetail);
         }
+
 
         return qMeUserQuiz;
     }
