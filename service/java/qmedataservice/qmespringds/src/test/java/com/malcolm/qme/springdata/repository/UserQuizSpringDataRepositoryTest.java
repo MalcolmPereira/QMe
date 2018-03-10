@@ -333,7 +333,7 @@ public class UserQuizSpringDataRepositoryTest {
         Page<UserQuizEntity> pageList = userQuizSpringDataRepository.findQuizzesForUser(userID, new PageRequest(0, 50));
         List<UserQuizEntity> userQuizEntityList = pageList.getContent();
         assertNotNull(userQuizEntityList);
-        assertThat(userQuizEntityList.size(), greaterThan(2));
+        assertThat(userQuizEntityList.size(), greaterThan(1));
 
         userQuizSpringDataRepository.delete(userQuizID);
         userQuizEntity = userQuizSpringDataRepository.findOne(userQuizID);

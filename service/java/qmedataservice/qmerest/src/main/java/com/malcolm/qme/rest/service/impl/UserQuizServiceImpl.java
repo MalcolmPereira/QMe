@@ -7,6 +7,7 @@
 
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.domain.UserQuiz;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
@@ -161,6 +162,18 @@ public class UserQuizServiceImpl implements UserQuizService {
         qMeUserQuiz.setUserQuizToken(userQuiz.getUserQuizToken());
         qMeUserQuiz.setQuizUserScore(userQuiz.getQuizUserScore());
         qMeUserQuiz.setQuizMaxScore(userQuiz.getQuizMaxScore());
+        Quiz quiz = userQuiz.getQuiz();
+        if(quiz != null){
+            QMeQuizDetail quizDetail = new QMeQuizDetail();
+            quizDetail.setQuizID(quiz.getQuizID());
+            quizDetail.setQuizName(quiz.getQuizName());
+            quizDetail.setQuizDesc(quiz.getQuizDesc());
+            if(quiz.getCategory() != null){
+                quizDetail.setCategoryName(quiz.getCategory().getCategoryName());
+                quizDetail.setCategoryID(quiz.getCategoryID());
+            }
+        }
+
         return qMeUserQuiz;
     }
 }
