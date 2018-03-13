@@ -6,10 +6,14 @@
  */
 package com.malcolm.qme.springdata.repository;
 
+import com.malcolm.qme.core.domain.Category;
+import com.malcolm.qme.core.domain.Quiz;
 import com.malcolm.qme.core.domain.UserQuiz;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
 import com.malcolm.qme.core.repository.UserQuizRepository;
+import com.malcolm.qme.springdata.entity.CategoryEntity;
+import com.malcolm.qme.springdata.entity.QuizEntity;
 import com.malcolm.qme.springdata.entity.UserQuizEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -240,7 +244,8 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 	 * @return UserQuiz
 	 */
 	private UserQuiz getUserQuiz(UserQuizEntity userQuizEntity) {
-	    return new UserQuiz(userQuizEntity.getUserQuizId(),
+
+        UserQuiz userQuiz = new UserQuiz(userQuizEntity.getUserQuizId(),
                     userQuizEntity.getUserId(),
                     userQuizEntity.getQuizId(),
                     userQuizEntity.getCatId(),
@@ -249,8 +254,34 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
                     userQuizEntity.getQuizToken(),
                     userQuizEntity.getQuizUserScore(),
                     userQuizEntity.getQuizMaxScore()
-            );
+        );
+        if(userQuizEntity.getQuiz() != null){
+            userQuiz.setQuiz(getQuiz(userQuizEntity.getQuiz()));
+        }
+        return userQuiz;
    }
+
+    private Quiz getQuiz(QuizEntity quizEntity) {
+        Quiz quiz = new  Quiz(quizEntity.getQuizId(),
+                quizEntity.getQuizName(),
+                quizEntity.getQuizDesc(),
+                quizEntity.getCatId(),
+                quizEntity.getQuizLikes(),
+                quizEntity.getQuizHits(),
+                quizEntity.getMaxAttempts(),
+                quizEntity.getQuizCreateDate(),
+                quizEntity.getQuizCreateUser(),
+                quizEntity.getQuizUpdateDate(),
+                quizEntity.getQuizUpdateUser());
+        if(quizEntity.getCategory() != null){
+            quiz.setCategory(getCategory(quizEntity.getCategory()));
+        }
+        return quiz;
+	}
+
+    private Category getCategory(CategoryEntity category) {
+	    return new Category(category.getCatId(), category.getCatParentId(),category.getCatName(),category.getCatLikes(), category.getCatCreateDate(), category.getCatCreateUser());
+    }
 
     /**
      * Set Sort Fields

@@ -168,6 +168,13 @@ public class UserQuizServiceImpl implements UserQuizService {
             quizDetail.setQuizID(quiz.getQuizID());
             quizDetail.setQuizName(quiz.getQuizName());
             quizDetail.setQuizDesc(quiz.getQuizDesc());
+            quizDetail.setLikes(quiz.getLikes());
+            quizDetail.setQuizHit(quiz.getQuizHit());
+            quizDetail.setQuizMaxAttempts(quiz.getQuizMaxAttempts());
+            quizDetail.setQuizCreateDate(quiz.getQuizCreateDate());
+            quizDetail.setCreateUserID(quiz.getCreateUserID());
+            quizDetail.setQuizUpdateDate(quiz.getQuizUpdateDate());
+            quizDetail.setUpdateUserID(quiz.getUpdateUserID());
             if(quiz.getCategory() != null){
                 quizDetail.setCategoryName(quiz.getCategory().getCategoryName());
                 quizDetail.setCategoryID(quiz.getCategoryID());
