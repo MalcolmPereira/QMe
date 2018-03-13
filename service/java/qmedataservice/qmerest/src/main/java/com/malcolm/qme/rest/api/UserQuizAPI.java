@@ -93,7 +93,7 @@ public interface UserQuizAPI extends QMeAPI {
      * @param pageSize
      * @param sortType
      * @param sortFields
-     * @return
+     * @return User Quiz Details
      * @throws QMeResourceException
      */
     List<QMeUserQuiz> listQuizzesPending(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
@@ -104,8 +104,18 @@ public interface UserQuizAPI extends QMeAPI {
      * @param pageSize
      * @param sortType
      * @param sortFields
-     * @return
+     * @return User Quiz Details
      * @throws QMeResourceException
      */
     List<QMeUserQuiz> listQuizzesCompleted(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+
+    /**
+     * Register For Quiz
+     * @param userID
+     * @param quizID
+     * @return User Quiz Details
+     * @throws QMeResourceException
+     */
+    QMeUserQuiz registerForQuiz(Long userID, Long quizID) throws QMeResourceException;
+
 }

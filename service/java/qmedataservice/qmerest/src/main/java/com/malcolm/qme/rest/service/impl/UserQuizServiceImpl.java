@@ -115,16 +115,50 @@ public class UserQuizServiceImpl implements UserQuizService {
 
     @Override
     public QMeUserQuiz save(QMeUserQuiz qMeUserQuiz, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
-        return null;
+        try{
+            UserQuiz userQuiz = getUserQuiz(qMeUserQuiz,userId);
+            userQuiz = userQuizRepo.save(userQuiz);
+            return getQMeUserQuiz(userQuiz);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
+
+
 
     @Override
     public QMeUserQuiz update(QMeUserQuiz qMeUserQuiz, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
-        return null;
+        try{
+            UserQuiz userQuiz = getUserQuiz(qMeUserQuiz,userId);
+            userQuiz = userQuizRepo.update(userQuiz,userId);
+            return getQMeUserQuiz(userQuiz);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
     }
 
     @Override
     public void delete(Long id) throws QMeResourceNotFoundException, QMeServerException {
+        try{
+           userQuizRepo.delete(id);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    /**
+     * Get User Quiz
+     * @param qMeUserQuiz
+     * @return
+     */
+    private UserQuiz getUserQuiz(QMeUserQuiz qMeUserQuiz,Long userId) {
+        UserQuiz userQuiz = null;
+        if(qMeUserQuiz.getUserQuizID() != null){
+
+        }else{
+            userQuiz = new UserQuiz(userId,qMeUserQuiz.getQuizID(), qMeUserQuiz.getCategoryID(),0, null);
+        }
+        return userQuiz;
     }
 
     /**

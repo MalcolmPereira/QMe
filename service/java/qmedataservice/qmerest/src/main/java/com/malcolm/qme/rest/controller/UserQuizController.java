@@ -9,7 +9,6 @@ package com.malcolm.qme.rest.controller;
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserQuizAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,6 +149,11 @@ public class UserQuizController implements UserQuizAPI  {
             qMeUserQuizList = new ArrayList<>();
         }
         return qMeUserQuizList;
+    }
+
+    @Override
+    public QMeUserQuiz registerForQuiz(Long userID, Long quizID) throws QMeResourceException {
+        return null;
     }
 
     /**
