@@ -9,8 +9,13 @@ package com.malcolm.qme.rest.controller;
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserQuizAPI;
 import com.malcolm.qme.rest.exception.QMeResourceException;
+import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
+import com.malcolm.qme.rest.model.QMeQuizDetail;
+import com.malcolm.qme.rest.model.QMeUserDetail;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
+import com.malcolm.qme.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
@@ -34,6 +39,12 @@ public class UserQuizController implements UserQuizAPI  {
 
     @Autowired
     private UserQuizService userQuizService;
+
+    @Autowired
+    private QuizService quizService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value=COUNT_PATH,method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -151,9 +162,37 @@ public class UserQuizController implements UserQuizAPI  {
         return qMeUserQuizList;
     }
 
+    @RequestMapping(value=QUIZ_PATH_REGISTER,method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
     @Override
-    public QMeUserQuiz registerForQuiz(Long userID, Long quizID) throws QMeResourceException {
-        return null;
+    public QMeUserQuiz registerForQuiz(@PathVariable(value=ID_PARAM_STRING) Long quizID) throws QMeResourceException {
+        QMeUserDetail user = userService.searchById(getCurrentUser().getUserID());
+        QMeQuizDetail quiz =  quizService.searchById(quizID);
+        QMeUserQuiz qMeUserQuiz = new QMeUserQuiz();
+        qMeUserQuiz.setQuizID(quiz.getQuizID());
+        qMeUserQuiz.setCategoryID(quiz.getCategoryID());
+        qMeUserQuiz.setUserID(user.getUserId());
+        qMeUserQuiz.setQuizStartDate(null);
+        qMeUserQuiz.setQuizEndDate(null);
+        qMeUserQuiz.setQuizUserScore(0);
+        qMeUserQuiz.setQuizMaxScore(0);
+        qMeUserQuiz.setUserQuizToken(null);
+        return userQuizService.save(qMeUserQuiz,user.getUserId());
+    }
+
+    @RequestMapping(value=QUIZ_PATH_UNREGISTER,method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
+    @Override
+    public void unRegisterFromQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID) throws QMeResourceException {
+        userService.searchById(getCurrentUser().getUserID());
+        QMeUserQuiz userQuiz = userQuizService.searchById(userQuizID);
+        if(userQuiz.getUserID() != null && userQuiz.getUserID() == getCurrentUser().getUserID()){
+            userQuizService.delete(userQuiz.getUserQuizID());
+        }else{
+            throw new QMeResourceNotFoundException("User Quiz  " + userQuizID + " not found for user "+getCurrentUser().getUsername());
+        }
     }
 
     /**

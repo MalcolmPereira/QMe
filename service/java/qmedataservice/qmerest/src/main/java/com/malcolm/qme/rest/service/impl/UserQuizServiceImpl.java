@@ -75,7 +75,13 @@ public class UserQuizServiceImpl implements UserQuizService {
     public QMeUserQuiz searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
         try{
             QMeUserQuiz qMeUserQuiz = getQMeUserQuiz(userQuizRepo.findById(id));
+            if(qMeUserQuiz == null){
+                throw new QMeResourceNotFoundException("User Quiz with User Quiz ID " + id + " not found");
+            }
             QMeQuizDetail qMeQuizDetail = quizService.searchById(qMeUserQuiz.getQuizID());
+            if(qMeQuizDetail == null){
+                throw new QMeResourceNotFoundException("Quiz with Quiz ID " + qMeUserQuiz.getQuizID() + " not found");
+            }
             qMeUserQuiz.setQuiz(qMeQuizDetail);
             return qMeUserQuiz;
         }catch(QMeException err){

@@ -37,7 +37,7 @@ public interface UserQuizAPI extends QMeAPI {
     String ID_PATH = ROOT_PATH + "/{" + ID_PARAM_STRING + "}";
 
     /**
-     * QMe User List Path
+     * QMe User Quiz List Path
      */
     String QUIZ_PATH = ROOT_PATH + "/list";
 
@@ -50,6 +50,16 @@ public interface UserQuizAPI extends QMeAPI {
      * QMe User List Completed Path
      */
     String QUIZ_PATH_COMPLETED = ROOT_PATH + "/listcompleted";
+
+    /**
+     * QMe User Quiz Register
+     */
+    String QUIZ_PATH_REGISTER = ROOT_PATH + "/register" + "/{" + ID_PARAM_STRING + "}";
+
+    /**
+     * QMe User Quiz UnRegister
+     */
+    String QUIZ_PATH_UNREGISTER = ROOT_PATH + "/unregister" + "/{" + ID_PARAM_STRING + "}";
 
     /**
      * Get Count
@@ -111,11 +121,16 @@ public interface UserQuizAPI extends QMeAPI {
 
     /**
      * Register For Quiz
-     * @param userID
      * @param quizID
      * @return User Quiz Details
      * @throws QMeResourceException
      */
-    QMeUserQuiz registerForQuiz(Long userID, Long quizID) throws QMeResourceException;
+    QMeUserQuiz registerForQuiz(Long quizID) throws QMeResourceException;
+
+    /**
+     * UnRegister For Quiz
+     * @param userQuizID User Quiz ID
+     */
+    void unRegisterFromQuiz(Long userQuizID) throws QMeResourceException;
 
 }

@@ -6,8 +6,13 @@
  */
 package com.malcolm.qme.rest.controller;
 
+import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.fixtures.QMeQuizDetailFixture;
+import com.malcolm.qme.rest.model.fixtures.QMeUserFixtures;
 import com.malcolm.qme.rest.model.fixtures.QMeUserQuizFixture;
+import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
+import com.malcolm.qme.rest.service.UserService;
 import com.malcolm.qme.security.service.QMeUserDetails;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,14 +27,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,6 +50,12 @@ public class UserQuizControllerTest extends QMeControllerTest {
 
     @Mock
     private UserQuizService userQuizService;
+
+    @Mock
+    private QuizService quizService;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private UserQuizController userQuizController;
@@ -169,6 +181,50 @@ public class UserQuizControllerTest extends QMeControllerTest {
                 .andExpect(jsonPath("$[4].userQuizID", is(5)))
         ;
         verify(userQuizService).findCompletedByUserId(1L,0,10,true,"MAXSCORE");
+    }
+
+    @Test
+    public void testRegisterForQuiz() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+        assertThat(quizService, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.simpleQMeQuizDetail());
+        when(userService.searchById(1L)).thenReturn(QMeUserFixtures.simpleQMeUserDetailsWithId());
+        when(userQuizService.save(any(QMeUserQuiz.class),eq(1L))).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
+
+        mockMvc.perform(
+                post("/qme/userquiz/register/1")
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andExpect(jsonPath("$.userQuizID", is(1)))
+                    .andExpect(jsonPath("$.quizID", is(1)))
+                    .andExpect(jsonPath("$.categoryID", is(1)))
+        ;
+        verify(quizService).searchById(1L);
+        verify(userService).searchById(1L);
+        verify(userQuizService).save(anyObject(),eq(1L));
+    }
+
+    @Test
+    public void testUnRegisterForQuiz() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+        assertThat(userService, notNullValue());
+        when(userService.searchById(1L)).thenReturn(QMeUserFixtures.simpleQMeUserDetailsWithId());
+        when(userQuizService.searchById(1L)).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
+        doNothing().when(userQuizService).delete(1L);
+        mockMvc.perform(
+                post("/qme/userquiz/unregister/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+        ;
+        verify(userQuizService).searchById(1L);
+        verify(userService).searchById(1L);
+        verify(userQuizService).delete(eq(1L));
     }
 
 }
