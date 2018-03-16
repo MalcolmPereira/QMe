@@ -64,4 +64,18 @@ public class QMeQuestionDetail extends QMeQuestion {
     public void setAnswerOptionList(List<QMeAnswerOption> answerOptionList) {
         this.answerOptionList = answerOptionList;
     }
+
+    /**
+     * Add Answer Option List
+     * @param qMeAnswerOption Answer Option List
+     */
+    public void addAnswerOptionList(QMeAnswerOption qMeAnswerOption){
+        if(answerOptionList == null){
+            answerOptionList = new ArrayList<>();
+        }
+        if(qMeAnswerOption != null){
+            answerOptionList.add(qMeAnswerOption);
+        }
+
+    }
 }

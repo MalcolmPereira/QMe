@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.rest.service;
 
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
@@ -62,4 +64,14 @@ public interface UserQuizService extends QMeService<QMeUserQuizDetail, QMeUserQu
      * @throws QMeServerException Server Exception
      */
     List<QMeUserQuizDetail>  findPendingByUserId(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields)throws QMeServerException;
+
+    /**
+     * Start User Quiz
+     * @param userID User ID
+     * @param userQuizID User Quiz ID
+     * @return QMeUserQuizDetail User Quiz Detail
+     * @throws QMeServerException Server Exception
+     */
+    QMeUserQuizDetail startQuiz(Long userID, Long userQuizID) throws QMeServerException, QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException;
+
 }

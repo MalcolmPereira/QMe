@@ -62,6 +62,16 @@ public interface UserQuizAPI extends QMeAPI {
     String QUIZ_PATH_UNREGISTER = ROOT_PATH + "/unregister" + "/{" + ID_PARAM_STRING + "}";
 
     /**
+     * QMe User Quiz Start
+     */
+    String QUIZ_START = ROOT_PATH + "/start" + "/{" + ID_PARAM_STRING + "}";
+
+    /**
+     * QMe User Quiz Start
+     */
+    String QUIZ_COMPLETE = ROOT_PATH + "/complete" + "/{" + ID_PARAM_STRING + "}";
+
+    /**
      * Get Count
      *
      * @return Count of Catgeories
@@ -132,5 +142,22 @@ public interface UserQuizAPI extends QMeAPI {
      * @param userQuizID User Quiz ID
      */
     void unRegisterFromQuiz(Long userQuizID) throws QMeResourceException;
+
+    /**
+     * Start Quiz
+     * @param userQuizID User Quiz ID
+     * @return QMeUserQuizDetail Quiz Started
+     * @throws QMeResourceException
+     */
+    QMeUserQuizDetail startQuiz(Long userQuizID) throws QMeResourceException;
+
+    /**
+     * Complete Quiz
+     * @param userQuizID User Quiz ID
+     * @param quiz Completed Quiz
+     * @return QMeUserQuizDetail Quiz Result
+     * @throws QMeResourceException
+     */
+    QMeUserQuizDetail completeQuiz(Long userQuizID, QMeUserQuizDetail quiz) throws QMeResourceException;
 
 }

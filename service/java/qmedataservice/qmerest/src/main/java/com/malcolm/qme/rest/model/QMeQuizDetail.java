@@ -49,13 +49,16 @@ public class QMeQuizDetail extends QMeQuiz {
 
     /**
      * Add Qme Question Detail List
-     * @param qmeQuetionDetail QmeQuestionDetailList
+     * @param qmeQuestionDetail QmeQuestionDetailList
      */
-    public void addQmeQuestionDetailList(QMeQuestionDetail qmeQuetionDetail){
+    public void addQmeQuestionDetailList(QMeQuestionDetail qmeQuestionDetail){
         if(qmeQuestionDetailList == null){
             qmeQuestionDetailList = new ArrayList<>();
         }
-        qmeQuestionDetailList.add(qmeQuetionDetail);
+        if(qmeQuestionDetail != null){
+            qmeQuestionDetailList.add(qmeQuestionDetail);
+        }
+
     }
 
     /**

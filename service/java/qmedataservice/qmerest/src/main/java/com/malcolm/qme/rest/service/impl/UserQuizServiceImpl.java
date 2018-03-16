@@ -16,17 +16,17 @@ import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
-import com.malcolm.qme.rest.model.QMeQuizDetail;
-import com.malcolm.qme.rest.model.QMeUserQuiz;
-import com.malcolm.qme.rest.model.QMeUserQuizDetail;
+import com.malcolm.qme.rest.model.*;
 import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -133,6 +133,82 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
+    public QMeUserQuizDetail startQuiz(Long userID, Long userQuizID) throws QMeServerException, QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException {
+        try{
+            UserQuiz userQuiz = userQuizRepo.findById(userQuizID);
+            if(userQuiz == null){
+                throw new QMeResourceNotFoundException("User Quiz with Quiz ID " + userQuizID + " not found");
+            }
+            QMeQuizDetail qMeQuizDetail = quizService.searchById(userQuiz.getQuizID());
+            if(qMeQuizDetail == null){
+                throw new QMeResourceNotFoundException("Quiz with Quiz ID " + userQuiz.getQuizID() + " not found");
+            }
+            QMeUserQuizDetail userQuizDetail = new QMeUserQuizDetail();
+            userQuizDetail.setUserQuizID(userQuiz.getUserQuizID());
+            userQuizDetail.setUserID(userID);
+            userQuizDetail.setQuizID(qMeQuizDetail.getQuizID());
+            userQuizDetail.setQuizName(qMeQuizDetail.getQuizName());
+            userQuizDetail.setQuizDesc(qMeQuizDetail.getQuizDesc());
+            userQuizDetail.setCategoryName(qMeQuizDetail.getCategoryName());
+            userQuizDetail.setLikes(qMeQuizDetail.getLikes());
+            userQuizDetail.setQuizHit(qMeQuizDetail.getQuizHit());
+            userQuizDetail.setQuizMaxAttempts(qMeQuizDetail.getQuizMaxAttempts());
+            userQuizDetail.setQuizCreateDate(qMeQuizDetail.getQuizCreateDate());
+            userQuizDetail.setCreateUserID(qMeQuizDetail.getCreateUserID());
+            userQuizDetail.setCreateUserName(qMeQuizDetail.getCreateUserName());
+            userQuizDetail.setQuizUpdateDate(qMeQuizDetail.getQuizUpdateDate());
+            userQuizDetail.setUpdateUserID(qMeQuizDetail.getUpdateUserID());
+            userQuizDetail.setUpdateUserName(qMeQuizDetail.getUpdateUserName());
+            userQuizDetail.setCategoryID(qMeQuizDetail.getCategoryID());
+            userQuizDetail.setQuizStartDate(LocalDateTime.now());
+            userQuizDetail.setQuizEndDate(null);
+            userQuizDetail.setUserQuizToken(UUID.randomUUID()+"");
+            userQuizDetail.setQuizUserScore(0);
+            List<QMeQuizQuestionDetail> qmeQuestionDetailList = new ArrayList<>();
+            List<QMeQuestionDetail> qMeQuestionDetails = qMeQuizDetail.getQmeQuestionDetailList();
+            Integer quizMaxScore = 0;
+            for (QMeQuestionDetail qMeQuestionDetail:qMeQuestionDetails) {
+                QMeQuizQuestionDetail qMeQuizQuestionDetail = new QMeQuizQuestionDetail();
+                qMeQuizQuestionDetail.setQuestionId(qMeQuestionDetail.getQuestionId());
+                qMeQuizQuestionDetail.setCategoryId(qMeQuestionDetail.getCategoryId());
+                qMeQuizQuestionDetail.setQuestionText(qMeQuestionDetail.getQuestionText());
+                qMeQuizQuestionDetail.setQuestionPoint(qMeQuestionDetail.getQuestionPoint());
+                qMeQuizQuestionDetail.setLikes(qMeQuestionDetail.getLikes());
+                qMeQuizQuestionDetail.setQuestionCreateDate(qMeQuestionDetail.getQuestionCreateDate());
+                qMeQuizQuestionDetail.setCreateUserID(qMeQuestionDetail.getCreateUserID());
+                qMeQuizQuestionDetail.setQuestionUpdateDate(qMeQuestionDetail.getQuestionUpdateDate());
+                qMeQuizQuestionDetail.setUpdateUserID(qMeQuestionDetail.getUpdateUserID());
+                qMeQuizQuestionDetail.setCreateUserName(qMeQuestionDetail.getCreateUserName());
+                qMeQuizQuestionDetail.setUpdateUserName(qMeQuestionDetail.getUpdateUserName());
+                qMeQuizQuestionDetail.setCategoryName(qMeQuestionDetail.getCategoryName());
+                qMeQuizQuestionDetail.setCorrect(Boolean.FALSE);
+                List<QMeQuizAnswerOption> answerOptionList = new ArrayList<>();
+                List<QMeAnswerOption> qMeAnswerOptionList = qMeQuestionDetail.getAnswerOptionList();
+                for (QMeAnswerOption qMeAnswerOption:qMeAnswerOptionList) {
+                    QMeQuizAnswerOption qMeQuizAnswerOption = new QMeQuizAnswerOption();
+                    qMeQuizAnswerOption.setAnswerOptionID(qMeAnswerOption.getAnswerOptionID());
+                    qMeQuizAnswerOption.setQuestionID(qMeAnswerOption.getQuestionID());
+                    qMeQuizAnswerOption.setOptionText(qMeAnswerOption.getOptionText());
+                    qMeQuizAnswerOption.setSelected(Boolean.FALSE);
+                    qMeQuizAnswerOption.setAnswerOptionMediaList(qMeAnswerOption.getAnswerOptionMediaList());
+                    answerOptionList.add(qMeQuizAnswerOption);
+                }
+                qMeQuizQuestionDetail.setAnswerOptionList(answerOptionList);
+                qmeQuestionDetailList.add(qMeQuizQuestionDetail);
+                quizMaxScore = quizMaxScore + qMeQuestionDetail.getQuestionPoint();
+            }
+            userQuizDetail.setQmeQuestionDetailList(qmeQuestionDetailList);
+            userQuizDetail.setQuizMaxScore(quizMaxScore);
+
+            update(userQuizDetail, userQuiz.getUserQuizID(), userID);
+
+            return userQuizDetail;
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public QMeUserQuizDetail save(QMeUserQuiz qMeUserQuiz, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
         try{
             UserQuiz userQuiz = getUserQuiz(qMeUserQuiz,userId);
@@ -142,8 +218,6 @@ public class UserQuizServiceImpl implements UserQuizService {
             throw new QMeServerException(err.getMessage(),err);
         }
     }
-
-
 
     @Override
     public QMeUserQuizDetail update(QMeUserQuiz qMeUserQuiz, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
@@ -173,7 +247,9 @@ public class UserQuizServiceImpl implements UserQuizService {
     private UserQuiz getUserQuiz(QMeUserQuiz qMeUserQuiz,Long userId) {
         UserQuiz userQuiz = null;
         if(qMeUserQuiz.getUserQuizID() != null){
-
+            userQuiz = new UserQuiz(qMeUserQuiz.getUserQuizID(), userId, qMeUserQuiz.getQuizID(), qMeUserQuiz.getCategoryID(),
+                    qMeUserQuiz.getQuizStartDate(), qMeUserQuiz.getQuizEndDate(), qMeUserQuiz.getUserQuizToken(),
+                    qMeUserQuiz.getQuizUserScore(), qMeUserQuiz.getQuizMaxScore());
         }else{
             userQuiz = new UserQuiz(userId,qMeUserQuiz.getQuizID(), qMeUserQuiz.getCategoryID(),0, null);
         }

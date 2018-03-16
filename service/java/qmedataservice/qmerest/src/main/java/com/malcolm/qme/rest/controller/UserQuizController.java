@@ -201,6 +201,22 @@ public class UserQuizController implements UserQuizAPI  {
         }
     }
 
+    @RequestMapping(value=QUIZ_START,method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
+    @Override
+    public QMeUserQuizDetail startQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID) throws QMeResourceException {
+        return null;
+    }
+
+    @RequestMapping(value=QUIZ_COMPLETE,method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
+    @Override
+    public QMeUserQuizDetail completeQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID, @RequestBody QMeUserQuizDetail quiz) throws QMeResourceException {
+        return null;
+    }
+
     /**
      * Set User Quiz Links
      * @param qMeUserQuizList QMe User Quiz List
