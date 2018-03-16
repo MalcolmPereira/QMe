@@ -135,7 +135,7 @@ public class UserQuizServiceImpl implements UserQuizService {
     @Override
     public QMeUserQuizDetail startQuiz(Long userID, Long userQuizID) throws QMeServerException, QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException {
         try{
-            UserQuiz userQuiz = userQuizRepo.findById(userQuizID);
+            QMeUserQuizDetail userQuiz = searchById(userQuizID);
             if(userQuiz == null){
                 throw new QMeResourceNotFoundException("User Quiz with Quiz ID " + userQuizID + " not found");
             }
@@ -203,7 +203,7 @@ public class UserQuizServiceImpl implements UserQuizService {
             update(userQuizDetail, userQuiz.getUserQuizID(), userID);
 
             return userQuizDetail;
-        }catch(QMeException err){
+        }catch(Exception err){
             throw new QMeServerException(err.getMessage(),err);
         }
     }

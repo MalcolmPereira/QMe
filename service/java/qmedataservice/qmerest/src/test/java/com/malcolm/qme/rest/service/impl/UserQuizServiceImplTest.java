@@ -225,13 +225,12 @@ public class UserQuizServiceImplTest {
         when(userQuizRepo.update(any(UserQuiz.class),eq(1L))).thenReturn(UserQuizFixtures.simpleUserQuiz());
         QMeUserQuizDetail qMeUserQuizDetail = userQuizService.startQuiz(1L,1L);
         verify(userQuizRepo).findById(1L);
-        verify(quizService).searchById(1L);
+        verify(quizService, times(2)).searchById(1L);
         assertNotNull(qMeUserQuizDetail);
         assertNotNull(qMeUserQuizDetail.getUserQuizToken());
         assertNotNull(qMeUserQuizDetail.getQuizMaxScore());
         assertTrue(qMeUserQuizDetail.getQuizMaxScore() == 2);
         assertNotNull(qMeUserQuizDetail.getQuizMaxAttempts());
-
     }
 
 }

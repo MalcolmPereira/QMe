@@ -168,7 +168,7 @@ public class UserQuizController implements UserQuizAPI  {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
     @Override
-    public QMeUserQuizDetail registerForQuiz(@PathVariable(value=ID_PARAM_STRING) Long quizID) throws QMeResourceException {
+    public @ResponseBody QMeUserQuizDetail registerForQuiz(@PathVariable(value=ID_PARAM_STRING) Long quizID) throws QMeResourceException {
         QMeUserDetail user = userService.searchById(getCurrentUser().getUserID());
         QMeQuizDetail quiz =  quizService.searchById(quizID);
         if(!userQuizService.findPendingForUserByQuizId(getCurrentUser().getUserID(),quizID)){
@@ -205,15 +205,15 @@ public class UserQuizController implements UserQuizAPI  {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
     @Override
-    public QMeUserQuizDetail startQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID) throws QMeResourceException {
-        return null;
+    public @ResponseBody QMeUserQuizDetail startQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID) throws QMeResourceException {
+        return userQuizService.startQuiz(getCurrentUser().getUserID(),userQuizID);
     }
 
     @RequestMapping(value=QUIZ_COMPLETE,method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('"+USER_ROLE+"')")
     @Override
-    public QMeUserQuizDetail completeQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID, @RequestBody QMeUserQuizDetail quiz) throws QMeResourceException {
+    public @ResponseBody QMeUserQuizDetail completeQuiz(@PathVariable(value=ID_PARAM_STRING) Long userQuizID, @RequestBody QMeUserQuizDetail quiz) throws QMeResourceException {
         return null;
     }
 

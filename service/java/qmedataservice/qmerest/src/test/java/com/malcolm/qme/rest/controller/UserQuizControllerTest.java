@@ -30,10 +30,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -251,4 +251,25 @@ public class UserQuizControllerTest extends QMeControllerTest {
         verify(userQuizService).delete(eq(1L));
     }
 
+    @Test
+    public void testStartQuiz() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+        assertThat(quizService, notNullValue());
+
+        when(userQuizService.searchById(1L)).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestionsIdsAndDetails());
+        when(userQuizService.update(any(QMeUserQuiz.class),eq(1L),eq(1L))).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
+
+        mockMvc.perform(
+                post("/qme/userquiz/start/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+        ;
+
+        verify(userQuizService).searchById(1L);
+        verify(quizService).searchById(1L);
+        verify(userQuizService).update(any(QMeUserQuiz.class),eq(1L),eq(1L));
+    }
 }
