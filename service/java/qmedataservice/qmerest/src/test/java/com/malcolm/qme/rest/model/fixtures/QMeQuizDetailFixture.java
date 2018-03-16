@@ -6,6 +6,8 @@
  */
 package com.malcolm.qme.rest.model.fixtures;
 
+import com.malcolm.qme.rest.model.QMeAnswerOption;
+import com.malcolm.qme.rest.model.QMeQuestionDetail;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
 
 import java.time.LocalDateTime;
@@ -26,6 +28,30 @@ public class QMeQuizDetailFixture extends QMeResourceFixture<QMeQuizDetail>{
         return getQMeQuizDetail();
     }
 
+
+    /**
+     * Get QMe Quiz Details with Question Id
+     * @return
+     */
+    public static QMeQuizDetail qMeQuizDetailWithQuestionsIdsAndDetails() {
+        QMeQuizDetail qMeQuizDetail = getQMeQuizDetail();
+        qMeQuizDetail.addQuestionIdList(1L);
+        qMeQuizDetail.addQuestionIdList(2L);
+        qMeQuizDetail.addQuestionIdList(3L);
+        qMeQuizDetail.addQuestionIdList(4L);
+        qMeQuizDetail.addQuestionIdList(5L);
+        QMeQuestionDetail qmeQuestionDetail = getQMeQuestionDetail(1L);
+        qmeQuestionDetail.addAnswerOptionList(getQMeAnswerOption(1L,1L));
+        qmeQuestionDetail.addAnswerOptionList(getQMeAnswerOption(2L,1L));
+        qmeQuestionDetail.addAnswerOptionList(getQMeAnswerOption(3L,1L));
+        qMeQuizDetail.addQmeQuestionDetailList(qmeQuestionDetail);
+        qmeQuestionDetail = getQMeQuestionDetail(2L);
+        qmeQuestionDetail.addAnswerOptionList(getQMeAnswerOption(1L,2L));
+        qmeQuestionDetail.addAnswerOptionList(getQMeAnswerOption(2L,2L));
+        qmeQuestionDetail.addAnswerOptionList(getQMeAnswerOption(3L,2L));
+        qMeQuizDetail.addQmeQuestionDetailList(qmeQuestionDetail);
+        return qMeQuizDetail;
+    }
 
     /**
      * Get QMe Quiz Detail
@@ -77,6 +103,43 @@ public class QMeQuizDetailFixture extends QMeResourceFixture<QMeQuizDetail>{
         qMeQuizDetail.setCategoryID(1L);
         qMeQuizDetail.setQuizMaxAttempts(3);
         return qMeQuizDetail;
+    }
+
+
+    /**
+     * Get Question Detail
+     * @param questionID Question ID
+     * @return QMeQuestionDetail Question Detail
+     */
+    private static QMeQuestionDetail getQMeQuestionDetail(Long questionID) {
+        QMeQuestionDetail qmeQuestionDetail = new QMeQuestionDetail();
+        qmeQuestionDetail.setQuestionId(questionID);
+        qmeQuestionDetail.setCategoryId(1L);
+        qmeQuestionDetail.setQuestionText("This is a test");
+        qmeQuestionDetail.setAnswer("Some Answer");
+        qmeQuestionDetail.setQuestionPoint(1);
+        qmeQuestionDetail.setLikes(1L);
+        qmeQuestionDetail.setQuestionCreateDate(LocalDateTime.now());
+        qmeQuestionDetail.setCreateUserID(1L);
+        qmeQuestionDetail.setQuestionUpdateDate(LocalDateTime.now());
+        qmeQuestionDetail.setUpdateUserID(1L);
+        qmeQuestionDetail.setCreateUserName("Hello");
+        qmeQuestionDetail.setUpdateUserName("test");
+        qmeQuestionDetail.setCategoryName("Some");
+        return qmeQuestionDetail;
+    }
+
+    /**
+     * Get QMe Answer Option
+     * @return QMeAnswerOption Answer Option
+     */
+    private static QMeAnswerOption getQMeAnswerOption(Long AnswerOptionID, Long questionID) {
+        QMeAnswerOption qMeAnswerOption = new QMeAnswerOption();
+        qMeAnswerOption.setAnswerOptionID(AnswerOptionID);
+        qMeAnswerOption.setQuestionID(questionID);
+        qMeAnswerOption.setOptionText("some option");
+        qMeAnswerOption.setCorrect(Boolean.FALSE);
+        return qMeAnswerOption;
     }
 
 

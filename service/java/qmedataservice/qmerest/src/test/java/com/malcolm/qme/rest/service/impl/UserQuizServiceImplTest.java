@@ -6,6 +6,7 @@
  */
 package com.malcolm.qme.rest.service.impl;
 
+import com.malcolm.qme.core.domain.UserQuiz;
 import com.malcolm.qme.core.domain.fixtures.UserQuizFixtures;
 import com.malcolm.qme.core.repository.PageSort;
 import com.malcolm.qme.core.repository.QMeException;
@@ -32,9 +33,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Malcolm
@@ -217,6 +216,22 @@ public class UserQuizServiceImplTest {
         when(userQuizRepo.findPendingForUserByQuizId(eq(1L),eq(1L))).thenReturn(true);
         assertTrue(userQuizService.findPendingForUserByQuizId(1L, 1L));
         verify(userQuizRepo, times(2)).findPendingForUserByQuizId(eq(1L),eq(1L));
+    }
+
+    @Test
+    public void testStartQuiz() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findById(1L)).thenReturn(UserQuizFixtures.simpleUserQuiz());
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestionsIdsAndDetails());
+        when(userQuizRepo.update(any(UserQuiz.class),eq(1L))).thenReturn(UserQuizFixtures.simpleUserQuiz());
+        QMeUserQuizDetail qMeUserQuizDetail = userQuizService.startQuiz(1L,1L);
+        verify(userQuizRepo).findById(1L);
+        verify(quizService).searchById(1L);
+        assertNotNull(qMeUserQuizDetail);
+        assertNotNull(qMeUserQuizDetail.getUserQuizToken());
+        assertNotNull(qMeUserQuizDetail.getQuizMaxScore());
+        assertTrue(qMeUserQuizDetail.getQuizMaxScore() == 2);
+        assertNotNull(qMeUserQuizDetail.getQuizMaxAttempts());
+
     }
 
 }
