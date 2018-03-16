@@ -6,7 +6,7 @@
  */
 package com.malcolm.qme.rest.model.fixtures;
 
-import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.QMeUserQuizDetail;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class QMeUserQuizFixture {
      * Get QMe User Quiz
      * @return QMeUserQuiz
      */
-    public static QMeUserQuiz simpleQMeQuizDetail(){
+    public static QMeUserQuizDetail simpleQMeQuizDetail(){
         return getQMeUserQuizDetail();
     }
 
@@ -30,9 +30,9 @@ public class QMeUserQuizFixture {
      * Get QMe User Quiz List
      * @return QMeUserQuiz List
      */
-    public static List<QMeUserQuiz> simpleQMeQuizDetailList(){
-        List<QMeUserQuiz> userQuizList = new ArrayList<>();
-        QMeUserQuiz qMeUserQuiz = getQMeUserQuizDetail();
+    public static List<QMeUserQuizDetail> simpleQMeQuizDetailList(){
+        List<QMeUserQuizDetail> userQuizList = new ArrayList<>();
+        QMeUserQuizDetail qMeUserQuiz = getQMeUserQuizDetail();
         qMeUserQuiz.setUserQuizID(1L);
         userQuizList.add(qMeUserQuiz);
         qMeUserQuiz = getQMeUserQuizDetail();
@@ -54,8 +54,8 @@ public class QMeUserQuizFixture {
      * Get QMe User Quiz
      * @return QMeUserQuiz
      */
-    private static QMeUserQuiz getQMeUserQuizDetail() {
-        QMeUserQuiz qMeUserQuiz = new QMeUserQuiz();
+    private static QMeUserQuizDetail getQMeUserQuizDetail() {
+        QMeUserQuizDetail qMeUserQuiz = new QMeUserQuizDetail();
         qMeUserQuiz.setUserQuizID(1L);
         qMeUserQuiz.setUserID(1L);
         qMeUserQuiz.setQuizID(1L);

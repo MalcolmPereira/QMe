@@ -13,6 +13,7 @@ import com.malcolm.qme.core.repository.UserQuizRepository;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.QMeUserQuizDetail;
 import com.malcolm.qme.rest.model.fixtures.QMeQuizDetailFixture;
 import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
@@ -31,7 +32,6 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -71,7 +71,7 @@ public class UserQuizServiceImplTest {
     public void testList() throws QMeResourceException, QMeException {
         when(userQuizRepo.findAll()).thenReturn(UserQuizFixtures.simpleUserQuizList());
 
-        List<QMeUserQuiz> userQuizList = userQuizService.list();
+        List<QMeUserQuizDetail> userQuizList = userQuizService.list();
 
         verify(userQuizRepo).findAll();
 
@@ -94,7 +94,7 @@ public class UserQuizServiceImplTest {
     public void testListPaged() throws QMeResourceException, QMeException {
         when(userQuizRepo.findAll(Matchers.<PageSort>anyObject())).thenReturn(UserQuizFixtures.simpleUserQuizList());
 
-        List<QMeUserQuiz> userQuizList = userQuizService.list(0,10,true, "QUIZNAME");
+        List<QMeUserQuizDetail> userQuizList = userQuizService.list(0,10,true, "QUIZNAME");
 
         verify(userQuizRepo).findAll(Matchers.<PageSort>anyObject());
         assertNotNull(userQuizList);
@@ -114,14 +114,14 @@ public class UserQuizServiceImplTest {
     @Test(expected = QMeServerException.class)
     public void testListPagedQMeServerException() throws QMeResourceException, QMeException {
         when(userQuizRepo.findAll(Matchers.<PageSort>anyObject())).thenThrow(QMeException.class);
-        List<QMeUserQuiz> userQuizList = userQuizService.list(0,10,true, "QUIZNAME");
+        List<QMeUserQuizDetail> userQuizList = userQuizService.list(0,10,true, "QUIZNAME");
         verify(userQuizRepo).findAll(Matchers.<PageSort>anyObject());
     }
 
     @Test
     public void testListNullReturn() throws QMeResourceException, QMeException{
         when(userQuizRepo.findAll()).thenReturn(null);
-        List<QMeUserQuiz> userQuizList = userQuizService.list();
+        List<QMeUserQuizDetail> userQuizList = userQuizService.list();
         verify(userQuizRepo).findAll();
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(0));
@@ -152,7 +152,7 @@ public class UserQuizServiceImplTest {
     @Test
     public void testFindQuizzesForUser() throws QMeResourceException, QMeException {
         when(userQuizRepo.findQuizzesForUser(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
-        List<QMeUserQuiz> userQuizList = userQuizService.findQuizzesForUser(1L,0,10,true, "MAXSCORE");
+        List<QMeUserQuizDetail> userQuizList = userQuizService.findQuizzesForUser(1L,0,10,true, "MAXSCORE");
         verify(userQuizRepo).findQuizzesForUser(eq(1L),any(PageSort.class));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(5));
@@ -171,7 +171,7 @@ public class UserQuizServiceImplTest {
     @Test
     public void findCompletedByUserId() throws QMeResourceException, QMeException {
         when(userQuizRepo.findCompletedByUserId(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
-        List<QMeUserQuiz> userQuizList = userQuizService.findCompletedByUserId(1L,0,10,true, "MAXSCORE");
+        List<QMeUserQuizDetail> userQuizList = userQuizService.findCompletedByUserId(1L,0,10,true, "MAXSCORE");
         verify(userQuizRepo).findCompletedByUserId(eq(1L),any(PageSort.class));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(5));
@@ -190,7 +190,7 @@ public class UserQuizServiceImplTest {
     @Test
     public void findPendingByUserId() throws QMeResourceException, QMeException {
         when(userQuizRepo.findPendingByUserId(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
-        List<QMeUserQuiz> userQuizList = userQuizService.findPendingByUserId(1L,0,10,true, "MAXSCORE");
+        List<QMeUserQuizDetail> userQuizList = userQuizService.findPendingByUserId(1L,0,10,true, "MAXSCORE");
         verify(userQuizRepo).findPendingByUserId(eq(1L),any(PageSort.class));
         assertNotNull(userQuizList);
         assertThat(userQuizList.size(), equalTo(5));

@@ -7,7 +7,7 @@
 package com.malcolm.qme.rest.api;
 
 import com.malcolm.qme.rest.exception.QMeResourceException;
-import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.QMeUserQuizDetail;
 import org.springframework.hateoas.Resource;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public interface UserQuizAPI extends QMeAPI {
      *
      * @return List of User Quiz
      */
-    List<QMeUserQuiz> list() throws QMeResourceException;
+    List<QMeUserQuizDetail> list() throws QMeResourceException;
 
     /**
      * Get User Quiz Paged
@@ -84,7 +84,7 @@ public interface UserQuizAPI extends QMeAPI {
      * @return List of User Quiz
      * @throws QMeResourceException
      */
-    List<QMeUserQuiz> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+    List<QMeUserQuizDetail> listPaged(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
     /**
      * Get All Quizzes available for User
@@ -95,7 +95,7 @@ public interface UserQuizAPI extends QMeAPI {
      * @return
      * @throws QMeResourceException
      */
-    List<QMeUserQuiz> listQuizzes(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+    List<QMeUserQuizDetail> listQuizzes(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
     /**
      * Get Pending Quizzes available for User
@@ -106,7 +106,7 @@ public interface UserQuizAPI extends QMeAPI {
      * @return User Quiz Details
      * @throws QMeResourceException
      */
-    List<QMeUserQuiz> listQuizzesPending(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+    List<QMeUserQuizDetail> listQuizzesPending(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
     /**
      * Get Completed Quizzes available for User
@@ -117,7 +117,7 @@ public interface UserQuizAPI extends QMeAPI {
      * @return User Quiz Details
      * @throws QMeResourceException
      */
-    List<QMeUserQuiz> listQuizzesCompleted(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
+    List<QMeUserQuizDetail> listQuizzesCompleted(String page,String pageSize, String sortType, String sortFields) throws QMeResourceException;
 
     /**
      * Register For Quiz
@@ -125,7 +125,7 @@ public interface UserQuizAPI extends QMeAPI {
      * @return User Quiz Details
      * @throws QMeResourceException
      */
-    QMeUserQuiz registerForQuiz(Long quizID) throws QMeResourceException;
+    QMeUserQuizDetail registerForQuiz(Long quizID) throws QMeResourceException;
 
     /**
      * UnRegister For Quiz

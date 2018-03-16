@@ -65,11 +65,6 @@ public class QMeUserQuiz extends QMeResource {
     private Integer quizMaxScore;
 
     /**
-     * Quiz Details
-     */
-    private QMeQuizDetail quiz;
-
-    /**
      * Get User Quiz ID
      * @return userQuizID
      */
@@ -211,21 +206,5 @@ public class QMeUserQuiz extends QMeResource {
      */
     public void setQuizMaxScore(Integer quizMaxScore) {
         this.quizMaxScore = quizMaxScore;
-    }
-
-   /**
-     * Get Quiz
-     * @return QMeQuizDetail
-     */
-    public QMeQuizDetail getQuiz() {
-        return quiz;
-    }
-
-    /**
-     * Set Quiz
-     * @param quiz Quiz
-     */
-    public void setQuiz(QMeQuizDetail quiz) {
-        this.quiz = quiz;
     }
 }

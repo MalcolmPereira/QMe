@@ -1,5 +1,5 @@
 /**
- * QMeAnswerOption Model for REST Service Controller
+ * QMeQuizAnswerOption Model for REST User Quiz Service Controller
  *
  * @author Malcolm
  */
@@ -8,16 +8,15 @@ package com.malcolm.qme.rest.model;
 import java.util.List;
 
 /**
- * QMeAnswerOption Model for REST Service Controller
+ * QMeQuizAnswerOption Model for REST Service Controller
  *
  * @author Malcolm
  */
-public class QMeAnswerOption extends QMeResource {
-
+public class QMeQuizAnswerOption extends QMeResource {
     /**
      * Generated Serialized Version Id
      */
-    private static final long serialVersionUID = 1323257850480181822L;
+    private static final long serialVersionUID = 1323257850480182821L;
 
     /**
      * Answer Option Id
@@ -35,42 +34,43 @@ public class QMeAnswerOption extends QMeResource {
     private String optionText;
 
     /**
-     * Correct
+     * Selected
      */
-    private Boolean correct;
+    private Boolean selected;
 
     /**
      * Answer Option Media List
      */
     private List<QMeAnswerOptionMedia> answerOptionMediaList;
 
+
     /**
-     * Get Answer Option Id
-     * @return Answer Option Id
+     * Get Answer Option ID
+     * @return answerOptionID Answer Option ID
      */
     public Long getAnswerOptionID() {
         return answerOptionID;
     }
 
     /**
-     * Set Answer Option Id
-     * @param answerOptionID Answer Option Id
+     * Set Answer Option ID
+     * @param answerOptionID Answer Option ID
      */
     public void setAnswerOptionID(Long answerOptionID) {
         this.answerOptionID = answerOptionID;
     }
 
     /**
-     * Get Question Id
-     * @return Question Id
+     * Get Question ID
+     * @return questionID Question ID
      */
     public Long getQuestionID() {
         return questionID;
     }
 
     /**
-     * Set Question Id
-     * @param questionID Question Id
+     * Set Question ID
+     * @param questionID  Question ID
      */
     public void setQuestionID(Long questionID) {
         this.questionID = questionID;
@@ -78,7 +78,7 @@ public class QMeAnswerOption extends QMeResource {
 
     /**
      * Get Option Text
-     * @return Option Text
+     * @return optionText Option Text
      */
     public String getOptionText() {
         return optionText;
@@ -93,24 +93,24 @@ public class QMeAnswerOption extends QMeResource {
     }
 
     /**
-     * Get Correct
-     * @return Correct True / Not Correct False
+     * Get Selected
+     * @return selected Selected
      */
-    public Boolean getCorrect() {
-        return correct;
+    public Boolean getSelected() {
+        return selected;
     }
 
     /**
-     * Set Correct
-     * @param correct Whether Answer Option is Correct Correct True / Not Correct False
+     * Set Selected
+     * @param selected Selected
      */
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 
     /**
      * Get Answer Option Media List
-     * @return Answer Option Media List
+     * @return answerOptionMediaList Answer Option Media List
      */
     public List<QMeAnswerOptionMedia> getAnswerOptionMediaList() {
         return answerOptionMediaList;
@@ -124,5 +124,3 @@ public class QMeAnswerOption extends QMeResource {
         this.answerOptionMediaList = answerOptionMediaList;
     }
 }
-
-

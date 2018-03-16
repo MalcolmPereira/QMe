@@ -8,13 +8,14 @@ package com.malcolm.qme.rest.service;
 
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.QMeUserQuizDetail;
 
 import java.util.List;
 
 /**
  * @author malcolm
  */
-public interface UserQuizService extends QMeService<QMeUserQuiz, QMeUserQuiz, Long>{
+public interface UserQuizService extends QMeService<QMeUserQuizDetail, QMeUserQuiz, Long>{
 
     /**
      * Find Quizzes for User
@@ -25,7 +26,7 @@ public interface UserQuizService extends QMeService<QMeUserQuiz, QMeUserQuiz, Lo
      * @param sortFields
      * @return User Quiz List
      */
-    List<QMeUserQuiz> findQuizzesForUser(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException;
+    List<QMeUserQuizDetail> findQuizzesForUser(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException;
 
     /**
      * Find Completed Quizzes for User
@@ -36,7 +37,7 @@ public interface UserQuizService extends QMeService<QMeUserQuiz, QMeUserQuiz, Lo
      * @param sortFields
      * @return User Quiz List
      */
-    List<QMeUserQuiz> findCompletedByUserId(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields)throws QMeServerException;
+    List<QMeUserQuizDetail> findCompletedByUserId(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields)throws QMeServerException;
 
     /**
      * Find Pending Quizzes for User
@@ -47,5 +48,5 @@ public interface UserQuizService extends QMeService<QMeUserQuiz, QMeUserQuiz, Lo
      * @param sortFields
      * @return User Quiz List
      */
-    List<QMeUserQuiz>  findPendingByUserId(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields)throws QMeServerException;
+    List<QMeUserQuizDetail>  findPendingByUserId(Long userID,Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields)throws QMeServerException;
 }

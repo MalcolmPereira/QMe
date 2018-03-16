@@ -18,6 +18,7 @@ import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
+import com.malcolm.qme.rest.model.QMeUserQuizDetail;
 import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public List<QMeUserQuiz> list() throws QMeServerException {
+    public List<QMeUserQuizDetail> list() throws QMeServerException {
         try{
             return  getQMeUserQuiz(userQuizRepo.findAll());
 
@@ -62,7 +63,7 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public List<QMeUserQuiz> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+    public List<QMeUserQuizDetail> list(Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
         try{
             return  getQMeUserQuiz(userQuizRepo.findAll(new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
 
@@ -72,9 +73,9 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public QMeUserQuiz searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
+    public QMeUserQuizDetail searchById(Long id) throws QMeResourceNotFoundException, QMeServerException {
         try{
-            QMeUserQuiz qMeUserQuiz = getQMeUserQuiz(userQuizRepo.findById(id));
+            QMeUserQuizDetail qMeUserQuiz = getQMeUserQuiz(userQuizRepo.findById(id));
             if(qMeUserQuiz == null){
                 throw new QMeResourceNotFoundException("User Quiz with User Quiz ID " + id + " not found");
             }
@@ -82,7 +83,6 @@ public class UserQuizServiceImpl implements UserQuizService {
             if(qMeQuizDetail == null){
                 throw new QMeResourceNotFoundException("Quiz with Quiz ID " + qMeUserQuiz.getQuizID() + " not found");
             }
-            qMeUserQuiz.setQuiz(qMeQuizDetail);
             return qMeUserQuiz;
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
@@ -90,9 +90,9 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public List<QMeUserQuiz> findQuizzesForUser(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+    public List<QMeUserQuizDetail> findQuizzesForUser(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
         try{
-            return  getQMeUserQuiz(userQuizRepo.findQuizzesForUser(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
+            return getQMeUserQuiz(userQuizRepo.findQuizzesForUser(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
 
         }catch(QMeException err){
             throw new QMeServerException(err.getMessage(),err);
@@ -100,7 +100,7 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public List<QMeUserQuiz> findCompletedByUserId(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+    public List<QMeUserQuizDetail> findCompletedByUserId(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
         try{
             return  getQMeUserQuiz(userQuizRepo.findCompletedByUserId(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
 
@@ -110,7 +110,7 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public List<QMeUserQuiz> findPendingByUserId(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
+    public List<QMeUserQuizDetail> findPendingByUserId(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
         try{
             return  getQMeUserQuiz(userQuizRepo.findPendingByUserId(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));
 
@@ -120,7 +120,7 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
-    public QMeUserQuiz save(QMeUserQuiz qMeUserQuiz, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
+    public QMeUserQuizDetail save(QMeUserQuiz qMeUserQuiz, Long userId) throws QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException, QMeResourceNotFoundException {
         try{
             UserQuiz userQuiz = getUserQuiz(qMeUserQuiz,userId);
             userQuiz = userQuizRepo.save(userQuiz);
@@ -133,7 +133,7 @@ public class UserQuizServiceImpl implements UserQuizService {
 
 
     @Override
-    public QMeUserQuiz update(QMeUserQuiz qMeUserQuiz, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
+    public QMeUserQuizDetail update(QMeUserQuiz qMeUserQuiz, Long id, Long userId) throws QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException, QMeServerException {
         try{
             UserQuiz userQuiz = getUserQuiz(qMeUserQuiz,userId);
             userQuiz = userQuizRepo.update(userQuiz,userId);
@@ -173,8 +173,8 @@ public class UserQuizServiceImpl implements UserQuizService {
      * @param userQuizList List of User Quiz
      * @return QMeUserQuiz List
      */
-    private List<QMeUserQuiz> getQMeUserQuiz(List<UserQuiz> userQuizList) {
-        List<QMeUserQuiz> qMeUserQuizzes = new ArrayList<>();
+    private List<QMeUserQuizDetail> getQMeUserQuiz(List<UserQuiz> userQuizList) {
+        List<QMeUserQuizDetail> qMeUserQuizzes = new ArrayList<>();
         if (userQuizList == null) {
             return qMeUserQuizzes;
         }
@@ -191,8 +191,8 @@ public class UserQuizServiceImpl implements UserQuizService {
      * @param userQuiz UserQuiz
      * @return QMeUserQuiz QMeUserQuiz Detail
      */
-    private QMeUserQuiz getQMeUserQuiz(UserQuiz userQuiz) {
-        QMeUserQuiz qMeUserQuiz = new QMeUserQuiz();
+    private QMeUserQuizDetail getQMeUserQuiz(UserQuiz userQuiz) {
+        QMeUserQuizDetail qMeUserQuiz = new QMeUserQuizDetail();
         qMeUserQuiz.setUserQuizID(userQuiz.getUserQuizID());
         qMeUserQuiz.setUserID(userQuiz.getUserID());
         qMeUserQuiz.setQuizID(userQuiz.getQuizID());
@@ -204,25 +204,20 @@ public class UserQuizServiceImpl implements UserQuizService {
         qMeUserQuiz.setQuizMaxScore(userQuiz.getQuizMaxScore());
         Quiz quiz = userQuiz.getQuiz();
         if(quiz != null){
-            QMeQuizDetail quizDetail = new QMeQuizDetail();
-            quizDetail.setQuizID(quiz.getQuizID());
-            quizDetail.setQuizName(quiz.getQuizName());
-            quizDetail.setQuizDesc(quiz.getQuizDesc());
-            quizDetail.setLikes(quiz.getLikes());
-            quizDetail.setQuizHit(quiz.getQuizHit());
-            quizDetail.setQuizMaxAttempts(quiz.getQuizMaxAttempts());
-            quizDetail.setQuizCreateDate(quiz.getQuizCreateDate());
-            quizDetail.setCreateUserID(quiz.getCreateUserID());
-            quizDetail.setQuizUpdateDate(quiz.getQuizUpdateDate());
-            quizDetail.setUpdateUserID(quiz.getUpdateUserID());
+            qMeUserQuiz.setQuizName(quiz.getQuizName());
+            qMeUserQuiz.setQuizDesc(quiz.getQuizDesc());
+            qMeUserQuiz.setLikes(quiz.getLikes());
+            qMeUserQuiz.setQuizHit(quiz.getQuizHit());
+            qMeUserQuiz.setQuizMaxAttempts(quiz.getQuizMaxAttempts());
+            qMeUserQuiz.setQuizCreateDate(quiz.getQuizCreateDate());
+            qMeUserQuiz.setCreateUserID(quiz.getCreateUserID());
+            qMeUserQuiz.setQuizUpdateDate(quiz.getQuizUpdateDate());
+            qMeUserQuiz.setUpdateUserID(quiz.getUpdateUserID());
             if(quiz.getCategory() != null){
-                quizDetail.setCategoryName(quiz.getCategory().getCategoryName());
-                quizDetail.setCategoryID(quiz.getCategoryID());
+                qMeUserQuiz.setCategoryName(quiz.getCategory().getCategoryName());
+                qMeUserQuiz.setCategoryID(quiz.getCategoryID());
             }
-            qMeUserQuiz.setQuiz(quizDetail);
         }
-
-
         return qMeUserQuiz;
     }
 }
