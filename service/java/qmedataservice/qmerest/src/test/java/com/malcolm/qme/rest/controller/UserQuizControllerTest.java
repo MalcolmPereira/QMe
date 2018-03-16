@@ -254,22 +254,13 @@ public class UserQuizControllerTest extends QMeControllerTest {
     @Test
     public void testStartQuiz() throws Exception {
         assertThat(mockMvc, notNullValue());
-        assertThat(userQuizService, notNullValue());
-        assertThat(quizService, notNullValue());
-
-        when(userQuizService.searchById(1L)).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
-        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestionsIdsAndDetails());
-        when(userQuizService.update(any(QMeUserQuiz.class),eq(1L),eq(1L))).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
-
+        when(userQuizService.startQuiz(1L,1L)).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
         mockMvc.perform(
                 post("/qme/userquiz/start/1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
         ;
-
-        verify(userQuizService).searchById(1L);
-        verify(quizService).searchById(1L);
-        verify(userQuizService).update(any(QMeUserQuiz.class),eq(1L),eq(1L));
+        verify(userQuizService).startQuiz(1L,1L);
     }
 }
