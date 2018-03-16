@@ -39,6 +39,11 @@ public class QMeQuizAnswerOption extends QMeResource {
     private Boolean selected;
 
     /**
+     * Correct
+     */
+    private Boolean correct;
+
+    /**
      * Answer Option Media List
      */
     private List<QMeAnswerOptionMedia> answerOptionMediaList;
@@ -107,6 +112,23 @@ public class QMeQuizAnswerOption extends QMeResource {
     public void setSelected(Boolean selected) {
         this.selected = selected;
     }
+
+    /**
+     * Get Correct
+     * @return correct Answered Correctly
+     */
+    public Boolean getCorrect() {
+        return correct;
+    }
+
+    /**
+     * Set Correct
+     * @param correct Answered Correctly
+     */
+    public void setCorrect(Boolean correct) {
+        this.correct = correct;
+    }
+
 
     /**
      * Get Answer Option Media List
