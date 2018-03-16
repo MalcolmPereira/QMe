@@ -29,11 +29,19 @@ public interface UserQuizSpringDataRepository extends JpaRepository<UserQuizEnti
     List<UserQuizEntity> findByUserId(Long userId);
 
     /**
+     * Find By User ID and Quiz ID
+     * @param userId
+     * @param quizId
+     * @return
+     */
+    List<UserQuizEntity> findByUserIdAndQuizId(Long userId, Long quizId);
+
+    /**
      * Find Quizzes f0r User ID
      * @param userId User ID
      * @return UserQuizEntity List
      */
-    @Query( value = "SELECT COALESCE(userQuiz.USER_QUIZ_ID, - SUBSTRING((RAND() * -1),4)) AS USER_QUIZ_ID , COALESCE(userQuiz.USER_ID, 0) AS USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,quiz.CAT_ID,quiz.QUIZ_LIKES, quiz.QUIZ_HITS, quiz.MAX_ATTEMPTS, quiz.QUIZ_CREATE_DATE, quiz.QUIZ_CREATE_USER, quiz.QUIZ_UPDATE_DATE, quiz.QUIZ_UPDATE_USER, userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID = :userId \n#pageable\n",
+    @Query( value = "SELECT COALESCE(userQuiz.USER_QUIZ_ID, - SUBSTRING((RAND() * -1),4)) AS USER_QUIZ_ID , COALESCE(userQuiz.USER_ID, - SUBSTRING((RAND() * -1),4)) AS USER_ID,quiz.QUIZ_ID,quiz.QUIZ_NAME,quiz.QUIZ_DESC,quiz.CAT_ID,quiz.QUIZ_LIKES, quiz.QUIZ_HITS, quiz.MAX_ATTEMPTS, quiz.QUIZ_CREATE_DATE, quiz.QUIZ_CREATE_USER, quiz.QUIZ_UPDATE_DATE, quiz.QUIZ_UPDATE_USER, userQuiz.QUIZ_START_DATE,userQuiz.QUIZ_END_DATE,userQuiz.QUIZ_USER_SCORE,userQuiz.QUIZ_MAX_SCORE,userQuiz.QUIZ_TOKEN FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID = :userId \n#pageable\n",
             countQuery = "SELECT count(*) FROM USER_QUIZ userQuiz RIGHT JOIN QUIZ quiz ON userQuiz.QUIZ_ID = quiz.QUIZ_ID AND userQuiz.USER_ID = :userId",
             nativeQuery = true)
     Page<UserQuizEntity> findQuizzesForUser(@Param("userId") Long userId, Pageable pageable);

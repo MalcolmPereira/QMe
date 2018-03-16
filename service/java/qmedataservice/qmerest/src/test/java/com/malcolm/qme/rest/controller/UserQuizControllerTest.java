@@ -192,6 +192,7 @@ public class UserQuizControllerTest extends QMeControllerTest {
 
         when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.simpleQMeQuizDetail());
         when(userService.searchById(1L)).thenReturn(QMeUserFixtures.simpleQMeUserDetailsWithId());
+        when(userQuizService.findPendingForUserByQuizId(1L, 1L)).thenReturn(false);
         when(userQuizService.save(any(QMeUserQuiz.class),eq(1L))).thenReturn(QMeUserQuizFixture.simpleQMeQuizDetail());
 
         mockMvc.perform(
@@ -205,7 +206,30 @@ public class UserQuizControllerTest extends QMeControllerTest {
         ;
         verify(quizService).searchById(1L);
         verify(userService).searchById(1L);
+        verify(userQuizService).findPendingForUserByQuizId(1L,1L);
         verify(userQuizService).save(anyObject(),eq(1L));
+    }
+
+    @Test
+    public void testRegisterForQuizWhilePending() throws Exception {
+        assertThat(mockMvc, notNullValue());
+        assertThat(userQuizService, notNullValue());
+        assertThat(quizService, notNullValue());
+        assertThat(userService, notNullValue());
+
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.simpleQMeQuizDetail());
+        when(userService.searchById(1L)).thenReturn(QMeUserFixtures.simpleQMeUserDetailsWithId());
+        when(userQuizService.findPendingForUserByQuizId(1L, 1L)).thenReturn(true);
+
+        mockMvc.perform(
+                post("/qme/userquiz/register/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(400))
+                .andDo(print())
+        ;
+        verify(quizService).searchById(1L);
+        verify(userService).searchById(1L);
+        verify(userQuizService).findPendingForUserByQuizId(1L,1L);
     }
 
     @Test

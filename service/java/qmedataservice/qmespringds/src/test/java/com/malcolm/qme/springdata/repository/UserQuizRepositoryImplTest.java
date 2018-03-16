@@ -652,4 +652,67 @@ public class UserQuizRepositoryImplTest {
         quizAnother = quizRepository.findById(quizIDAnother);
         assertNull(quizAnother);
     }
+
+    @Test
+    public void testFindPendingForUserByQuizId() throws QMeException {
+
+        assertNotNull(userQuizRepository);
+
+        assertNotNull(userRepo);
+
+        assertNotNull(quizRepository);
+
+        User user = new User("UserQuizRepositoryImplTest5", "Test", "Test", "Test", "UserQuizRepositoryImplTest@test.com");
+        user = userRepo.save(user);
+        assertNotNull(user);
+        assertThat(user.getUserID(), greaterThan(0L));
+        Long userID = user.getUserID();
+
+        Quiz quiz = new Quiz(
+                "UserQuizRepositoryImplTest 5 Quiz", "UserQuizRepositoryImplTest 1 Quiz Desc", 1L, 0, 1L);
+        quiz = quizRepository.save(quiz);
+        assertNotNull(quiz);
+        assertThat(quiz.getQuizID(), greaterThan(0L));
+        final Long quizID = quiz.getQuizID();
+
+        boolean userPendingQuizBefore = userQuizRepository.findPendingForUserByQuizId(userID,quizID);
+
+        UserQuiz userQuiz = new UserQuiz(userID, quizID, 1L, 10, "Some token");
+        userQuiz = userQuizRepository.save(userQuiz);
+        assertNotNull(userQuiz);
+        assertThat(userQuiz.getUserQuizID(), greaterThan(0L));
+        final Long userQuizID = userQuiz.getUserQuizID();
+
+        Quiz quizAnother = new Quiz(
+                "UserQuizRepositoryImplTest Quiz Test 2", "UserQuizRepositoryImplTest Quiz Test 2 Desc", 1L, 0, 1L);
+        quizAnother = quizRepository.save(quizAnother);
+        assertNotNull(quizAnother);
+        assertThat(quizAnother.getQuizID(), greaterThan(0L));
+        final Long quizIDAnother = quizAnother.getQuizID();
+
+        List<UserQuiz> userQuizList = userQuizRepository.findQuizzesForUser(userID, new PageSort(0,50, true, UserQuizRepository.USERQUIZSORTFIELDS.USERSCORE.toString()));
+        assertNotNull(userQuizList);
+
+        boolean userPendingQuizAfter = userQuizRepository.findPendingForUserByQuizId(userID,quizID);
+
+        userQuizRepository.delete(userQuizID);
+        userQuiz = userQuizRepository.findById(userQuizID);
+        assertNull(userQuiz);
+
+        userRepo.delete(userID);
+        user = userRepo.findById(userID);
+        assertNull(user);
+
+        quizRepository.delete(quizID);
+        quiz = quizRepository.findById(quizID);
+        assertNull(quiz);
+
+        quizRepository.delete(quizIDAnother);
+        quizAnother = quizRepository.findById(quizIDAnother);
+        assertNull(quizAnother);
+
+        assertFalse(userPendingQuizBefore);
+        assertTrue(userPendingQuizAfter);
+
+    }
 }

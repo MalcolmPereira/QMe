@@ -29,10 +29,10 @@ import java.util.List;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -169,7 +169,7 @@ public class UserQuizServiceImplTest {
     }
 
     @Test
-    public void findCompletedByUserId() throws QMeResourceException, QMeException {
+    public void testFindCompletedByUserId() throws QMeResourceException, QMeException {
         when(userQuizRepo.findCompletedByUserId(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
         List<QMeUserQuizDetail> userQuizList = userQuizService.findCompletedByUserId(1L,0,10,true, "MAXSCORE");
         verify(userQuizRepo).findCompletedByUserId(eq(1L),any(PageSort.class));
@@ -188,7 +188,7 @@ public class UserQuizServiceImplTest {
     }
 
     @Test
-    public void findPendingByUserId() throws QMeResourceException, QMeException {
+    public void testFindPendingByUserId() throws QMeResourceException, QMeException {
         when(userQuizRepo.findPendingByUserId(eq(1L),any(PageSort.class))).thenReturn(UserQuizFixtures.simpleUserQuizList());
         List<QMeUserQuizDetail> userQuizList = userQuizService.findPendingByUserId(1L,0,10,true, "MAXSCORE");
         verify(userQuizRepo).findPendingByUserId(eq(1L),any(PageSort.class));
@@ -204,6 +204,19 @@ public class UserQuizServiceImplTest {
                     is(5L)
             ));
         }
+    }
+
+    @Test
+    public void testFindPendingByUserIdAndQuizID() throws QMeResourceException, QMeException {
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestions());
+        when(userQuizRepo.findPendingForUserByQuizId(eq(1L),eq(1L))).thenReturn(false);
+        assertFalse(userQuizService.findPendingForUserByQuizId(1L, 1L));
+        verify(userQuizRepo).findPendingForUserByQuizId(eq(1L),eq(1L));
+
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestions());
+        when(userQuizRepo.findPendingForUserByQuizId(eq(1L),eq(1L))).thenReturn(true);
+        assertTrue(userQuizService.findPendingForUserByQuizId(1L, 1L));
+        verify(userQuizRepo, times(2)).findPendingForUserByQuizId(eq(1L),eq(1L));
     }
 
 }

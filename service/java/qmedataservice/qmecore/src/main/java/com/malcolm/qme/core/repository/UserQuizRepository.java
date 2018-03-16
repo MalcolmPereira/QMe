@@ -67,6 +67,15 @@ public interface UserQuizRepository extends QMeRepository<UserQuiz, Long> {
 
 
     /**
+     * Find Pending For User By QuizID
+     * @param userID User ID
+     * @param quizID Quiz ID
+     * @return boolean Pending for User
+     * @throws QMeException
+     */
+    boolean findPendingForUserByQuizId(Long userID,Long quizID) throws QMeException;
+
+    /**
      * Find Quizzes User ID
      *
      * @param userID User ID

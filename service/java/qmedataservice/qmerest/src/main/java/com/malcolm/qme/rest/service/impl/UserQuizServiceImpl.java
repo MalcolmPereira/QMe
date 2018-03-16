@@ -90,6 +90,19 @@ public class UserQuizServiceImpl implements UserQuizService {
     }
 
     @Override
+    public boolean findPendingForUserByQuizId(Long userID, Long quizID) throws QMeServerException, QMeResourceNotFoundException {
+        try{
+            QMeQuizDetail qMeQuizDetail = quizService.searchById(quizID);
+            if(qMeQuizDetail == null){
+                throw new QMeResourceNotFoundException("Quiz with Quiz ID " + quizID + " not found");
+            }
+            return userQuizRepo.findPendingForUserByQuizId(userID,quizID);
+        }catch(QMeException err){
+            throw new QMeServerException(err.getMessage(),err);
+        }
+    }
+
+    @Override
     public List<QMeUserQuizDetail> findQuizzesForUser(Long userID, Integer pageIndex, Integer maxRows, boolean sortAscending, String... sortFields) throws QMeServerException {
         try{
             return getQMeUserQuiz(userQuizRepo.findQuizzesForUser(userID, new PageSort(pageIndex,maxRows,sortAscending,sortFields)));

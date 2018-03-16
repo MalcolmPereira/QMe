@@ -443,4 +443,63 @@ public class UserQuizSpringDataRepositoryTest {
         userEntity = userSpringDataRepo.findOne(userID);
         assertNull(userEntity);
     }
+
+    @Test
+    public void testFindPendingByUserIdAndQuizId() {
+        assertNotNull(userQuizSpringDataRepository);
+
+        assertNotNull(userSpringDataRepo);
+
+        assertNotNull(quizSpringDataRepository);
+
+        UserEntity userEntity = new UserEntity("TestFindPendingByUserIdAndQuizId","Test", "Test", "TestFindPendingByUserIdAndQuizId@test.com","Test", LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now());
+        userEntity = userSpringDataRepo.save(userEntity);
+        assertNotNull(userEntity);
+        assertThat(userEntity.getUserId(), greaterThan(0L));
+        Long userID = userEntity.getUserId();
+
+        QuizEntity quizEntity = new QuizEntity("TestFindPendingByUserIdAndQuizId Quiz", "TestFindPendingByUserIdAndQuizId Quiz Desc", 1L, 0L, 0L,0, LocalDateTime.now(), 1L, LocalDateTime.now(), 1L);
+        quizEntity = quizSpringDataRepository.save(quizEntity);
+        assertNotNull(quizEntity);
+        assertThat(quizEntity.getQuizId(), greaterThan(0L));
+        final Long quizID = quizEntity.getQuizId();
+
+        List<UserQuizEntity> userQuizEntitiesBefore = userQuizSpringDataRepository.findByUserIdAndQuizId(userEntity.getUserId(), quizEntity.getQuizId());
+
+        UserQuizEntity userQuizEntity = new UserQuizEntity(userID, quizID, 1L, LocalDateTime.now(), 0, 10);
+        userQuizEntity = userQuizSpringDataRepository.save(userQuizEntity);
+        assertNotNull(userQuizEntity);
+        assertThat(userQuizEntity.getUserQuizId(), greaterThan(0L));
+        final Long userQuizID = userQuizEntity.getUserQuizId();
+
+        Page<UserQuizEntity> pageList = userQuizSpringDataRepository.findQuizzesForUser(userID,new PageRequest(0, 50));
+        List<UserQuizEntity> userQuizEntityList = pageList.getContent();
+        assertNotNull(userQuizEntityList);
+        assertThat(userQuizEntityList.size(), greaterThan(0));
+
+        List<UserQuizEntity> userQuizEntitiesAfter = userQuizSpringDataRepository.findByUserIdAndQuizId(userEntity.getUserId(), quizEntity.getQuizId());
+
+        userQuizSpringDataRepository.delete(userQuizID);
+        userQuizEntity = userQuizSpringDataRepository.findOne(userQuizID);
+        assertNull(userQuizEntity);
+
+        quizSpringDataRepository.delete(quizID);
+        quizEntity = quizSpringDataRepository.findOne(quizID);
+        assertNull(quizEntity);
+
+        userSpringDataRepo.delete(userID);
+        userEntity = userSpringDataRepo.findOne(userID);
+        assertNull(userEntity);
+
+        assertNotNull(userQuizEntitiesBefore);
+        assertThat(userQuizEntitiesBefore.size(), equalTo(0));
+
+        assertNotNull(userQuizEntitiesAfter);
+        assertThat(userQuizEntityList.size(), greaterThan(0));
+    }
+
+    @Test
+    public void testFindPendingForUserByQuizId() {
+
+    }
 }

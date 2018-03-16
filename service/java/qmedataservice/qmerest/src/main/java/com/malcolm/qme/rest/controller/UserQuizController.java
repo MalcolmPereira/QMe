@@ -8,6 +8,7 @@ package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserQuizAPI;
+import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
@@ -170,16 +171,20 @@ public class UserQuizController implements UserQuizAPI  {
     public QMeUserQuizDetail registerForQuiz(@PathVariable(value=ID_PARAM_STRING) Long quizID) throws QMeResourceException {
         QMeUserDetail user = userService.searchById(getCurrentUser().getUserID());
         QMeQuizDetail quiz =  quizService.searchById(quizID);
-        QMeUserQuiz qMeUserQuiz = new QMeUserQuiz();
-        qMeUserQuiz.setQuizID(quiz.getQuizID());
-        qMeUserQuiz.setCategoryID(quiz.getCategoryID());
-        qMeUserQuiz.setUserID(user.getUserId());
-        qMeUserQuiz.setQuizStartDate(null);
-        qMeUserQuiz.setQuizEndDate(null);
-        qMeUserQuiz.setQuizUserScore(0);
-        qMeUserQuiz.setQuizMaxScore(0);
-        qMeUserQuiz.setUserQuizToken(null);
-        return userQuizService.save(qMeUserQuiz,user.getUserId());
+        if(!userQuizService.findPendingForUserByQuizId(getCurrentUser().getUserID(),quizID)){
+            QMeUserQuiz qMeUserQuiz = new QMeUserQuiz();
+            qMeUserQuiz.setQuizID(quiz.getQuizID());
+            qMeUserQuiz.setCategoryID(quiz.getCategoryID());
+            qMeUserQuiz.setUserID(user.getUserId());
+            qMeUserQuiz.setQuizStartDate(null);
+            qMeUserQuiz.setQuizEndDate(null);
+            qMeUserQuiz.setQuizUserScore(0);
+            qMeUserQuiz.setQuizMaxScore(0);
+            qMeUserQuiz.setUserQuizToken(null);
+            return userQuizService.save(qMeUserQuiz,user.getUserId());
+        }else{
+            throw new QMeInvalidResourceDataException("User Quiz  " + quiz.getQuizName() + " Already Registered for user please complete existing quiz for  "+getCurrentUser().getUsername());
+        }
     }
 
     @RequestMapping(value=QUIZ_PATH_UNREGISTER,method = RequestMethod.POST)

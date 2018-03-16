@@ -152,7 +152,23 @@ public class UserQuizRepositoryImpl implements UserQuizRepository {
 			throw new QMeException(err);
 		}
 	}
-	
+
+	@Override
+	public boolean findPendingForUserByQuizId(Long userID, Long quizID) throws QMeException {
+        try{
+            List<UserQuizEntity> userQuizEntities = userQuizSpringDataRepository.findByUserIdAndQuizId(userID,quizID);
+            for (UserQuizEntity userQuizEntity:userQuizEntities) {
+                if(userQuizEntity.getQuizEndDate() == null){
+                    return true;
+                }
+            }
+            return false;
+
+        }catch(Exception err){
+            throw new QMeException(err);
+        }
+	}
+
 	@Override
 	public UserQuiz findById(Long id) throws QMeException {
 		try{
