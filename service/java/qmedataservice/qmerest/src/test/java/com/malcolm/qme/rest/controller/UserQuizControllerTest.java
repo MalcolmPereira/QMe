@@ -224,7 +224,7 @@ public class UserQuizControllerTest extends QMeControllerTest {
         mockMvc.perform(
                 post("/qme/userquiz/register/1")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400))
+                .andExpect(status().is(409))
                 .andDo(print())
         ;
         verify(quizService).searchById(1L);

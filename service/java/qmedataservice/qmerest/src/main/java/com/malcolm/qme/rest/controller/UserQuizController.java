@@ -8,7 +8,7 @@ package com.malcolm.qme.rest.controller;
 
 import com.malcolm.qme.rest.api.QMeAppAPI;
 import com.malcolm.qme.rest.api.UserQuizAPI;
-import com.malcolm.qme.rest.exception.QMeInvalidResourceDataException;
+import com.malcolm.qme.rest.exception.QMeResourceConflictException;
 import com.malcolm.qme.rest.exception.QMeResourceException;
 import com.malcolm.qme.rest.exception.QMeResourceNotFoundException;
 import com.malcolm.qme.rest.model.QMeQuizDetail;
@@ -183,7 +183,7 @@ public class UserQuizController implements UserQuizAPI  {
             qMeUserQuiz.setUserQuizToken(null);
             return userQuizService.save(qMeUserQuiz,user.getUserId());
         }else{
-            throw new QMeInvalidResourceDataException("User Quiz  " + quiz.getQuizName() + " Already Registered for user please complete existing quiz for  "+getCurrentUser().getUsername());
+            throw new QMeResourceConflictException("User Quiz  " + quiz.getQuizName() + " Already Registered for user please complete existing quiz for  "+getCurrentUser().getUsername());
         }
     }
 
