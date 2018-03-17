@@ -6,6 +6,7 @@
 package com.malcolm.qme.rest.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -280,7 +281,10 @@ public class QMeUserQuizDetail extends QMeUserQuiz {
      * @return qmeQuestionDetailList Quiz Question Details
      */
     public List<QMeQuizQuestionDetail> getQmeQuestionDetailList() {
-        return qmeQuestionDetailList;
+        if(this.qmeQuestionDetailList == null){
+            this.qmeQuestionDetailList = new ArrayList<>();
+        }
+        return this.qmeQuestionDetailList;
     }
 
     /**
@@ -289,5 +293,16 @@ public class QMeUserQuizDetail extends QMeUserQuiz {
      */
     public void setQmeQuestionDetailList(List<QMeQuizQuestionDetail> qmeQuestionDetailList) {
         this.qmeQuestionDetailList = qmeQuestionDetailList;
+    }
+
+    /**
+     * Add Quiz Question Details
+     * @param qMeQuizQuestionDetail Quiz Question Detail
+     */
+    public void addQmeQuestionDetailList(QMeQuizQuestionDetail qMeQuizQuestionDetail){
+        if(this.qmeQuestionDetailList == null){
+            this.qmeQuestionDetailList = new ArrayList<>();
+        }
+        this.qmeQuestionDetailList.add(qMeQuizQuestionDetail);
     }
 }

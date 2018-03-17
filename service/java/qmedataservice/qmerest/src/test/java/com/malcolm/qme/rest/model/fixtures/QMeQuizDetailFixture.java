@@ -138,7 +138,11 @@ public class QMeQuizDetailFixture extends QMeResourceFixture<QMeQuizDetail>{
         qMeAnswerOption.setAnswerOptionID(AnswerOptionID);
         qMeAnswerOption.setQuestionID(questionID);
         qMeAnswerOption.setOptionText("some option");
-        qMeAnswerOption.setCorrect(Boolean.FALSE);
+        if(AnswerOptionID == 1){
+            qMeAnswerOption.setCorrect(Boolean.TRUE);
+        }else{
+            qMeAnswerOption.setCorrect(Boolean.FALSE);
+        }
         return qMeAnswerOption;
     }
 

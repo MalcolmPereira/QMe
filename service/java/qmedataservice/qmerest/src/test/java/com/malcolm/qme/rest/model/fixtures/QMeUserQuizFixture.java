@@ -6,7 +6,7 @@
  */
 package com.malcolm.qme.rest.model.fixtures;
 
-import com.malcolm.qme.rest.model.QMeUserQuizDetail;
+import com.malcolm.qme.rest.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +24,26 @@ public class QMeUserQuizFixture {
      */
     public static QMeUserQuizDetail simpleQMeQuizDetail(){
         return getQMeUserQuizDetail();
+    }
+
+    /**
+     * Get QMe Quiz Details with Question Id
+     * @return
+     */
+    public static QMeUserQuizDetail getQMeUserQuizDetailWithQuestions() {
+        QMeUserQuizDetail qMeUserQuizDetail = getQMeUserQuizDetail();
+        qMeUserQuizDetail.setUserQuizToken("somequiztoken");
+        QMeQuizQuestionDetail  qMeQuizQuestionDetail = getQMeQuestionDetail(1L);
+        qMeQuizQuestionDetail.addAnswerOptionList(getQMeQuizAnswerOption(1L, 1L));
+        qMeQuizQuestionDetail.addAnswerOptionList(getQMeQuizAnswerOption(2L, 1L));
+        qMeQuizQuestionDetail.addAnswerOptionList(getQMeQuizAnswerOption(3L, 1L));
+        qMeUserQuizDetail.addQmeQuestionDetailList(qMeQuizQuestionDetail);
+        qMeQuizQuestionDetail = getQMeQuestionDetail(2L);
+        qMeQuizQuestionDetail.addAnswerOptionList(getQMeQuizAnswerOption(1L, 2L));
+        qMeQuizQuestionDetail.addAnswerOptionList(getQMeQuizAnswerOption(2L, 2L));
+        qMeQuizQuestionDetail.addAnswerOptionList(getQMeQuizAnswerOption(3L, 2L));
+        qMeUserQuizDetail.addQmeQuestionDetailList(qMeQuizQuestionDetail);
+        return qMeUserQuizDetail;
     }
 
     /**
@@ -68,5 +88,43 @@ public class QMeUserQuizFixture {
         return qMeUserQuiz;
     }
 
+    /**
+     * Get Quiz Question Detail
+     * @param questionID Question ID
+     * @return QMeQuestionDetail Question Detail
+     */
+    private static QMeQuizQuestionDetail getQMeQuestionDetail(Long questionID) {
+        QMeQuizQuestionDetail qmeQuestionDetail = new QMeQuizQuestionDetail();
+        qmeQuestionDetail.setQuestionId(questionID);
+        qmeQuestionDetail.setCategoryId(1L);
+        qmeQuestionDetail.setQuestionText("This is a test");
+        qmeQuestionDetail.setQuestionPoint(1);
+        qmeQuestionDetail.setLikes(1L);
+        qmeQuestionDetail.setQuestionCreateDate(LocalDateTime.now());
+        qmeQuestionDetail.setCreateUserID(1L);
+        qmeQuestionDetail.setQuestionUpdateDate(LocalDateTime.now());
+        qmeQuestionDetail.setUpdateUserID(1L);
+        qmeQuestionDetail.setCreateUserName("Hello");
+        qmeQuestionDetail.setUpdateUserName("test");
+        qmeQuestionDetail.setCategoryName("Some");
+        return qmeQuestionDetail;
+    }
+
+    /**
+     * Get QMe Quiz Answer Option
+     * @return QMeAnswerOption Answer Option
+     */
+    private static QMeQuizAnswerOption getQMeQuizAnswerOption(Long AnswerOptionID, Long questionID) {
+        QMeQuizAnswerOption qMeAnswerOption = new QMeQuizAnswerOption();
+        qMeAnswerOption.setAnswerOptionID(AnswerOptionID);
+        qMeAnswerOption.setQuestionID(questionID);
+        qMeAnswerOption.setOptionText("some option");
+        if(AnswerOptionID ==1){
+            qMeAnswerOption.setSelected(Boolean.TRUE);
+        }else{
+            qMeAnswerOption.setSelected(Boolean.FALSE);
+        }
+        return qMeAnswerOption;
+    }
 
 }

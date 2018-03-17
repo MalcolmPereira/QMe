@@ -71,7 +71,20 @@ public interface UserQuizService extends QMeService<QMeUserQuizDetail, QMeUserQu
      * @param userQuizID User Quiz ID
      * @return QMeUserQuizDetail User Quiz Detail
      * @throws QMeServerException Server Exception
+     * @throws QMeResourceNotFoundException Resource Not Found
+     * @throws QMeInvalidResourceDataException Invalid Resource
+     * @throws QMeResourceConflictException Resource Conflict
      */
     QMeUserQuizDetail startQuiz(Long userID, Long userQuizID) throws QMeServerException, QMeResourceNotFoundException, QMeInvalidResourceDataException, QMeResourceConflictException;
 
+    /**
+     * Complete User Quiz
+     * @param userID User ID
+     * @param userQuizID User Quiz ID
+     * @param quizDetail User Quiz Detail
+     * @throws QMeServerException Server Exception
+     * @throws QMeResourceNotFoundException Resource Not Found
+     * @throws QMeInvalidResourceDataException Invalid Resource
+     */
+    QMeUserQuizDetail completeQuiz(Long userID, Long userQuizID,QMeUserQuizDetail quizDetail) throws QMeServerException, QMeResourceNotFoundException, QMeInvalidResourceDataException;
 }

@@ -16,6 +16,7 @@ import com.malcolm.qme.rest.exception.QMeServerException;
 import com.malcolm.qme.rest.model.QMeUserQuiz;
 import com.malcolm.qme.rest.model.QMeUserQuizDetail;
 import com.malcolm.qme.rest.model.fixtures.QMeQuizDetailFixture;
+import com.malcolm.qme.rest.model.fixtures.QMeUserQuizFixture;
 import com.malcolm.qme.rest.service.QuizService;
 import com.malcolm.qme.rest.service.UserQuizService;
 import org.junit.Test;
@@ -226,6 +227,7 @@ public class UserQuizServiceImplTest {
         QMeUserQuizDetail qMeUserQuizDetail = userQuizService.startQuiz(1L,1L);
         verify(userQuizRepo).findById(1L);
         verify(quizService, times(2)).searchById(1L);
+        verify(userQuizRepo).update(any(UserQuiz.class),eq(1L));
         assertNotNull(qMeUserQuizDetail);
         assertNotNull(qMeUserQuizDetail.getUserQuizToken());
         assertNotNull(qMeUserQuizDetail.getQuizMaxScore());
@@ -233,4 +235,19 @@ public class UserQuizServiceImplTest {
         assertNotNull(qMeUserQuizDetail.getQuizMaxAttempts());
     }
 
+    @Test
+    public void testCompleteQuiz() throws QMeResourceException, QMeException {
+        when(userQuizRepo.findById(1L)).thenReturn(UserQuizFixtures.simpleUserQuiz());
+        when(quizService.searchById(1L)).thenReturn(QMeQuizDetailFixture.qMeQuizDetailWithQuestionsIdsAndDetails());
+        when(userQuizRepo.update(any(UserQuiz.class),eq(1L))).thenReturn(UserQuizFixtures.simpleUserQuiz());
+        QMeUserQuizDetail userQuizDetail = userQuizService.completeQuiz(1L,1L, QMeUserQuizFixture.getQMeUserQuizDetailWithQuestions());
+        verify(userQuizRepo).findById(1L);
+        verify(quizService,times(3)).searchById(1L);
+        verify(userQuizRepo).update(any(UserQuiz.class),eq(1L));
+        assertNotNull(userQuizDetail);
+        assertNotNull(userQuizDetail.getUserQuizToken());
+        assertNotNull(userQuizDetail.getQuizMaxScore());
+        assertNotNull(userQuizDetail.getQuizUserScore());
+        assertTrue(userQuizDetail.getQuizUserScore() == 2);
+    }
 }
